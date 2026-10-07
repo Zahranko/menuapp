@@ -337,6 +337,7 @@ namespace Storefront.Infrastructure.Persistence.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("NameKey")
+                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
@@ -348,8 +349,7 @@ namespace Storefront.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BusinessId", "NameKey")
-                        .IsUnique()
-                        .HasFilter("[NameKey] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("BusinessId", "SortOrder");
 

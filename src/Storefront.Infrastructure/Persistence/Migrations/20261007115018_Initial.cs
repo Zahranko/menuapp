@@ -286,7 +286,7 @@ namespace Storefront.Infrastructure.Persistence.Migrations
                     BusinessId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     SortOrder = table.Column<int>(type: "int", nullable: false),
-                    NameKey = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true, computedColumnSql: "LOWER([Name])", stored: true)
+                    NameKey = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false, computedColumnSql: "LOWER([Name])", stored: true)
                 },
                 constraints: table =>
                 {
@@ -528,8 +528,7 @@ namespace Storefront.Infrastructure.Persistence.Migrations
                 name: "IX_Categories_BusinessId_NameKey",
                 table: "Categories",
                 columns: new[] { "BusinessId", "NameKey" },
-                unique: true,
-                filter: "[NameKey] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Categories_BusinessId_SortOrder",

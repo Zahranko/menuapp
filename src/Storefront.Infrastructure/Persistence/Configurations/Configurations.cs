@@ -39,7 +39,7 @@ internal sealed class CategoryConfiguration : IEntityTypeConfiguration<Category>
         b.Ignore(x => x.DomainEvents);
         b.Property(x => x.Name).HasMaxLength(Category.NameMax);
         // Names are unique per business, ignoring case.
-        b.Property<string>("NameKey").HasMaxLength(Category.NameMax).HasComputedColumnSql("LOWER([Name])", stored: true);
+        b.Property<string>("NameKey").IsRequired().HasMaxLength(Category.NameMax).HasComputedColumnSql("LOWER([Name])", stored: true);
         b.HasIndex("BusinessId", "NameKey").IsUnique();
         b.HasIndex(x => new { x.BusinessId, x.SortOrder });
         b.HasOne<Business>().WithMany().HasForeignKey(x => x.BusinessId).OnDelete(DeleteBehavior.Cascade);

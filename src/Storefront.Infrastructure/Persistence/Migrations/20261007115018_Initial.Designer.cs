@@ -12,7 +12,7 @@ using Storefront.Infrastructure.Persistence;
 namespace Storefront.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(StorefrontDbContext))]
-    [Migration("20261007113830_Initial")]
+    [Migration("20261007115018_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -340,6 +340,7 @@ namespace Storefront.Infrastructure.Persistence.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("NameKey")
+                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
@@ -351,8 +352,7 @@ namespace Storefront.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BusinessId", "NameKey")
-                        .IsUnique()
-                        .HasFilter("[NameKey] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("BusinessId", "SortOrder");
 
