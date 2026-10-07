@@ -19,8 +19,8 @@ env:
   DB_SERVER: ${{ vars.DB_SERVER || 'sql6034.site4now.net' }}
   DB_NAME: ${{ vars.DB_NAME || 'db_acc171_mobiletest' }}
   DB_USER: ${{ vars.DB_USER || 'db_acc171_mobiletest_admin' }}
-  # The site's public address, for example https://api.example.com. Optional until known.
-  API_URL: ${{ vars.API_URL }}
+  # The site's public address: health check, HTTPS enforcement (https only) and photo URLs.
+  API_URL: ${{ vars.API_URL || 'https://alamalhosp-001-site7.itempurl.com' }}
   DOTNET_CLI_TELEMETRY_OPTOUT: "1"
   DOTNET_NOLOGO: "1"
 

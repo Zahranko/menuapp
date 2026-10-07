@@ -25,7 +25,7 @@ In GitHub, open **Settings**, then **Secrets and variables**, then **Actions**.
 
 | Name | Default | What it is |
 |---|---|---|
-| `API_URL` | none | The site's address, for example `https://api.example.com`. Turns on the health check after each deploy, HTTPS enforcement (only for an `https://` address) and absolute photo URLs |
+| `API_URL` | the current site4now address | The site's address. Used for the health check after each deploy, HTTPS enforcement (only for an `https://` address) and photo URLs |
 | `FTP_SERVER` / `FTP_USERNAME` / `FTP_DIR` | the current site4now account | Change these when the hosting account changes |
 | `DB_SERVER` / `DB_NAME` / `DB_USER` | the current site4now database | Same |
 
