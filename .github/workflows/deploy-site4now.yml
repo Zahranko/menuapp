@@ -15,7 +15,8 @@ env:
   # Account names are not secret; passwords and the signing key are repository secrets.
   FTP_SERVER: ${{ vars.FTP_SERVER || 'win6036.site4now.net' }}
   FTP_USERNAME: ${{ vars.FTP_USERNAME || 'alamalhosp-001' }}
-  FTP_DIR: ${{ vars.FTP_DIR || '/' }}
+  # The site's own folder as the FTP login sees it. No default: the login's top folder holds other sites.
+  FTP_DIR: ${{ vars.FTP_DIR }}
   DB_SERVER: ${{ vars.DB_SERVER || 'sql6034.site4now.net' }}
   DB_NAME: ${{ vars.DB_NAME || 'db_acc171_mobiletest' }}
   DB_USER: ${{ vars.DB_USER || 'db_acc171_mobiletest_admin' }}
@@ -40,6 +41,9 @@ jobs:
           [ -n "$FTP_PASSWORD" ] || missing="$missing FTP_PASSWORD"
           [ -n "$DB_PASSWORD" ] || missing="$missing DB_PASSWORD"
           [ ${#JWT_SIGNING_KEY} -ge 32 ] || missing="$missing JWT_SIGNING_KEY(32+ characters)"
+          case "$FTP_DIR" in
+            ""|"/") missing="$missing FTP_DIR(variable: the site's own folder, never the top folder)";;
+          esac
           if [ -n "$missing" ]; then
             echo "::error title=Missing deploy secrets::Add these repository secrets:$missing"
             exit 1
