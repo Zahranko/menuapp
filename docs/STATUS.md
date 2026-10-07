@@ -4,7 +4,7 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 
 | ID | Session | Status | PR | Notes |
 |---|---|---|---|---|
-| S00 | Repo bootstrap, tooling, CI | not started | | |
+| S00 | Repo bootstrap, tooling, CI | done | | .NET 10 solution, Next.js 16 sites, Flutter app, CI, brand scripts |
 | S01 | Domain model and persistence | not started | | |
 | S02 | Auth and accounts API | not started | | |
 | S03 | Catalog API | not started | | |
@@ -33,3 +33,8 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 ## Decisions made during sessions
 
 (Anything decided that is not in PLAN.md, with the reason.)
+
+- S00: Next.js 16 (current stable) with Cache Components on. `apps/sites/next.config.ts` sets the Turbopack root to the repo root so `lib/brand.ts` can import `brand.json`.
+- S00: Tests use xUnit; architecture rules use NetArchTest.Rules plus assembly reference checks.
+- S00: OpenAPI document is served at `/openapi/v1.json`; `scripts/export-openapi.sh` drops the `servers` list so exports are stable.
+- S00: The web manifest is `apps/sites/app/manifest.ts` (reads brand config at build time), so `rebrand.sh` only copies the favicon to `apps/sites/app/icon.svg`.

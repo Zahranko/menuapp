@@ -1,0 +1,32 @@
+{
+  "name": "storefront-sites",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "next": "16.4.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.0",
+    "typescript": "^5",
+    "vitest": "^5",
+    "@vitejs/plugin-react": "^6",
+    "jsdom": "^27",
+    "@testing-library/react": "^16",
+    "@testing-library/dom": "^10",
+    "vite": "^8"
+  }
+}

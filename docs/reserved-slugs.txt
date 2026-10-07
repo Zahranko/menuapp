@@ -1,0 +1,34 @@
+# Slugs no business can register. Shared by the backend and the Next.js app.
+# One per line, lowercase. The brand's short name from brand.json is added at startup, not written here.
+admin
+api
+app
+www
+mail
+help
+support
+pricing
+login
+signup
+register
+about
+blog
+terms
+privacy
+contact
+s
+_next
+_preview
+static
+assets
+dashboard
+settings
+account
+billing
+docs
+status
+robots.txt
+sitemap.xml
+favicon.ico
+icon.svg
+manifest.webmanifest

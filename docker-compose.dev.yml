@@ -1,0 +1,15 @@
+# Local PostgreSQL for development outside cloud sessions:
+#   docker compose -f docker-compose.dev.yml up -d
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: storefront
+      POSTGRES_PASSWORD: storefront
+      POSTGRES_DB: storefront
+    ports:
+      - "5432:5432"
+    volumes:
+      - storefront-pg:/var/lib/postgresql/data
+volumes:
+  storefront-pg:
