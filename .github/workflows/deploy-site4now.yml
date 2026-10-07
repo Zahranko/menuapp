@@ -108,8 +108,10 @@ jobs:
         env:
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
         run: |
+          # Quote commands run in the login folder, so the path must be absolute.
           curl -sS --ssl-reqd --netrc-file <(printf 'machine %s login %s password %s\n' "$FTP_SERVER" "$FTP_USERNAME" "$FTP_PASSWORD") \
-            "ftp://$FTP_SERVER${FTP_DIR%/}/" -Q "DELE app_offline.htm" -o /dev/null || true
+            "ftp://$FTP_SERVER${FTP_DIR%/}/" -Q "DELE ${FTP_DIR%/}/app_offline.htm" -o /dev/null \
+            || { echo "::error title=Site still offline::Could not delete ${FTP_DIR%/}/app_offline.htm. Delete it over FTP."; exit 1; }
 
       - name: Health check
         if: env.API_URL != ''
@@ -119,5 +121,20 @@ jobs:
             [ "$code" = "200" ] && { echo "API is up at $API_URL"; exit 0; }
             sleep 6
           done
-          echo "::error title=API not healthy::${API_URL%/}/health returned $code. Read logs/stdout_*.log on the host over FTP."
+          echo "::error title=API not healthy::${API_URL%/}/health returned $code."
           exit 1
+
+      # The app's startup errors land in logs/stdout_*.log; show the newest one on the run.
+      - name: Show the app log
+        if: failure()
+        env:
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          netrc=$(mktemp); printf 'machine %s login %s password %s\n' "$FTP_SERVER" "$FTP_USERNAME" "$FTP_PASSWORD" > "$netrc"
+          logs="ftp://$FTP_SERVER${FTP_DIR%/}/logs/"
+          newest=$(curl -sS --ssl-reqd --netrc-file "$netrc" --list-only "$logs" | tr -d '\r' | grep '^stdout' | sort | tail -1 || true)
+          if [ -z "$newest" ]; then echo "::warning title=No app log::No logs/stdout_*.log yet."; exit 0; fi
+          curl -sS --ssl-reqd --netrc-file "$netrc" "$logs$newest" -o app.log || exit 0
+          rm -f "$netrc"
+          tail -c 3500 app.log > tail.log
+          echo "::error title=App log ($newest)::$(sed ':a;N;$!ba;s/%/%25/g;s/\r//g;s/\n/%0A/g' tail.log)"
