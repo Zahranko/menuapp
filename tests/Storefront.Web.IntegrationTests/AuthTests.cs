@@ -221,6 +221,45 @@ public partial class AuthTests(StorefrontFactory factory) : IClassFixture<Storef
     }
 
     [Fact]
+    public async Task Reset_password_signs_out_every_device()
+    {
+        var owner = Api.NewOwner();
+        var register = await _client.PostAsJsonAsync("/api/v1/auth/register", new { businessName = owner.Name, email = owner.Email, phone = owner.Phone, password = "Sunrise2026" });
+        await Api.EnsureSuccess(register);
+        var phone = (await register.Content.ReadFromJsonAsync<AuthResponse>(Api.Json))!;
+        var tablet = (await (await _client.PostAsJsonAsync("/api/v1/auth/login", new { login = owner.Email, password = "Sunrise2026" })).Content.ReadFromJsonAsync<AuthResponse>(Api.Json))!;
+
+        await _client.PostAsJsonAsync("/api/v1/auth/forgot-password", new { email = owner.Email });
+        var mail = factory.Emails.Sent.Last(m => m.To == owner.Email);
+        var token = Uri.UnescapeDataString(TokenInLink().Match(mail.Text).Groups[1].Value);
+        Assert.Equal(HttpStatusCode.NoContent, (await _client.PostAsJsonAsync("/api/v1/auth/reset-password", new { email = owner.Email, token, newPassword = "Evening2026" })).StatusCode);
+
+        foreach (var session in new[] { phone, tablet })
+        {
+            var refresh = await _client.PostAsJsonAsync("/api/v1/auth/refresh", new { refreshToken = session.RefreshToken });
+            Assert.Equal(HttpStatusCode.Unauthorized, refresh.StatusCode);
+        }
+    }
+
+    [Fact]
+    public async Task Logout_everywhere_revokes_every_refresh_token()
+    {
+        var owner = Api.NewOwner();
+        var register = await _client.PostAsJsonAsync("/api/v1/auth/register", new { businessName = owner.Name, email = owner.Email, phone = owner.Phone, password = "Sunrise2026" });
+        var phone = (await register.Content.ReadFromJsonAsync<AuthResponse>(Api.Json))!;
+        var tablet = (await (await _client.PostAsJsonAsync("/api/v1/auth/login", new { login = owner.Email, password = "Sunrise2026" })).Content.ReadFromJsonAsync<AuthResponse>(Api.Json))!;
+
+        Assert.Equal(HttpStatusCode.Unauthorized, (await _client.PostAsync("/api/v1/auth/logout-all", null)).StatusCode);
+        var client = factory.CreateClient().Authorized(phone.AccessToken);
+        Assert.Equal(HttpStatusCode.NoContent, (await client.PostAsync("/api/v1/auth/logout-all", null)).StatusCode);
+
+        foreach (var session in new[] { phone, tablet })
+        {
+            Assert.Equal(HttpStatusCode.Unauthorized, (await _client.PostAsJsonAsync("/api/v1/auth/refresh", new { refreshToken = session.RefreshToken })).StatusCode);
+        }
+    }
+
+    [Fact]
     public async Task Me_returns_the_owner_and_business()
     {
         var auth = await Api.RegisterAsync(_client);

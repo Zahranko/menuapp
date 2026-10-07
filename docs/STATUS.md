@@ -19,7 +19,7 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 | S12 | Flutter My menu dashboard | not started | | |
 | S13 | Flutter template gallery and editor | not started | | |
 | S14 | Flutter plans and custom domain | not started | | |
-| S15 | Deployment and hardening | not started | | |
+| S15 | Deployment and hardening | in progress | | API security done early: forwarded headers for Caddy, HTTPS-only with HSTS, security headers, global and per-owner rate limits, sign-out everywhere. Deployment still to do |
 | S16+ | Template factory | in progress | | Batch 1: templates 002 to 006 (Linen List, Night Market, Arch Story, Pocket Catalog, Chalk Board), per-template stylesheets, sample businesses, axe checks. Batch 2: 007 to 011 (Bento, Neon Diner, Zen, Bistro Card, Pizzeria). Batch 3: 012 to 016 (Ticket, Garden, Mono Grid, Spice Route, Polaroid). Service websites: 017 to 021 (Atelier, Clinic, Agency, Pulse, Handy). Plan for the rest: `docs/templates-catalog.md` |
 
 ## Settings other sessions need
@@ -43,7 +43,7 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 (Things a session found that belong to another session. Format: `- [S07] what and why (found in S03)`.)
 
 - [S09] Add a `/reset-password?email=&token=` page on the marketing site that posts to `POST /api/v1/auth/reset-password`; the reset email links there (found in S02).
-- [S15] Rate limiting partitions by `RemoteIpAddress`; behind Caddy, enable forwarded headers so it sees the client IP (found in S02).
+- [S15] When deploying, set `Security__KnownNetworks` (or `Security__KnownProxies`) to Caddy's address or Docker network, otherwise forwarded headers are ignored and every request looks like it came from Caddy (found in S15 API security).
 - [S04] The public API has no way to list published slugs, so the brand domain's sitemap only lists marketing pages. Add `GET /api/public/v1/sites` (slugs and published dates) and list the sites in `app/sitemap.ts` (found in S08).
 - [S04] `PublicBusinessDto` has no logo; Souq reads the logo from its `logo` setting. If the business profile gets a logo later, use it as the default (found in S08).
 - [S13] Souq's schema grew: `logo`, `hero.eyebrow`, `highlights.{1,2,3}.title/text`, `story.title`, `story.since`, `reviews.{1,2,3}.quote/name`. The editor renders them from the schema; group order follows the manifest (found in S08).
@@ -53,6 +53,12 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 
 (Anything decided that is not in PLAN.md, with the reason.)
 
+- S15 (API security, done early): `UseStorefrontSecurity` runs first. It applies `X-Forwarded-For`/`-Proto` from trusted proxies only (loopback plus `Security:KnownProxies`/`KnownNetworks`, one hop), so rate limits and HTTPS checks see the real client.
+- S15: HTTPS only (`Security:RequireHttps`, off in Development and tests). Plain-HTTP GET/HEAD get a 308 to https; other methods get 400 instead of a redirect, so a password or token is never sent twice in the clear. `/health` works over HTTP for the container check. HSTS is 365 days with subdomains (no `preload`, because custom domains are owned by businesses).
+- S15: Every response sends `nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: no-referrer` and no `Server` header. `/api` adds `CSP default-src 'none'` and `Cross-Origin-Resource-Policy: same-origin`. `/api/v1` responses are `Cache-Control: no-store` unless the endpoint sets its own. Request bodies are capped at 1 MB (`Security:MaxRequestBodyBytes`); uploads keep their own larger limit. No CORS policy is registered on purpose.
+- S15: Rate limits: the named per-IP policies stay (auth 10, slug check 60, public 600 a minute), and every request also counts against 1200 a minute per IP and 300 a minute per signed-in owner (`RateLimits:GlobalPerMinute`, `OwnerPerMinute`). A 429 has `Retry-After` and a ProblemDetails body.
+- S15: Tokens: only HS256 is accepted, and issuer, audience, signature and expiry are all required, so `alg: none` and tampered tokens fail. Outside Development the app refuses to start with the development signing key or a key shorter than 32 characters. Resetting a password signs out every device, and `POST /api/v1/auth/logout-all` lets an owner do the same.
+- S15: `scripts/export-openapi.sh` turns HTTPS enforcement off for its local run and no longer overwrites `openapi.json` with an empty file on failure.
 - S00: Next.js 16 (current stable) with Cache Components on. `apps/sites/next.config.ts` sets the Turbopack root to the repo root so `lib/brand.ts` can import `brand.json`.
 - S08: Shared template kit in `apps/sites/templates/_kit/` (menu data, hours, contrast-safe accent colors, fonts, search, category tabs, item dialog, drawer, icons). Guide: `docs/templates.md`.
 - S08: Accent colors are adjusted when needed so text reaches 4.5:1 (for example the default red is darkened slightly behind white button text). Sold-out products use the muted text color and a struck-through price instead of 45% opacity, for the same reason.

@@ -50,7 +50,8 @@ public sealed class ResetPasswordValidator : AbstractValidator<ResetPassword>
     }
 }
 
-public sealed class ResetPasswordHandler(IValidator<ResetPassword> validator, IIdentityService identity)
+/// <summary>A new password ends every session, so whoever knew the old one is signed out everywhere.</summary>
+public sealed class ResetPasswordHandler(IValidator<ResetPassword> validator, IIdentityService identity, IRefreshTokenRepository refreshTokens, IUnitOfWork uow, IClock clock)
 {
     public async Task<Result> Handle(ResetPassword cmd, CancellationToken ct)
     {
@@ -59,6 +60,14 @@ public sealed class ResetPasswordHandler(IValidator<ResetPassword> validator, II
             return invalid;
         }
 
-        return await identity.ResetPasswordAsync(cmd.Email.Trim(), cmd.Token, cmd.NewPassword, ct);
+        var email = cmd.Email.Trim();
+        var result = await identity.ResetPasswordAsync(email, cmd.Token, cmd.NewPassword, ct);
+        if (result.IsSuccess && await identity.FindByLoginAsync(email, ct) is { } user)
+        {
+            await refreshTokens.RevokeAllAsync(user.Id, clock.UtcNow, ct);
+            await uow.SaveChangesAsync(ct);
+        }
+
+        return result;
     }
 }

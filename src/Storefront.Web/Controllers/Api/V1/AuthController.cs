@@ -50,6 +50,16 @@ public sealed class AuthController : ApiController
         return NoContent();
     }
 
+    /// <summary>Signs out on every device: all refresh tokens stop working at once.</summary>
+    [HttpPost("logout-all")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> LogoutEverywhere([FromServices] LogoutEverywhereHandler handler, CancellationToken ct)
+    {
+        await handler.Handle(ct);
+        return NoContent();
+    }
+
     /// <summary>Always 202, whether or not the email has an account.</summary>
     [HttpPost("forgot-password")]
     [AllowAnonymous]

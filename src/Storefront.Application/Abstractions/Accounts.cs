@@ -55,6 +55,21 @@ public interface IRefreshTokenRepository
     void Add(Domain.Accounts.RefreshToken token);
 }
 
+/// <summary>Ends every session of one user, for example after a password reset.</summary>
+public static class RefreshTokenRepositoryExtensions
+{
+    public static async Task<int> RevokeAllAsync(this IRefreshTokenRepository refreshTokens, Guid userId, DateTimeOffset now, CancellationToken ct)
+    {
+        var active = (await refreshTokens.ListForUserAsync(userId, ct)).Where(t => t.IsActive(now)).ToList();
+        foreach (var token in active)
+        {
+            token.Revoke(now);
+        }
+
+        return active.Count;
+    }
+}
+
 public sealed record EmailMessage(string To, string Subject, string Text, string Html);
 
 public interface IEmailSender
