@@ -16,11 +16,33 @@ const sample: Array<[string, string, string, number, string | null, boolean]> = 
   ["Desserts", "Kunafa cheesecake", "Baked cheesecake on a crisp kunafa base", 4.5, "Signature", true],
 ];
 
+/** Sample photos (the prototype's illustrations) in menu order. */
+const photos = ["latte", "spanish", "cortado", "iced", "tea", "karak", "croissant", "zaatar", "cookie", "cake", "kunafa"].map((f) => `/samples/food/${f}.svg`);
+
+/** Content a real owner would type in, so every section of the sample site has something to show. */
+const sampleSettings: Settings = {
+  "hero.eyebrow": "Since 2019 · Jabal Amman",
+  "story.since": "2019",
+  gallery: ["/samples/latte-art.svg", "/templates/souq/presets/counter.svg", "/samples/food/croissant.svg", "/templates/souq/art/store.svg", "/templates/souq/presets/beans.svg", "/samples/food/kunafa.svg"],
+  "reviews.1.quote": "Best vanilla latte in town, and the pistachio croissant is dangerous. I come here to work every Sunday.",
+  "reviews.1.name": "Lina H.",
+  "reviews.2.quote": "Quiet, beautiful, and the staff remember your order. The kunafa cheesecake is a must.",
+  "reviews.2.name": "Omar K.",
+  "reviews.3.quote": "Great coffee and the menu is easy to browse on the phone before you even arrive.",
+  "reviews.3.name": "Sara M.",
+};
+
 const id = (n: number) => `00000000-0000-7000-8000-${n.toString().padStart(12, "0")}`;
 
 export function defaultsFor(templateId: string): Settings {
   const template = registry.templates.find((t) => t.id === templateId) ?? registry.templates[0];
   return { ...(template.defaults as Settings) };
+}
+
+/** Sample content for the keys this template has. */
+function sampleFor(templateId: string): Settings {
+  const defaults = defaultsFor(templateId);
+  return Object.fromEntries(Object.entries(sampleSettings).filter(([key]) => key in defaults));
 }
 
 export function fixtureFor(templateId: string, overrides: Partial<PublicSite> = {}): PublicSite {
@@ -39,7 +61,7 @@ export function fixtureFor(templateId: string, overrides: Partial<PublicSite> = 
       customDomains: ["vanillamenu.example.com"],
     },
     templateId,
-    settings: defaultsFor(templateId),
+    settings: { ...defaultsFor(templateId), ...sampleFor(templateId) },
     categories: names.map((name, ci) => ({
       id: id(100 + ci),
       name,
@@ -51,7 +73,7 @@ export function fixtureFor(templateId: string, overrides: Partial<PublicSite> = 
           name: s[1],
           description: s[2],
           price: s[3],
-          imageUrl: null,
+          imageUrl: photos[i] ?? null,
           label: s[4],
           isAvailable: i !== 3,
           isFeatured: s[5],
@@ -64,3 +86,12 @@ export function fixtureFor(templateId: string, overrides: Partial<PublicSite> = 
 }
 
 export const fixtureSite: PublicSite = fixtureFor(process.env.APP_FIXTURE_TEMPLATE ?? "souq");
+
+/**
+ * Fixture mode: /vanillamenu shows the sample business with APP_FIXTURE_TEMPLATE,
+ * and /<template id> shows the same business with that template (used for thumbnails and template work).
+ */
+export function fixtureBySlug(slug: string): PublicSite | null {
+  if (slug === fixtureSite.business.slug) return fixtureSite;
+  return registry.templates.some((t) => t.id === slug) ? fixtureFor(slug) : null;
+}

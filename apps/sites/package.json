@@ -15,7 +15,8 @@
     "prebuild": "node scripts/build-registry.mjs --check && node scripts/copy-reserved-slugs.mjs",
     "predev": "node scripts/copy-reserved-slugs.mjs",
     "pretest": "node scripts/copy-reserved-slugs.mjs",
-    "pretypecheck": "node scripts/copy-reserved-slugs.mjs"
+    "pretypecheck": "node scripts/copy-reserved-slugs.mjs",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "next": "16.4.0",
@@ -24,6 +25,7 @@
     "server-only": "^0.0.1"
   },
   "devDependencies": {
+    "@playwright/test": "1.56",
     "@testing-library/dom": "^10",
     "@testing-library/react": "^16",
     "@types/node": "^22",

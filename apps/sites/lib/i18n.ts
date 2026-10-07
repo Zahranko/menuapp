@@ -32,6 +32,8 @@ const en = {
   items: "items",
   featured: "Featured",
   from: "from",
+  openUntil: "Open today until {time}",
+  closedToday: "Closed today",
   days: { sat: "Saturday", sun: "Sunday", mon: "Monday", tue: "Tuesday", wed: "Wednesday", thu: "Thursday", fri: "Friday" },
 } as const;
 
@@ -68,6 +70,8 @@ const ar: Strings = {
   items: "أصناف",
   featured: "مميز",
   from: "من",
+  openUntil: "مفتوح اليوم حتى {time}",
+  closedToday: "مغلق اليوم",
   days: { sat: "السبت", sun: "الأحد", mon: "الاثنين", tue: "الثلاثاء", wed: "الأربعاء", thu: "الخميس", fri: "الجمعة" },
 };
 

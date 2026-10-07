@@ -33,9 +33,6 @@ export async function proxy(request: NextRequest) {
     return NextResponse.rewrite(url);
   }
 
-  // Robots and sitemap are answered per host by their route handlers.
-  if (decision.path === "/robots.txt" || decision.path === "/sitemap.xml") return NextResponse.next();
-
   const slug = await slugForHost(decision.host);
   url.pathname = slug ? sitePath(slug) + decision.path : "/unknown-site";
   const response = NextResponse.rewrite(url);

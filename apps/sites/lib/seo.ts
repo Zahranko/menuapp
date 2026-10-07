@@ -20,6 +20,8 @@ export function siteMetadata(site: PublicSite): Metadata {
   const url = siteUrl(site);
   const title = text(site.settings, "hero.title") ? `${site.business.name} · ${text(site.settings, "hero.title")}` : site.business.name;
   return {
+    // Generated images (Open Graph) are served from the main domain, which answers for every site.
+    metadataBase: new URL(`https://${brand.domain}`),
     title,
     description: siteDescription(site),
     alternates: { canonical: url },

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getSiteBySlug } from "@/lib/api";
+import { jsonLdScript, siteJsonLd } from "@/lib/jsonld";
 import { siteMetadata } from "@/lib/seo";
 import { SiteTemplate } from "@/templates/registry";
 
@@ -22,5 +23,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function SitePage({ params }: Props) {
   const site = await getSiteBySlug((await params).slug);
   if (!site) notFound();
-  return <SiteTemplate site={site} preview={false} />;
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(siteJsonLd(site)) }} />
+      <SiteTemplate site={site} preview={false} />
+    </>
+  );
 }
