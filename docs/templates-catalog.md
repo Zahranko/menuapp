@@ -11,11 +11,11 @@ Status: done (merged), building (in an open PR), planned.
 | 004 | Arch Story | Bakery, desserts | Magazine: arch-shaped photos, story chapters per category, swipe cards | building (S16 batch 1) |
 | 005 | Pocket Catalog | Shop | Catalog grid with category filter chips, sort by price and Ask on WhatsApp per item | building (S16 batch 1) |
 | 006 | Chalk Board | Café | Chalkboard panels in a wooden frame, handwritten headings, prices in chalk | building (S16 batch 1) |
-| 007 | Bento | Juice bar | Bento grid of tiles in mixed sizes, featured items get the big tiles | planned |
-| 008 | Neon Diner | Burger joint | Retro diner: numbered combo cards, checkered strip, neon sign hero | planned |
-| 009 | Zen | Sushi, Japanese | Quiet minimal list with big numerals and small square photos | planned |
-| 010 | Bistro Card | French bistro | One printed menu card on a textured table, courses in order | planned |
-| 011 | Pizzeria | Pizza | Round photo cutouts on a rustic band per category | planned |
+| 007 | Bento | Juice bar | Bento grid of tiles in mixed sizes, featured items get the big tiles | building (S16 batch 2) |
+| 008 | Neon Diner | Burger joint | Retro diner: numbered combo cards, checkered strip, neon sign hero | building (S16 batch 2) |
+| 009 | Zen | Sushi, Japanese | Quiet minimal list with big numerals and small square photos | building (S16 batch 2) |
+| 010 | Bistro Card | French bistro | One printed menu card on a textured table, courses in order | building (S16 batch 2) |
+| 011 | Pizzeria | Pizza | Round photo cutouts on a rustic band per category | building (S16 batch 2) |
 | 012 | Ticket | Coffee truck | Receipt-style menu: monospace, perforated edges, order number | planned |
 | 013 | Garden | Brunch, healthy | Organic shapes, leaf ornaments, cards with diet tags first | planned |
 | 014 | Mono Grid | Concept store | Swiss grid with hairlines and index numbers, black and white | planned |

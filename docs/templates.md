@@ -26,7 +26,7 @@ functions are compiled for the browsers we support) into `public/styles/<id>.<ha
 links it, so a site only downloads its own template's CSS. The build runs before `dev`, `build`, `test`, `typecheck`
 and `lint`; `npm run styles:watch` rebuilds while you edit. Both outputs are generated and not committed.
 
-- Put every rule inside `.t-<name> { ... }` so templates never leak into each other.
+- Put every rule inside `.t-<name> { ... }` so templates never leak into each other. `@keyframes` cannot be nested: put them at the end of the file, named `<name>-<animation>`.
 - Make the root the size container (`container: page / inline-size`) and write desktop rules in
   `@container page (min-width: 760px)`. A container cannot style itself, so rules for the root use `@media`.
 - `app/(site)/kit.css` gives the kit blocks (hours, contact, credits, item sheet, sold-out tiles, `.sr-only`, `ul.plain`)
@@ -81,7 +81,7 @@ Use these instead of writing your own, so every template behaves the same where 
 ## Trying a template
 
 `APP_FIXTURES=1 npm run dev`, then open `http://localhost:3000/<id>` (the template's own sample business, set by
-`"sample"` in the manifest: cafe, restaurant, sweets, drinks, fastfood, asian or shop) or `/vanillamenu` (the café
+`"sample"` in the manifest: cafe, restaurant, sweets, drinks, fastfood, asian, pizza or shop) or `/vanillamenu` (the café
 with the template in `APP_FIXTURE_TEMPLATE`, default `souq`). `/_preview/fixture.<id>.<theme>.<en|ar>` shows any
 theme in either language.
 

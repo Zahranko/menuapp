@@ -1,0 +1,152 @@
+{
+  "id": "zen",
+  "number": 9,
+  "name": "Zen",
+  "category": "Japanese, sushi",
+  "description": "A quiet, minimal menu with big numerals, hairlines and small square photos.",
+  "version": 1,
+  "thumbnail": "/templates/zen/thumbnail.png",
+  "sample": "asian",
+  "schema": [
+    {
+      "key": "font",
+      "type": "choice",
+      "label": "Font style",
+      "group": "Brand",
+      "options": [
+        "elegant",
+        "modern",
+        "mono"
+      ],
+      "optionLabels": {
+        "elegant": "Elegant",
+        "modern": "Modern",
+        "mono": "Typewriter"
+      }
+    },
+    {
+      "key": "logo",
+      "type": "image",
+      "label": "Logo",
+      "group": "Brand"
+    },
+    {
+      "key": "theme",
+      "type": "palette",
+      "label": "Color theme",
+      "group": "Brand",
+      "options": [
+        "washi",
+        "stone",
+        "matcha",
+        "ink"
+      ],
+      "swatches": {
+        "washi": "#F5F1E8",
+        "stone": "#ECEDEA",
+        "matcha": "#E9EEDF",
+        "ink": "#121212"
+      }
+    },
+    {
+      "key": "accent",
+      "type": "color",
+      "label": "Seal color",
+      "group": "Brand",
+      "options": [
+        "#B7282E",
+        "#2D4B3A",
+        "#1F3A5F",
+        "#8A5A2B"
+      ]
+    },
+    {
+      "key": "photos",
+      "type": "toggle",
+      "label": "Small photos",
+      "group": "Brand"
+    },
+    {
+      "key": "hero.title",
+      "type": "text",
+      "label": "Headline",
+      "group": "Top",
+      "max": 60
+    },
+    {
+      "key": "hero.subtitle",
+      "type": "textarea",
+      "label": "Text under the headline",
+      "group": "Top",
+      "max": 160
+    },
+    {
+      "key": "sections",
+      "type": "toggles",
+      "label": "Sections",
+      "group": "Sections",
+      "options": [
+        "announcement",
+        "story",
+        "visit"
+      ],
+      "optionLabels": {
+        "announcement": "Announcement bar",
+        "story": "Our way",
+        "visit": "Hours and contact"
+      }
+    },
+    {
+      "key": "announcement",
+      "type": "text",
+      "label": "Announcement",
+      "group": "Sections",
+      "max": 80
+    },
+    {
+      "key": "story.title",
+      "type": "text",
+      "label": "Story headline",
+      "group": "Our way",
+      "max": 60
+    },
+    {
+      "key": "story.text",
+      "type": "textarea",
+      "label": "Our way",
+      "group": "Our way",
+      "max": 400
+    },
+    {
+      "key": "hours",
+      "type": "hours",
+      "label": "Opening hours",
+      "group": "Visit and contact"
+    }
+  ],
+  "defaults": {
+    "font": "elegant",
+    "logo": "",
+    "theme": "washi",
+    "accent": "#B7282E",
+    "photos": true,
+    "hero.title": "Simple food, made with care",
+    "hero.subtitle": "Sushi pressed by hand, ramen broth cooked for twelve hours, and a short menu that changes with the season.",
+    "sections": [
+      "story",
+      "visit"
+    ],
+    "announcement": "Lunch set every weekday from 12 to 3",
+    "story.title": "Our way",
+    "story.text": "We make a few things and we make them slowly. The rice is seasoned by hand, the broth starts the night before, and every bowl leaves the kitchen when it is ready, not before.",
+    "hours": {
+      "sat": "12:00-23:30",
+      "sun": "12:00-23:30",
+      "mon": "12:00-23:30",
+      "tue": "12:00-23:30",
+      "wed": "12:00-23:30",
+      "thu": "12:00-00:30",
+      "fri": "13:00-00:30"
+    }
+  }
+}

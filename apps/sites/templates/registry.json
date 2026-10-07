@@ -1294,6 +1294,790 @@
           "fri": "14:00-00:00"
         }
       }
+    },
+    {
+      "id": "bento",
+      "number": 7,
+      "name": "Bento",
+      "category": "Juice bar",
+      "description": "A bento box of tiles in mixed sizes; featured drinks get the big tiles.",
+      "version": 1,
+      "thumbnail": "/templates/bento/thumbnail.png",
+      "sample": "drinks",
+      "schema": [
+        {
+          "key": "font",
+          "type": "choice",
+          "label": "Font style",
+          "group": "Brand",
+          "options": [
+            "round",
+            "grotesk",
+            "bold"
+          ],
+          "optionLabels": {
+            "round": "Friendly",
+            "grotesk": "Clean",
+            "bold": "Bold"
+          }
+        },
+        {
+          "key": "logo",
+          "type": "image",
+          "label": "Logo",
+          "group": "Brand"
+        },
+        {
+          "key": "theme",
+          "type": "palette",
+          "label": "Color theme",
+          "group": "Brand",
+          "options": [
+            "fresh",
+            "lime",
+            "berry",
+            "night"
+          ],
+          "swatches": {
+            "fresh": "#F7F7F2",
+            "lime": "#F1F6E4",
+            "berry": "#FBF1F4",
+            "night": "#111613"
+          }
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "label": "Accent color",
+          "group": "Brand",
+          "options": [
+            "#2F8F4E",
+            "#E4572E",
+            "#C2185B",
+            "#2563EB"
+          ]
+        },
+        {
+          "key": "corners",
+          "type": "choice",
+          "label": "Corners",
+          "group": "Brand",
+          "options": [
+            "rounded",
+            "sharp"
+          ],
+          "optionLabels": {
+            "rounded": "Rounded",
+            "sharp": "Sharp"
+          }
+        },
+        {
+          "key": "hero.title",
+          "type": "text",
+          "label": "Headline",
+          "group": "Top tiles",
+          "max": 50
+        },
+        {
+          "key": "hero.subtitle",
+          "type": "textarea",
+          "label": "Text under the headline",
+          "group": "Top tiles",
+          "max": 140
+        },
+        {
+          "key": "hero.image",
+          "type": "image",
+          "label": "Big picture",
+          "group": "Top tiles",
+          "presets": [
+            "citrus",
+            "leaves",
+            "rings",
+            "sprinkles"
+          ]
+        },
+        {
+          "key": "sections",
+          "type": "toggles",
+          "label": "Sections",
+          "group": "Sections",
+          "options": [
+            "announcement",
+            "hero",
+            "story",
+            "visit"
+          ],
+          "optionLabels": {
+            "announcement": "Announcement bar",
+            "hero": "Top tiles",
+            "story": "About us",
+            "visit": "Hours and contact"
+          }
+        },
+        {
+          "key": "announcement",
+          "type": "text",
+          "label": "Announcement",
+          "group": "Sections",
+          "max": 80
+        },
+        {
+          "key": "story.title",
+          "type": "text",
+          "label": "About headline",
+          "group": "About us",
+          "max": 60
+        },
+        {
+          "key": "story.text",
+          "type": "textarea",
+          "label": "About us",
+          "group": "About us",
+          "max": 400
+        },
+        {
+          "key": "hours",
+          "type": "hours",
+          "label": "Opening hours",
+          "group": "Visit and contact"
+        }
+      ],
+      "defaults": {
+        "font": "round",
+        "logo": "",
+        "theme": "fresh",
+        "accent": "#2F8F4E",
+        "corners": "rounded",
+        "hero.title": "Pressed this morning, poured for you",
+        "hero.subtitle": "Fresh juices, smoothies and mocktails made to order. No syrups, no shortcuts.",
+        "hero.image": "preset:citrus",
+        "sections": [
+          "announcement",
+          "hero",
+          "story",
+          "visit"
+        ],
+        "announcement": "Build your own juice: pick any three fruits",
+        "story.title": "Fruit first",
+        "story.text": "We buy fruit from the central market every morning and press it when you order. What we do not sell by evening goes to the compost, never to tomorrow.",
+        "hours": {
+          "sat": "08:00-23:00",
+          "sun": "08:00-23:00",
+          "mon": "08:00-23:00",
+          "tue": "08:00-23:00",
+          "wed": "08:00-23:00",
+          "thu": "08:00-00:00",
+          "fri": "13:00-00:00"
+        }
+      }
+    },
+    {
+      "id": "neondiner",
+      "number": 8,
+      "name": "Neon Diner",
+      "category": "Burgers, diner",
+      "description": "A retro diner: neon sign, checkered strips and numbered combo cards.",
+      "version": 1,
+      "thumbnail": "/templates/neondiner/thumbnail.png",
+      "sample": "fastfood",
+      "schema": [
+        {
+          "key": "font",
+          "type": "choice",
+          "label": "Font style",
+          "group": "Brand",
+          "options": [
+            "condensed",
+            "bold",
+            "round"
+          ],
+          "optionLabels": {
+            "condensed": "Poster",
+            "bold": "Bold",
+            "round": "Friendly"
+          }
+        },
+        {
+          "key": "logo",
+          "type": "image",
+          "label": "Logo",
+          "group": "Brand"
+        },
+        {
+          "key": "theme",
+          "type": "palette",
+          "label": "Color theme",
+          "group": "Brand",
+          "options": [
+            "diner",
+            "cherry",
+            "mint",
+            "midnight"
+          ],
+          "swatches": {
+            "diner": "#FFF6E5",
+            "cherry": "#FCEDEE",
+            "mint": "#E6F5EF",
+            "midnight": "#121826"
+          }
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "label": "Neon color",
+          "group": "Brand",
+          "options": [
+            "#D7263D",
+            "#1B9AAA",
+            "#F4A300",
+            "#6C3FC5"
+          ]
+        },
+        {
+          "key": "checks",
+          "type": "toggle",
+          "label": "Checkered strips",
+          "group": "Brand"
+        },
+        {
+          "key": "hero.title",
+          "type": "text",
+          "label": "Line under the sign",
+          "group": "Sign",
+          "max": 60
+        },
+        {
+          "key": "sections",
+          "type": "toggles",
+          "label": "Sections",
+          "group": "Sections",
+          "options": [
+            "announcement",
+            "story",
+            "visit"
+          ],
+          "optionLabels": {
+            "announcement": "Announcement bar",
+            "story": "Our story",
+            "visit": "Hours and contact"
+          }
+        },
+        {
+          "key": "announcement",
+          "type": "text",
+          "label": "Announcement",
+          "group": "Sections",
+          "max": 80
+        },
+        {
+          "key": "story.title",
+          "type": "text",
+          "label": "Story headline",
+          "group": "Our story",
+          "max": 60
+        },
+        {
+          "key": "story.text",
+          "type": "textarea",
+          "label": "Our story",
+          "group": "Our story",
+          "max": 400
+        },
+        {
+          "key": "hours",
+          "type": "hours",
+          "label": "Opening hours",
+          "group": "Visit and contact"
+        }
+      ],
+      "defaults": {
+        "font": "condensed",
+        "logo": "",
+        "theme": "diner",
+        "accent": "#D7263D",
+        "checks": true,
+        "hero.title": "Smashed burgers, hot fries, cold shakes",
+        "sections": [
+          "announcement",
+          "story",
+          "visit"
+        ],
+        "announcement": "Combo Tuesday: any burger with fries and a drink",
+        "story.title": "Since the first smash",
+        "story.text": "Two friends, one hot griddle and a recipe for house sauce we still will not share. Everything is cooked to order, so give us a few minutes.",
+        "hours": {
+          "sat": "12:00-23:30",
+          "sun": "12:00-23:30",
+          "mon": "12:00-23:30",
+          "tue": "12:00-23:30",
+          "wed": "12:00-23:30",
+          "thu": "12:00-00:30",
+          "fri": "13:00-00:30"
+        }
+      }
+    },
+    {
+      "id": "zen",
+      "number": 9,
+      "name": "Zen",
+      "category": "Japanese, sushi",
+      "description": "A quiet, minimal menu with big numerals, hairlines and small square photos.",
+      "version": 1,
+      "thumbnail": "/templates/zen/thumbnail.png",
+      "sample": "asian",
+      "schema": [
+        {
+          "key": "font",
+          "type": "choice",
+          "label": "Font style",
+          "group": "Brand",
+          "options": [
+            "elegant",
+            "modern",
+            "mono"
+          ],
+          "optionLabels": {
+            "elegant": "Elegant",
+            "modern": "Modern",
+            "mono": "Typewriter"
+          }
+        },
+        {
+          "key": "logo",
+          "type": "image",
+          "label": "Logo",
+          "group": "Brand"
+        },
+        {
+          "key": "theme",
+          "type": "palette",
+          "label": "Color theme",
+          "group": "Brand",
+          "options": [
+            "washi",
+            "stone",
+            "matcha",
+            "ink"
+          ],
+          "swatches": {
+            "washi": "#F5F1E8",
+            "stone": "#ECEDEA",
+            "matcha": "#E9EEDF",
+            "ink": "#121212"
+          }
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "label": "Seal color",
+          "group": "Brand",
+          "options": [
+            "#B7282E",
+            "#2D4B3A",
+            "#1F3A5F",
+            "#8A5A2B"
+          ]
+        },
+        {
+          "key": "photos",
+          "type": "toggle",
+          "label": "Small photos",
+          "group": "Brand"
+        },
+        {
+          "key": "hero.title",
+          "type": "text",
+          "label": "Headline",
+          "group": "Top",
+          "max": 60
+        },
+        {
+          "key": "hero.subtitle",
+          "type": "textarea",
+          "label": "Text under the headline",
+          "group": "Top",
+          "max": 160
+        },
+        {
+          "key": "sections",
+          "type": "toggles",
+          "label": "Sections",
+          "group": "Sections",
+          "options": [
+            "announcement",
+            "story",
+            "visit"
+          ],
+          "optionLabels": {
+            "announcement": "Announcement bar",
+            "story": "Our way",
+            "visit": "Hours and contact"
+          }
+        },
+        {
+          "key": "announcement",
+          "type": "text",
+          "label": "Announcement",
+          "group": "Sections",
+          "max": 80
+        },
+        {
+          "key": "story.title",
+          "type": "text",
+          "label": "Story headline",
+          "group": "Our way",
+          "max": 60
+        },
+        {
+          "key": "story.text",
+          "type": "textarea",
+          "label": "Our way",
+          "group": "Our way",
+          "max": 400
+        },
+        {
+          "key": "hours",
+          "type": "hours",
+          "label": "Opening hours",
+          "group": "Visit and contact"
+        }
+      ],
+      "defaults": {
+        "font": "elegant",
+        "logo": "",
+        "theme": "washi",
+        "accent": "#B7282E",
+        "photos": true,
+        "hero.title": "Simple food, made with care",
+        "hero.subtitle": "Sushi pressed by hand, ramen broth cooked for twelve hours, and a short menu that changes with the season.",
+        "sections": [
+          "story",
+          "visit"
+        ],
+        "announcement": "Lunch set every weekday from 12 to 3",
+        "story.title": "Our way",
+        "story.text": "We make a few things and we make them slowly. The rice is seasoned by hand, the broth starts the night before, and every bowl leaves the kitchen when it is ready, not before.",
+        "hours": {
+          "sat": "12:00-23:30",
+          "sun": "12:00-23:30",
+          "mon": "12:00-23:30",
+          "tue": "12:00-23:30",
+          "wed": "12:00-23:30",
+          "thu": "12:00-00:30",
+          "fri": "13:00-00:30"
+        }
+      }
+    },
+    {
+      "id": "bistro",
+      "number": 10,
+      "name": "Bistro Card",
+      "category": "Restaurant",
+      "description": "A folded menu card on a tablecloth: cover with today's dish, courses inside.",
+      "version": 1,
+      "thumbnail": "/templates/bistro/thumbnail.png",
+      "sample": "restaurant",
+      "schema": [
+        {
+          "key": "font",
+          "type": "choice",
+          "label": "Font style",
+          "group": "Brand",
+          "options": [
+            "elegant",
+            "classic",
+            "soft"
+          ],
+          "optionLabels": {
+            "elegant": "Elegant",
+            "classic": "Classic",
+            "soft": "Soft"
+          }
+        },
+        {
+          "key": "logo",
+          "type": "image",
+          "label": "Logo",
+          "group": "Brand"
+        },
+        {
+          "key": "theme",
+          "type": "palette",
+          "label": "Tablecloth",
+          "group": "Brand",
+          "options": [
+            "gingham",
+            "blue",
+            "oak",
+            "noir"
+          ],
+          "swatches": {
+            "gingham": "#C7363B",
+            "blue": "#2D5DA8",
+            "oak": "#8A5A35",
+            "noir": "#1C1A18"
+          }
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "label": "Ink color",
+          "group": "Brand",
+          "options": [
+            "#9E2A2B",
+            "#1F4E79",
+            "#3A5A40",
+            "#6B3E26"
+          ]
+        },
+        {
+          "key": "hero.eyebrow",
+          "type": "text",
+          "label": "Small line above the name",
+          "group": "Cover",
+          "max": 40
+        },
+        {
+          "key": "hero.title",
+          "type": "text",
+          "label": "Tagline",
+          "group": "Cover",
+          "max": 60
+        },
+        {
+          "key": "sections",
+          "type": "toggles",
+          "label": "Sections",
+          "group": "Sections",
+          "options": [
+            "announcement",
+            "special",
+            "story",
+            "visit"
+          ],
+          "optionLabels": {
+            "announcement": "Announcement bar",
+            "special": "Today's dish",
+            "story": "The house",
+            "visit": "Hours and contact"
+          }
+        },
+        {
+          "key": "announcement",
+          "type": "text",
+          "label": "Announcement",
+          "group": "Sections",
+          "max": 80
+        },
+        {
+          "key": "special.title",
+          "type": "text",
+          "label": "Today's dish headline",
+          "group": "Today's dish",
+          "max": 40
+        },
+        {
+          "key": "story.title",
+          "type": "text",
+          "label": "Story headline",
+          "group": "The house",
+          "max": 60
+        },
+        {
+          "key": "story.text",
+          "type": "textarea",
+          "label": "The house",
+          "group": "The house",
+          "max": 400
+        },
+        {
+          "key": "hours",
+          "type": "hours",
+          "label": "Opening hours",
+          "group": "Visit and contact"
+        }
+      ],
+      "defaults": {
+        "font": "elegant",
+        "logo": "",
+        "theme": "gingham",
+        "accent": "#9E2A2B",
+        "hero.eyebrow": "Est. 2019",
+        "hero.title": "Home cooking, the way our grandmother made it",
+        "sections": [
+          "special",
+          "story",
+          "visit"
+        ],
+        "announcement": "Friday family lunch from 1 pm",
+        "special.title": "Today's dish",
+        "story.title": "The house",
+        "story.text": "Bait Sitti means grandmother's house. The recipes are hers, the plates are big and there is always room for one more at the table.",
+        "hours": {
+          "sat": "12:00-23:30",
+          "sun": "12:00-23:30",
+          "mon": "12:00-23:30",
+          "tue": "12:00-23:30",
+          "wed": "12:00-23:30",
+          "thu": "12:00-00:30",
+          "fri": "13:00-00:30"
+        }
+      }
+    },
+    {
+      "id": "pizzeria",
+      "number": 11,
+      "name": "Pizzeria",
+      "category": "Pizza",
+      "description": "A wood-fired pizza place: round photo cutouts on colored bands, one per category.",
+      "version": 1,
+      "thumbnail": "/templates/pizzeria/thumbnail.png",
+      "sample": "pizza",
+      "schema": [
+        {
+          "key": "font",
+          "type": "choice",
+          "label": "Font style",
+          "group": "Brand",
+          "options": [
+            "classic",
+            "bold",
+            "hand"
+          ],
+          "optionLabels": {
+            "classic": "Classic",
+            "bold": "Bold",
+            "hand": "Handwritten"
+          }
+        },
+        {
+          "key": "logo",
+          "type": "image",
+          "label": "Logo",
+          "group": "Brand"
+        },
+        {
+          "key": "theme",
+          "type": "palette",
+          "label": "Color theme",
+          "group": "Brand",
+          "options": [
+            "napoli",
+            "basil",
+            "crust",
+            "night"
+          ],
+          "swatches": {
+            "napoli": "#FFF8EE",
+            "basil": "#F5F7EE",
+            "crust": "#F8EEDF",
+            "night": "#191513"
+          }
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "label": "Accent color",
+          "group": "Brand",
+          "options": [
+            "#C8102E",
+            "#2E7D32",
+            "#E07A1F",
+            "#1D3557"
+          ]
+        },
+        {
+          "key": "hero.title",
+          "type": "text",
+          "label": "Headline",
+          "group": "Top",
+          "max": 50
+        },
+        {
+          "key": "hero.subtitle",
+          "type": "textarea",
+          "label": "Text under the headline",
+          "group": "Top",
+          "max": 140
+        },
+        {
+          "key": "stamp",
+          "type": "text",
+          "label": "Round stamp text",
+          "group": "Top",
+          "max": 16
+        },
+        {
+          "key": "sections",
+          "type": "toggles",
+          "label": "Sections",
+          "group": "Sections",
+          "options": [
+            "announcement",
+            "story",
+            "visit"
+          ],
+          "optionLabels": {
+            "announcement": "Announcement bar",
+            "story": "Our story",
+            "visit": "Hours and contact"
+          }
+        },
+        {
+          "key": "announcement",
+          "type": "text",
+          "label": "Announcement",
+          "group": "Sections",
+          "max": 80
+        },
+        {
+          "key": "story.title",
+          "type": "text",
+          "label": "Story headline",
+          "group": "Our story",
+          "max": 60
+        },
+        {
+          "key": "story.text",
+          "type": "textarea",
+          "label": "Our story",
+          "group": "Our story",
+          "max": 400
+        },
+        {
+          "key": "hours",
+          "type": "hours",
+          "label": "Opening hours",
+          "group": "Visit and contact"
+        }
+      ],
+      "defaults": {
+        "font": "classic",
+        "logo": "",
+        "theme": "napoli",
+        "accent": "#C8102E",
+        "hero.title": "Wood fired, ninety seconds, done",
+        "hero.subtitle": "Dough rested for 48 hours, tomatoes from Italy and za'atar from our hills.",
+        "stamp": "Wood fired",
+        "sections": [
+          "announcement",
+          "story",
+          "visit"
+        ],
+        "announcement": "Two pizzas and a salad for 15 JD, every Monday",
+        "story.title": "From our oven",
+        "story.text": "Our oven was built by hand and burns oak at 450 degrees. A pizza takes ninety seconds, which is just enough time to choose the next one.",
+        "hours": {
+          "sat": "12:00-23:30",
+          "sun": "12:00-23:30",
+          "mon": "12:00-23:30",
+          "tue": "12:00-23:30",
+          "wed": "12:00-23:30",
+          "thu": "12:00-00:30",
+          "fri": "13:00-00:30"
+        }
+      }
     }
   ]
 }

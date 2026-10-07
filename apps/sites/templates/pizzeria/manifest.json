@@ -1,0 +1,154 @@
+{
+  "id": "pizzeria",
+  "number": 11,
+  "name": "Pizzeria",
+  "category": "Pizza",
+  "description": "A wood-fired pizza place: round photo cutouts on colored bands, one per category.",
+  "version": 1,
+  "thumbnail": "/templates/pizzeria/thumbnail.png",
+  "sample": "pizza",
+  "schema": [
+    {
+      "key": "font",
+      "type": "choice",
+      "label": "Font style",
+      "group": "Brand",
+      "options": [
+        "classic",
+        "bold",
+        "hand"
+      ],
+      "optionLabels": {
+        "classic": "Classic",
+        "bold": "Bold",
+        "hand": "Handwritten"
+      }
+    },
+    {
+      "key": "logo",
+      "type": "image",
+      "label": "Logo",
+      "group": "Brand"
+    },
+    {
+      "key": "theme",
+      "type": "palette",
+      "label": "Color theme",
+      "group": "Brand",
+      "options": [
+        "napoli",
+        "basil",
+        "crust",
+        "night"
+      ],
+      "swatches": {
+        "napoli": "#FFF8EE",
+        "basil": "#F5F7EE",
+        "crust": "#F8EEDF",
+        "night": "#191513"
+      }
+    },
+    {
+      "key": "accent",
+      "type": "color",
+      "label": "Accent color",
+      "group": "Brand",
+      "options": [
+        "#C8102E",
+        "#2E7D32",
+        "#E07A1F",
+        "#1D3557"
+      ]
+    },
+    {
+      "key": "hero.title",
+      "type": "text",
+      "label": "Headline",
+      "group": "Top",
+      "max": 50
+    },
+    {
+      "key": "hero.subtitle",
+      "type": "textarea",
+      "label": "Text under the headline",
+      "group": "Top",
+      "max": 140
+    },
+    {
+      "key": "stamp",
+      "type": "text",
+      "label": "Round stamp text",
+      "group": "Top",
+      "max": 16
+    },
+    {
+      "key": "sections",
+      "type": "toggles",
+      "label": "Sections",
+      "group": "Sections",
+      "options": [
+        "announcement",
+        "story",
+        "visit"
+      ],
+      "optionLabels": {
+        "announcement": "Announcement bar",
+        "story": "Our story",
+        "visit": "Hours and contact"
+      }
+    },
+    {
+      "key": "announcement",
+      "type": "text",
+      "label": "Announcement",
+      "group": "Sections",
+      "max": 80
+    },
+    {
+      "key": "story.title",
+      "type": "text",
+      "label": "Story headline",
+      "group": "Our story",
+      "max": 60
+    },
+    {
+      "key": "story.text",
+      "type": "textarea",
+      "label": "Our story",
+      "group": "Our story",
+      "max": 400
+    },
+    {
+      "key": "hours",
+      "type": "hours",
+      "label": "Opening hours",
+      "group": "Visit and contact"
+    }
+  ],
+  "defaults": {
+    "font": "classic",
+    "logo": "",
+    "theme": "napoli",
+    "accent": "#C8102E",
+    "hero.title": "Wood fired, ninety seconds, done",
+    "hero.subtitle": "Dough rested for 48 hours, tomatoes from Italy and za'atar from our hills.",
+    "stamp": "Wood fired",
+    "sections": [
+      "announcement",
+      "story",
+      "visit"
+    ],
+    "announcement": "Two pizzas and a salad for 15 JD, every Monday",
+    "story.title": "From our oven",
+    "story.text": "Our oven was built by hand and burns oak at 450 degrees. A pizza takes ninety seconds, which is just enough time to choose the next one.",
+    "hours": {
+      "sat": "12:00-23:30",
+      "sun": "12:00-23:30",
+      "mon": "12:00-23:30",
+      "tue": "12:00-23:30",
+      "wed": "12:00-23:30",
+      "thu": "12:00-00:30",
+      "fri": "13:00-00:30"
+    }
+  }
+}

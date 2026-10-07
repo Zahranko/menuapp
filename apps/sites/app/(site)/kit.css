@@ -21,7 +21,7 @@
   outline: 2px solid var(--acc-text, currentColor);
   outline-offset: 3px;
 }
-:where([data-template]) :where(ul.plain) {
+:where([data-template]) :where(ul.plain, ol.plain) {
   list-style: none;
   margin: 0;
   padding: 0;
