@@ -1,0 +1,166 @@
+{
+  "id": "garden",
+  "number": 13,
+  "name": "Garden",
+  "category": "Brunch, healthy",
+  "description": "Organic shapes, leaves and cards that put diet tags first.",
+  "version": 1,
+  "thumbnail": "/templates/garden/thumbnail.png",
+  "sample": "brunch",
+  "schema": [
+    {
+      "key": "font",
+      "type": "choice",
+      "label": "Font style",
+      "group": "Brand",
+      "options": [
+        "soft",
+        "round",
+        "elegant"
+      ],
+      "optionLabels": {
+        "soft": "Soft",
+        "round": "Friendly",
+        "elegant": "Elegant"
+      }
+    },
+    {
+      "key": "logo",
+      "type": "image",
+      "label": "Logo",
+      "group": "Brand"
+    },
+    {
+      "key": "theme",
+      "type": "palette",
+      "label": "Color theme",
+      "group": "Brand",
+      "options": [
+        "sage",
+        "blush",
+        "sunny",
+        "forest"
+      ],
+      "swatches": {
+        "sage": "#F2F5EC",
+        "blush": "#FBF2EE",
+        "sunny": "#FFF9EA",
+        "forest": "#13211A"
+      }
+    },
+    {
+      "key": "accent",
+      "type": "color",
+      "label": "Accent color",
+      "group": "Brand",
+      "options": [
+        "#3F7D4E",
+        "#D9633F",
+        "#B7791F",
+        "#7B5EA7"
+      ]
+    },
+    {
+      "key": "leaves",
+      "type": "toggle",
+      "label": "Leaves",
+      "group": "Brand"
+    },
+    {
+      "key": "hero.title",
+      "type": "text",
+      "label": "Headline",
+      "group": "Top",
+      "max": 50
+    },
+    {
+      "key": "hero.subtitle",
+      "type": "textarea",
+      "label": "Text under the headline",
+      "group": "Top",
+      "max": 140
+    },
+    {
+      "key": "hero.image",
+      "type": "image",
+      "label": "Picture",
+      "group": "Top",
+      "presets": [
+        "leaves",
+        "citrus",
+        "tiles",
+        "dunes"
+      ]
+    },
+    {
+      "key": "sections",
+      "type": "toggles",
+      "label": "Sections",
+      "group": "Sections",
+      "options": [
+        "announcement",
+        "story",
+        "visit"
+      ],
+      "optionLabels": {
+        "announcement": "Announcement bar",
+        "story": "Our story",
+        "visit": "Hours and contact"
+      }
+    },
+    {
+      "key": "announcement",
+      "type": "text",
+      "label": "Announcement",
+      "group": "Sections",
+      "max": 80
+    },
+    {
+      "key": "story.title",
+      "type": "text",
+      "label": "Story headline",
+      "group": "Our story",
+      "max": 60
+    },
+    {
+      "key": "story.text",
+      "type": "textarea",
+      "label": "Our story",
+      "group": "Our story",
+      "max": 400
+    },
+    {
+      "key": "hours",
+      "type": "hours",
+      "label": "Opening hours",
+      "group": "Visit and contact"
+    }
+  ],
+  "defaults": {
+    "font": "soft",
+    "logo": "",
+    "theme": "sage",
+    "accent": "#3F7D4E",
+    "leaves": true,
+    "hero.title": "Slow mornings, good food",
+    "hero.subtitle": "All-day brunch, big bowls and fresh juice. Most of the menu is vegetarian and every dish is marked.",
+    "hero.image": "preset:leaves",
+    "sections": [
+      "announcement",
+      "story",
+      "visit"
+    ],
+    "announcement": "Weekend brunch from 9, no booking needed",
+    "story.title": "Grown with love",
+    "story.text": "Our vegetables come from two family farms in the Jordan Valley. We cook what is in season and bake our bread every morning.",
+    "hours": {
+      "sat": "08:00-17:00",
+      "sun": "08:00-17:00",
+      "mon": "08:00-17:00",
+      "tue": "08:00-17:00",
+      "wed": "08:00-17:00",
+      "thu": "08:00-17:00",
+      "fri": "09:00-15:00"
+    }
+  }
+}

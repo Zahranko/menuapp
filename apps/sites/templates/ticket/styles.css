@@ -1,0 +1,262 @@
+/* Template 012 "Ticket": a till receipt on a counter. Monospace lines, dashed rules, punched edges, a stamp and a barcode. */
+
+.t-ticket {
+  container: page / inline-size;
+  font-family: var(--fb);
+  font-size: 14.5px;
+  line-height: 1.55;
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--fd);
+    font-weight: var(--fw);
+    letter-spacing: var(--ft);
+    line-height: 1.15;
+    text-transform: uppercase;
+  }
+
+  .desk {
+    padding: 22px 12px 30px;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% 0, #ffffff14, transparent 70%),
+      var(--desk);
+  }
+  .receipt {
+    position: relative;
+    max-width: 460px;
+    margin: 0 auto;
+    padding: 34px 22px 30px;
+    background: var(--bg);
+    color: var(--ink);
+    mask:
+      radial-gradient(circle 7px at 50% 0, #0000 97%, #000) 50% 0 / 18px 51%
+        repeat-x,
+      radial-gradient(circle 7px at 50% 100%, #0000 97%, #000) 50% 100% / 18px
+        51% repeat-x;
+  }
+
+  .tag {
+    margin-inline-end: 6px;
+    font-weight: 700;
+    color: var(--acc-text);
+  }
+  .tag-out {
+    color: var(--ink);
+  }
+
+  /* header */
+  .head {
+    position: relative;
+    text-align: center;
+    padding-bottom: 6px;
+  }
+  .stars {
+    letter-spacing: 2px;
+    color: var(--muted);
+  }
+  .head h1 {
+    margin: 6px 0;
+    font-size: calc(30px * var(--fs));
+    overflow-wrap: anywhere;
+  }
+  .sub {
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .addr {
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .stamp {
+    position: absolute;
+    top: -6px;
+    inset-inline-end: -4px;
+    padding: 4px 10px;
+    border: 2.5px solid var(--acc-text);
+    border-radius: 6px;
+    color: var(--acc-text);
+    font: 800 15px var(--fd);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    rotate: 12deg;
+    opacity: 0.9;
+  }
+  .jump {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2px 10px;
+    margin-top: 12px;
+  }
+  .jump a {
+    padding: 6px 2px;
+    text-decoration: none;
+    font-size: 13px;
+    text-transform: uppercase;
+  }
+  .jump a:hover {
+    color: var(--acc-text);
+  }
+
+  /* dashed section rules */
+  .rule {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 22px 0 10px;
+    font-size: calc(15px * var(--fs));
+    letter-spacing: 2px;
+  }
+  .rule::before,
+  .rule::after {
+    content: "";
+    flex: 1;
+    border-top: 1.5px dashed var(--ink);
+  }
+  .rule span {
+    max-width: 75%;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+
+  /* lines */
+  .menu,
+  .group,
+  .visit {
+    scroll-margin-top: 10px;
+  }
+  .line {
+    all: unset;
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    padding: 7px 0;
+    cursor: pointer;
+  }
+  .line:focus-visible {
+    outline: 2px dashed var(--acc-text);
+    outline-offset: 2px;
+  }
+  .line:hover .line-name {
+    background: var(--ink);
+    color: var(--bg);
+  }
+  .line-top {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .qty {
+    flex: none;
+    color: var(--muted);
+  }
+  .line-name {
+    min-width: 0;
+    font-weight: 700;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+  }
+  .dots {
+    flex: 1;
+    min-width: 16px;
+    border-bottom: 2px dotted color-mix(in srgb, var(--ink) 45%, transparent);
+    transform: translateY(-4px);
+  }
+  .line-price {
+    flex: none;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .line-desc {
+    display: block;
+    padding-inline-start: 30px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .line.out .line-name,
+  .line.out .line-price {
+    text-decoration: line-through;
+    color: var(--muted);
+  }
+  .total {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1.5px dashed var(--ink);
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  /* visit */
+  .today-spot {
+    padding: 10px 12px;
+    border: 1.5px solid var(--ink);
+    font-weight: 700;
+    text-align: center;
+  }
+  .visit h3 {
+    margin: 18px 0 6px;
+    font-size: calc(13px * var(--fs));
+    letter-spacing: 2px;
+  }
+  .hours > div {
+    border-bottom: 0;
+    padding-block: 3px;
+  }
+  .order {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px;
+    margin-top: 18px;
+    background: var(--ink);
+    color: var(--bg);
+    text-decoration: none;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .order:hover {
+    background: var(--acc);
+    color: var(--acc-ink);
+  }
+
+  /* footer */
+  .foot {
+    margin-top: 26px;
+    padding-top: 16px;
+    border-top: 1.5px dashed var(--ink);
+    text-align: center;
+    color: var(--muted);
+  }
+  .thanks {
+    color: var(--ink);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .barcode {
+    display: block;
+    width: 80%;
+    height: 54px;
+    margin: 14px auto;
+    color: var(--ink);
+  }
+  .credits {
+    justify-content: center;
+    font-size: 12px;
+  }
+
+  @container page (min-width: 760px) {
+    .desk {
+      padding: 60px 24px 70px;
+    }
+    .receipt {
+      padding: 46px 36px 40px;
+      rotate: -0.6deg;
+    }
+  }
+}

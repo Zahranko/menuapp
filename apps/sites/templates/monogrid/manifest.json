@@ -1,0 +1,130 @@
+{
+  "id": "monogrid",
+  "number": 14,
+  "name": "Mono Grid",
+  "category": "Concept store",
+  "description": "A Swiss-style catalog: hairline grid, index numbers and one signal color.",
+  "version": 1,
+  "thumbnail": "/templates/monogrid/thumbnail.png",
+  "sample": "shop",
+  "schema": [
+    {
+      "key": "font",
+      "type": "choice",
+      "label": "Font style",
+      "group": "Brand",
+      "options": [
+        "grotesk",
+        "modern",
+        "mono"
+      ],
+      "optionLabels": {
+        "grotesk": "Grotesk",
+        "modern": "Modern",
+        "mono": "Mono"
+      }
+    },
+    {
+      "key": "theme",
+      "type": "palette",
+      "label": "Color theme",
+      "group": "Brand",
+      "options": [
+        "white",
+        "concrete",
+        "black",
+        "blueprint"
+      ],
+      "swatches": {
+        "white": "#FFFFFF",
+        "concrete": "#E9E8E4",
+        "black": "#0B0B0B",
+        "blueprint": "#0F2A5C"
+      }
+    },
+    {
+      "key": "accent",
+      "type": "color",
+      "label": "Signal color",
+      "group": "Brand",
+      "options": [
+        "#FF3B00",
+        "#0047FF",
+        "#00A86B",
+        "#FFD400"
+      ]
+    },
+    {
+      "key": "hero.title",
+      "type": "text",
+      "label": "Line under the name",
+      "group": "Header",
+      "max": 100
+    },
+    {
+      "key": "sections",
+      "type": "toggles",
+      "label": "Sections",
+      "group": "Sections",
+      "options": [
+        "announcement",
+        "story",
+        "visit"
+      ],
+      "optionLabels": {
+        "announcement": "Announcement bar",
+        "story": "About",
+        "visit": "Hours and contact"
+      }
+    },
+    {
+      "key": "announcement",
+      "type": "text",
+      "label": "Announcement",
+      "group": "Sections",
+      "max": 80
+    },
+    {
+      "key": "story.title",
+      "type": "text",
+      "label": "About headline",
+      "group": "About",
+      "max": 60
+    },
+    {
+      "key": "story.text",
+      "type": "textarea",
+      "label": "About",
+      "group": "About",
+      "max": 400
+    },
+    {
+      "key": "hours",
+      "type": "hours",
+      "label": "Opening hours",
+      "group": "Visit and contact"
+    }
+  ],
+  "defaults": {
+    "font": "grotesk",
+    "theme": "white",
+    "accent": "#FF3B00",
+    "hero.title": "Objects for everyday use. Made in small batches, sold in one room.",
+    "sections": [
+      "story",
+      "visit"
+    ],
+    "announcement": "New pieces every first Saturday",
+    "story.title": "About",
+    "story.text": "A small concept store for useful things. We work with local makers and keep every object in stock for as long as they make it.",
+    "hours": {
+      "sat": "11:00-20:00",
+      "sun": "11:00-20:00",
+      "mon": "11:00-20:00",
+      "tue": "11:00-20:00",
+      "wed": "11:00-20:00",
+      "thu": "11:00-21:00",
+      "fri": ""
+    }
+  }
+}

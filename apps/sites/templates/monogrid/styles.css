@@ -1,0 +1,273 @@
+/* Template 014 "Mono Grid": Swiss style. A huge name, an index, a hairline product grid and a single signal color. */
+
+.t-mono {
+  container: page / inline-size;
+  font-size: 14px;
+  line-height: 1.45;
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--fd);
+    font-weight: var(--fw);
+    letter-spacing: var(--ft);
+    line-height: 0.95;
+  }
+
+  .num {
+    font-family: var(--fb);
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+  }
+  .label {
+    font: 700 11px var(--fb);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  /* header */
+  .head {
+    padding: 14px 14px 26px;
+    border-bottom: 1px solid var(--line);
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 4px 16px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .name {
+    margin-top: 22px;
+    font-size: min(17cqi, 168px);
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+  }
+  .name::after {
+    content: "";
+    display: inline-block;
+    width: 0.16em;
+    height: 0.16em;
+    margin-inline-start: 0.06em;
+    background: var(--acc);
+  }
+  .lede {
+    max-width: 40ch;
+    margin-top: 18px;
+    font-size: 17px;
+    line-height: 1.35;
+  }
+
+  /* index */
+  .catalog {
+    scroll-margin-top: 10px;
+  }
+  .index {
+    padding: 18px 14px 26px;
+    border-bottom: 1px solid var(--line);
+  }
+  .index a {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    min-height: 44px;
+    padding: 10px 0;
+    border-top: 1px solid var(--line);
+    text-decoration: none;
+  }
+  .index li:last-child a {
+    border-bottom: 1px solid var(--line);
+  }
+  .index-name {
+    flex: 1;
+    font: var(--fw) calc(22px * var(--fs)) var(--fd);
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+    min-width: 0;
+  }
+  .index a:hover .index-name {
+    color: var(--acc-text);
+  }
+
+  /* blocks */
+  .block,
+  .info {
+    scroll-margin-top: 10px;
+  }
+  .block-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    padding: 34px 14px 14px;
+    font-size: calc(38px * var(--fs));
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+    border-bottom: 1px solid var(--line);
+  }
+  .block-head .num {
+    font-size: 12px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .grid > li {
+    border-bottom: 1px solid var(--line);
+  }
+  .grid > li:nth-child(odd) {
+    border-inline-end: 1px solid var(--line);
+  }
+  .cell {
+    all: unset;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+    padding: 12px;
+    transition:
+      background 0.15s,
+      color 0.15s;
+  }
+  .cell:hover {
+    background: var(--ink);
+    color: var(--bg);
+  }
+  .cell:focus-visible {
+    outline: 3px solid var(--acc);
+    outline-offset: -3px;
+  }
+  .cell-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    min-height: 20px;
+  }
+  .cell-top .num {
+    margin-inline-end: auto;
+  }
+  .flag {
+    padding: 2px 6px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    background: var(--acc);
+    color: var(--acc-ink);
+  }
+  .flag-out {
+    background: var(--ink);
+    color: var(--bg);
+  }
+  .cell:hover .flag-out {
+    background: var(--bg);
+    color: var(--ink);
+  }
+  .cell-media {
+    position: relative;
+    display: block;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: var(--surf);
+  }
+  .cell-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .cell-name {
+    font: var(--fw) calc(15px * var(--fs)) / 1.2 var(--fd);
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+  }
+  .cell-price {
+    font-variant-numeric: tabular-nums;
+  }
+  .cell.out .cell-media > * {
+    opacity: 0.4;
+    filter: grayscale(1);
+  }
+  .cell.out .cell-price {
+    text-decoration: line-through;
+  }
+
+  /* information */
+  .info-grid {
+    display: grid;
+  }
+  .info-cell {
+    padding: 18px 14px 26px;
+    border-bottom: 1px solid var(--line);
+  }
+  .info-cell p {
+    white-space: pre-line;
+    max-width: 48ch;
+  }
+  .hours > div,
+  .hours .today {
+    border-color: color-mix(in srgb, var(--line) 25%, transparent);
+  }
+  .today-tag {
+    background: var(--acc);
+    color: var(--acc-ink);
+  }
+
+  .foot {
+    padding: 16px 14px 28px;
+    color: var(--muted);
+    font-size: 12px;
+    text-transform: uppercase;
+  }
+
+  @container page (min-width: 760px) {
+    .head,
+    .index,
+    .block-head,
+    .info-cell,
+    .foot {
+      padding-inline: 28px;
+    }
+    .head {
+      padding-top: 18px;
+    }
+    .lede {
+      font-size: 22px;
+    }
+    .index {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 28px;
+    }
+    .grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .grid > li:nth-child(odd) {
+      border-inline-end: 0;
+    }
+    .grid > li:not(:nth-child(4n)) {
+      border-inline-end: 1px solid var(--line);
+    }
+    .cell {
+      padding: 16px;
+    }
+    .block-head {
+      font-size: calc(64px * var(--fs));
+      padding-top: 56px;
+    }
+    .info-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .info-cell + .info-cell {
+      border-inline-start: 1px solid var(--line);
+    }
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "id": "ticket",
+  "number": 12,
+  "name": "Ticket",
+  "category": "Coffee truck, kiosk",
+  "description": "A menu printed as a till receipt: monospace lines, zigzag edges and a barcode.",
+  "version": 1,
+  "thumbnail": "/templates/ticket/thumbnail.png",
+  "sample": "cafe",
+  "schema": [
+    {
+      "key": "font",
+      "type": "choice",
+      "label": "Font style",
+      "group": "Brand",
+      "options": ["mono", "grotesk", "condensed"],
+      "optionLabels": {
+        "mono": "Receipt",
+        "grotesk": "Clean",
+        "condensed": "Poster"
+      }
+    },
+    {
+      "key": "theme",
+      "type": "palette",
+      "label": "Counter",
+      "group": "Brand",
+      "options": ["thermal", "kraft", "mint", "night"],
+      "swatches": {
+        "thermal": "#2B2D30",
+        "kraft": "#B98E5F",
+        "mint": "#5FA38A",
+        "night": "#050605"
+      }
+    },
+    {
+      "key": "accent",
+      "type": "color",
+      "label": "Stamp color",
+      "group": "Brand",
+      "options": ["#D3412F", "#1F6FEB", "#1E8C5A", "#7A3EC8"]
+    },
+    {
+      "key": "hero.title",
+      "type": "text",
+      "label": "Line under the name",
+      "group": "Receipt",
+      "max": 60
+    },
+    {
+      "key": "stamp",
+      "type": "text",
+      "label": "Stamp",
+      "group": "Receipt",
+      "max": 14
+    },
+    {
+      "key": "location",
+      "type": "text",
+      "label": "Where the truck is today",
+      "group": "Visit and contact",
+      "max": 80
+    },
+    {
+      "key": "thanks",
+      "type": "text",
+      "label": "Last line",
+      "group": "Receipt",
+      "max": 40
+    },
+    {
+      "key": "sections",
+      "type": "toggles",
+      "label": "Sections",
+      "group": "Sections",
+      "options": ["announcement", "visit"],
+      "optionLabels": {
+        "announcement": "Announcement bar",
+        "visit": "Where, hours and contact"
+      }
+    },
+    {
+      "key": "announcement",
+      "type": "text",
+      "label": "Announcement",
+      "group": "Sections",
+      "max": 80
+    },
+    {
+      "key": "hours",
+      "type": "hours",
+      "label": "Opening hours",
+      "group": "Visit and contact"
+    }
+  ],
+  "defaults": {
+    "font": "mono",
+    "theme": "thermal",
+    "accent": "#D3412F",
+    "hero.title": "Coffee on wheels",
+    "stamp": "Fresh",
+    "location": "Today: Rainbow Street, next to the old cinema",
+    "thanks": "Thank you, come again",
+    "sections": ["announcement", "visit"],
+    "announcement": "Bring your own cup, get 0.25 off",
+    "hours": {
+      "sat": "07:00-14:00",
+      "sun": "07:00-14:00",
+      "mon": "07:00-14:00",
+      "tue": "07:00-14:00",
+      "wed": "07:00-14:00",
+      "thu": "07:00-16:00",
+      "fri": ""
+    }
+  }
+}

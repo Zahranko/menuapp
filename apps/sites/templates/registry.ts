@@ -5,12 +5,17 @@ import ArchStoryTemplate from "./archstory/Template";
 import BentoTemplate from "./bento/Template";
 import BistroCardTemplate from "./bistro/Template";
 import ChalkBoardTemplate from "./chalkboard/Template";
+import GardenTemplate from "./garden/Template";
 import LinenListTemplate from "./linen/Template";
+import MonoGridTemplate from "./monogrid/Template";
 import NeonDinerTemplate from "./neondiner/Template";
 import NightMarketTemplate from "./nightmarket/Template";
 import PizzeriaTemplate from "./pizzeria/Template";
 import PocketCatalogTemplate from "./pocket/Template";
+import PolaroidTemplate from "./polaroid/Template";
 import SouqTemplate from "./souq/Template";
+import SpiceRouteTemplate from "./spiceroute/Template";
+import TicketTemplate from "./ticket/Template";
 import ZenTemplate from "./zen/Template";
 
 /**
@@ -29,6 +34,11 @@ export const templates: Record<string, ComponentType<TemplateProps>> = {
   zen: ZenTemplate,
   bistro: BistroCardTemplate,
   pizzeria: PizzeriaTemplate,
+  ticket: TicketTemplate,
+  garden: GardenTemplate,
+  monogrid: MonoGridTemplate,
+  spiceroute: SpiceRouteTemplate,
+  polaroid: PolaroidTemplate,
 };
 
 export function templateFor(id: string): ComponentType<TemplateProps> {

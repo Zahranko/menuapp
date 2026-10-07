@@ -20,7 +20,7 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 | S13 | Flutter template gallery and editor | not started | | |
 | S14 | Flutter plans and custom domain | not started | | |
 | S15 | Deployment and hardening | not started | | |
-| S16+ | Template factory | in progress | | Batch 1: templates 002 to 006 (Linen List, Night Market, Arch Story, Pocket Catalog, Chalk Board), per-template stylesheets, sample businesses, axe checks. Batch 2: 007 to 011 (Bento, Neon Diner, Zen, Bistro Card, Pizzeria). Plan for the rest: `docs/templates-catalog.md` |
+| S16+ | Template factory | in progress | | Batch 1: templates 002 to 006 (Linen List, Night Market, Arch Story, Pocket Catalog, Chalk Board), per-template stylesheets, sample businesses, axe checks. Batch 2: 007 to 011 (Bento, Neon Diner, Zen, Bistro Card, Pizzeria). Batch 3: 012 to 016 (Ticket, Garden, Mono Grid, Spice Route, Polaroid). Plan for the rest: `docs/templates-catalog.md` |
 
 ## Settings other sessions need
 
@@ -63,7 +63,7 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 - S08: Files (any path whose last segment has a dot) are served as they are on every host, so `/templates/...` and `/samples/...` work on custom domains. Preview tokens are matched first because they contain dots.
 - S16: Each template has a plain `styles.css` nested under `.t-<name>`, built per template by `scripts/build-styles.mjs` into `public/styles/<id>.<hash>.css` and linked with `<TemplateStyles>`. CSS modules were dropped because Next bundled every template's module CSS into every page, and that grows with each template. Souq was moved over too.
 - S16: Shared picture presets live in `public/presets/` and sample product illustrations in `public/samples/food/`; any template can offer any preset.
-- S16: Fixture mode has eight sample businesses (café, restaurant, sweets, drinks, street food, Asian, pizza, shop). Each template's manifest names its `"sample"` (the backend ignores that key). `/_preview/fixture.<id>.<theme>.<en|ar>` shows any theme in either language.
+- S16: Fixture mode has nine sample businesses (café, restaurant, sweets, drinks, street food, Asian, brunch, pizza, shop). Each template's manifest names its `"sample"` (the backend ignores that key). `/_preview/fixture.<id>.<theme>.<en|ar>` shows any theme in either language.
 - S16: Every template is checked by one shared unit test (all themes, Arabic, 1 and 200 products, everything off, no products) and by `e2e/templates.spec.ts` (load, no sideways scroll, item dialog, axe WCAG A/AA per theme and in Arabic).
 - S16: Font pairs grew to eleven (adds grotesk, hand, condensed, mono, round, naskh); fonts load only when a template uses them (`preload: false`).
 - S07: Cache Components are off. The sites use fetch with `next: { tags }`: `site:<slug>` (revalidate 3600 s as a safety net) and `host:<domain>` (60 s); `/api/revalidate` calls `revalidateTag(tag, { expire: 0 })`. This replaces the S00 note about Cache Components.

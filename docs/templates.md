@@ -81,7 +81,7 @@ Use these instead of writing your own, so every template behaves the same where 
 ## Trying a template
 
 `APP_FIXTURES=1 npm run dev`, then open `http://localhost:3000/<id>` (the template's own sample business, set by
-`"sample"` in the manifest: cafe, restaurant, sweets, drinks, fastfood, asian, pizza or shop) or `/vanillamenu` (the café
+`"sample"` in the manifest: cafe, restaurant, sweets, drinks, fastfood, asian, brunch, pizza or shop) or `/vanillamenu` (the café
 with the template in `APP_FIXTURE_TEMPLATE`, default `souq`). `/_preview/fixture.<id>.<theme>.<en|ar>` shows any
 theme in either language.
 
