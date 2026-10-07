@@ -1,9 +1,9 @@
 import "server-only";
 import { fixtureBySlug, fixturePreview, fixtureSite } from "./fixtures";
+import { apiBaseUrl } from "./routing";
 import type { PublicSite } from "./types";
 
-/** Base URL of the Storefront API, for example http://localhost:5080. */
-const apiUrl = () => (process.env.STOREFRONT_API_URL ?? "http://localhost:5080").replace(/\/$/, "");
+const apiUrl = () => apiBaseUrl();
 const fixturesOn = () => process.env.APP_FIXTURES === "1";
 
 export const siteTag = (slug: string) => `site:${slug.toLowerCase()}`;

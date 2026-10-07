@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { mainHosts, route } from "./routing";
+import { apiBaseUrl, mainHosts, route } from "./routing";
 
 const main = new Set(["example.test", "www.example.test", "localhost"]);
 
@@ -42,5 +42,19 @@ describe("mainHosts", () => {
     expect(hosts.has("menuapp.vercel.app")).toBe(true);
     expect(hosts.has("menuapp-abc123.vercel.app")).toBe(true);
     expect(route("menuapp.vercel.app", "/vanillamenu", hosts)).toEqual({ kind: "rewrite", path: "/s/vanillamenu" });
+  });
+});
+
+describe("apiBaseUrl", () => {
+  it("prefers STOREFRONT_API_URL and trims the slash", () => {
+    expect(apiBaseUrl({ STOREFRONT_API_URL: "https://api.example.com/", VERCEL_GIT_COMMIT_REF: "test" })).toBe("https://api.example.com");
+  });
+
+  it("uses the test server for the test branch on Vercel", () => {
+    expect(apiBaseUrl({ VERCEL_GIT_COMMIT_REF: "test" })).toBe("https://alamalhosp-001-site7.itempurl.com");
+  });
+
+  it("falls back to localhost elsewhere", () => {
+    expect(apiBaseUrl({})).toBe("http://localhost:5080");
   });
 });

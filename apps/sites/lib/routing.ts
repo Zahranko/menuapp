@@ -57,3 +57,12 @@ export function route(hostHeader: string, pathname: string, main: Set<string> = 
 }
 
 const rest = (segments: string[]) => (segments.length ? `/${segments.join("/")}` : "");
+
+/** The test server, used by Vercel builds of the `test` branch when STOREFRONT_API_URL is not set. */
+const TEST_API_URL = "https://alamalhosp-001-site7.itempurl.com";
+
+/** Base URL of the Storefront API, for example http://localhost:5080. */
+export function apiBaseUrl(env: Record<string, string | undefined> = process.env): string {
+  const fallback = env.VERCEL_GIT_COMMIT_REF === "test" ? TEST_API_URL : "http://localhost:5080";
+  return (env.STOREFRONT_API_URL || fallback).replace(/\/$/, "");
+}
