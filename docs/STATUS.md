@@ -26,7 +26,7 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 
 (Setting names, URLs and secrets placeholders that one session defines and another uses.)
 
-- `ConnectionStrings__Default`: PostgreSQL connection (S01).
+- `ConnectionStrings__Default`: SQL Server connection (S01; PostgreSQL until the site4now move).
 - `Auth__SigningKey` (32+ characters, secret, required outside Development), `Auth__Issuer`, `Auth__Audience`, `Auth__AccessTokenMinutes` (15), `Auth__RefreshTokenDays` (30) (S02).
 - `Email__Smtp__Host`, `__Port`, `__UserName`, `__Password`, `__EnableSsl`: when Host is empty, emails go to the log (S02). Sender is `noReplyEmail` from brand.json.
 - `Revalidation__Url` (the Next.js endpoint, for example `https://{domain}/api/revalidate`) and `Revalidation__Secret` (shared HMAC secret). The API POSTs `{"tags":["site:<slug>"]}` (plus `host:<domain>` when a custom domain changes) with header `X-Storefront-Signature` = lowercase hex HMAC-SHA256 of the exact body. Empty Url = no calls (S03, used by S07).
@@ -42,6 +42,7 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 
 (Things a session found that belong to another session. Format: `- [S07] what and why (found in S03)`.)
 
+- [S15] `scripts/session-start.sh` still starts PostgreSQL. Cloud sessions can't download SQL Server, so integration tests only run in CI; update the hook if a SQL Server image becomes reachable (found in the site4now move).
 - [S09] Add a `/reset-password?email=&token=` page on the marketing site that posts to `POST /api/v1/auth/reset-password`; the reset email links there (found in S02).
 - [S15] When deploying, set `Security__KnownNetworks` (or `Security__KnownProxies`) to Caddy's address or Docker network, otherwise forwarded headers are ignored and every request looks like it came from Caddy (found in S15 API security).
 - [S04] The public API has no way to list published slugs, so the brand domain's sitemap only lists marketing pages. Add `GET /api/public/v1/sites` (slugs and published dates) and list the sites in `app/sitemap.ts` (found in S08).
@@ -53,6 +54,8 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 
 (Anything decided that is not in PLAN.md, with the reason.)
 
+- Hosting (owner's choice): the API runs on site4now (Windows/IIS) with its SQL Server database, so the database moved from PostgreSQL to SQL Server. One fresh `Initial` migration replaces the PostgreSQL ones (nothing was deployed yet). JSON columns are `nvarchar(max)`, product search uses `LIKE` (SQL Server's default collation ignores case, and `[` is escaped), the category name key is `LOWER([Name])`, and `MediaAsset.Url` is limited to 800 characters so its index stays under the 1700-byte key limit. CI runs the integration tests on a SQL Server 2022 container.
+- Deploy: `.github/workflows/deploy-site4now.yml` publishes a self-contained win-x64 build over FTPS on pushes to `main` or `deploy`, writes `web.config` (out-of-process, settings as environment variables, `MigrateOnStartup`), and uses `app_offline.htm` while uploading. Setup and secrets: `docs/deploy-site4now.md`. HTTPS is enforced only when the `API_URL` variable is an https address.
 - iOS build: `codemagic.yaml` has an unsigned IPA workflow and a signed TestFlight workflow for `apps/mobile` (setup in `docs/ios-build.md`). `rebrand.sh` also writes `appId` into its `bundle_identifier`. The iOS app is iPhone only and portrait only, and declares `ITSAppUsesNonExemptEncryption = false` (HTTPS only).
 - S15 (API security, done early): `UseStorefrontSecurity` runs first. It applies `X-Forwarded-For`/`-Proto` from trusted proxies only (loopback plus `Security:KnownProxies`/`KnownNetworks`, one hop), so rate limits and HTTPS checks see the real client.
 - S15: HTTPS only (`Security:RequireHttps`, off in Development and tests). Plain-HTTP GET/HEAD get a 308 to https; other methods get 400 instead of a redirect, so a password or token is never sent twice in the clear. `/health` works over HTTP for the container check. HSTS is 365 days with subdomains (no `preload`, because custom domains are owned by businesses).

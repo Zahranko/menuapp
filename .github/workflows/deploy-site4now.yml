@@ -1,0 +1,140 @@
+# Publishes the API (src/Storefront.Web) to the site4now Windows/IIS host over FTPS. Setup: docs/deploy-site4now.md.
+# Runs on every push to main, on a push to the "deploy" branch (to ship a branch before it is merged), or by hand.
+name: Deploy API (site4now)
+
+on:
+  push:
+    branches: [main, deploy]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-site4now
+  cancel-in-progress: false
+
+env:
+  # Account names are not secret; passwords and the signing key are repository secrets.
+  FTP_SERVER: ${{ vars.FTP_SERVER || 'win6036.site4now.net' }}
+  FTP_USERNAME: ${{ vars.FTP_USERNAME || 'alamalhosp-001' }}
+  # The site's own folder as the FTP login sees it. Never "/": the login's top folder holds other sites.
+  FTP_DIR: ${{ vars.FTP_DIR || '/TestMobileApp' }}
+  DB_SERVER: ${{ vars.DB_SERVER || 'sql6034.site4now.net' }}
+  DB_NAME: ${{ vars.DB_NAME || 'db_acc171_mobiletest' }}
+  DB_USER: ${{ vars.DB_USER || 'db_acc171_mobiletest_admin' }}
+  # The site's public address: health check, HTTPS enforcement (https only) and photo URLs.
+  API_URL: ${{ vars.API_URL || 'https://alamalhosp-001-site7.itempurl.com' }}
+  DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+  DOTNET_NOLOGO: "1"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check secrets
+        env:
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
+        run: |
+          missing=""
+          [ -n "$FTP_PASSWORD" ] || missing="$missing FTP_PASSWORD"
+          [ -n "$DB_PASSWORD" ] || missing="$missing DB_PASSWORD"
+          [ ${#JWT_SIGNING_KEY} -ge 32 ] || missing="$missing JWT_SIGNING_KEY(32+ characters)"
+          case "$FTP_DIR" in
+            ""|"/") missing="$missing FTP_DIR(variable: the site's own folder, never the top folder)";;
+          esac
+          if [ -n "$missing" ]; then
+            echo "::error title=Missing deploy secrets::Add these repository secrets:$missing"
+            exit 1
+          fi
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      # Self-contained, so the host needs no .NET runtime installed; out-of-process, so the app pool's bitness doesn't matter.
+      - name: Publish
+        run: |
+          dotnet publish src/Storefront.Web -c Release -r win-x64 --self-contained true -o out
+          # Files the API finds by walking up from its folder.
+          cp brand.json out/
+          mkdir -p out/docs out/apps/sites/templates
+          cp docs/reserved-slugs.txt out/docs/
+          cp apps/sites/templates/registry.json out/apps/sites/templates/
+          mkdir -p out/logs
+
+      - name: Write web.config
+        env:
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
+        run: python3 scripts/site4now-web-config.py > out/web.config
+
+      - name: Take the site offline
+        env:
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          echo '<!doctype html><title>Updating</title><p>Updating, back in a minute.</p>' > app_offline.htm
+          curl -sS --fail --ssl-reqd --netrc-file <(printf 'machine %s login %s password %s\n' "$FTP_SERVER" "$FTP_USERNAME" "$FTP_PASSWORD") \
+            -T app_offline.htm "ftp://$FTP_SERVER${FTP_DIR%/}/app_offline.htm" \
+            || { echo "::error title=FTP login failed::Could not upload to $FTP_SERVER as $FTP_USERNAME. Check FTP_PASSWORD."; exit 1; }
+          # Give IIS time to stop the app so its files are not locked.
+          sleep 10
+
+      # What the FTP login sees, so a wrong FTP_DIR shows up on the run.
+      - name: List the FTP folder
+        env:
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          names=$(curl -sS --ssl-reqd --list-only --netrc-file <(printf 'machine %s login %s password %s\n' "$FTP_SERVER" "$FTP_USERNAME" "$FTP_PASSWORD") \
+            "ftp://$FTP_SERVER${FTP_DIR%/}/" | tr '\r\n' '  ')
+          echo "::notice title=FTP folder ${FTP_DIR}::$names"
+
+      # lftp, because IIS needs TLS session reuse on FTPS data connections, which basic-ftp based actions lack (ECONNRESET).
+      - name: Upload
+        env:
+          LFTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq lftp >/dev/null
+          lftp --env-password -u "$FTP_USERNAME" "$FTP_SERVER" -e "
+            set ftp:ssl-force true; set ftp:ssl-protect-data true; set ssl:verify-certificate yes;
+            set net:max-retries 3; set net:reconnect-interval-base 5; set net:timeout 60;
+            mirror --reverse --only-newer --no-perms --parallel=4 --exclude-glob App_Data/ --exclude-glob logs/ out/ '${FTP_DIR}';
+            bye" \
+            || { echo "::error title=Upload failed::lftp could not upload to $FTP_SERVER$FTP_DIR."; exit 1; }
+
+      - name: Bring the site back
+        if: always()
+        env:
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          # Quote commands run in the login folder, so the path must be absolute.
+          curl -sS --ssl-reqd --netrc-file <(printf 'machine %s login %s password %s\n' "$FTP_SERVER" "$FTP_USERNAME" "$FTP_PASSWORD") \
+            "ftp://$FTP_SERVER${FTP_DIR%/}/" -Q "DELE ${FTP_DIR%/}/app_offline.htm" -o /dev/null \
+            || { echo "::error title=Site still offline::Could not delete ${FTP_DIR%/}/app_offline.htm. Delete it over FTP."; exit 1; }
+
+      - name: Health check
+        if: env.API_URL != ''
+        run: |
+          for i in $(seq 1 20); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "${API_URL%/}/health" || true)
+            [ "$code" = "200" ] && { echo "API is up at $API_URL"; exit 0; }
+            sleep 6
+          done
+          echo "::error title=API not healthy::${API_URL%/}/health returned $code."
+          exit 1
+
+      # The app's startup errors land in logs/stdout_*.log; show the newest one on the run.
+      - name: Show the app log
+        if: failure()
+        env:
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          netrc=$(mktemp); printf 'machine %s login %s password %s\n' "$FTP_SERVER" "$FTP_USERNAME" "$FTP_PASSWORD" > "$netrc"
+          logs="ftp://$FTP_SERVER${FTP_DIR%/}/logs/"
+          newest=$(curl -sS --ssl-reqd --netrc-file "$netrc" --list-only "$logs" | tr -d '\r' | grep '^stdout' | sort | tail -1 || true)
+          if [ -z "$newest" ]; then echo "::warning title=No app log::No logs/stdout_*.log yet."; exit 0; fi
+          curl -sS --ssl-reqd --netrc-file "$netrc" "$logs$newest" -o app.log || exit 0
+          rm -f "$netrc"
+          tail -c 3500 app.log > tail.log
+          echo "::error title=App log ($newest)::$(sed ':a;N;$!ba;s/%/%25/g;s/\r//g;s/\n/%0A/g' tail.log)"
