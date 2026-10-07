@@ -32,6 +32,14 @@ const en = {
   items: "items",
   featured: "Featured",
   from: "from",
+  viewMenu: "View the menu",
+  findUs: "Find us",
+  address: "Address",
+  phone: "WhatsApp",
+  rights: "All rights reserved.",
+  categories: "Menu categories",
+  photoOf: "Photo {n} of {name}",
+  since: "Since",
   openUntil: "Open today until {time}",
   closedToday: "Closed today",
   days: { sat: "Saturday", sun: "Sunday", mon: "Monday", tue: "Tuesday", wed: "Wednesday", thu: "Thursday", fri: "Friday" },
@@ -70,6 +78,14 @@ const ar: Strings = {
   items: "أصناف",
   featured: "مميز",
   from: "من",
+  viewMenu: "تصفح القائمة",
+  findUs: "موقعنا",
+  address: "العنوان",
+  phone: "واتساب",
+  rights: "جميع الحقوق محفوظة.",
+  categories: "أقسام القائمة",
+  photoOf: "الصورة {n} من {name}",
+  since: "منذ",
   openUntil: "مفتوح اليوم حتى {time}",
   closedToday: "مغلق اليوم",
   days: { sat: "السبت", sun: "الأحد", mon: "الاثنين", tue: "الثلاثاء", wed: "الأربعاء", thu: "الخميس", fri: "الجمعة" },
@@ -91,3 +107,9 @@ export function madeWith(locale: string): string {
 }
 
 export const asLocale = (value: string): Locale => (value === "ar" ? "ar" : "en");
+
+/** "1 item", "5 items" in the site's language. */
+export function itemCount(n: number, locale: string): string {
+  if (locale === "ar") return n === 1 ? "صنف واحد" : n === 2 ? "صنفان" : n <= 10 ? `${n} أصناف` : `${n} صنفًا`;
+  return n === 1 ? "1 item" : `${n} items`;
+}

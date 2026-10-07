@@ -2,38 +2,37 @@ import { hasHours } from "../../_kit/site-data";
 import { Mail, Pin, WhatsApp } from "../../_kit/icons";
 import { Picture } from "../../_kit/Picture";
 import type { SouqContext } from "../context";
-import s from "../souq.module.css";
 
 export function Visit({ ctx }: { ctx: SouqContext }) {
   const { business } = ctx.site;
   const { c, t, contact } = ctx;
   return (
-    <section className={`${s.block} ${s.alt}`} id="visit" data-section="visit" aria-labelledby="visit-title">
-      <div className={s.wrap}>
-        <div className={s.head}>
-          <span className={s.eyebrow}>{c.visitEyebrow}</span>
+    <section className={`block alt`} id="visit" data-section="visit" aria-labelledby="visit-title">
+      <div className="wrap">
+        <div className="head">
+          <span className="eyebrow">{c.visitEyebrow}</span>
           <h2 id="visit-title">{c.visitTitle}</h2>
         </div>
-        <div className={s.visit}>
+        <div className="visit">
           {contact.maps ? (
-            <a className={s.map} href={contact.maps} rel="noopener" target="_blank" aria-label={c.getDirections}>
+            <a className="map" href={contact.maps} rel="noopener" target="_blank" aria-label={c.getDirections}>
               <Picture src="/templates/souq/art/map.svg" sizes="(min-width: 760px) 55vw, 100vw" />
             </a>
           ) : (
-            <div className={s.map}>
+            <div className="map">
               <Picture src="/templates/souq/art/map.svg" sizes="(min-width: 760px) 55vw, 100vw" />
             </div>
           )}
-          <div className={s.info}>
+          <div className="info">
             {hasHours(ctx.hours) && (
-              <div className={s.card}>
+              <div className="card">
                 <h3>{t.hours}</h3>
-                <dl className={s.hours}>
+                <dl className="hours">
                   {ctx.hours.map((row) => (
-                    <div key={row.day} className={row.today ? s.today : undefined}>
+                    <div key={row.day} className={row.today ? "today" : undefined}>
                       <dt>
                         {row.name}
-                        {row.today && <span className={s.todayTag}>{t.today}</span>}
+                        {row.today && <span className="todayTag">{t.today}</span>}
                       </dt>
                       <dd>{row.time ?? t.closed}</dd>
                     </div>
@@ -41,9 +40,9 @@ export function Visit({ ctx }: { ctx: SouqContext }) {
                 </dl>
               </div>
             )}
-            <div className={s.card}>
+            <div className="card">
               <h3>{t.contact}</h3>
-              <ul className={s.contact}>
+              <ul className="contact">
                 {business.address && (
                   <li>
                     <Pin />
@@ -73,15 +72,15 @@ export function Visit({ ctx }: { ctx: SouqContext }) {
                 )}
               </ul>
               {(contact.maps || contact.whatsapp) && (
-                <div className={s.btns} style={{ marginTop: 16 }}>
+                <div className="btns" style={{ marginTop: 16 }}>
                   {contact.maps && (
-                    <a className={`${s.btn} ${s.pri}`} href={contact.maps} rel="noopener" target="_blank">
+                    <a className={`btn pri`} href={contact.maps} rel="noopener" target="_blank">
                       <Pin />
                       {c.getDirections}
                     </a>
                   )}
                   {contact.whatsapp && (
-                    <a className={`${s.btn} ${s.dark}`} href={contact.whatsapp} rel="noopener" target="_blank">
+                    <a className={`btn dark`} href={contact.whatsapp} rel="noopener" target="_blank">
                       <WhatsApp />
                       {c.whatsapp}
                     </a>

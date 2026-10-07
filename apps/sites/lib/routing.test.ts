@@ -16,7 +16,7 @@ describe("route", () => {
   });
 
   it("serves files on custom domains too", () => {
-    expect(route("shop.example.com", "/templates/souq/presets/counter.svg", main)).toEqual({ kind: "pass" });
+    expect(route("shop.example.com", "/presets/counter.svg", main)).toEqual({ kind: "pass" });
     expect(route("example.test", "/samples/food/latte.svg", main)).toEqual({ kind: "pass" });
   });
 

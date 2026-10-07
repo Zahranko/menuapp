@@ -1,0 +1,171 @@
+{
+  "id": "chalkboard",
+  "number": 6,
+  "name": "Chalk Board",
+  "category": "Café",
+  "description": "A café blackboard: hand lettering, a daily special and boxed menu sections.",
+  "version": 1,
+  "thumbnail": "/templates/chalkboard/thumbnail.png",
+  "sample": "cafe",
+  "schema": [
+    {
+      "key": "font",
+      "type": "choice",
+      "label": "Font style",
+      "group": "Brand",
+      "options": [
+        "hand",
+        "round",
+        "condensed"
+      ],
+      "optionLabels": {
+        "hand": "Handwritten",
+        "round": "Round",
+        "condensed": "Poster"
+      }
+    },
+    {
+      "key": "logo",
+      "type": "image",
+      "label": "Logo",
+      "group": "Brand"
+    },
+    {
+      "key": "theme",
+      "type": "palette",
+      "label": "Board",
+      "group": "Brand",
+      "options": [
+        "board",
+        "slate",
+        "black",
+        "kraft"
+      ],
+      "swatches": {
+        "board": "#22302A",
+        "slate": "#25282B",
+        "black": "#151515",
+        "kraft": "#D2B48C"
+      }
+    },
+    {
+      "key": "accent",
+      "type": "color",
+      "label": "Chalk color",
+      "group": "Brand",
+      "options": [
+        "#F2C14E",
+        "#F29A9A",
+        "#8FD3C1",
+        "#9EC5F2"
+      ]
+    },
+    {
+      "key": "texture",
+      "type": "toggle",
+      "label": "Chalk dust",
+      "group": "Brand"
+    },
+    {
+      "key": "doodles",
+      "type": "toggle",
+      "label": "Doodles",
+      "group": "Brand"
+    },
+    {
+      "key": "hero.title",
+      "type": "text",
+      "label": "Tagline",
+      "group": "Header",
+      "max": 60
+    },
+    {
+      "key": "sections",
+      "type": "toggles",
+      "label": "Sections",
+      "group": "Sections",
+      "options": [
+        "announcement",
+        "special",
+        "story",
+        "visit"
+      ],
+      "optionLabels": {
+        "announcement": "Announcement bar",
+        "special": "Today's special",
+        "story": "About us",
+        "visit": "Visit and contact"
+      }
+    },
+    {
+      "key": "announcement",
+      "type": "text",
+      "label": "Announcement",
+      "group": "Sections",
+      "max": 80
+    },
+    {
+      "key": "special.title",
+      "type": "text",
+      "label": "Special headline",
+      "group": "Today's special",
+      "max": 40
+    },
+    {
+      "key": "special.note",
+      "type": "text",
+      "label": "Special note",
+      "group": "Today's special",
+      "max": 60
+    },
+    {
+      "key": "story.title",
+      "type": "text",
+      "label": "About headline",
+      "group": "About us",
+      "max": 60
+    },
+    {
+      "key": "story.text",
+      "type": "textarea",
+      "label": "About us",
+      "group": "About us",
+      "max": 400
+    },
+    {
+      "key": "hours",
+      "type": "hours",
+      "label": "Opening hours",
+      "group": "Visit and contact"
+    }
+  ],
+  "defaults": {
+    "font": "hand",
+    "logo": "",
+    "theme": "board",
+    "accent": "#F2C14E",
+    "texture": true,
+    "doodles": true,
+    "hero.title": "Coffee, cake and good chats",
+    "sections": [
+      "announcement",
+      "special",
+      "story",
+      "visit"
+    ],
+    "announcement": "Fresh croissants every morning from 7",
+    "special.title": "Today's special",
+    "special.note": "Ask us about it, we love this one",
+    "story.title": "Hello!",
+    "story.text": "We are a small coffee bar with a big chalkboard. The menu changes with the seasons, so come back often.",
+    "hours": {
+      "sat": "07:00-23:00",
+      "sun": "07:00-23:00",
+      "mon": "07:00-23:00",
+      "tue": "07:00-23:00",
+      "wed": "07:00-23:00",
+      "thu": "07:00-00:00",
+      "fri": "14:00-00:00"
+    }
+  }
+}

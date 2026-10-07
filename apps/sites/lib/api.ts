@@ -1,5 +1,5 @@
 import "server-only";
-import { fixtureBySlug, fixtureSite } from "./fixtures";
+import { fixtureBySlug, fixturePreview, fixtureSite } from "./fixtures";
 import type { PublicSite } from "./types";
 
 /** Base URL of the Storefront API, for example http://localhost:5080. */
@@ -46,6 +46,6 @@ export async function getSiteByHost(host: string): Promise<PublicSite | null> {
 
 /** The draft behind a preview token. Never cached. */
 export async function getPreview(token: string): Promise<PublicSite | null> {
-  if (fixturesOn()) return token === "fixture" ? { ...fixtureSite, isPreview: true } : null;
+  if (fixturesOn()) return fixturePreview(token);
   return read(`/api/public/v1/preview/${encodeURIComponent(token)}`, { cache: "no-store" });
 }

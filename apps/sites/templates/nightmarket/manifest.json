@@ -1,0 +1,176 @@
+{
+  "id": "nightmarket",
+  "number": 3,
+  "name": "Night Market",
+  "category": "Street food",
+  "description": "Dark and loud: big photo cards you swipe through, one row per category.",
+  "version": 1,
+  "thumbnail": "/templates/nightmarket/thumbnail.png",
+  "sample": "fastfood",
+  "schema": [
+    {
+      "key": "font",
+      "type": "choice",
+      "label": "Font style",
+      "group": "Brand",
+      "options": [
+        "condensed",
+        "bold",
+        "grotesk"
+      ],
+      "optionLabels": {
+        "condensed": "Poster",
+        "bold": "Bold",
+        "grotesk": "Clean"
+      }
+    },
+    {
+      "key": "logo",
+      "type": "image",
+      "label": "Logo",
+      "group": "Brand"
+    },
+    {
+      "key": "theme",
+      "type": "palette",
+      "label": "Color theme",
+      "group": "Brand",
+      "options": [
+        "midnight",
+        "charcoal",
+        "ember",
+        "concrete"
+      ],
+      "swatches": {
+        "midnight": "#0D0C14",
+        "charcoal": "#17181A",
+        "ember": "#1C0F0B",
+        "concrete": "#E9E7E2"
+      }
+    },
+    {
+      "key": "accent",
+      "type": "color",
+      "label": "Neon color",
+      "group": "Brand",
+      "options": [
+        "#FFD23F",
+        "#FF4F9A",
+        "#A3E635",
+        "#22D3EE"
+      ]
+    },
+    {
+      "key": "corners",
+      "type": "choice",
+      "label": "Corners",
+      "group": "Brand",
+      "options": [
+        "rounded",
+        "sharp"
+      ],
+      "optionLabels": {
+        "rounded": "Rounded",
+        "sharp": "Sharp"
+      }
+    },
+    {
+      "key": "hero.image",
+      "type": "image",
+      "label": "Hero picture",
+      "group": "Hero header",
+      "presets": [
+        "neon",
+        "flames",
+        "marble"
+      ]
+    },
+    {
+      "key": "hero.title",
+      "type": "text",
+      "label": "Headline",
+      "group": "Hero header",
+      "max": 40
+    },
+    {
+      "key": "hero.subtitle",
+      "type": "textarea",
+      "label": "Subtext",
+      "group": "Hero header",
+      "max": 140
+    },
+    {
+      "key": "hero.sticker",
+      "type": "text",
+      "label": "Sticker",
+      "group": "Hero header",
+      "max": 18
+    },
+    {
+      "key": "sections",
+      "type": "toggles",
+      "label": "Sections",
+      "group": "Sections",
+      "options": [
+        "announcement",
+        "picks",
+        "gallery",
+        "visit"
+      ],
+      "optionLabels": {
+        "announcement": "Announcement bar",
+        "picks": "Tonight's favorites",
+        "gallery": "Photo strip",
+        "visit": "Find us"
+      }
+    },
+    {
+      "key": "announcement",
+      "type": "text",
+      "label": "Announcement",
+      "group": "Sections",
+      "max": 80
+    },
+    {
+      "key": "gallery",
+      "type": "images",
+      "label": "Photo strip",
+      "group": "Sections",
+      "max": 8
+    },
+    {
+      "key": "hours",
+      "type": "hours",
+      "label": "Opening hours",
+      "group": "Find us"
+    }
+  ],
+  "defaults": {
+    "font": "condensed",
+    "logo": "",
+    "theme": "midnight",
+    "accent": "#FFD23F",
+    "corners": "rounded",
+    "hero.image": "preset:neon",
+    "hero.title": "Smashed. Stacked. Served hot.",
+    "hero.subtitle": "Burgers, pizza and loaded fries until late. Order ahead on WhatsApp and skip the line.",
+    "hero.sticker": "Open late",
+    "sections": [
+      "announcement",
+      "picks",
+      "gallery",
+      "visit"
+    ],
+    "announcement": "Free fries with every double on Tuesdays",
+    "gallery": [],
+    "hours": {
+      "sat": "16:00-24:00",
+      "sun": "16:00-24:00",
+      "mon": "16:00-24:00",
+      "tue": "16:00-24:00",
+      "wed": "16:00-24:00",
+      "thu": "16:00-24:00",
+      "fri": "14:00-24:00"
+    }
+  }
+}

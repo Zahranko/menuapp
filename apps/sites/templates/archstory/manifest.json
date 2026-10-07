@@ -1,0 +1,234 @@
+{
+  "id": "archstory",
+  "number": 4,
+  "name": "Arch Story",
+  "category": "Bakery and desserts",
+  "description": "A magazine for sweet shops: arched photos, menu chapters and cards you swipe.",
+  "version": 1,
+  "thumbnail": "/templates/archstory/thumbnail.png",
+  "sample": "sweets",
+  "schema": [
+    {
+      "key": "font",
+      "type": "choice",
+      "label": "Font style",
+      "group": "Brand",
+      "options": [
+        "soft",
+        "elegant",
+        "classic"
+      ],
+      "optionLabels": {
+        "soft": "Soft",
+        "elegant": "Elegant",
+        "classic": "Classic"
+      }
+    },
+    {
+      "key": "logo",
+      "type": "image",
+      "label": "Logo",
+      "group": "Brand"
+    },
+    {
+      "key": "theme",
+      "type": "palette",
+      "label": "Color theme",
+      "group": "Brand",
+      "options": [
+        "blush",
+        "sand",
+        "sage",
+        "cocoa"
+      ],
+      "swatches": {
+        "blush": "#F8E8E4",
+        "sand": "#F4ECDD",
+        "sage": "#E7ECE3",
+        "cocoa": "#2A1D19"
+      }
+    },
+    {
+      "key": "accent",
+      "type": "color",
+      "label": "Accent color",
+      "group": "Brand",
+      "options": [
+        "#C2577A",
+        "#B5651D",
+        "#4F7A57",
+        "#6B4E9B"
+      ]
+    },
+    {
+      "key": "hero.image",
+      "type": "image",
+      "label": "Hero picture",
+      "group": "Hero header",
+      "presets": [
+        "arches",
+        "sprinkles",
+        "dunes",
+        "pour"
+      ]
+    },
+    {
+      "key": "hero.eyebrow",
+      "type": "text",
+      "label": "Small line above the headline",
+      "group": "Hero header",
+      "max": 40
+    },
+    {
+      "key": "hero.title",
+      "type": "text",
+      "label": "Headline",
+      "group": "Hero header",
+      "max": 60
+    },
+    {
+      "key": "hero.subtitle",
+      "type": "textarea",
+      "label": "Subtext",
+      "group": "Hero header",
+      "max": 180
+    },
+    {
+      "key": "sections",
+      "type": "toggles",
+      "label": "Sections",
+      "group": "Sections",
+      "options": [
+        "announcement",
+        "picks",
+        "story",
+        "reviews",
+        "visit"
+      ],
+      "optionLabels": {
+        "announcement": "Announcement bar",
+        "picks": "Favorites",
+        "story": "Our story",
+        "reviews": "Reviews",
+        "visit": "Visit us"
+      }
+    },
+    {
+      "key": "announcement",
+      "type": "text",
+      "label": "Announcement",
+      "group": "Sections",
+      "max": 80
+    },
+    {
+      "key": "story.title",
+      "type": "text",
+      "label": "Story headline",
+      "group": "Our story",
+      "max": 70
+    },
+    {
+      "key": "story.text",
+      "type": "textarea",
+      "label": "Our story",
+      "group": "Our story",
+      "max": 500
+    },
+    {
+      "key": "story.image",
+      "type": "image",
+      "label": "Story picture",
+      "group": "Our story",
+      "presets": [
+        "arches",
+        "sprinkles",
+        "dunes",
+        "pour"
+      ]
+    },
+    {
+      "key": "reviews.1.quote",
+      "type": "textarea",
+      "label": "Review 1",
+      "group": "Reviews",
+      "max": 220
+    },
+    {
+      "key": "reviews.1.name",
+      "type": "text",
+      "label": "Review 1 by",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "reviews.2.quote",
+      "type": "textarea",
+      "label": "Review 2",
+      "group": "Reviews",
+      "max": 220
+    },
+    {
+      "key": "reviews.2.name",
+      "type": "text",
+      "label": "Review 2 by",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "reviews.3.quote",
+      "type": "textarea",
+      "label": "Review 3",
+      "group": "Reviews",
+      "max": 220
+    },
+    {
+      "key": "reviews.3.name",
+      "type": "text",
+      "label": "Review 3 by",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "hours",
+      "type": "hours",
+      "label": "Opening hours",
+      "group": "Visit us"
+    }
+  ],
+  "defaults": {
+    "font": "soft",
+    "logo": "",
+    "theme": "blush",
+    "accent": "#C2577A",
+    "hero.image": "preset:sprinkles",
+    "hero.eyebrow": "Made fresh every morning",
+    "hero.title": "Small sweet things, made slowly.",
+    "hero.subtitle": "Ice cream churned in the shop, doughnuts from brioche dough and cakes for every kind of day.",
+    "sections": [
+      "announcement",
+      "picks",
+      "story",
+      "reviews",
+      "visit"
+    ],
+    "announcement": "New flavor every Friday",
+    "story.title": "Every flavor starts in our kitchen",
+    "story.text": "We make our ice cream in small batches with fresh milk and real fruit, and we bake the doughnuts the same morning you eat them. Nothing sits on the shelf overnight.",
+    "story.image": "preset:arches",
+    "reviews.1.quote": "",
+    "reviews.1.name": "",
+    "reviews.2.quote": "",
+    "reviews.2.name": "",
+    "reviews.3.quote": "",
+    "reviews.3.name": "",
+    "hours": {
+      "sat": "11:00-23:00",
+      "sun": "11:00-23:00",
+      "mon": "11:00-23:00",
+      "tue": "11:00-23:00",
+      "wed": "11:00-23:00",
+      "thu": "11:00-24:00",
+      "fri": "13:00-24:00"
+    }
+  }
+}

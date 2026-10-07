@@ -2,7 +2,6 @@ import { choice, number } from "@/lib/settings";
 import { Arrow, Clock, Pin } from "../../_kit/icons";
 import { Picture } from "../../_kit/Picture";
 import type { SouqContext } from "../context";
-import s from "../souq.module.css";
 
 export function Hero({ ctx }: { ctx: SouqContext }) {
   const split = choice(ctx.site.settings, "hero.layout", ["full", "split"] as const, "full") === "split";
@@ -11,25 +10,25 @@ export function Hero({ ctx }: { ctx: SouqContext }) {
   const subtitle = ctx.text("hero.subtitle");
   const { address } = ctx.site.business;
   return (
-    <section className={`${s.hero} ${split ? s.split : ""}`} id="top" data-section="hero" aria-labelledby="hero-title">
-      <div className={s.heroMedia}>{picture && <Picture src={picture} sizes={split ? "(min-width: 760px) 50vw, 100vw" : "100vw"} priority />}</div>
-      <div className={s.heroShade} style={{ opacity: number(ctx.site.settings, "hero.shade", 55) / 100 }} />
-      <div className={s.heroIn}>
-        {eyebrow && <span className={s.eyebrow}>{eyebrow}</span>}
+    <section className={`hero ${split ? "split" : ""}`} id="top" data-section="hero" aria-labelledby="hero-title">
+      <div className="heroMedia">{picture && <Picture src={picture} sizes={split ? "(min-width: 760px) 50vw, 100vw" : "100vw"} priority />}</div>
+      <div className="heroShade" style={{ opacity: number(ctx.site.settings, "hero.shade", 55) / 100 }} />
+      <div className="heroIn">
+        {eyebrow && <span className="eyebrow">{eyebrow}</span>}
         <h1 id="hero-title">{ctx.text("hero.title") || ctx.site.business.name}</h1>
         {subtitle && <p>{subtitle}</p>}
-        <div className={s.btns}>
-          <a className={`${s.btn} ${s.pri}`} href="#menu">
-            {ctx.c.viewMenu} <Arrow className={s.flip} />
+        <div className="btns">
+          <a className={`btn pri`} href="#menu">
+            {ctx.c.viewMenu} <Arrow className="flip" />
           </a>
           {ctx.on("visit") && (
-            <a className={`${s.btn} ${s.sec}`} href="#visit">
+            <a className={`btn sec`} href="#visit">
               {ctx.c.findUs}
             </a>
           )}
         </div>
         {(ctx.today || address) && (
-          <div className={s.heroMeta}>
+          <div className="heroMeta">
             {ctx.today && (
               <span>
                 <Clock /> {ctx.today}

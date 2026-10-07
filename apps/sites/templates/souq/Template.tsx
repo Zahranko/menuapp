@@ -2,6 +2,7 @@ import type { TemplateProps } from "@/lib/types";
 import { fontVariables } from "../_kit/fonts";
 import { ItemSheet, type SheetItem } from "../_kit/ItemSheet";
 import { tintFor } from "../_kit/site-data";
+import { TemplateStyles } from "../_kit/TemplateStyles";
 import { souqContext } from "./context";
 import { Footer } from "./sections/Footer";
 import { Header } from "./sections/Header";
@@ -13,7 +14,6 @@ import { Signature } from "./sections/Signature";
 import { Gallery } from "./sections/Gallery";
 import { Story } from "./sections/Story";
 import { Visit } from "./sections/Visit";
-import s from "./souq.module.css";
 import { dotted, souqVars } from "./theme";
 
 /** Template 001 "Souq": a warm café site with a big hero, signature picks and a searchable menu. */
@@ -34,13 +34,14 @@ export default function SouqTemplate({ site, preview, now }: TemplateProps & { n
   );
 
   return (
-    <div className={`${s.site} ${fontVariables} ${dotted(site.settings) ? s.pat : ""}`} style={souqVars(site.settings, site.business.locale)}>
-      <a className={s.skip} href="#menu">
+    <div data-template="souq" className={`t-souq ${fontVariables} ${dotted(site.settings) ? "pat" : ""}`} style={souqVars(site.settings, site.business.locale)}>
+      <TemplateStyles id="souq" />
+      <a className="skip" href="#menu">
         {ctx.c.viewMenu}
       </a>
-      {preview && <div className={s.preview}>{ctx.t.preview}</div>}
+      {preview && <div className="preview">{ctx.t.preview}</div>}
       {ctx.on("announcement") && announcement && (
-        <div className={s.ann} data-section="announcement">
+        <div className="ann" data-section="announcement">
           {announcement}
         </div>
       )}
@@ -60,7 +61,7 @@ export default function SouqTemplate({ site, preview, now }: TemplateProps & { n
         items={sheetItems}
         closeLabel={ctx.t.close}
         soldOutLabel={ctx.t.soldOut}
-        classes={{ dialog: s.sheet, media: s.sheetMedia, body: s.sheetBody, title: s.sheetTitle, text: s.sheetText, row: s.sheetRow, close: `${s.btn} ${s.pri}`, tag: s.tag }}
+        classes={{ dialog: "sheet", media: "sheetMedia", body: "sheetBody", title: "sheetTitle", text: "sheetText", row: "sheetRow", close: `btn pri`, tag: "tag" }}
       />
     </div>
   );
