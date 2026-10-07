@@ -38,6 +38,28 @@ public sealed class StorefrontDbContext(DbContextOptions<StorefrontDbContext> op
 
     Task IUnitOfWork.SaveChangesAsync(CancellationToken ct) => SaveChangesAsync(ct);
 
+    async Task<TResult> IUnitOfWork.InTransactionAsync<TResult>(Func<Task<TResult>> work, CancellationToken ct)
+    {
+        if (Database.CurrentTransaction is not null)
+        {
+            return await work();
+        }
+
+        await using var transaction = await Database.BeginTransactionAsync(ct);
+        var result = await work();
+        if (result.IsSuccess)
+        {
+            await transaction.CommitAsync(ct);
+        }
+        else
+        {
+            await transaction.RollbackAsync(ct);
+            ChangeTracker.Clear();
+        }
+
+        return result;
+    }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
