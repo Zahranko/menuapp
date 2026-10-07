@@ -10,25 +10,32 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "templates:registry": "node scripts/build-registry.mjs",
-    "templates:check": "node scripts/build-registry.mjs --check"
+    "templates:check": "node scripts/build-registry.mjs --check",
+    "api:types": "openapi-typescript ../../docs/api/openapi.json -o lib/api-types.ts",
+    "prebuild": "node scripts/build-registry.mjs --check && node scripts/copy-reserved-slugs.mjs",
+    "predev": "node scripts/copy-reserved-slugs.mjs",
+    "pretest": "node scripts/copy-reserved-slugs.mjs",
+    "pretypecheck": "node scripts/copy-reserved-slugs.mjs"
   },
   "dependencies": {
     "next": "16.4.0",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "server-only": "^0.0.1"
   },
   "devDependencies": {
+    "@testing-library/dom": "^10",
+    "@testing-library/react": "^16",
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^6",
     "eslint": "^9",
     "eslint-config-next": "16.4.0",
-    "typescript": "^5",
-    "vitest": "^5",
-    "@vitejs/plugin-react": "^6",
     "jsdom": "^27",
-    "@testing-library/react": "^16",
-    "@testing-library/dom": "^10",
-    "vite": "^8"
+    "openapi-typescript": "^7.13.0",
+    "typescript": "^5",
+    "vite": "^8",
+    "vitest": "^5"
   }
 }
