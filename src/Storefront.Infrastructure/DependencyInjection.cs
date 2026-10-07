@@ -20,12 +20,12 @@ public static class DependencyInjection
     {
         services.Configure<StorefrontOptions>(configuration.GetSection(StorefrontOptions.SectionName));
 
-        var connectionString = configuration.GetConnectionString("Default")
-            ?? throw new InvalidOperationException("Connection string 'Default' is missing (ConnectionStrings__Default).");
-
         services.AddSingleton<DomainEventsInterceptor>();
+        // Read the connection string when the context is built, so test hosts can override configuration.
         services.AddDbContext<StorefrontDbContext>((sp, options) => options
-            .UseNpgsql(connectionString, npgsql => npgsql.MigrationsAssembly(typeof(StorefrontDbContext).Assembly.FullName))
+            .UseNpgsql(
+                sp.GetRequiredService<IConfiguration>().GetConnectionString("Default")
+                    ?? throw new InvalidOperationException("Connection string 'Default' is missing (ConnectionStrings__Default)."), npgsql => npgsql.MigrationsAssembly(typeof(StorefrontDbContext).Assembly.FullName))
             .AddInterceptors(sp.GetRequiredService<DomainEventsInterceptor>()));
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<StorefrontDbContext>());
 
@@ -65,14 +65,12 @@ public static class DependencyInjection
         services.AddSingleton<ITokenService, TokenService>();
 
         services.Configure<SmtpOptions>(configuration.GetSection(SmtpOptions.SectionName));
-        if (string.IsNullOrWhiteSpace(configuration[$"{SmtpOptions.SectionName}:Host"]))
-        {
-            services.AddSingleton<IEmailSender, LogEmailSender>();
-        }
-        else
-        {
-            services.AddSingleton<IEmailSender, SmtpEmailSender>();
-        }
+        services.AddSingleton<LogEmailSender>();
+        services.AddSingleton<SmtpEmailSender>();
+        services.AddSingleton<IEmailSender>(sp =>
+            string.IsNullOrWhiteSpace(sp.GetRequiredService<IConfiguration>()[$"{SmtpOptions.SectionName}:Host"])
+                ? sp.GetRequiredService<LogEmailSender>()
+                : sp.GetRequiredService<SmtpEmailSender>());
 
         services.AddScoped<TemplateRegistryImporter>();
         services.AddScoped<DevelopmentSeeder>();
