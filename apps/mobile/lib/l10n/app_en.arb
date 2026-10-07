@@ -1,0 +1,79 @@
+{
+  "@@locale": "en",
+  "createAccount": "Create account",
+  "creatingAccount": "Creating account",
+  "logIn": "Log in",
+  "loggingIn": "Logging in",
+  "back": "Back",
+  "signupTitle": "Set up your business",
+  "signupSubtitle": "One account, one menu site. Takes about a minute.",
+  "businessName": "Business name",
+  "businessNameHint": "Vanilla Menu",
+  "linkAvailable": "Available",
+  "linkTaken": "Taken",
+  "email": "Email",
+  "emailHint": "you@business.com",
+  "phone": "Phone number",
+  "phoneHint": "7X XXX XXXX",
+  "countryCode": "Country code",
+  "password": "Password",
+  "passwordHint": "At least 8 characters",
+  "passwordHelp": "Use 8+ characters with a number and a capital letter.",
+  "strengthTooShort": "Too short",
+  "strengthWeak": "Weak. Add a number and a capital letter.",
+  "strengthOkay": "Okay. Add a capital letter or symbol.",
+  "strengthGood": "Good password",
+  "strengthStrong": "Strong password",
+  "showPassword": "Show password",
+  "hidePassword": "Hide password",
+  "termsAgree": "I agree to the Terms and Privacy Policy.",
+  "haveAccount": "Already have an account?",
+  "errBusinessName": "Enter your business name.",
+  "errEmail": "Enter your email.",
+  "errEmailFormat": "Check the email format, like name@business.com.",
+  "errPhone": "Enter your phone number.",
+  "errPhoneFull": "Enter a full phone number without the country code.",
+  "errPasswordShort": "Password needs at least 8 characters.",
+  "errTerms": "Accept the terms to continue.",
+  "errPassword": "Enter your password.",
+  "errNetwork": "Can't reach the server. Check your connection and try again.",
+  "errGeneric": "Something went wrong. Try again.",
+  "loginTitle": "Welcome back",
+  "loginSubtitle": "Log in to edit your menu and prices.",
+  "loginWith": "Log in with",
+  "tabEmail": "Email",
+  "tabPhone": "Phone",
+  "passwordHintLogin": "Your password",
+  "forgotPassword": "Forgot password?",
+  "newTo": "New to {brandName}?",
+  "@newTo": {
+    "placeholders": {
+      "brandName": {
+        "type": "String"
+      }
+    }
+  },
+  "createAnAccount": "Create an account",
+  "forgotTitle": "Reset your password",
+  "forgotBody": "Enter your account email and we'll send you a reset link.",
+  "sendLink": "Send reset link",
+  "resetSent": "We sent a reset link to your email",
+  "welcomeTitle": "Your table is set, {name}.",
+  "@welcomeTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "welcomeNew": "Your account is ready. Next, pick a template and add your first items.",
+  "welcomeBack": "You are logged in. Your menu site is live at the link below.",
+  "yourLink": "Your menu link",
+  "copy": "Copy",
+  "copied": "Copied",
+  "stepAccount": "Account created",
+  "stepTemplate": "Choose one of 100 templates",
+  "stepItems": "Add items and prices",
+  "stepPublish": "Choose Basic ($5) or Pro ($10) and publish",
+  "logOut": "Log out"
+}

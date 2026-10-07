@@ -15,7 +15,7 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 | S08 | Next.js template 001 "Souq" and SEO | done | | Souq with all sections, shared template kit, JSON-LD, per-host robots and sitemap, Open Graph image, Playwright smoke test |
 | S09 | Next.js marketing pages | not started | | |
 | S10 | Flutter foundation, splash, onboarding | not started | | |
-| S11 | Flutter sign up and log in | not started | | |
+| S11 | Flutter sign up and log in | in progress | | Sign up (live link check, strength bar, API field errors), log in by email or phone, forgot password, welcome with the live link, secure token storage, refresh on 401, en/ar. Not yet: generated Dart client, screenshots |
 | S12 | Flutter My menu dashboard | not started | | |
 | S13 | Flutter template gallery and editor | not started | | |
 | S14 | Flutter plans and custom domain | not started | | |
@@ -42,6 +42,8 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 
 (Things a session found that belong to another session. Format: `- [S07] what and why (found in S03)`.)
 
+- [S11] Generate the Dart client from `docs/api/openapi.json` (`scripts/gen-dart-client.sh`) and replace the hand-written calls in `apps/mobile/lib/features/auth/auth_repository.dart` (found in S11 early).
+- [S02] API error messages are English only; the app shows them as they come. Return a localized message (Accept-Language) or a stable code the app can translate (found in S11 early).
 - [S15] `scripts/session-start.sh` still starts PostgreSQL. Cloud sessions can't download SQL Server, so integration tests only run in CI; update the hook if a SQL Server image becomes reachable (found in the site4now move).
 - [S09] Add a `/reset-password?email=&token=` page on the marketing site that posts to `POST /api/v1/auth/reset-password`; the reset email links there (found in S02).
 - [S15] When deploying, set `Security__KnownNetworks` (or `Security__KnownProxies`) to Caddy's address or Docker network, otherwise forwarded headers are ignored and every request looks like it came from Caddy (found in S15 API security).
@@ -54,6 +56,7 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 
 (Anything decided that is not in PLAN.md, with the reason.)
 
+- S11 (early, owner asked to connect the app to the live API): the app's API address comes from `apps/mobile/config/production.json` (`--dart-define-from-file`, next to `brand.json`), so a host change doesn't touch the brand file; without it the app falls back to `https://{apiHost}`. The API client is hand-written dio for now (`lib/core/api/`), with a queued interceptor so parallel 401s share one refresh (the API revokes a reused refresh token); refresh and the retry go through a client without interceptors. Signed-in owners land on the welcome screen until the dashboard (S12) exists. A start screen stands in for the splash and onboarding (S10).
 - Hosting (owner's choice): the API runs on site4now (Windows/IIS) with its SQL Server database, so the database moved from PostgreSQL to SQL Server. One fresh `Initial` migration replaces the PostgreSQL ones (nothing was deployed yet). JSON columns are `nvarchar(max)`, product search uses `LIKE` (SQL Server's default collation ignores case, and `[` is escaped), the category name key is `LOWER([Name])`, and `MediaAsset.Url` is limited to 800 characters so its index stays under the 1700-byte key limit. CI runs the integration tests on a SQL Server 2022 container.
 - Deploy: `.github/workflows/deploy-site4now.yml` publishes a self-contained win-x64 build over FTPS on pushes to `main` or `deploy`, writes `web.config` (out-of-process, settings as environment variables, `MigrateOnStartup`), and uses `app_offline.htm` while uploading. Setup and secrets: `docs/deploy-site4now.md`. HTTPS is enforced only when the `API_URL` variable is an https address.
 - iOS build: `codemagic.yaml` has an unsigned IPA workflow and a signed TestFlight workflow for `apps/mobile` (setup in `docs/ios-build.md`). `rebrand.sh` also writes `appId` into its `bundle_identifier`. The iOS app is iPhone only and portrait only, and declares `ITSAppUsesNonExemptEncryption = false` (HTTPS only).
