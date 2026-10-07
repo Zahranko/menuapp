@@ -11,7 +11,7 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 | S04 | Sites, templates, public read API | done | | Template gallery, schema-validated drafts, publish, preview tokens, public by-slug/by-host/preview with ETags |
 | S05 | Plans, billing abstraction, custom domains | not started | | |
 | S06 | Back office (MVC) | not started | | |
-| S07 | Next.js foundation and routing | not started | | |
+| S07 | Next.js foundation and routing | done | | Host/slug routing in proxy.ts, typed API client, fixtures, signed revalidate endpoint, preview route, fallback template |
 | S08 | Next.js template 001 "Souq" and SEO | not started | | |
 | S09 | Next.js marketing pages | not started | | |
 | S10 | Flutter foundation, splash, onboarding | not started | | |
@@ -35,6 +35,7 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 - `RateLimits__AuthPerMinute` (10), `RateLimits__SlugCheckPerMinute` (60), `RateLimits__PublicPerMinute` (600), per client IP (S02).
 - `Storefront__SeedSampleData` (true in Development): seeds plans, templates and the sample business `vanillamenu` (S01). Sample owner login: `owner@example.com` / `Sample-pass-123`, development only.
 - `Storefront__MigrateOnStartup`: apply migrations at startup outside Development (S01). `Storefront__SkipDatabaseStartup`: skip migrate and template import (used by `export-openapi.sh`).
+- Next.js (`apps/sites`, S07): `STOREFRONT_API_URL` (API base URL, default `http://localhost:5080`), `REVALIDATE_SECRET` (must equal the API's `Revalidation__Secret`), `SITES_MAIN_HOSTS` (extra hosts treated like the brand domain, default `localhost,127.0.0.1`), `IMAGE_HOSTS` (comma-separated hosts allowed for `next/image`, e.g. the storage public host), `APP_FIXTURES=1` (serve the sample site `vanillamenu` without the API; preview token `fixture`), `APP_FIXTURE_TEMPLATE` (template id for the fixture). The API's `Revalidation__Url` is `https://{domain}/api/revalidate`.
 - `Storefront__TemplateRegistryFile`, `Storefront__ReservedSlugsFile`: paths when the app runs outside the repo (Docker). Found automatically inside the repo (S01).
 
 ## Follow-ups
@@ -50,6 +51,10 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 (Anything decided that is not in PLAN.md, with the reason.)
 
 - S00: Next.js 16 (current stable) with Cache Components on. `apps/sites/next.config.ts` sets the Turbopack root to the repo root so `lib/brand.ts` can import `brand.json`.
+- S07: Cache Components are off. The sites use fetch with `next: { tags }`: `site:<slug>` (revalidate 3600 s as a safety net) and `host:<domain>` (60 s); `/api/revalidate` calls `revalidateTag(tag, { expire: 0 })`. This replaces the S00 note about Cache Components.
+- S07: `proxy.ts` (Next 16's middleware) rewrites `{domain}/<slug>` to the internal route `/s/<slug>` and `/_preview/<token>` to `/s-preview/<token>`; neither can clash with a slug because slugs never contain `-` and `s` is too short. Custom hosts are resolved with `by-host` and cached in memory for 60 s; unknown hosts get the not-found page.
+- S07: Marketing pages and sites are separate root layouts (`app/(marketing)`, `app/(site)`) so each site sets its own `lang`/`dir`; `app/global-not-found.tsx` handles unmatched URLs.
+- S07: Templates are registered in `apps/sites/templates/registry.ts` (id → component). Ids without a component render the fallback template.
 - S04: Draft settings are validated against the template schema and stored complete (missing keys take the template's defaults). Unknown keys are rejected. Field errors are keyed `settings.<key>`.
 - S04: Preview tokens are HMAC-signed (key derived from `Auth__SigningKey`), valid 30 minutes; preview URL is `https://{domain}/_preview/<token>`. `GET /api/public/v1/preview/{token}` is `no-store`.
 - S04: Public site responses: `Cache-Control: public, max-age=60, stale-while-revalidate=300` and a content-hash ETag (304 on `If-None-Match`). Unpublished sites are 404. `by-host` also matches `www.` + an active domain. Categories without products are left out; sold-out products stay with `isAvailable: false`.

@@ -41,3 +41,4 @@ apps/mobile/ios/Flutter/ephemeral/
 .env
 *.pem
 App_Data/
+apps/sites/lib/reserved-slugs.generated.json
