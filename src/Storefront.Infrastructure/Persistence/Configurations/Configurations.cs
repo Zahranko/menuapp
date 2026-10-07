@@ -176,7 +176,7 @@ internal sealed class OutboxMessageConfiguration : IEntityTypeConfiguration<Outb
         b.Property(x => x.Type).HasMaxLength(100);
         b.Property(x => x.Payload).HasColumnType("jsonb");
         b.Property(x => x.LastError).HasMaxLength(2000);
-        b.HasIndex(x => x.ProcessedAt).HasFilter("\"ProcessedAt\" IS NULL");
+        b.HasIndex(x => new { x.NextAttemptAt, x.OccurredAt }).HasFilter("\"ProcessedAt\" IS NULL");
     }
 }
 

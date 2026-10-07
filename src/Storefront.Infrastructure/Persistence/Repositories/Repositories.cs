@@ -52,7 +52,29 @@ internal sealed class CatalogRepository(StorefrontDbContext db) : ICatalogReposi
             .OrderBy(p => p.SortOrder).ThenBy(p => p.CreatedAt)
             .ToListAsync(ct);
 
+    public async Task<IReadOnlyList<Product>> SearchProductsAsync(Guid? categoryId, string? text, CancellationToken ct)
+    {
+        var query = db.Products.Where(p => categoryId == null || p.CategoryId == categoryId);
+        if (!string.IsNullOrWhiteSpace(text))
+        {
+            var pattern = $"%{EscapeLike(text.Trim())}%";
+            query = query.Where(p => EF.Functions.ILike(p.Name, pattern, "\\") || (p.Description != null && EF.Functions.ILike(p.Description, pattern, "\\")));
+        }
+
+        return await query.OrderBy(p => p.SortOrder).ThenBy(p => p.CreatedAt).ToListAsync(ct);
+    }
+
+    public async Task<IReadOnlyDictionary<Guid, int>> CountProductsByCategoryAsync(CancellationToken ct) =>
+        await db.Products.GroupBy(p => p.CategoryId).Select(g => new { g.Key, Count = g.Count() }).ToDictionaryAsync(x => x.Key, x => x.Count, ct);
+
+    public async Task<int> NextCategorySortOrderAsync(CancellationToken ct) => (await db.Categories.MaxAsync(c => (int?)c.SortOrder, ct) ?? -1) + 1;
+
+    public async Task<int> NextProductSortOrderAsync(Guid categoryId, CancellationToken ct) =>
+        (await db.Products.Where(p => p.CategoryId == categoryId).MaxAsync(p => (int?)p.SortOrder, ct) ?? -1) + 1;
+
     public Task<Product?> GetProductAsync(Guid id, CancellationToken ct) => db.Products.FirstOrDefaultAsync(p => p.Id == id, ct);
+
+    private static string EscapeLike(string value) => value.Replace("\\", "\\\\").Replace("%", "\\%").Replace("_", "\\_");
 
     public Task<int> CountProductsAsync(Guid categoryId, CancellationToken ct) => db.Products.CountAsync(p => p.CategoryId == categoryId, ct);
 

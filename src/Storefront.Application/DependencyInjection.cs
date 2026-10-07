@@ -10,7 +10,7 @@ public static class DependencyInjection
     {
         var assembly = typeof(DependencyInjection).Assembly;
         foreach (var type in assembly.GetTypes().Where(t => t is { IsClass: true, IsAbstract: false, IsPublic: true }
-                     && (t.Name.EndsWith("Handler", StringComparison.Ordinal) || t.Name.EndsWith("Issuer", StringComparison.Ordinal))))
+                     && (t.Name.EndsWith("Handler", StringComparison.Ordinal) || t.Name.EndsWith("Issuer", StringComparison.Ordinal) || t.Name.EndsWith("Checker", StringComparison.Ordinal))))
         {
             services.AddScoped(type);
         }

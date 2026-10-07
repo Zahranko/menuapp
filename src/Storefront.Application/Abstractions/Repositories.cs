@@ -33,6 +33,15 @@ public interface ICatalogRepository
 
     Task<IReadOnlyList<Product>> ListProductsAsync(Guid? categoryId, CancellationToken ct);
 
+    /// <summary>Filters by category and by text in the name or description (case-insensitive).</summary>
+    Task<IReadOnlyList<Product>> SearchProductsAsync(Guid? categoryId, string? text, CancellationToken ct);
+
+    Task<IReadOnlyDictionary<Guid, int>> CountProductsByCategoryAsync(CancellationToken ct);
+
+    Task<int> NextCategorySortOrderAsync(CancellationToken ct);
+
+    Task<int> NextProductSortOrderAsync(Guid categoryId, CancellationToken ct);
+
     Task<Product?> GetProductAsync(Guid id, CancellationToken ct);
 
     Task<int> CountProductsAsync(Guid categoryId, CancellationToken ct);

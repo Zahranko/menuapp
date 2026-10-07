@@ -40,3 +40,4 @@ apps/mobile/ios/Flutter/ephemeral/
 # Secrets
 .env
 *.pem
+App_Data/

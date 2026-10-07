@@ -7,7 +7,7 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 | S00 | Repo bootstrap, tooling, CI | done | | .NET 10 solution, Next.js 16 sites, Flutter app, CI, brand scripts |
 | S01 | Domain model and persistence | done | | Entities, value objects, EF Core + PostgreSQL, Initial migration, dev seeder |
 | S02 | Auth and accounts API | done | | Register, login (email or phone), rotating refresh tokens, password reset, business profile |
-| S03 | Catalog API | not started | | |
+| S03 | Catalog API | done | | Categories, products, image upload, outbox dispatcher, signed revalidation, audit log |
 | S04 | Sites, templates, public read API | not started | | |
 | S05 | Plans, billing abstraction, custom domains | not started | | |
 | S06 | Back office (MVC) | not started | | |
@@ -29,6 +29,9 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 - `ConnectionStrings__Default`: PostgreSQL connection (S01).
 - `Auth__SigningKey` (32+ characters, secret, required outside Development), `Auth__Issuer`, `Auth__Audience`, `Auth__AccessTokenMinutes` (15), `Auth__RefreshTokenDays` (30) (S02).
 - `Email__Smtp__Host`, `__Port`, `__UserName`, `__Password`, `__EnableSsl`: when Host is empty, emails go to the log (S02). Sender is `noReplyEmail` from brand.json.
+- `Revalidation__Url` (the Next.js endpoint, for example `https://{domain}/api/revalidate`) and `Revalidation__Secret` (shared HMAC secret). The API POSTs `{"tags":["site:<slug>"]}` (plus `host:<domain>` when a custom domain changes) with header `X-Storefront-Signature` = lowercase hex HMAC-SHA256 of the exact body. Empty Url = no calls (S03, used by S07).
+- `Storage__Provider` (`local` or `s3`), `Storage__PublicBaseUrl`, `Storage__LocalRoot`, and for S3/R2: `Storage__ServiceUrl`, `Storage__Bucket`, `Storage__AccessKey`, `Storage__SecretKey`, `Storage__Region` (S03). Local files are served by the API at `/media`.
+- `Outbox__Enabled` (true), `Outbox__PollSeconds` (2) (S03).
 - `RateLimits__AuthPerMinute` (10), `RateLimits__SlugCheckPerMinute` (60), `RateLimits__PublicPerMinute` (600), per client IP (S02).
 - `Storefront__SeedSampleData` (true in Development): seeds plans, templates and the sample business `vanillamenu` (S01). Sample owner login: `owner@example.com` / `Sample-pass-123`, development only.
 - `Storefront__MigrateOnStartup`: apply migrations at startup outside Development (S01). `Storefront__SkipDatabaseStartup`: skip migrate and template import (used by `export-openapi.sh`).
@@ -47,6 +50,9 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 (Anything decided that is not in PLAN.md, with the reason.)
 
 - S00: Next.js 16 (current stable) with Cache Components on. `apps/sites/next.config.ts` sets the Turbopack root to the repo root so `lib/brand.ts` can import `brand.json`.
+- S03: The outbox keeps fine-grained event types (`ProductChanged`, `CategoryChanged`, `BusinessChanged`, `SitePublished`, `DomainActivated`, `DomainDeactivated`); the dispatcher treats them all as "site content changed" and sends one revalidation per business per batch. Retries back off from 5 seconds to 1 hour, 10 attempts.
+- S03: Product images must be URLs uploaded through `/api/v1/media` by the same business. Prices with more decimals than the currency allows are rejected ("Use numbers only, like 3.50.").
+- S03: Fixed the integration tests so they really use their own throwaway database (the connection string is now read when the DbContext is created).
 - S02: Register requires the phone number with its country code (E.164 after removing spaces); the app combines the country picker and the number. Errors use the prototype copy; a taken link says "That link is taken. Try adding your city, like {slug}amman." and slug-availability returns a free `suggestion`.
 - S02: Login errors are `auth.invalid` (wrong email, phone or password) and `auth.locked` (5 failures, 5 minutes), both 401. Refresh reuse revokes every token that grew from the reused one.
 - S02: New owners start on `basic` with a 14-day `trialing` subscription (provider `none`) until D8 is decided.

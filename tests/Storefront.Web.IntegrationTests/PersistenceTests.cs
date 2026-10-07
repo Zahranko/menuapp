@@ -32,6 +32,7 @@ public class PersistenceTests : IAsyncLifetime
             .AddInMemoryCollection(new Dictionary<string, string?> { ["ConnectionStrings:Default"] = _database.ConnectionString })
             .Build();
         var services = new ServiceCollection().AddLogging();
+        services.AddSingleton<IConfiguration>(config);
         Storefront.Infrastructure.DependencyInjection.AddInfrastructure(services, config);
         services.AddSingleton<ICurrentUser>(_user);
         _services = services.BuildServiceProvider();
