@@ -1,0 +1,133 @@
+{
+  "id": "bistro",
+  "number": 10,
+  "name": "Bistro Card",
+  "category": "Restaurant",
+  "description": "A folded menu card on a tablecloth: cover with today's dish, courses inside.",
+  "version": 1,
+  "thumbnail": "/templates/bistro/thumbnail.png",
+  "sample": "restaurant",
+  "schema": [
+    {
+      "key": "font",
+      "type": "choice",
+      "label": "Font style",
+      "group": "Brand",
+      "options": ["elegant", "classic", "soft"],
+      "optionLabels": {
+        "elegant": "Elegant",
+        "classic": "Classic",
+        "soft": "Soft"
+      }
+    },
+    {
+      "key": "logo",
+      "type": "image",
+      "label": "Logo",
+      "group": "Brand"
+    },
+    {
+      "key": "theme",
+      "type": "palette",
+      "label": "Tablecloth",
+      "group": "Brand",
+      "options": ["gingham", "blue", "oak", "noir"],
+      "swatches": {
+        "gingham": "#C7363B",
+        "blue": "#2D5DA8",
+        "oak": "#8A5A35",
+        "noir": "#1C1A18"
+      }
+    },
+    {
+      "key": "accent",
+      "type": "color",
+      "label": "Ink color",
+      "group": "Brand",
+      "options": ["#9E2A2B", "#1F4E79", "#3A5A40", "#6B3E26"]
+    },
+    {
+      "key": "hero.eyebrow",
+      "type": "text",
+      "label": "Small line above the name",
+      "group": "Cover",
+      "max": 40
+    },
+    {
+      "key": "hero.title",
+      "type": "text",
+      "label": "Tagline",
+      "group": "Cover",
+      "max": 60
+    },
+    {
+      "key": "sections",
+      "type": "toggles",
+      "label": "Sections",
+      "group": "Sections",
+      "options": ["announcement", "special", "story", "visit"],
+      "optionLabels": {
+        "announcement": "Announcement bar",
+        "special": "Today's dish",
+        "story": "The house",
+        "visit": "Hours and contact"
+      }
+    },
+    {
+      "key": "announcement",
+      "type": "text",
+      "label": "Announcement",
+      "group": "Sections",
+      "max": 80
+    },
+    {
+      "key": "special.title",
+      "type": "text",
+      "label": "Today's dish headline",
+      "group": "Today's dish",
+      "max": 40
+    },
+    {
+      "key": "story.title",
+      "type": "text",
+      "label": "Story headline",
+      "group": "The house",
+      "max": 60
+    },
+    {
+      "key": "story.text",
+      "type": "textarea",
+      "label": "The house",
+      "group": "The house",
+      "max": 400
+    },
+    {
+      "key": "hours",
+      "type": "hours",
+      "label": "Opening hours",
+      "group": "Visit and contact"
+    }
+  ],
+  "defaults": {
+    "font": "elegant",
+    "logo": "",
+    "theme": "gingham",
+    "accent": "#9E2A2B",
+    "hero.eyebrow": "Est. 2019",
+    "hero.title": "Home cooking, the way our grandmother made it",
+    "sections": ["special", "story", "visit"],
+    "announcement": "Friday family lunch from 1 pm",
+    "special.title": "Today's dish",
+    "story.title": "The house",
+    "story.text": "Bait Sitti means grandmother's house. The recipes are hers, the plates are big and there is always room for one more at the table.",
+    "hours": {
+      "sat": "12:00-23:30",
+      "sun": "12:00-23:30",
+      "mon": "12:00-23:30",
+      "tue": "12:00-23:30",
+      "wed": "12:00-23:30",
+      "thu": "12:00-00:30",
+      "fri": "13:00-00:30"
+    }
+  }
+}

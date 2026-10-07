@@ -1,0 +1,145 @@
+{
+  "id": "neondiner",
+  "number": 8,
+  "name": "Neon Diner",
+  "category": "Burgers, diner",
+  "description": "A retro diner: neon sign, checkered strips and numbered combo cards.",
+  "version": 1,
+  "thumbnail": "/templates/neondiner/thumbnail.png",
+  "sample": "fastfood",
+  "schema": [
+    {
+      "key": "font",
+      "type": "choice",
+      "label": "Font style",
+      "group": "Brand",
+      "options": [
+        "condensed",
+        "bold",
+        "round"
+      ],
+      "optionLabels": {
+        "condensed": "Poster",
+        "bold": "Bold",
+        "round": "Friendly"
+      }
+    },
+    {
+      "key": "logo",
+      "type": "image",
+      "label": "Logo",
+      "group": "Brand"
+    },
+    {
+      "key": "theme",
+      "type": "palette",
+      "label": "Color theme",
+      "group": "Brand",
+      "options": [
+        "diner",
+        "cherry",
+        "mint",
+        "midnight"
+      ],
+      "swatches": {
+        "diner": "#FFF6E5",
+        "cherry": "#FCEDEE",
+        "mint": "#E6F5EF",
+        "midnight": "#121826"
+      }
+    },
+    {
+      "key": "accent",
+      "type": "color",
+      "label": "Neon color",
+      "group": "Brand",
+      "options": [
+        "#D7263D",
+        "#1B9AAA",
+        "#F4A300",
+        "#6C3FC5"
+      ]
+    },
+    {
+      "key": "checks",
+      "type": "toggle",
+      "label": "Checkered strips",
+      "group": "Brand"
+    },
+    {
+      "key": "hero.title",
+      "type": "text",
+      "label": "Line under the sign",
+      "group": "Sign",
+      "max": 60
+    },
+    {
+      "key": "sections",
+      "type": "toggles",
+      "label": "Sections",
+      "group": "Sections",
+      "options": [
+        "announcement",
+        "story",
+        "visit"
+      ],
+      "optionLabels": {
+        "announcement": "Announcement bar",
+        "story": "Our story",
+        "visit": "Hours and contact"
+      }
+    },
+    {
+      "key": "announcement",
+      "type": "text",
+      "label": "Announcement",
+      "group": "Sections",
+      "max": 80
+    },
+    {
+      "key": "story.title",
+      "type": "text",
+      "label": "Story headline",
+      "group": "Our story",
+      "max": 60
+    },
+    {
+      "key": "story.text",
+      "type": "textarea",
+      "label": "Our story",
+      "group": "Our story",
+      "max": 400
+    },
+    {
+      "key": "hours",
+      "type": "hours",
+      "label": "Opening hours",
+      "group": "Visit and contact"
+    }
+  ],
+  "defaults": {
+    "font": "condensed",
+    "logo": "",
+    "theme": "diner",
+    "accent": "#D7263D",
+    "checks": true,
+    "hero.title": "Smashed burgers, hot fries, cold shakes",
+    "sections": [
+      "announcement",
+      "story",
+      "visit"
+    ],
+    "announcement": "Combo Tuesday: any burger with fries and a drink",
+    "story.title": "Since the first smash",
+    "story.text": "Two friends, one hot griddle and a recipe for house sauce we still will not share. Everything is cooked to order, so give us a few minutes.",
+    "hours": {
+      "sat": "12:00-23:30",
+      "sun": "12:00-23:30",
+      "mon": "12:00-23:30",
+      "tue": "12:00-23:30",
+      "wed": "12:00-23:30",
+      "thu": "12:00-00:30",
+      "fri": "13:00-00:30"
+    }
+  }
+}

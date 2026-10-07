@@ -104,6 +104,22 @@ export const SAMPLES = {
       ["Small plates", "Miso soup", "Tofu, wakame, spring onion", 1.75, null, false, "soup"],
     ],
   },
+  pizza: {
+    name: "Forno Rosso",
+    address: "Al-Baouniyah Street 14, Jabal Al-Luweibdeh",
+    instagram: "fornorosso",
+    menu: [
+      ["Pizza", "Margherita", "San Marzano tomato, fior di latte, basil", 6.0, "Best seller", true, "pizza"],
+      ["Pizza", "Diavola", "Spicy beef salami, tomato, mozzarella, chili honey", 7.75, "Spicy", true, "pizza"],
+      ["Pizza", "Za'atar and labneh", "White base, za'atar, labneh, olives and mint", 6.5, "Signature", true, "pizza"],
+      ["Pizza", "Quattro formaggi", "Mozzarella, gorgonzola, parmesan and halloumi", 8.25, null, false, "pizza"],
+      ["Pasta", "Penne arrabbiata", "Tomato, garlic and chili", 5.5, "Vegan", false, "noodles"],
+      ["Pasta", "Tagliatelle al ragù", "Slow cooked beef ragù, parmesan", 7.0, null, false, "noodles"],
+      ["Salads", "Rocket and parmesan", "Lemon, olive oil, shaved parmesan", 4.25, null, false, "salad"],
+      ["Desserts", "Tiramisu", "Mascarpone, espresso, cocoa", 3.75, null, false, "cake"],
+      ["Drinks", "Fresh lemonade", "Lemon, mint and a little sugar", 2.0, null, false, "juice"],
+    ],
+  },
   shop: {
     name: "Olive and Thread",
     address: "Jabal Al-Weibdeh, Paris Circle 3",

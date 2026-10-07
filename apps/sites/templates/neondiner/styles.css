@@ -1,0 +1,422 @@
+/* Template 008 "Neon Diner": a neon sign, checkered strips, jukebox buttons and numbered combo cards with offset shadows. */
+
+.t-diner {
+  container: page / inline-size;
+  font-size: 15px;
+  line-height: 1.5;
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--fd);
+    font-weight: var(--fw);
+    letter-spacing: var(--ft);
+    line-height: 1.02;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+
+  .checks {
+    height: 22px;
+    background: repeating-conic-gradient(var(--check) 0 25%, var(--bg) 0 50%) 0 0 / 22px 22px;
+  }
+
+  .neon {
+    color: #fffaf3;
+    text-shadow:
+      0 0 2px #fff,
+      0 0 10px var(--acc),
+      0 0 22px var(--acc),
+      0 0 44px var(--acc);
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: var(--acc);
+    color: var(--acc-ink);
+  }
+  .tag-out {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  /* the sign */
+  .sign {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    padding: 22px 18px 34px;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 45%, color-mix(in srgb, var(--acc) 22%, transparent), transparent 70%),
+      var(--sign);
+    color: #fffaf3;
+  }
+  .sign-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .logo {
+    position: relative;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #fffaf3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font: var(--fw) 22px var(--fd);
+  }
+  .open {
+    font: var(--fw) 18px var(--fd);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border: 2px solid #8b8b96;
+    border-radius: 8px;
+    color: #c9c9d1;
+  }
+  .open.lit {
+    border-color: #fffaf3;
+    color: #fffaf3;
+    box-shadow:
+      0 0 10px #39d98a,
+      inset 0 0 10px #39d98a;
+    text-shadow: 0 0 8px #39d98a;
+  }
+  .sign h1 {
+    margin-top: 10px;
+    font-size: calc(58px * var(--fs));
+    overflow-wrap: anywhere;
+  }
+  .sign-sub {
+    font: var(--fw) calc(20px * var(--fs)) / 1.1 var(--fd);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .sign-today {
+    font-size: 14px;
+    color: #d9d6cf;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .sign h1 {
+      animation: diner-flicker 6s infinite;
+    }
+  }
+
+  /* jukebox nav */
+  .menu {
+    padding: 0 16px 20px;
+    scroll-margin-top: 10px;
+  }
+  .jukebox {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin: 0 -16px;
+    padding: 12px 16px;
+    background: var(--bg);
+    border-bottom: 2px solid var(--ink);
+  }
+  .jukebox::-webkit-scrollbar {
+    display: none;
+  }
+  .jukebox a {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 42px;
+    padding: 0 14px 0 6px;
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    background: var(--surf);
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+  .key {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--acc);
+    color: var(--acc-ink);
+    font-size: 13px;
+  }
+  .jukebox a:hover {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  /* groups and combo cards */
+  .group {
+    padding-top: 34px;
+    scroll-margin-top: 66px;
+  }
+  .ribbon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 22px;
+  }
+  .ribbon span {
+    position: relative;
+    padding: 8px 34px;
+    background: var(--acc);
+    color: var(--acc-ink);
+    font-size: calc(30px * var(--fs));
+    clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 50%, 100% 100%, 0 100%, 14px 50%);
+    overflow-wrap: anywhere;
+  }
+  .combos {
+    display: grid;
+    gap: 22px;
+  }
+  .combo {
+    all: unset;
+    box-sizing: border-box;
+    cursor: pointer;
+    position: relative;
+    display: grid;
+    grid-template-columns: 92px minmax(0, 1fr);
+    grid-template-areas:
+      "photo text"
+      "photo price";
+    align-items: start;
+    gap: 6px 14px;
+    width: 100%;
+    padding: 16px;
+    background: var(--surf);
+    border: 2px solid var(--ink);
+    border-radius: 18px;
+    box-shadow: 6px 6px 0 var(--ink);
+    transition:
+      transform 0.15s,
+      box-shadow 0.15s;
+  }
+  .combo:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 8px 0 var(--ink);
+  }
+  .combo:active {
+    transform: translate(3px, 3px);
+    box-shadow: 2px 2px 0 var(--ink);
+  }
+  .combo:focus-visible {
+    outline: 3px solid var(--acc-text);
+    outline-offset: 4px;
+  }
+  .combo-no {
+    position: absolute;
+    z-index: 1;
+    inset-block-start: -12px;
+    inset-inline-start: -10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--acc);
+    color: var(--acc-ink);
+    border: 2px solid var(--ink);
+    font: var(--fw) 19px / 0.9 var(--fd);
+    rotate: -10deg;
+  }
+  .combo-no small {
+    font: 800 8px var(--fb);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .combo-photo {
+    grid-area: photo;
+    position: relative;
+    display: block;
+    width: 92px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--ink);
+    background: var(--bg);
+  }
+  .combo-text {
+    grid-area: text;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+  .combo-name {
+    font: var(--fw) calc(22px * var(--fs)) / 1.02 var(--fd);
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+  }
+  .combo-desc {
+    font-size: 13.5px;
+    color: var(--muted);
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 2px;
+  }
+  .combo-price {
+    grid-area: price;
+    justify-self: start;
+    margin-top: 4px;
+    padding: 3px 12px;
+    border-radius: 8px;
+    background: var(--ink);
+    color: var(--bg);
+    font: var(--fw) calc(18px * var(--fs)) var(--fd);
+    font-variant-numeric: tabular-nums;
+  }
+  .combo.out .combo-photo > * {
+    opacity: 0.45;
+    filter: grayscale(1);
+  }
+  .combo.out .combo-price {
+    background: transparent;
+    color: var(--muted);
+    text-decoration: line-through;
+    border: 1.5px solid var(--line);
+  }
+
+  /* story */
+  .story {
+    padding: 40px 22px;
+    text-align: center;
+    scroll-margin-top: 10px;
+  }
+  .story h2 {
+    font-size: calc(36px * var(--fs));
+    margin-bottom: 12px;
+  }
+  .story p {
+    max-width: 52ch;
+    margin: 0 auto;
+    color: var(--muted);
+    white-space: pre-line;
+  }
+
+  /* visit */
+  .visit {
+    padding: 40px 16px 44px;
+    background: var(--sign);
+    scroll-margin-top: 10px;
+  }
+  .visit > h2 {
+    text-align: center;
+    font-size: calc(40px * var(--fs));
+    margin-bottom: 26px;
+  }
+  .visit-grid {
+    display: grid;
+    gap: 18px;
+  }
+  .ticket {
+    padding: 22px 20px;
+    background: var(--surf);
+    color: var(--ink);
+    border-radius: 16px;
+    border: 2px solid var(--ink);
+  }
+  .ticket h3 {
+    font-size: calc(24px * var(--fs));
+    margin-bottom: 12px;
+  }
+  .order {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 48px;
+    margin-top: 16px;
+    padding: 0 20px;
+    border-radius: 999px;
+    background: var(--acc);
+    color: var(--acc-ink);
+    border: 2px solid var(--ink);
+    text-decoration: none;
+    font-weight: 800;
+    text-transform: uppercase;
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+
+  .foot {
+    padding: 18px 16px 28px;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  @container page (min-width: 760px) {
+    .sign {
+      padding: 26px max(32px, calc((100cqi - 1160px) / 2)) 56px;
+    }
+    .sign h1 {
+      font-size: calc(110px * var(--fs));
+    }
+    .sign-sub {
+      font-size: calc(28px * var(--fs));
+    }
+    .menu {
+      padding-inline: max(32px, calc((100cqi - 1160px) / 2));
+    }
+    .jukebox {
+      justify-content: center;
+      margin-inline: calc(-1 * max(32px, calc((100cqi - 1160px) / 2)));
+    }
+    .combos {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 30px 28px;
+    }
+    .combo {
+      grid-template-columns: 120px minmax(0, 1fr);
+      padding: 20px;
+    }
+    .combo-photo {
+      width: 120px;
+    }
+    .visit-grid {
+      grid-template-columns: 1fr 1fr;
+      max-width: 1000px;
+      margin: 0 auto;
+      gap: 28px;
+    }
+    .visit > h2 {
+      font-size: calc(64px * var(--fs));
+    }
+  }
+}
+
+/* Keyframes cannot be nested; the name carries the template prefix instead. */
+@keyframes diner-flicker {
+  0%,
+  92%,
+  95%,
+  100% {
+    opacity: 1;
+  }
+  93%,
+  96% {
+    opacity: 0.55;
+  }
+}

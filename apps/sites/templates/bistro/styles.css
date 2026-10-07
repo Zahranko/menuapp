@@ -1,0 +1,376 @@
+/* Template 010 "Bistro Card": a folded paper menu on a tablecloth. Cover page, courses inside, a clipped note for today's dish. */
+
+.t-bistro {
+  container: page / inline-size;
+  font-size: 15.5px;
+  line-height: 1.55;
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--fd);
+    font-weight: var(--fw);
+    letter-spacing: var(--ft);
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+
+  /* the table */
+  .table {
+    padding: 18px 12px 24px;
+    background: var(--table);
+  }
+  .cloth-gingham,
+  .cloth-blue {
+    background:
+      linear-gradient(
+          90deg,
+          color-mix(in srgb, var(--cloth) 40%, transparent) 50%,
+          transparent 0
+        )
+        0 0 / 34px 34px,
+      linear-gradient(
+          color-mix(in srgb, var(--cloth) 40%, transparent) 50%,
+          transparent 0
+        )
+        0 0 / 34px 34px,
+      var(--table);
+  }
+  .cloth-oak {
+    background:
+      repeating-linear-gradient(90deg, #0000 0 118px, #0002 118px 120px),
+      repeating-linear-gradient(
+        90deg,
+        #ffffff10 0 3px,
+        #0000 3px 11px,
+        #00000012 11px 13px,
+        #0000 13px 23px
+      ),
+      var(--table);
+  }
+  .cloth-noir {
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 30%, #ffffff0d, transparent 70%),
+      var(--table);
+  }
+
+  .card {
+    display: grid;
+    gap: 14px;
+  }
+  .page {
+    position: relative;
+    background: var(--bg);
+    padding: 34px 24px;
+    box-shadow:
+      0 1px 2px #0002,
+      0 22px 40px -22px #0008;
+    outline: 1px solid var(--line);
+    outline-offset: -10px;
+  }
+
+  .tag {
+    display: inline-block;
+    margin-inline-start: 8px;
+    font: 700 10px var(--fb);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--acc-text);
+    vertical-align: 3px;
+  }
+  .tag-out {
+    color: var(--muted);
+  }
+
+  /* cover */
+  .cover {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+  }
+  .monogram {
+    position: relative;
+    width: 74px;
+    height: 74px;
+    margin-bottom: 10px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid var(--acc-text);
+    box-shadow:
+      0 0 0 4px var(--bg),
+      0 0 0 5px var(--acc-text);
+    color: var(--acc-text);
+    font: italic var(--fw) 36px var(--fd);
+  }
+  .est {
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .est:empty {
+    display: none;
+  }
+  .cover h1 {
+    font-size: calc(46px * var(--fs));
+    font-style: italic;
+    overflow-wrap: anywhere;
+  }
+  .tagline {
+    max-width: 30ch;
+    font: italic var(--fw) calc(18px * var(--fs)) / 1.35 var(--fd);
+    color: var(--muted);
+  }
+  .today {
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--acc-text);
+  }
+
+  /* today's dish: a note clipped to the cover */
+  .note {
+    position: relative;
+    width: min(100%, 300px);
+    margin-top: 28px;
+    padding: 22px 18px 18px;
+    background: var(--surf);
+    box-shadow: 0 10px 20px -12px #0006;
+    rotate: 1.5deg;
+  }
+  .clip {
+    position: absolute;
+    top: -26px;
+    inset-inline-start: 26px;
+    color: var(--muted);
+  }
+  .note h2 {
+    font-size: calc(20px * var(--fs));
+    font-style: italic;
+    color: var(--acc-text);
+    margin-bottom: 12px;
+  }
+  .note-item {
+    all: unset;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    text-align: start;
+  }
+  .note-item:focus-visible {
+    outline: 2px solid var(--acc-text);
+    outline-offset: 4px;
+  }
+  .note-photo {
+    position: relative;
+    flex: none;
+    width: 76px;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border: 4px solid #fff;
+    box-shadow: 0 2px 6px #0003;
+    background: var(--bg);
+  }
+  .note-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+  .note-name {
+    font: var(--fw) calc(19px * var(--fs)) / 1.2 var(--fd);
+    overflow-wrap: anywhere;
+  }
+  .note-price {
+    font-weight: 700;
+    color: var(--acc-text);
+  }
+
+  /* inside */
+  .menu {
+    scroll-margin-top: 10px;
+  }
+  .course {
+    padding: 8px 0 18px;
+    scroll-margin-top: 10px;
+  }
+  .course + .course::before {
+    content: "· · ·";
+    display: block;
+    text-align: center;
+    letter-spacing: 6px;
+    color: var(--acc-text);
+    margin-bottom: 18px;
+  }
+  .course h3 {
+    text-align: center;
+    font-size: calc(15px * var(--fs));
+    font-family: var(--fb);
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--acc-text);
+    margin-bottom: 14px;
+  }
+  .dish {
+    all: unset;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 2px 18px;
+    width: 100%;
+    padding: 10px 2px;
+  }
+  .dish:focus-visible {
+    outline: 2px solid var(--acc-text);
+    outline-offset: 2px;
+  }
+  .dish:hover .dish-name {
+    text-decoration: underline;
+    text-decoration-color: var(--acc-text);
+    text-underline-offset: 4px;
+  }
+  .dish-name {
+    font: italic var(--fw) calc(20px * var(--fs)) / 1.25 var(--fd);
+    overflow-wrap: anywhere;
+  }
+  .dish-price {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .dish-desc {
+    grid-column: 1 / -1;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .dish.out .dish-name,
+  .dish.out .dish-price {
+    color: var(--muted);
+  }
+  .dish.out .dish-price {
+    text-decoration: line-through;
+  }
+
+  /* back of the card */
+  .back {
+    margin-top: 26px;
+    padding-top: 26px;
+    border-top: 1px solid var(--line);
+  }
+  .story,
+  .visit {
+    scroll-margin-top: 10px;
+  }
+  .story {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .story h2,
+  .visit > h2 {
+    font-size: calc(28px * var(--fs));
+    font-style: italic;
+    margin-bottom: 12px;
+  }
+  .visit > h2 {
+    text-align: center;
+  }
+  .story p {
+    max-width: 50ch;
+    margin: 0 auto;
+    color: var(--muted);
+    white-space: pre-line;
+  }
+  .visit-grid {
+    display: grid;
+    gap: 24px;
+  }
+  .visit h3 {
+    font: 800 11.5px var(--fb);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--acc-text);
+    margin-bottom: 8px;
+  }
+  .book {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 46px;
+    margin-top: 16px;
+    padding: 0 18px;
+    border: 1.5px solid var(--acc-text);
+    color: var(--acc-text);
+    text-decoration: none;
+    font-weight: 700;
+  }
+  .book:hover {
+    background: var(--acc);
+    border-color: var(--acc);
+    color: var(--acc-ink);
+  }
+
+  .foot {
+    width: fit-content;
+    max-width: 100%;
+    margin: 18px auto 0;
+    padding: 8px 16px;
+    background: var(--bg);
+    color: var(--muted);
+    box-shadow: 0 6px 14px -8px #0006;
+  }
+  .credits {
+    justify-content: center;
+  }
+
+  @container page (min-width: 760px) {
+    .table {
+      padding: 56px 32px 40px;
+    }
+    .card {
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+      gap: 0;
+      max-width: 1120px;
+      margin: 0 auto;
+      align-items: start;
+    }
+    .page {
+      padding: 56px 52px;
+      outline-offset: -14px;
+    }
+    .cover {
+      position: sticky;
+      top: 24px;
+      min-height: 640px;
+      justify-content: center;
+    }
+    .cover h1 {
+      font-size: calc(64px * var(--fs));
+    }
+    .inside {
+      box-shadow:
+        inset 22px 0 26px -22px #0004,
+        0 1px 2px #0002,
+        0 22px 40px -22px #0008;
+    }
+    .inside:dir(rtl) {
+      box-shadow:
+        inset -22px 0 26px -22px #0004,
+        0 1px 2px #0002,
+        0 22px 40px -22px #0008;
+    }
+    .visit-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+  }
+}

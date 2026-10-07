@@ -15,21 +15,35 @@ const outDir = path.join(root, "public", "styles");
 const mapFile = path.join(templatesDir, "styles.generated.json");
 const targets = browserslistToTargets(browserslist(["chrome >= 100", "safari >= 15.4", "firefox >= 110", "edge >= 100"]));
 
+/** Compiles one stylesheet; errors are shortened to "file:line:column message". */
+function compile(source) {
+  try {
+    return transform({ filename: source, code: readFileSync(source), minify: true, targets }).code;
+  } catch (error) {
+    const where = error.loc ? `:${error.loc.line}:${error.loc.column}` : "";
+    throw new Error(`${path.relative(process.cwd(), source)}${where} ${error.message}`);
+  }
+}
+
 function build() {
-  rmSync(outDir, { recursive: true, force: true });
-  mkdirSync(outDir, { recursive: true });
-  const map = {};
+  // Compile everything first, so a CSS error leaves the previous stylesheets in place.
+  const files = [];
   for (const dir of readdirSync(templatesDir, { withFileTypes: true })) {
     const source = path.join(templatesDir, dir.name, "styles.css");
     if (!dir.isDirectory() || !existsSync(source)) continue;
-    const { code } = transform({ filename: source, code: readFileSync(source), minify: true, targets });
+    const code = compile(source);
     const hash = createHash("sha256").update(code).digest("hex").slice(0, 10);
-    const name = `${dir.name}.${hash}.css`;
-    writeFileSync(path.join(outDir, name), code);
-    map[dir.name] = `/styles/${name}`;
+    files.push({ id: dir.name, name: `${dir.name}.${hash}.css`, code });
+  }
+  rmSync(outDir, { recursive: true, force: true });
+  mkdirSync(outDir, { recursive: true });
+  const map = {};
+  for (const file of files) {
+    writeFileSync(path.join(outDir, file.name), file.code);
+    map[file.id] = `/styles/${file.name}`;
   }
   writeFileSync(mapFile, JSON.stringify(map, null, 2) + "\n");
-  console.log(`styles: built ${Object.keys(map).length} template stylesheets`);
+  console.log(`styles: built ${files.length} template stylesheets`);
 }
 
 build();

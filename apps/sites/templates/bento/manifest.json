@@ -1,0 +1,177 @@
+{
+  "id": "bento",
+  "number": 7,
+  "name": "Bento",
+  "category": "Juice bar",
+  "description": "A bento box of tiles in mixed sizes; featured drinks get the big tiles.",
+  "version": 1,
+  "thumbnail": "/templates/bento/thumbnail.png",
+  "sample": "drinks",
+  "schema": [
+    {
+      "key": "font",
+      "type": "choice",
+      "label": "Font style",
+      "group": "Brand",
+      "options": [
+        "round",
+        "grotesk",
+        "bold"
+      ],
+      "optionLabels": {
+        "round": "Friendly",
+        "grotesk": "Clean",
+        "bold": "Bold"
+      }
+    },
+    {
+      "key": "logo",
+      "type": "image",
+      "label": "Logo",
+      "group": "Brand"
+    },
+    {
+      "key": "theme",
+      "type": "palette",
+      "label": "Color theme",
+      "group": "Brand",
+      "options": [
+        "fresh",
+        "lime",
+        "berry",
+        "night"
+      ],
+      "swatches": {
+        "fresh": "#F7F7F2",
+        "lime": "#F1F6E4",
+        "berry": "#FBF1F4",
+        "night": "#111613"
+      }
+    },
+    {
+      "key": "accent",
+      "type": "color",
+      "label": "Accent color",
+      "group": "Brand",
+      "options": [
+        "#2F8F4E",
+        "#E4572E",
+        "#C2185B",
+        "#2563EB"
+      ]
+    },
+    {
+      "key": "corners",
+      "type": "choice",
+      "label": "Corners",
+      "group": "Brand",
+      "options": [
+        "rounded",
+        "sharp"
+      ],
+      "optionLabels": {
+        "rounded": "Rounded",
+        "sharp": "Sharp"
+      }
+    },
+    {
+      "key": "hero.title",
+      "type": "text",
+      "label": "Headline",
+      "group": "Top tiles",
+      "max": 50
+    },
+    {
+      "key": "hero.subtitle",
+      "type": "textarea",
+      "label": "Text under the headline",
+      "group": "Top tiles",
+      "max": 140
+    },
+    {
+      "key": "hero.image",
+      "type": "image",
+      "label": "Big picture",
+      "group": "Top tiles",
+      "presets": [
+        "citrus",
+        "leaves",
+        "rings",
+        "sprinkles"
+      ]
+    },
+    {
+      "key": "sections",
+      "type": "toggles",
+      "label": "Sections",
+      "group": "Sections",
+      "options": [
+        "announcement",
+        "hero",
+        "story",
+        "visit"
+      ],
+      "optionLabels": {
+        "announcement": "Announcement bar",
+        "hero": "Top tiles",
+        "story": "About us",
+        "visit": "Hours and contact"
+      }
+    },
+    {
+      "key": "announcement",
+      "type": "text",
+      "label": "Announcement",
+      "group": "Sections",
+      "max": 80
+    },
+    {
+      "key": "story.title",
+      "type": "text",
+      "label": "About headline",
+      "group": "About us",
+      "max": 60
+    },
+    {
+      "key": "story.text",
+      "type": "textarea",
+      "label": "About us",
+      "group": "About us",
+      "max": 400
+    },
+    {
+      "key": "hours",
+      "type": "hours",
+      "label": "Opening hours",
+      "group": "Visit and contact"
+    }
+  ],
+  "defaults": {
+    "font": "round",
+    "logo": "",
+    "theme": "fresh",
+    "accent": "#2F8F4E",
+    "corners": "rounded",
+    "hero.title": "Pressed this morning, poured for you",
+    "hero.subtitle": "Fresh juices, smoothies and mocktails made to order. No syrups, no shortcuts.",
+    "hero.image": "preset:citrus",
+    "sections": [
+      "announcement",
+      "hero",
+      "story",
+      "visit"
+    ],
+    "announcement": "Build your own juice: pick any three fruits",
+    "story.title": "Fruit first",
+    "story.text": "We buy fruit from the central market every morning and press it when you order. What we do not sell by evening goes to the compost, never to tomorrow.",
+    "hours": {
+      "sat": "08:00-23:00",
+      "sun": "08:00-23:00",
+      "mon": "08:00-23:00",
+      "tue": "08:00-23:00",
+      "wed": "08:00-23:00",
+      "thu": "08:00-00:00",
+      "fri": "13:00-00:00"
+    }
+  }
+}

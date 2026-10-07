@@ -1,0 +1,382 @@
+/* Template 011 "Pizzeria": a slowly turning pizza, a round stamp and colored bands with round photo cutouts. */
+
+.t-pizza {
+  container: page / inline-size;
+  font-size: 15.5px;
+  line-height: 1.5;
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--fd);
+    font-weight: var(--fw);
+    letter-spacing: var(--ft);
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: var(--acc);
+    color: var(--acc-ink);
+  }
+  .tag-out {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 0 24px;
+    border-radius: 999px;
+    background: var(--acc);
+    color: var(--acc-ink);
+    text-decoration: none;
+    font-weight: 800;
+  }
+  .cta:hover {
+    filter: brightness(1.08);
+  }
+
+  /* header */
+  .head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 18px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    text-decoration: none;
+    font: var(--fw) calc(20px * var(--fs)) var(--fd);
+  }
+  .logo {
+    position: relative;
+    flex: none;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--acc);
+    color: var(--acc-ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .head-today {
+    font-size: 13px;
+    color: var(--muted);
+    text-align: end;
+  }
+
+  /* hero */
+  .hero {
+    display: grid;
+    justify-items: center;
+    gap: 26px;
+    padding: 16px 18px 40px;
+    text-align: center;
+    overflow: hidden;
+  }
+  .hero-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+  .hero h1 {
+    font-size: calc(44px * var(--fs));
+    font-style: italic;
+    max-width: 14ch;
+  }
+  .hero p {
+    color: var(--muted);
+    max-width: 40ch;
+  }
+  .hero-pie {
+    all: unset;
+    box-sizing: border-box;
+    position: relative;
+    cursor: pointer;
+    width: min(82%, 360px);
+  }
+  .hero-pie:focus-visible {
+    outline: 3px solid var(--acc-text);
+    outline-offset: 6px;
+    border-radius: 50%;
+  }
+  .pie {
+    position: relative;
+    display: block;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--band);
+    box-shadow:
+      0 0 0 12px var(--band),
+      0 30px 50px -20px #0007;
+  }
+  .stamp {
+    position: absolute;
+    width: 34%;
+    top: -6%;
+    inset-inline-end: -8%;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .pie {
+      animation: pizza-turn 60s linear infinite;
+    }
+    .stamp {
+      animation: pizza-turn 24s linear infinite reverse;
+    }
+  }
+
+  /* menu */
+  .menu {
+    scroll-margin-top: 10px;
+  }
+  .tabs {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 10px 18px;
+    background: var(--bg);
+    border-block: 1px solid var(--line);
+  }
+  .tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .tabs a {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 16px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14.5px;
+  }
+  .tabs a:hover {
+    background: var(--band);
+  }
+  .band {
+    padding: 40px 18px 34px;
+    scroll-margin-top: 62px;
+  }
+  .band.tinted {
+    background: var(--band);
+  }
+  .band h2 {
+    text-align: center;
+    font-size: calc(40px * var(--fs));
+    font-style: italic;
+    margin-bottom: 28px;
+    overflow-wrap: anywhere;
+  }
+  .band h2::after {
+    content: "";
+    display: block;
+    width: 54px;
+    height: 4px;
+    margin: 12px auto 0;
+    border-radius: 4px;
+    background: var(--acc);
+  }
+  .pies {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px 16px;
+  }
+  .pies > li {
+    width: calc(50% - 8px);
+  }
+  .slice {
+    all: unset;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    text-align: center;
+  }
+  .slice:focus-visible {
+    outline: 3px solid var(--acc-text);
+    outline-offset: 6px;
+    border-radius: 18px;
+  }
+  .slice-photo {
+    position: relative;
+    display: block;
+    width: 82%;
+    aspect-ratio: 1;
+    margin-bottom: 8px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--surf);
+    border: 6px solid var(--surf);
+    box-shadow:
+      0 0 0 2px var(--line),
+      0 16px 24px -14px #0006;
+    transition: rotate 0.6s;
+  }
+  .slice:hover .slice-photo {
+    rotate: 25deg;
+  }
+  .slice-name {
+    font: var(--fw) calc(20px * var(--fs)) / 1.15 var(--fd);
+    overflow-wrap: anywhere;
+  }
+  .slice-desc {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+  }
+  .slice-price {
+    margin-top: 4px;
+    padding: 4px 14px;
+    border-radius: 999px;
+    border: 1.5px solid var(--ink);
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+  }
+  .slice.out .slice-photo > * {
+    opacity: 0.45;
+    filter: grayscale(1);
+  }
+  .slice.out .slice-price {
+    border-color: var(--line);
+    color: var(--muted);
+    text-decoration: line-through;
+  }
+
+  /* story */
+  .story {
+    padding: 56px 24px;
+    text-align: center;
+    scroll-margin-top: 10px;
+  }
+  .story h2 {
+    font-size: calc(36px * var(--fs));
+    font-style: italic;
+    margin-bottom: 14px;
+  }
+  .story p {
+    max-width: 52ch;
+    margin: 0 auto;
+    color: var(--muted);
+    white-space: pre-line;
+  }
+
+  /* visit */
+  .visit {
+    padding: 44px 18px;
+    background: var(--band);
+    scroll-margin-top: 10px;
+  }
+  .visit > h2 {
+    text-align: center;
+    font-size: calc(38px * var(--fs));
+    font-style: italic;
+    margin-bottom: 24px;
+  }
+  .visit-grid {
+    display: grid;
+    gap: 16px;
+  }
+  .visit-card {
+    padding: 24px 22px;
+    border-radius: 24px;
+    background: var(--surf);
+  }
+  .visit-card h3 {
+    font-size: calc(22px * var(--fs));
+    margin-bottom: 12px;
+  }
+  .visit-card .cta {
+    margin-top: 18px;
+  }
+
+  .foot {
+    padding: 22px 18px 30px;
+    color: var(--muted);
+  }
+
+  @container page (min-width: 760px) {
+    .head,
+    .foot {
+      padding-inline: max(36px, calc((100cqi - 1160px) / 2));
+    }
+    .hero {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: center;
+      justify-items: start;
+      gap: 40px;
+      padding: 30px max(36px, calc((100cqi - 1160px) / 2)) 70px;
+      text-align: start;
+    }
+    .hero-text {
+      align-items: flex-start;
+    }
+    .hero h1 {
+      font-size: calc(72px * var(--fs));
+    }
+    .hero-pie {
+      justify-self: center;
+      width: min(100%, 440px);
+    }
+    .tabs {
+      justify-content: center;
+    }
+    .band {
+      padding: 60px max(36px, calc((100cqi - 1160px) / 2)) 54px;
+    }
+    .band h2 {
+      font-size: calc(54px * var(--fs));
+    }
+    .pies {
+      gap: 44px 28px;
+    }
+    .pies > li {
+      width: min(250px, calc(25% - 21px));
+    }
+    .visit-grid {
+      grid-template-columns: 1fr 1fr;
+      max-width: 1000px;
+      margin: 0 auto;
+      gap: 24px;
+    }
+  }
+}
+
+@keyframes pizza-turn {
+  to {
+    rotate: 360deg;
+  }
+}

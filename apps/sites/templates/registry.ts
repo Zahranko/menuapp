@@ -2,11 +2,16 @@ import { createElement, type ComponentType } from "react";
 import type { TemplateProps } from "@/lib/types";
 import FallbackTemplate from "./fallback/Template";
 import ArchStoryTemplate from "./archstory/Template";
+import BentoTemplate from "./bento/Template";
+import BistroCardTemplate from "./bistro/Template";
 import ChalkBoardTemplate from "./chalkboard/Template";
 import LinenListTemplate from "./linen/Template";
+import NeonDinerTemplate from "./neondiner/Template";
 import NightMarketTemplate from "./nightmarket/Template";
+import PizzeriaTemplate from "./pizzeria/Template";
 import PocketCatalogTemplate from "./pocket/Template";
 import SouqTemplate from "./souq/Template";
+import ZenTemplate from "./zen/Template";
 
 /**
  * Template id → component. Every folder with a manifest.json must be listed here
@@ -19,6 +24,11 @@ export const templates: Record<string, ComponentType<TemplateProps>> = {
   archstory: ArchStoryTemplate,
   pocket: PocketCatalogTemplate,
   chalkboard: ChalkBoardTemplate,
+  bento: BentoTemplate,
+  neondiner: NeonDinerTemplate,
+  zen: ZenTemplate,
+  bistro: BistroCardTemplate,
+  pizzeria: PizzeriaTemplate,
 };
 
 export function templateFor(id: string): ComponentType<TemplateProps> {
