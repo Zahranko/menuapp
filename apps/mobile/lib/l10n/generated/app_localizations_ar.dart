@@ -169,7 +169,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String welcomeTitle(String name) {
-    return 'سفرتك جاهزة يا $name.';
+    return 'طاولتك جاهزة يا $name.';
   }
 
   @override
