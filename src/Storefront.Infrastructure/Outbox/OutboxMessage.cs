@@ -9,4 +9,5 @@ public sealed class OutboxMessage
     public DateTimeOffset? ProcessedAt { get; set; }
     public int Attempts { get; set; }
     public string? LastError { get; set; }
+    public DateTimeOffset? NextAttemptAt { get; set; }
 }

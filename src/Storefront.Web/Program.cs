@@ -35,6 +35,7 @@ await app.PrepareDatabaseAsync();
 app.UseExceptionHandler();
 app.UseStatusCodePages();
 app.UseSerilogRequestLogging();
+app.UseLocalMedia();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseRateLimiter();

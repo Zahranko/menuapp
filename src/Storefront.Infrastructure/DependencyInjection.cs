@@ -10,6 +10,8 @@ using Storefront.Infrastructure.Outbox;
 using Storefront.Infrastructure.Persistence;
 using Storefront.Infrastructure.Persistence.Repositories;
 using Storefront.Infrastructure.Persistence.Seeding;
+using Storefront.Infrastructure.Revalidation;
+using Storefront.Infrastructure.Storage;
 using Storefront.Infrastructure.Services;
 
 namespace Storefront.Infrastructure;
@@ -20,12 +22,12 @@ public static class DependencyInjection
     {
         services.Configure<StorefrontOptions>(configuration.GetSection(StorefrontOptions.SectionName));
 
-        var connectionString = configuration.GetConnectionString("Default")
-            ?? throw new InvalidOperationException("Connection string 'Default' is missing (ConnectionStrings__Default).");
-
         services.AddSingleton<DomainEventsInterceptor>();
+        // Read the connection string when the context is built, so test hosts can override configuration.
         services.AddDbContext<StorefrontDbContext>((sp, options) => options
-            .UseNpgsql(connectionString, npgsql => npgsql.MigrationsAssembly(typeof(StorefrontDbContext).Assembly.FullName))
+            .UseNpgsql(
+                sp.GetRequiredService<IConfiguration>().GetConnectionString("Default")
+                    ?? throw new InvalidOperationException("Connection string 'Default' is missing (ConnectionStrings__Default)."), npgsql => npgsql.MigrationsAssembly(typeof(StorefrontDbContext).Assembly.FullName))
             .AddInterceptors(sp.GetRequiredService<DomainEventsInterceptor>()));
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<StorefrontDbContext>());
 
@@ -65,14 +67,28 @@ public static class DependencyInjection
         services.AddSingleton<ITokenService, TokenService>();
 
         services.Configure<SmtpOptions>(configuration.GetSection(SmtpOptions.SectionName));
-        if (string.IsNullOrWhiteSpace(configuration[$"{SmtpOptions.SectionName}:Host"]))
-        {
-            services.AddSingleton<IEmailSender, LogEmailSender>();
-        }
-        else
-        {
-            services.AddSingleton<IEmailSender, SmtpEmailSender>();
-        }
+        services.AddSingleton<LogEmailSender>();
+        services.AddSingleton<SmtpEmailSender>();
+        services.AddSingleton<IEmailSender>(sp =>
+            string.IsNullOrWhiteSpace(sp.GetRequiredService<IConfiguration>()[$"{SmtpOptions.SectionName}:Host"])
+                ? sp.GetRequiredService<LogEmailSender>()
+                : sp.GetRequiredService<SmtpEmailSender>());
+
+        services.AddScoped<IAuditLog, EfAuditLog>();
+
+        services.Configure<StorageOptions>(configuration.GetSection(StorageOptions.SectionName));
+        services.AddSingleton<LocalFileStorage>();
+        services.AddSingleton<S3FileStorage>();
+        services.AddSingleton<IFileStorage>(sp =>
+            string.Equals(sp.GetRequiredService<IConfiguration>()[$"{StorageOptions.SectionName}:Provider"], "s3", StringComparison.OrdinalIgnoreCase)
+                ? sp.GetRequiredService<S3FileStorage>()
+                : sp.GetRequiredService<LocalFileStorage>());
+
+        services.Configure<RevalidationOptions>(configuration.GetSection(RevalidationOptions.SectionName));
+        services.AddHttpClient<ISiteRevalidator, HttpSiteRevalidator>(c => c.Timeout = TimeSpan.FromSeconds(10));
+        services.Configure<OutboxOptions>(configuration.GetSection(OutboxOptions.SectionName));
+        services.AddScoped<OutboxProcessor>();
+        services.AddHostedService<OutboxDispatcher>();
 
         services.AddScoped<TemplateRegistryImporter>();
         services.AddScoped<DevelopmentSeeder>();

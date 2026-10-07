@@ -18,6 +18,25 @@ public sealed class CapturingEmailSender : IEmailSender
     }
 }
 
+public sealed class CapturingRevalidator : ISiteRevalidator
+{
+    public ConcurrentQueue<string[]> Calls { get; } = new();
+
+    public int FailuresLeft { get; set; }
+
+    public Task RevalidateAsync(IReadOnlyCollection<string> tags, CancellationToken ct)
+    {
+        if (FailuresLeft > 0)
+        {
+            FailuresLeft--;
+            throw new HttpRequestException("Next.js is down");
+        }
+
+        Calls.Enqueue(tags.ToArray());
+        return Task.CompletedTask;
+    }
+}
+
 public static class Api
 {
     private static int _counter;

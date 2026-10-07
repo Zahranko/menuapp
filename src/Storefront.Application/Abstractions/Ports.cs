@@ -29,3 +29,23 @@ public interface IOutbox
 {
     void Enqueue(string type, object payload);
 }
+
+/// <summary>Records who changed what, for support.</summary>
+public interface IAuditLog
+{
+    void Record(string action, string entityType, string? entityId);
+}
+
+public sealed record StoredFile(string Key, string Url);
+
+/// <summary>Public file storage (S3-compatible in production, local disk in development).</summary>
+public interface IFileStorage
+{
+    Task<StoredFile> SaveAsync(string key, Stream content, string contentType, CancellationToken ct);
+}
+
+/// <summary>Tells the Next.js app to drop cached pages for these cache tags (for example "site:vanillamenu").</summary>
+public interface ISiteRevalidator
+{
+    Task RevalidateAsync(IReadOnlyCollection<string> tags, CancellationToken ct);
+}

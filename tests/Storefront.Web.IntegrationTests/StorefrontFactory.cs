@@ -14,6 +14,10 @@ public class StorefrontFactory : WebApplicationFactory<Program>, IAsyncLifetime
 
     public CapturingEmailSender Emails { get; } = new();
 
+    public CapturingRevalidator Revalidations { get; } = new();
+
+    public string MediaRoot { get; } = Path.Combine(Path.GetTempPath(), "storefront-tests", Guid.NewGuid().ToString("N"));
+
     /// <summary>Overrides for one fixture, applied after the defaults below.</summary>
     protected virtual IDictionary<string, string?> ExtraSettings => new Dictionary<string, string?>();
 
@@ -23,6 +27,10 @@ public class StorefrontFactory : WebApplicationFactory<Program>, IAsyncLifetime
     {
         await base.DisposeAsync();
         await Database.DisposeAsync();
+        if (Directory.Exists(MediaRoot))
+        {
+            Directory.Delete(MediaRoot, recursive: true);
+        }
     }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -37,7 +45,14 @@ public class StorefrontFactory : WebApplicationFactory<Program>, IAsyncLifetime
             ["RateLimits:AuthPerMinute"] = "10000",
             ["RateLimits:SlugCheckPerMinute"] = "10000",
             ["RateLimits:PublicPerMinute"] = "10000",
+            ["Outbox:Enabled"] = "false",
+            ["Storage:LocalRoot"] = MediaRoot,
+            ["Storage:PublicBaseUrl"] = "http://localhost/media",
         }).AddInMemoryCollection(ExtraSettings));
-        builder.ConfigureTestServices(services => services.AddSingleton<IEmailSender>(Emails));
+        builder.ConfigureTestServices(services =>
+        {
+            services.AddSingleton<IEmailSender>(Emails);
+            services.AddSingleton<ISiteRevalidator>(Revalidations);
+        });
     }
 }
