@@ -15,8 +15,8 @@ env:
   # Account names are not secret; passwords and the signing key are repository secrets.
   FTP_SERVER: ${{ vars.FTP_SERVER || 'win6036.site4now.net' }}
   FTP_USERNAME: ${{ vars.FTP_USERNAME || 'alamalhosp-001' }}
-  # The site's own folder as the FTP login sees it. No default: the login's top folder holds other sites.
-  FTP_DIR: ${{ vars.FTP_DIR }}
+  # The site's own folder as the FTP login sees it. Never "/": the login's top folder holds other sites.
+  FTP_DIR: ${{ vars.FTP_DIR || '/TestMobileApp' }}
   DB_SERVER: ${{ vars.DB_SERVER || 'sql6034.site4now.net' }}
   DB_NAME: ${{ vars.DB_NAME || 'db_acc171_mobiletest' }}
   DB_USER: ${{ vars.DB_USER || 'db_acc171_mobiletest_admin' }}

@@ -26,7 +26,8 @@ In GitHub, open **Settings**, then **Secrets and variables**, then **Actions**.
 | Name | Default | What it is |
 |---|---|---|
 | `API_URL` | the current site4now address | The site's address. Used for the health check after each deploy, HTTPS enforcement (only for an `https://` address) and photo URLs |
-| `FTP_SERVER` / `FTP_USERNAME` / `FTP_DIR` | the current site4now account | Change these when the hosting account changes |
+| `FTP_SERVER` / `FTP_USERNAME` | the current site4now account | Change these when the hosting account changes |
+| `FTP_DIR` | `/TestMobileApp` | The site's own folder as the FTP login sees it. The login's top folder holds other sites, so the deploy refuses `/` |
 | `DB_SERVER` / `DB_NAME` / `DB_USER` | the current site4now database | Same |
 
 ## What a deploy does
