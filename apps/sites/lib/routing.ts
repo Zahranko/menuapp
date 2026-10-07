@@ -30,12 +30,15 @@ export function route(hostHeader: string, pathname: string, main: Set<string> = 
   const segments = pathname.split("/").filter(Boolean);
   const first = segments[0] ?? "";
 
-  if (first === "_next" || first === "api" || (segments.length === 1 && first.includes("."))) {
-    return { kind: "pass" };
-  }
-
+  // Preview tokens contain dots, so this comes before the file rule.
   if (first === "_preview" && segments[1]) {
     return { kind: "rewrite", path: previewPath(decodeURIComponent(segments[1])) };
+  }
+
+  // Next.js internals, the API and files (anything whose last segment has an extension) are served as they are on every host.
+  const last = segments[segments.length - 1] ?? "";
+  if (first === "_next" || first === "api" || last.includes(".")) {
+    return { kind: "pass" };
   }
 
   if (main.has(host)) {

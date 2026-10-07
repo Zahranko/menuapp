@@ -3,6 +3,7 @@ import { brand } from "@/lib/brand";
 import "../globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(`https://${brand.domain}`),
   title: brand.brandName,
   description: brand.tagline,
 };

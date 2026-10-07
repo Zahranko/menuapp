@@ -26,6 +26,12 @@
           }
         },
         {
+          "key": "logo",
+          "type": "image",
+          "label": "Logo",
+          "group": "Brand"
+        },
+        {
           "key": "theme",
           "type": "palette",
           "label": "Color theme",
@@ -102,6 +108,13 @@
           ]
         },
         {
+          "key": "hero.eyebrow",
+          "type": "text",
+          "label": "Small line above the headline",
+          "group": "Hero header",
+          "max": 40
+        },
+        {
           "key": "hero.title",
           "type": "text",
           "label": "Headline",
@@ -156,6 +169,55 @@
           "max": 80
         },
         {
+          "key": "highlights.1.title",
+          "type": "text",
+          "label": "Highlight 1",
+          "group": "Highlights",
+          "max": 30
+        },
+        {
+          "key": "highlights.1.text",
+          "type": "textarea",
+          "label": "Highlight 1 text",
+          "group": "Highlights",
+          "max": 90
+        },
+        {
+          "key": "highlights.2.title",
+          "type": "text",
+          "label": "Highlight 2",
+          "group": "Highlights",
+          "max": 30
+        },
+        {
+          "key": "highlights.2.text",
+          "type": "textarea",
+          "label": "Highlight 2 text",
+          "group": "Highlights",
+          "max": 90
+        },
+        {
+          "key": "highlights.3.title",
+          "type": "text",
+          "label": "Highlight 3",
+          "group": "Highlights",
+          "max": 30
+        },
+        {
+          "key": "highlights.3.text",
+          "type": "textarea",
+          "label": "Highlight 3 text",
+          "group": "Highlights",
+          "max": 90
+        },
+        {
+          "key": "story.title",
+          "type": "text",
+          "label": "Story headline",
+          "group": "Our story",
+          "max": 70
+        },
+        {
           "key": "story.text",
           "type": "textarea",
           "label": "Our story",
@@ -175,11 +237,60 @@
           ]
         },
         {
+          "key": "story.since",
+          "type": "text",
+          "label": "Open since (year)",
+          "group": "Our story",
+          "max": 4
+        },
+        {
           "key": "gallery",
           "type": "images",
           "label": "Gallery",
           "group": "Gallery",
           "max": 6
+        },
+        {
+          "key": "reviews.1.quote",
+          "type": "textarea",
+          "label": "Review 1",
+          "group": "Reviews",
+          "max": 220
+        },
+        {
+          "key": "reviews.1.name",
+          "type": "text",
+          "label": "Review 1 by",
+          "group": "Reviews",
+          "max": 40
+        },
+        {
+          "key": "reviews.2.quote",
+          "type": "textarea",
+          "label": "Review 2",
+          "group": "Reviews",
+          "max": 220
+        },
+        {
+          "key": "reviews.2.name",
+          "type": "text",
+          "label": "Review 2 by",
+          "group": "Reviews",
+          "max": 40
+        },
+        {
+          "key": "reviews.3.quote",
+          "type": "textarea",
+          "label": "Review 3",
+          "group": "Reviews",
+          "max": 220
+        },
+        {
+          "key": "reviews.3.name",
+          "type": "text",
+          "label": "Review 3 by",
+          "group": "Reviews",
+          "max": 40
         },
         {
           "key": "hours",
@@ -190,12 +301,14 @@
       ],
       "defaults": {
         "font": "modern",
+        "logo": "",
         "theme": "cream",
         "accent": "#D9542C",
         "corners": "rounded",
         "texture": false,
         "hero.layout": "full",
         "hero.image": "preset:counter",
+        "hero.eyebrow": "",
         "hero.title": "Coffee worth crossing the city for.",
         "hero.subtitle": "Specialty coffee roasted in-house, fresh bakes every morning and a quiet corner to stay a while.",
         "hero.shade": 55,
@@ -209,9 +322,23 @@
           "visit"
         ],
         "announcement": "Now open until midnight on Thursdays and Fridays",
+        "highlights.1.title": "Roasted in-house",
+        "highlights.1.text": "Small batches every week, single origin and house blend.",
+        "highlights.2.title": "Baked before sunrise",
+        "highlights.2.text": "Croissants, cookies and cakes made from scratch daily.",
+        "highlights.3.title": "Open late",
+        "highlights.3.text": "Stay for one more cup. See our hours below.",
+        "story.title": "A small counter that grew into a neighborhood spot",
         "story.text": "We started with one machine and a small counter. Today we roast our own beans every week, bake from scratch before sunrise, and still know most of our regulars by name.",
         "story.image": "preset:arches",
+        "story.since": "",
         "gallery": [],
+        "reviews.1.quote": "",
+        "reviews.1.name": "",
+        "reviews.2.quote": "",
+        "reviews.2.name": "",
+        "reviews.3.quote": "",
+        "reviews.3.name": "",
         "hours": {
           "sat": "08:00-23:00",
           "sun": "08:00-23:00",

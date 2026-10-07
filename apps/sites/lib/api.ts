@@ -1,5 +1,5 @@
 import "server-only";
-import { fixtureSite } from "./fixtures";
+import { fixtureBySlug, fixtureSite } from "./fixtures";
 import type { PublicSite } from "./types";
 
 /** Base URL of the Storefront API, for example http://localhost:5080. */
@@ -29,7 +29,7 @@ async function read(path: string, init: RequestInit & { next?: { tags?: string[]
 /** A published site. Cached until the API revalidates the "site:<slug>" tag (and at most an hour). */
 export async function getSiteBySlug(slug: string): Promise<PublicSite | null> {
   const key = slug.toLowerCase();
-  if (fixturesOn()) return key === fixtureSite.business.slug ? fixtureSite : null;
+  if (fixturesOn()) return fixtureBySlug(key);
   return read(`/api/public/v1/sites/by-slug/${encodeURIComponent(key)}`, {
     next: { tags: [siteTag(key)], revalidate: 3600 },
   });

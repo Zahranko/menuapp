@@ -18,6 +18,7 @@ const manifests = readdirSync(root, { withFileTypes: true })
   .filter((d) => d.isDirectory() && existsSync(path.join(root, d.name, "manifest.json")))
   .map((d) => {
     const manifest = JSON.parse(readFileSync(path.join(root, d.name, "manifest.json"), "utf8"));
+    if (!/^[a-z0-9]{3,30}$/.test(d.name)) fail(`${d.name}: template ids use 3 to 30 lowercase letters and digits (they double as fixture URLs)`);
     if (manifest.id !== d.name) fail(`${d.name}/manifest.json has id "${manifest.id}"; it must match the folder name`);
     for (const key of ["number", "name", "category", "version", "schema", "defaults"]) {
       if (manifest[key] === undefined) fail(`${d.name}: missing "${key}"`);

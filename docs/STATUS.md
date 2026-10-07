@@ -12,7 +12,7 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 | S05 | Plans, billing abstraction, custom domains | not started | | |
 | S06 | Back office (MVC) | not started | | |
 | S07 | Next.js foundation and routing | done | | Host/slug routing in proxy.ts, typed API client, fixtures, signed revalidate endpoint, preview route, fallback template |
-| S08 | Next.js template 001 "Souq" and SEO | not started | | |
+| S08 | Next.js template 001 "Souq" and SEO | done | | Souq with all sections, shared template kit, JSON-LD, per-host robots and sitemap, Open Graph image, Playwright smoke test |
 | S09 | Next.js marketing pages | not started | | |
 | S10 | Flutter foundation, splash, onboarding | not started | | |
 | S11 | Flutter sign up and log in | not started | | |
@@ -44,6 +44,9 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 
 - [S09] Add a `/reset-password?email=&token=` page on the marketing site that posts to `POST /api/v1/auth/reset-password`; the reset email links there (found in S02).
 - [S15] Rate limiting partitions by `RemoteIpAddress`; behind Caddy, enable forwarded headers so it sees the client IP (found in S02).
+- [S04] The public API has no way to list published slugs, so the brand domain's sitemap only lists marketing pages. Add `GET /api/public/v1/sites` (slugs and published dates) and list the sites in `app/sitemap.ts` (found in S08).
+- [S04] `PublicBusinessDto` has no logo; Souq reads the logo from its `logo` setting. If the business profile gets a logo later, use it as the default (found in S08).
+- [S13] Souq's schema grew: `logo`, `hero.eyebrow`, `highlights.{1,2,3}.title/text`, `story.title`, `story.since`, `reviews.{1,2,3}.quote/name`. The editor renders them from the schema; group order follows the manifest (found in S08).
 - [S10] The OpenAPI document has no bearer security scheme yet; add one (document transformer) before generating the Flutter client (found in S02).
 
 ## Decisions made during sessions
@@ -51,6 +54,13 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 (Anything decided that is not in PLAN.md, with the reason.)
 
 - S00: Next.js 16 (current stable) with Cache Components on. `apps/sites/next.config.ts` sets the Turbopack root to the repo root so `lib/brand.ts` can import `brand.json`.
+- S08: Shared template kit in `apps/sites/templates/_kit/` (menu data, hours, contrast-safe accent colors, fonts, search, category tabs, item dialog, drawer, icons). Guide: `docs/templates.md`.
+- S08: Accent colors are adjusted when needed so text reaches 4.5:1 (for example the default red is darkened slightly behind white button text). Sold-out products use the muted text color and a struck-through price instead of 45% opacity, for the same reason.
+- S08: Souq shows only content the owner provides: no made-up ratings, review counts or "since" years. Reviews, the eyebrow line, the "since" badge and the gallery appear when filled in; highlights default to editable café copy.
+- S08: The footer newsletter field opens an email to the business (no mailing-list service exists). Product photos without an image show a tinted tile with the first letter.
+- S08: Open Graph images use the brand domain as `metadataBase` (`/s/<slug>/opengraph-image`), which works for custom domains too. Arabic text in OG images needs a bundled Arabic font (not done).
+- S08: In fixture mode `/<template id>` shows the sample business with that template; template ids are therefore 3 to 30 lowercase letters and digits (checked by `templates:registry`).
+- S08: Files (any path whose last segment has a dot) are served as they are on every host, so `/templates/...` and `/samples/...` work on custom domains. Preview tokens are matched first because they contain dots.
 - S07: Cache Components are off. The sites use fetch with `next: { tags }`: `site:<slug>` (revalidate 3600 s as a safety net) and `host:<domain>` (60 s); `/api/revalidate` calls `revalidateTag(tag, { expire: 0 })`. This replaces the S00 note about Cache Components.
 - S07: `proxy.ts` (Next 16's middleware) rewrites `{domain}/<slug>` to the internal route `/s/<slug>` and `/_preview/<token>` to `/s-preview/<token>`; neither can clash with a slug because slugs never contain `-` and `s` is too short. Custom hosts are resolved with `by-host` and cached in memory for 60 s; unknown hosts get the not-found page.
 - S07: Marketing pages and sites are separate root layouts (`app/(marketing)`, `app/(site)`) so each site sets its own `lang`/`dir`; `app/global-not-found.tsx` handles unmatched URLs.
