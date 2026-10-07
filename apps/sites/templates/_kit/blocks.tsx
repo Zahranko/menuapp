@@ -113,7 +113,8 @@ export function Credits({ ctx, className = "credits" }: { ctx: SiteContext; clas
 }
 
 /** The product details dialog, fed from the menu. Class names: sheet, sheet-media, sheet-body, sheet-title, sheet-text, sheet-row, sheet-close, tag. */
-export function ProductSheet({ ctx, closeClassName = "sheet-close" }: { ctx: SiteContext; closeClassName?: string }) {
+/** Product details dialog. Service templates pass `services` so unavailable items read "Not available" instead of "Sold out". */
+export function ProductSheet({ ctx, closeClassName = "sheet-close", services = false }: { ctx: SiteContext; closeClassName?: string; services?: boolean }) {
   const items: SheetItem[] = ctx.sections.flatMap((section) =>
     section.products.map((p) => ({
       id: p.id,
@@ -130,7 +131,7 @@ export function ProductSheet({ ctx, closeClassName = "sheet-close" }: { ctx: Sit
     <ItemSheet
       items={items}
       closeLabel={ctx.t.close}
-      soldOutLabel={ctx.t.soldOut}
+      soldOutLabel={services ? ctx.t.unavailable : ctx.t.soldOut}
       classes={{ dialog: "sheet", media: "sheet-media", body: "sheet-body", title: "sheet-title", text: "sheet-text", row: "sheet-row", close: closeClassName, tag: "tag" }}
     />
   );

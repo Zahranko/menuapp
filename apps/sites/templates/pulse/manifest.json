@@ -1,0 +1,418 @@
+{
+  "id": "pulse",
+  "number": 20,
+  "name": "Pulse",
+  "category": "Gym, fitness studio",
+  "description": "A high-energy site for a gym or studio: pricing cards with a most popular plan, a class list, first-week steps and a big join call.",
+  "version": 1,
+  "thumbnail": "/templates/pulse/thumbnail.png",
+  "sample": "gym",
+  "schema": [
+    {
+      "key": "font",
+      "type": "choice",
+      "label": "Font style",
+      "group": "Brand",
+      "options": [
+        "condensed",
+        "bold",
+        "grotesk"
+      ],
+      "optionLabels": {
+        "condensed": "Athletic",
+        "bold": "Bold",
+        "grotesk": "Technical"
+      }
+    },
+    {
+      "key": "logo",
+      "type": "image",
+      "label": "Logo",
+      "group": "Brand"
+    },
+    {
+      "key": "theme",
+      "type": "palette",
+      "label": "Color theme",
+      "group": "Brand",
+      "options": [
+        "carbon",
+        "chalk",
+        "volt",
+        "steel"
+      ],
+      "swatches": {
+        "carbon": "#0E0E0E",
+        "chalk": "#F4F4F0",
+        "volt": "#0B1410",
+        "steel": "#10151C"
+      }
+    },
+    {
+      "key": "accent",
+      "type": "color",
+      "label": "Accent color",
+      "group": "Brand",
+      "options": [
+        "#FF4D1C",
+        "#D7FF3A",
+        "#00C2FF",
+        "#FF2E88",
+        "#FFC300"
+      ]
+    },
+    {
+      "key": "corners",
+      "type": "choice",
+      "label": "Corners",
+      "group": "Brand",
+      "options": [
+        "rounded",
+        "sharp"
+      ],
+      "optionLabels": {
+        "rounded": "Rounded",
+        "sharp": "Sharp"
+      }
+    },
+    {
+      "key": "hero.title",
+      "type": "text",
+      "label": "Big title",
+      "group": "Top",
+      "max": 50
+    },
+    {
+      "key": "hero.subtitle",
+      "type": "textarea",
+      "label": "Short intro",
+      "group": "Top",
+      "max": 160
+    },
+    {
+      "key": "hero.image",
+      "type": "image",
+      "label": "Main picture",
+      "group": "Top",
+      "presets": [
+        "motion",
+        "neon",
+        "flames",
+        "tiles"
+      ]
+    },
+    {
+      "key": "book.message",
+      "type": "text",
+      "label": "WhatsApp message start",
+      "group": "Joining",
+      "max": 80
+    },
+    {
+      "key": "services.title",
+      "type": "text",
+      "label": "Plans title",
+      "group": "Plans",
+      "max": 40
+    },
+    {
+      "key": "sections",
+      "type": "toggles",
+      "label": "Sections",
+      "group": "Sections",
+      "options": [
+        "announcement",
+        "highlights",
+        "steps",
+        "gallery",
+        "reviews",
+        "faq",
+        "visit"
+      ],
+      "optionLabels": {
+        "announcement": "Announcement bar",
+        "highlights": "Quick facts",
+        "steps": "Your first week",
+        "gallery": "Photos",
+        "reviews": "Reviews",
+        "faq": "Questions",
+        "visit": "Hours and contact"
+      }
+    },
+    {
+      "key": "announcement",
+      "type": "text",
+      "label": "Announcement",
+      "group": "Sections",
+      "max": 80
+    },
+    {
+      "key": "highlights.1.title",
+      "type": "text",
+      "label": "Fact 1",
+      "group": "Quick facts",
+      "max": 16
+    },
+    {
+      "key": "highlights.1.text",
+      "type": "textarea",
+      "label": "Fact text 1",
+      "group": "Quick facts",
+      "max": 50
+    },
+    {
+      "key": "highlights.2.title",
+      "type": "text",
+      "label": "Fact 2",
+      "group": "Quick facts",
+      "max": 16
+    },
+    {
+      "key": "highlights.2.text",
+      "type": "textarea",
+      "label": "Fact text 2",
+      "group": "Quick facts",
+      "max": 50
+    },
+    {
+      "key": "highlights.3.title",
+      "type": "text",
+      "label": "Fact 3",
+      "group": "Quick facts",
+      "max": 16
+    },
+    {
+      "key": "highlights.3.text",
+      "type": "textarea",
+      "label": "Fact text 3",
+      "group": "Quick facts",
+      "max": 50
+    },
+    {
+      "key": "steps.title",
+      "type": "text",
+      "label": "First week title",
+      "group": "Your first week",
+      "max": 40
+    },
+    {
+      "key": "steps.1.title",
+      "type": "text",
+      "label": "Step 1",
+      "group": "Your first week",
+      "max": 40
+    },
+    {
+      "key": "steps.1.text",
+      "type": "textarea",
+      "label": "Step text 1",
+      "group": "Your first week",
+      "max": 140
+    },
+    {
+      "key": "steps.2.title",
+      "type": "text",
+      "label": "Step 2",
+      "group": "Your first week",
+      "max": 40
+    },
+    {
+      "key": "steps.2.text",
+      "type": "textarea",
+      "label": "Step text 2",
+      "group": "Your first week",
+      "max": 140
+    },
+    {
+      "key": "steps.3.title",
+      "type": "text",
+      "label": "Step 3",
+      "group": "Your first week",
+      "max": 40
+    },
+    {
+      "key": "steps.3.text",
+      "type": "textarea",
+      "label": "Step text 3",
+      "group": "Your first week",
+      "max": 140
+    },
+    {
+      "key": "gallery",
+      "type": "images",
+      "label": "Photos",
+      "group": "Gallery",
+      "max": 6
+    },
+    {
+      "key": "reviews.1.quote",
+      "type": "textarea",
+      "label": "Review 1",
+      "group": "Reviews",
+      "max": 240
+    },
+    {
+      "key": "reviews.1.name",
+      "type": "text",
+      "label": "Reviewer 1",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "reviews.2.quote",
+      "type": "textarea",
+      "label": "Review 2",
+      "group": "Reviews",
+      "max": 240
+    },
+    {
+      "key": "reviews.2.name",
+      "type": "text",
+      "label": "Reviewer 2",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "reviews.3.quote",
+      "type": "textarea",
+      "label": "Review 3",
+      "group": "Reviews",
+      "max": 240
+    },
+    {
+      "key": "reviews.3.name",
+      "type": "text",
+      "label": "Reviewer 3",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "faq.1.q",
+      "type": "text",
+      "label": "Question 1",
+      "group": "Questions",
+      "max": 90
+    },
+    {
+      "key": "faq.1.a",
+      "type": "textarea",
+      "label": "Answer 1",
+      "group": "Questions",
+      "max": 300
+    },
+    {
+      "key": "faq.2.q",
+      "type": "text",
+      "label": "Question 2",
+      "group": "Questions",
+      "max": 90
+    },
+    {
+      "key": "faq.2.a",
+      "type": "textarea",
+      "label": "Answer 2",
+      "group": "Questions",
+      "max": 300
+    },
+    {
+      "key": "faq.3.q",
+      "type": "text",
+      "label": "Question 3",
+      "group": "Questions",
+      "max": 90
+    },
+    {
+      "key": "faq.3.a",
+      "type": "textarea",
+      "label": "Answer 3",
+      "group": "Questions",
+      "max": 300
+    },
+    {
+      "key": "faq.4.q",
+      "type": "text",
+      "label": "Question 4",
+      "group": "Questions",
+      "max": 90
+    },
+    {
+      "key": "faq.4.a",
+      "type": "textarea",
+      "label": "Answer 4",
+      "group": "Questions",
+      "max": 300
+    },
+    {
+      "key": "cta.title",
+      "type": "text",
+      "label": "Join band title",
+      "group": "Joining",
+      "max": 50
+    },
+    {
+      "key": "hours",
+      "type": "hours",
+      "label": "Opening hours",
+      "group": "Visit and contact"
+    }
+  ],
+  "defaults": {
+    "font": "condensed",
+    "logo": "",
+    "theme": "carbon",
+    "accent": "#FF4D1C",
+    "corners": "rounded",
+    "hero.title": "Stronger every week",
+    "hero.subtitle": "Open gym, 30 group classes a week and coaches who know your name. No contracts, cancel any time.",
+    "hero.image": "preset:motion",
+    "book.message": "Hi! I would like to join:",
+    "services.title": "Plans and classes",
+    "sections": [
+      "highlights",
+      "steps",
+      "gallery",
+      "reviews",
+      "faq",
+      "visit"
+    ],
+    "announcement": "New members: first class free this month",
+    "highlights.1.title": "6 am",
+    "highlights.1.text": "Open early, every day",
+    "highlights.2.title": "30+",
+    "highlights.2.text": "Group classes a week",
+    "highlights.3.title": "0 JD",
+    "highlights.3.text": "Joining fee",
+    "steps.title": "Your first week",
+    "steps.1.title": "Free tour",
+    "steps.1.text": "Come by, see the gym and meet a coach. No pressure to sign up.",
+    "steps.2.title": "Body scan",
+    "steps.2.text": "A quick scan and a short chat about your goals.",
+    "steps.3.title": "Your plan",
+    "steps.3.text": "Get a simple plan for the gym floor and pick classes you will enjoy.",
+    "gallery": [],
+    "reviews.1.quote": "",
+    "reviews.1.name": "",
+    "reviews.2.quote": "",
+    "reviews.2.name": "",
+    "reviews.3.quote": "",
+    "reviews.3.name": "",
+    "faq.1.q": "Do I need to sign a contract?",
+    "faq.1.a": "No. Pay month by month and stop whenever you like.",
+    "faq.2.q": "Are there women-only hours?",
+    "faq.2.a": "Yes, every day from 10 am to 2 pm, with a female coach on the floor.",
+    "faq.3.q": "Is parking available?",
+    "faq.3.a": "Free parking for members in the building, entrance from the side street.",
+    "faq.4.q": "",
+    "faq.4.a": "",
+    "cta.title": "Your first class is on us",
+    "hours": {
+      "sat": "06:00-23:00",
+      "sun": "06:00-23:00",
+      "mon": "06:00-23:00",
+      "tue": "06:00-23:00",
+      "wed": "06:00-23:00",
+      "thu": "06:00-23:00",
+      "fri": "10:00-20:00"
+    }
+  }
+}

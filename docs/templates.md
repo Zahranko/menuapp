@@ -14,6 +14,7 @@ public/templates/<id>/
   art/               Decorations only this template uses (optional)
 public/presets/<name>.svg       Shared picture library; an image field offers some of them with "presets": [...]
 public/samples/food/<name>.svg  Product illustrations used by the sample businesses
+public/samples/services/<name>.svg  Service illustrations (scissors, tooth, dumbbell, wrench...) for the service samples
 ```
 
 Add the component to `templates/registry.ts` and run `npm run templates:registry`.
@@ -64,13 +65,15 @@ Use these instead of writing your own, so every template behaves the same where 
 | `blocks.tsx` | `TopBars` (skip link, preview bar, announcement), `Logo`, `ProductPicture`, `HoursList`, `ContactList`, `Credits`, `ProductSheet` |
 | `CatalogControls.tsx` | Search, category chips and price sort over a product grid (`data-product`, `data-cat`, `data-q`, `data-price`, `data-order`) |
 | `icons.tsx` | Line icons |
+| `services.ts` | For service websites: `bookLink(ctx, service?)` (WhatsApp link that starts with the `book.message` setting), `highlights()`, `steps()`, `faqs()` from numbered settings (`steps.1.title`, `faq.1.q`...) |
 
 ## Rules every template follows
 
 - Settings are read with the helpers in `lib/settings.ts`; never assume a key exists.
 - Reuse the standard keys where they fit: `font`, `theme`, `accent`, `logo`, `hero.*`, `sections`, `announcement`, `story.*`, `gallery`, `reviews.*`, `hours`.
 - A section with nothing to show is left out (no empty headings). Reviews are only what the owner typed in.
-- Sold-out products stay visible with the "Sold out" label and are never featured.
+- Sold-out products stay visible with the "Sold out" label and are never featured. Service templates say "Not available" instead (`t.unavailable`, `<ProductSheet services />`).
+- Service websites (salon, clinic, studio, gym, home services) treat categories as service groups and products as services: book on WhatsApp, "From" prices (`prices.from`), steps and questions.
 - Mark each top-level section with `data-section="<name>"` (tests check the order).
 - Copy comes from `lib/i18n.ts` (shared words) or the template's `copy.ts`. Both languages, always.
 - Layout uses logical properties (`margin-inline-start`, `inset-inline-end`) so Arabic works right to left.
@@ -81,7 +84,7 @@ Use these instead of writing your own, so every template behaves the same where 
 ## Trying a template
 
 `APP_FIXTURES=1 npm run dev`, then open `http://localhost:3000/<id>` (the template's own sample business, set by
-`"sample"` in the manifest: cafe, restaurant, sweets, drinks, fastfood, asian, brunch, pizza or shop) or `/vanillamenu` (the café
+`"sample"` in the manifest: cafe, restaurant, sweets, drinks, fastfood, asian, brunch, pizza, shop, or the service samples salon, clinic, studio, gym and home) or `/vanillamenu` (the café
 with the template in `APP_FIXTURE_TEMPLATE`, default `souq`). `/_preview/fixture.<id>.<theme>.<en|ar>` shows any
 theme in either language.
 

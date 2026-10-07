@@ -1,11 +1,15 @@
 import { createElement, type ComponentType } from "react";
 import type { TemplateProps } from "@/lib/types";
 import FallbackTemplate from "./fallback/Template";
+import AgencyTemplate from "./agency/Template";
 import ArchStoryTemplate from "./archstory/Template";
+import AtelierTemplate from "./atelier/Template";
 import BentoTemplate from "./bento/Template";
 import BistroCardTemplate from "./bistro/Template";
 import ChalkBoardTemplate from "./chalkboard/Template";
+import ClinicTemplate from "./clinic/Template";
 import GardenTemplate from "./garden/Template";
+import HandyTemplate from "./handy/Template";
 import LinenListTemplate from "./linen/Template";
 import MonoGridTemplate from "./monogrid/Template";
 import NeonDinerTemplate from "./neondiner/Template";
@@ -13,6 +17,7 @@ import NightMarketTemplate from "./nightmarket/Template";
 import PizzeriaTemplate from "./pizzeria/Template";
 import PocketCatalogTemplate from "./pocket/Template";
 import PolaroidTemplate from "./polaroid/Template";
+import PulseTemplate from "./pulse/Template";
 import SouqTemplate from "./souq/Template";
 import SpiceRouteTemplate from "./spiceroute/Template";
 import TicketTemplate from "./ticket/Template";
@@ -39,6 +44,11 @@ export const templates: Record<string, ComponentType<TemplateProps>> = {
   monogrid: MonoGridTemplate,
   spiceroute: SpiceRouteTemplate,
   polaroid: PolaroidTemplate,
+  atelier: AtelierTemplate,
+  clinic: ClinicTemplate,
+  agency: AgencyTemplate,
+  pulse: PulseTemplate,
+  handy: HandyTemplate,
 };
 
 export function templateFor(id: string): ComponentType<TemplateProps> {

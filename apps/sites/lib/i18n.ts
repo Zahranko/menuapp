@@ -7,6 +7,8 @@ const en = {
   noResults: "Nothing matches your search.",
   all: "All",
   soldOut: "Sold out",
+  /** A service that cannot be booked right now (service templates use it instead of "Sold out"). */
+  unavailable: "Not available",
   signature: "Signature picks",
   story: "Our story",
   gallery: "Gallery",
@@ -53,6 +55,7 @@ const ar: Strings = {
   noResults: "لا توجد نتائج مطابقة.",
   all: "الكل",
   soldOut: "نفد",
+  unavailable: "غير متاح حاليًا",
   signature: "اختياراتنا المميزة",
   story: "قصتنا",
   gallery: "الصور",

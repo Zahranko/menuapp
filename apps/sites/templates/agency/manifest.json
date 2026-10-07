@@ -1,0 +1,462 @@
+{
+  "id": "agency",
+  "number": 19,
+  "name": "Agency",
+  "category": "Creative studio, freelancer",
+  "description": "A bold, dark website for a studio or freelancer: numbered services, selected work, process and a big call to talk.",
+  "version": 1,
+  "thumbnail": "/templates/agency/thumbnail.png",
+  "sample": "studio",
+  "schema": [
+    {
+      "key": "font",
+      "type": "choice",
+      "label": "Font style",
+      "group": "Brand",
+      "options": [
+        "bold",
+        "grotesk",
+        "modern",
+        "condensed"
+      ],
+      "optionLabels": {
+        "bold": "Bold",
+        "grotesk": "Technical",
+        "modern": "Modern",
+        "condensed": "Tall"
+      }
+    },
+    {
+      "key": "logo",
+      "type": "image",
+      "label": "Logo",
+      "group": "Brand"
+    },
+    {
+      "key": "theme",
+      "type": "palette",
+      "label": "Color theme",
+      "group": "Brand",
+      "options": [
+        "ink",
+        "cobalt",
+        "paper",
+        "plum"
+      ],
+      "swatches": {
+        "ink": "#0B0B0C",
+        "cobalt": "#0C1230",
+        "paper": "#F2F0EA",
+        "plum": "#1B0F1F"
+      }
+    },
+    {
+      "key": "accent",
+      "type": "color",
+      "label": "Accent color",
+      "group": "Brand",
+      "options": [
+        "#D7FF3A",
+        "#FF5A36",
+        "#7B61FF",
+        "#2EE6C5",
+        "#FFB800"
+      ]
+    },
+    {
+      "key": "corners",
+      "type": "choice",
+      "label": "Corners",
+      "group": "Brand",
+      "options": [
+        "rounded",
+        "sharp"
+      ],
+      "optionLabels": {
+        "rounded": "Rounded",
+        "sharp": "Sharp"
+      }
+    },
+    {
+      "key": "hero.eyebrow",
+      "type": "text",
+      "label": "Small line above the title",
+      "group": "Top",
+      "max": 50
+    },
+    {
+      "key": "hero.title",
+      "type": "text",
+      "label": "Big title",
+      "group": "Top",
+      "max": 70
+    },
+    {
+      "key": "hero.subtitle",
+      "type": "textarea",
+      "label": "Short intro",
+      "group": "Top",
+      "max": 180
+    },
+    {
+      "key": "hero.image",
+      "type": "image",
+      "label": "Wide picture",
+      "group": "Top",
+      "presets": [
+        "shapes",
+        "neon",
+        "tiles",
+        "dunes"
+      ]
+    },
+    {
+      "key": "book.message",
+      "type": "text",
+      "label": "WhatsApp message start",
+      "group": "Booking",
+      "max": 80
+    },
+    {
+      "key": "prices.from",
+      "type": "toggle",
+      "label": "Show \"From\" before prices",
+      "group": "Services"
+    },
+    {
+      "key": "services.title",
+      "type": "text",
+      "label": "Services title",
+      "group": "Services",
+      "max": 50
+    },
+    {
+      "key": "sections",
+      "type": "toggles",
+      "label": "Sections",
+      "group": "Sections",
+      "options": [
+        "announcement",
+        "marquee",
+        "highlights",
+        "work",
+        "steps",
+        "reviews",
+        "faq",
+        "visit"
+      ],
+      "optionLabels": {
+        "announcement": "Announcement bar",
+        "marquee": "Moving service names",
+        "highlights": "Numbers",
+        "work": "Selected work",
+        "steps": "Process",
+        "reviews": "Reviews",
+        "faq": "Questions",
+        "visit": "Contact details and hours"
+      }
+    },
+    {
+      "key": "announcement",
+      "type": "text",
+      "label": "Announcement",
+      "group": "Sections",
+      "max": 80
+    },
+    {
+      "key": "highlights.1.title",
+      "type": "text",
+      "label": "Number 1",
+      "group": "Numbers",
+      "max": 12
+    },
+    {
+      "key": "highlights.1.text",
+      "type": "text",
+      "label": "Number 1 label",
+      "group": "Numbers",
+      "max": 40
+    },
+    {
+      "key": "highlights.2.title",
+      "type": "text",
+      "label": "Number 2",
+      "group": "Numbers",
+      "max": 12
+    },
+    {
+      "key": "highlights.2.text",
+      "type": "text",
+      "label": "Number 2 label",
+      "group": "Numbers",
+      "max": 40
+    },
+    {
+      "key": "highlights.3.title",
+      "type": "text",
+      "label": "Number 3",
+      "group": "Numbers",
+      "max": 12
+    },
+    {
+      "key": "highlights.3.text",
+      "type": "text",
+      "label": "Number 3 label",
+      "group": "Numbers",
+      "max": 40
+    },
+    {
+      "key": "work.title",
+      "type": "text",
+      "label": "Work title",
+      "group": "Selected work",
+      "max": 40
+    },
+    {
+      "key": "gallery",
+      "type": "images",
+      "label": "Photos",
+      "group": "Gallery",
+      "max": 6
+    },
+    {
+      "key": "steps.title",
+      "type": "text",
+      "label": "Process title",
+      "group": "Process",
+      "max": 40
+    },
+    {
+      "key": "steps.1.title",
+      "type": "text",
+      "label": "Step 1",
+      "group": "Process",
+      "max": 40
+    },
+    {
+      "key": "steps.1.text",
+      "type": "textarea",
+      "label": "Step text 1",
+      "group": "Process",
+      "max": 140
+    },
+    {
+      "key": "steps.2.title",
+      "type": "text",
+      "label": "Step 2",
+      "group": "Process",
+      "max": 40
+    },
+    {
+      "key": "steps.2.text",
+      "type": "textarea",
+      "label": "Step text 2",
+      "group": "Process",
+      "max": 140
+    },
+    {
+      "key": "steps.3.title",
+      "type": "text",
+      "label": "Step 3",
+      "group": "Process",
+      "max": 40
+    },
+    {
+      "key": "steps.3.text",
+      "type": "textarea",
+      "label": "Step text 3",
+      "group": "Process",
+      "max": 140
+    },
+    {
+      "key": "steps.4.title",
+      "type": "text",
+      "label": "Step 4",
+      "group": "Process",
+      "max": 40
+    },
+    {
+      "key": "steps.4.text",
+      "type": "textarea",
+      "label": "Step text 4",
+      "group": "Process",
+      "max": 140
+    },
+    {
+      "key": "reviews.1.quote",
+      "type": "textarea",
+      "label": "Review 1",
+      "group": "Reviews",
+      "max": 240
+    },
+    {
+      "key": "reviews.1.name",
+      "type": "text",
+      "label": "Reviewer 1",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "reviews.2.quote",
+      "type": "textarea",
+      "label": "Review 2",
+      "group": "Reviews",
+      "max": 240
+    },
+    {
+      "key": "reviews.2.name",
+      "type": "text",
+      "label": "Reviewer 2",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "reviews.3.quote",
+      "type": "textarea",
+      "label": "Review 3",
+      "group": "Reviews",
+      "max": 240
+    },
+    {
+      "key": "reviews.3.name",
+      "type": "text",
+      "label": "Reviewer 3",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "faq.1.q",
+      "type": "text",
+      "label": "Question 1",
+      "group": "Questions",
+      "max": 90
+    },
+    {
+      "key": "faq.1.a",
+      "type": "textarea",
+      "label": "Answer 1",
+      "group": "Questions",
+      "max": 300
+    },
+    {
+      "key": "faq.2.q",
+      "type": "text",
+      "label": "Question 2",
+      "group": "Questions",
+      "max": 90
+    },
+    {
+      "key": "faq.2.a",
+      "type": "textarea",
+      "label": "Answer 2",
+      "group": "Questions",
+      "max": 300
+    },
+    {
+      "key": "faq.3.q",
+      "type": "text",
+      "label": "Question 3",
+      "group": "Questions",
+      "max": 90
+    },
+    {
+      "key": "faq.3.a",
+      "type": "textarea",
+      "label": "Answer 3",
+      "group": "Questions",
+      "max": 300
+    },
+    {
+      "key": "faq.4.q",
+      "type": "text",
+      "label": "Question 4",
+      "group": "Questions",
+      "max": 90
+    },
+    {
+      "key": "faq.4.a",
+      "type": "textarea",
+      "label": "Answer 4",
+      "group": "Questions",
+      "max": 300
+    },
+    {
+      "key": "cta.text",
+      "type": "text",
+      "label": "Line above Let's talk",
+      "group": "Contact",
+      "max": 60
+    },
+    {
+      "key": "hours",
+      "type": "hours",
+      "label": "Opening hours",
+      "group": "Visit and contact"
+    }
+  ],
+  "defaults": {
+    "font": "bold",
+    "logo": "",
+    "theme": "ink",
+    "accent": "#D7FF3A",
+    "corners": "rounded",
+    "hero.eyebrow": "Brand, web and content studio",
+    "hero.title": "We make small brands look big",
+    "hero.subtitle": "Identity, websites and content for businesses that want to stand out. One small team from first sketch to launch.",
+    "hero.image": "preset:shapes",
+    "book.message": "Hi! I would like to talk about a project:",
+    "prices.from": true,
+    "services.title": "What we do",
+    "sections": [
+      "marquee",
+      "highlights",
+      "work",
+      "steps",
+      "reviews",
+      "faq",
+      "visit"
+    ],
+    "announcement": "Booking projects for next month",
+    "highlights.1.title": "120+",
+    "highlights.1.text": "Brands launched",
+    "highlights.2.title": "9 yrs",
+    "highlights.2.text": "Working with small businesses",
+    "highlights.3.title": "4.9",
+    "highlights.3.text": "Average client rating",
+    "work.title": "Selected work",
+    "gallery": [],
+    "steps.title": "How we work",
+    "steps.1.title": "Talk",
+    "steps.1.text": "A short call about your business, your customers and what you need.",
+    "steps.2.title": "Plan",
+    "steps.2.text": "A clear proposal with the price and the dates. No surprises later.",
+    "steps.3.title": "Make",
+    "steps.3.text": "We design and share progress every week. You comment, we refine.",
+    "steps.4.title": "Launch",
+    "steps.4.text": "We hand over everything and help you for a month after launch.",
+    "reviews.1.quote": "",
+    "reviews.1.name": "",
+    "reviews.2.quote": "",
+    "reviews.2.name": "",
+    "reviews.3.quote": "",
+    "reviews.3.name": "",
+    "faq.1.q": "How long does a project take?",
+    "faq.1.a": "A brand identity takes about three weeks and a website four to six. We agree the dates before we start.",
+    "faq.2.q": "How do payments work?",
+    "faq.2.a": "Half when we start and half at launch. Bigger projects can be split into monthly payments.",
+    "faq.3.q": "Do you work with businesses outside Amman?",
+    "faq.3.a": "Yes. Most of our work happens online, and we travel for photo shoots when needed.",
+    "faq.4.q": "",
+    "faq.4.a": "",
+    "cta.text": "Have a project in mind?",
+    "hours": {
+      "sat": "",
+      "sun": "10:00-18:00",
+      "mon": "10:00-18:00",
+      "tue": "10:00-18:00",
+      "wed": "10:00-18:00",
+      "thu": "10:00-18:00",
+      "fri": ""
+    }
+  }
+}

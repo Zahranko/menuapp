@@ -1,0 +1,418 @@
+{
+  "id": "handy",
+  "number": 21,
+  "name": "Handy",
+  "category": "Home services, repairs",
+  "description": "A friendly site for home services: trust badges, the areas you cover, a request button on every service, steps and a sticky request bar.",
+  "version": 1,
+  "thumbnail": "/templates/handy/thumbnail.png",
+  "sample": "home",
+  "schema": [
+    {
+      "key": "font",
+      "type": "choice",
+      "label": "Font style",
+      "group": "Brand",
+      "options": [
+        "round",
+        "modern",
+        "grotesk"
+      ],
+      "optionLabels": {
+        "round": "Friendly",
+        "modern": "Modern",
+        "grotesk": "Clean"
+      }
+    },
+    {
+      "key": "logo",
+      "type": "image",
+      "label": "Logo",
+      "group": "Brand"
+    },
+    {
+      "key": "theme",
+      "type": "palette",
+      "label": "Color theme",
+      "group": "Brand",
+      "options": [
+        "clean",
+        "sunny",
+        "sage",
+        "navy"
+      ],
+      "swatches": {
+        "clean": "#F6F8FB",
+        "sunny": "#FFF9EC",
+        "sage": "#F3F6F1",
+        "navy": "#0F1B2D"
+      }
+    },
+    {
+      "key": "accent",
+      "type": "color",
+      "label": "Accent color",
+      "group": "Brand",
+      "options": [
+        "#1E5BB8",
+        "#E8572A",
+        "#118A5C",
+        "#6B4EE6",
+        "#0F1B2D"
+      ]
+    },
+    {
+      "key": "corners",
+      "type": "choice",
+      "label": "Corners",
+      "group": "Brand",
+      "options": [
+        "rounded",
+        "sharp"
+      ],
+      "optionLabels": {
+        "rounded": "Rounded",
+        "sharp": "Sharp"
+      }
+    },
+    {
+      "key": "hero.title",
+      "type": "text",
+      "label": "Big title",
+      "group": "Top",
+      "max": 60
+    },
+    {
+      "key": "hero.subtitle",
+      "type": "textarea",
+      "label": "Short intro",
+      "group": "Top",
+      "max": 180
+    },
+    {
+      "key": "hero.image",
+      "type": "image",
+      "label": "Main picture",
+      "group": "Top",
+      "presets": [
+        "blueprint",
+        "tiles",
+        "leaves",
+        "citrus"
+      ]
+    },
+    {
+      "key": "book.message",
+      "type": "text",
+      "label": "WhatsApp message start",
+      "group": "Requests",
+      "max": 80
+    },
+    {
+      "key": "prices.from",
+      "type": "toggle",
+      "label": "Show \"From\" before prices",
+      "group": "Services"
+    },
+    {
+      "key": "services.title",
+      "type": "text",
+      "label": "Services title",
+      "group": "Services",
+      "max": 50
+    },
+    {
+      "key": "sections",
+      "type": "toggles",
+      "label": "Sections",
+      "group": "Sections",
+      "options": [
+        "announcement",
+        "highlights",
+        "areas",
+        "steps",
+        "reviews",
+        "faq",
+        "visit"
+      ],
+      "optionLabels": {
+        "announcement": "Announcement bar",
+        "highlights": "Trust badges",
+        "areas": "Areas we cover",
+        "steps": "How it works",
+        "reviews": "Reviews",
+        "faq": "Questions",
+        "visit": "Contact and hours"
+      }
+    },
+    {
+      "key": "announcement",
+      "type": "text",
+      "label": "Announcement",
+      "group": "Sections",
+      "max": 80
+    },
+    {
+      "key": "highlights.1.title",
+      "type": "text",
+      "label": "Badge 1",
+      "group": "Trust badges",
+      "max": 30
+    },
+    {
+      "key": "highlights.1.text",
+      "type": "textarea",
+      "label": "Badge text 1",
+      "group": "Trust badges",
+      "max": 60
+    },
+    {
+      "key": "highlights.2.title",
+      "type": "text",
+      "label": "Badge 2",
+      "group": "Trust badges",
+      "max": 30
+    },
+    {
+      "key": "highlights.2.text",
+      "type": "textarea",
+      "label": "Badge text 2",
+      "group": "Trust badges",
+      "max": 60
+    },
+    {
+      "key": "highlights.3.title",
+      "type": "text",
+      "label": "Badge 3",
+      "group": "Trust badges",
+      "max": 30
+    },
+    {
+      "key": "highlights.3.text",
+      "type": "textarea",
+      "label": "Badge text 3",
+      "group": "Trust badges",
+      "max": 60
+    },
+    {
+      "key": "areas",
+      "type": "textarea",
+      "label": "Areas, separated by commas",
+      "group": "Areas we cover",
+      "max": 300
+    },
+    {
+      "key": "steps.title",
+      "type": "text",
+      "label": "How it works title",
+      "group": "How it works",
+      "max": 40
+    },
+    {
+      "key": "steps.1.title",
+      "type": "text",
+      "label": "Step 1",
+      "group": "How it works",
+      "max": 40
+    },
+    {
+      "key": "steps.1.text",
+      "type": "textarea",
+      "label": "Step text 1",
+      "group": "How it works",
+      "max": 140
+    },
+    {
+      "key": "steps.2.title",
+      "type": "text",
+      "label": "Step 2",
+      "group": "How it works",
+      "max": 40
+    },
+    {
+      "key": "steps.2.text",
+      "type": "textarea",
+      "label": "Step text 2",
+      "group": "How it works",
+      "max": 140
+    },
+    {
+      "key": "steps.3.title",
+      "type": "text",
+      "label": "Step 3",
+      "group": "How it works",
+      "max": 40
+    },
+    {
+      "key": "steps.3.text",
+      "type": "textarea",
+      "label": "Step text 3",
+      "group": "How it works",
+      "max": 140
+    },
+    {
+      "key": "reviews.1.quote",
+      "type": "textarea",
+      "label": "Review 1",
+      "group": "Reviews",
+      "max": 240
+    },
+    {
+      "key": "reviews.1.name",
+      "type": "text",
+      "label": "Reviewer 1",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "reviews.2.quote",
+      "type": "textarea",
+      "label": "Review 2",
+      "group": "Reviews",
+      "max": 240
+    },
+    {
+      "key": "reviews.2.name",
+      "type": "text",
+      "label": "Reviewer 2",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "reviews.3.quote",
+      "type": "textarea",
+      "label": "Review 3",
+      "group": "Reviews",
+      "max": 240
+    },
+    {
+      "key": "reviews.3.name",
+      "type": "text",
+      "label": "Reviewer 3",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "faq.1.q",
+      "type": "text",
+      "label": "Question 1",
+      "group": "Questions",
+      "max": 90
+    },
+    {
+      "key": "faq.1.a",
+      "type": "textarea",
+      "label": "Answer 1",
+      "group": "Questions",
+      "max": 300
+    },
+    {
+      "key": "faq.2.q",
+      "type": "text",
+      "label": "Question 2",
+      "group": "Questions",
+      "max": 90
+    },
+    {
+      "key": "faq.2.a",
+      "type": "textarea",
+      "label": "Answer 2",
+      "group": "Questions",
+      "max": 300
+    },
+    {
+      "key": "faq.3.q",
+      "type": "text",
+      "label": "Question 3",
+      "group": "Questions",
+      "max": 90
+    },
+    {
+      "key": "faq.3.a",
+      "type": "textarea",
+      "label": "Answer 3",
+      "group": "Questions",
+      "max": 300
+    },
+    {
+      "key": "faq.4.q",
+      "type": "text",
+      "label": "Question 4",
+      "group": "Questions",
+      "max": 90
+    },
+    {
+      "key": "faq.4.a",
+      "type": "textarea",
+      "label": "Answer 4",
+      "group": "Questions",
+      "max": 300
+    },
+    {
+      "key": "hours",
+      "type": "hours",
+      "label": "Opening hours",
+      "group": "Visit and contact"
+    }
+  ],
+  "defaults": {
+    "font": "round",
+    "logo": "",
+    "theme": "clean",
+    "accent": "#1E5BB8",
+    "corners": "rounded",
+    "hero.title": "Home repairs and cleaning, done right",
+    "hero.subtitle": "Trusted technicians for AC, plumbing, painting and deep cleaning. Fixed prices and visits on time, all over Amman.",
+    "hero.image": "preset:blueprint",
+    "book.message": "Hello! I would like to request a visit for:",
+    "prices.from": true,
+    "services.title": "Our services",
+    "sections": [
+      "announcement",
+      "highlights",
+      "areas",
+      "steps",
+      "reviews",
+      "faq",
+      "visit"
+    ],
+    "announcement": "Summer AC check: 20 percent off until the end of the month",
+    "highlights.1.title": "Licensed and insured",
+    "highlights.1.text": "Every technician is checked and trained",
+    "highlights.2.title": "Same-day visits",
+    "highlights.2.text": "Message before noon, we come today",
+    "highlights.3.title": "6-month guarantee",
+    "highlights.3.text": "If it breaks again, we fix it free",
+    "areas": "Abdoun, Sweifieh, Khalda, Dabouq, Jabal Amman, Shmeisani, Tla' Al-Ali, Marj Al-Hamam",
+    "steps.title": "How it works",
+    "steps.1.title": "Message us",
+    "steps.1.text": "Tell us what needs fixing and send a photo if you can.",
+    "steps.2.title": "Get a fixed price",
+    "steps.2.text": "We confirm the price and a time that suits you before we come.",
+    "steps.3.title": "We fix it",
+    "steps.3.text": "The technician arrives on time, cleans up and you pay when you are happy.",
+    "reviews.1.quote": "",
+    "reviews.1.name": "",
+    "reviews.2.quote": "",
+    "reviews.2.name": "",
+    "reviews.3.quote": "",
+    "reviews.3.name": "",
+    "faq.1.q": "Do you bring the materials?",
+    "faq.1.a": "Yes. Prices include basic materials. For parts like a new heater we send you the price first.",
+    "faq.2.q": "How do I pay?",
+    "faq.2.a": "Cash or CliQ after the job is done.",
+    "faq.3.q": "Do you work on Fridays?",
+    "faq.3.a": "Emergency visits only. Message us and we will tell you who is available.",
+    "faq.4.q": "",
+    "faq.4.a": "",
+    "hours": {
+      "sat": "08:00-20:00",
+      "sun": "08:00-20:00",
+      "mon": "08:00-20:00",
+      "tue": "08:00-20:00",
+      "wed": "08:00-20:00",
+      "thu": "08:00-18:00",
+      "fri": ""
+    }
+  }
+}

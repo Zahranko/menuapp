@@ -20,7 +20,7 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 | S13 | Flutter template gallery and editor | not started | | |
 | S14 | Flutter plans and custom domain | not started | | |
 | S15 | Deployment and hardening | not started | | |
-| S16+ | Template factory | in progress | | Batch 1: templates 002 to 006 (Linen List, Night Market, Arch Story, Pocket Catalog, Chalk Board), per-template stylesheets, sample businesses, axe checks. Batch 2: 007 to 011 (Bento, Neon Diner, Zen, Bistro Card, Pizzeria). Batch 3: 012 to 016 (Ticket, Garden, Mono Grid, Spice Route, Polaroid). Plan for the rest: `docs/templates-catalog.md` |
+| S16+ | Template factory | in progress | | Batch 1: templates 002 to 006 (Linen List, Night Market, Arch Story, Pocket Catalog, Chalk Board), per-template stylesheets, sample businesses, axe checks. Batch 2: 007 to 011 (Bento, Neon Diner, Zen, Bistro Card, Pizzeria). Batch 3: 012 to 016 (Ticket, Garden, Mono Grid, Spice Route, Polaroid). Service websites: 017 to 021 (Atelier, Clinic, Agency, Pulse, Handy). Plan for the rest: `docs/templates-catalog.md` |
 
 ## Settings other sessions need
 
@@ -65,6 +65,7 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 - S16: Shared picture presets live in `public/presets/` and sample product illustrations in `public/samples/food/`; any template can offer any preset.
 - S16: Fixture mode has nine sample businesses (café, restaurant, sweets, drinks, street food, Asian, brunch, pizza, shop). Each template's manifest names its `"sample"` (the backend ignores that key). `/_preview/fixture.<id>.<theme>.<en|ar>` shows any theme in either language.
 - S16: Every template is checked by one shared unit test (all themes, Arabic, 1 and 200 products, everything off, no products) and by `e2e/templates.spec.ts` (load, no sideways scroll, item dialog, axe WCAG A/AA per theme and in Arabic).
+- S16: The product also makes websites for service businesses. Service templates (017 to 021) use five service samples in fixture mode (salon, clinic, studio, gym, home) with illustrations in `public/samples/services/`, the kit in `templates/_kit/services.ts`, and say "Not available" instead of "Sold out". JSON-LD picks the schema.org type from the template's category (BeautySalon, Dentist, MedicalClinic, ExerciseGym, ProfessionalService, HomeAndConstructionBusiness, Store, CafeOrCoffeeShop, else Restaurant); non-food types list services in `hasOfferCatalog` instead of `hasMenu`. Planned menu templates moved to 022 onward.
 - S16: Font pairs grew to eleven (adds grotesk, hand, condensed, mono, round, naskh); fonts load only when a template uses them (`preload: false`).
 - S07: Cache Components are off. The sites use fetch with `next: { tags }`: `site:<slug>` (revalidate 3600 s as a safety net) and `host:<domain>` (60 s); `/api/revalidate` calls `revalidateTag(tag, { expire: 0 })`. This replaces the S00 note about Cache Components.
 - S07: `proxy.ts` (Next 16's middleware) rewrites `{domain}/<slug>` to the internal route `/s/<slug>` and `/_preview/<token>` to `/s-preview/<token>`; neither can clash with a slug because slugs never contain `-` and `s` is too short. Custom hosts are resolved with `by-host` and cached in memory for 60 s; unknown hosts get the not-found page.

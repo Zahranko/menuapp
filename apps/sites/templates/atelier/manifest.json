@@ -1,0 +1,278 @@
+{
+  "id": "atelier",
+  "number": 17,
+  "name": "Atelier",
+  "category": "Salon, beauty",
+  "description": "An editorial website for a salon or beauty studio, with a price list people can book from.",
+  "version": 1,
+  "thumbnail": "/templates/atelier/thumbnail.png",
+  "sample": "salon",
+  "schema": [
+    {
+      "key": "font",
+      "type": "choice",
+      "label": "Font style",
+      "group": "Brand",
+      "options": ["elegant", "classic", "modern"],
+      "optionLabels": {
+        "elegant": "Elegant",
+        "classic": "Classic",
+        "modern": "Modern"
+      }
+    },
+    {
+      "key": "logo",
+      "type": "image",
+      "label": "Logo",
+      "group": "Brand"
+    },
+    {
+      "key": "theme",
+      "type": "palette",
+      "label": "Color theme",
+      "group": "Brand",
+      "options": ["blush", "sand", "sage", "noir"],
+      "swatches": {
+        "blush": "#FAF5F2",
+        "sand": "#F5F0E8",
+        "sage": "#F1F3EE",
+        "noir": "#141212"
+      }
+    },
+    {
+      "key": "accent",
+      "type": "color",
+      "label": "Accent color",
+      "group": "Brand",
+      "options": ["#B76E79", "#8C6A4A", "#4F6F5B", "#111111"]
+    },
+    {
+      "key": "hero.eyebrow",
+      "type": "text",
+      "label": "Small line above the headline",
+      "group": "Top",
+      "max": 40
+    },
+    {
+      "key": "hero.title",
+      "type": "text",
+      "label": "Headline",
+      "group": "Top",
+      "max": 60
+    },
+    {
+      "key": "hero.subtitle",
+      "type": "textarea",
+      "label": "Text under the headline",
+      "group": "Top",
+      "max": 160
+    },
+    {
+      "key": "hero.image",
+      "type": "image",
+      "label": "Main picture",
+      "group": "Top",
+      "presets": ["marble", "arches", "leaves", "rings"]
+    },
+    {
+      "key": "book.message",
+      "type": "text",
+      "label": "WhatsApp booking message",
+      "group": "Booking",
+      "max": 80
+    },
+    {
+      "key": "sections",
+      "type": "toggles",
+      "label": "Sections",
+      "group": "Sections",
+      "options": [
+        "announcement",
+        "highlights",
+        "story",
+        "gallery",
+        "reviews",
+        "visit"
+      ],
+      "optionLabels": {
+        "announcement": "Announcement bar",
+        "highlights": "Highlights",
+        "story": "About",
+        "gallery": "Photos",
+        "reviews": "Reviews",
+        "visit": "Hours and contact"
+      }
+    },
+    {
+      "key": "announcement",
+      "type": "text",
+      "label": "Announcement",
+      "group": "Sections",
+      "max": 80
+    },
+    {
+      "key": "highlights.1.title",
+      "type": "text",
+      "label": "Highlight 1",
+      "group": "Highlights",
+      "max": 40
+    },
+    {
+      "key": "highlights.1.text",
+      "type": "textarea",
+      "label": "Highlight text 1",
+      "group": "Highlights",
+      "max": 90
+    },
+    {
+      "key": "highlights.2.title",
+      "type": "text",
+      "label": "Highlight 2",
+      "group": "Highlights",
+      "max": 40
+    },
+    {
+      "key": "highlights.2.text",
+      "type": "textarea",
+      "label": "Highlight text 2",
+      "group": "Highlights",
+      "max": 90
+    },
+    {
+      "key": "highlights.3.title",
+      "type": "text",
+      "label": "Highlight 3",
+      "group": "Highlights",
+      "max": 40
+    },
+    {
+      "key": "highlights.3.text",
+      "type": "textarea",
+      "label": "Highlight text 3",
+      "group": "Highlights",
+      "max": 90
+    },
+    {
+      "key": "services.title",
+      "type": "text",
+      "label": "Services headline",
+      "group": "Services",
+      "max": 60
+    },
+    {
+      "key": "story.title",
+      "type": "text",
+      "label": "About headline",
+      "group": "About",
+      "max": 60
+    },
+    {
+      "key": "story.text",
+      "type": "textarea",
+      "label": "About",
+      "group": "About",
+      "max": 500
+    },
+    {
+      "key": "story.image",
+      "type": "image",
+      "label": "About picture",
+      "group": "About",
+      "presets": ["marble", "arches", "leaves"]
+    },
+    {
+      "key": "gallery",
+      "type": "images",
+      "label": "Photos",
+      "group": "Gallery",
+      "max": 6
+    },
+    {
+      "key": "reviews.1.quote",
+      "type": "textarea",
+      "label": "Review 1",
+      "group": "Reviews",
+      "max": 240
+    },
+    {
+      "key": "reviews.1.name",
+      "type": "text",
+      "label": "Reviewer 1",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "reviews.2.quote",
+      "type": "textarea",
+      "label": "Review 2",
+      "group": "Reviews",
+      "max": 240
+    },
+    {
+      "key": "reviews.2.name",
+      "type": "text",
+      "label": "Reviewer 2",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "reviews.3.quote",
+      "type": "textarea",
+      "label": "Review 3",
+      "group": "Reviews",
+      "max": 240
+    },
+    {
+      "key": "reviews.3.name",
+      "type": "text",
+      "label": "Reviewer 3",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "hours",
+      "type": "hours",
+      "label": "Opening hours",
+      "group": "Visit and contact"
+    }
+  ],
+  "defaults": {
+    "font": "elegant",
+    "logo": "",
+    "theme": "blush",
+    "accent": "#B76E79",
+    "hero.eyebrow": "Hair, nails and skin",
+    "hero.title": "Look good, feel even better",
+    "hero.subtitle": "A calm salon in Abdoun with experienced stylists, quality products and time set aside just for you.",
+    "hero.image": "preset:marble",
+    "book.message": "Hello! I would like to book:",
+    "sections": ["highlights", "story", "gallery", "reviews", "visit"],
+    "announcement": "New clients get 15 percent off their first visit",
+    "highlights.1.title": "Experienced team",
+    "highlights.1.text": "Every stylist has at least five years in the chair.",
+    "highlights.2.title": "Quality products",
+    "highlights.2.text": "Professional, cruelty-free brands only.",
+    "highlights.3.title": "Easy booking",
+    "highlights.3.text": "Message us on WhatsApp and pick a time.",
+    "services.title": "Services and prices",
+    "story.title": "A salon that feels like home",
+    "story.text": "Lina opened the salon in 2015 with one chair and a simple idea: listen first, then cut. Today our team of six still works the same way.",
+    "story.image": "preset:arches",
+    "gallery": [],
+    "reviews.1.quote": "",
+    "reviews.1.name": "",
+    "reviews.2.quote": "",
+    "reviews.2.name": "",
+    "reviews.3.quote": "",
+    "reviews.3.name": "",
+    "hours": {
+      "sat": "10:00-20:00",
+      "sun": "10:00-20:00",
+      "mon": "10:00-20:00",
+      "tue": "10:00-20:00",
+      "wed": "10:00-20:00",
+      "thu": "10:00-21:00",
+      "fri": ""
+    }
+  }
+}
