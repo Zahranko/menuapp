@@ -1,0 +1,413 @@
+{
+  "id": "clinic",
+  "number": 18,
+  "name": "Clinic",
+  "category": "Dental, medical clinic",
+  "description": "A calm, trustworthy website for a clinic: services with prices, how a visit works, questions and booking.",
+  "version": 1,
+  "thumbnail": "/templates/clinic/thumbnail.png",
+  "sample": "clinic",
+  "schema": [
+    {
+      "key": "font",
+      "type": "choice",
+      "label": "Font style",
+      "group": "Brand",
+      "options": [
+        "modern",
+        "grotesk",
+        "round"
+      ],
+      "optionLabels": {
+        "modern": "Modern",
+        "grotesk": "Clean",
+        "round": "Friendly"
+      }
+    },
+    {
+      "key": "logo",
+      "type": "image",
+      "label": "Logo",
+      "group": "Brand"
+    },
+    {
+      "key": "theme",
+      "type": "palette",
+      "label": "Color theme",
+      "group": "Brand",
+      "options": [
+        "fresh",
+        "mint",
+        "warm",
+        "night"
+      ],
+      "swatches": {
+        "fresh": "#F5F9FC",
+        "mint": "#F2F8F6",
+        "warm": "#FBF8F4",
+        "night": "#0F1722"
+      }
+    },
+    {
+      "key": "accent",
+      "type": "color",
+      "label": "Accent color",
+      "group": "Brand",
+      "options": [
+        "#1F6FEB",
+        "#0E9F87",
+        "#6D4AFF",
+        "#D64550"
+      ]
+    },
+    {
+      "key": "corners",
+      "type": "choice",
+      "label": "Corners",
+      "group": "Brand",
+      "options": [
+        "rounded",
+        "sharp"
+      ],
+      "optionLabels": {
+        "rounded": "Rounded",
+        "sharp": "Sharp"
+      }
+    },
+    {
+      "key": "hero.eyebrow",
+      "type": "text",
+      "label": "Small line above the headline",
+      "group": "Top",
+      "max": 50
+    },
+    {
+      "key": "hero.title",
+      "type": "text",
+      "label": "Headline",
+      "group": "Top",
+      "max": 60
+    },
+    {
+      "key": "hero.subtitle",
+      "type": "textarea",
+      "label": "Text under the headline",
+      "group": "Top",
+      "max": 180
+    },
+    {
+      "key": "hero.image",
+      "type": "image",
+      "label": "Main picture",
+      "group": "Top",
+      "presets": [
+        "care",
+        "tiles",
+        "leaves",
+        "dunes"
+      ]
+    },
+    {
+      "key": "book.message",
+      "type": "text",
+      "label": "WhatsApp booking message",
+      "group": "Booking",
+      "max": 80
+    },
+    {
+      "key": "prices.from",
+      "type": "toggle",
+      "label": "Show \"From\" before prices",
+      "group": "Services"
+    },
+    {
+      "key": "services.title",
+      "type": "text",
+      "label": "Services headline",
+      "group": "Services",
+      "max": 60
+    },
+    {
+      "key": "sections",
+      "type": "toggles",
+      "label": "Sections",
+      "group": "Sections",
+      "options": [
+        "announcement",
+        "highlights",
+        "steps",
+        "reviews",
+        "faq",
+        "visit"
+      ],
+      "optionLabels": {
+        "announcement": "Announcement bar",
+        "highlights": "Reasons to choose us",
+        "steps": "How it works",
+        "reviews": "Reviews",
+        "faq": "Questions",
+        "visit": "Contact and hours"
+      }
+    },
+    {
+      "key": "announcement",
+      "type": "text",
+      "label": "Announcement",
+      "group": "Sections",
+      "max": 80
+    },
+    {
+      "key": "highlights.1.title",
+      "type": "text",
+      "label": "Reason 1",
+      "group": "Reasons to choose us",
+      "max": 40
+    },
+    {
+      "key": "highlights.1.text",
+      "type": "textarea",
+      "label": "Reason text 1",
+      "group": "Reasons to choose us",
+      "max": 90
+    },
+    {
+      "key": "highlights.2.title",
+      "type": "text",
+      "label": "Reason 2",
+      "group": "Reasons to choose us",
+      "max": 40
+    },
+    {
+      "key": "highlights.2.text",
+      "type": "textarea",
+      "label": "Reason text 2",
+      "group": "Reasons to choose us",
+      "max": 90
+    },
+    {
+      "key": "highlights.3.title",
+      "type": "text",
+      "label": "Reason 3",
+      "group": "Reasons to choose us",
+      "max": 40
+    },
+    {
+      "key": "highlights.3.text",
+      "type": "textarea",
+      "label": "Reason text 3",
+      "group": "Reasons to choose us",
+      "max": 90
+    },
+    {
+      "key": "steps.title",
+      "type": "text",
+      "label": "Steps headline",
+      "group": "How it works",
+      "max": 50
+    },
+    {
+      "key": "steps.1.title",
+      "type": "text",
+      "label": "Step 1",
+      "group": "How it works",
+      "max": 40
+    },
+    {
+      "key": "steps.1.text",
+      "type": "textarea",
+      "label": "Step text 1",
+      "group": "How it works",
+      "max": 140
+    },
+    {
+      "key": "steps.2.title",
+      "type": "text",
+      "label": "Step 2",
+      "group": "How it works",
+      "max": 40
+    },
+    {
+      "key": "steps.2.text",
+      "type": "textarea",
+      "label": "Step text 2",
+      "group": "How it works",
+      "max": 140
+    },
+    {
+      "key": "steps.3.title",
+      "type": "text",
+      "label": "Step 3",
+      "group": "How it works",
+      "max": 40
+    },
+    {
+      "key": "steps.3.text",
+      "type": "textarea",
+      "label": "Step text 3",
+      "group": "How it works",
+      "max": 140
+    },
+    {
+      "key": "reviews.1.quote",
+      "type": "textarea",
+      "label": "Review 1",
+      "group": "Reviews",
+      "max": 240
+    },
+    {
+      "key": "reviews.1.name",
+      "type": "text",
+      "label": "Reviewer 1",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "reviews.2.quote",
+      "type": "textarea",
+      "label": "Review 2",
+      "group": "Reviews",
+      "max": 240
+    },
+    {
+      "key": "reviews.2.name",
+      "type": "text",
+      "label": "Reviewer 2",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "reviews.3.quote",
+      "type": "textarea",
+      "label": "Review 3",
+      "group": "Reviews",
+      "max": 240
+    },
+    {
+      "key": "reviews.3.name",
+      "type": "text",
+      "label": "Reviewer 3",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "faq.1.q",
+      "type": "text",
+      "label": "Question 1",
+      "group": "Questions",
+      "max": 90
+    },
+    {
+      "key": "faq.1.a",
+      "type": "textarea",
+      "label": "Answer 1",
+      "group": "Questions",
+      "max": 300
+    },
+    {
+      "key": "faq.2.q",
+      "type": "text",
+      "label": "Question 2",
+      "group": "Questions",
+      "max": 90
+    },
+    {
+      "key": "faq.2.a",
+      "type": "textarea",
+      "label": "Answer 2",
+      "group": "Questions",
+      "max": 300
+    },
+    {
+      "key": "faq.3.q",
+      "type": "text",
+      "label": "Question 3",
+      "group": "Questions",
+      "max": 90
+    },
+    {
+      "key": "faq.3.a",
+      "type": "textarea",
+      "label": "Answer 3",
+      "group": "Questions",
+      "max": 300
+    },
+    {
+      "key": "faq.4.q",
+      "type": "text",
+      "label": "Question 4",
+      "group": "Questions",
+      "max": 90
+    },
+    {
+      "key": "faq.4.a",
+      "type": "textarea",
+      "label": "Answer 4",
+      "group": "Questions",
+      "max": 300
+    },
+    {
+      "key": "hours",
+      "type": "hours",
+      "label": "Opening hours",
+      "group": "Visit and contact"
+    }
+  ],
+  "defaults": {
+    "font": "modern",
+    "logo": "",
+    "theme": "fresh",
+    "accent": "#1F6FEB",
+    "corners": "rounded",
+    "hero.eyebrow": "Family dental care in Shmeisani",
+    "hero.title": "Healthy smiles, gentle care",
+    "hero.subtitle": "Modern dentistry for adults and children, with clear prices and appointments that run on time.",
+    "hero.image": "preset:care",
+    "book.message": "Hello! I would like to book an appointment for:",
+    "prices.from": true,
+    "services.title": "What we can help with",
+    "sections": [
+      "highlights",
+      "steps",
+      "reviews",
+      "faq",
+      "visit"
+    ],
+    "announcement": "Free check-up for children under 6 this month",
+    "highlights.1.title": "Same-day emergency visits",
+    "highlights.1.text": "",
+    "highlights.2.title": "Child-friendly dentists",
+    "highlights.2.text": "",
+    "highlights.3.title": "Clear prices before treatment",
+    "highlights.3.text": "",
+    "steps.title": "How a visit works",
+    "steps.1.title": "Message us",
+    "steps.1.text": "Tell us what you need on WhatsApp and pick a time.",
+    "steps.2.title": "Check-up",
+    "steps.2.text": "We examine, explain what we see and agree a plan and a price.",
+    "steps.3.title": "Treatment",
+    "steps.3.text": "Most treatments are done in one or two short visits.",
+    "reviews.1.quote": "",
+    "reviews.1.name": "",
+    "reviews.2.quote": "",
+    "reviews.2.name": "",
+    "reviews.3.quote": "",
+    "reviews.3.name": "",
+    "faq.1.q": "Do you accept insurance?",
+    "faq.1.a": "Yes, we work with most insurance companies in Jordan. Send us a photo of your card and we will check it for you.",
+    "faq.2.q": "Can I bring my children?",
+    "faq.2.a": "Of course. We see children from age three and keep the first visit short and fun.",
+    "faq.3.q": "Do you offer payment plans?",
+    "faq.3.a": "For larger treatments we can split the cost over several months at no extra charge.",
+    "faq.4.q": "",
+    "faq.4.a": "",
+    "hours": {
+      "sat": "09:00-19:00",
+      "sun": "09:00-19:00",
+      "mon": "09:00-19:00",
+      "tue": "09:00-19:00",
+      "wed": "09:00-19:00",
+      "thu": "09:00-16:00",
+      "fri": ""
+    }
+  }
+}

@@ -136,6 +136,76 @@ export const SAMPLES = {
       ["Drinks", "Fresh lemonade", "Lemon, mint and a little sugar", 2.0, null, false, "juice"],
     ],
   },
+  salon: {
+    name: "Maison Lina",
+    address: "Abdoun, Prince Hashem Street 12",
+    instagram: "maisonlina",
+    menu: [
+      ["Hair", "Cut and blow dry", "Consultation, wash, cut and finish, 60 minutes", 25, "Best seller", true, "services/scissors"],
+      ["Hair", "Blow dry", "Wash and styled blow dry, 40 minutes", 12, null, false, "services/dryer"],
+      ["Hair", "Full color", "Root to tip color with gloss, from 120 minutes", 55, "Signature", true, "services/dryer"],
+      ["Hair", "Keratin treatment", "Smoothing treatment for frizz-free hair", 90, null, false, null],
+      ["Nails", "Gel manicure", "Shape, cuticle care and gel color", 15, null, true, "services/nails"],
+      ["Nails", "Spa pedicure", "Soak, scrub, massage and polish", 18, "New", false, "services/nails"],
+      ["Skin", "Hydrating facial", "Deep cleanse, mask and massage, 50 minutes", 35, null, false, "services/facial"],
+      ["Skin", "Hot stone massage", "Full body, 60 minutes", 45, null, false, "services/massage"],
+    ],
+  },
+  clinic: {
+    name: "Smile Dental Clinic",
+    address: "Shmeisani, Abdul Hamid Sharaf Street 30",
+    instagram: "smiledental",
+    menu: [
+      ["General", "Check-up and cleaning", "Exam, scaling, polishing and advice", 30, "Best seller", true, "services/tooth"],
+      ["General", "Fillings", "Tooth-colored composite fillings, per tooth", 35, null, false, "services/tooth"],
+      ["General", "Children's dentistry", "Gentle visits for kids from age 3", 25, null, true, "services/clipboard"],
+      ["General", "Emergency visit", "Same-day appointment for pain or injury", 40, null, false, "services/stethoscope"],
+      ["Cosmetic", "Teeth whitening", "In-clinic whitening, one session", 150, "Signature", true, "services/tooth"],
+      ["Cosmetic", "Veneers", "Porcelain veneers, per tooth, from", 220, null, false, null],
+      ["Orthodontics", "Clear aligners", "Consultation and treatment plan", 50, "New", false, "services/clipboard"],
+    ],
+  },
+  studio: {
+    name: "Northline Studio",
+    address: "Jabal Amman, First Circle, Studio 4",
+    instagram: "northline",
+    menu: [
+      ["Brand", "Brand identity", "Logo, colors, type and a short brand guide", 900, "Best seller", true, "services/pen"],
+      ["Brand", "Packaging design", "Labels and boxes ready for print", 600, null, false, "services/pen"],
+      ["Web", "Website design and build", "Up to six pages, mobile first, easy to edit", 1500, "Signature", true, "services/browser"],
+      ["Web", "Online store setup", "Products, payments and delivery set up for you", 1200, null, false, "services/browser"],
+      ["Content", "Product photography", "Half-day shoot, 20 edited photos", 350, null, true, "services/camera"],
+      ["Content", "Social media videos", "Four short videos a month", 400, "New", false, "services/play"],
+    ],
+  },
+  gym: {
+    name: "Pulse Fitness",
+    address: "Sweifieh, Wakalat Street 5",
+    instagram: "pulsefitness",
+    menu: [
+      ["Memberships", "Monthly membership", "Gym floor and all group classes", 45, "Best seller", true, "services/dumbbell"],
+      ["Memberships", "Three months", "Save 15 percent, includes a body scan", 115, null, true, "services/kettlebell"],
+      ["Memberships", "Student plan", "Weekdays before 4 pm with a student card", 30, null, false, "services/dumbbell"],
+      ["Classes", "Spin class", "45 minutes, all levels", 6, null, false, "services/kettlebell"],
+      ["Classes", "Yoga flow", "60 minutes, mats provided", 7, "New", false, "services/yoga"],
+      ["Classes", "HIIT", "30 minutes of intervals", 6, null, false, "services/kettlebell"],
+      ["Personal training", "One session", "60 minutes with a certified coach", 25, null, false, "services/dumbbell"],
+      ["Personal training", "Pack of ten", "Ten sessions, use them in three months", 220, "Signature", true, "services/yoga"],
+    ],
+  },
+  home: {
+    name: "Handy Pro",
+    address: "Serving all of Amman",
+    instagram: "handypro",
+    menu: [
+      ["Cleaning", "Home deep clean", "Two cleaners, up to 150 square meters", 45, "Best seller", true, "services/spray"],
+      ["Cleaning", "Sofa and carpet cleaning", "Steam cleaning, per seat or square meter", 15, null, false, "services/spray"],
+      ["Repairs", "AC service", "Clean, gas check and filter, per unit", 20, "Signature", true, "services/snowflake"],
+      ["Repairs", "Plumbing visit", "Leaks, taps and heaters, first hour", 18, null, false, "services/drop"],
+      ["Repairs", "Handyman hour", "Shelves, curtains, furniture assembly", 12, null, false, "services/wrench"],
+      ["Painting", "Room painting", "Walls and ceiling, paint included", 90, "New", false, "services/roller"],
+    ],
+  },
   shop: {
     name: "Olive and Thread",
     address: "Jabal Al-Weibdeh, Paris Circle 3",
@@ -167,11 +237,14 @@ const sampleSettings: Settings = {
   "reviews.3.name": "Sara M.",
 };
 
+/** Sample pictures: "latte" is a food illustration, "services/tooth" a service one. */
+const photoUrl = (name: string) => (name.includes("/") ? `/samples/${name}.svg` : `/samples/food/${name}.svg`);
+
 /** Gallery photos per sample, built from its product pictures. */
 function galleryFor(sample: SampleName): string[] {
   if (sample === "cafe") return sampleSettings.gallery as string[];
   const photos = [...new Set(SAMPLES[sample].menu.map((r) => r[6]).filter(Boolean))] as string[];
-  return photos.slice(0, 6).map((p) => `/samples/food/${p}.svg`);
+  return photos.slice(0, 6).map(photoUrl);
 }
 
 const id = (n: number) => `00000000-0000-7000-8000-${n.toString().padStart(12, "0")}`;
@@ -199,9 +272,26 @@ const otherReviews: Settings = {
   "reviews.3.quote": "Our favorite place in the neighborhood. Try the signature, you will not regret it.",
 };
 
+/** Reviews that fit a service business instead of a kitchen. */
+const serviceReviews: Settings = {
+  "reviews.1.quote": "Booked on WhatsApp in a minute and they were on time. Friendly, careful and the price was exactly what they said.",
+  "reviews.1.name": "Rania A.",
+  "reviews.2.quote": "Professional from the first message to the last. I have already recommended them to my whole family.",
+  "reviews.2.name": "Khaled S.",
+  "reviews.3.quote": "Clear prices, no surprises and great results. I will definitely be back.",
+  "reviews.3.name": "Dana M.",
+};
+const SERVICE_SAMPLES = new Set<SampleName>(["salon", "clinic", "studio", "gym", "home"]);
+
 function sampleSettingsFor(templateId: string, sample: SampleName): Settings {
   const defaults = defaultsFor(templateId);
-  const settings: Settings = { ...sampleSettings, ...(sample === "cafe" ? {} : otherReviews), gallery: galleryFor(sample) };
+  if (SERVICE_SAMPLES.has(sample)) {
+    // Service templates bring their own hero copy; only reviews and photos come from the sample.
+    const settings: Settings = { ...serviceReviews, gallery: galleryFor(sample) };
+    return Object.fromEntries(Object.entries(settings).filter(([key]) => key in defaults));
+  }
+  const reviews = sample === "cafe" ? {} : otherReviews;
+  const settings: Settings = { ...sampleSettings, ...reviews, gallery: galleryFor(sample) };
   return Object.fromEntries(Object.entries(settings).filter(([key]) => key in defaults));
 }
 
@@ -235,7 +325,7 @@ export function fixtureFor(templateId: string, overrides: Partial<PublicSite> = 
           name: s[1],
           description: s[2],
           price: s[3],
-          imageUrl: s[6] ? `/samples/food/${s[6]}.svg` : null,
+          imageUrl: s[6] ? photoUrl(s[6]) : null,
           label: s[4],
           // The fourth product is sold out in every sample, to show how that looks.
           isAvailable: i !== 3,

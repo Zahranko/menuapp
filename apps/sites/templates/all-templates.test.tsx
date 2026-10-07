@@ -21,7 +21,7 @@ describe.each(ids)("template %s", (id) => {
     expect(html).toContain(`data-template="${id}"`);
     expect(html).toContain(site.business.name.replace("&", "&amp;"));
     for (const p of site.categories.flatMap((c) => c.products)) expect(html, p.name).toContain(p.name.replace("'", "&#x27;"));
-    expect(html).toContain("Sold out");
+    expect(html).toMatch(/Sold out|Not available/);
     for (const section of ["header", "menu", "footer"]) expect(html).toContain(`data-section="${section}"`);
     expect(html).toContain('id="menu"');
   });
@@ -36,8 +36,8 @@ describe.each(ids)("template %s", (id) => {
     const site = fixtureFor(id);
     site.business = { ...site.business, locale: "ar" };
     const html = render(site);
-    expect(html).toContain("نفد");
-    expect(html).not.toContain("Sold out");
+    expect(html).toMatch(/نفد|غير متاح حاليًا/);
+    expect(html).not.toMatch(/Sold out|Not available/);
   });
 
   it("handles one product, and 200 products with long names and no photos", () => {

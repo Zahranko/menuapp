@@ -12,11 +12,34 @@ describe("JSON-LD", () => {
     expect(data.name).toBe("Vanilla Menu");
     expect(data.url).toBe("https://vanillamenu.example.com");
     expect(data.openingHoursSpecification).toHaveLength(7);
-    expect(data.openingHoursSpecification[5]).toMatchObject({ dayOfWeek: "https://schema.org/Thursday", opens: "08:00", closes: "23:59" });
+    expect(data.openingHoursSpecification[5]).toMatchObject({
+      dayOfWeek: "https://schema.org/Thursday",
+      opens: "08:00",
+      closes: "23:59",
+    });
     const latte = data.hasMenu.hasMenuSection[0].hasMenuItem[0];
-    expect(latte).toMatchObject({ name: "Vanilla latte", offers: { price: "3.50", priceCurrency: "JOD", availability: "https://schema.org/InStock" } });
+    expect(latte).toMatchObject({
+      name: "Vanilla latte",
+      offers: {
+        price: "3.50",
+        priceCurrency: "JOD",
+        availability: "https://schema.org/InStock",
+      },
+    });
     const mocha = data.hasMenu.hasMenuSection[0].hasMenuItem[3];
     expect(mocha.offers.availability).toBe("https://schema.org/OutOfStock");
+  });
+
+  it("lists a shop's products and a service business's services as an offer catalog", () => {
+    const shop = JSON.parse(jsonLdScript(siteJsonLd(fixtureFor("pocket"))));
+    expect(shop["@type"]).toBe("Store");
+    expect(shop.hasMenu).toBeUndefined();
+    expect(
+      shop.hasOfferCatalog.itemListElement[0].itemListElement[0],
+    ).toMatchObject({
+      "@type": "Offer",
+      itemOffered: { "@type": "Product", name: "Olive wood candle" },
+    });
   });
 
   it("cannot break out of the script tag", () => {
