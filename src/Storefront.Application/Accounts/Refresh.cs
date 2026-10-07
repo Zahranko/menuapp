@@ -67,6 +67,21 @@ public sealed class RefreshHandler(
     }
 }
 
+/// <summary>Signs the owner out on every device (all refresh tokens are revoked; access tokens run out within minutes).</summary>
+public sealed class LogoutEverywhereHandler(IRefreshTokenRepository refreshTokens, IUnitOfWork uow, IClock clock, ICurrentUser currentUser)
+{
+    public async Task Handle(CancellationToken ct)
+    {
+        if (currentUser.UserId is not { } userId)
+        {
+            return;
+        }
+
+        await refreshTokens.RevokeAllAsync(userId, clock.UtcNow, ct);
+        await uow.SaveChangesAsync(ct);
+    }
+}
+
 public sealed record Logout(string RefreshToken);
 
 public sealed class LogoutHandler(IRefreshTokenRepository refreshTokens, ITokenService tokens, IUnitOfWork uow, IClock clock, ICurrentUser currentUser)

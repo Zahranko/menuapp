@@ -9,6 +9,7 @@ using Storefront.Web.Configuration;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddBrandFile(builder.Environment.ContentRootPath);
+builder.AddStorefrontSecurity();
 
 builder.Host.UseSerilog((context, logger) => logger
     .ReadFrom.Configuration(context.Configuration)
@@ -30,8 +31,10 @@ builder.Services.AddControllers()
 
 var app = builder.Build();
 
+app.CheckSigningKey();
 await app.PrepareDatabaseAsync();
 
+app.UseStorefrontSecurity();
 app.UseExceptionHandler();
 app.UseStatusCodePages();
 app.UseSerilogRequestLogging();
