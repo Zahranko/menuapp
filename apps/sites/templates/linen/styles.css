@@ -1,0 +1,331 @@
+/* Template 002 "Linen List": a printed menu card. Text only, dotted leaders, one or two columns. */
+
+.t-linen {
+  container: page / inline-size;
+  background:
+    radial-gradient(color-mix(in srgb, var(--ink) 4%, transparent) 1px, transparent 1.2px) 0 0 / 6px 6px,
+    var(--bg);
+  font-size: 16px;
+  line-height: 1.55;
+  padding: 0 0 40px;
+
+  .paper {
+    max-width: 940px;
+    margin: 0 auto;
+    background: var(--surf);
+    border-inline: 1px solid var(--line);
+    box-shadow: 0 30px 60px -50px #0007;
+    padding: 0 22px 32px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--fd);
+    font-weight: var(--fw);
+    letter-spacing: var(--ft);
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+
+  .flourish {
+    display: block;
+    margin: 18px auto;
+    color: var(--acc-text);
+  }
+
+  /* masthead */
+  .masthead {
+    text-align: center;
+    padding: 44px 0 10px;
+    border-bottom: 3px double var(--line);
+  }
+  .logo {
+    position: relative;
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 14px;
+    border-radius: 50%;
+    border: 1px solid var(--acc-text);
+    color: var(--acc-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font: var(--fw) 26px var(--fd);
+  }
+  .masthead h1 {
+    font-size: calc(46px * var(--fs));
+  }
+  .tagline {
+    margin: 10px auto 0;
+    max-width: 34ch;
+    font-family: var(--fd);
+    font-style: italic;
+    font-size: calc(19px * var(--fs));
+    color: var(--muted);
+  }
+  .masthead nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4px 22px;
+    padding: 4px 0 10px;
+  }
+  .masthead nav a {
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 10px 0;
+  }
+  .masthead nav a:hover {
+    color: var(--acc-text);
+  }
+
+  .intro {
+    max-width: 52ch;
+    margin: 32px auto 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: 17px;
+  }
+
+  /* menu */
+  .menu {
+    padding-top: 36px;
+    scroll-margin-top: 10px;
+  }
+  .menu-title {
+    text-align: center;
+    font-size: 13px;
+    font-family: var(--fb);
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--acc-text);
+  }
+  .contents {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    margin: 14px 0 6px;
+    font-size: 14px;
+  }
+  .contents a {
+    text-decoration: none;
+    color: var(--muted);
+    padding: 6px 4px;
+  }
+  .contents a + a::before {
+    content: "·";
+    margin-inline-end: 10px;
+    color: var(--line);
+  }
+  .contents a:hover {
+    color: var(--ink);
+  }
+  .courses {
+    margin-top: 18px;
+  }
+  .course {
+    break-inside: avoid;
+    padding: 18px 0 8px;
+    scroll-margin-top: 16px;
+  }
+  .course h3 {
+    text-align: center;
+    font-size: calc(26px * var(--fs));
+    margin-bottom: 14px;
+  }
+  .course h3::after {
+    content: "";
+    display: block;
+    width: 34px;
+    height: 2px;
+    margin: 10px auto 0;
+    background: var(--acc);
+  }
+  .dish {
+    all: unset;
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    cursor: pointer;
+    padding: 9px 4px;
+    border-radius: 4px;
+  }
+  .dish:hover .dish-name {
+    color: var(--acc-text);
+  }
+  .dish:focus-visible {
+    outline: 2px solid var(--acc-text);
+    outline-offset: 2px;
+  }
+  .dish-line {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .dish-name {
+    font-family: var(--fd);
+    font-weight: var(--fw);
+    font-size: calc(19px * var(--fs));
+    line-height: 1.25;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    transition: color 0.2s;
+  }
+  .leader {
+    flex: 1;
+    min-width: 24px;
+    border-bottom: 2px dotted color-mix(in srgb, var(--ink) 35%, transparent);
+    transform: translateY(-4px);
+  }
+  .price {
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .dish-desc {
+    display: block;
+    margin-top: 3px;
+    padding-inline-end: 70px;
+    font-size: 14.5px;
+    font-style: italic;
+    color: var(--muted);
+  }
+  .tag {
+    display: inline-block;
+    font-style: normal;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--acc-text);
+    border: 1px solid currentColor;
+    border-radius: 3px;
+    padding: 1px 5px;
+    margin-inline-end: 8px;
+    vertical-align: 2px;
+  }
+  .tag-out {
+    color: var(--muted);
+  }
+  .dish.out .dish-name,
+  .dish.out .price {
+    color: var(--muted);
+  }
+  .dish.out .price {
+    text-decoration: line-through;
+  }
+  .note {
+    margin-top: 22px;
+    text-align: center;
+    font-size: 13.5px;
+    font-style: italic;
+    color: var(--muted);
+  }
+
+  /* story */
+  .story {
+    margin: 44px auto 0;
+    padding-top: 10px;
+    max-width: 58ch;
+    text-align: center;
+    border-top: 3px double var(--line);
+    scroll-margin-top: 10px;
+  }
+  .story h2 {
+    font-size: calc(30px * var(--fs));
+    margin-bottom: 12px;
+  }
+  .story p {
+    color: var(--muted);
+    white-space: pre-line;
+  }
+
+  /* visit */
+  .visit {
+    margin-top: 48px;
+    padding-top: 28px;
+    border-top: 3px double var(--line);
+    scroll-margin-top: 10px;
+  }
+  .visit > h2 {
+    text-align: center;
+    font-size: calc(30px * var(--fs));
+    margin-bottom: 22px;
+  }
+  .visit-grid {
+    display: grid;
+    gap: 28px;
+  }
+  .visit h3 {
+    font: 800 12px var(--fb);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--acc-text);
+    margin-bottom: 10px;
+  }
+  .hours {
+    font-size: 15px;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+  }
+  .button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 46px;
+    padding: 0 18px;
+    border-radius: var(--r);
+    background: var(--acc);
+    color: var(--acc-ink);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14.5px;
+    border: 1.5px solid var(--acc);
+  }
+  .button.ghost {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--line);
+  }
+
+  .foot {
+    margin-top: 44px;
+    padding-top: 6px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+  }
+  .credits {
+    margin-top: 10px;
+  }
+
+  @container page (min-width: 760px) {
+    .paper {
+      margin-top: 32px;
+      border: 1px solid var(--line);
+      padding: 0 64px 40px;
+    }
+    .masthead h1 {
+      font-size: calc(68px * var(--fs));
+    }
+    .courses.two {
+      columns: 2;
+      column-gap: 64px;
+      column-rule: 1px solid var(--line);
+    }
+    .visit-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+    }
+  }
+}

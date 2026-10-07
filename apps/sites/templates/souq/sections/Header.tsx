@@ -3,7 +3,6 @@ import { Drawer } from "../../_kit/Drawer";
 import { Picture } from "../../_kit/Picture";
 import { initial } from "@/lib/format";
 import type { SouqContext } from "../context";
-import s from "../souq.module.css";
 
 export function navLinks(ctx: SouqContext): [string, string][] {
   const links: [string, string][] = [["#menu", ctx.t.menu]];
@@ -15,25 +14,25 @@ export function navLinks(ctx: SouqContext): [string, string][] {
 
 export function Logo({ ctx }: { ctx: SouqContext }) {
   const logo = ctx.image("logo");
-  return <span className={s.logo}>{logo ? <Picture src={logo} sizes="40px" /> : initial(ctx.site.business.name)}</span>;
+  return <span className="logo">{logo ? <Picture src={logo} sizes="40px" /> : initial(ctx.site.business.name)}</span>;
 }
 
 export function Header({ ctx }: { ctx: SouqContext }) {
   const links = navLinks(ctx);
   const order = ctx.contact.whatsapp && (
-    <a className={`${s.btn} ${s.pri} ${s.navCta}`} href={ctx.contact.whatsapp} rel="noopener" target="_blank">
+    <a className={`btn pri navCta`} href={ctx.contact.whatsapp} rel="noopener" target="_blank">
       <WhatsApp />
       {ctx.t.whatsapp}
     </a>
   );
   return (
-    <header className={s.nav} data-section="header">
-      <div className={s.navIn}>
-        <a className={s.brand} href="#top">
+    <header className="nav" data-section="header">
+      <div className="navIn">
+        <a className="brand" href="#top">
           <Logo ctx={ctx} />
-          <span className={s.brandName}>{ctx.site.business.name}</span>
+          <span className="brandName">{ctx.site.business.name}</span>
         </a>
-        <nav className={s.links} aria-label={ctx.c.mainNav}>
+        <nav className="links" aria-label={ctx.c.mainNav}>
           {links.map(([href, label]) => (
             <a key={href} href={href}>
               {label}
@@ -41,14 +40,14 @@ export function Header({ ctx }: { ctx: SouqContext }) {
           ))}
         </nav>
         {order}
-        <Drawer openLabel={ctx.t.openMenu} closeLabel={ctx.t.close} buttonClassName={s.burger} panelClassName={s.drawer} icon={<Burger />} closeIcon={<Close />}>
+        <Drawer openLabel={ctx.t.openMenu} closeLabel={ctx.t.close} buttonClassName="burger" panelClassName="drawer" icon={<Burger />} closeIcon={<Close />}>
           {links.map(([href, label]) => (
             <a key={href} href={href}>
               {label}
             </a>
           ))}
           {ctx.contact.whatsapp && (
-            <a className={`${s.btn} ${s.pri}`} href={ctx.contact.whatsapp} rel="noopener" target="_blank">
+            <a className={`btn pri`} href={ctx.contact.whatsapp} rel="noopener" target="_blank">
               <WhatsApp />
               {ctx.t.whatsapp}
             </a>

@@ -12,11 +12,14 @@
     "templates:registry": "node scripts/build-registry.mjs",
     "templates:check": "node scripts/build-registry.mjs --check",
     "api:types": "openapi-typescript ../../docs/api/openapi.json -o lib/api-types.ts",
-    "prebuild": "node scripts/build-registry.mjs --check && node scripts/copy-reserved-slugs.mjs",
-    "predev": "node scripts/copy-reserved-slugs.mjs",
-    "pretest": "node scripts/copy-reserved-slugs.mjs",
-    "pretypecheck": "node scripts/copy-reserved-slugs.mjs",
-    "test:e2e": "playwright test"
+    "prebuild": "node scripts/build-registry.mjs --check && node scripts/copy-reserved-slugs.mjs && node scripts/build-styles.mjs",
+    "predev": "node scripts/copy-reserved-slugs.mjs && node scripts/build-styles.mjs",
+    "pretest": "node scripts/copy-reserved-slugs.mjs && node scripts/build-styles.mjs",
+    "pretypecheck": "node scripts/copy-reserved-slugs.mjs && node scripts/build-styles.mjs",
+    "test:e2e": "playwright test",
+    "styles": "node scripts/build-styles.mjs",
+    "styles:watch": "node scripts/build-styles.mjs --watch",
+    "prelint": "node scripts/copy-reserved-slugs.mjs && node scripts/build-styles.mjs"
   },
   "dependencies": {
     "next": "16.4.0",
@@ -25,6 +28,7 @@
     "server-only": "^0.0.1"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "1.56",
     "@testing-library/dom": "^10",
     "@testing-library/react": "^16",
@@ -32,9 +36,11 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^6",
+    "browserslist": "^4.29.3",
     "eslint": "^9",
     "eslint-config-next": "16.4.0",
     "jsdom": "^27",
+    "lightningcss": "^1.33.0",
     "openapi-typescript": "^7.13.0",
     "typescript": "^5",
     "vite": "^8",

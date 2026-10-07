@@ -41,10 +41,10 @@ export function hours(settings: Settings, key = "hours"): Hours {
 
 /**
  * Resolves an image setting: "preset:<name>" → the template's bundled picture, a URL → itself, empty → null.
- * Presets live in public/templates/<templateId>/presets/<name>.svg.
+ * Presets are a shared library in public/presets/<name>.svg; each template's schema lists the ones it offers.
  */
-export function image(value: unknown, templateId: string): string | null {
+export function image(value: unknown): string | null {
   if (typeof value !== "string" || value.length === 0) return null;
-  if (value.startsWith(PRESET)) return `/templates/${templateId}/presets/${value.slice(PRESET.length)}.svg`;
+  if (value.startsWith(PRESET)) return `/presets/${value.slice(PRESET.length)}.svg`;
   return value;
 }

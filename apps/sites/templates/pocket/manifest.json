@@ -1,0 +1,185 @@
+{
+  "id": "pocket",
+  "number": 5,
+  "name": "Pocket Catalog",
+  "category": "Shop",
+  "description": "A shop catalog: filter by category, sort by price and ask about any item on WhatsApp.",
+  "version": 1,
+  "thumbnail": "/templates/pocket/thumbnail.png",
+  "sample": "shop",
+  "schema": [
+    {
+      "key": "font",
+      "type": "choice",
+      "label": "Font style",
+      "group": "Brand",
+      "options": [
+        "grotesk",
+        "modern",
+        "bold"
+      ],
+      "optionLabels": {
+        "grotesk": "Clean",
+        "modern": "Modern",
+        "bold": "Bold"
+      }
+    },
+    {
+      "key": "logo",
+      "type": "image",
+      "label": "Logo",
+      "group": "Brand"
+    },
+    {
+      "key": "theme",
+      "type": "palette",
+      "label": "Color theme",
+      "group": "Brand",
+      "options": [
+        "paper",
+        "cloud",
+        "mint",
+        "graphite"
+      ],
+      "swatches": {
+        "paper": "#F6F5F1",
+        "cloud": "#EEF2F7",
+        "mint": "#EAF4EF",
+        "graphite": "#18191B"
+      }
+    },
+    {
+      "key": "accent",
+      "type": "color",
+      "label": "Accent color",
+      "group": "Brand",
+      "options": [
+        "#1F3A5F",
+        "#D9542C",
+        "#2B6B4F",
+        "#111111"
+      ]
+    },
+    {
+      "key": "corners",
+      "type": "choice",
+      "label": "Corners",
+      "group": "Brand",
+      "options": [
+        "rounded",
+        "sharp"
+      ],
+      "optionLabels": {
+        "rounded": "Rounded",
+        "sharp": "Sharp"
+      }
+    },
+    {
+      "key": "hero.title",
+      "type": "text",
+      "label": "Banner headline",
+      "group": "Banner",
+      "max": 50
+    },
+    {
+      "key": "hero.subtitle",
+      "type": "textarea",
+      "label": "Banner text",
+      "group": "Banner",
+      "max": 140
+    },
+    {
+      "key": "hero.image",
+      "type": "image",
+      "label": "Banner picture",
+      "group": "Banner",
+      "presets": [
+        "leaves",
+        "rings",
+        "tiles",
+        "citrus"
+      ]
+    },
+    {
+      "key": "ask",
+      "type": "text",
+      "label": "WhatsApp message start",
+      "group": "Products",
+      "max": 60
+    },
+    {
+      "key": "sections",
+      "type": "toggles",
+      "label": "Sections",
+      "group": "Sections",
+      "options": [
+        "announcement",
+        "banner",
+        "story",
+        "visit"
+      ],
+      "optionLabels": {
+        "announcement": "Announcement bar",
+        "banner": "Banner",
+        "story": "About us",
+        "visit": "Visit and contact"
+      }
+    },
+    {
+      "key": "announcement",
+      "type": "text",
+      "label": "Announcement",
+      "group": "Sections",
+      "max": 80
+    },
+    {
+      "key": "story.title",
+      "type": "text",
+      "label": "About headline",
+      "group": "About us",
+      "max": 60
+    },
+    {
+      "key": "story.text",
+      "type": "textarea",
+      "label": "About us",
+      "group": "About us",
+      "max": 400
+    },
+    {
+      "key": "hours",
+      "type": "hours",
+      "label": "Opening hours",
+      "group": "Visit and contact"
+    }
+  ],
+  "defaults": {
+    "font": "grotesk",
+    "logo": "",
+    "theme": "paper",
+    "accent": "#1F3A5F",
+    "corners": "rounded",
+    "hero.title": "Things for slow mornings at home",
+    "hero.subtitle": "Handmade candles, mugs, soaps and plants from small makers in Amman. Ask about any item on WhatsApp.",
+    "hero.image": "preset:leaves",
+    "ask": "Hello! I would like to order:",
+    "sections": [
+      "announcement",
+      "banner",
+      "story",
+      "visit"
+    ],
+    "announcement": "Free delivery in Amman over 25 JD",
+    "story.title": "Made by people we know",
+    "story.text": "Every product in our shop comes from a maker we have met in person. We keep the list small and change it with the seasons.",
+    "hours": {
+      "sat": "10:00-21:00",
+      "sun": "10:00-21:00",
+      "mon": "10:00-21:00",
+      "tue": "10:00-21:00",
+      "wed": "10:00-21:00",
+      "thu": "10:00-22:00",
+      "fri": ""
+    }
+  }
+}

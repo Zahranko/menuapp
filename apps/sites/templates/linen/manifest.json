@@ -1,0 +1,179 @@
+{
+  "id": "linen",
+  "number": 2,
+  "name": "Linen List",
+  "category": "Restaurant",
+  "description": "A printed menu on linen paper: text only, dotted lines to the prices, one or two columns.",
+  "version": 1,
+  "thumbnail": "/templates/linen/thumbnail.png",
+  "sample": "restaurant",
+  "schema": [
+    {
+      "key": "font",
+      "type": "choice",
+      "label": "Font style",
+      "group": "Brand",
+      "options": [
+        "classic",
+        "elegant",
+        "soft"
+      ],
+      "optionLabels": {
+        "classic": "Classic",
+        "elegant": "Elegant",
+        "soft": "Soft"
+      }
+    },
+    {
+      "key": "logo",
+      "type": "image",
+      "label": "Logo",
+      "group": "Brand"
+    },
+    {
+      "key": "theme",
+      "type": "palette",
+      "label": "Paper",
+      "group": "Brand",
+      "options": [
+        "linen",
+        "ivory",
+        "slate",
+        "ink"
+      ],
+      "swatches": {
+        "linen": "#F3EEE3",
+        "ivory": "#FFFDF7",
+        "slate": "#E8ECEE",
+        "ink": "#16181D"
+      }
+    },
+    {
+      "key": "accent",
+      "type": "color",
+      "label": "Accent color",
+      "group": "Brand",
+      "options": [
+        "#8C2F39",
+        "#2B4D3D",
+        "#1F3A5F",
+        "#9A5B1E"
+      ]
+    },
+    {
+      "key": "ornaments",
+      "type": "toggle",
+      "label": "Decorative dividers",
+      "group": "Brand"
+    },
+    {
+      "key": "columns",
+      "type": "choice",
+      "label": "Menu columns on big screens",
+      "group": "Menu",
+      "options": [
+        "one",
+        "two"
+      ],
+      "optionLabels": {
+        "one": "One",
+        "two": "Two"
+      }
+    },
+    {
+      "key": "note",
+      "type": "text",
+      "label": "Note under the menu",
+      "group": "Menu",
+      "max": 120
+    },
+    {
+      "key": "hero.title",
+      "type": "text",
+      "label": "Tagline",
+      "group": "Header",
+      "max": 70
+    },
+    {
+      "key": "hero.subtitle",
+      "type": "textarea",
+      "label": "Welcome text",
+      "group": "Header",
+      "max": 220
+    },
+    {
+      "key": "sections",
+      "type": "toggles",
+      "label": "Sections",
+      "group": "Sections",
+      "options": [
+        "announcement",
+        "intro",
+        "story",
+        "visit"
+      ],
+      "optionLabels": {
+        "announcement": "Announcement bar",
+        "intro": "Welcome text",
+        "story": "Our kitchen",
+        "visit": "Visit us"
+      }
+    },
+    {
+      "key": "announcement",
+      "type": "text",
+      "label": "Announcement",
+      "group": "Sections",
+      "max": 80
+    },
+    {
+      "key": "story.title",
+      "type": "text",
+      "label": "Story headline",
+      "group": "Our kitchen",
+      "max": 60
+    },
+    {
+      "key": "story.text",
+      "type": "textarea",
+      "label": "Our story",
+      "group": "Our kitchen",
+      "max": 500
+    },
+    {
+      "key": "hours",
+      "type": "hours",
+      "label": "Opening hours",
+      "group": "Visit us"
+    }
+  ],
+  "defaults": {
+    "font": "classic",
+    "logo": "",
+    "theme": "linen",
+    "accent": "#8C2F39",
+    "ornaments": true,
+    "columns": "two",
+    "note": "Prices include tax. Tell us about any allergies.",
+    "hero.title": "Home cooking, the way our grandmothers made it.",
+    "hero.subtitle": "Mezze to share, bread from the oven and slow-cooked dishes from family recipes. Come hungry.",
+    "sections": [
+      "announcement",
+      "intro",
+      "story",
+      "visit"
+    ],
+    "announcement": "Family lunch every Friday from 1pm",
+    "story.title": "Our kitchen",
+    "story.text": "Every recipe on this menu came from a family kitchen. We cook the same way: fresh every morning, slowly, and with more olive oil than you would expect.",
+    "hours": {
+      "sat": "12:00-23:00",
+      "sun": "12:00-23:00",
+      "mon": "12:00-23:00",
+      "tue": "12:00-23:00",
+      "wed": "12:00-23:00",
+      "thu": "12:00-24:00",
+      "fri": "13:00-24:00"
+    }
+  }
+}

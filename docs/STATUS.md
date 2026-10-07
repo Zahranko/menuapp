@@ -20,7 +20,7 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 | S13 | Flutter template gallery and editor | not started | | |
 | S14 | Flutter plans and custom domain | not started | | |
 | S15 | Deployment and hardening | not started | | |
-| S16+ | Template factory | not started | | |
+| S16+ | Template factory | in progress | | Batch 1: templates 002 to 006 (Linen List, Night Market, Arch Story, Pocket Catalog, Chalk Board), per-template stylesheets, sample businesses, axe checks. Plan for the rest: `docs/templates-catalog.md` |
 
 ## Settings other sessions need
 
@@ -61,6 +61,11 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 - S08: Open Graph images use the brand domain as `metadataBase` (`/s/<slug>/opengraph-image`), which works for custom domains too. Arabic text in OG images needs a bundled Arabic font (not done).
 - S08: In fixture mode `/<template id>` shows the sample business with that template; template ids are therefore 3 to 30 lowercase letters and digits (checked by `templates:registry`).
 - S08: Files (any path whose last segment has a dot) are served as they are on every host, so `/templates/...` and `/samples/...` work on custom domains. Preview tokens are matched first because they contain dots.
+- S16: Each template has a plain `styles.css` nested under `.t-<name>`, built per template by `scripts/build-styles.mjs` into `public/styles/<id>.<hash>.css` and linked with `<TemplateStyles>`. CSS modules were dropped because Next bundled every template's module CSS into every page, and that grows with each template. Souq was moved over too.
+- S16: Shared picture presets live in `public/presets/` and sample product illustrations in `public/samples/food/`; any template can offer any preset.
+- S16: Fixture mode has seven sample businesses (café, restaurant, sweets, drinks, street food, Asian, shop). Each template's manifest names its `"sample"` (the backend ignores that key). `/_preview/fixture.<id>.<theme>.<en|ar>` shows any theme in either language.
+- S16: Every template is checked by one shared unit test (all themes, Arabic, 1 and 200 products, everything off, no products) and by `e2e/templates.spec.ts` (load, no sideways scroll, item dialog, axe WCAG A/AA per theme and in Arabic).
+- S16: Font pairs grew to eleven (adds grotesk, hand, condensed, mono, round, naskh); fonts load only when a template uses them (`preload: false`).
 - S07: Cache Components are off. The sites use fetch with `next: { tags }`: `site:<slug>` (revalidate 3600 s as a safety net) and `host:<domain>` (60 s); `/api/revalidate` calls `revalidateTag(tag, { expire: 0 })`. This replaces the S00 note about Cache Components.
 - S07: `proxy.ts` (Next 16's middleware) rewrites `{domain}/<slug>` to the internal route `/s/<slug>` and `/_preview/<token>` to `/s-preview/<token>`; neither can clash with a slug because slugs never contain `-` and `s` is too short. Custom hosts are resolved with `by-host` and cached in memory for 60 s; unknown hosts get the not-found page.
 - S07: Marketing pages and sites are separate root layouts (`app/(marketing)`, `app/(site)`) so each site sets its own `lang`/`dir`; `app/global-not-found.tsx` handles unmatched URLs.

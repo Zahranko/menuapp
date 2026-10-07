@@ -42,3 +42,5 @@ apps/mobile/ios/Flutter/ephemeral/
 *.pem
 App_Data/
 apps/sites/lib/reserved-slugs.generated.json
+apps/sites/public/styles/
+apps/sites/templates/styles.generated.json

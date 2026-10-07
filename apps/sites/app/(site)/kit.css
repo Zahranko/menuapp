@@ -1,0 +1,222 @@
+/*
+ * Base styles for the shared template blocks (templates/_kit/blocks.tsx). Zero specificity (:where) so every
+ * template's own styles.css wins. They read the standard variables from themeVars(): --bg, --ink, --muted, --line,
+ * --acc, --acc-ink, --fd, --fb, --r.
+ */
+:where([data-template]) {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--fb, system-ui, sans-serif);
+  text-align: start;
+  -webkit-font-smoothing: antialiased;
+}
+:where([data-template]) :where(h1, h2, h3, p, figure, blockquote, dl, dd) {
+  margin: 0;
+}
+:where([data-template]) :where(a) {
+  color: inherit;
+}
+:where([data-template]) :where(a, button, input, summary):focus-visible {
+  outline: 2px solid var(--acc-text, currentColor);
+  outline-offset: 3px;
+}
+:where([data-template]) :where(ul.plain) {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+:where([dir="rtl"]) :where([data-template]) :where(.flip) {
+  transform: scaleX(-1);
+}
+
+:where([data-template]) :where(.skip) {
+  position: absolute;
+  inset-inline-start: 12px;
+  top: -80px;
+  z-index: 60;
+  background: var(--ink);
+  color: var(--bg);
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 700;
+}
+:where([data-template]) :where(.skip:focus) {
+  top: 12px;
+}
+:where([data-template]) :where(.preview-bar) {
+  background: var(--ink);
+  color: var(--bg);
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 16px;
+}
+:where([data-template]) :where(.announcement) {
+  background: var(--acc);
+  color: var(--acc-ink);
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 9px 16px;
+}
+:where([data-template]) :where(.no-photo) {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 700 2em var(--fd, serif);
+  color: #1e1a14b3;
+}
+
+:where([data-template]) :where(.hours) div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--line);
+  font-variant-numeric: tabular-nums;
+}
+:where([data-template]) :where(.hours) div:last-child {
+  border-bottom: 0;
+}
+:where([data-template]) :where(.hours .today) {
+  font-weight: 800;
+}
+:where([data-template]) :where(.today-tag) {
+  margin-inline-start: 8px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  background: var(--acc);
+  color: var(--acc-ink);
+  padding: 3px 6px;
+  border-radius: 5px;
+}
+:where([data-template]) :where(.contact) {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+:where([data-template]) :where(.contact li) {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+:where([data-template]) :where(.contact svg) {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--acc-text);
+}
+:where([data-template]) :where(.contact p span) {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+}
+:where([data-template]) :where(.contact bdi) {
+  overflow-wrap: anywhere;
+}
+:where([data-template]) :where(.credits) {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12.5px;
+}
+:where([data-template]) :where(.credits a) {
+  font-weight: 700;
+}
+
+:where([data-template]) :where(.sheet) {
+  margin: auto auto 0;
+  width: min(100%, 560px);
+  max-width: 100%;
+  max-height: 92vh;
+  border: 0;
+  border-radius: calc(var(--r, 16px) + 8px) calc(var(--r, 16px) + 8px) 0 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--fb, system-ui, sans-serif);
+}
+:where([data-template]) :where(.sheet)::backdrop {
+  background: #0009;
+}
+:where([data-template]) :where(.sheet-media) {
+  height: 240px;
+  position: relative;
+  overflow: hidden;
+}
+:where([data-template]) :where(.sheet-media img) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+:where([data-template]) :where(.sheet-body) {
+  padding: 18px 22px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+:where([data-template]) :where(.sheet-body > p:first-child) {
+  display: flex;
+  gap: 6px;
+}
+:where([data-template]) :where(.sheet-title) {
+  font: var(--fw, 700) calc(26px * var(--fs, 1)) var(--fd, serif);
+  letter-spacing: var(--ft, 0);
+}
+:where([data-template]) :where(.sheet-text) {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+:where([data-template]) :where(.sheet-row) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+:where([data-template]) :where(.sheet-row b) {
+  font: 700 24px var(--fd, serif);
+  font-variant-numeric: tabular-nums;
+}
+:where([data-template]) :where(.sheet-close) {
+  cursor: pointer;
+  border: 0;
+  border-radius: calc(var(--r, 16px) * 0.6);
+  padding: 13px 22px;
+  font: 700 15px var(--fb, sans-serif);
+  background: var(--acc);
+  color: var(--acc-ink);
+}
+@media (min-width: 760px) {
+  :where([data-template]) :where(.sheet) {
+    margin: auto;
+    border-radius: calc(var(--r, 16px) + 8px);
+    overflow: hidden;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  :where([data-template]) *,
+  :where([data-template]) *::before,
+  :where([data-template]) *::after {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+:where([data-template]) :where(.sr-only) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

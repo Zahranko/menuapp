@@ -1,6 +1,11 @@
 import { createElement, type ComponentType } from "react";
 import type { TemplateProps } from "@/lib/types";
 import FallbackTemplate from "./fallback/Template";
+import ArchStoryTemplate from "./archstory/Template";
+import ChalkBoardTemplate from "./chalkboard/Template";
+import LinenListTemplate from "./linen/Template";
+import NightMarketTemplate from "./nightmarket/Template";
+import PocketCatalogTemplate from "./pocket/Template";
 import SouqTemplate from "./souq/Template";
 
 /**
@@ -9,6 +14,11 @@ import SouqTemplate from "./souq/Template";
  */
 export const templates: Record<string, ComponentType<TemplateProps>> = {
   souq: SouqTemplate,
+  linen: LinenListTemplate,
+  nightmarket: NightMarketTemplate,
+  archstory: ArchStoryTemplate,
+  pocket: PocketCatalogTemplate,
+  chalkboard: ChalkBoardTemplate,
 };
 
 export function templateFor(id: string): ComponentType<TemplateProps> {
