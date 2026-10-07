@@ -6,7 +6,7 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 |---|---|---|---|---|
 | S00 | Repo bootstrap, tooling, CI | done | | .NET 10 solution, Next.js 16 sites, Flutter app, CI, brand scripts |
 | S01 | Domain model and persistence | done | | Entities, value objects, EF Core + PostgreSQL, Initial migration, dev seeder |
-| S02 | Auth and accounts API | not started | | |
+| S02 | Auth and accounts API | done | | Register, login (email or phone), rotating refresh tokens, password reset, business profile |
 | S03 | Catalog API | not started | | |
 | S04 | Sites, templates, public read API | not started | | |
 | S05 | Plans, billing abstraction, custom domains | not started | | |
@@ -27,6 +27,9 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 (Setting names, URLs and secrets placeholders that one session defines and another uses.)
 
 - `ConnectionStrings__Default`: PostgreSQL connection (S01).
+- `Auth__SigningKey` (32+ characters, secret, required outside Development), `Auth__Issuer`, `Auth__Audience`, `Auth__AccessTokenMinutes` (15), `Auth__RefreshTokenDays` (30) (S02).
+- `Email__Smtp__Host`, `__Port`, `__UserName`, `__Password`, `__EnableSsl`: when Host is empty, emails go to the log (S02). Sender is `noReplyEmail` from brand.json.
+- `RateLimits__AuthPerMinute` (10), `RateLimits__SlugCheckPerMinute` (60), `RateLimits__PublicPerMinute` (600), per client IP (S02).
 - `Storefront__SeedSampleData` (true in Development): seeds plans, templates and the sample business `vanillamenu` (S01). Sample owner login: `owner@example.com` / `Sample-pass-123`, development only.
 - `Storefront__MigrateOnStartup`: apply migrations at startup outside Development (S01). `Storefront__SkipDatabaseStartup`: skip migrate and template import (used by `export-openapi.sh`).
 - `Storefront__TemplateRegistryFile`, `Storefront__ReservedSlugsFile`: paths when the app runs outside the repo (Docker). Found automatically inside the repo (S01).
@@ -35,11 +38,18 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 
 (Things a session found that belong to another session. Format: `- [S07] what and why (found in S03)`.)
 
+- [S09] Add a `/reset-password?email=&token=` page on the marketing site that posts to `POST /api/v1/auth/reset-password`; the reset email links there (found in S02).
+- [S15] Rate limiting partitions by `RemoteIpAddress`; behind Caddy, enable forwarded headers so it sees the client IP (found in S02).
+- [S10] The OpenAPI document has no bearer security scheme yet; add one (document transformer) before generating the Flutter client (found in S02).
+
 ## Decisions made during sessions
 
 (Anything decided that is not in PLAN.md, with the reason.)
 
 - S00: Next.js 16 (current stable) with Cache Components on. `apps/sites/next.config.ts` sets the Turbopack root to the repo root so `lib/brand.ts` can import `brand.json`.
+- S02: Register requires the phone number with its country code (E.164 after removing spaces); the app combines the country picker and the number. Errors use the prototype copy; a taken link says "That link is taken. Try adding your city, like {slug}amman." and slug-availability returns a free `suggestion`.
+- S02: Login errors are `auth.invalid` (wrong email, phone or password) and `auth.locked` (5 failures, 5 minutes), both 401. Refresh reuse revokes every token that grew from the reused one.
+- S02: New owners start on `basic` with a 14-day `trialing` subscription (provider `none`) until D8 is decided.
 - S01: Template settings are a flat JSON object keyed by schema field key (`"hero.title"`), so the editor and validator never walk nested paths. Field types: choice, palette, color, text, textarea, range, image, images, toggle, toggles, hours. Images are `preset:<name>` or an uploaded URL.
 - S01: `apps/sites/templates/souq/manifest.json` and `registry.json` (built by `npm run templates:registry`, checked by `npm run templates:check`) were created early because the seeder needs a template. S08 owns the Souq manifest from here.
 - S01: Added `Business.TimeZone` (default `Asia/Amman`) for "today" in opening hours, `Site.PublishedTemplateId` so changing template in the draft does not change the live site, and `RefreshToken.ReplacedById` for rotation.

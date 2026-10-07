@@ -18,6 +18,10 @@ public interface ICurrentUser
 public interface IUnitOfWork
 {
     Task SaveChangesAsync(CancellationToken ct);
+
+    /// <summary>Runs <paramref name="work"/> in a database transaction, committed only when the result succeeds.</summary>
+    Task<TResult> InTransactionAsync<TResult>(Func<Task<TResult>> work, CancellationToken ct)
+        where TResult : Common.Result;
 }
 
 /// <summary>Queues a message that a background dispatcher delivers after the transaction commits.</summary>

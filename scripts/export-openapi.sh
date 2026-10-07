@@ -5,7 +5,7 @@ cd "$(dirname "$0")/.."
 
 port="${OPENAPI_PORT:-5099}"
 dotnet build src/Storefront.Web -c Release -v quiet >/dev/null
-ASPNETCORE_URLS="http://127.0.0.1:${port}" ASPNETCORE_ENVIRONMENT=OpenApiExport Storefront__SkipDatabaseStartup=true \
+ASPNETCORE_URLS="http://127.0.0.1:${port}" ASPNETCORE_ENVIRONMENT=OpenApiExport Storefront__SkipDatabaseStartup=true Auth__SigningKey=openapi-export-only-signing-key-0123456789 \
   dotnet run --project src/Storefront.Web -c Release --no-build --no-launch-profile >/tmp/storefront-openapi.log 2>&1 &
 pid=$!
 trap 'kill $pid 2>/dev/null || true' EXIT

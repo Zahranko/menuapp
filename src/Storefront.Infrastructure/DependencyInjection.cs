@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Storefront.Application.Abstractions;
 using Storefront.Application.Common;
+using Storefront.Infrastructure.Email;
+using Storefront.Infrastructure.Identity;
 using Storefront.Infrastructure.Outbox;
 using Storefront.Infrastructure.Persistence;
 using Storefront.Infrastructure.Persistence.Repositories;
@@ -37,6 +40,39 @@ public static class DependencyInjection
         services.AddScoped<IBillingRepository, BillingRepository>();
         services.AddScoped<IDomainRepository, DomainRepository>();
         services.AddScoped<IMediaRepository, MediaRepository>();
+
+        services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+
+        services.Configure<AuthOptions>(configuration.GetSection(AuthOptions.SectionName));
+        services.AddIdentityCore<AppUser>(o =>
+            {
+                o.User.RequireUniqueEmail = true;
+                o.Password.RequiredLength = 8;
+                o.Password.RequireDigit = true;
+                o.Password.RequireUppercase = true;
+                o.Password.RequireLowercase = false;
+                o.Password.RequireNonAlphanumeric = false;
+                o.Lockout.AllowedForNewUsers = true;
+                o.Lockout.MaxFailedAccessAttempts = 5;
+                o.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+            })
+            .AddRoles<IdentityRole<Guid>>()
+            .AddEntityFrameworkStores<StorefrontDbContext>()
+            .AddErrorDescriber<FriendlyIdentityErrors>()
+            .AddDefaultTokenProviders();
+        services.Configure<DataProtectionTokenProviderOptions>(o => o.TokenLifespan = TimeSpan.FromHours(24));
+        services.AddScoped<IIdentityService, IdentityService>();
+        services.AddSingleton<ITokenService, TokenService>();
+
+        services.Configure<SmtpOptions>(configuration.GetSection(SmtpOptions.SectionName));
+        if (string.IsNullOrWhiteSpace(configuration[$"{SmtpOptions.SectionName}:Host"]))
+        {
+            services.AddSingleton<IEmailSender, LogEmailSender>();
+        }
+        else
+        {
+            services.AddSingleton<IEmailSender, SmtpEmailSender>();
+        }
 
         services.AddScoped<TemplateRegistryImporter>();
         services.AddScoped<DevelopmentSeeder>();
