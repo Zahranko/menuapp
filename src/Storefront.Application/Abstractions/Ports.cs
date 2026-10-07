@@ -49,3 +49,12 @@ public interface ISiteRevalidator
 {
     Task RevalidateAsync(IReadOnlyCollection<string> tags, CancellationToken ct);
 }
+
+/// <summary>Signed, short-lived tokens that let the editor preview a draft site.</summary>
+public interface IPreviewTokens
+{
+    string Create(Guid businessId, DateTimeOffset expiresAt);
+
+    /// <summary>The business id, or null when the token is forged or expired.</summary>
+    Guid? Read(string token, DateTimeOffset now);
+}

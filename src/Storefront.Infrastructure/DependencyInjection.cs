@@ -4,12 +4,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Storefront.Application.Abstractions;
 using Storefront.Application.Common;
+using Storefront.Application.PublicSites;
 using Storefront.Infrastructure.Email;
 using Storefront.Infrastructure.Identity;
 using Storefront.Infrastructure.Outbox;
 using Storefront.Infrastructure.Persistence;
 using Storefront.Infrastructure.Persistence.Repositories;
 using Storefront.Infrastructure.Persistence.Seeding;
+using Storefront.Infrastructure.PublicSites;
 using Storefront.Infrastructure.Revalidation;
 using Storefront.Infrastructure.Storage;
 using Storefront.Infrastructure.Services;
@@ -65,6 +67,8 @@ public static class DependencyInjection
         services.Configure<DataProtectionTokenProviderOptions>(o => o.TokenLifespan = TimeSpan.FromHours(24));
         services.AddScoped<IIdentityService, IdentityService>();
         services.AddSingleton<ITokenService, TokenService>();
+        services.AddSingleton<IPreviewTokens, PreviewTokens>();
+        services.AddScoped<IPublicSiteReader, PublicSiteReader>();
 
         services.Configure<SmtpOptions>(configuration.GetSection(SmtpOptions.SectionName));
         services.AddSingleton<LogEmailSender>();
