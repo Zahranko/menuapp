@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "templates:registry": "node scripts/build-registry.mjs",
+    "templates:check": "node scripts/build-registry.mjs --check"
   },
   "dependencies": {
     "next": "16.4.0",
