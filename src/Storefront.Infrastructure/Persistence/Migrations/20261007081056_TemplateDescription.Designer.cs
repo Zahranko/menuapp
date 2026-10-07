@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Storefront.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using Storefront.Infrastructure.Persistence;
 namespace Storefront.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(StorefrontDbContext))]
-    partial class StorefrontDbContextModelSnapshot : ModelSnapshot
+    [Migration("20261007081056_TemplateDescription")]
+    partial class TemplateDescription
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

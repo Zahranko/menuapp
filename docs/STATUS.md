@@ -8,7 +8,7 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 | S01 | Domain model and persistence | done | | Entities, value objects, EF Core + PostgreSQL, Initial migration, dev seeder |
 | S02 | Auth and accounts API | done | | Register, login (email or phone), rotating refresh tokens, password reset, business profile |
 | S03 | Catalog API | done | | Categories, products, image upload, outbox dispatcher, signed revalidation, audit log |
-| S04 | Sites, templates, public read API | not started | | |
+| S04 | Sites, templates, public read API | done | | Template gallery, schema-validated drafts, publish, preview tokens, public by-slug/by-host/preview with ETags |
 | S05 | Plans, billing abstraction, custom domains | not started | | |
 | S06 | Back office (MVC) | not started | | |
 | S07 | Next.js foundation and routing | not started | | |
@@ -50,6 +50,10 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 (Anything decided that is not in PLAN.md, with the reason.)
 
 - S00: Next.js 16 (current stable) with Cache Components on. `apps/sites/next.config.ts` sets the Turbopack root to the repo root so `lib/brand.ts` can import `brand.json`.
+- S04: Draft settings are validated against the template schema and stored complete (missing keys take the template's defaults). Unknown keys are rejected. Field errors are keyed `settings.<key>`.
+- S04: Preview tokens are HMAC-signed (key derived from `Auth__SigningKey`), valid 30 minutes; preview URL is `https://{domain}/_preview/<token>`. `GET /api/public/v1/preview/{token}` is `no-store`.
+- S04: Public site responses: `Cache-Control: public, max-age=60, stale-while-revalidate=300` and a content-hash ETag (304 on `If-None-Match`). Unpublished sites are 404. `by-host` also matches `www.` + an active domain. Categories without products are left out; sold-out products stay with `isAvailable: false`.
+- S04: Templates got a `Description` column (from the manifest's `description`).
 - S03: The outbox keeps fine-grained event types (`ProductChanged`, `CategoryChanged`, `BusinessChanged`, `SitePublished`, `DomainActivated`, `DomainDeactivated`); the dispatcher treats them all as "site content changed" and sends one revalidation per business per batch. Retries back off from 5 seconds to 1 hour, 10 attempts.
 - S03: Product images must be URLs uploaded through `/api/v1/media` by the same business. Prices with more decimals than the currency allows are rejected ("Use numbers only, like 3.50.").
 - S03: Fixed the integration tests so they really use their own throwaway database (the connection string is now read when the DbContext is created).

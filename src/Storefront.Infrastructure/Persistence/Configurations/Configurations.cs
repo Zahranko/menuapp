@@ -70,6 +70,7 @@ internal sealed class TemplateConfiguration : IEntityTypeConfiguration<Template>
         b.Property(x => x.Name).HasMaxLength(60);
         b.Property(x => x.Category).HasMaxLength(40);
         b.Property(x => x.ThumbnailUrl).HasMaxLength(2048);
+        b.Property(x => x.Description).HasMaxLength(300);
         b.Property(x => x.SettingsSchema).HasColumnType("jsonb");
         b.Property(x => x.DefaultSettings).HasColumnType("jsonb");
         b.HasIndex(x => x.Number).IsUnique();
