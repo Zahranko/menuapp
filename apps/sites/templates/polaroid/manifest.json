@@ -1,0 +1,138 @@
+{
+  "id": "polaroid",
+  "number": 16,
+  "name": "Polaroid",
+  "category": "Desserts, sweets",
+  "description": "A wall of instant photos, slightly tilted, taped up and captioned by hand.",
+  "version": 1,
+  "thumbnail": "/templates/polaroid/thumbnail.png",
+  "sample": "sweets",
+  "schema": [
+    {
+      "key": "font",
+      "type": "choice",
+      "label": "Font style",
+      "group": "Brand",
+      "options": [
+        "hand",
+        "round",
+        "soft"
+      ],
+      "optionLabels": {
+        "hand": "Handwritten",
+        "round": "Friendly",
+        "soft": "Soft"
+      }
+    },
+    {
+      "key": "logo",
+      "type": "image",
+      "label": "Logo",
+      "group": "Brand"
+    },
+    {
+      "key": "theme",
+      "type": "palette",
+      "label": "Wall",
+      "group": "Brand",
+      "options": [
+        "pastel",
+        "mint",
+        "cork",
+        "night"
+      ],
+      "swatches": {
+        "pastel": "#FDF0F3",
+        "mint": "#EAF6F1",
+        "cork": "#D9B98F",
+        "night": "#1D1B24"
+      }
+    },
+    {
+      "key": "accent",
+      "type": "color",
+      "label": "Accent color",
+      "group": "Brand",
+      "options": [
+        "#E0457B",
+        "#2A9D8F",
+        "#E76F51",
+        "#6D4BC4"
+      ]
+    },
+    {
+      "key": "hero.title",
+      "type": "text",
+      "label": "Tagline",
+      "group": "Top",
+      "max": 60
+    },
+    {
+      "key": "sections",
+      "type": "toggles",
+      "label": "Sections",
+      "group": "Sections",
+      "options": [
+        "announcement",
+        "story",
+        "visit"
+      ],
+      "optionLabels": {
+        "announcement": "Announcement bar",
+        "story": "Hello note",
+        "visit": "Hours and contact"
+      }
+    },
+    {
+      "key": "announcement",
+      "type": "text",
+      "label": "Announcement",
+      "group": "Sections",
+      "max": 80
+    },
+    {
+      "key": "story.title",
+      "type": "text",
+      "label": "Note headline",
+      "group": "Hello note",
+      "max": 60
+    },
+    {
+      "key": "story.text",
+      "type": "textarea",
+      "label": "Hello note",
+      "group": "Hello note",
+      "max": 400
+    },
+    {
+      "key": "hours",
+      "type": "hours",
+      "label": "Opening hours",
+      "group": "Visit and contact"
+    }
+  ],
+  "defaults": {
+    "font": "hand",
+    "logo": "",
+    "theme": "pastel",
+    "accent": "#E0457B",
+    "hero.title": "Ice cream, doughnuts and cake, made today",
+    "sections": [
+      "announcement",
+      "story",
+      "visit"
+    ],
+    "announcement": "Free sprinkles on every scoop this week",
+    "story.title": "Hello from us",
+    "story.text": "We are a tiny sweet shop with a big freezer. Everything is made in our kitchen in the morning and sold until it runs out.",
+    "hours": {
+      "sat": "12:00-00:00",
+      "sun": "12:00-00:00",
+      "mon": "12:00-00:00",
+      "tue": "12:00-00:00",
+      "wed": "12:00-00:00",
+      "thu": "12:00-01:00",
+      "fri": "14:00-01:00"
+    }
+  }
+}

@@ -1,0 +1,348 @@
+/* Template 015 "Spice Route": eight-point star borders, a star medallion, an arched window and centered courses. */
+
+.t-spice {
+  container: page / inline-size;
+  --octagram: polygon(50% 0, 64.7% 14.4%, 85.4% 14.6%, 85.6% 35.3%, 100% 50%, 85.6% 64.7%, 85.4% 85.4%, 64.7% 85.6%, 50% 100%, 35.3% 85.6%, 14.6% 85.4%, 14.4% 64.7%, 0 50%, 14.4% 35.3%, 14.6% 14.6%, 35.3% 14.4%);
+  font-size: 15.5px;
+  line-height: 1.6;
+  text-align: center;
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--fd);
+    font-weight: var(--fw);
+    letter-spacing: var(--ft);
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+
+  .band {
+    display: block;
+    width: 100%;
+    height: 24px;
+    background: var(--tile);
+    border-block: 1px solid var(--line);
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--acc-text);
+    color: var(--acc-text);
+  }
+  .tag-out {
+    border-color: var(--line);
+    color: var(--muted);
+  }
+
+  /* header */
+  .head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 34px 20px 26px;
+  }
+  .medallion {
+    position: relative;
+    width: 84px;
+    height: 84px;
+    margin-bottom: 12px;
+    clip-path: var(--octagram);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--acc);
+    color: var(--acc-ink);
+    font: var(--fw) 32px var(--fd);
+  }
+  .welcome {
+    font: var(--fw) calc(18px * var(--fs)) var(--fd);
+    color: var(--acc-text);
+  }
+  .welcome:empty {
+    display: none;
+  }
+  .head h1 {
+    font-size: calc(46px * var(--fs));
+    overflow-wrap: anywhere;
+  }
+  .tagline {
+    max-width: 36ch;
+    color: var(--muted);
+    font-size: 16.5px;
+  }
+  .today {
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--acc-text);
+  }
+
+  /* arched window */
+  .window {
+    position: relative;
+    width: min(86%, 520px);
+    aspect-ratio: 4 / 5;
+    margin: 6px auto 0;
+    overflow: hidden;
+    border-radius: 999px 999px 0 0;
+    border: 8px solid var(--surf);
+    outline: 1px solid var(--line);
+    background: var(--tile);
+  }
+
+  /* menu */
+  .menu {
+    padding: 44px 18px 10px;
+    scroll-margin-top: 10px;
+  }
+  .menu-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    font-size: calc(38px * var(--fs));
+  }
+  .star {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    color: var(--acc-text);
+  }
+  .jump {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin: 18px 0 8px;
+  }
+  .jump a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 16px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 14.5px;
+    background: var(--surf);
+  }
+  .jump a:hover {
+    border-color: var(--acc-text);
+    color: var(--acc-text);
+  }
+  .course {
+    padding-top: 38px;
+    scroll-margin-top: 10px;
+  }
+  .course-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+    font-size: calc(28px * var(--fs));
+  }
+  .course-title::before,
+  .course-title::after {
+    content: "";
+    flex: 1;
+    height: 10px;
+    background:
+      linear-gradient(var(--line), var(--line)) 50% / 100% 1px no-repeat,
+      radial-gradient(circle, var(--acc-text) 2.5px, transparent 3px) 50% 50% / 10px 10px no-repeat;
+  }
+  .course-title span {
+    max-width: 75%;
+    overflow-wrap: anywhere;
+  }
+  .dishes {
+    display: grid;
+    gap: 26px;
+  }
+  .dish {
+    all: unset;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+    padding: 6px 10px;
+  }
+  .dish:focus-visible {
+    outline: 2px solid var(--acc-text);
+    outline-offset: 2px;
+  }
+  .dish:hover .dish-name {
+    color: var(--acc-text);
+  }
+  .dish-photo {
+    position: relative;
+    display: block;
+    width: 84px;
+    aspect-ratio: 1;
+    margin-bottom: 6px;
+    overflow: hidden;
+    clip-path: var(--octagram);
+    background: var(--tile);
+  }
+  .dish-name {
+    font: var(--fw) calc(21px * var(--fs)) / 1.25 var(--fd);
+    overflow-wrap: anywhere;
+    transition: color 0.2s;
+  }
+  .dish-desc {
+    max-width: 40ch;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+  }
+  .dish-price {
+    margin-top: 2px;
+    font-weight: 700;
+    color: var(--acc-text);
+    font-variant-numeric: tabular-nums;
+  }
+  .dish-price::before,
+  .dish-price::after {
+    content: "◆";
+    font-size: 8px;
+    margin-inline: 8px;
+    vertical-align: 3px;
+  }
+  .dish.out .dish-photo > * {
+    opacity: 0.4;
+    filter: grayscale(1);
+  }
+  .dish.out .dish-name,
+  .dish.out .dish-price {
+    color: var(--muted);
+  }
+  .dish.out .dish-price {
+    text-decoration: line-through;
+  }
+
+  /* story */
+  .story {
+    margin: 50px 18px 0;
+    padding: 40px 22px;
+    background: var(--tile);
+    border-radius: 999px 999px 24px 24px;
+    scroll-margin-top: 10px;
+  }
+  .story-star {
+    width: 34px;
+    height: 34px;
+    color: var(--acc-text);
+  }
+  .story h2 {
+    margin: 8px 0 12px;
+    font-size: calc(32px * var(--fs));
+  }
+  .story p {
+    max-width: 50ch;
+    margin: 0 auto;
+    color: var(--muted);
+    white-space: pre-line;
+  }
+
+  /* visit */
+  .visit {
+    padding: 46px 18px 30px;
+    scroll-margin-top: 10px;
+  }
+  .frame {
+    padding: 30px 20px;
+    background: var(--surf);
+    border: 1px solid var(--line);
+    outline: 6px double var(--line);
+    outline-offset: 6px;
+  }
+  .frame > h2 {
+    font-size: calc(32px * var(--fs));
+    margin-bottom: 20px;
+  }
+  .visit-grid {
+    display: grid;
+    gap: 28px;
+    text-align: start;
+  }
+  .visit h3 {
+    font-size: calc(20px * var(--fs));
+    color: var(--acc-text);
+    margin-bottom: 8px;
+  }
+  .reserve {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 46px;
+    margin-top: 16px;
+    padding: 0 20px;
+    border-radius: 999px;
+    background: var(--acc);
+    color: var(--acc-ink);
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  .foot {
+    padding: 18px 18px 26px;
+    color: var(--muted);
+  }
+  .credits {
+    justify-content: center;
+  }
+
+  @container page (min-width: 760px) {
+    .band {
+      height: 32px;
+    }
+    .head {
+      padding: 50px 40px 34px;
+    }
+    .head h1 {
+      font-size: calc(72px * var(--fs));
+    }
+    .menu {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding-inline: 40px;
+    }
+    .menu-title {
+      font-size: calc(52px * var(--fs));
+    }
+    .dishes {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 34px 30px;
+    }
+    .story {
+      max-width: 820px;
+      margin: 70px auto 0;
+      padding: 60px 70px 50px;
+    }
+    .visit {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 70px 40px 40px;
+    }
+    .frame {
+      padding: 44px 48px;
+    }
+    .visit-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+  }
+}

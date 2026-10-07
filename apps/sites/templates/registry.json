@@ -2078,6 +2078,741 @@
           "fri": "13:00-00:30"
         }
       }
+    },
+    {
+      "id": "ticket",
+      "number": 12,
+      "name": "Ticket",
+      "category": "Coffee truck, kiosk",
+      "description": "A menu printed as a till receipt: monospace lines, zigzag edges and a barcode.",
+      "version": 1,
+      "thumbnail": "/templates/ticket/thumbnail.png",
+      "sample": "cafe",
+      "schema": [
+        {
+          "key": "font",
+          "type": "choice",
+          "label": "Font style",
+          "group": "Brand",
+          "options": [
+            "mono",
+            "grotesk",
+            "condensed"
+          ],
+          "optionLabels": {
+            "mono": "Receipt",
+            "grotesk": "Clean",
+            "condensed": "Poster"
+          }
+        },
+        {
+          "key": "theme",
+          "type": "palette",
+          "label": "Counter",
+          "group": "Brand",
+          "options": [
+            "thermal",
+            "kraft",
+            "mint",
+            "night"
+          ],
+          "swatches": {
+            "thermal": "#2B2D30",
+            "kraft": "#B98E5F",
+            "mint": "#5FA38A",
+            "night": "#050605"
+          }
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "label": "Stamp color",
+          "group": "Brand",
+          "options": [
+            "#D3412F",
+            "#1F6FEB",
+            "#1E8C5A",
+            "#7A3EC8"
+          ]
+        },
+        {
+          "key": "hero.title",
+          "type": "text",
+          "label": "Line under the name",
+          "group": "Receipt",
+          "max": 60
+        },
+        {
+          "key": "stamp",
+          "type": "text",
+          "label": "Stamp",
+          "group": "Receipt",
+          "max": 14
+        },
+        {
+          "key": "location",
+          "type": "text",
+          "label": "Where the truck is today",
+          "group": "Visit and contact",
+          "max": 80
+        },
+        {
+          "key": "thanks",
+          "type": "text",
+          "label": "Last line",
+          "group": "Receipt",
+          "max": 40
+        },
+        {
+          "key": "sections",
+          "type": "toggles",
+          "label": "Sections",
+          "group": "Sections",
+          "options": [
+            "announcement",
+            "visit"
+          ],
+          "optionLabels": {
+            "announcement": "Announcement bar",
+            "visit": "Where, hours and contact"
+          }
+        },
+        {
+          "key": "announcement",
+          "type": "text",
+          "label": "Announcement",
+          "group": "Sections",
+          "max": 80
+        },
+        {
+          "key": "hours",
+          "type": "hours",
+          "label": "Opening hours",
+          "group": "Visit and contact"
+        }
+      ],
+      "defaults": {
+        "font": "mono",
+        "theme": "thermal",
+        "accent": "#D3412F",
+        "hero.title": "Coffee on wheels",
+        "stamp": "Fresh",
+        "location": "Today: Rainbow Street, next to the old cinema",
+        "thanks": "Thank you, come again",
+        "sections": [
+          "announcement",
+          "visit"
+        ],
+        "announcement": "Bring your own cup, get 0.25 off",
+        "hours": {
+          "sat": "07:00-14:00",
+          "sun": "07:00-14:00",
+          "mon": "07:00-14:00",
+          "tue": "07:00-14:00",
+          "wed": "07:00-14:00",
+          "thu": "07:00-16:00",
+          "fri": ""
+        }
+      }
+    },
+    {
+      "id": "garden",
+      "number": 13,
+      "name": "Garden",
+      "category": "Brunch, healthy",
+      "description": "Organic shapes, leaves and cards that put diet tags first.",
+      "version": 1,
+      "thumbnail": "/templates/garden/thumbnail.png",
+      "sample": "brunch",
+      "schema": [
+        {
+          "key": "font",
+          "type": "choice",
+          "label": "Font style",
+          "group": "Brand",
+          "options": [
+            "soft",
+            "round",
+            "elegant"
+          ],
+          "optionLabels": {
+            "soft": "Soft",
+            "round": "Friendly",
+            "elegant": "Elegant"
+          }
+        },
+        {
+          "key": "logo",
+          "type": "image",
+          "label": "Logo",
+          "group": "Brand"
+        },
+        {
+          "key": "theme",
+          "type": "palette",
+          "label": "Color theme",
+          "group": "Brand",
+          "options": [
+            "sage",
+            "blush",
+            "sunny",
+            "forest"
+          ],
+          "swatches": {
+            "sage": "#F2F5EC",
+            "blush": "#FBF2EE",
+            "sunny": "#FFF9EA",
+            "forest": "#13211A"
+          }
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "label": "Accent color",
+          "group": "Brand",
+          "options": [
+            "#3F7D4E",
+            "#D9633F",
+            "#B7791F",
+            "#7B5EA7"
+          ]
+        },
+        {
+          "key": "leaves",
+          "type": "toggle",
+          "label": "Leaves",
+          "group": "Brand"
+        },
+        {
+          "key": "hero.title",
+          "type": "text",
+          "label": "Headline",
+          "group": "Top",
+          "max": 50
+        },
+        {
+          "key": "hero.subtitle",
+          "type": "textarea",
+          "label": "Text under the headline",
+          "group": "Top",
+          "max": 140
+        },
+        {
+          "key": "hero.image",
+          "type": "image",
+          "label": "Picture",
+          "group": "Top",
+          "presets": [
+            "leaves",
+            "citrus",
+            "tiles",
+            "dunes"
+          ]
+        },
+        {
+          "key": "sections",
+          "type": "toggles",
+          "label": "Sections",
+          "group": "Sections",
+          "options": [
+            "announcement",
+            "story",
+            "visit"
+          ],
+          "optionLabels": {
+            "announcement": "Announcement bar",
+            "story": "Our story",
+            "visit": "Hours and contact"
+          }
+        },
+        {
+          "key": "announcement",
+          "type": "text",
+          "label": "Announcement",
+          "group": "Sections",
+          "max": 80
+        },
+        {
+          "key": "story.title",
+          "type": "text",
+          "label": "Story headline",
+          "group": "Our story",
+          "max": 60
+        },
+        {
+          "key": "story.text",
+          "type": "textarea",
+          "label": "Our story",
+          "group": "Our story",
+          "max": 400
+        },
+        {
+          "key": "hours",
+          "type": "hours",
+          "label": "Opening hours",
+          "group": "Visit and contact"
+        }
+      ],
+      "defaults": {
+        "font": "soft",
+        "logo": "",
+        "theme": "sage",
+        "accent": "#3F7D4E",
+        "leaves": true,
+        "hero.title": "Slow mornings, good food",
+        "hero.subtitle": "All-day brunch, big bowls and fresh juice. Most of the menu is vegetarian and every dish is marked.",
+        "hero.image": "preset:leaves",
+        "sections": [
+          "announcement",
+          "story",
+          "visit"
+        ],
+        "announcement": "Weekend brunch from 9, no booking needed",
+        "story.title": "Grown with love",
+        "story.text": "Our vegetables come from two family farms in the Jordan Valley. We cook what is in season and bake our bread every morning.",
+        "hours": {
+          "sat": "08:00-17:00",
+          "sun": "08:00-17:00",
+          "mon": "08:00-17:00",
+          "tue": "08:00-17:00",
+          "wed": "08:00-17:00",
+          "thu": "08:00-17:00",
+          "fri": "09:00-15:00"
+        }
+      }
+    },
+    {
+      "id": "monogrid",
+      "number": 14,
+      "name": "Mono Grid",
+      "category": "Concept store",
+      "description": "A Swiss-style catalog: hairline grid, index numbers and one signal color.",
+      "version": 1,
+      "thumbnail": "/templates/monogrid/thumbnail.png",
+      "sample": "shop",
+      "schema": [
+        {
+          "key": "font",
+          "type": "choice",
+          "label": "Font style",
+          "group": "Brand",
+          "options": [
+            "grotesk",
+            "modern",
+            "mono"
+          ],
+          "optionLabels": {
+            "grotesk": "Grotesk",
+            "modern": "Modern",
+            "mono": "Mono"
+          }
+        },
+        {
+          "key": "theme",
+          "type": "palette",
+          "label": "Color theme",
+          "group": "Brand",
+          "options": [
+            "white",
+            "concrete",
+            "black",
+            "blueprint"
+          ],
+          "swatches": {
+            "white": "#FFFFFF",
+            "concrete": "#E9E8E4",
+            "black": "#0B0B0B",
+            "blueprint": "#0F2A5C"
+          }
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "label": "Signal color",
+          "group": "Brand",
+          "options": [
+            "#FF3B00",
+            "#0047FF",
+            "#00A86B",
+            "#FFD400"
+          ]
+        },
+        {
+          "key": "hero.title",
+          "type": "text",
+          "label": "Line under the name",
+          "group": "Header",
+          "max": 100
+        },
+        {
+          "key": "sections",
+          "type": "toggles",
+          "label": "Sections",
+          "group": "Sections",
+          "options": [
+            "announcement",
+            "story",
+            "visit"
+          ],
+          "optionLabels": {
+            "announcement": "Announcement bar",
+            "story": "About",
+            "visit": "Hours and contact"
+          }
+        },
+        {
+          "key": "announcement",
+          "type": "text",
+          "label": "Announcement",
+          "group": "Sections",
+          "max": 80
+        },
+        {
+          "key": "story.title",
+          "type": "text",
+          "label": "About headline",
+          "group": "About",
+          "max": 60
+        },
+        {
+          "key": "story.text",
+          "type": "textarea",
+          "label": "About",
+          "group": "About",
+          "max": 400
+        },
+        {
+          "key": "hours",
+          "type": "hours",
+          "label": "Opening hours",
+          "group": "Visit and contact"
+        }
+      ],
+      "defaults": {
+        "font": "grotesk",
+        "theme": "white",
+        "accent": "#FF3B00",
+        "hero.title": "Objects for everyday use. Made in small batches, sold in one room.",
+        "sections": [
+          "story",
+          "visit"
+        ],
+        "announcement": "New pieces every first Saturday",
+        "story.title": "About",
+        "story.text": "A small concept store for useful things. We work with local makers and keep every object in stock for as long as they make it.",
+        "hours": {
+          "sat": "11:00-20:00",
+          "sun": "11:00-20:00",
+          "mon": "11:00-20:00",
+          "tue": "11:00-20:00",
+          "wed": "11:00-20:00",
+          "thu": "11:00-21:00",
+          "fri": ""
+        }
+      }
+    },
+    {
+      "id": "spiceroute",
+      "number": 15,
+      "name": "Spice Route",
+      "category": "Middle Eastern restaurant",
+      "description": "Geometric star borders, an arched window and centered courses. Looks its best in Arabic.",
+      "version": 1,
+      "thumbnail": "/templates/spiceroute/thumbnail.png",
+      "sample": "restaurant",
+      "schema": [
+        {
+          "key": "font",
+          "type": "choice",
+          "label": "Font style",
+          "group": "Brand",
+          "options": [
+            "naskh",
+            "classic",
+            "elegant"
+          ],
+          "optionLabels": {
+            "naskh": "Calligraphic",
+            "classic": "Classic",
+            "elegant": "Elegant"
+          }
+        },
+        {
+          "key": "logo",
+          "type": "image",
+          "label": "Logo",
+          "group": "Brand"
+        },
+        {
+          "key": "theme",
+          "type": "palette",
+          "label": "Color theme",
+          "group": "Brand",
+          "options": [
+            "saffron",
+            "rose",
+            "olive",
+            "indigo"
+          ],
+          "swatches": {
+            "saffron": "#FBF4E6",
+            "rose": "#FBF0EB",
+            "olive": "#F1F0E2",
+            "indigo": "#141A2E"
+          }
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "label": "Accent color",
+          "group": "Brand",
+          "options": [
+            "#1F5F5B",
+            "#9B2C2C",
+            "#B7791F",
+            "#2B4C8C"
+          ]
+        },
+        {
+          "key": "pattern",
+          "type": "toggle",
+          "label": "Star borders",
+          "group": "Brand"
+        },
+        {
+          "key": "hero.eyebrow",
+          "type": "text",
+          "label": "Greeting",
+          "group": "Top",
+          "max": 40
+        },
+        {
+          "key": "hero.title",
+          "type": "text",
+          "label": "Tagline",
+          "group": "Top",
+          "max": 80
+        },
+        {
+          "key": "hero.image",
+          "type": "image",
+          "label": "Window picture",
+          "group": "Top",
+          "presets": [
+            "tiles",
+            "dunes",
+            "marble",
+            "arches"
+          ]
+        },
+        {
+          "key": "sections",
+          "type": "toggles",
+          "label": "Sections",
+          "group": "Sections",
+          "options": [
+            "announcement",
+            "story",
+            "visit"
+          ],
+          "optionLabels": {
+            "announcement": "Announcement bar",
+            "story": "Our story",
+            "visit": "Hours and contact"
+          }
+        },
+        {
+          "key": "announcement",
+          "type": "text",
+          "label": "Announcement",
+          "group": "Sections",
+          "max": 80
+        },
+        {
+          "key": "story.title",
+          "type": "text",
+          "label": "Story headline",
+          "group": "Our story",
+          "max": 60
+        },
+        {
+          "key": "story.text",
+          "type": "textarea",
+          "label": "Our story",
+          "group": "Our story",
+          "max": 400
+        },
+        {
+          "key": "hours",
+          "type": "hours",
+          "label": "Opening hours",
+          "group": "Visit and contact"
+        }
+      ],
+      "defaults": {
+        "font": "naskh",
+        "logo": "",
+        "theme": "saffron",
+        "accent": "#1F5F5B",
+        "pattern": true,
+        "hero.eyebrow": "",
+        "hero.title": "Recipes from Levantine kitchens, shared at a big table",
+        "hero.image": "preset:tiles",
+        "sections": [
+          "story",
+          "visit"
+        ],
+        "announcement": "Family platters for four every Friday",
+        "story.title": "Our story",
+        "story.text": "Three generations of cooks, one long table. We grind our own spices, bake bread in a stone oven and serve every mezze to share.",
+        "hours": {
+          "sat": "12:00-23:30",
+          "sun": "12:00-23:30",
+          "mon": "12:00-23:30",
+          "tue": "12:00-23:30",
+          "wed": "12:00-23:30",
+          "thu": "12:00-00:30",
+          "fri": "13:00-00:30"
+        }
+      }
+    },
+    {
+      "id": "polaroid",
+      "number": 16,
+      "name": "Polaroid",
+      "category": "Desserts, sweets",
+      "description": "A wall of instant photos, slightly tilted, taped up and captioned by hand.",
+      "version": 1,
+      "thumbnail": "/templates/polaroid/thumbnail.png",
+      "sample": "sweets",
+      "schema": [
+        {
+          "key": "font",
+          "type": "choice",
+          "label": "Font style",
+          "group": "Brand",
+          "options": [
+            "hand",
+            "round",
+            "soft"
+          ],
+          "optionLabels": {
+            "hand": "Handwritten",
+            "round": "Friendly",
+            "soft": "Soft"
+          }
+        },
+        {
+          "key": "logo",
+          "type": "image",
+          "label": "Logo",
+          "group": "Brand"
+        },
+        {
+          "key": "theme",
+          "type": "palette",
+          "label": "Wall",
+          "group": "Brand",
+          "options": [
+            "pastel",
+            "mint",
+            "cork",
+            "night"
+          ],
+          "swatches": {
+            "pastel": "#FDF0F3",
+            "mint": "#EAF6F1",
+            "cork": "#D9B98F",
+            "night": "#1D1B24"
+          }
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "label": "Accent color",
+          "group": "Brand",
+          "options": [
+            "#E0457B",
+            "#2A9D8F",
+            "#E76F51",
+            "#6D4BC4"
+          ]
+        },
+        {
+          "key": "hero.title",
+          "type": "text",
+          "label": "Tagline",
+          "group": "Top",
+          "max": 60
+        },
+        {
+          "key": "sections",
+          "type": "toggles",
+          "label": "Sections",
+          "group": "Sections",
+          "options": [
+            "announcement",
+            "story",
+            "visit"
+          ],
+          "optionLabels": {
+            "announcement": "Announcement bar",
+            "story": "Hello note",
+            "visit": "Hours and contact"
+          }
+        },
+        {
+          "key": "announcement",
+          "type": "text",
+          "label": "Announcement",
+          "group": "Sections",
+          "max": 80
+        },
+        {
+          "key": "story.title",
+          "type": "text",
+          "label": "Note headline",
+          "group": "Hello note",
+          "max": 60
+        },
+        {
+          "key": "story.text",
+          "type": "textarea",
+          "label": "Hello note",
+          "group": "Hello note",
+          "max": 400
+        },
+        {
+          "key": "hours",
+          "type": "hours",
+          "label": "Opening hours",
+          "group": "Visit and contact"
+        }
+      ],
+      "defaults": {
+        "font": "hand",
+        "logo": "",
+        "theme": "pastel",
+        "accent": "#E0457B",
+        "hero.title": "Ice cream, doughnuts and cake, made today",
+        "sections": [
+          "announcement",
+          "story",
+          "visit"
+        ],
+        "announcement": "Free sprinkles on every scoop this week",
+        "story.title": "Hello from us",
+        "story.text": "We are a tiny sweet shop with a big freezer. Everything is made in our kitchen in the morning and sold until it runs out.",
+        "hours": {
+          "sat": "12:00-00:00",
+          "sun": "12:00-00:00",
+          "mon": "12:00-00:00",
+          "tue": "12:00-00:00",
+          "wed": "12:00-00:00",
+          "thu": "12:00-01:00",
+          "fri": "14:00-01:00"
+        }
+      }
     }
   ]
 }

@@ -104,6 +104,22 @@ export const SAMPLES = {
       ["Small plates", "Miso soup", "Tofu, wakame, spring onion", 1.75, null, false, "soup"],
     ],
   },
+  brunch: {
+    name: "Green Fork",
+    address: "Abdali Boulevard 9, Amman",
+    instagram: "greenfork",
+    menu: [
+      ["Brunch", "Shakshuka", "Eggs baked in spiced tomato and peppers, warm bread", 4.5, "Best seller", true, "soup"],
+      ["Brunch", "Halloumi waffle", "Savory waffle, grilled halloumi, za'atar honey", 5.25, "New", true, "waffle"],
+      ["Brunch", "Avocado toast", "Sourdough, smashed avocado, dukkah and lemon", 4.75, "Vegan", false, null],
+      ["Bowls", "Green goddess bowl", "Quinoa, greens, edamame, herb dressing", 5.75, "Vegan", true, "salad"],
+      ["Bowls", "Falafel bowl", "Baked falafel, hummus, pickles and tabbouleh", 5.5, null, false, "falafel"],
+      ["Bowls", "Lentil soup", "Red lentils, cumin and lemon", 3.0, "Vegan", false, "soup"],
+      ["Drinks", "Green juice", "Apple, cucumber, spinach and ginger", 2.75, null, false, "juice"],
+      ["Drinks", "Berry smoothie", "Berries, banana and oat milk", 3.25, "Vegan", false, "smoothie"],
+      ["Drinks", "Flat white", "Double shot, silky milk", 2.75, null, false, "latte"],
+    ],
+  },
   pizza: {
     name: "Forno Rosso",
     address: "Al-Baouniyah Street 14, Jabal Al-Luweibdeh",

@@ -1,0 +1,362 @@
+/* Template 016 "Polaroid": instant photos taped to a wall, each slightly tilted, captions in handwriting. */
+
+.t-polaroid {
+  container: page / inline-size;
+  --paper: #fffdf9;
+  --pen: #24212a;
+  font-size: 15px;
+  line-height: 1.55;
+  overflow-x: clip;
+  background:
+    radial-gradient(color-mix(in srgb, var(--ink) 6%, transparent) 1px, transparent 1.4px) 0 0 / 14px 14px,
+    var(--bg);
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--fd);
+    font-weight: var(--fw);
+    letter-spacing: var(--ft);
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+
+  /* header */
+  .head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 6px;
+    padding: 30px 18px 10px;
+  }
+  .logo {
+    position: relative;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--acc);
+    color: var(--acc-ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font: var(--fw) 26px var(--fd);
+    rotate: -6deg;
+  }
+  .head h1 {
+    font-size: calc(48px * var(--fs));
+    overflow-wrap: anywhere;
+  }
+  .tagline {
+    font: var(--fw) calc(20px * var(--fs)) / 1.2 var(--fd);
+    color: var(--muted);
+  }
+  .today {
+    margin-top: 6px;
+    padding: 4px 12px;
+    background: var(--tape);
+    color: var(--tapeink);
+    font-size: 13px;
+    rotate: -1.5deg;
+  }
+
+  /* the photo */
+  .photo {
+    all: unset;
+    box-sizing: border-box;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+    padding: 9px 9px 14px;
+    background: var(--paper);
+    color: var(--pen);
+    box-shadow:
+      0 1px 1px #0002,
+      0 14px 24px -14px #0007;
+    transition:
+      rotate 0.3s,
+      translate 0.3s,
+      box-shadow 0.3s;
+  }
+  .photo:hover {
+    rotate: 0deg;
+    translate: 0 -6px;
+    box-shadow:
+      0 1px 1px #0002,
+      0 24px 34px -16px #0008;
+  }
+  .photo:focus-visible {
+    outline: 3px solid var(--acc-text);
+    outline-offset: 4px;
+  }
+  .photo-img {
+    position: relative;
+    display: block;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: #eee9e2;
+  }
+  .caption {
+    margin-top: 6px;
+    font: var(--fw) calc(19px * var(--fs)) / 1.1 var(--fd);
+    min-width: 0;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+  .price {
+    text-align: center;
+    font-weight: 700;
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+  }
+  .tape {
+    position: absolute;
+    z-index: 1;
+    top: -12px;
+    left: 50%;
+    width: 70px;
+    height: 22px;
+    translate: -50% 0;
+    rotate: -4deg;
+    background: color-mix(in srgb, var(--tape) 80%, transparent);
+  }
+  .stickers {
+    position: absolute;
+    inset-block-end: 8px;
+    inset-inline-end: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+  }
+  .sticker {
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: var(--acc);
+    color: var(--acc-ink);
+    font-size: 11px;
+    font-weight: 800;
+    rotate: 6deg;
+  }
+  .sticker-out {
+    background: var(--pen);
+    color: var(--paper);
+  }
+  .photo.out .photo-img > :not(.stickers) {
+    opacity: 0.45;
+    filter: grayscale(1) sepia(0.2);
+  }
+  .photo.out .price {
+    text-decoration: line-through;
+  }
+
+  /* favorites fan */
+  .fan {
+    padding: 26px 18px 10px;
+  }
+  .fan .caption {
+    font-size: calc(16px * var(--fs));
+  }
+  .fan-list {
+    display: flex;
+    justify-content: center;
+  }
+  .fan-list li {
+    width: min(36%, 220px);
+    margin-inline: -6px;
+  }
+  .fan-list li:nth-child(1) .photo {
+    rotate: -9deg;
+    translate: 0 14px;
+  }
+  .fan-list li:nth-child(2) {
+    z-index: 1;
+  }
+  .fan-list li:nth-child(2) .photo {
+    rotate: 2deg;
+  }
+  .fan-list li:nth-child(3) .photo {
+    rotate: 10deg;
+    translate: 0 18px;
+  }
+  .fan-list li:only-child .photo {
+    rotate: -3deg;
+    translate: 0;
+  }
+
+  /* albums */
+  .menu {
+    padding: 34px 18px 10px;
+    scroll-margin-top: 10px;
+  }
+  .jump {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  .jump a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 42px;
+    padding: 0 16px;
+    background: var(--tape);
+    color: var(--tapeink);
+    text-decoration: none;
+    font: var(--fw) calc(18px * var(--fs)) var(--fd);
+  }
+  .jump a:nth-child(even) {
+    rotate: 2deg;
+  }
+  .jump a:nth-child(odd) {
+    rotate: -2deg;
+  }
+  .album {
+    padding-top: 40px;
+    scroll-margin-top: 10px;
+  }
+  .album h2 {
+    text-align: center;
+    margin-bottom: 28px;
+    font-size: calc(38px * var(--fs));
+  }
+  .album h2 span {
+    background: linear-gradient(transparent 62%, color-mix(in srgb, var(--acc) 35%, transparent) 62% 90%, transparent 90%);
+    padding: 0 6px;
+  }
+  .wall {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 34px 18px;
+  }
+  .wall li:nth-child(4n + 1) .photo {
+    rotate: -2.5deg;
+  }
+  .wall li:nth-child(4n + 2) .photo {
+    rotate: 2deg;
+    translate: 0 10px;
+  }
+  .wall li:nth-child(4n + 3) .photo {
+    rotate: 1.5deg;
+  }
+  .wall li:nth-child(4n) .photo {
+    rotate: -1.5deg;
+    translate: 0 8px;
+  }
+
+  /* note and visit */
+  .note {
+    width: min(100% - 36px, 560px);
+    margin: 56px auto 0;
+    padding: 30px 26px;
+    background: var(--paper);
+    color: var(--pen);
+    box-shadow: 0 16px 28px -18px #0008;
+    rotate: -1deg;
+    scroll-margin-top: 10px;
+    background-image: repeating-linear-gradient(transparent 0 29px, #b9d3ea 29px 30px);
+    background-position: 0 14px;
+  }
+  .note h2 {
+    font-size: calc(32px * var(--fs));
+    margin-bottom: 8px;
+  }
+  .note p {
+    line-height: 30px;
+    white-space: pre-line;
+  }
+  .visit {
+    padding: 56px 18px 30px;
+    scroll-margin-top: 10px;
+  }
+  .visit > h2 {
+    text-align: center;
+    font-size: calc(38px * var(--fs));
+    margin-bottom: 22px;
+  }
+  .visit-grid {
+    display: grid;
+    gap: 22px;
+  }
+  .card {
+    padding: 24px 20px;
+    background: var(--surf);
+    box-shadow: 0 12px 24px -18px #0007;
+  }
+  .card h3 {
+    font-size: calc(26px * var(--fs));
+    margin-bottom: 10px;
+  }
+  .order {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 46px;
+    margin-top: 16px;
+    padding: 0 20px;
+    border-radius: 999px;
+    background: var(--acc);
+    color: var(--acc-ink);
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  .foot {
+    padding: 18px 18px 30px;
+    color: var(--muted);
+  }
+  .credits {
+    justify-content: center;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .photo {
+      transition: none;
+    }
+  }
+
+  @container page (min-width: 760px) {
+    .head {
+      padding-top: 46px;
+    }
+    .head h1 {
+      font-size: calc(76px * var(--fs));
+    }
+    .fan {
+      padding-bottom: 30px;
+    }
+    .fan-list li {
+      margin-inline: -10px;
+    }
+    .menu {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding-inline: 36px;
+    }
+    .album h2 {
+      font-size: calc(54px * var(--fs));
+    }
+    .wall {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 48px 30px;
+    }
+    .visit {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .visit-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+    .visit .card:nth-child(1) {
+      rotate: -1deg;
+    }
+    .visit .card:nth-child(2) {
+      rotate: 1deg;
+    }
+  }
+}

@@ -16,11 +16,11 @@ Status: done (merged), building (in an open PR), planned.
 | 009 | Zen | Sushi, Japanese | Quiet minimal list with big numerals and small square photos | building (S16 batch 2) |
 | 010 | Bistro Card | French bistro | One printed menu card on a textured table, courses in order | building (S16 batch 2) |
 | 011 | Pizzeria | Pizza | Round photo cutouts on a rustic band per category | building (S16 batch 2) |
-| 012 | Ticket | Coffee truck | Receipt-style menu: monospace, perforated edges, order number | planned |
-| 013 | Garden | Brunch, healthy | Organic shapes, leaf ornaments, cards with diet tags first | planned |
-| 014 | Mono Grid | Concept store | Swiss grid with hairlines and index numbers, black and white | planned |
-| 015 | Spice Route | Middle Eastern restaurant | Arabic-first, geometric borders, centered courses | planned |
-| 016 | Polaroid | Dessert shop | Scattered instant-photo cards with slight tilts | planned |
+| 012 | Ticket | Coffee truck | Receipt-style menu: monospace, perforated edges, order number | building (S16 batch 3) |
+| 013 | Garden | Brunch, healthy | Organic shapes, leaf ornaments, cards with diet tags first | building (S16 batch 3) |
+| 014 | Mono Grid | Concept store | Swiss grid with hairlines and index numbers, black and white | building (S16 batch 3) |
+| 015 | Spice Route | Middle Eastern restaurant | Arabic-first, geometric borders, centered courses | building (S16 batch 3) |
+| 016 | Polaroid | Dessert shop | Scattered instant-photo cards with slight tilts | building (S16 batch 3) |
 | 017 | Day Parts | Breakfast place | Menu grouped on a sticky timeline rail (morning to night) | planned |
 | 018 | Tasting | Fine dining | Cover-page hero and a course-by-course tasting list | planned |
 | 019 | Market Stall | Grocery, butcher | Compact price table with units, sticky category sidebar on desktop | planned |

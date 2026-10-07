@@ -1,0 +1,368 @@
+/* Template 013 "Garden": soft blobs, leaves and waves. Cards lead with diet tags so people find what they can eat. */
+
+.t-garden {
+  container: page / inline-size;
+  font-size: 15.5px;
+  line-height: 1.55;
+  overflow-x: clip;
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--fd);
+    font-weight: var(--fw);
+    letter-spacing: var(--ft);
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: var(--acc);
+    color: var(--acc-ink);
+  }
+  .tag-out {
+    background: var(--ink);
+    color: var(--bg);
+  }
+  .button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 0 24px;
+    border-radius: 999px 999px 999px 18px;
+    background: var(--acc);
+    color: var(--acc-ink);
+    text-decoration: none;
+    font-weight: 700;
+  }
+  .button:hover {
+    border-radius: 18px 999px 999px 999px;
+  }
+
+  /* header */
+  .head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 18px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    text-decoration: none;
+    font: var(--fw) calc(20px * var(--fs)) var(--fd);
+  }
+  .logo {
+    position: relative;
+    flex: none;
+    width: 42px;
+    height: 42px;
+    border-radius: 58% 42% 50% 50% / 48% 55% 45% 52%;
+    overflow: hidden;
+    background: var(--acc);
+    color: var(--acc-ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pill {
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: var(--surf);
+    font-size: 12.5px;
+    text-align: center;
+  }
+
+  /* hero */
+  .hero {
+    position: relative;
+    display: grid;
+    gap: 30px;
+    padding: 20px 18px 50px;
+  }
+  .hero-text {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .hero h1 {
+    font-size: calc(44px * var(--fs));
+  }
+  .hero p {
+    color: var(--muted);
+    max-width: 42ch;
+  }
+  .hero-blob {
+    position: relative;
+    aspect-ratio: 1;
+    width: 88%;
+    justify-self: center;
+    overflow: hidden;
+    border-radius: 62% 38% 46% 54% / 48% 58% 42% 52%;
+    background: var(--blob);
+    box-shadow: 18px 18px 0 var(--blob2);
+  }
+  .leaf {
+    position: absolute;
+    color: var(--blob);
+    pointer-events: none;
+  }
+  .leaf-a {
+    width: 130px;
+    top: -10px;
+    inset-inline-end: -30px;
+    rotate: 20deg;
+  }
+  .leaf-b {
+    width: 110px;
+    bottom: 10px;
+    inset-inline-start: -30px;
+    rotate: -30deg;
+  }
+
+  /* menu */
+  .menu {
+    position: relative;
+    scroll-margin-top: 10px;
+  }
+  .wave {
+    display: block;
+    width: 100%;
+    height: 34px;
+    color: var(--blob);
+    margin-bottom: -1px;
+  }
+  .menu-inner {
+    padding: 14px 18px 40px;
+    background: var(--blob);
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .chips a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 42px;
+    padding: 0 18px;
+    border-radius: 999px;
+    background: var(--surf);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14.5px;
+  }
+  .chips a:hover {
+    background: var(--acc);
+    color: var(--acc-ink);
+  }
+  .group {
+    padding-top: 26px;
+    scroll-margin-top: 10px;
+  }
+  .group h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: calc(30px * var(--fs));
+    margin-bottom: 14px;
+    overflow-wrap: anywhere;
+  }
+  .leaf-icon {
+    flex: none;
+    width: 26px;
+    color: var(--acc-text);
+  }
+  .cards {
+    display: grid;
+    gap: 12px;
+  }
+  .card {
+    all: unset;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    padding: 12px;
+    border-radius: 28px;
+    background: var(--surf);
+    transition: transform 0.25s;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+  }
+  .card:focus-visible {
+    outline: 3px solid var(--acc-text);
+    outline-offset: 3px;
+  }
+  .card-blob {
+    position: relative;
+    flex: none;
+    width: 104px;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: var(--blob2);
+  }
+  .shape-0 {
+    border-radius: 60% 40% 52% 48% / 46% 58% 42% 54%;
+  }
+  .shape-1 {
+    border-radius: 42% 58% 40% 60% / 56% 44% 56% 44%;
+  }
+  .shape-2 {
+    border-radius: 50% 50% 38% 62% / 62% 38% 52% 48%;
+  }
+  .card-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    min-width: 0;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 2px;
+  }
+  .card-name {
+    font: var(--fw) calc(19px * var(--fs)) / 1.15 var(--fd);
+    overflow-wrap: anywhere;
+  }
+  .card-desc {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+  .card-price {
+    margin-top: 4px;
+    font-weight: 800;
+    color: var(--acc-text);
+    font-variant-numeric: tabular-nums;
+  }
+  .card.out .card-blob > * {
+    opacity: 0.45;
+    filter: grayscale(1);
+  }
+  .card.out .card-price {
+    color: var(--muted);
+    text-decoration: line-through;
+  }
+
+  /* story */
+  .story {
+    position: relative;
+    padding: 60px 24px;
+    text-align: center;
+    scroll-margin-top: 10px;
+  }
+  .story h2 {
+    font-size: calc(34px * var(--fs));
+    margin-bottom: 14px;
+  }
+  .story p {
+    position: relative;
+    max-width: 52ch;
+    margin: 0 auto;
+    color: var(--muted);
+    white-space: pre-line;
+  }
+
+  /* visit */
+  .visit {
+    padding: 10px 18px 40px;
+    scroll-margin-top: 10px;
+  }
+  .visit > h2 {
+    font-size: calc(34px * var(--fs));
+    margin-bottom: 18px;
+    text-align: center;
+  }
+  .visit-grid {
+    display: grid;
+    gap: 16px;
+  }
+  .visit-card {
+    padding: 26px 22px;
+    border-radius: 34px 34px 34px 10px;
+    background: var(--surf);
+  }
+  .visit-card h3 {
+    font-size: calc(22px * var(--fs));
+    margin-bottom: 12px;
+  }
+  .visit-card .button {
+    margin-top: 18px;
+  }
+
+  .foot {
+    padding: 20px 18px 30px;
+    color: var(--muted);
+  }
+
+  @container page (min-width: 760px) {
+    .head,
+    .foot {
+      padding-inline: max(36px, calc((100cqi - 1160px) / 2));
+    }
+    .hero {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      align-items: center;
+      gap: 60px;
+      padding: 30px max(36px, calc((100cqi - 1160px) / 2)) 80px;
+    }
+    .hero h1 {
+      font-size: calc(66px * var(--fs));
+    }
+    .hero-blob {
+      width: 100%;
+    }
+    .leaf-a {
+      width: 200px;
+      inset-inline-end: 2%;
+      top: 0;
+    }
+    .wave {
+      height: 60px;
+    }
+    .menu-inner {
+      padding: 20px max(36px, calc((100cqi - 1160px) / 2)) 64px;
+    }
+    .chips {
+      justify-content: center;
+    }
+    .cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .card {
+      padding: 16px;
+    }
+    .card-blob {
+      width: 130px;
+    }
+    .visit {
+      padding-inline: max(36px, calc((100cqi - 1160px) / 2));
+    }
+    .visit-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+  }
+}

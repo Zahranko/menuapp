@@ -1,0 +1,165 @@
+{
+  "id": "spiceroute",
+  "number": 15,
+  "name": "Spice Route",
+  "category": "Middle Eastern restaurant",
+  "description": "Geometric star borders, an arched window and centered courses. Looks its best in Arabic.",
+  "version": 1,
+  "thumbnail": "/templates/spiceroute/thumbnail.png",
+  "sample": "restaurant",
+  "schema": [
+    {
+      "key": "font",
+      "type": "choice",
+      "label": "Font style",
+      "group": "Brand",
+      "options": [
+        "naskh",
+        "classic",
+        "elegant"
+      ],
+      "optionLabels": {
+        "naskh": "Calligraphic",
+        "classic": "Classic",
+        "elegant": "Elegant"
+      }
+    },
+    {
+      "key": "logo",
+      "type": "image",
+      "label": "Logo",
+      "group": "Brand"
+    },
+    {
+      "key": "theme",
+      "type": "palette",
+      "label": "Color theme",
+      "group": "Brand",
+      "options": [
+        "saffron",
+        "rose",
+        "olive",
+        "indigo"
+      ],
+      "swatches": {
+        "saffron": "#FBF4E6",
+        "rose": "#FBF0EB",
+        "olive": "#F1F0E2",
+        "indigo": "#141A2E"
+      }
+    },
+    {
+      "key": "accent",
+      "type": "color",
+      "label": "Accent color",
+      "group": "Brand",
+      "options": [
+        "#1F5F5B",
+        "#9B2C2C",
+        "#B7791F",
+        "#2B4C8C"
+      ]
+    },
+    {
+      "key": "pattern",
+      "type": "toggle",
+      "label": "Star borders",
+      "group": "Brand"
+    },
+    {
+      "key": "hero.eyebrow",
+      "type": "text",
+      "label": "Greeting",
+      "group": "Top",
+      "max": 40
+    },
+    {
+      "key": "hero.title",
+      "type": "text",
+      "label": "Tagline",
+      "group": "Top",
+      "max": 80
+    },
+    {
+      "key": "hero.image",
+      "type": "image",
+      "label": "Window picture",
+      "group": "Top",
+      "presets": [
+        "tiles",
+        "dunes",
+        "marble",
+        "arches"
+      ]
+    },
+    {
+      "key": "sections",
+      "type": "toggles",
+      "label": "Sections",
+      "group": "Sections",
+      "options": [
+        "announcement",
+        "story",
+        "visit"
+      ],
+      "optionLabels": {
+        "announcement": "Announcement bar",
+        "story": "Our story",
+        "visit": "Hours and contact"
+      }
+    },
+    {
+      "key": "announcement",
+      "type": "text",
+      "label": "Announcement",
+      "group": "Sections",
+      "max": 80
+    },
+    {
+      "key": "story.title",
+      "type": "text",
+      "label": "Story headline",
+      "group": "Our story",
+      "max": 60
+    },
+    {
+      "key": "story.text",
+      "type": "textarea",
+      "label": "Our story",
+      "group": "Our story",
+      "max": 400
+    },
+    {
+      "key": "hours",
+      "type": "hours",
+      "label": "Opening hours",
+      "group": "Visit and contact"
+    }
+  ],
+  "defaults": {
+    "font": "naskh",
+    "logo": "",
+    "theme": "saffron",
+    "accent": "#1F5F5B",
+    "pattern": true,
+    "hero.eyebrow": "",
+    "hero.title": "Recipes from Levantine kitchens, shared at a big table",
+    "hero.image": "preset:tiles",
+    "sections": [
+      "story",
+      "visit"
+    ],
+    "announcement": "Family platters for four every Friday",
+    "story.title": "Our story",
+    "story.text": "Three generations of cooks, one long table. We grind our own spices, bake bread in a stone oven and serve every mezze to share.",
+    "hours": {
+      "sat": "12:00-23:30",
+      "sun": "12:00-23:30",
+      "mon": "12:00-23:30",
+      "tue": "12:00-23:30",
+      "wed": "12:00-23:30",
+      "thu": "12:00-00:30",
+      "fri": "13:00-00:30"
+    }
+  }
+}
