@@ -36,13 +36,13 @@ internal static class SiteErrors
 }
 
 /// <summary>Shared lookups for the site handlers.</summary>
-public sealed class SiteContext(ISiteRepository sites, IBusinessRepository businesses, ICurrentUser user, IOptions<BrandOptions> brand)
+public sealed class SiteContext(ISiteRepository sites, IBusinessRepository businesses, ICurrentUser user, SiteLinks links)
 {
     public async Task<(Site? Site, string SiteUrl)> LoadAsync(CancellationToken ct)
     {
         var site = await sites.GetForCurrentBusinessAsync(ct);
         var business = user.BusinessId is { } id ? await businesses.GetAsync(id, ct) : null;
-        return (site, business is null ? "" : $"https://{brand.Value.Domain}/{business.Slug.Value}");
+        return (site, business is null ? "" : links.Site(business.Slug.Value));
     }
 }
 
@@ -137,7 +137,7 @@ public sealed class PublishSiteHandler(SiteContext context, IUnitOfWork uow, IAu
 
 public sealed record PreviewLink(string Token, string PreviewUrl, DateTimeOffset ExpiresAt);
 
-public sealed class CreatePreviewTokenHandler(IPreviewTokens tokens, ICurrentUser user, IClock clock, IOptions<BrandOptions> brand)
+public sealed class CreatePreviewTokenHandler(IPreviewTokens tokens, ICurrentUser user, IClock clock, SiteLinks links)
 {
     public static readonly TimeSpan Lifetime = TimeSpan.FromMinutes(30);
 
@@ -150,6 +150,6 @@ public sealed class CreatePreviewTokenHandler(IPreviewTokens tokens, ICurrentUse
 
         var expires = clock.UtcNow + Lifetime;
         var token = tokens.Create(businessId, expires);
-        return new PreviewLink(token, $"https://{brand.Value.Domain}/_preview/{token}", expires);
+        return new PreviewLink(token, links.Preview(token), expires);
     }
 }

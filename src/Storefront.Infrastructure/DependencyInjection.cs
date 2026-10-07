@@ -23,6 +23,8 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<StorefrontOptions>(configuration.GetSection(StorefrontOptions.SectionName));
+        services.Configure<BillingOptions>(configuration.GetSection(BillingOptions.SectionName));
+        services.AddScoped<IPaymentProvider, Billing.FakePaymentProvider>();
 
         services.AddSingleton<DomainEventsInterceptor>();
         // Read the connection string when the context is built, so test hosts can override configuration.
@@ -96,6 +98,7 @@ public static class DependencyInjection
         services.AddHostedService<OutboxDispatcher>();
 
         services.AddScoped<TemplateRegistryImporter>();
+        services.AddScoped<ReferenceDataSeeder>();
         services.AddScoped<DevelopmentSeeder>();
         return services;
     }

@@ -7,6 +7,8 @@ The API (`src/Storefront.Web`) runs on a site4now Windows/IIS site with a site4n
 
 - Every push to `main`.
 - A push to the `deploy` branch, which ships a branch before it is merged: `git push origin HEAD:deploy --force`.
+- A push to the `test` branch. It works like `deploy` and also turns on billing test mode: every account,
+  new or existing, is on an active Pro plan, so every feature can be tried without paying.
 - By hand: GitHub, **Actions**, **Deploy API (site4now)**, **Run workflow**. This button only appears once the workflow is on `main`.
 
 ## One-time setup
@@ -29,6 +31,8 @@ In GitHub, open **Settings**, then **Secrets and variables**, then **Actions**.
 | `FTP_SERVER` / `FTP_USERNAME` | the current site4now account | Change these when the hosting account changes |
 | `FTP_DIR` | `/TestMobileApp` | The site's own folder as the FTP login sees it. The login's top folder holds other sites, so the deploy refuses `/` |
 | `DB_SERVER` / `DB_NAME` / `DB_USER` | the current site4now database | Same |
+| `SITES_URL` | empty (the brand domain) | Where the owners' websites (`apps/sites`) are hosted, like `https://sites.example.vercel.app`. Used for each site's link and the editor preview |
+| `BILLING_TEST_MODE` | `true` on the `test` branch, otherwise `false` | Puts every account on an active Pro plan. Only for test servers |
 
 ## What a deploy does
 

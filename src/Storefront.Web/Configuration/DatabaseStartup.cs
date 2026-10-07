@@ -10,7 +10,7 @@ public static class DatabaseStartup
 {
     /// <summary>
     /// Development and test: apply migrations and (when Storefront:SeedSampleData is true) seed sample data.
-    /// Other environments always re-import the template registry so new templates appear without code changes.
+    /// Other environments always seed the plans and re-import the template registry so new templates appear without code changes.
     /// </summary>
     public static async Task PrepareDatabaseAsync(this WebApplication app)
     {
@@ -34,6 +34,7 @@ public static class DatabaseStartup
         }
         else
         {
+            await scope.ServiceProvider.GetRequiredService<ReferenceDataSeeder>().SeedAsync(CancellationToken.None);
             await scope.ServiceProvider.GetRequiredService<TemplateRegistryImporter>().ImportAsync(CancellationToken.None);
         }
     }
