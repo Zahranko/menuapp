@@ -39,8 +39,13 @@ settings = {
 }
 
 # Where owners' websites (apps/sites) are hosted, when not yet at the brand domain.
-if env.get("SITES_URL", "").strip():
-    settings["Storefront__SitesBaseUrl"] = env["SITES_URL"].strip().rstrip("/")
+sites_url = env.get("SITES_URL", "").strip().rstrip("/")
+if sites_url:
+    settings["Storefront__SitesBaseUrl"] = sites_url
+    # Saves in the app refresh the cached website pages right away (the same secret is set on the websites host).
+    if env.get("REVALIDATE_SECRET", ""):
+        settings["Revalidation__Url"] = f"{sites_url}/api/revalidate"
+        settings["Revalidation__Secret"] = env["REVALIDATE_SECRET"]
 
 variables = "\n".join(
     f"          <environmentVariable name={quoteattr(k)} value={quoteattr(v)} />" for k, v in settings.items()

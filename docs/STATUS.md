@@ -42,7 +42,7 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 
 (Things a session found that belong to another session. Format: `- [S07] what and why (found in S03)`.)
 
-- [S15] The owners' websites (`apps/sites`) are not hosted yet, so "View site" and the editor preview show "This page isn't online yet". Host them (Vercel or a Node host), then set the `SITES_URL` deploy variable so site links and previews point there, and `Revalidation__Url`/`Secret` so saves refresh the pages (found on the test branch).
+- [S15] The owners' websites (`apps/sites`) go on Vercel (owner's choice): setup in `docs/deploy-vercel.md`. Until `SITES_URL` is set, "View site" and the editor preview show "This page isn't online yet" (found on the test branch).
 - [S05] Still to do: payment webhook, DNS checker job for `AwaitingDns` requests, `/internal/caddy/ask`, and the real payment provider adapter once D5/D8 are decided. Staff move domain requests forward in the back office (S06) (found on the test branch).
 - [S13] Template schema labels and option labels are English only; the editor shows them as they are. Add Arabic labels to the manifests (for example `labelAr`) (found on the test branch).
 - [S12] Categories reorder with arrows only (no drag), and there is no RTL golden test yet (found on the test branch).

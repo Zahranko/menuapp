@@ -22,6 +22,7 @@ In GitHub, open **Settings**, then **Secrets and variables**, then **Actions**.
 | `FTP_PASSWORD` | The FTP password from the site4now control panel |
 | `DB_PASSWORD` | The SQL Server database user's password |
 | `JWT_SIGNING_KEY` | Any random text of 32 or more characters. Keep it stable: changing it signs everyone out |
+| `REVALIDATE_SECRET` | Optional. The same value as on the websites host (`docs/deploy-vercel.md`), so saves refresh the websites at once |
 
 **Variables** (tab *Variables*, all optional):
 
@@ -56,4 +57,4 @@ In GitHub, open **Settings**, then **Secrets and variables**, then **Actions**.
 - IIS stops an idle app after about 20 minutes. The first request after that is slow, and the outbox (site refresh
   messages) only runs while the app is awake.
 - Photos are stored on the site's disk (`App_Data/media`). Back that folder up, or switch `Storage__Provider` to `s3` later.
-- Only the API is deployed here. The Next.js sites (`apps/sites`) need a Node.js host.
+- Only the API is deployed here. The Next.js sites (`apps/sites`) run on Vercel: `docs/deploy-vercel.md`.
