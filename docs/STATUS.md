@@ -53,6 +53,7 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 
 (Anything decided that is not in PLAN.md, with the reason.)
 
+- iOS build: `codemagic.yaml` has an unsigned IPA workflow and a signed TestFlight workflow for `apps/mobile` (setup in `docs/ios-build.md`). `rebrand.sh` also writes `appId` into its `bundle_identifier`. The iOS app is iPhone only and portrait only, and declares `ITSAppUsesNonExemptEncryption = false` (HTTPS only).
 - S15 (API security, done early): `UseStorefrontSecurity` runs first. It applies `X-Forwarded-For`/`-Proto` from trusted proxies only (loopback plus `Security:KnownProxies`/`KnownNetworks`, one hop), so rate limits and HTTPS checks see the real client.
 - S15: HTTPS only (`Security:RequireHttps`, off in Development and tests). Plain-HTTP GET/HEAD get a 308 to https; other methods get 400 instead of a redirect, so a password or token is never sent twice in the clear. `/health` works over HTTP for the container check. HSTS is 365 days with subdomains (no `preload`, because custom domains are owned by businesses).
 - S15: Every response sends `nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: no-referrer` and no `Server` header. `/api` adds `CSP default-src 'none'` and `Cross-Origin-Resource-Policy: same-origin`. `/api/v1` responses are `Cache-Control: no-store` unless the endpoint sets its own. Request bodies are capped at 1 MB (`Security:MaxRequestBodyBytes`); uploads keep their own larger limit. No CORS policy is registered on purpose.

@@ -1,6 +1,7 @@
 #!/bin/bash
 # Writes brand values from brand.json and brand/ into the places that can't read config at runtime:
-# Android applicationId and label, iOS bundle ID and display name, launcher icons, and the sites favicon.
+# Android applicationId and label, iOS bundle ID and display name, the Codemagic signing bundle ID,
+# launcher icons, and the sites favicon.
 # Safe to run any number of times. Needs python3; icons also need Pillow (pip install pillow).
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -38,6 +39,9 @@ sub("apps/mobile/ios/Runner.xcodeproj/project.pbxproj",
     r'PRODUCT_BUNDLE_IDENTIFIER = (?![^;]*RunnerTests)[^;]*;', f'PRODUCT_BUNDLE_IDENTIFIER = {app_id};')
 sub("apps/mobile/ios/Runner/Info.plist",
     r'(<key>CFBundleDisplayName</key>\s*<string>)[^<]*(</string>)', rf'\g<1>{name}\g<2>')
+
+# Codemagic signs the iOS build for this bundle ID.
+sub("codemagic.yaml", r'^(\s*bundle_identifier: ).*$', rf'\g<1>{app_id}')
 
 # Sites favicon (Next.js serves app/icon.svg).
 fav = root / "brand/favicon.svg"

@@ -1,0 +1,77 @@
+# Codemagic builds for the owner app (apps/mobile). Setup steps: docs/ios-build.md.
+# Brand values reach the app through --dart-define-from-file=../../brand.json, the same as in CI.
+# The bundle identifier below is written by scripts/rebrand.sh from brand.json "appId"; don't edit it by hand.
+
+definitions:
+  flutter_env: &flutter_env
+    flutter: stable
+    xcode: latest
+    cocoapods: default
+  scripts:
+    - &pub_get
+      name: Get packages
+      script: flutter pub get
+    - &analyze_test
+      name: Analyze and test
+      script: |
+        flutter analyze
+        flutter test --dart-define-from-file=../../brand.json
+
+workflows:
+  # Signed IPA uploaded to TestFlight. Needs an Apple Developer account, the App Store Connect
+  # integration named below, and an app record in App Store Connect with the bundle identifier.
+  ios-testflight:
+    name: iOS · TestFlight
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    working_directory: apps/mobile
+    integrations:
+      app_store_connect: Storefront ASC key
+    environment:
+      <<: *flutter_env
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.sufrly.app
+    scripts:
+      - *pub_get
+      - *analyze_test
+      - name: Use signing profiles
+        script: xcode-project use-profiles
+      - name: Build IPA
+        script: |
+          flutter build ipa --release \
+            --build-number="$BUILD_NUMBER" \
+            --dart-define-from-file=../../brand.json \
+            --export-options-plist=/Users/builder/export_options.plist
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - build/ios/archive/Runner.xcarchive/dSYMs/**
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
+
+  # Unsigned IPA: no Apple account needed. Proves the app builds for iOS; the file must be signed
+  # (for example with a sideloading tool) before it installs on a phone.
+  ios-unsigned:
+    name: iOS · unsigned IPA
+    instance_type: mac_mini_m2
+    max_build_duration: 45
+    working_directory: apps/mobile
+    environment:
+      <<: *flutter_env
+    scripts:
+      - *pub_get
+      - *analyze_test
+      - name: Build unsigned IPA
+        script: |
+          flutter build ios --release --no-codesign \
+            --build-number="$BUILD_NUMBER" \
+            --dart-define-from-file=../../brand.json
+          rm -rf build/ios/unsigned && mkdir -p build/ios/unsigned/Payload build/ios/ipa
+          cp -R build/ios/iphoneos/Runner.app build/ios/unsigned/Payload/
+          (cd build/ios/unsigned && zip -qry ../ipa/app-unsigned.ipa Payload)
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
