@@ -1,12 +1,11 @@
 using System.Net;
-using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Storefront.Application.Common;
 
 namespace Storefront.Web.IntegrationTests;
 
-public class HealthTests(WebApplicationFactory<Program> factory) : IClassFixture<WebApplicationFactory<Program>>
+public class HealthTests(StorefrontFactory factory) : IClassFixture<StorefrontFactory>
 {
     [Fact]
     public async Task Health_endpoint_returns_ok()

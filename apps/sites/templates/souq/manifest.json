@@ -1,0 +1,48 @@
+{
+  "id": "souq",
+  "number": 1,
+  "name": "Souq",
+  "category": "Café",
+  "description": "Warm café site with a big hero, signature picks and a searchable menu with photos.",
+  "version": 1,
+  "thumbnail": "/templates/souq/thumbnail.png",
+  "schema": [
+    { "key": "font", "type": "choice", "label": "Font style", "group": "Brand", "options": ["modern", "elegant", "bold"], "optionLabels": { "modern": "Modern", "elegant": "Elegant", "bold": "Bold" } },
+    { "key": "theme", "type": "palette", "label": "Color theme", "group": "Brand", "options": ["cream", "sage", "blush", "night"], "swatches": { "cream": "#FBF7EE", "sage": "#EEF2EA", "blush": "#FBF1EE", "night": "#121714" } },
+    { "key": "accent", "type": "color", "label": "Accent color", "group": "Brand", "options": ["#D9542C", "#F2B22E", "#2B6B4F", "#7A3E6E"] },
+    { "key": "corners", "type": "choice", "label": "Corners", "group": "Brand", "options": ["rounded", "sharp"], "optionLabels": { "rounded": "Rounded", "sharp": "Sharp" } },
+    { "key": "texture", "type": "toggle", "label": "Dotted texture", "group": "Brand" },
+    { "key": "hero.layout", "type": "choice", "label": "Layout", "group": "Hero header", "options": ["full", "split"], "optionLabels": { "full": "Full image", "split": "Split" } },
+    { "key": "hero.image", "type": "image", "label": "Hero image", "group": "Hero header", "presets": ["counter", "arches", "pour", "beans"] },
+    { "key": "hero.title", "type": "text", "label": "Headline", "group": "Hero header", "max": 60 },
+    { "key": "hero.subtitle", "type": "textarea", "label": "Subtext", "group": "Hero header", "max": 160 },
+    { "key": "hero.shade", "type": "range", "label": "Image darkness", "group": "Hero header", "min": 0, "max": 90, "step": 5 },
+    { "key": "sections", "type": "toggles", "label": "Sections", "group": "Sections", "options": ["announcement", "highlights", "signature", "story", "gallery", "reviews", "visit"], "optionLabels": { "announcement": "Announcement bar", "highlights": "Highlights strip", "signature": "Signature picks", "story": "Our story", "gallery": "Gallery", "reviews": "Reviews", "visit": "Visit us" } },
+    { "key": "announcement", "type": "text", "label": "Announcement", "group": "Sections", "max": 80 },
+    { "key": "story.text", "type": "textarea", "label": "Our story", "group": "Our story", "max": 400 },
+    { "key": "story.image", "type": "image", "label": "Story photo", "group": "Our story", "presets": ["counter", "arches", "pour", "beans"] },
+    { "key": "gallery", "type": "images", "label": "Gallery", "group": "Gallery", "max": 6 },
+    { "key": "hours", "type": "hours", "label": "Opening hours", "group": "Visit us" }
+  ],
+  "defaults": {
+    "font": "modern",
+    "theme": "cream",
+    "accent": "#D9542C",
+    "corners": "rounded",
+    "texture": false,
+    "hero.layout": "full",
+    "hero.image": "preset:counter",
+    "hero.title": "Coffee worth crossing the city for.",
+    "hero.subtitle": "Specialty coffee roasted in-house, fresh bakes every morning and a quiet corner to stay a while.",
+    "hero.shade": 55,
+    "sections": ["announcement", "highlights", "signature", "story", "gallery", "reviews", "visit"],
+    "announcement": "Now open until midnight on Thursdays and Fridays",
+    "story.text": "We started with one machine and a small counter. Today we roast our own beans every week, bake from scratch before sunrise, and still know most of our regulars by name.",
+    "story.image": "preset:arches",
+    "gallery": [],
+    "hours": {
+      "sat": "08:00-23:00", "sun": "08:00-23:00", "mon": "08:00-23:00", "tue": "08:00-23:00",
+      "wed": "08:00-23:00", "thu": "08:00-24:00", "fri": "13:00-24:00"
+    }
+  }
+}

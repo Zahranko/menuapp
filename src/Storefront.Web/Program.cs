@@ -1,6 +1,7 @@
 using Serilog;
 using Serilog.Formatting.Compact;
 using Storefront.Application.Common;
+using Storefront.Infrastructure;
 using Storefront.Web.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,8 +17,13 @@ builder.Services.Configure<BrandOptions>(builder.Configuration.GetSection(BrandO
 builder.Services.AddProblemDetails();
 builder.Services.AddOpenApi("v1");
 builder.Services.AddHealthChecks();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<Storefront.Application.Abstractions.ICurrentUser, Storefront.Web.Auth.HttpCurrentUser>();
+builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
+
+await app.PrepareDatabaseAsync();
 
 app.UseExceptionHandler();
 app.UseStatusCodePages();
