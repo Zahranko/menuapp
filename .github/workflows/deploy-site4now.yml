@@ -1,0 +1,112 @@
+# Publishes the API (src/Storefront.Web) to the site4now Windows/IIS host over FTPS. Setup: docs/deploy-site4now.md.
+# Runs on every push to main, on a push to the "deploy" branch (to ship a branch before it is merged), or by hand.
+name: Deploy API (site4now)
+
+on:
+  push:
+    branches: [main, deploy]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-site4now
+  cancel-in-progress: false
+
+env:
+  # Account names are not secret; passwords and the signing key are repository secrets.
+  FTP_SERVER: ${{ vars.FTP_SERVER || 'win6036.site4now.net' }}
+  FTP_USERNAME: ${{ vars.FTP_USERNAME || 'alamalhosp-001' }}
+  FTP_DIR: ${{ vars.FTP_DIR || '/' }}
+  DB_SERVER: ${{ vars.DB_SERVER || 'sql6034.site4now.net' }}
+  DB_NAME: ${{ vars.DB_NAME || 'db_acc171_mobiletest' }}
+  DB_USER: ${{ vars.DB_USER || 'db_acc171_mobiletest_admin' }}
+  # The site's public address, for example https://api.example.com. Optional until known.
+  API_URL: ${{ vars.API_URL }}
+  DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+  DOTNET_NOLOGO: "1"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check secrets
+        env:
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
+        run: |
+          missing=""
+          [ -n "$FTP_PASSWORD" ] || missing="$missing FTP_PASSWORD"
+          [ -n "$DB_PASSWORD" ] || missing="$missing DB_PASSWORD"
+          [ ${#JWT_SIGNING_KEY} -ge 32 ] || missing="$missing JWT_SIGNING_KEY(32+ characters)"
+          if [ -n "$missing" ]; then
+            echo "::error title=Missing deploy secrets::Add these repository secrets:$missing"
+            exit 1
+          fi
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      # Self-contained, so the host needs no .NET runtime installed; out-of-process, so the app pool's bitness doesn't matter.
+      - name: Publish
+        run: |
+          dotnet publish src/Storefront.Web -c Release -r win-x64 --self-contained true -o out
+          # Files the API finds by walking up from its folder.
+          cp brand.json out/
+          mkdir -p out/docs out/apps/sites/templates
+          cp docs/reserved-slugs.txt out/docs/
+          cp apps/sites/templates/registry.json out/apps/sites/templates/
+          mkdir -p out/logs
+
+      - name: Write web.config
+        env:
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
+        run: python3 scripts/site4now-web-config.py > out/web.config
+
+      - name: Take the site offline
+        env:
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          echo '<!doctype html><title>Updating</title><p>Updating, back in a minute.</p>' > app_offline.htm
+          curl -sS --fail --ssl-reqd --netrc-file <(printf 'machine %s login %s password %s\n' "$FTP_SERVER" "$FTP_USERNAME" "$FTP_PASSWORD") \
+            -T app_offline.htm "ftp://$FTP_SERVER${FTP_DIR%/}/app_offline.htm" \
+            || { echo "::error title=FTP login failed::Could not upload to $FTP_SERVER as $FTP_USERNAME. Check FTP_PASSWORD."; exit 1; }
+          # Give IIS time to stop the app so its files are not locked.
+          sleep 10
+
+      - name: Upload
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ env.FTP_SERVER }}
+          username: ${{ env.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: out/
+          server-dir: ${{ env.FTP_DIR }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+            App_Data/**
+            logs/**
+
+      - name: Bring the site back
+        if: always()
+        env:
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          curl -sS --ssl-reqd --netrc-file <(printf 'machine %s login %s password %s\n' "$FTP_SERVER" "$FTP_USERNAME" "$FTP_PASSWORD") \
+            "ftp://$FTP_SERVER${FTP_DIR%/}/" -Q "DELE app_offline.htm" -o /dev/null || true
+
+      - name: Health check
+        if: env.API_URL != ''
+        run: |
+          for i in $(seq 1 20); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "${API_URL%/}/health" || true)
+            [ "$code" = "200" ] && { echo "API is up at $API_URL"; exit 0; }
+            sleep 6
+          done
+          echo "::error title=API not healthy::${API_URL%/}/health returned $code. Read logs/stdout_*.log on the host over FTP."
+          exit 1

@@ -58,7 +58,7 @@ internal sealed class CatalogRepository(StorefrontDbContext db) : ICatalogReposi
         if (!string.IsNullOrWhiteSpace(text))
         {
             var pattern = $"%{EscapeLike(text.Trim())}%";
-            query = query.Where(p => EF.Functions.ILike(p.Name, pattern, "\\") || (p.Description != null && EF.Functions.ILike(p.Description, pattern, "\\")));
+            query = query.Where(p => EF.Functions.Like(p.Name, pattern, "\\") || (p.Description != null && EF.Functions.Like(p.Description, pattern, "\\")));
         }
 
         return await query.OrderBy(p => p.SortOrder).ThenBy(p => p.CreatedAt).ToListAsync(ct);
@@ -74,7 +74,8 @@ internal sealed class CatalogRepository(StorefrontDbContext db) : ICatalogReposi
 
     public Task<Product?> GetProductAsync(Guid id, CancellationToken ct) => db.Products.FirstOrDefaultAsync(p => p.Id == id, ct);
 
-    private static string EscapeLike(string value) => value.Replace("\\", "\\\\").Replace("%", "\\%").Replace("_", "\\_");
+    // SQL Server also treats [ as a wildcard. Its default collation ignores case, so search does too.
+    private static string EscapeLike(string value) => value.Replace("\\", "\\\\").Replace("%", "\\%").Replace("_", "\\_").Replace("[", "\\[");
 
     public Task<int> CountProductsAsync(Guid categoryId, CancellationToken ct) => db.Products.CountAsync(p => p.CategoryId == categoryId, ct);
 

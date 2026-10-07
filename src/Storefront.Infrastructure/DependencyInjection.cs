@@ -27,9 +27,10 @@ public static class DependencyInjection
         services.AddSingleton<DomainEventsInterceptor>();
         // Read the connection string when the context is built, so test hosts can override configuration.
         services.AddDbContext<StorefrontDbContext>((sp, options) => options
-            .UseNpgsql(
+            .UseSqlServer(
                 sp.GetRequiredService<IConfiguration>().GetConnectionString("Default")
-                    ?? throw new InvalidOperationException("Connection string 'Default' is missing (ConnectionStrings__Default)."), npgsql => npgsql.MigrationsAssembly(typeof(StorefrontDbContext).Assembly.FullName))
+                    ?? throw new InvalidOperationException("Connection string 'Default' is missing (ConnectionStrings__Default)."),
+                sql => sql.MigrationsAssembly(typeof(StorefrontDbContext).Assembly.FullName))
             .AddInterceptors(sp.GetRequiredService<DomainEventsInterceptor>()));
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<StorefrontDbContext>());
 

@@ -39,7 +39,7 @@ internal sealed class CategoryConfiguration : IEntityTypeConfiguration<Category>
         b.Ignore(x => x.DomainEvents);
         b.Property(x => x.Name).HasMaxLength(Category.NameMax);
         // Names are unique per business, ignoring case.
-        b.Property<string>("NameKey").HasMaxLength(Category.NameMax).HasComputedColumnSql("lower(\"Name\")", stored: true);
+        b.Property<string>("NameKey").HasMaxLength(Category.NameMax).HasComputedColumnSql("LOWER([Name])", stored: true);
         b.HasIndex("BusinessId", "NameKey").IsUnique();
         b.HasIndex(x => new { x.BusinessId, x.SortOrder });
         b.HasOne<Business>().WithMany().HasForeignKey(x => x.BusinessId).OnDelete(DeleteBehavior.Cascade);
@@ -71,8 +71,6 @@ internal sealed class TemplateConfiguration : IEntityTypeConfiguration<Template>
         b.Property(x => x.Category).HasMaxLength(40);
         b.Property(x => x.ThumbnailUrl).HasMaxLength(2048);
         b.Property(x => x.Description).HasMaxLength(300);
-        b.Property(x => x.SettingsSchema).HasColumnType("jsonb");
-        b.Property(x => x.DefaultSettings).HasColumnType("jsonb");
         b.HasIndex(x => x.Number).IsUnique();
     }
 }
@@ -86,8 +84,6 @@ internal sealed class SiteConfiguration : IEntityTypeConfiguration<Site>
         b.HasIndex(x => x.BusinessId).IsUnique();
         b.Property(x => x.TemplateId).HasMaxLength(40);
         b.Property(x => x.PublishedTemplateId).HasMaxLength(40);
-        b.Property(x => x.DraftSettings).HasColumnType("jsonb");
-        b.Property(x => x.PublishedSettings).HasColumnType("jsonb");
         b.HasOne<Business>().WithOne().HasForeignKey<Site>(x => x.BusinessId).OnDelete(DeleteBehavior.Cascade);
         b.HasOne<Template>().WithMany().HasForeignKey(x => x.TemplateId).OnDelete(DeleteBehavior.Restrict);
     }
@@ -97,7 +93,8 @@ internal sealed class MediaAssetConfiguration : IEntityTypeConfiguration<MediaAs
 {
     public void Configure(EntityTypeBuilder<MediaAsset> b)
     {
-        b.Property(x => x.Url).HasMaxLength(2048);
+        // Upload URLs are short (storage base + id). 800 keeps the (BusinessId, Url) index under SQL Server's 1700-byte key limit.
+        b.Property(x => x.Url).HasMaxLength(800);
         b.Property(x => x.ContentType).HasMaxLength(40);
         b.HasIndex(x => new { x.BusinessId, x.Url });
         b.HasOne<Business>().WithMany().HasForeignKey(x => x.BusinessId).OnDelete(DeleteBehavior.Cascade);
@@ -175,9 +172,8 @@ internal sealed class OutboxMessageConfiguration : IEntityTypeConfiguration<Outb
     public void Configure(EntityTypeBuilder<OutboxMessage> b)
     {
         b.Property(x => x.Type).HasMaxLength(100);
-        b.Property(x => x.Payload).HasColumnType("jsonb");
         b.Property(x => x.LastError).HasMaxLength(2000);
-        b.HasIndex(x => new { x.NextAttemptAt, x.OccurredAt }).HasFilter("\"ProcessedAt\" IS NULL");
+        b.HasIndex(x => new { x.NextAttemptAt, x.OccurredAt }).HasFilter("[ProcessedAt] IS NULL");
     }
 }
 

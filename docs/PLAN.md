@@ -299,7 +299,7 @@ The **settings schema** is a list of typed fields. The Flutter editor renders co
 
 | # | Decision | Status |
 |---|---|---|
-| D1 | Database: PostgreSQL 16 | Decided |
+| D1 | Database: SQL Server (was PostgreSQL 16; changed 2026-10-07 because the chosen host, site4now, offers SQL Server) | Decided |
 | D2 | Backend: .NET 10 LTS monolith, onion layers, MVC back office + JSON API | Decided |
 | D3 | Sites: Next.js App Router. Mobile: Flutter | Decided |
 | D4 | Payment provider for web checkout (for example Paddle, Lemon Squeezy or a local gateway). Check which ones can pay out to your business's country | **OPEN** |

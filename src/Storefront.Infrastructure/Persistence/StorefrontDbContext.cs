@@ -68,7 +68,7 @@ public sealed class StorefrontDbContext(DbContextOptions<StorefrontDbContext> op
         builder.Entity<AppUser>(user =>
         {
             user.HasIndex(u => u.NormalizedEmail).IsUnique();
-            user.HasIndex(u => u.PhoneNumber).IsUnique().HasFilter("\"PhoneNumber\" IS NOT NULL");
+            user.HasIndex(u => u.PhoneNumber).IsUnique().HasFilter("[PhoneNumber] IS NOT NULL");
         });
 
         // Tenant isolation: owners only ever see their own rows. Public and staff reads opt out with IgnoreQueryFilters().

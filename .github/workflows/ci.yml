@@ -19,18 +19,17 @@ jobs:
   backend:
     runs-on: ubuntu-latest
     services:
-      postgres:
-        image: postgres:16
+      sqlserver:
+        image: mcr.microsoft.com/mssql/server:2022-latest
         env:
-          POSTGRES_USER: storefront
-          POSTGRES_PASSWORD: storefront
-          POSTGRES_DB: storefront
-        ports: ["5432:5432"]
+          ACCEPT_EULA: "Y"
+          MSSQL_SA_PASSWORD: Storefront_dev1
+        ports: ["1433:1433"]
         options: >-
-          --health-cmd "pg_isready -U storefront"
-          --health-interval 5s --health-timeout 5s --health-retries 10
+          --health-cmd "/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P Storefront_dev1 -Q 'SELECT 1' || exit 1"
+          --health-interval 10s --health-timeout 5s --health-retries 20
     env:
-      ConnectionStrings__Default: Host=localhost;Database=storefront;Username=storefront;Password=storefront
+      ConnectionStrings__Default: Server=localhost;Database=storefront;User Id=sa;Password=Storefront_dev1;TrustServerCertificate=True
       DOTNET_CLI_TELEMETRY_OPTOUT: "1"
       DOTNET_NOLOGO: "1"
     steps:

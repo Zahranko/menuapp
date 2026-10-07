@@ -22,7 +22,7 @@ brand/                       Logo, app icon, favicon for the current brand
 src/                         ASP.NET Core monolith (onion architecture)
   Storefront.Domain/             Entities, value objects, domain events. No package references.
   Storefront.Application/        Use cases, interfaces (ports), DTOs, validators. References Domain only.
-  Storefront.Infrastructure/     EF Core + PostgreSQL, Identity stores, storage, email, payments, jobs.
+  Storefront.Infrastructure/     EF Core + SQL Server, Identity stores, storage, email, payments, jobs.
   Storefront.Web/                MVC back office (Areas/Admin), JSON API (/api/v1), composition root.
 tests/
   Storefront.Domain.Tests/  Storefront.Application.Tests/  Storefront.Web.IntegrationTests/  Storefront.ArchitectureTests/
@@ -53,7 +53,8 @@ scripts/                     cloud-setup.sh, brand-lint.sh, and later session-st
 | Brand check | `scripts/brand-lint.sh` (fails if the brand name or domain is hardcoded) |
 | Apply a brand change | `scripts/rebrand.sh` (app IDs, display names, icons, favicon) |
 
-Local PostgreSQL: `scripts/session-start.sh` starts it in cloud sessions and creates role and database `storefront` / password `storefront`.
+Database: SQL Server (the production host is site4now; deploy: `docs/deploy-site4now.md`). Local: `docker compose -f docker-compose.dev.yml up -d` (user `sa`, password `Storefront_dev1`).
+Cloud sessions cannot download SQL Server, so integration tests run in CI there.
 Connection string env var: `ConnectionStrings__Default`.
 
 ## Architecture rules (enforced by Storefront.ArchitectureTests)
