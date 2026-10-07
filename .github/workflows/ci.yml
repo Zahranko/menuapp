@@ -38,7 +38,8 @@ jobs:
         with:
           global-json-file: global.json
       - run: dotnet build Storefront.sln
-      - run: dotnet test Storefront.sln --no-build
+      # Failed tests show up as annotations on the check run.
+      - run: dotnet test Storefront.sln --no-build --logger GitHubActions
 
   sites:
     runs-on: ubuntu-latest
