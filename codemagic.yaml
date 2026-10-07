@@ -1,5 +1,6 @@
 # Codemagic builds for the owner app (apps/mobile). Setup steps: docs/ios-build.md.
-# Brand values reach the app through --dart-define-from-file=../../brand.json, the same as in CI.
+# Brand values reach the app through --dart-define-from-file=../../brand.json, the same as in CI;
+# the API address comes from apps/mobile/config/production.json.
 # The bundle identifier below is written by scripts/rebrand.sh from brand.json "appId"; don't edit it by hand.
 
 definitions:
@@ -42,6 +43,7 @@ workflows:
           flutter build ipa --release \
             --build-number="$BUILD_NUMBER" \
             --dart-define-from-file=../../brand.json \
+            --dart-define-from-file=config/production.json \
             --export-options-plist=/Users/builder/export_options.plist
     artifacts:
       - build/ios/ipa/*.ipa
@@ -68,7 +70,8 @@ workflows:
         script: |
           flutter build ios --release --no-codesign \
             --build-number="$BUILD_NUMBER" \
-            --dart-define-from-file=../../brand.json
+            --dart-define-from-file=../../brand.json \
+            --dart-define-from-file=config/production.json
           rm -rf build/ios/unsigned && mkdir -p build/ios/unsigned/Payload build/ios/ipa
           cp -R build/ios/iphoneos/Runner.app build/ios/unsigned/Payload/
           (cd build/ios/unsigned && zip -qry ../ipa/app-unsigned.ipa Payload)

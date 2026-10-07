@@ -1,7 +1,7 @@
 # Building the iOS app with Codemagic
 
 `codemagic.yaml` at the repo root has two workflows for `apps/mobile`. Both run `flutter analyze` and the tests first,
-and both pass `brand.json` to the app with `--dart-define-from-file`, the same way CI does.
+and both pass `brand.json` and `apps/mobile/config/production.json` (the API address) to the app with `--dart-define-from-file`.
 
 | Workflow | Needs | Result |
 |---|---|---|
