@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/theme.dart';
 import '../../../l10n/generated/app_localizations.dart';
@@ -85,6 +86,14 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                 ]),
               ),
             const SizedBox(height: 28),
+            FilledButton.icon(
+              key: const Key('chooseTemplate'),
+              style: FilledButton.styleFrom(backgroundColor: BrandColors.accent, foregroundColor: BrandColors.primary),
+              onPressed: () => context.push('/templates'),
+              icon: const Icon(Icons.arrow_forward),
+              label: Text(t.chooseTemplate),
+            ),
+            const SizedBox(height: 10),
             OutlinedButton(
               style: OutlinedButton.styleFrom(
                 foregroundColor: onDark,
@@ -92,8 +101,8 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                 minimumSize: const Size.fromHeight(50),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
               ),
-              onPressed: () => ref.read(authControllerProvider.notifier).logOut(),
-              child: Text(t.logOut),
+              onPressed: () => context.go('/menu'),
+              child: Text(t.goToMenu),
             ),
           ],
         ),

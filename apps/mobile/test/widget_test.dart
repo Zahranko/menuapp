@@ -133,23 +133,6 @@ void main() {
     expect(find.text("That email, phone or password doesn't match. Try again."), findsOneWidget);
   });
 
-  testWidgets('a saved session opens the welcome screen, and log out returns to start', (tester) async {
-    final tokens = MemoryTokenStore();
-    await tokens.save(access: 'a', refresh: 'r');
-    await pumpApp(tester, (path, body) {
-      if (path == '/api/v1/me') return (status: 200, body: {'userId': 'u', 'email': 'e', 'phone': null, 'business': business()});
-      return (status: 204, body: null);
-    }, tokens: tokens);
-
-    expect(find.text('You are logged in. Your menu site is live at the link below.'), findsOneWidget);
-    await tester.ensureVisible(find.text('Log out'));
-    await tester.tap(find.text('Log out'));
-    await tester.pumpAndSettle();
-
-    expect(await tokens.read(), isNull);
-    expect(find.text('Create account'), findsOneWidget);
-  });
-
   testWidgets('Arabic devices get Arabic, right to left', (tester) async {
     await pumpApp(tester, slugFree, locale: const Locale('ar'));
     await tester.tap(find.text('إنشاء حساب'));

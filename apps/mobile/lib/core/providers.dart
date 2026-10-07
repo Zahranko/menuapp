@@ -3,6 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../features/auth/auth_controller.dart';
 import '../features/auth/auth_repository.dart';
+import '../features/design/design_repository.dart';
+import '../features/menu/menu_repository.dart';
+import '../features/plan/plan_repository.dart';
 import 'api/api_client.dart';
 import 'auth/token_store.dart';
 import 'config.dart';
@@ -23,3 +26,9 @@ final dioProvider = Provider<Dio>((ref) => createApiClient(
 final authRepositoryProvider = Provider<AuthRepository>(
   (ref) => AuthRepository(ref.watch(dioProvider), ref.watch(tokenStoreProvider)),
 );
+
+final menuRepositoryProvider = Provider<MenuRepository>((ref) => MenuRepository(ref.watch(dioProvider)));
+
+final designRepositoryProvider = Provider<DesignRepository>((ref) => DesignRepository(ref.watch(dioProvider)));
+
+final planRepositoryProvider = Provider<PlanRepository>((ref) => PlanRepository(ref.watch(dioProvider)));

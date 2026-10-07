@@ -71,4 +71,9 @@ class AuthController extends Notifier<AuthState> {
   }
 
   void sessionExpired() => state = const SignedOut();
+
+  /// Business info was saved elsewhere in the app.
+  void businessChanged(Business business) {
+    if (state is SignedIn) state = SignedIn(business);
+  }
 }

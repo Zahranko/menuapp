@@ -38,6 +38,8 @@ app.UseStorefrontSecurity();
 app.UseExceptionHandler();
 app.UseStatusCodePages();
 app.UseSerilogRequestLogging();
+// Template thumbnails and preset pictures for the app's gallery and editor (copied into wwwroot by the deploy).
+app.UseStaticFiles();
 app.UseLocalMedia();
 app.UseAuthentication();
 app.UseAuthorization();

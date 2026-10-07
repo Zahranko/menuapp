@@ -41,6 +41,10 @@ dependencies:
   intl: ^0.20.3
   flutter_localizations:
     sdk: flutter
+  image_picker: ^1.2.4
+  webview_flutter: ^4.14.1
+  url_launcher: ^6.3.3
+  flutter_svg: ^2.3.0
 
 dev_dependencies:
   flutter_test:

@@ -75,5 +75,392 @@
   "stepTemplate": "Choose one of 100 templates",
   "stepItems": "Add items and prices",
   "stepPublish": "Choose Basic ($5) or Pro ($10) and publish",
-  "logOut": "Log out"
+  "logOut": "Log out",
+  "tabProducts": "Products",
+  "tabCategories": "Categories",
+  "tabSettings": "Settings",
+  "viewSite": "View site",
+  "savesGoLive": "Saves go live instantly",
+  "addProduct": "Add product",
+  "addCategory": "Add category",
+  "tryAgain": "Try again",
+  "statProducts": "Products",
+  "statSoldOut": "Sold out",
+  "statCategories": "Categories",
+  "searchProducts": "Search products",
+  "filterAll": "All",
+  "noProductsTitle": "No products yet",
+  "noProductsBody": "Tap Add product to put your first item on your website.",
+  "noMatchesTitle": "No matches",
+  "noMatchesBody": "Try another name, or clear the search.",
+  "noProductsInCategory": "No products in this category yet.",
+  "soldOut": "Sold out",
+  "availableAgain": "{name} is available again",
+  "@availableAgain": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "markedSoldOut": "{name} marked sold out",
+  "@markedSoldOut": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "labelSignature": "Signature",
+  "labelNew": "New",
+  "labelBestSeller": "Best seller",
+  "labelVegan": "Vegan",
+  "labelSpicy": "Spicy",
+  "priceIn": "{price} {currency}",
+  "@priceIn": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "currencyJod": "JD",
+  "addCategoryFirst": "Add a category first",
+  "errProductName": "Enter a product name.",
+  "errPrice": "Enter a price.",
+  "errPriceFormat": "Use numbers only, like 3.50.",
+  "savedLive": "Saved · live on your website",
+  "addedLive": "Added · live on your website",
+  "productDeleted": "Product deleted",
+  "editProduct": "Edit product",
+  "newProduct": "New product",
+  "editProductSub": "Changes show on your website as soon as you save.",
+  "newProductSub": "It appears on your website right after you save.",
+  "uploading": "Uploading",
+  "uploadPhoto": "Upload photo",
+  "changePhoto": "Change photo",
+  "remove": "Remove",
+  "productName": "Name",
+  "productNameHint": "Pistachio croissant",
+  "descriptionOptional": "Description (optional)",
+  "descriptionHint": "What's in it, size, how it's served",
+  "price": "Price",
+  "category": "Category",
+  "label": "Label",
+  "noLabel": "No label",
+  "available": "Available",
+  "availableHelp": "Turn off to show it as sold out",
+  "featureSignature": "Feature in Signature picks",
+  "featureSignatureHelp": "Shown large near the top of your website",
+  "deleteProductTitle": "Delete {name}?",
+  "@deleteProductTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteProductBody": "It will be removed from your website. This can't be undone.",
+  "saveChanges": "Save changes",
+  "saving": "Saving",
+  "deleteProduct": "Delete product",
+  "cancel": "Cancel",
+  "keepIt": "Keep it",
+  "delete": "Delete",
+  "noCategoriesTitle": "No categories yet",
+  "noCategoriesBody": "Categories group your products, like Coffee or Desserts.",
+  "categoriesHint": "Use the arrows to set the order your customers see. Categories with no products stay hidden on your website.",
+  "productCount": "{count, plural, =0{No products} =1{1 product} other{{count} products}}",
+  "@productCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "hiddenOnSite": "Hidden on site",
+  "moveUp": "Move {name} up",
+  "@moveUp": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "moveDown": "Move {name} down",
+  "@moveDown": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "orderUpdated": "Order updated on your website",
+  "errCategoryName": "Enter a category name.",
+  "errCategoryTaken": "You already have a category with that name.",
+  "categoryAdded": "Category added. Add products to show it.",
+  "categoryRenamed": "Renamed · live on your website",
+  "categoryDeleted": "Category deleted",
+  "categoryDeletedMoved": "Deleted · products moved to {name}",
+  "@categoryDeletedMoved": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "newCategory": "New category",
+  "editCategory": "Edit category",
+  "newCategorySub": "Group your products, like Coffee, Sandwiches or Gift boxes.",
+  "productsInCategory": "{count, plural, =0{No products in this category.} =1{1 product in this category.} other{{count} products in this category.}}",
+  "@productsInCategory": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "categoryName": "Category name",
+  "categoryNameHint": "Sandwiches",
+  "deleteCategoryTitle": "Delete {name}?",
+  "@deleteCategoryTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteCategoryChoose": "Choose where its products go first.",
+  "deleteCategoryEmpty": "It has no products, so nothing else changes.",
+  "whatHappensToProducts": "{count, plural, =1{What happens to its product?} other{What happens to its {count} products?}}",
+  "@whatHappensToProducts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "moveTo": "Move to {name}",
+  "@moveTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteThemToo": "Delete them too",
+  "deleteCategory": "Delete category",
+  "yourWebsite": "Your website",
+  "live": "Live",
+  "notPublished": "Not published",
+  "websiteTemplate": "{link} · Template {number} {name}",
+  "@websiteTemplate": {
+    "placeholders": {
+      "link": {
+        "type": "String"
+      },
+      "number": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "editDesign": "Edit design",
+  "chooseTemplateShort": "Change template",
+  "copyLink": "Copy link",
+  "linkCopied": "Link copied",
+  "businessInfo": "Business info",
+  "businessInfoSub": "Shown in your website header, contact section and footer.",
+  "errBusinessNameEmpty": "Business name can't be empty",
+  "whatsApp": "WhatsApp",
+  "address": "Address",
+  "instagram": "Instagram",
+  "account": "Account",
+  "changePassword": "Change password",
+  "passwordLinkSent": "We emailed you a link to change your password",
+  "plan": "Plan",
+  "planBasic": "Basic",
+  "planPro": "Pro",
+  "planCurrent": "{name} · current",
+  "@planCurrent": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "perMonth": "/mo",
+  "proDetail": "Everything in Basic plus your own domain",
+  "testModeNote": "Test account: every feature is unlocked and nothing is charged.",
+  "trialUntil": "Free trial until {date}",
+  "@trialUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "upgradeToPro": "Upgrade to Pro",
+  "switchToBasic": "Switch to Basic",
+  "upgradeBody": "{price} per month. You can request your own domain right after upgrading.",
+  "@upgradeBody": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "downgradeBody": "{price} per month from your next billing date.",
+  "@downgradeBody": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "downgradeDomain": "Your domain request for {domain} will be cancelled.",
+  "@downgradeDomain": {
+    "placeholders": {
+      "domain": {
+        "type": "String"
+      }
+    }
+  },
+  "upgradeFor": "Upgrade for {price}/month",
+  "@upgradeFor": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "notNow": "Not now",
+  "nowOnPro": "You're on Pro",
+  "nowOnBasic": "You're on Basic",
+  "finishPayment": "Finish the payment in your browser to change plan",
+  "customDomain": "Custom domain",
+  "domainLocked": "Connect your own domain, like {example}. Available on Pro.",
+  "@domainLocked": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
+  "domainEnterBody": "Enter the domain you own. Our support team sets it up and emails you the DNS steps.",
+  "yourDomain": "Your domain",
+  "errDomainEmpty": "Enter your domain.",
+  "errDomainFormat": "Enter a domain like vanillamenu.com, without spaces.",
+  "sendToSupport": "Send request to support",
+  "sending": "Sending",
+  "domainRequestSent": "Request sent to support",
+  "domainRequestCancelled": "Domain request cancelled",
+  "domainRequested": "{domain} · request sent {date}",
+  "@domainRequested": {
+    "placeholders": {
+      "domain": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "domainStep1": "Request sent",
+  "domainStep2": "Support emails you DNS steps (within 24 hours)",
+  "domainStep3": "You add the DNS record at your domain provider",
+  "domainStep4": "Live with SSL at {domain}",
+  "@domainStep4": {
+    "placeholders": {
+      "domain": {
+        "type": "String"
+      }
+    }
+  },
+  "dnsHint": "Point the www record (CNAME) of your domain to {target}.",
+  "@dnsHint": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "cancelRequest": "Cancel request",
+  "openInBrowser": "Open in browser",
+  "manageMenu": "Manage menu",
+  "siteOfflineTitle": "This page isn't online yet",
+  "siteOfflineBody": "Your changes are saved. The page shows here once the websites are hosted.",
+  "chooseTemplate": "Choose a template",
+  "templatesSub": "{count} designs. Each one shows your products its own way.",
+  "@templatesSub": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "filterAllCount": "All {count}",
+  "@filterAllCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "filterFood": "Food and drinks",
+  "filterShops": "Shops",
+  "filterServices": "Services",
+  "replaceDesignTitle": "Use {name}?",
+  "@replaceDesignTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "replaceDesignBody": "Your design settings start fresh with this template. Products and prices stay the same. Your live site changes when you publish.",
+  "useTemplate": "Use template",
+  "inUse": "In use",
+  "ready": "Ready",
+  "customize": "Customize",
+  "customizeTemplate": "{number} {name}",
+  "@customizeTemplate": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "resetTooltip": "Reset to template defaults",
+  "resetTitle": "Start over?",
+  "resetBody": "Every design setting goes back to {name}'s defaults. Products and prices stay the same.",
+  "@resetBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "reset": "Reset",
+  "livePreview": "Live preview",
+  "groupMore": "More",
+  "menuItemsAndPrices": "Menu items and prices",
+  "menuItemsElsewhere": "Products and prices are edited in My menu, and show in every template.",
+  "publish": "Publish",
+  "publishChanges": "Publish changes",
+  "publishing": "Publishing your site",
+  "publishedTitle": "Your site is live",
+  "publishedBody": "Customers see the new design now. Products and prices update by themselves when you change them.",
+  "photo": "Photo",
+  "addPhotos": "Add photos",
+  "closed": "Closed",
+  "goToMenu": "Go to my menu"
 }

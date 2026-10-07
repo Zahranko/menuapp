@@ -24,6 +24,10 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Choose photos of your products and your business to show on your website.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Take photos of your products to show on your website.</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>

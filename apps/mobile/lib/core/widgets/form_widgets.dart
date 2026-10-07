@@ -159,7 +159,7 @@ class BusyButton extends StatelessWidget {
           ? Row(mainAxisSize: MainAxisSize.min, children: [
               const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white)),
               const SizedBox(width: 10),
-              Text(busyLabel),
+              Flexible(child: Text(busyLabel, overflow: TextOverflow.ellipsis)),
             ])
           : Text(label),
     );
