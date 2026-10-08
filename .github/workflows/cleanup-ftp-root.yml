@@ -1,0 +1,81 @@
+# One-off: removes the files that the deploy of commit b50ea76 (2026-10-07) uploaded to the FTP login's top folder
+# by mistake. It rebuilds that deploy's exact file list and deletes only those paths. Nothing else is touched:
+# not TestMobileApp, not the other sites' folders. Runs only on a push to the "cleanup/ftp-root" branch.
+name: Clean FTP top folder
+
+on:
+  push:
+    branches: [cleanup/ftp-root]
+
+concurrency:
+  group: deploy-site4now
+  cancel-in-progress: false
+
+env:
+  FTP_SERVER: ${{ vars.FTP_SERVER || 'win6036.site4now.net' }}
+  FTP_USERNAME: ${{ vars.FTP_USERNAME || 'alamalhosp-001' }}
+  DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+  DOTNET_NOLOGO: "1"
+
+jobs:
+  clean:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check out the deploy that went to the top folder
+        run: git checkout --quiet b50ea76
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Rebuild that deploy's file list
+        run: |
+          dotnet publish src/Storefront.Web -c Release -r win-x64 --self-contained true -o out >/dev/null
+          cp brand.json out/
+          mkdir -p out/docs out/apps/sites/templates
+          cp docs/reserved-slugs.txt out/docs/
+          cp apps/sites/templates/registry.json out/apps/sites/templates/
+          touch out/web.config
+          (cd out && find . -type f | sed 's|^\./||' | sort) > files.txt
+          (cd out && find . -mindepth 1 -type d | sed 's|^\./||' | awk '{ print length, $0 }' | sort -rn | cut -d' ' -f2-) > dirs.txt
+          echo "::notice title=Paths to remove::$(wc -l < files.txt) files in $(wc -l < dirs.txt) folders, plus app_offline.htm"
+          # Safety: nothing in the list may sit inside another site's folder.
+          if grep -Eq '^(AlAmalBusiness|contact|crm|db|feedback|site1|TestMobileApp|whatsapp)(/|$)' files.txt dirs.txt; then
+            echo "::error::The list touches another site's folder. Stopping."; exit 1
+          fi
+
+      - name: List the top folder before
+        env:
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          names=$(curl -sS --ssl-reqd --list-only --netrc-file <(printf 'machine %s login %s password %s\n' "$FTP_SERVER" "$FTP_USERNAME" "$FTP_PASSWORD") \
+            "ftp://$FTP_SERVER/" | tr '\r\n' '  ')
+          echo "::notice title=Top folder before::$names"
+
+      - name: Delete only those paths
+        env:
+          LFTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq lftp >/dev/null
+          {
+            echo "set ftp:ssl-force true; set ftp:ssl-protect-data true; set ssl:verify-certificate yes;"
+            echo "set net:max-retries 3; set net:reconnect-interval-base 5; set net:timeout 60; set cmd:fail-exit no;"
+            echo "rm '/app_offline.htm'"
+            sed "s|.*|rm '/&'|" files.txt
+            # A folder goes only if it is empty afterwards, so anything else in it stays.
+            sed "s|.*|rmdir '/&'|" dirs.txt
+            echo "bye"
+          } > clean.lftp
+          timeout 900 lftp --env-password -u "$FTP_USERNAME" "$FTP_SERVER" -f clean.lftp 2>&1 | tail -40 || true
+
+      - name: List the top folder after
+        env:
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          names=$(curl -sS --ssl-reqd --list-only --netrc-file <(printf 'machine %s login %s password %s\n' "$FTP_SERVER" "$FTP_USERNAME" "$FTP_PASSWORD") \
+            "ftp://$FTP_SERVER/" | tr '\r\n' '  ')
+          echo "::notice title=Top folder after::$names"
