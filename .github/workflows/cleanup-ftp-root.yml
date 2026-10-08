@@ -70,7 +70,9 @@ jobs:
             sed "s|.*|rmdir '/&'|" dirs.txt
             echo "bye"
           } > clean.lftp
-          timeout 900 lftp --env-password -u "$FTP_USERNAME" "$FTP_SERVER" -f clean.lftp 2>&1 | tail -40 || true
+          timeout 900 lftp --env-password -u "$FTP_USERNAME" "$FTP_SERVER" -e "source clean.lftp" > lftp.log 2>&1 || true
+          echo "::notice title=lftp messages::$(grep -c . lftp.log) lines. First ones: $(head -5 lftp.log | tr '\n' ' ')"
+          echo "::notice title=Not found (fine)::$(grep -c '550' lftp.log)"
 
       - name: List the top folder after
         env:
@@ -79,3 +81,5 @@ jobs:
           names=$(curl -sS --ssl-reqd --list-only --netrc-file <(printf 'machine %s login %s password %s\n' "$FTP_SERVER" "$FTP_USERNAME" "$FTP_PASSWORD") \
             "ftp://$FTP_SERVER/" | tr '\r\n' '  ')
           echo "::notice title=Top folder after::$names"
+          left=$(for n in $names; do grep -qxF "$n" <(cut -d/ -f1 files.txt dirs.txt | sort -u; echo app_offline.htm) && echo "$n"; done | tr '\n' ' ')
+          echo "::notice title=Still there from that deploy::${left:-none}"
