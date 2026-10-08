@@ -392,7 +392,7 @@
   },
   "cancelRequest": "Cancel request",
   "openInBrowser": "Open in browser",
-  "manageMenu": "Manage menu",
+  "manageMenu": "Manage your menu",
   "siteOfflineTitle": "This page isn't online yet",
   "siteOfflineBody": "Your changes are saved. The page shows here once the websites are hosted.",
   "chooseTemplate": "Choose a template",
@@ -462,5 +462,41 @@
   "photo": "Photo",
   "addPhotos": "Add photos",
   "closed": "Closed",
-  "goToMenu": "Go to my menu"
+  "goToMenu": "Go to my menu",
+  "onbItemsTitle": "List your items and prices in minutes",
+  "onbItemsBody": "Add photos, prices and categories. Edit anything later and your site updates right away.",
+  "onbTemplatesTitle": "Pick one of 100 templates, then make it yours",
+  "onbTemplatesBody": "Each template shows your products its own way. Choose the hero image, colors and add your logo.",
+  "onbShareTitle": "Share one link. Go custom on Pro.",
+  "onbShareBody": "Put the link on your Instagram, WhatsApp or a table QR code. Customers see your menu instantly.",
+  "sampleCafe": "Vanilla Café",
+  "sampleDrinks": "Drinks",
+  "sampleItem1": "Vanilla latte",
+  "sampleItem1Note": "Double shot, oat milk",
+  "sampleItem2": "Pistachio croissant",
+  "sampleItem2Note": "Baked this morning",
+  "sampleItem3": "Saffron cake",
+  "sampleItem3Note": "Slice, cardamom cream",
+  "addItem": "Add item",
+  "templateOf": "Template {number} / 100",
+  "@templateOf": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "hello": "Hello, {name}",
+  "@hello": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "siteLive": "Your site is live",
+  "quickActions": "Quick actions",
+  "designSite": "Design",
+  "shareSite": "Share",
+  "allItems": "All"
 }

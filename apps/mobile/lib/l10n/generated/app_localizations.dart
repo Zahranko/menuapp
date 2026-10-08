@@ -1331,7 +1331,7 @@ abstract class AppLocalizations {
   /// No description provided for @manageMenu.
   ///
   /// In en, this message translates to:
-  /// **'Manage menu'**
+  /// **'Manage your menu'**
   String get manageMenu;
 
   /// No description provided for @siteOfflineTitle.
@@ -1525,6 +1525,138 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Go to my menu'**
   String get goToMenu;
+
+  /// No description provided for @onbItemsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'List your items and prices in minutes'**
+  String get onbItemsTitle;
+
+  /// No description provided for @onbItemsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Add photos, prices and categories. Edit anything later and your site updates right away.'**
+  String get onbItemsBody;
+
+  /// No description provided for @onbTemplatesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick one of 100 templates, then make it yours'**
+  String get onbTemplatesTitle;
+
+  /// No description provided for @onbTemplatesBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Each template shows your products its own way. Choose the hero image, colors and add your logo.'**
+  String get onbTemplatesBody;
+
+  /// No description provided for @onbShareTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Share one link. Go custom on Pro.'**
+  String get onbShareTitle;
+
+  /// No description provided for @onbShareBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Put the link on your Instagram, WhatsApp or a table QR code. Customers see your menu instantly.'**
+  String get onbShareBody;
+
+  /// No description provided for @sampleCafe.
+  ///
+  /// In en, this message translates to:
+  /// **'Vanilla Café'**
+  String get sampleCafe;
+
+  /// No description provided for @sampleDrinks.
+  ///
+  /// In en, this message translates to:
+  /// **'Drinks'**
+  String get sampleDrinks;
+
+  /// No description provided for @sampleItem1.
+  ///
+  /// In en, this message translates to:
+  /// **'Vanilla latte'**
+  String get sampleItem1;
+
+  /// No description provided for @sampleItem1Note.
+  ///
+  /// In en, this message translates to:
+  /// **'Double shot, oat milk'**
+  String get sampleItem1Note;
+
+  /// No description provided for @sampleItem2.
+  ///
+  /// In en, this message translates to:
+  /// **'Pistachio croissant'**
+  String get sampleItem2;
+
+  /// No description provided for @sampleItem2Note.
+  ///
+  /// In en, this message translates to:
+  /// **'Baked this morning'**
+  String get sampleItem2Note;
+
+  /// No description provided for @sampleItem3.
+  ///
+  /// In en, this message translates to:
+  /// **'Saffron cake'**
+  String get sampleItem3;
+
+  /// No description provided for @sampleItem3Note.
+  ///
+  /// In en, this message translates to:
+  /// **'Slice, cardamom cream'**
+  String get sampleItem3Note;
+
+  /// No description provided for @addItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Add item'**
+  String get addItem;
+
+  /// No description provided for @templateOf.
+  ///
+  /// In en, this message translates to:
+  /// **'Template {number} / 100'**
+  String templateOf(String number);
+
+  /// No description provided for @hello.
+  ///
+  /// In en, this message translates to:
+  /// **'Hello, {name}'**
+  String hello(String name);
+
+  /// No description provided for @siteLive.
+  ///
+  /// In en, this message translates to:
+  /// **'Your site is live'**
+  String get siteLive;
+
+  /// No description provided for @quickActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick actions'**
+  String get quickActions;
+
+  /// No description provided for @designSite.
+  ///
+  /// In en, this message translates to:
+  /// **'Design'**
+  String get designSite;
+
+  /// No description provided for @shareSite.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get shareSite;
+
+  /// No description provided for @allItems.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get allItems;
 }
 
 class _AppLocalizationsDelegate

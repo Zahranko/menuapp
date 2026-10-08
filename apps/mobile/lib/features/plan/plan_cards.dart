@@ -22,8 +22,8 @@ class PlanCard extends ConsumerWidget {
     final auth = ref.watch(authControllerProvider);
     final link = auth is SignedIn ? auth.business.displayUrl : '';
     return ref.watch(planProvider).when(
-          loading: () => SectionCard(title: t.plan, children: const [LinearProgressIndicator()]),
-          error: (e, _) => SectionCard(title: t.plan, children: [
+          loading: () => SectionCard(title: t.plan, icon: Icons.workspace_premium_outlined, children: const [LinearProgressIndicator()]),
+          error: (e, _) => SectionCard(title: t.plan, icon: Icons.workspace_premium_outlined, children: [
             Text(errorText(t, e), style: TextStyle(color: BrandColors.muted)),
             const SizedBox(height: 8),
             LightButton(label: t.tryAgain, onPressed: () => ref.invalidate(planProvider)),
@@ -32,6 +32,7 @@ class PlanCard extends ConsumerWidget {
             final sub = state.subscription;
             return SectionCard(
               title: t.plan,
+              icon: Icons.workspace_premium_outlined,
               subtitle: sub.testMode ? t.testModeNote : (sub.status == 'trialing' && sub.currentPeriodEnd != null ? t.trialUntil(_date(context, sub.currentPeriodEnd!)) : null),
               children: [
                 Row(children: [
@@ -73,20 +74,23 @@ class _PlanTile extends StatelessWidget {
       selected: current,
       child: InkWell(
         key: Key('plan-${plan.code}'),
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(18),
         onTap: onTap,
         child: Container(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
-            color: current ? BrandColors.primary : Colors.white,
-            borderRadius: BorderRadius.circular(14),
+            color: current ? null : Colors.white,
+            gradient: current
+                ? LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [BrandColors.primary2, BrandColors.primary])
+                : null,
+            borderRadius: BorderRadius.circular(18),
             border: Border.all(color: current ? BrandColors.primary : BrandColors.line),
           ),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(current ? t.planCurrent(name) : name, style: TextStyle(color: current ? BrandColors.accent : BrandColors.muted, fontSize: 12.5, fontWeight: FontWeight.w600)),
             const SizedBox(height: 4),
             Text.rich(TextSpan(children: [
-              TextSpan(text: plan.price, style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800, color: current ? Colors.white : BrandColors.ink)),
+              TextSpan(text: plan.price, style: Ui.display(28, color: current ? Colors.white : BrandColors.ink)),
               TextSpan(text: ' ${t.perMonth}', style: TextStyle(color: current ? Colors.white70 : BrandColors.muted)),
             ])),
             const SizedBox(height: 4),
@@ -143,7 +147,7 @@ class _PlanSheetState extends ConsumerState<_PlanSheet> {
     var body = up ? t.upgradeBody(price) : t.downgradeBody(price);
     if (!up && widget.domain != null) body = '$body ${t.downgradeDomain(widget.domain!.domain)}';
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Text(up ? t.upgradeToPro : t.switchToBasic, style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: BrandColors.ink)),
+      Text(up ? t.upgradeToPro : t.switchToBasic, style: Ui.display(26)),
       const SizedBox(height: 6),
       Text(body, style: TextStyle(color: BrandColors.muted, height: 1.4)),
       const SizedBox(height: 18),
@@ -228,7 +232,7 @@ class _DomainCardState extends ConsumerState<DomainCard> {
 
     if (!pro) {
       final proPlan = state.plans.where((p) => p.allowsCustomDomain).firstOrNull;
-      return SectionCard(title: t.customDomain, badge: Pill(t.planPro), subtitle: t.domainLocked(example), children: [
+      return SectionCard(title: t.customDomain, icon: Icons.dns_outlined, badge: Pill(t.planPro), subtitle: t.domainLocked(example), children: [
         if (proPlan != null)
           FilledButton(
             style: FilledButton.styleFrom(backgroundColor: BrandColors.accent, foregroundColor: BrandColors.primary),
@@ -239,7 +243,7 @@ class _DomainCardState extends ConsumerState<DomainCard> {
     }
 
     if (request == null) {
-      return SectionCard(title: t.customDomain, subtitle: t.domainEnterBody, children: [
+      return SectionCard(title: t.customDomain, icon: Icons.dns_outlined, subtitle: t.domainEnterBody, children: [
         LabeledField(
           fieldKey: const Key('domainField'),
           label: t.yourDomain,
@@ -258,6 +262,7 @@ class _DomainCardState extends ConsumerState<DomainCard> {
     final steps = [t.domainStep1, t.domainStep2, t.domainStep3, t.domainStep4(request.domain)];
     return SectionCard(
       title: t.customDomain,
+      icon: Icons.dns_outlined,
       subtitle: t.domainRequested(request.domain, _date(context, request.createdAt)),
       children: [
         for (final (i, step) in steps.indexed)

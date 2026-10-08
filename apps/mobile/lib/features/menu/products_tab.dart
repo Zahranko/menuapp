@@ -33,25 +33,32 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
       data: (c) => RefreshIndicator(
         onRefresh: () => ref.read(catalogProvider.notifier).refresh(),
         child: ListView(
-          padding: const EdgeInsets.fromLTRB(16, 4, 16, 96),
+          padding: const EdgeInsets.fromLTRB(Ui.gutter, 4, Ui.gutter, 110),
           children: [
             Row(children: [
-              _Stat(value: c.products.length, label: t.statProducts),
-              const SizedBox(width: 8),
-              _Stat(value: c.soldOut, label: t.statSoldOut, warn: c.soldOut > 0),
-              const SizedBox(width: 8),
-              _Stat(value: c.categories.length, label: t.statCategories),
+              _Stat(value: c.products.length, label: t.statProducts, icon: Icons.shopping_bag_outlined),
+              const SizedBox(width: 10),
+              _Stat(value: c.soldOut, label: t.statSoldOut, icon: Icons.do_not_disturb_on_outlined, warn: c.soldOut > 0),
+              const SizedBox(width: 10),
+              _Stat(value: c.categories.length, label: t.statCategories, icon: Icons.grid_view_outlined),
             ]),
-            const SizedBox(height: 12),
-            TextField(
-              key: const Key('productSearch'),
-              decoration: InputDecoration(hintText: t.searchProducts, prefixIcon: const Icon(Icons.search)),
-              onChanged: (v) => setState(() => _query = v),
+            const SizedBox(height: 14),
+            DecoratedBox(
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(Ui.radiusSmall), boxShadow: Ui.shadow),
+              child: TextField(
+                key: const Key('productSearch'),
+                decoration: InputDecoration(
+                  hintText: t.searchProducts,
+                  prefixIcon: Icon(Icons.search_rounded, color: BrandColors.muted),
+                  enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(Ui.radiusSmall), borderSide: BorderSide(color: BrandColors.hairline)),
+                ),
+                onChanged: (v) => setState(() => _query = v),
+              ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 12),
             SizedBox(
-              height: 40,
-              child: ListView(scrollDirection: Axis.horizontal, children: [
+              height: 42,
+              child: ListView(scrollDirection: Axis.horizontal, clipBehavior: Clip.none, children: [
                 _chip(t.filterAll, _filter == null, () => setState(() => _filter = null)),
                 for (final cat in c.categories)
                   _chip('${cat.name} · ${c.inCategory(cat.id).length}', _filter == cat.id, () => setState(() => _filter = cat.id)),
@@ -71,9 +78,8 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
           label: Text(label),
           selected: on,
           onSelected: (_) => onTap(),
-          selectedColor: BrandColors.primary,
-          labelStyle: TextStyle(color: on ? Colors.white : BrandColors.ink, fontWeight: FontWeight.w600),
-          showCheckmark: false,
+          side: BorderSide(color: on ? BrandColors.primary : BrandColors.line),
+          labelStyle: TextStyle(color: on ? Colors.white : BrandColors.ink, fontWeight: FontWeight.w600, fontSize: 13.5),
         ),
       );
 
@@ -91,20 +97,20 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
     return [
       for (final (cat, products) in groups) ...[
         Padding(
-          padding: const EdgeInsets.fromLTRB(4, 14, 4, 8),
+          padding: const EdgeInsets.fromLTRB(4, 20, 4, 10),
           child: Row(children: [
-            Expanded(child: Text(cat.name, style: TextStyle(fontWeight: FontWeight.w700, color: BrandColors.ink))),
-            Text('${products.length}', style: TextStyle(color: BrandColors.muted)),
+            Expanded(child: Text(cat.name, style: Ui.eyebrow.copyWith(letterSpacing: 0.3, fontSize: 13))),
+            Text('${products.length}', style: Ui.eyebrow),
           ]),
         ),
         if (products.isEmpty)
           Padding(padding: const EdgeInsets.all(12), child: Text(t.noProductsInCategory, style: TextStyle(color: BrandColors.muted)))
         else
-          Container(
-            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), border: Border.all(color: BrandColors.line)),
+          AppCard(
+            padding: EdgeInsets.zero,
             child: Column(children: [
               for (final (i, p) in products.indexed) ...[
-                if (i > 0) Divider(height: 1, color: BrandColors.line),
+                if (i > 0) const Divider(indent: 82),
                 _ProductRow(product: p, currency: currency),
               ],
             ]),
@@ -115,27 +121,32 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
 }
 
 class _Stat extends StatelessWidget {
-  const _Stat({required this.value, required this.label, this.warn = false});
+  const _Stat({required this.value, required this.label, required this.icon, this.warn = false});
 
   final int value;
   final String label;
+  final IconData icon;
   final bool warn;
 
   @override
-  Widget build(BuildContext context) => Expanded(
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-          decoration: BoxDecoration(
-            color: warn ? BrandColors.highlight.withValues(alpha: 0.1) : Colors.white,
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: warn ? BrandColors.highlight.withValues(alpha: 0.4) : BrandColors.line),
-          ),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text('$value', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: warn ? BrandColors.highlight : BrandColors.ink)),
-            Text(label, style: TextStyle(color: BrandColors.muted, fontSize: 12)),
+  Widget build(BuildContext context) {
+    final color = warn ? BrandColors.highlight : BrandColors.ink;
+    return Expanded(
+      child: AppCard(
+        radius: 18,
+        color: warn ? Color.lerp(Colors.white, BrandColors.highlight, 0.07) : null,
+        padding: const EdgeInsets.fromLTRB(14, 12, 10, 12),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Row(children: [
+            Expanded(child: Text('$value', style: Ui.display(26, color: color))),
+            Icon(icon, size: 17, color: warn ? BrandColors.highlight : BrandColors.muted.withValues(alpha: 0.7)),
           ]),
-        ),
-      );
+          const SizedBox(height: 2),
+          Text(label, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: warn ? color : BrandColors.muted, fontSize: 12.5, fontWeight: FontWeight.w500)),
+        ]),
+      ),
+    );
+  }
 }
 
 class _ProductRow extends ConsumerWidget {
@@ -153,16 +164,16 @@ class _ProductRow extends ConsumerWidget {
       child: Opacity(
         opacity: p.isAvailable ? 1 : 0.75,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(12, 10, 6, 10),
+          padding: const EdgeInsetsDirectional.fromSTEB(14, 12, 8, 12),
           child: Row(children: [
-            ProductThumb(name: p.name, imageUrl: p.imageUrl),
-            const SizedBox(width: 12),
+            ProductThumb(name: p.name, imageUrl: p.imageUrl, size: 54, radius: 14),
+            const SizedBox(width: 14),
             Expanded(
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(p.name, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontWeight: FontWeight.w700, color: BrandColors.ink)),
+                Text(p.name, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15.5, color: BrandColors.ink)),
                 const SizedBox(height: 4),
                 Wrap(spacing: 6, runSpacing: 4, crossAxisAlignment: WrapCrossAlignment.center, children: [
-                  Text(formatPrice(t, p.price, currency), style: TextStyle(color: BrandColors.muted)),
+                  Text(formatPrice(t, p.price, currency), style: TextStyle(color: BrandColors.muted, fontWeight: FontWeight.w500)),
                   if (p.label != null) Pill(productLabelText(t, p.label!)),
                   if (!p.isAvailable) Pill(t.soldOut, color: BrandColors.highlight.withValues(alpha: 0.15), textColor: BrandColors.highlight),
                 ]),
@@ -170,7 +181,6 @@ class _ProductRow extends ConsumerWidget {
             ),
             Switch(
               value: p.isAvailable,
-              activeTrackColor: BrandColors.primary,
               onChanged: (v) async {
                 try {
                   await ref.read(catalogProvider.notifier).setAvailability(p.id, v);

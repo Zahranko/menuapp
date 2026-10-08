@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -71,10 +72,12 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
       await _refreshPreview();
     } on ApiError catch (e) {
       if (mounted) {
-        setState(() => _errors = {
-              for (final f in _fields)
-                if (e.field('settings.${f.key}') != null) f.key: e.field('settings.${f.key}')!,
-            });
+        setState(
+          () => _errors = {
+            for (final f in _fields)
+              if (e.field('settings.${f.key}') != null) f.key: e.field('settings.${f.key}')!,
+          },
+        );
         if (_errors.isEmpty) showMessage(context, errorText(AppLocalizations.of(context), e));
       }
     } catch (e) {
@@ -114,7 +117,11 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
         content: Text(t.resetBody(template.name)),
         actions: [
           TextButton(onPressed: () => Navigator.pop(context, false), child: Text(t.cancel)),
-          FilledButton(style: FilledButton.styleFrom(minimumSize: const Size(0, 44)), onPressed: () => Navigator.pop(context, true), child: Text(t.reset)),
+          FilledButton(
+            style: FilledButton.styleFrom(minimumSize: const Size(0, 44)),
+            onPressed: () => Navigator.pop(context, true),
+            child: Text(t.reset),
+          ),
         ],
       ),
     );
@@ -137,13 +144,19 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
       await ref.read(siteProvider.notifier).publish();
       if (!mounted) return;
       setState(() => _publishing = false);
-      await showFormSheet<void>(context, (sheet) => _Published(onViewSite: () {
+      await showFormSheet<void>(
+        context,
+        (sheet) => _Published(
+          onViewSite: () {
             Navigator.pop(sheet);
             context.push('/site');
-          }, onManageMenu: () {
+          },
+          onManageMenu: () {
             Navigator.pop(sheet);
             context.go('/menu');
-          }));
+          },
+        ),
+      );
     } catch (e) {
       if (mounted) showMessage(context, errorText(t, e));
     } finally {
@@ -159,15 +172,23 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
     if (site.hasError || templates.hasError) {
       return Scaffold(
         appBar: AppBar(),
-        body: LoadError(error: site.error ?? templates.error!, onRetry: () {
-          ref.invalidate(siteProvider);
-          ref.invalidate(templatesProvider);
-        }),
+        body: LoadError(
+          error: site.error ?? templates.error!,
+          onRetry: () {
+            ref.invalidate(siteProvider);
+            ref.invalidate(templatesProvider);
+          },
+        ),
       );
     }
     final info = site.value;
     final all = templates.value;
-    if (info == null || all == null) return Scaffold(appBar: AppBar(), body: const Center(child: CircularProgressIndicator()));
+    if (info == null || all == null) {
+      return Scaffold(
+        appBar: AppBar(),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
 
     if (_templateId != info.templateId) {
       // First load, or the template changed in the gallery: start from the saved draft.
@@ -178,7 +199,10 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
       Future.microtask(_refreshPreview);
     }
     final template = all.where((x) => x.id == info.templateId).firstOrNull;
-    final fields = [for (final f in template?.fields ?? const <TemplateField>[]) if (supportedFieldTypes.contains(f.type)) f];
+    final fields = [
+      for (final f in template?.fields ?? const <TemplateField>[])
+        if (supportedFieldTypes.contains(f.type)) f,
+    ];
     final groups = <String, List<TemplateField>>{};
     for (final f in fields) {
       groups.putIfAbsent(f.group ?? t.groupMore, () => []).add(f);
@@ -191,63 +215,140 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
         await _save();
         if (context.mounted) context.pop();
       },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(template == null ? t.customize : t.customizeTemplate(template.numberLabel, template.name)),
-          actions: [
-            if (template != null) IconButton(tooltip: t.resetTooltip, onPressed: () => _reset(template), icon: const Icon(Icons.restart_alt)),
-            IconButton(tooltip: t.chooseTemplateShort, onPressed: () => context.push('/templates'), icon: const Icon(Icons.grid_view_rounded)),
-          ],
-        ),
-        body: Column(children: [
-          Container(
-            height: MediaQuery.sizeOf(context).height * 0.34,
-            margin: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-            clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(18), border: Border.all(color: BrandColors.line), color: Colors.white),
-            child: Stack(children: [
-              Positioned.fill(
-                child: _previewUrl == null
-                    ? const Center(child: CircularProgressIndicator())
-                    : ref.watch(webViewBuilderProvider)(_previewUrl!, _reload),
-              ),
-              PositionedDirectional(
-                top: 8,
-                start: 8,
-                child: Pill(_pending ? t.saving : t.livePreview, color: Colors.white),
-              ),
-            ]),
-          ),
-          Expanded(
-            child: ListView(padding: const EdgeInsets.fromLTRB(16, 4, 16, 24), children: [
-              for (final entry in groups.entries)
-                SectionCard(
-                  title: entry.key,
-                  children: [
-                    for (final f in entry.value)
-                      SettingField(
-                        key: ValueKey('${f.key}-$_generation'),
-                        field: f,
-                        value: _settings![f.key],
-                        error: _errors[f.key],
-                        onChanged: (v) => _change(f.key, v),
+      child: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.light,
+        child: Scaffold(
+          body: Column(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [BrandColors.primary, BrandColors.primary2]),
+                ),
+                child: SafeArea(
+                  bottom: false,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
+                        child: Row(
+                          children: [
+                            RoundIconButton(
+                              dark: true,
+                              icon: Icons.arrow_back_rounded,
+                              tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+                              onPressed: () => Navigator.maybePop(context),
+                            ),
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  Text(
+                                    template?.name ?? t.customize,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Ui.display(18, color: Colors.white, weight: FontWeight.w700),
+                                  ),
+                                  if (template != null)
+                                    Text(
+                                      t.templateOf(template.numberLabel),
+                                      style: TextStyle(color: Colors.white.withValues(alpha: 0.6), fontSize: 12.5, fontWeight: FontWeight.w500),
+                                    ),
+                                ],
+                              ),
+                            ),
+                            if (template != null)
+                              RoundIconButton(dark: true, tooltip: t.resetTooltip, onPressed: () => _reset(template), icon: Icons.restart_alt_rounded),
+                            const SizedBox(width: 6),
+                            RoundIconButton(
+                              dark: true,
+                              tooltip: t.chooseTemplateShort,
+                              onPressed: () => context.push('/templates'),
+                              icon: Icons.grid_view_rounded,
+                            ),
+                          ],
+                        ),
                       ),
+                      Container(
+                        height: MediaQuery.sizeOf(context).height * 0.36,
+                        width: double.infinity,
+                        margin: const EdgeInsets.fromLTRB(36, 0, 36, 0),
+                        padding: const EdgeInsets.fromLTRB(6, 6, 6, 0),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF0B0F0D),
+                          borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
+                          boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.3), blurRadius: 30, offset: const Offset(0, -4))],
+                        ),
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.vertical(top: Radius.circular(25)),
+                          child: Stack(
+                            children: [
+                              Positioned.fill(
+                                child: ColoredBox(
+                                  color: Colors.white,
+                                  child: _previewUrl == null
+                                      ? const Center(child: CircularProgressIndicator())
+                                      : ref.watch(webViewBuilderProvider)(_previewUrl!, _reload),
+                                ),
+                              ),
+                              PositionedDirectional(
+                                top: 10,
+                                start: 10,
+                                child: AnimatedSwitcher(
+                                  duration: const Duration(milliseconds: 200),
+                                  child: Pill(
+                                    key: ValueKey(_pending),
+                                    _pending ? t.saving : t.livePreview,
+                                    color: _pending ? BrandColors.accent : BrandColors.primary,
+                                    textColor: _pending ? BrandColors.primary : Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: ListView(
+                  padding: const EdgeInsets.fromLTRB(Ui.gutter, 20, Ui.gutter, 24),
+                  children: [
+                    for (final entry in groups.entries)
+                      SectionCard(
+                        title: entry.key,
+                        children: [
+                          for (final f in entry.value)
+                            SettingField(
+                              key: ValueKey('${f.key}-$_generation'),
+                              field: f,
+                              value: _settings![f.key],
+                              error: _errors[f.key],
+                              onChanged: (v) => _change(f.key, v),
+                            ),
+                        ],
+                      ),
+                    SectionCard(
+                      title: t.menuItemsAndPrices,
+                      icon: Icons.restaurant_menu_rounded,
+                      subtitle: t.menuItemsElsewhere,
+                      children: [LightButton(label: t.manageMenu, onPressed: () => context.go('/menu'))],
+                    ),
                   ],
                 ),
-              SectionCard(title: t.menuItemsAndPrices, subtitle: t.menuItemsElsewhere, children: [
-                LightButton(label: t.manageMenu, onPressed: () => context.go('/menu')),
-              ]),
-            ]),
+              ),
+            ],
           ),
-        ]),
-        bottomNavigationBar: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-            child: BusyButton(
-              label: info.isPublished ? t.publishChanges : t.publish,
-              busyLabel: t.publishing,
-              busy: _publishing,
-              onPressed: _publish,
+          bottomNavigationBar: DecoratedBox(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border(top: BorderSide(color: BrandColors.hairline)),
+            ),
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 10, 16, 8),
+                child: BusyButton(label: info.isPublished ? t.publishChanges : t.publish, busyLabel: t.publishing, busy: _publishing, onPressed: _publish),
+              ),
             ),
           ),
         ),
@@ -265,19 +366,27 @@ class _Published extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
-    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Align(
-        alignment: AlignmentDirectional.centerStart,
-        child: CircleAvatar(radius: 26, backgroundColor: BrandColors.accent, child: Icon(Icons.check, color: BrandColors.primary, size: 28)),
-      ),
-      const SizedBox(height: 14),
-      Text(t.publishedTitle, style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: BrandColors.ink)),
-      const SizedBox(height: 6),
-      Text(t.publishedBody, style: TextStyle(color: BrandColors.muted)),
-      const SizedBox(height: 18),
-      FilledButton(onPressed: onViewSite, child: Text(t.viewSite)),
-      const SizedBox(height: 10),
-      LightButton(label: t.manageMenu, onPressed: onManageMenu),
-    ]);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Align(
+          alignment: AlignmentDirectional.centerStart,
+          child: Container(
+            width: 60,
+            height: 60,
+            decoration: BoxDecoration(color: BrandColors.accent, borderRadius: BorderRadius.circular(18)),
+            child: Icon(Icons.check_rounded, color: BrandColors.primary, size: 32),
+          ),
+        ),
+        const SizedBox(height: 16),
+        Text(t.publishedTitle, style: Ui.display(26)),
+        const SizedBox(height: 8),
+        Text(t.publishedBody, style: TextStyle(color: BrandColors.muted, height: 1.45, fontSize: 15)),
+        const SizedBox(height: 18),
+        FilledButton(onPressed: onViewSite, child: Text(t.viewSite)),
+        const SizedBox(height: 10),
+        LightButton(label: t.manageMenu, onPressed: onManageMenu),
+      ],
+    );
   }
 }

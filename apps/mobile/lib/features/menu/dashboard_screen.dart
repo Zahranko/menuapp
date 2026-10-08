@@ -38,42 +38,69 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
         bottom: false,
         child: Column(children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 12, 12, 8),
+            padding: const EdgeInsets.fromLTRB(Ui.gutter, 14, Ui.gutter, 12),
             child: Row(children: [
-              CircleAvatar(
-                radius: 21,
-                backgroundColor: BrandColors.accent,
+              Container(
+                width: 48,
+                height: 48,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [BrandColors.highlight, Color.lerp(BrandColors.highlight, BrandColors.accent, 0.45)!],
+                  ),
+                  borderRadius: BorderRadius.circular(15),
+                ),
                 child: Text(business.name.isEmpty ? '?' : business.name.characters.first.toUpperCase(),
-                    style: TextStyle(color: BrandColors.primary, fontWeight: FontWeight.w800, fontSize: 18)),
+                    style: Ui.display(22, color: Colors.white)),
               ),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text(business.name, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: BrandColors.muted, fontSize: 13)),
-                  Text(titles[_tab], style: TextStyle(color: BrandColors.ink, fontSize: 24, fontWeight: FontWeight.w800)),
+                  Text(business.name, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: BrandColors.muted, fontSize: 13.5, fontWeight: FontWeight.w500)),
+                  const SizedBox(height: 2),
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 200),
+                    child: Text(titles[_tab], key: ValueKey(_tab), style: Ui.display(27)),
+                  ),
                 ]),
               ),
-              FilledButton(
+              FilledButton.icon(
                 key: const Key('viewSite'),
-                style: FilledButton.styleFrom(minimumSize: const Size(0, 40), padding: const EdgeInsets.symmetric(horizontal: 14)),
+                style: FilledButton.styleFrom(
+                  minimumSize: const Size(0, 44),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                ),
                 onPressed: () => context.push('/site'),
-                child: Text(t.viewSite),
+                icon: const Icon(Icons.visibility_outlined, size: 18),
+                label: Text(t.viewSite),
               ),
             ]),
           ),
           Container(
-            margin: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
-            decoration: BoxDecoration(color: BrandColors.primary, borderRadius: BorderRadius.circular(12)),
-            child: Row(children: [
-              Container(width: 8, height: 8, decoration: const BoxDecoration(color: Color(0xFF52D17C), shape: BoxShape.circle)),
-              const SizedBox(width: 8),
-              Expanded(
+            margin: const EdgeInsets.fromLTRB(Ui.gutter, 0, Ui.gutter, 10),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
+            decoration: BoxDecoration(color: BrandColors.paper, borderRadius: BorderRadius.circular(14)),
+            child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              const _LiveDot(),
+              const SizedBox(width: 10),
+              Flexible(
+                flex: 3,
                 child: Text(business.displayUrl,
-                    maxLines: 1, overflow: TextOverflow.ellipsis, textDirection: TextDirection.ltr,
-                    textAlign: TextAlign.start, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 13)),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textDirection: TextDirection.ltr,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(color: BrandColors.ink, fontWeight: FontWeight.w700, fontSize: 13.5)),
               ),
-              Text(t.savesGoLive, style: TextStyle(color: BrandColors.accent, fontSize: 12, fontStyle: FontStyle.italic)),
+              const SizedBox(width: 10),
+              Flexible(
+                flex: 2,
+                child: Text(t.savesGoLive,
+                    maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.end, style: TextStyle(color: BrandColors.muted, fontSize: 12)),
+              ),
             ]),
           ),
           Expanded(
@@ -85,25 +112,41 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
           ? null
           : FloatingActionButton.extended(
               key: const Key('addButton'),
-              backgroundColor: BrandColors.accent,
-              foregroundColor: BrandColors.primary,
               onPressed: () => _tab == 0 ? openProductSheet(context, null) : openCategorySheet(context, null),
-              icon: const Icon(Icons.add),
-              label: Text(_tab == 0 ? t.addProduct : t.addCategory, style: const TextStyle(fontWeight: FontWeight.w700)),
+              icon: const Icon(Icons.add_rounded),
+              label: Text(_tab == 0 ? t.addProduct : t.addCategory),
             ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _tab,
-        backgroundColor: Colors.white,
-        indicatorColor: BrandColors.accent.withValues(alpha: 0.35),
-        onDestinationSelected: (i) => setState(() => _tab = i),
-        destinations: [
-          NavigationDestination(icon: const Icon(Icons.shopping_bag_outlined), selectedIcon: const Icon(Icons.shopping_bag), label: t.tabProducts),
-          NavigationDestination(icon: const Icon(Icons.grid_view_outlined), selectedIcon: const Icon(Icons.grid_view_rounded), label: t.tabCategories),
-          NavigationDestination(icon: const Icon(Icons.settings_outlined), selectedIcon: const Icon(Icons.settings), label: t.tabSettings),
-        ],
+      bottomNavigationBar: DecoratedBox(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border(top: BorderSide(color: BrandColors.hairline)),
+        ),
+        child: NavigationBar(
+          selectedIndex: _tab,
+          onDestinationSelected: (i) => setState(() => _tab = i),
+          destinations: [
+            NavigationDestination(icon: const Icon(Icons.shopping_bag_outlined), selectedIcon: const Icon(Icons.shopping_bag_rounded), label: t.tabProducts),
+            NavigationDestination(icon: const Icon(Icons.grid_view_outlined), selectedIcon: const Icon(Icons.grid_view_rounded), label: t.tabCategories),
+            NavigationDestination(icon: const Icon(Icons.tune_rounded), selectedIcon: const Icon(Icons.tune_rounded), label: t.tabSettings),
+          ],
+        ),
       ),
     );
   }
+}
+
+/// A green dot with a soft halo: the site is live.
+class _LiveDot extends StatelessWidget {
+  const _LiveDot();
+
+  @override
+  Widget build(BuildContext context) => Container(
+        width: 16,
+        height: 16,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(color: BrandColors.live.withValues(alpha: 0.2), shape: BoxShape.circle),
+        child: Container(width: 8, height: 8, decoration: const BoxDecoration(color: BrandColors.live, shape: BoxShape.circle)),
+      );
 }
 
 /// Shows the error of a failed load with a retry button.
@@ -137,14 +180,17 @@ class EmptyNote extends StatelessWidget {
   final String body;
 
   @override
-  Widget build(BuildContext context) => Container(
-        margin: const EdgeInsets.symmetric(vertical: 12),
-        padding: const EdgeInsets.all(22),
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), border: Border.all(color: BrandColors.line)),
-        child: Column(children: [
-          Text(title, textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: BrandColors.ink)),
-          const SizedBox(height: 6),
-          Text(body, textAlign: TextAlign.center, style: TextStyle(color: BrandColors.muted, height: 1.4)),
-        ]),
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        child: AppCard(
+          padding: const EdgeInsets.fromLTRB(24, 28, 24, 28),
+          child: Column(children: [
+            IconTile(Icons.inventory_2_outlined, size: 54),
+            const SizedBox(height: 14),
+            Text(title, textAlign: TextAlign.center, style: Ui.display(19, weight: FontWeight.w700)),
+            const SizedBox(height: 6),
+            Text(body, textAlign: TextAlign.center, style: TextStyle(color: BrandColors.muted, height: 1.45)),
+          ]),
+        ),
       );
 }

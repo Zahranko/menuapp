@@ -10,6 +10,7 @@ import '../../../core/brand.dart';
 import '../../../core/providers.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/form_widgets.dart';
+import '../../../core/widgets/ui.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../auth_controller.dart';
 
@@ -131,11 +132,11 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
         : [t.strengthTooShort, t.strengthWeak, t.strengthOkay, t.strengthGood, t.strengthStrong][strength];
 
     return Scaffold(
-      appBar: AppBar(leading: BackButton(onPressed: () => context.go('/'))),
+      appBar: AuthHeader(onBack: () => context.go('/'), wordmark: const Wordmark(size: 20)),
       body: SafeArea(
         child: AutofillGroup(
           child: ListView(
-            padding: const EdgeInsets.fromLTRB(24, 8, 24, 32),
+            padding: const EdgeInsets.fromLTRB(24, 18, 24, 32),
             children: [
               FormTitle(title: t.signupTitle, subtitle: t.signupSubtitle),
               const SizedBox(height: 24),
@@ -146,22 +147,37 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 hint: t.businessNameHint,
                 error: _errors['businessName'],
                 autofillHints: const [AutofillHints.organizationName],
+                icon: Icons.storefront_outlined,
                 onChanged: _onName,
               ),
               if (_slug != null) ...[
-                const SizedBox(height: 6),
-                Row(children: [
-                  Expanded(
-                    child: Text('${Brand.domain}/${_slug!.slug}',
-                        textDirection: TextDirection.ltr, style: TextStyle(color: BrandColors.muted), overflow: TextOverflow.ellipsis),
+                const SizedBox(height: 8),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: (_slug!.available ? BrandColors.live : BrandColors.highlight).withValues(alpha: 0.08),
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  Text(
-                    _slug!.available ? t.linkAvailable : t.linkTaken,
-                    style: TextStyle(fontWeight: FontWeight.w600, color: _slug!.available ? BrandColors.primary2 : BrandColors.highlight),
-                  ),
-                ]),
+                  child: Row(children: [
+                    Icon(Icons.link_rounded, size: 17, color: BrandColors.muted),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text('${Brand.domain}/${_slug!.slug}',
+                          textDirection: TextDirection.ltr,
+                          style: TextStyle(color: BrandColors.ink, fontWeight: FontWeight.w600, fontSize: 13.5),
+                          overflow: TextOverflow.ellipsis),
+                    ),
+                    Icon(_slug!.available ? Icons.check_circle_rounded : Icons.cancel_rounded,
+                        size: 16, color: _slug!.available ? BrandColors.live : BrandColors.highlight),
+                    const SizedBox(width: 4),
+                    Text(
+                      _slug!.available ? t.linkAvailable : t.linkTaken,
+                      style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13, color: _slug!.available ? BrandColors.live : BrandColors.highlight),
+                    ),
+                  ]),
+                ),
                 if (!_slug!.available && _slug!.message != null)
-                  Padding(padding: const EdgeInsets.only(top: 4), child: Text(_slug!.message!, style: TextStyle(color: BrandColors.highlight, fontSize: 13))),
+                  Padding(padding: const EdgeInsets.only(top: 6), child: Text(_slug!.message!, style: TextStyle(color: BrandColors.highlight, fontSize: 13))),
               ],
               const SizedBox(height: 16),
               LabeledField(
@@ -172,6 +188,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 error: _errors['email'],
                 keyboardType: TextInputType.emailAddress,
                 autofillHints: const [AutofillHints.email],
+                icon: Icons.mail_outline_rounded,
                 onChanged: (_) => _clear('email'),
               ),
               const SizedBox(height: 16),
@@ -197,8 +214,8 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 for (var i = 0; i < 4; i++)
                   Expanded(
                     child: Container(
-                      height: 4,
-                      margin: EdgeInsetsDirectional.only(end: i < 3 ? 5 : 0),
+                      height: 5,
+                      margin: EdgeInsetsDirectional.only(end: i < 3 ? 6 : 0),
                       decoration: BoxDecoration(
                         color: i < strength ? strengthColors[strength] : BrandColors.line,
                         borderRadius: BorderRadius.circular(4),

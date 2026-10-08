@@ -25,7 +25,7 @@ class SettingsTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ListView(padding: const EdgeInsets.fromLTRB(16, 4, 16, 32), children: const [
+    return ListView(padding: const EdgeInsets.fromLTRB(Ui.gutter, 4, Ui.gutter, 32), children: const [
       _WebsiteCard(),
       _BusinessCard(),
       PlanCard(),
@@ -49,13 +49,14 @@ class _WebsiteCard extends ConsumerWidget {
     final live = site?.isPublished ?? false;
     return SectionCard(
       title: t.yourWebsite,
+      icon: Icons.language_rounded,
       badge: Pill(live ? t.live : t.notPublished,
-          color: live ? const Color(0xFF52D17C).withValues(alpha: 0.2) : BrandColors.line, textColor: live ? const Color(0xFF1C6B3A) : BrandColors.muted),
+          color: live ? BrandColors.live.withValues(alpha: 0.15) : BrandColors.paper, textColor: live ? BrandColors.live : BrandColors.muted),
       subtitle: template == null ? auth.business.displayUrl : t.websiteTemplate(auth.business.displayUrl, template.numberLabel, template.name),
       children: [
         Wrap(spacing: 8, runSpacing: 8, children: [
           FilledButton.icon(
-            style: FilledButton.styleFrom(minimumSize: const Size(0, 46)),
+            style: FilledButton.styleFrom(minimumSize: const Size(0, 48), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
             onPressed: () => context.push('/design'),
             icon: const Icon(Icons.edit_outlined, size: 18),
             label: Text(t.editDesign),
@@ -144,15 +145,15 @@ class _BusinessCardState extends ConsumerState<_BusinessCard> {
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
-    return SectionCard(title: t.businessInfo, subtitle: t.businessInfoSub, children: [
-      LabeledField(label: t.businessName, controller: _name, error: _errors['name']),
-      const SizedBox(height: 10),
-      LabeledField(label: t.whatsApp, hint: '+962 79 123 4567', controller: _whatsApp, error: _errors['whatsApp'], keyboardType: TextInputType.phone),
-      const SizedBox(height: 10),
-      LabeledField(label: t.address, controller: _address, error: _errors['address']),
-      const SizedBox(height: 10),
-      LabeledField(label: t.instagram, hint: '@vanillamenu', controller: _instagram, error: _errors['instagram'], textInputAction: TextInputAction.done),
+    return SectionCard(title: t.businessInfo, icon: Icons.storefront_outlined, subtitle: t.businessInfoSub, children: [
+      LabeledField(label: t.businessName, controller: _name, error: _errors['name'], icon: Icons.badge_outlined),
       const SizedBox(height: 14),
+      LabeledField(label: t.whatsApp, hint: '+962 79 123 4567', controller: _whatsApp, error: _errors['whatsApp'], keyboardType: TextInputType.phone, icon: Icons.chat_outlined),
+      const SizedBox(height: 14),
+      LabeledField(label: t.address, controller: _address, error: _errors['address'], icon: Icons.place_outlined),
+      const SizedBox(height: 14),
+      LabeledField(label: t.instagram, hint: '@vanillamenu', controller: _instagram, error: _errors['instagram'], textInputAction: TextInputAction.done, icon: Icons.alternate_email_rounded),
+      const SizedBox(height: 18),
       BusyButton(label: t.saveChanges, busyLabel: t.saving, busy: _busy, onPressed: _save),
     ]);
   }
@@ -167,11 +168,15 @@ class _AccountCard extends ConsumerWidget {
     final account = ref.watch(accountProvider).value;
     return SectionCard(
       title: t.account,
+      icon: Icons.person_outline_rounded,
       children: [
         if (account != null) ...[
-          Text(account.email, style: TextStyle(color: BrandColors.ink)),
-          if (account.phone != null) Text(account.phone!, textDirection: TextDirection.ltr, textAlign: TextAlign.start, style: TextStyle(color: BrandColors.muted)),
-          const SizedBox(height: 12),
+          Text(account.email, style: TextStyle(color: BrandColors.ink, fontWeight: FontWeight.w600)),
+          if (account.phone != null) ...[
+            const SizedBox(height: 2),
+            Text(account.phone!, textDirection: TextDirection.ltr, textAlign: TextAlign.start, style: TextStyle(color: BrandColors.muted)),
+          ],
+          const SizedBox(height: 14),
         ],
         Row(children: [
           Expanded(

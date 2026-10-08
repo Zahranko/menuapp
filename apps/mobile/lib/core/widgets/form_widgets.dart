@@ -19,6 +19,7 @@ class LabeledField extends StatelessWidget {
     this.onChanged,
     this.textInputAction = TextInputAction.next,
     this.fieldKey,
+    this.icon,
   });
 
   final String label;
@@ -34,13 +35,16 @@ class LabeledField extends StatelessWidget {
   final TextInputAction textInputAction;
   final Key? fieldKey;
 
+  /// A small icon at the start of the field, when there is no [prefix].
+  final IconData? icon;
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(label, style: TextStyle(fontWeight: FontWeight.w600, color: BrandColors.ink)),
-        const SizedBox(height: 6),
+        Text(label, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13.5, color: BrandColors.ink)),
+        const SizedBox(height: 8),
         TextField(
           key: fieldKey,
           controller: controller,
@@ -49,7 +53,13 @@ class LabeledField extends StatelessWidget {
           autofillHints: autofillHints,
           textInputAction: textInputAction,
           onChanged: onChanged,
-          decoration: InputDecoration(hintText: hint, errorText: error, errorMaxLines: 3, suffixIcon: suffix, prefixIcon: prefix),
+          decoration: InputDecoration(
+            hintText: hint,
+            errorText: error,
+            errorMaxLines: 3,
+            suffixIcon: suffix,
+            prefixIcon: prefix ?? (icon == null ? null : Icon(icon, size: 20, color: BrandColors.muted)),
+          ),
         ),
       ],
     );
@@ -87,9 +97,10 @@ class _PasswordFieldState extends State<PasswordField> {
       onChanged: widget.onChanged,
       textInputAction: TextInputAction.done,
       autofillHints: [widget.newPassword ? AutofillHints.newPassword : AutofillHints.password],
+      icon: Icons.lock_outline_rounded,
       suffix: IconButton(
         tooltip: _shown ? t.hidePassword : t.showPassword,
-        icon: Icon(_shown ? Icons.visibility_off_outlined : Icons.visibility_outlined),
+        icon: Icon(_shown ? Icons.visibility_off_outlined : Icons.visibility_outlined, size: 20, color: BrandColors.muted),
         onPressed: () => setState(() => _shown = !_shown),
       ),
     );
@@ -176,10 +187,61 @@ class FormTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text(title, style: TextStyle(fontSize: 30, fontWeight: FontWeight.w800, color: BrandColors.ink, height: 1.1)),
-      const SizedBox(height: 8),
-      Text(subtitle, style: TextStyle(fontSize: 15, color: BrandColors.muted)),
+      Text(title, style: Ui.display(32)),
+      const SizedBox(height: 10),
+      Text(subtitle, style: TextStyle(fontSize: 15.5, height: 1.45, color: BrandColors.muted)),
     ]);
+  }
+}
+
+/// The top of the sign-up and log-in screens: a round back button and the brand wordmark.
+class AuthHeader extends StatelessWidget implements PreferredSizeWidget {
+  const AuthHeader({super.key, required this.onBack, required this.wordmark});
+
+  final VoidCallback onBack;
+  final Widget wordmark;
+
+  @override
+  Size get preferredSize => const Size.fromHeight(64);
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      bottom: false,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 10, 24, 6),
+        child: Row(children: [
+          RoundIconButton(icon: Icons.arrow_back_rounded, tooltip: MaterialLocalizations.of(context).backButtonTooltip, onPressed: onBack),
+          const Spacer(),
+          wordmark,
+        ]),
+      ),
+    );
+  }
+}
+
+/// A white circular icon button with a hairline border, used for back and refresh.
+class RoundIconButton extends StatelessWidget {
+  const RoundIconButton({super.key, required this.icon, required this.onPressed, this.tooltip, this.dark = false});
+
+  final IconData icon;
+  final VoidCallback? onPressed;
+  final String? tooltip;
+  final bool dark;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      tooltip: tooltip,
+      onPressed: onPressed,
+      style: IconButton.styleFrom(
+        fixedSize: const Size(44, 44),
+        backgroundColor: dark ? Colors.white.withValues(alpha: 0.1) : Colors.white,
+        foregroundColor: dark ? Colors.white : BrandColors.ink,
+        side: BorderSide(color: dark ? Colors.white.withValues(alpha: 0.18) : BrandColors.line),
+      ),
+      icon: Icon(icon, size: 21, textDirection: Directionality.of(context)),
+    );
   }
 }
 

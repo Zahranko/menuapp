@@ -228,7 +228,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(backend.templateId, 'atelier');
-    expect(find.text('017 Atelier'), findsOneWidget);
+    expect(find.text('Template 017 / 100'), findsOneWidget);
   });
 
   testWidgets('the editor saves changes after a pause, skips unknown settings and publishes', (tester) async {
@@ -238,7 +238,7 @@ void main() {
     await tester.tap(find.text('Edit design'));
     await tester.pumpAndSettle();
 
-    expect(find.text('001 Souq'), findsOneWidget);
+    expect(find.text('Template 001 / 100'), findsOneWidget);
     expect(find.text('Future setting'), findsNothing);
     expect(find.textContaining('web https://example.test/_preview/t'), findsOneWidget);
 

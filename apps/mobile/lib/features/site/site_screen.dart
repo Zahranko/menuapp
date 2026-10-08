@@ -21,44 +21,82 @@ class SiteScreen extends ConsumerWidget {
     if (auth is! SignedIn) return const SizedBox.shrink();
     final business = auth.business;
     return Scaffold(
-      appBar: AppBar(
-        titleSpacing: 0,
-        title: Row(children: [
-          Container(width: 8, height: 8, decoration: const BoxDecoration(color: Color(0xFF52D17C), shape: BoxShape.circle)),
-          const SizedBox(width: 8),
-          Flexible(child: Text(business.displayUrl, textDirection: TextDirection.ltr, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 15))),
-        ]),
-        actions: [
-          IconButton(
-            tooltip: t.openInBrowser,
-            icon: const Icon(Icons.open_in_browser),
-            onPressed: () => launchUrl(Uri.parse(business.siteUrl), mode: LaunchMode.externalApplication),
+      backgroundColor: Colors.white,
+      body: Column(children: [
+        Container(
+          color: BrandColors.canvas,
+          child: SafeArea(
+            bottom: false,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(12, 8, 12, 10),
+              child: Row(children: [
+                RoundIconButton(
+                  icon: Icons.arrow_back_rounded,
+                  tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+                  onPressed: () => context.canPop() ? context.pop() : context.go('/menu'),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Container(
+                    height: 44,
+                    padding: const EdgeInsets.symmetric(horizontal: 14),
+                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14), border: Border.all(color: BrandColors.line)),
+                    child: Row(children: [
+                      Icon(Icons.lock_rounded, size: 14, color: BrandColors.live),
+                      const SizedBox(width: 8),
+                      Flexible(
+                        child: Text(business.displayUrl,
+                            textDirection: TextDirection.ltr,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: BrandColors.ink)),
+                      ),
+                    ]),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                RoundIconButton(
+                  tooltip: t.openInBrowser,
+                  icon: Icons.open_in_new_rounded,
+                  onPressed: () => launchUrl(Uri.parse(business.siteUrl), mode: LaunchMode.externalApplication),
+                ),
+              ]),
+            ),
           ),
-        ],
-      ),
-      body: ref.watch(webViewBuilderProvider)(business.siteUrl, 0),
-      bottomNavigationBar: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-          child: Row(children: [
-            Expanded(
-              child: FilledButton(
-                onPressed: () => context.canPop() ? context.pop() : context.go('/menu'),
-                child: Text(t.manageMenu),
+        ),
+        Expanded(child: ref.watch(webViewBuilderProvider)(business.siteUrl, 0)),
+      ]),
+      bottomNavigationBar: DecoratedBox(
+        decoration: BoxDecoration(color: Colors.white, border: Border(top: BorderSide(color: BrandColors.hairline))),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 10, 16, 8),
+            child: Row(children: [
+              Expanded(
+                child: FilledButton.icon(
+                  style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(54)),
+                  onPressed: () => context.canPop() ? context.pop() : context.go('/menu'),
+                  icon: const Icon(Icons.grid_view_rounded, size: 19),
+                  label: Text(t.manageMenu, maxLines: 1, overflow: TextOverflow.ellipsis),
+                ),
               ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: OutlinedButton(
-                style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(52), foregroundColor: BrandColors.ink),
-                onPressed: () async {
-                  await Clipboard.setData(ClipboardData(text: business.siteUrl));
-                  if (context.mounted) showMessage(context, t.linkCopied);
-                },
-                child: Text(t.copyLink),
+              const SizedBox(width: 10),
+              Expanded(
+                child: FilledButton.icon(
+                  style: FilledButton.styleFrom(
+                    minimumSize: const Size.fromHeight(54),
+                    backgroundColor: BrandColors.accent,
+                    foregroundColor: BrandColors.primary,
+                  ),
+                  onPressed: () async {
+                    await Clipboard.setData(ClipboardData(text: business.siteUrl));
+                    if (context.mounted) showMessage(context, t.linkCopied);
+                  },
+                  icon: const Icon(Icons.copy_rounded, size: 19),
+                  label: Text(t.copyLink, maxLines: 1, overflow: TextOverflow.ellipsis),
+                ),
               ),
-            ),
-          ]),
+            ]),
+          ),
         ),
       ),
     );

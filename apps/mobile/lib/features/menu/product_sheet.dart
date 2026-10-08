@@ -143,13 +143,16 @@ class _ProductSheetState extends ConsumerState<ProductSheet> {
     final auth = ref.watch(authControllerProvider);
     final currency = auth is SignedIn && auth.business.currencyCode != 'JOD' ? auth.business.currencyCode : t.currencyJod;
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Text(_editing ? t.editProduct : t.newProduct, style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: BrandColors.ink)),
-      const SizedBox(height: 4),
-      Text(_editing ? t.editProductSub : t.newProductSub, style: TextStyle(color: BrandColors.muted)),
-      const SizedBox(height: 16),
+      Text(_editing ? t.editProduct : t.newProduct, style: Ui.display(26)),
+      const SizedBox(height: 6),
+      Text(_editing ? t.editProductSub : t.newProductSub, style: TextStyle(color: BrandColors.muted, fontSize: 14.5)),
+      const SizedBox(height: 18),
       Row(children: [
-        ProductThumb(name: _name.text, imageUrl: _imageUrl, size: 72, radius: 16),
-        const SizedBox(width: 12),
+        GestureDetector(
+          onTap: _uploading ? null : _pickPhoto,
+          child: ProductThumb(name: _name.text, imageUrl: _imageUrl, size: 84, radius: 20),
+        ),
+        const SizedBox(width: 14),
         Expanded(
           child: Wrap(spacing: 8, runSpacing: 8, children: [
             LightButton(
@@ -165,8 +168,8 @@ class _ProductSheetState extends ConsumerState<ProductSheet> {
       LabeledField(fieldKey: const Key('productName'), label: t.productName, hint: t.productNameHint, controller: _name, error: _errors['name'],
           onChanged: (_) => setState(() => _errors.remove('name'))),
       const SizedBox(height: 12),
-      Text(t.descriptionOptional, style: TextStyle(fontWeight: FontWeight.w600, color: BrandColors.ink)),
-      const SizedBox(height: 6),
+      Text(t.descriptionOptional, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13.5, color: BrandColors.ink)),
+      const SizedBox(height: 8),
       TextField(controller: _description, maxLines: 2, maxLength: 140, decoration: InputDecoration(hintText: t.descriptionHint)),
       const SizedBox(height: 4),
       Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -185,8 +188,8 @@ class _ProductSheetState extends ConsumerState<ProductSheet> {
         const SizedBox(width: 12),
         Expanded(
           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            Text(t.category, style: TextStyle(fontWeight: FontWeight.w600, color: BrandColors.ink)),
-            const SizedBox(height: 6),
+            Text(t.category, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13.5, color: BrandColors.ink)),
+            const SizedBox(height: 8),
             DropdownButtonFormField<String>(
               initialValue: _categoryId,
               isExpanded: true,
@@ -197,8 +200,8 @@ class _ProductSheetState extends ConsumerState<ProductSheet> {
         ),
       ]),
       const SizedBox(height: 12),
-      Text(t.label, style: TextStyle(fontWeight: FontWeight.w600, color: BrandColors.ink)),
-      const SizedBox(height: 6),
+      Text(t.label, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13.5, color: BrandColors.ink)),
+      const SizedBox(height: 8),
       DropdownButtonFormField<String?>(
         initialValue: _label,
         items: [
@@ -207,24 +210,28 @@ class _ProductSheetState extends ConsumerState<ProductSheet> {
         ],
         onChanged: (v) => setState(() => _label = v),
       ),
-      const SizedBox(height: 8),
-      SwitchListTile(
-        contentPadding: EdgeInsets.zero,
-        title: Text(t.available, style: const TextStyle(fontWeight: FontWeight.w600)),
-        subtitle: Text(t.availableHelp),
-        value: _available,
-        activeTrackColor: BrandColors.primary,
-        onChanged: (v) => setState(() => _available = v),
+      const SizedBox(height: 16),
+      AppCard(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        child: Column(children: [
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            title: Text(t.available),
+            subtitle: Text(t.availableHelp),
+            value: _available,
+            onChanged: (v) => setState(() => _available = v),
+          ),
+          const Divider(),
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            title: Text(t.featureSignature),
+            subtitle: Text(t.featureSignatureHelp),
+            value: _featured,
+            onChanged: (v) => setState(() => _featured = v),
+          ),
+        ]),
       ),
-      SwitchListTile(
-        contentPadding: EdgeInsets.zero,
-        title: Text(t.featureSignature, style: const TextStyle(fontWeight: FontWeight.w600)),
-        subtitle: Text(t.featureSignatureHelp),
-        value: _featured,
-        activeTrackColor: BrandColors.primary,
-        onChanged: (v) => setState(() => _featured = v),
-      ),
-      const SizedBox(height: 12),
+      const SizedBox(height: 18),
       if (_confirmDelete)
         ConfirmBox(
           title: t.deleteProductTitle(widget.product!.name),

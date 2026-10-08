@@ -717,7 +717,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get openInBrowser => 'Open in browser';
 
   @override
-  String get manageMenu => 'Manage menu';
+  String get manageMenu => 'Manage your menu';
 
   @override
   String get siteOfflineTitle => 'This page isn\'t online yet';
@@ -828,4 +828,78 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get goToMenu => 'Go to my menu';
+
+  @override
+  String get onbItemsTitle => 'List your items and prices in minutes';
+
+  @override
+  String get onbItemsBody =>
+      'Add photos, prices and categories. Edit anything later and your site updates right away.';
+
+  @override
+  String get onbTemplatesTitle =>
+      'Pick one of 100 templates, then make it yours';
+
+  @override
+  String get onbTemplatesBody =>
+      'Each template shows your products its own way. Choose the hero image, colors and add your logo.';
+
+  @override
+  String get onbShareTitle => 'Share one link. Go custom on Pro.';
+
+  @override
+  String get onbShareBody =>
+      'Put the link on your Instagram, WhatsApp or a table QR code. Customers see your menu instantly.';
+
+  @override
+  String get sampleCafe => 'Vanilla Café';
+
+  @override
+  String get sampleDrinks => 'Drinks';
+
+  @override
+  String get sampleItem1 => 'Vanilla latte';
+
+  @override
+  String get sampleItem1Note => 'Double shot, oat milk';
+
+  @override
+  String get sampleItem2 => 'Pistachio croissant';
+
+  @override
+  String get sampleItem2Note => 'Baked this morning';
+
+  @override
+  String get sampleItem3 => 'Saffron cake';
+
+  @override
+  String get sampleItem3Note => 'Slice, cardamom cream';
+
+  @override
+  String get addItem => 'Add item';
+
+  @override
+  String templateOf(String number) {
+    return 'Template $number / 100';
+  }
+
+  @override
+  String hello(String name) {
+    return 'Hello, $name';
+  }
+
+  @override
+  String get siteLive => 'Your site is live';
+
+  @override
+  String get quickActions => 'Quick actions';
+
+  @override
+  String get designSite => 'Design';
+
+  @override
+  String get shareSite => 'Share';
+
+  @override
+  String get allItems => 'All';
 }

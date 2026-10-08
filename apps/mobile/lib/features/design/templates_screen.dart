@@ -72,54 +72,67 @@ class _TemplatesScreenState extends ConsumerState<TemplatesScreen> {
     final templates = ref.watch(templatesProvider);
     final current = ref.watch(siteProvider).value?.templateId;
     return Scaffold(
-      appBar: AppBar(title: Text(t.chooseTemplate)),
+      appBar: AuthHeader(onBack: () => context.canPop() ? context.pop() : context.go('/menu'), wordmark: const Wordmark(size: 20)),
       body: templates.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => LoadError(error: e, onRetry: () => ref.invalidate(templatesProvider)),
         data: (all) {
-          final shown = [for (final x in all) if (_kind == _Kind.all || _kindOf(x) == _kind) x];
-          final labels = {
-            _Kind.all: t.filterAllCount(all.length),
-            _Kind.food: t.filterFood,
-            _Kind.shops: t.filterShops,
-            _Kind.services: t.filterServices,
-          };
-          return CustomScrollView(slivers: [
-            SliverPadding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-              sliver: SliverToBoxAdapter(
-                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text(t.templatesSub(all.length), style: TextStyle(color: BrandColors.muted)),
-                  const SizedBox(height: 12),
-                  Wrap(spacing: 8, runSpacing: 8, children: [
-                    for (final k in _Kind.values)
-                      if (k == _Kind.all || all.any((x) => _kindOf(x) == k))
-                        ChoiceChip(
-                          label: Text(labels[k]!),
-                          selected: _kind == k,
-                          showCheckmark: false,
-                          selectedColor: BrandColors.primary,
-                          labelStyle: TextStyle(color: _kind == k ? Colors.white : BrandColors.ink, fontWeight: FontWeight.w600),
-                          onSelected: (_) => setState(() => _kind = k),
-                        ),
-                  ]),
-                ]),
-              ),
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
-              sliver: SliverGrid.builder(
-                itemCount: shown.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisSpacing: 16, crossAxisSpacing: 12, childAspectRatio: 0.58),
-                itemBuilder: (context, i) => _TemplateCard(
-                  template: shown[i],
-                  current: shown[i].id == current,
-                  busy: _busyId == shown[i].id,
-                  onTap: _busyId == null ? () => _choose(shown[i]) : null,
+          final shown = [
+            for (final x in all)
+              if (_kind == _Kind.all || _kindOf(x) == _kind) x,
+          ];
+          final labels = {_Kind.all: t.filterAllCount(all.length), _Kind.food: t.filterFood, _Kind.shops: t.filterShops, _Kind.services: t.filterServices};
+          return CustomScrollView(
+            slivers: [
+              SliverPadding(
+                padding: const EdgeInsets.fromLTRB(Ui.gutter, 18, Ui.gutter, 8),
+                sliver: SliverToBoxAdapter(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(t.chooseTemplate, style: Ui.display(32)),
+                      const SizedBox(height: 10),
+                      Text(t.templatesSub(all.length), style: TextStyle(color: BrandColors.muted, fontSize: 15.5, height: 1.45)),
+                      const SizedBox(height: 18),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: [
+                          for (final k in _Kind.values)
+                            if (k == _Kind.all || all.any((x) => _kindOf(x) == k))
+                              ChoiceChip(
+                                label: Text(labels[k]!),
+                                selected: _kind == k,
+                                side: BorderSide(color: _kind == k ? BrandColors.primary : BrandColors.line),
+                                labelStyle: TextStyle(color: _kind == k ? Colors.white : BrandColors.ink, fontWeight: FontWeight.w600, fontSize: 13.5),
+                                onSelected: (_) => setState(() => _kind = k),
+                              ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ]);
+              SliverPadding(
+                padding: const EdgeInsets.fromLTRB(Ui.gutter, 12, Ui.gutter, 32),
+                sliver: SliverGrid.builder(
+                  itemCount: shown.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 20,
+                    crossAxisSpacing: 14,
+                    childAspectRatio: 0.56,
+                  ),
+                  itemBuilder: (context, i) => _TemplateCard(
+                    template: shown[i],
+                    current: shown[i].id == current,
+                    busy: _busyId == shown[i].id,
+                    onTap: _busyId == null ? () => _choose(shown[i]) : null,
+                  ),
+                ),
+              ),
+            ],
+          );
         },
       ),
     );
@@ -137,39 +150,78 @@ class _TemplateCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
-    final placeholder = Container(
-      color: BrandColors.primary2,
-      alignment: Alignment.center,
-      child: Text(template.numberLabel, style: TextStyle(color: BrandColors.accent, fontSize: 28, fontWeight: FontWeight.w800)),
+    final placeholder = DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [BrandColors.primary2, BrandColors.primary]),
+      ),
+      child: Center(
+        child: Text(template.numberLabel, style: Ui.display(30, color: BrandColors.accent)),
+      ),
     );
-    return InkWell(
+    return GestureDetector(
       key: Key('template-${template.id}'),
       onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Expanded(
-          child: Container(
-            clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: current ? BrandColors.accent : BrandColors.line, width: current ? 3 : 1),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(Ui.radius),
+                boxShadow: Ui.shadow,
+                border: Border.all(color: current ? BrandColors.accent : Colors.white, width: current ? 3 : 4),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(Ui.radius - 3),
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    template.thumbnail == null
+                        ? placeholder
+                        : Image.network(template.thumbnail!, fit: BoxFit.cover, alignment: Alignment.topCenter, errorBuilder: (_, _, _) => placeholder),
+                    PositionedDirectional(
+                      top: 8,
+                      start: 8,
+                      child: Pill(current ? t.inUse : t.ready, color: current ? BrandColors.accent : Colors.white.withValues(alpha: 0.92)),
+                    ),
+                    if (busy)
+                      Container(
+                        color: Colors.black26,
+                        alignment: Alignment.center,
+                        child: const CircularProgressIndicator(color: Colors.white),
+                      ),
+                  ],
+                ),
+              ),
             ),
-            child: Stack(fit: StackFit.expand, children: [
-              template.thumbnail == null
-                  ? placeholder
-                  : Image.network(template.thumbnail!, fit: BoxFit.cover, alignment: Alignment.topCenter, errorBuilder: (_, _, _) => placeholder),
-              PositionedDirectional(top: 8, start: 8, child: Pill(current ? t.inUse : t.ready, color: current ? BrandColors.accent : Colors.white)),
-              if (busy) Container(color: Colors.black26, alignment: Alignment.center, child: const CircularProgressIndicator()),
-            ]),
           ),
-        ),
-        const SizedBox(height: 8),
-        Row(children: [
-          Expanded(child: Text(template.name, style: TextStyle(fontWeight: FontWeight.w700, color: BrandColors.ink))),
-          Text(template.numberLabel, style: TextStyle(color: BrandColors.muted, fontSize: 12)),
-        ]),
-        Text(template.category, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: BrandColors.muted, fontSize: 12)),
-      ]),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  template.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15, color: BrandColors.ink),
+                ),
+              ),
+              Text(
+                template.numberLabel,
+                style: TextStyle(color: BrandColors.muted, fontSize: 12, fontWeight: FontWeight.w600),
+              ),
+            ],
+          ),
+          const SizedBox(height: 1),
+          Text(
+            template.category,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(color: BrandColors.muted, fontSize: 12.5),
+          ),
+        ],
+      ),
     );
   }
 }

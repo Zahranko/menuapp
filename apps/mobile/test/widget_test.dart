@@ -57,7 +57,8 @@ void main() {
     final api = await pumpApp(tester, slugFree);
     await tester.tap(find.text('Create account'));
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.widgetWithText(FilledButton, 'Create account'));
+    await tester.scrollUntilVisible(find.widgetWithText(FilledButton, 'Create account'), 200, scrollable: find.byType(Scrollable).first);
+    await tester.pumpAndSettle();
     await tester.tap(find.widgetWithText(FilledButton, 'Create account'));
     await tester.pumpAndSettle();
 
@@ -89,7 +90,8 @@ void main() {
     await tester.enterText(find.byKey(const Key('email')), 'hello@vanillamenu.test');
     await tester.enterText(find.byKey(const Key('phone')), '079 123 4567');
     await tester.enterText(find.byKey(const Key('password')), 'Vanilla2026');
-    await tester.ensureVisible(find.widgetWithText(FilledButton, 'Create account'));
+    await tester.scrollUntilVisible(find.widgetWithText(FilledButton, 'Create account'), 200, scrollable: find.byType(Scrollable).first);
+    await tester.pumpAndSettle();
     await tester.tap(find.widgetWithText(FilledButton, 'Create account'));
     await tester.pumpAndSettle();
 
@@ -112,7 +114,8 @@ void main() {
     await tester.enterText(find.byKey(const Key('email')), 'hello@vanillamenu.test');
     await tester.enterText(find.byKey(const Key('phone')), '791234567');
     await tester.enterText(find.byKey(const Key('password')), 'Vanilla2026');
-    await tester.ensureVisible(find.widgetWithText(FilledButton, 'Create account'));
+    await tester.scrollUntilVisible(find.widgetWithText(FilledButton, 'Create account'), 200, scrollable: find.byType(Scrollable).first);
+    await tester.pumpAndSettle();
     await tester.tap(find.widgetWithText(FilledButton, 'Create account'));
     await tester.pumpAndSettle();
 

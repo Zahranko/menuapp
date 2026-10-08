@@ -83,7 +83,7 @@ class _CategorySheetState extends ConsumerState<CategorySheet> {
     final count = category?.productCount ?? 0;
     final others = _others;
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Text(category == null ? t.newCategory : t.editCategory, style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: BrandColors.ink)),
+      Text(category == null ? t.newCategory : t.editCategory, style: Ui.display(26)),
       const SizedBox(height: 4),
       Text(category == null ? t.newCategorySub : t.productsInCategory(count), style: TextStyle(color: BrandColors.muted)),
       const SizedBox(height: 16),

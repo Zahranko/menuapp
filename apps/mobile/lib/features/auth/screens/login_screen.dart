@@ -6,6 +6,7 @@ import '../../../core/api/api_error.dart';
 import '../../../core/brand.dart';
 import '../../../core/providers.dart';
 import '../../../core/widgets/form_widgets.dart';
+import '../../../core/widgets/ui.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../auth_controller.dart';
 
@@ -82,11 +83,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
     return Scaffold(
-      appBar: AppBar(leading: BackButton(onPressed: () => context.go('/'))),
+      appBar: AuthHeader(onBack: () => context.go('/'), wordmark: const Wordmark(size: 20)),
       body: SafeArea(
         child: AutofillGroup(
           child: ListView(
-            padding: const EdgeInsets.fromLTRB(24, 8, 24, 32),
+            padding: const EdgeInsets.fromLTRB(24, 18, 24, 32),
             children: [
               FormTitle(title: t.loginTitle, subtitle: t.loginSubtitle),
               const SizedBox(height: 24),
@@ -123,6 +124,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   error: _errors['login'],
                   keyboardType: TextInputType.emailAddress,
                   autofillHints: const [AutofillHints.email],
+                  icon: Icons.mail_outline_rounded,
                 ),
               const SizedBox(height: 16),
               PasswordField(label: t.password, controller: _password, hint: t.passwordHintLogin, error: _errors['password']),

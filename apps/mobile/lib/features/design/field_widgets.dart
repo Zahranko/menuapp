@@ -41,7 +41,6 @@ class SettingField extends StatelessWidget {
         contentPadding: EdgeInsets.zero,
         title: Text(field.label, style: TextStyle(fontWeight: FontWeight.w600, color: BrandColors.ink)),
         value: value == true,
-        activeTrackColor: BrandColors.primary,
         onChanged: onChanged,
       );
     }
@@ -199,7 +198,6 @@ class _TogglesSetting extends StatelessWidget {
             contentPadding: EdgeInsets.zero,
             title: Text(field.optionLabel(o)),
             value: value.contains(o),
-            activeTrackColor: BrandColors.primary,
             // Keep the template's order so the sections list stays stable.
             onChanged: (on) => onChanged([for (final x in field.options) if (x == o ? on : value.contains(x)) x]),
           ),

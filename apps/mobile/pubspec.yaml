@@ -69,6 +69,26 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  # The brand fonts (brand.json's fontDisplay and fontBody, each joined with fontArabic; OFL licensed).
+  # Code refers to them by role, so a rebrand only swaps the files. See assets/fonts/README.md.
+  fonts:
+    - family: Display
+      fonts:
+        - asset: assets/fonts/Display-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Display-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Display-ExtraBold.ttf
+          weight: 800
+    - family: Body
+      fonts:
+        - asset: assets/fonts/Body-Regular.ttf
+        - asset: assets/fonts/Body-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Body-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Body-Bold.ttf
+          weight: 700
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

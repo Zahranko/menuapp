@@ -709,7 +709,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get openInBrowser => 'فتح في المتصفح';
 
   @override
-  String get manageMenu => 'إدارة المنيو';
+  String get manageMenu => 'أدر قائمتك';
 
   @override
   String get siteOfflineTitle => 'هذه الصفحة غير متاحة بعد';
@@ -820,4 +820,77 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get goToMenu => 'الذهاب إلى قائمتي';
+
+  @override
+  String get onbItemsTitle => 'أضف منتجاتك وأسعارك خلال دقائق';
+
+  @override
+  String get onbItemsBody =>
+      'أضف الصور والأسعار والفئات. عدّل أي شيء لاحقاً ويتحدّث موقعك فوراً.';
+
+  @override
+  String get onbTemplatesTitle => 'اختر قالباً من 100 قالب واجعله لك';
+
+  @override
+  String get onbTemplatesBody =>
+      'كل قالب يعرض منتجاتك بطريقته. اختر صورة الواجهة والألوان وأضف شعارك.';
+
+  @override
+  String get onbShareTitle => 'شارك رابطاً واحداً. ونطاقك الخاص مع Pro.';
+
+  @override
+  String get onbShareBody =>
+      'ضع الرابط على إنستغرام أو واتساب أو رمز QR على الطاولة. يرى زبائنك المنيو فوراً.';
+
+  @override
+  String get sampleCafe => 'مقهى فانيلا';
+
+  @override
+  String get sampleDrinks => 'مشروبات';
+
+  @override
+  String get sampleItem1 => 'لاتيه فانيلا';
+
+  @override
+  String get sampleItem1Note => 'شوت مزدوج، حليب الشوفان';
+
+  @override
+  String get sampleItem2 => 'كرواسون فستق';
+
+  @override
+  String get sampleItem2Note => 'مخبوز هذا الصباح';
+
+  @override
+  String get sampleItem3 => 'كيكة زعفران';
+
+  @override
+  String get sampleItem3Note => 'شريحة مع كريمة الهيل';
+
+  @override
+  String get addItem => 'إضافة منتج';
+
+  @override
+  String templateOf(String number) {
+    return 'القالب $number / 100';
+  }
+
+  @override
+  String hello(String name) {
+    return 'مرحباً، $name';
+  }
+
+  @override
+  String get siteLive => 'موقعك منشور';
+
+  @override
+  String get quickActions => 'إجراءات سريعة';
+
+  @override
+  String get designSite => 'التصميم';
+
+  @override
+  String get shareSite => 'مشاركة';
+
+  @override
+  String get allItems => 'الكل';
 }
