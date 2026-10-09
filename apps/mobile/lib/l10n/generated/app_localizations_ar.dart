@@ -893,4 +893,33 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get allItems => 'الكل';
+
+  @override
+  String get skip => 'تخطٍّ';
+
+  @override
+  String get next => 'التالي';
+
+  @override
+  String get getStarted => 'ابدأ الآن';
+
+  @override
+  String get splashTagline => 'قائمتك، مقدَّمة بأناقة.';
+
+  @override
+  String get onbBasicPrice => '5\$';
+
+  @override
+  String get onbProPrice => '10\$';
+
+  @override
+  String onbBasicNote(String link) {
+    return 'موقعك على $link';
+  }
+
+  @override
+  String get onbProNote => 'نطاقك الخاص، يجهّزه فريق الدعم';
+
+  @override
+  String get onbHeroColor => 'لون الواجهة';
 }

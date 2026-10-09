@@ -1,7 +1,7 @@
 #!/bin/bash
 # Writes brand values from brand.json and brand/ into the places that can't read config at runtime:
 # Android applicationId and label, iOS bundle ID and display name, the Codemagic signing bundle ID,
-# launcher icons, and the sites favicon.
+# launcher icons, launch screen colors, and the sites favicon.
 # Safe to run any number of times. Needs python3; icons also need Pillow (pip install pillow).
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -42,6 +42,15 @@ sub("apps/mobile/ios/Runner/Info.plist",
 
 # Codemagic signs the iOS build for this bundle ID.
 sub("codemagic.yaml", r'^(\s*bundle_identifier: ).*$', rf'\g<1>{app_id}')
+
+# Launch screens in the brand color, so the app opens straight into its animated splash.
+primary = b["colorPrimary"].lstrip("#")
+sub("apps/mobile/android/app/src/main/res/values/colors.xml",
+    r'(<color name="launch_background">)[^<]*(</color>)', rf'\g<1>#{primary}\g<2>')
+r, g, bl = (int(primary[i:i + 2], 16) / 255 for i in (0, 2, 4))
+sub("apps/mobile/ios/Runner/Base.lproj/LaunchScreen.storyboard",
+    r'<color key="backgroundColor" [^/]*/>',
+    f'<color key="backgroundColor" red="{r:.4f}" green="{g:.4f}" blue="{bl:.4f}" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>')
 
 # Sites favicon (Next.js serves app/icon.svg).
 fav = root / "brand/favicon.svg"

@@ -902,4 +902,33 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get allItems => 'All';
+
+  @override
+  String get skip => 'Skip';
+
+  @override
+  String get next => 'Next';
+
+  @override
+  String get getStarted => 'Get started';
+
+  @override
+  String get splashTagline => 'Your menu, beautifully served.';
+
+  @override
+  String get onbBasicPrice => '\$5';
+
+  @override
+  String get onbProPrice => '\$10';
+
+  @override
+  String onbBasicNote(String link) {
+    return 'Your site at $link';
+  }
+
+  @override
+  String get onbProNote => 'Your own domain, set up by our support team';
+
+  @override
+  String get onbHeroColor => 'Hero color';
 }

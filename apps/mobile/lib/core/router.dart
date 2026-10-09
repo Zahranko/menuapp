@@ -53,8 +53,5 @@ class _Loading extends StatelessWidget {
   const _Loading();
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        backgroundColor: BrandColors.primary,
-        body: Center(child: CircularProgressIndicator(color: BrandColors.accent)),
-      );
+  Widget build(BuildContext context) => ColoredBox(color: BrandColors.primary);
 }

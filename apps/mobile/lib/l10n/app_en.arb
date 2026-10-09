@@ -498,5 +498,21 @@
   "quickActions": "Quick actions",
   "designSite": "Design",
   "shareSite": "Share",
-  "allItems": "All"
+  "allItems": "All",
+  "skip": "Skip",
+  "next": "Next",
+  "getStarted": "Get started",
+  "splashTagline": "Your menu, beautifully served.",
+  "onbBasicPrice": "$5",
+  "onbProPrice": "$10",
+  "onbBasicNote": "Your site at {link}",
+  "@onbBasicNote": {
+    "placeholders": {
+      "link": {
+        "type": "String"
+      }
+    }
+  },
+  "onbProNote": "Your own domain, set up by our support team",
+  "onbHeroColor": "Hero color"
 }

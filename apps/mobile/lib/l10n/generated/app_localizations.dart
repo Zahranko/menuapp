@@ -1657,6 +1657,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'All'**
   String get allItems;
+
+  /// No description provided for @skip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get skip;
+
+  /// No description provided for @next.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get next;
+
+  /// No description provided for @getStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Get started'**
+  String get getStarted;
+
+  /// No description provided for @splashTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'Your menu, beautifully served.'**
+  String get splashTagline;
+
+  /// No description provided for @onbBasicPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'\$5'**
+  String get onbBasicPrice;
+
+  /// No description provided for @onbProPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'\$10'**
+  String get onbProPrice;
+
+  /// No description provided for @onbBasicNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Your site at {link}'**
+  String onbBasicNote(String link);
+
+  /// No description provided for @onbProNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Your own domain, set up by our support team'**
+  String get onbProNote;
+
+  /// No description provided for @onbHeroColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Hero color'**
+  String get onbHeroColor;
 }
 
 class _AppLocalizationsDelegate

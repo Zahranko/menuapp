@@ -259,5 +259,14 @@
   "quickActions": "إجراءات سريعة",
   "designSite": "التصميم",
   "shareSite": "مشاركة",
-  "allItems": "الكل"
+  "allItems": "الكل",
+  "skip": "تخطٍّ",
+  "next": "التالي",
+  "getStarted": "ابدأ الآن",
+  "splashTagline": "قائمتك، مقدَّمة بأناقة.",
+  "onbBasicPrice": "5$",
+  "onbProPrice": "10$",
+  "onbBasicNote": "موقعك على {link}",
+  "onbProNote": "نطاقك الخاص، يجهّزه فريق الدعم",
+  "onbHeroColor": "لون الواجهة"
 }

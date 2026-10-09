@@ -207,7 +207,7 @@ void main() {
     await scrollTo(tester, find.text('Log out'));
     await tapIn(tester, find.text('Log out'));
     expect(await tokens.read(), isNull);
-    expect(find.text('Create account'), findsOneWidget);
+    expect(find.text('Skip'), findsOneWidget);
   });
 
   testWidgets('choosing another template asks first, then opens the editor', (tester) async {

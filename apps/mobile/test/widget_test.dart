@@ -10,7 +10,7 @@ import 'package:storefront_app/main.dart';
 import 'fake_api.dart';
 
 Future<FakeApi> pumpApp(WidgetTester tester, FakeResponse Function(String path, Object? body) handle,
-    {TokenStore? tokens, Locale? locale}) async {
+    {TokenStore? tokens, Locale? locale, bool settle = true}) async {
   final api = FakeApi((r) => handle(r.path, r.data));
   if (locale != null) {
     tester.platformDispatcher.localesTestValue = [locale];
@@ -26,7 +26,7 @@ Future<FakeApi> pumpApp(WidgetTester tester, FakeResponse Function(String path, 
     ],
     child: const StorefrontApp(),
   ));
-  await tester.pumpAndSettle();
+  if (settle) await tester.pumpAndSettle();
   return api;
 }
 
@@ -49,13 +49,37 @@ void main() {
   testWidgets('signed-out owners land on the start screen', (tester) async {
     await pumpApp(tester, slugFree);
     expect(find.text(Brand.brandName), findsOneWidget);
-    expect(find.text('Create account'), findsOneWidget);
+    expect(find.text('List your items and prices in minutes'), findsOneWidget);
+    expect(find.text('Skip'), findsOneWidget);
     expect(find.text('Log in'), findsOneWidget);
+  });
+
+  testWidgets('the launch splash shows the brand, then gives way to onboarding', (tester) async {
+    await pumpApp(tester, slugFree, settle: false);
+    await tester.pump(const Duration(milliseconds: 2400));
+    expect(find.text('Your menu, beautifully served.'), findsOneWidget);
+    await tester.pumpAndSettle();
+    expect(find.text('Your menu, beautifully served.'), findsNothing);
+    expect(find.text('Skip'), findsOneWidget);
+  });
+
+  testWidgets('onboarding walks through three slides, then Get started opens sign-up', (tester) async {
+    await pumpApp(tester, slugFree);
+    await tester.tap(find.byKey(const Key('onboardingNext')));
+    await tester.pumpAndSettle();
+    expect(find.text('Pick one of 100 templates, then make it yours'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('onboardingNext')));
+    await tester.pumpAndSettle();
+    expect(find.text('Share one link. Go custom on Pro.'), findsOneWidget);
+    expect(find.text('Get started'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('onboardingNext')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('businessName')), findsOneWidget);
   });
 
   testWidgets('sign up checks every field before calling the API', (tester) async {
     final api = await pumpApp(tester, slugFree);
-    await tester.tap(find.text('Create account'));
+    await tester.tap(find.text('Skip'));
     await tester.pumpAndSettle();
     await tester.scrollUntilVisible(find.widgetWithText(FilledButton, 'Create account'), 200, scrollable: find.byType(Scrollable).first);
     await tester.pumpAndSettle();
@@ -78,7 +102,7 @@ void main() {
       }
       return slugFree(path, body);
     });
-    await tester.tap(find.text('Create account'));
+    await tester.tap(find.text('Skip'));
     await tester.pumpAndSettle();
 
     await tester.enterText(find.byKey(const Key('businessName')), 'Vanilla Menu');
@@ -108,7 +132,7 @@ void main() {
       }
       return slugFree(path, body);
     });
-    await tester.tap(find.text('Create account'));
+    await tester.tap(find.text('Skip'));
     await tester.pumpAndSettle();
     await tester.enterText(find.byKey(const Key('businessName')), 'Vanilla Menu');
     await tester.enterText(find.byKey(const Key('email')), 'hello@vanillamenu.test');
@@ -138,7 +162,7 @@ void main() {
 
   testWidgets('Arabic devices get Arabic, right to left', (tester) async {
     await pumpApp(tester, slugFree, locale: const Locale('ar'));
-    await tester.tap(find.text('إنشاء حساب'));
+    await tester.tap(find.text('تخطٍّ'));
     await tester.pumpAndSettle();
 
     expect(find.text('جهّز نشاطك التجاري'), findsOneWidget);
