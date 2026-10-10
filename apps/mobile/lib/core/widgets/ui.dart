@@ -145,8 +145,15 @@ class ProductThumb extends StatelessWidget {
 }
 
 /// Picks a photo from the library, shrinks it and returns its bytes and file name, or null when cancelled.
+/// The server shrinks and compresses it again (1600 px, WebP), so this mainly keeps the upload small and fast.
 Future<({Uint8List bytes, String name})?> pickPhoto() async {
-  final file = await ImagePicker().pickImage(source: ImageSource.gallery, maxWidth: 1600, maxHeight: 1600, imageQuality: 82);
+  final file = await ImagePicker().pickImage(
+    source: ImageSource.gallery,
+    maxWidth: 1600,
+    maxHeight: 1600,
+    imageQuality: 80,
+    requestFullMetadata: false,
+  );
   if (file == null) return null;
   return (bytes: await file.readAsBytes(), name: file.name);
 }

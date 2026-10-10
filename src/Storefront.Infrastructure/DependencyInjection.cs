@@ -84,6 +84,7 @@ public static class DependencyInjection
         services.AddScoped<IAuditLog, EfAuditLog>();
 
         services.Configure<StorageOptions>(configuration.GetSection(StorageOptions.SectionName));
+        services.AddSingleton<IImageOptimizer, Media.SkiaImageOptimizer>();
         services.AddSingleton<LocalFileStorage>();
         services.AddSingleton<S3FileStorage>();
         services.AddSingleton<IFileStorage>(sp =>

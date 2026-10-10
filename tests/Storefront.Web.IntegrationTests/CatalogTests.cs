@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Storefront.Application.Catalog;
 using Storefront.Application.Media;
+using Storefront.Domain.Media;
 using Storefront.Infrastructure.Persistence;
 
 namespace Storefront.Web.IntegrationTests;
@@ -205,16 +206,23 @@ public class CatalogTests(StorefrontFactory factory) : IClassFixture<StorefrontF
     }
 
     [Fact]
-    public async Task Image_upload_checks_type_by_signature_and_size()
+    public async Task Image_upload_checks_type_and_size_then_stores_a_compressed_copy()
     {
         var (client, _) = await OwnerAsync();
-        var png = new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, 0, 0, 0, 13, 1, 2, 3 };
+        var photo = ImageOptimizerTests.Photo(3000, 2000);
 
-        var ok = await client.PostAsync("/api/v1/media", Upload(png, "photo.png", "image/png"));
+        // Stored shrunk and compressed to WebP, whatever was uploaded.
+        var ok = await client.PostAsync("/api/v1/media", Upload(photo, "photo.jpg", "image/jpeg"));
         Assert.Equal(HttpStatusCode.Created, ok.StatusCode);
         var media = (await ok.Content.ReadFromJsonAsync<MediaDto>(Api.Json))!;
-        Assert.Equal("image/png", media.ContentType);
+        Assert.Equal("image/webp", media.ContentType);
+        Assert.EndsWith(".webp", media.Url);
+        Assert.True(media.SizeBytes <= MediaAsset.MaxBytes && media.SizeBytes < photo.Length);
         Assert.StartsWith("http://localhost/media/", media.Url);
+
+        var broken = new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, 0, 0, 0, 13, 1, 2, 3 };
+        var unreadable = await client.PostAsync("/api/v1/media", Upload(broken, "photo.png", "image/png"));
+        Assert.Equal("media.type", (await Api.ProblemAsync(unreadable)).GetProperty("code").GetString());
 
         var fake = await client.PostAsync("/api/v1/media", Upload("not an image at all"u8.ToArray(), "photo.jpg", "image/jpeg"));
         Assert.Equal("media.type", (await Api.ProblemAsync(fake)).GetProperty("code").GetString());

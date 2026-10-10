@@ -38,6 +38,14 @@ public interface IAuditLog
 
 public sealed record StoredFile(string Key, string Url);
 
+public sealed record OptimizedImage(byte[] Bytes, string ContentType, int Width, int Height);
+
+/// <summary>Turns an uploaded photo into a web-ready one: upright, no larger than a set size, compressed, without camera metadata.</summary>
+public interface IImageOptimizer
+{
+    Common.Result<OptimizedImage> Optimize(ReadOnlyMemory<byte> image, int maxSide, long maxBytes);
+}
+
 /// <summary>Public file storage (S3-compatible in production, local disk in development).</summary>
 public interface IFileStorage
 {
