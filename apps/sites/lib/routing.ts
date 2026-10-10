@@ -8,10 +8,14 @@ export type Route =
 
 const reserved = new Set<string>([...reservedSlugs, brand.brandShortName.toLowerCase()]);
 
-/** Hosts that serve the marketing pages and {domain}/<slug> sites. */
-export function mainHosts(): Set<string> {
-  const extra = (process.env.SITES_MAIN_HOSTS ?? "localhost,127.0.0.1").split(",");
-  return new Set([brand.domain, `www.${brand.domain}`, ...extra].map((h) => h.trim().toLowerCase()).filter(Boolean));
+/**
+ * Hosts that serve the marketing pages and {domain}/<slug> sites. On Vercel the project's own addresses
+ * (set by Vercel) count too, so sites work at <project>.vercel.app/<slug> before the brand domain is connected.
+ */
+export function mainHosts(env: Record<string, string | undefined> = process.env): Set<string> {
+  const extra = (env.SITES_MAIN_HOSTS ?? "localhost,127.0.0.1").split(",");
+  const vercel = [env.VERCEL_PROJECT_PRODUCTION_URL, env.VERCEL_BRANCH_URL, env.VERCEL_URL].filter((h): h is string => !!h);
+  return new Set([brand.domain, `www.${brand.domain}`, ...extra, ...vercel].map((h) => h.trim().toLowerCase()).filter(Boolean));
 }
 
 export const isReserved = (segment: string) => reserved.has(segment.toLowerCase());
@@ -53,3 +57,12 @@ export function route(hostHeader: string, pathname: string, main: Set<string> = 
 }
 
 const rest = (segments: string[]) => (segments.length ? `/${segments.join("/")}` : "");
+
+/** The test server, used by Vercel builds of the `test` branch when STOREFRONT_API_URL is not set. */
+const TEST_API_URL = "https://alamalhosp-001-site7.itempurl.com";
+
+/** Base URL of the Storefront API, for example http://localhost:5080. */
+export function apiBaseUrl(env: Record<string, string | undefined> = process.env): string {
+  const fallback = env.VERCEL_GIT_COMMIT_REF === "test" ? TEST_API_URL : "http://localhost:5080";
+  return (env.STOREFRONT_API_URL || fallback).replace(/\/$/, "");
+}

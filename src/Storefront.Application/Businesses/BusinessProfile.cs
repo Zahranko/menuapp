@@ -8,14 +8,14 @@ using Storefront.Domain.Common;
 
 namespace Storefront.Application.Businesses;
 
-public sealed class GetBusinessHandler(ICurrentUser currentUser, IBusinessRepository businesses, IOptions<BrandOptions> brand)
+public sealed class GetBusinessHandler(ICurrentUser currentUser, IBusinessRepository businesses, SiteLinks links)
 {
     public async Task<Result<BusinessDto>> Handle(CancellationToken ct)
     {
         var business = currentUser.BusinessId is { } id ? await businesses.GetAsync(id, ct) : null;
         return business is null
             ? Error.NotFound("business.notFound", "Business not found.")
-            : BusinessDto.From(business, brand.Value.Domain);
+            : BusinessDto.From(business, links);
     }
 }
 
@@ -42,7 +42,7 @@ public sealed class UpdateBusinessValidator : AbstractValidator<UpdateBusiness>
     private static bool BeATimeZone(string id) => TimeZoneInfo.TryFindSystemTimeZoneById(id, out _);
 }
 
-public sealed class UpdateBusinessHandler(IValidator<UpdateBusiness> validator, ICurrentUser currentUser, IBusinessRepository businesses, IUnitOfWork uow, IClock clock, IOptions<BrandOptions> brand)
+public sealed class UpdateBusinessHandler(IValidator<UpdateBusiness> validator, ICurrentUser currentUser, IBusinessRepository businesses, IUnitOfWork uow, IClock clock, SiteLinks links)
 {
     public async Task<Result<BusinessDto>> Handle(UpdateBusiness cmd, CancellationToken ct)
     {
@@ -77,6 +77,6 @@ public sealed class UpdateBusinessHandler(IValidator<UpdateBusiness> validator, 
         }
 
         await uow.SaveChangesAsync(ct);
-        return BusinessDto.From(business, brand.Value.Domain);
+        return BusinessDto.From(business, links);
     }
 }

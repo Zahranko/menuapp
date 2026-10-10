@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { route, sitePath } from "./lib/routing";
+import { apiBaseUrl, route, sitePath } from "./lib/routing";
 
 const HOST_TTL_MS = 60_000;
 const hostCache = new Map<string, { slug: string | null; until: number }>();
@@ -13,7 +13,7 @@ async function slugForHost(host: string): Promise<string | null> {
   if (process.env.APP_FIXTURES === "1") {
     slug = host === "vanillamenu.example.com" ? "vanillamenu" : null;
   } else {
-    const api = (process.env.STOREFRONT_API_URL ?? "http://localhost:5080").replace(/\/$/, "");
+    const api = apiBaseUrl();
     const response = await fetch(`${api}/api/public/v1/sites/by-host/${encodeURIComponent(host)}`, { cache: "no-store" });
     if (response.ok) slug = ((await response.json()) as { business: { slug: string } }).business.slug;
     else if (response.status !== 404) throw new Error(`by-host lookup failed with ${response.status}`);

@@ -15,8 +15,8 @@ public sealed record BusinessDto(
     string CurrencyCode,
     string TimeZone)
 {
-    public static BusinessDto From(Business b, string brandDomain) => new(
-        b.Id, b.Name, b.Slug.Value, $"https://{brandDomain}/{b.Slug.Value}",
+    public static BusinessDto From(Business b, Common.SiteLinks links) => new(
+        b.Id, b.Name, b.Slug.Value, links.Site(b.Slug.Value),
         b.WhatsApp?.Value, b.Email, b.Address, b.Instagram, b.Locale, b.CurrencyCode, b.TimeZone);
 }
 

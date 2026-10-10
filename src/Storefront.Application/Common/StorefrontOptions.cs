@@ -13,4 +13,7 @@ public sealed class StorefrontOptions
 
     /// <summary>Runs the development seeder (plans, templates, sample business) at startup.</summary>
     public bool SeedSampleData { get; set; }
+
+    /// <summary>Where owners' sites are served, like https://example.com. Empty means https://{brand domain}.</summary>
+    public string? SitesBaseUrl { get; set; }
 }

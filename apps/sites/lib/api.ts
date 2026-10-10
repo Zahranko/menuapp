@@ -1,9 +1,9 @@
 import "server-only";
 import { fixtureBySlug, fixturePreview, fixtureSite } from "./fixtures";
+import { apiBaseUrl } from "./routing";
 import type { PublicSite } from "./types";
 
-/** Base URL of the Storefront API, for example http://localhost:5080. */
-const apiUrl = () => (process.env.STOREFRONT_API_URL ?? "http://localhost:5080").replace(/\/$/, "");
+const apiUrl = () => apiBaseUrl();
 const fixturesOn = () => process.env.APP_FIXTURES === "1";
 
 export const siteTag = (slug: string) => `site:${slug.toLowerCase()}`;
@@ -26,22 +26,30 @@ async function read(path: string, init: RequestInit & { next?: { tags?: string[]
   return normalize((await response.json()) as PublicSite);
 }
 
+/**
+ * Sites are cached only when the API can tell us about changes (REVALIDATE_SECRET is shared with it).
+ * Without it a cached page would show the old design for up to an hour, so every visit reads fresh.
+ */
+const onDemandRevalidation = () => Boolean(process.env.REVALIDATE_SECRET);
+
 /** A published site. Cached until the API revalidates the "site:<slug>" tag (and at most an hour). */
 export async function getSiteBySlug(slug: string): Promise<PublicSite | null> {
   const key = slug.toLowerCase();
   if (fixturesOn()) return fixtureBySlug(key);
-  return read(`/api/public/v1/sites/by-slug/${encodeURIComponent(key)}`, {
-    next: { tags: [siteTag(key)], revalidate: 3600 },
-  });
+  return read(
+    `/api/public/v1/sites/by-slug/${encodeURIComponent(key)}`,
+    onDemandRevalidation() ? { next: { tags: [siteTag(key)], revalidate: 3600 } } : { cache: "no-store" },
+  );
 }
 
 /** A published site by custom domain. */
 export async function getSiteByHost(host: string): Promise<PublicSite | null> {
   const key = host.toLowerCase();
   if (fixturesOn()) return fixtureSite.business.customDomains.includes(key) ? fixtureSite : null;
-  return read(`/api/public/v1/sites/by-host/${encodeURIComponent(key)}`, {
-    next: { tags: [hostTag(key)], revalidate: 60 },
-  });
+  return read(
+    `/api/public/v1/sites/by-host/${encodeURIComponent(key)}`,
+    onDemandRevalidation() ? { next: { tags: [hostTag(key)], revalidate: 60 } } : { cache: "no-store" },
+  );
 }
 
 /** The draft behind a preview token. Never cached. */

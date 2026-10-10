@@ -1,18 +1,47 @@
 /// The owner's business as the API returns it (`BusinessDto`).
 class Business {
-  const Business({required this.id, required this.name, required this.slug, required this.siteUrl});
+  const Business({
+    required this.id,
+    required this.name,
+    required this.slug,
+    required this.siteUrl,
+    this.whatsApp,
+    this.email,
+    this.address,
+    this.instagram,
+    this.locale = 'en',
+    this.currencyCode = 'JOD',
+  });
 
   factory Business.fromJson(Map<String, dynamic> json) => Business(
         id: json['id'] as String,
         name: json['name'] as String,
         slug: json['slug'] as String,
         siteUrl: json['siteUrl'] as String,
+        whatsApp: json['whatsApp'] as String?,
+        email: json['email'] as String?,
+        address: json['address'] as String?,
+        instagram: json['instagram'] as String?,
+        locale: json['locale'] as String? ?? 'en',
+        currencyCode: json['currencyCode'] as String? ?? 'JOD',
       );
 
   final String id;
   final String name;
   final String slug;
   final String siteUrl;
+  final String? whatsApp;
+  final String? email;
+  final String? address;
+  final String? instagram;
+  final String locale;
+  final String currencyCode;
+
+  /// The site address without the scheme, as owners read it: "example.com/vanillamenu".
+  String get displayUrl => siteUrl.replaceFirst(RegExp(r'^https?://'), '');
+
+  /// Where owners' websites are served (the site link without the slug). Template pictures load from here.
+  String get sitesBaseUrl => siteUrl.substring(0, siteUrl.lastIndexOf('/'));
 }
 
 /// Tokens and business returned by register, login and refresh (`AuthResponse`).

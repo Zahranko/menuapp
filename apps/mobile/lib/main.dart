@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/brand.dart';
 import 'core/router.dart';
 import 'core/theme.dart';
+import 'features/splash/splash_gate.dart';
 import 'l10n/generated/app_localizations.dart';
 
 void main() {
@@ -21,6 +22,8 @@ class StorefrontApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       theme: buildTheme(),
       routerConfig: ref.watch(routerProvider),
+      // The launch splash plays over the first screen while the saved session is checked.
+      builder: (context, child) => SplashGate(child: child ?? const SizedBox.shrink()),
       // Follows the device language; Arabic lays out right to left.
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: const [

@@ -5,13 +5,9 @@ import { jsonLdScript, siteJsonLd } from "@/lib/jsonld";
 import { siteMetadata } from "@/lib/seo";
 import { SiteTemplate } from "@/templates/registry";
 
-// Pages are rendered on first visit and cached until the API revalidates the site's tag.
-export const dynamicParams = true;
-export const revalidate = 3600;
-
-export function generateStaticParams() {
-  return [];
-}
+// Rendered on every visit so edits show at once. The site data itself is cached when the API
+// revalidates it on change (see getSiteBySlug), so this stays cheap.
+export const dynamic = "force-dynamic";
 
 type Props = { params: Promise<{ slug: string }> };
 

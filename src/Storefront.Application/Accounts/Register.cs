@@ -1,4 +1,5 @@
 using FluentValidation;
+using Microsoft.Extensions.Options;
 using Storefront.Application.Abstractions;
 using Storefront.Application.Common;
 using Storefront.Domain.Billing;
@@ -50,7 +51,8 @@ public sealed class RegisterHandler(
     SlugAvailabilityHandler slugs,
     SessionIssuer sessions,
     IUnitOfWork uow,
-    IClock clock)
+    IClock clock,
+    IOptions<BillingOptions> billingOptions)
 {
     public const string DefaultTemplateId = "souq";
     public static readonly TimeSpan TrialLength = TimeSpan.FromDays(14);
@@ -90,7 +92,9 @@ public sealed class RegisterHandler(
             business.ClearDomainEvents();
             businesses.Add(business);
             sites.Add(Site.Create(business.Id, template.Id, template.DefaultSettings, now));
-            billing.Add(Subscription.Start(business.Id, Plan.Basic, SubscriptionStatus.Trialing, "none", null, now + TrialLength));
+            billing.Add(billingOptions.Value.TestMode
+                ? Subscription.Start(business.Id, Plan.Pro, SubscriptionStatus.Active, "test", null, null)
+                : Subscription.Start(business.Id, Plan.Basic, SubscriptionStatus.Trialing, "none", null, now + TrialLength));
             await uow.SaveChangesAsync(ct);
 
             var session = await sessions.IssueAsync(user.Value, business, cmd.DeviceName, ct);

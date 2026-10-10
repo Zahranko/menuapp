@@ -15,7 +15,7 @@ namespace Storefront.Infrastructure.Persistence.Seeding;
 /// Development data: the two plans, templates from the registry, and the sample business "Vanilla Menu"
 /// with the prototype's categories and products. Safe to run any number of times.
 /// </summary>
-public sealed class DevelopmentSeeder(StorefrontDbContext db, TemplateRegistryImporter templates, IClock clock, ILogger<DevelopmentSeeder> logger)
+public sealed class DevelopmentSeeder(StorefrontDbContext db, ReferenceDataSeeder referenceData, TemplateRegistryImporter templates, IClock clock, ILogger<DevelopmentSeeder> logger)
 {
     public const string SampleOwnerEmail = "owner@example.com";
     public const string SampleOwnerPassword = "Sample-pass-123";
@@ -38,29 +38,9 @@ public sealed class DevelopmentSeeder(StorefrontDbContext db, TemplateRegistryIm
 
     public async Task SeedAsync(CancellationToken ct)
     {
-        await SeedPlansAsync(ct);
+        await referenceData.SeedAsync(ct);
         await templates.ImportAsync(ct);
         await SeedSampleBusinessAsync(ct);
-    }
-
-    private async Task SeedPlansAsync(CancellationToken ct)
-    {
-        var plans = await db.Plans.ToDictionaryAsync(p => p.Code, ct);
-        Upsert(Plan.Basic, "Basic", 5m, false);
-        Upsert(Plan.Pro, "Pro", 10m, true);
-        await db.SaveChangesAsync(ct);
-
-        void Upsert(string code, string name, decimal price, bool customDomain)
-        {
-            if (plans.TryGetValue(code, out var plan))
-            {
-                plan.Update(name, price, customDomain);
-            }
-            else
-            {
-                db.Plans.Add(Plan.Create(code, name, price, customDomain));
-            }
-        }
     }
 
     private async Task SeedSampleBusinessAsync(CancellationToken ct)

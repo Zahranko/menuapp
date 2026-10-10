@@ -9,16 +9,16 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 | S02 | Auth and accounts API | done | | Register, login (email or phone), rotating refresh tokens, password reset, business profile |
 | S03 | Catalog API | done | | Categories, products, image upload, outbox dispatcher, signed revalidation, audit log |
 | S04 | Sites, templates, public read API | done | | Template gallery, schema-validated drafts, publish, preview tokens, public by-slug/by-host/preview with ETags |
-| S05 | Plans, billing abstraction, custom domains | not started | | |
+| S05 | Plans, billing abstraction, custom domains | in progress | | Done on the `test` branch: plans seeded everywhere, `GET /plans`, `GET /subscription`, `POST /subscription/change` through `IPaymentProvider` (fake, applies at once), `GET/POST/DELETE /domain-request` with Pro gating, brand-domain refusal and cancel-on-downgrade, `Billing:TestMode`. Not yet: webhook, DNS checker job, Caddy ask endpoint |
 | S06 | Back office (MVC) | not started | | |
 | S07 | Next.js foundation and routing | done | | Host/slug routing in proxy.ts, typed API client, fixtures, signed revalidate endpoint, preview route, fallback template |
 | S08 | Next.js template 001 "Souq" and SEO | done | | Souq with all sections, shared template kit, JSON-LD, per-host robots and sitemap, Open Graph image, Playwright smoke test |
 | S09 | Next.js marketing pages | not started | | |
 | S10 | Flutter foundation, splash, onboarding | not started | | |
 | S11 | Flutter sign up and log in | in progress | | Sign up (live link check, strength bar, API field errors), log in by email or phone, forgot password, welcome with the live link, secure token storage, refresh on 401, en/ar. Not yet: generated Dart client, screenshots |
-| S12 | Flutter My menu dashboard | not started | | |
-| S13 | Flutter template gallery and editor | not started | | |
-| S14 | Flutter plans and custom domain | not started | | |
+| S12 | Flutter My menu dashboard | done | | On the `test` branch: header with View site, live link bar, Products (stats, search, filter chips, grouped list, optimistic sold-out switch with rollback, pull to refresh), product sheet (photo upload, validation, label, Signature picks, delete with confirm), Categories (counts, Hidden on site, arrows to reorder, add, rename, delete with move or delete), Settings (website, business info, plan, domain, account), site in a WebView |
+| S13 | Flutter template gallery and editor | done | | On the `test` branch: gallery with filter chips and thumbnails, confirm before replacing a design, editor with WebView preview refreshed after each 600 ms debounced draft save, a control per schema field type (unknown types skipped), reset to defaults, save before leaving, Publish with View site and Manage menu |
+| S14 | Flutter plans and custom domain | done | | On the `test` branch: Basic/Pro plan card with upgrade and downgrade sheets (checkout URL opens in the browser when a provider needs it), domain card locked on Basic, request form, four progress steps, cancel. Waits on D4/D5 for real payments |
 | S15 | Deployment and hardening | in progress | | API security done early: forwarded headers for Caddy, HTTPS-only with HSTS, security headers, global and per-owner rate limits, sign-out everywhere. Deployment still to do |
 | S16+ | Template factory | in progress | | Batch 1: templates 002 to 006 (Linen List, Night Market, Arch Story, Pocket Catalog, Chalk Board), per-template stylesheets, sample businesses, axe checks. Batch 2: 007 to 011 (Bento, Neon Diner, Zen, Bistro Card, Pizzeria). Batch 3: 012 to 016 (Ticket, Garden, Mono Grid, Spice Route, Polaroid). Service websites: 017 to 021 (Atelier, Clinic, Agency, Pulse, Handy). Plan for the rest: `docs/templates-catalog.md` |
 
@@ -42,6 +42,11 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 
 (Things a session found that belong to another session. Format: `- [S07] what and why (found in S03)`.)
 
+- [S15] The owners' websites (`apps/sites`) go on Vercel (owner's choice): setup in `docs/deploy-vercel.md`. Until `SITES_URL` is set, "View site" and the editor preview show "This page isn't online yet" (found on the test branch).
+- [S05] Still to do: payment webhook, DNS checker job for `AwaitingDns` requests, `/internal/caddy/ask`, and the real payment provider adapter once D5/D8 are decided. Staff move domain requests forward in the back office (S06) (found on the test branch).
+- [S13] Template schema labels and option labels are English only; the editor shows them as they are. Add Arabic labels to the manifests (for example `labelAr`) (found on the test branch).
+- [S12] Categories reorder with arrows only (no drag), and there is no RTL golden test yet (found on the test branch).
+
 - [S11] Generate the Dart client from `docs/api/openapi.json` (`scripts/gen-dart-client.sh`) and replace the hand-written calls in `apps/mobile/lib/features/auth/auth_repository.dart` (found in S11 early).
 - [S02] API error messages are English only; the app shows them as they come. Return a localized message (Accept-Language) or a stable code the app can translate (found in S11 early).
 - [S15] `scripts/session-start.sh` still starts PostgreSQL. Cloud sessions can't download SQL Server, so integration tests only run in CI; update the hook if a SQL Server image becomes reachable (found in the site4now move).
@@ -55,6 +60,9 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 ## Decisions made during sessions
 
 (Anything decided that is not in PLAN.md, with the reason.)
+
+- Test branch (owner asked for a fully working test build with a Pro account): the `test` branch deploys like `deploy` and turns on `Billing:TestMode`, which puts every account (new and existing) on an active Pro plan with provider `test`. Plan changes use `FakePaymentProvider` until D5/D8 are decided. `Storefront:SitesBaseUrl` (deploy variable `SITES_URL`) sets where site links and preview links point, so the websites can be hosted somewhere other than the brand domain at first. The API serves template thumbnails and preset pictures from `wwwroot` (copied by the deploy) so the app's gallery and editor work without the websites host; the app reads them from `assetsBaseUrl` (defaults to the API).
+- Mobile (S12 to S14 on the test branch): signed-in owners land on My menu; new owners see the welcome screen first with "Choose a template". Web views are built through `webViewBuilderProvider` so widget tests can replace them. Changes in the catalog reload the list from the API after saving (counts stay right); the sold-out switch and category order update at once and roll back on failure.
 
 - S11 (early, owner asked to connect the app to the live API): the app's API address comes from `apps/mobile/config/production.json` (`--dart-define-from-file`, next to `brand.json`), so a host change doesn't touch the brand file; without it the app falls back to `https://{apiHost}`. The API client is hand-written dio for now (`lib/core/api/`), with a queued interceptor so parallel 401s share one refresh (the API revokes a reused refresh token); refresh and the retry go through a client without interceptors. Signed-in owners land on the welcome screen until the dashboard (S12) exists. A start screen stands in for the splash and onboarding (S10).
 - Hosting (owner's choice): the API runs on site4now (Windows/IIS) with its SQL Server database, so the database moved from PostgreSQL to SQL Server. One fresh `Initial` migration replaces the PostgreSQL ones (nothing was deployed yet). JSON columns are `nvarchar(max)`, product search uses `LIKE` (SQL Server's default collation ignores case, and `[` is escaped), the category name key is `LOWER([Name])`, and `MediaAsset.Url` is limited to 800 characters so its index stays under the 1700-byte key limit. CI runs the integration tests on a SQL Server 2022 container.

@@ -9,11 +9,11 @@ namespace Storefront.Web.Controllers.Api.V1;
 [Authorize]
 public sealed class MediaController : ApiController
 {
-    /// <summary>Upload one image (form field "file"): JPEG, PNG or WebP, up to 5 MB.</summary>
+    /// <summary>Upload one image (form field "file"): JPEG, PNG or WebP, up to 5 MB. It is stored shrunk to 1600 px and compressed to WebP.</summary>
     [HttpPost]
     [Consumes("multipart/form-data")]
-    [RequestSizeLimit(MediaAsset.MaxBytes + 64 * 1024)]
-    [RequestFormLimits(MultipartBodyLengthLimit = MediaAsset.MaxBytes + 64 * 1024)]
+    [RequestSizeLimit(MediaAsset.MaxUploadBytes + 64 * 1024)]
+    [RequestFormLimits(MultipartBodyLengthLimit = MediaAsset.MaxUploadBytes + 64 * 1024)]
     [ProducesResponseType<MediaDto>(StatusCodes.Status201Created)]
     [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<MediaDto>> Upload(IFormFile? file, [FromServices] UploadImageHandler handler, CancellationToken ct)
