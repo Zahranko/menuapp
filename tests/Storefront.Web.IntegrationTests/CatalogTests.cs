@@ -217,10 +217,10 @@ public class CatalogTests(StorefrontFactory factory) : IClassFixture<StorefrontF
         Assert.Equal(["Cortado"], (await client.GetFromJsonAsync<List<ProductDto>>("/api/v1/products?q=CARDAMOM", Api.Json))!.Select(p => p.Name));
         Assert.Empty((await client.GetFromJsonAsync<List<ProductDto>>("/api/v1/products?q=100%25", Api.Json))!);
 
-        var update = await client.PutAsJsonAsync($"/api/v1/products/{latte.Id}", new { categoryId = coffee.Id, name = "Vanilla latte", price = 3.755m, label = "Signature", isFeatured = true, isAvailable = true });
+        var update = await client.PutAsJsonAsync($"/api/v1/products/{latte.Id}", new { categoryId = coffee.Id, name = "Vanilla latte", price = 3.75m, label = "Signature", isFeatured = true, isAvailable = true });
         await Api.EnsureSuccess(update);
         var updated = (await update.Content.ReadFromJsonAsync<ProductDto>(Api.Json))!;
-        Assert.Equal(3.755m, updated.Price);
+        Assert.Equal(3.75m, updated.Price);
         Assert.True(updated.IsFeatured);
 
         var soldOut = await client.PatchAsJsonAsync($"/api/v1/products/{latte.Id}/availability", new { isAvailable = false });

@@ -7,8 +7,11 @@ import 'package:go_router/go_router.dart';
 import '../../../core/api/api_error.dart';
 import '../../../core/api/models.dart';
 import '../../../core/brand.dart';
+import '../../../core/currency.dart';
 import '../../../core/providers.dart';
+import '../../../core/region.dart';
 import '../../../core/theme.dart';
+import '../../../core/widgets/currency_picker.dart';
 import '../../../core/widgets/form_widgets.dart';
 import '../../../core/widgets/language_picker.dart';
 import '../../../core/widgets/ui.dart';
@@ -39,7 +42,10 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
   final _email = TextEditingController();
   final _phone = TextEditingController();
   final _password = TextEditingController();
-  String _code = countryCodes.first;
+  String _code = defaultDialCode();
+
+  /// What prices show in; starts as the phone's region's currency.
+  String _currency = currencyForCountry(deviceCountry());
   bool _terms = true;
   bool _busy = false;
   Map<String, String?> _errors = {};
@@ -105,6 +111,8 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
             phone: PhoneField.e164(_code, _phone.text),
             password: _password.text,
             locale: Localizations.localeOf(context).languageCode,
+            currencyCode: _currency,
+            timeZone: deviceTimeZone(),
           );
     } on ApiError catch (e) {
       if (!mounted) return;
@@ -113,6 +121,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
         'email': e.field('email'),
         'phone': e.field('phone'),
         'password': e.field('password'),
+        'currencyCode': e.field('currencyCode'),
       };
       setState(() => _errors = fields);
       if (fields.values.every((v) => v == null)) {
@@ -200,6 +209,20 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 onCode: (c) => setState(() => _code = c),
                 error: _errors['phone'],
                 onChanged: (_) => _clear('phone'),
+              ),
+              const SizedBox(height: 16),
+              CurrencyRow(
+                code: _currency,
+                help: t.currencyHelp,
+                error: _errors['currencyCode'],
+                onTap: () async {
+                  final picked = await showCurrencyPicker(context, selected: _currency);
+                  if (picked == null || !mounted) return;
+                  setState(() {
+                    _currency = picked;
+                    _errors = {..._errors, 'currencyCode': null};
+                  });
+                },
               ),
               const SizedBox(height: 16),
               PasswordField(

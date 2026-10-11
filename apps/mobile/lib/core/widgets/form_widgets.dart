@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../l10n/generated/app_localizations.dart';
+import '../region.dart';
 import '../theme.dart';
 
 /// A label above a text field, with the error shown under it.
@@ -116,9 +117,6 @@ class _PasswordFieldState extends State<PasswordField> {
   }
 }
 
-/// Country codes offered in the prototype; Jordan first.
-const countryCodes = ['+962', '+966', '+971', '+974', '+965', '+20', '+1', '+44'];
-
 /// Country code picker and local number. [e164] joins them the way the API expects.
 class PhoneField extends StatelessWidget {
   const PhoneField({super.key, required this.label, required this.controller, required this.code, required this.onCode, this.error, this.onChanged});
@@ -130,7 +128,7 @@ class PhoneField extends StatelessWidget {
   final String? error;
   final ValueChanged<String>? onChanged;
 
-  /// "+962" and "079 123 4567" become "+962791234567".
+  /// "+44" and "07911 123456" become "+447911123456".
   static String e164(String code, String local) => '$code${local.replaceAll(RegExp(r'\D'), '').replaceFirst(RegExp(r'^0+'), '')}';
 
   @override

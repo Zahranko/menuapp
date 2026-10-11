@@ -1,6 +1,7 @@
 using System.Net;
 using System.Net.Http.Json;
 using Storefront.Application.Accounts;
+using Storefront.Application.Catalog;
 
 namespace Storefront.Web.IntegrationTests;
 
@@ -57,6 +58,50 @@ public class BusinessTests(StorefrontFactory factory) : IClassFixture<Storefront
         var businessB = await factory.CreateClient().Authorized(b.AccessToken).GetFromJsonAsync<BusinessDto>("/api/v1/business", Api.Json);
         Assert.Equal(b.Business.Id, businessB!.Id);
         Assert.NotEqual("Renamed by A", businessB.Name);
+    }
+
+    [Fact]
+    public async Task New_businesses_default_to_US_dollars_and_UTC()
+    {
+        var auth = await Api.RegisterAsync(factory.CreateClient());
+        Assert.Equal("USD", auth.Business.CurrencyCode);
+        Assert.Equal("UTC", auth.Business.TimeZone);
+    }
+
+    [Fact]
+    public async Task Owner_picks_the_currency_at_sign_up_and_changing_it_relabels_prices()
+    {
+        var owner = Api.NewOwner();
+        var register = await factory.CreateClient().PostAsJsonAsync("/api/v1/auth/register", new
+        {
+            businessName = owner.Name,
+            email = owner.Email,
+            phone = owner.Phone,
+            password = "Sunrise2026",
+            currencyCode = "JOD",
+            timeZone = "Asia/Dubai",
+        });
+        await Api.EnsureSuccess(register);
+        var auth = (await register.Content.ReadFromJsonAsync<AuthResponse>(Api.Json))!;
+        Assert.Equal("JOD", auth.Business.CurrencyCode);
+        Assert.Equal("Asia/Dubai", auth.Business.TimeZone);
+
+        var client = factory.CreateClient().Authorized(auth.AccessToken);
+        var category = await client.PostAsJsonAsync("/api/v1/categories", new { name = "Coffee" });
+        await Api.EnsureSuccess(category);
+        var categoryId = (await category.Content.ReadFromJsonAsync<CategoryDto>(Api.Json))!.Id;
+        var product = await client.PostAsJsonAsync("/api/v1/products", new { categoryId, name = "Latte", price = 1.255m });
+        await Api.EnsureSuccess(product);
+        var productId = (await product.Content.ReadFromJsonAsync<ProductDto>(Api.Json))!.Id;
+
+        var update = await client.PutAsJsonAsync("/api/v1/business", new { name = owner.Name, currencyCode = "usd" });
+        await Api.EnsureSuccess(update);
+        Assert.Equal("USD", (await update.Content.ReadFromJsonAsync<BusinessDto>(Api.Json))!.CurrencyCode);
+        Assert.Equal(1.26m, (await client.GetFromJsonAsync<ProductDto>($"/api/v1/products/{productId}", Api.Json))!.Price);
+
+        var bad = await client.PutAsJsonAsync("/api/v1/business", new { name = owner.Name, currencyCode = "XYZ" });
+        Assert.Equal(HttpStatusCode.BadRequest, bad.StatusCode);
+        Assert.True((await Api.ProblemAsync(bad)).GetProperty("errors").TryGetProperty("currencyCode", out _));
     }
 
     [Fact]

@@ -1814,6 +1814,8 @@ export interface components {
             password: string;
             deviceName?: null | string;
             locale?: null | string;
+            currencyCode?: null | string;
+            timeZone?: null | string;
         };
         ReorderProducts: {
             /** Format: uuid */
@@ -1906,6 +1908,7 @@ export interface components {
             instagram: null | string;
             locale: null | string;
             timeZone: null | string;
+            currencyCode?: null | string;
         };
         ValidationProblemDetails: {
             type?: null | string;

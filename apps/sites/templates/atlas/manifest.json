@@ -400,7 +400,7 @@
     "hero.shade": 45,
     "hero.eyebrow": "Objects for everyday life",
     "hero.title": "Made by hand. Chosen with care.",
-    "hero.subtitle": "Ceramics, candles, soaps and plants from small makers across Jordan.",
+    "hero.subtitle": "Ceramics, candles, soaps and plants from small independent makers.",
     "cards": "classic",
     "categories.style": "tiles",
     "density": "dense",
@@ -413,7 +413,7 @@
       "reviews",
       "visit"
     ],
-    "announcement": "Free delivery in Amman on orders over 30 JOD",
+    "announcement": "Free delivery on larger orders",
     "categories.title": "Shop by department",
     "best.title": "",
     "gallery.title": "",
@@ -442,8 +442,8 @@
   "defaultsAr": {
     "hero.eyebrow": "أغراض للحياة اليومية",
     "hero.title": "مصنوعة باليد. مختارة بعناية.",
-    "hero.subtitle": "خزف وشموع وصابون ونباتات من حرفيين صغار في أنحاء الأردن.",
-    "announcement": "توصيل مجاني داخل عمّان للطلبات فوق 30 دينارًا",
+    "hero.subtitle": "خزف وشموع وصابون ونباتات من حرفيين صغار مستقلين.",
+    "announcement": "توصيل مجاني للطلبات الكبيرة",
     "categories.title": "تسوّق حسب القسم",
     "story.title": "متجر صغير للأشياء المفيدة والجميلة",
     "story.text": "يعمل أطلس مباشرة مع صانعي الفخار والصابون والنسّاجين. كل قطعة تُصنع بكميات صغيرة، ونزور كل ورشة نبيع منتجاتها.",

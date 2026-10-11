@@ -78,11 +78,12 @@ public static partial class Messages
         ["business.instagram"] = "أدخل اسم المستخدم في إنستغرام، مثل vanillamenu.",
         ["business.timezone"] = "اختر منطقة زمنية من القائمة.",
         ["business.locale"] = "يجب أن تكون اللغة en أو ar.",
+        ["business.currency"] = "اختر عملة من القائمة.",
 
         ["slug.invalid"] = "استخدم من 3 إلى 30 حرفًا إنجليزيًا صغيرًا أو رقمًا.",
         ["slug.reserved"] = "هذا الرابط غير متاح.",
         ["slug.unavailable"] = "هذا الرابط غير متاح. جرّب اسمًا آخر.",
-        ["phone.invalid"] = "أدخل الرقم مع رمز الدولة، مثل ‎+962 79 000 0000.",
+        ["phone.invalid"] = "أدخل الرقم مع رمز الدولة، ويبدأ بعلامة ‎+.",
         ["money.currency"] = "يجب أن تكون العملة رمزًا من 3 أحرف إنجليزية.",
 
         ["category.notFound"] = "لم نعثر على الصنف.",
@@ -189,13 +190,14 @@ public static partial class Messages
         ["Your link needs at least 3 English letters or numbers."] = "يحتاج رابطك إلى 3 أحرف إنجليزية أو أرقام على الأقل.",
         ["This address is not available."] = "هذا الرابط غير متاح.",
         ["Use 3 to 30 lowercase letters and numbers."] = "استخدم من 3 إلى 30 حرفًا إنجليزيًا صغيرًا أو رقمًا.",
-        ["Enter the number with its country code, like +962 79 000 0000."] = "أدخل الرقم مع رمز الدولة، مثل ‎+962 79 000 0000.",
+        ["Enter the number with its country code, starting with +."] = "أدخل الرقم مع رمز الدولة، ويبدأ بعلامة ‎+.",
 
         // Business profile
         ["Business not found."] = "لم نعثر على النشاط.",
         ["Address can be at most 200 characters."] = "يمكن أن يصل العنوان إلى 200 حرف.",
         ["Enter your Instagram username, like vanillamenu."] = "أدخل اسم المستخدم في إنستغرام، مثل vanillamenu.",
         ["Choose a time zone from the list."] = "اختر منطقة زمنية من القائمة.",
+        ["Choose a currency from the list."] = "اختر عملة من القائمة.",
         ["Currency must be a 3-letter ISO code."] = "يجب أن تكون العملة رمزًا من 3 أحرف إنجليزية.",
 
         // Catalog
@@ -262,7 +264,7 @@ public static partial class Messages
     private static readonly (Regex Pattern, string Arabic)[] Patterns = Build(
     [
         ("Password needs at least {0} characters.", "يجب أن تتكون كلمة المرور من {0} أحرف على الأقل."),
-        ("That link is taken. Try adding your city, like {0}.", "هذا الرابط محجوز. جرّب إضافة مدينتك، مثل {0}."),
+        ("That link is taken. Try adding your area, like {0}.", "هذا الرابط محجوز. جرّب إضافة اسم منطقتك، مثل {0}."),
         ("Choose where its 1 product go first.", "اختر أولًا أين ينتقل منتجه الوحيد."),
         ("Choose where its {0} products go first.", "اختر أولًا أين تنتقل منتجاته ({0})."),
         ("Choose a label: {0}.", "اختر شارة: {0}."),

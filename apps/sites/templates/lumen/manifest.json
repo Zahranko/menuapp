@@ -397,7 +397,7 @@
       "preset:pour"
     ],
     "hero.shade": 45,
-    "hero.eyebrow": "Specialty coffee · Weibdeh",
+    "hero.eyebrow": "Specialty coffee · Old Town",
     "hero.title": "Slow mornings, good coffee.",
     "hero.subtitle": "Seasonal single origins, butter croissants laminated for three days and big windows full of light.",
     "cards": "classic",
@@ -439,7 +439,7 @@
     }
   },
   "defaultsAr": {
-    "hero.eyebrow": "قهوة مختصة · اللويبدة",
+    "hero.eyebrow": "قهوة مختصة · البلدة القديمة",
     "hero.title": "صباحات هادئة، وقهوة طيبة.",
     "hero.subtitle": "قهوة موسمية من محصول واحد، وكرواسون بالزبدة نرقّق عجينته ثلاثة أيام، ونوافذ كبيرة مليئة بالضوء.",
     "announcement": "محصول جديد هذا الأسبوع: إثيوبيا غوجي",

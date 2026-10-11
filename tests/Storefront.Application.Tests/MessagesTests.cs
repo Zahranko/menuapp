@@ -27,8 +27,8 @@ public class MessagesTests
     public void Placeholders_carry_their_values()
     {
         Assert.Equal("أضف حتى 6 صور.", Messages.Translate("Add up to 6 photos.", "validation", "ar"));
-        Assert.Equal("هذا الرابط محجوز. جرّب إضافة مدينتك، مثل vanillamenuamman.",
-            Messages.Translate("That link is taken. Try adding your city, like vanillamenuamman.", "slug.unavailable", "ar"));
+        Assert.Equal("هذا الرابط محجوز. جرّب إضافة اسم منطقتك، مثل vanillamenudowntown.",
+            Messages.Translate("That link is taken. Try adding your area, like vanillamenudowntown.", "slug.unavailable", "ar"));
         Assert.Equal("اختر قيمة من 0 إلى 90.", Messages.Translate("Choose a value from 0 to 90.", null, "ar"));
     }
 
@@ -151,7 +151,7 @@ public partial class MessagesCoverageTests
 
     [Theory]
     [InlineData("Password needs at least 8 characters.")]
-    [InlineData("That link is taken. Try adding your city, like cafeamman.")]
+    [InlineData("That link is taken. Try adding your area, like cafedowntown.")]
     [InlineData("Choose where its 1 product go first.")]
     [InlineData("Choose where its 4 products go first.")]
     [InlineData("Choose a label: Signature, New, Best seller, Vegan, Spicy.")]
@@ -185,7 +185,7 @@ public partial class MessagesCoverageTests
         string[] known =
         [
             "$\"Password needs at least {length} characters.\"",
-            "$\"That link is taken. Try adding your city, like {Fit(slug, \"amman\")}.\"",
+            "$\"That link is taken. Try adding your area, like {Fit(slug, \"downtown\")}.\"",
             "$\"Choose where its {products.Count} product{(products.Count == 1 ? \"\" : \"s\")} go first.\"",
             "$\"Choose a label: {string.Join(\", \", ProductLabel.All)}.\"",
             "$\"Label must be one of: {string.Join(\", \", ProductLabel.All)}.\"",

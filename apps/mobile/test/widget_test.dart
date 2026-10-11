@@ -5,6 +5,7 @@ import 'package:storefront_app/core/auth/token_store.dart';
 import 'package:storefront_app/core/brand.dart';
 import 'package:storefront_app/core/l10n/app_language.dart';
 import 'package:storefront_app/core/providers.dart';
+import 'package:storefront_app/core/region.dart';
 import 'package:storefront_app/features/auth/screens/signup_screen.dart';
 import 'package:storefront_app/main.dart';
 
@@ -114,14 +115,16 @@ void main() {
     expect(find.text('Available'), findsOneWidget);
 
     await tester.enterText(find.byKey(const Key('email')), 'hello@vanillamenu.test');
-    await tester.enterText(find.byKey(const Key('phone')), '079 123 4567');
+    await tester.enterText(find.byKey(const Key('phone')), '202 555 0123');
     await tester.enterText(find.byKey(const Key('password')), 'Vanilla2026');
     await tester.scrollUntilVisible(find.widgetWithText(FilledButton, 'Create account'), 200, scrollable: find.byType(Scrollable).first);
     await tester.pumpAndSettle();
     await tester.tap(find.widgetWithText(FilledButton, 'Create account'));
     await tester.pumpAndSettle();
 
-    expect(sent, containsPair('phone', '+962791234567'));
+    // A US phone: +1 and US dollars are preselected.
+    expect(sent, containsPair('phone', '+12025550123'));
+    expect(sent, containsPair('currencyCode', 'USD'));
     expect(sent, containsPair('businessName', 'Vanilla Menu'));
     expect(find.text('Your table is set, Vanilla Menu.'), findsOneWidget);
     expect(find.text('example.test/vanillamenu'), findsOneWidget);
@@ -266,5 +269,65 @@ void main() {
     await tester.tap(find.byType(FilledButton).first);
     await tester.pumpAndSettle();
     expect(api.requests.last.headers['Accept-Language'], 'ar');
+  });
+
+  testWidgets('sign-up preselects the phone region, and the currency picker searches and sends the choice', (tester) async {
+    Map<String, dynamic>? sent;
+    await pumpApp(tester, (path, body) {
+      if (path.endsWith('/register')) {
+        sent = Map<String, dynamic>.from(body as Map);
+        return (status: 200, body: authBody(currencyCode: 'EUR'));
+      }
+      return slugFree(path, body);
+    }, locale: const Locale('en', 'JO'));
+    await tester.tap(find.text('Skip'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('+962'), findsOneWidget);
+    await tester.scrollUntilVisible(find.byKey(const Key('currencyRow')), 200, scrollable: find.byType(Scrollable).first);
+    await tester.pumpAndSettle();
+    expect(find.text('Jordanian dinar · JOD'), findsOneWidget);
+    expect(find.text('Your prices show in this currency. You can change it later in Settings.'), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key('currencyRow')));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const Key('currencySearch')), 'eur');
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('currency-JOD')), findsNothing);
+    await tester.tap(find.byKey(const Key('currency-EUR')));
+    await tester.pumpAndSettle();
+    expect(find.text('Euro · EUR'), findsOneWidget);
+
+    await tester.enterText(find.byKey(const Key('businessName')), 'Vanilla Menu');
+    await tester.enterText(find.byKey(const Key('email')), 'hello@vanillamenu.test');
+    await tester.enterText(find.byKey(const Key('phone')), '079 123 4567');
+    await tester.enterText(find.byKey(const Key('password')), 'Vanilla2026');
+    await tester.pump(const Duration(milliseconds: 500));
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(find.widgetWithText(FilledButton, 'Create account'), 200, scrollable: find.byType(Scrollable).first);
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Create account'));
+    await tester.pumpAndSettle();
+
+    expect(sent!['phone'], '+962791234567');
+    expect(sent!['currencyCode'], 'EUR');
+    expect(sent!['timeZone'], 'Asia/Amman');
+  });
+
+  test('the phone region picks the calling code and time zone', () {
+    expect(countryCodes.first, '+1');
+    expect(countryCodes.toSet().length, countryCodes.length, reason: 'no repeated codes');
+    expect(defaultDialCode('AE'), '+971');
+    expect(defaultDialCode('CA'), '+1');
+    expect(defaultDialCode('ZZ'), '+1');
+    expect(deviceCountry(const [Locale('ar'), Locale('ar', 'eg')]), 'EG');
+    expect(deviceCountry(const [Locale('en')]), isNull);
+
+    expect(guessTimeZone(country: 'SA', standardOffset: const Duration(hours: 3)), 'Asia/Riyadh');
+    expect(guessTimeZone(country: 'US', standardOffset: const Duration(hours: -6)), 'America/Chicago');
+    expect(guessTimeZone(country: 'AU', standardOffset: const Duration(hours: 10)), 'Australia/Sydney');
+    expect(guessTimeZone(country: null, standardOffset: const Duration(hours: 5, minutes: 30)), 'Asia/Kolkata');
+    expect(guessTimeZone(country: 'ZZ', standardOffset: Duration.zero), 'UTC');
+    expect(guessTimeZone(country: null, standardOffset: const Duration(hours: 13, minutes: 45)), isNull);
   });
 }

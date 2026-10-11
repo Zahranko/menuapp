@@ -5,7 +5,8 @@ import 'fake_api.dart';
 /// An in-memory stand-in for the owner API: enough of /me, catalog, site, templates, plans and domains
 /// for widget tests to click through the app.
 class FakeBackend {
-  FakeBackend({this.plan = 'pro', this.testMode = true, bool withMenu = true}) {
+  FakeBackend({this.plan = 'pro', this.testMode = true, bool withMenu = true, String currencyCode = 'USD'})
+      : businessData = business(currencyCode: currencyCode) {
     if (withMenu) {
       categories.addAll([
         {'id': 'c1', 'name': 'Coffee', 'sortOrder': 0},
@@ -22,6 +23,16 @@ class FakeBackend {
 
   String plan;
   bool testMode;
+
+  /// The owner's business as `GET /me` and `PUT /business` return it.
+  final Map<String, Object?> businessData;
+
+  /// The server's currency list with each one's decimals.
+  static const currencyDecimals = {
+    'USD': 2, 'EUR': 2, 'GBP': 2, 'JOD': 3, 'SAR': 2, 'AED': 2, 'QAR': 2, 'KWD': 3, 'BHD': 3, 'OMR': 3, 'EGP': 2, 'LBP': 2, 'IQD': 3,
+    'SYP': 2, 'MAD': 2, 'TND': 3, 'DZD': 2, 'LYD': 3, 'YER': 2, 'SDG': 2, 'ILS': 2, 'TRY': 2, 'CAD': 2, 'AUD': 2, 'CHF': 2, 'SEK': 2,
+    'NOK': 2, 'DKK': 2, 'JPY': 0, 'CNY': 2, 'INR': 2, 'PKR': 2, 'MYR': 2, 'IDR': 2, 'NGN': 2, 'ZAR': 2, 'KES': 2, 'BRL': 2, 'MXN': 2,
+  };
   final categories = <Map<String, Object?>>[];
   final products = <Map<String, Object?>>[];
   Map<String, Object?>? domainRequest;
@@ -138,7 +149,24 @@ class FakeBackend {
 
     switch (key) {
       case 'GET /api/v1/me':
-        return (status: 200, body: {'userId': 'u1', 'email': 'hello@vanillamenu.test', 'phone': '+962791234567', 'business': business()});
+        return (status: 200, body: {'userId': 'u1', 'email': 'hello@vanillamenu.test', 'phone': '+15555550123', 'business': businessData});
+      case 'PUT /api/v1/business':
+        final currency = body!['currencyCode'] as String?;
+        if (currency != null && !currencyDecimals.containsKey(currency)) {
+          return (status: 400, body: {'title': 'Check the highlighted fields.', 'status': 400, 'code': 'business.currency', 'errors': {'currencyCode': ['Choose a currency from the list.']}});
+        }
+        for (final k in ['name', 'whatsApp', 'address', 'instagram', 'email', 'timeZone']) {
+          if (body.containsKey(k)) businessData[k] = body[k];
+        }
+        if (currency != null && currency != businessData['currencyCode']) {
+          // Prices keep their numbers, rounded to the new currency's decimals.
+          final decimals = currencyDecimals[currency]!;
+          for (final p in products) {
+            p['price'] = double.parse((p['price'] as num).toStringAsFixed(decimals));
+          }
+          businessData['currencyCode'] = currency;
+        }
+        return (status: 200, body: businessData);
       case 'POST /api/v1/auth/logout':
         return (status: 204, body: null);
       case 'GET /api/v1/categories':

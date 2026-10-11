@@ -117,6 +117,47 @@
   "labelVegan": "Vegan",
   "labelSpicy": "Spicy",
   "priceIn": "{price} {currency}",
+  "pricePrefixed": "{currency}{price}",
+  "@pricePrefixed": {
+    "description": "A price whose currency sign goes first, like $3.50.",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "errPriceWhole": "Use whole numbers only, like 350.",
+  "currency": "Currency",
+  "currencyHelp": "Your prices show in this currency. You can change it later in Settings.",
+  "chooseCurrency": "Choose your currency",
+  "chooseCurrencySub": "Prices on your website show in this currency.",
+  "searchCurrencies": "Search currencies",
+  "noCurrencyMatches": "No currency matches that search.",
+  "currencyChangeTitle": "Switch to {currency}?",
+  "@currencyChangeTitle": {
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "currencyChangeBody": "Your prices keep their numbers and only the currency changes: for example, {before} becomes {after}. Nothing is converted.",
+  "@currencyChangeBody": {
+    "placeholders": {
+      "before": {
+        "type": "String"
+      },
+      "after": {
+        "type": "String"
+      }
+    }
+  },
+  "currencyChangeConfirm": "Change currency",
+  "currencyChanged": "Currency changed · live on your website",
+  "whatsAppHint": "+XX XXX XXX XXXX",
   "@priceIn": {
     "placeholders": {
       "price": {
@@ -127,11 +168,17 @@
       }
     }
   },
-  "currencyJod": "JD",
   "addCategoryFirst": "Add a category first",
   "errProductName": "Enter a product name.",
   "errPrice": "Enter a price.",
-  "errPriceFormat": "Use numbers only, like 3.50.",
+  "errPriceFormat": "Use numbers only, like 3.50, with up to {decimals, plural, =1{1 digit} other{{decimals} digits}} after the point.",
+  "@errPriceFormat": {
+    "placeholders": {
+      "decimals": {
+        "type": "int"
+      }
+    }
+  },
   "savedLive": "Saved · live on your website",
   "addedLive": "Added · live on your website",
   "productDeleted": "Product deleted",

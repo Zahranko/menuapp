@@ -2230,6 +2230,18 @@
               "null",
               "string"
             ]
+          },
+          "currencyCode": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "timeZone": {
+            "type": [
+              "null",
+              "string"
+            ]
           }
         }
       },
@@ -2629,6 +2641,12 @@
             ]
           },
           "timeZone": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "currencyCode": {
             "type": [
               "null",
               "string"

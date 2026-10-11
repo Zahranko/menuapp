@@ -60,7 +60,7 @@ void main() {
     expect(find.text('Vanilla Menu'), findsOneWidget);
     expect(find.text('example.test/vanillamenu'), findsOneWidget);
     expect(find.text('Vanilla latte'), findsOneWidget);
-    expect(find.text('3.50 JD'), findsOneWidget);
+    expect(find.text(r'$3.50'), findsOneWidget);
     expect(find.text('Signature'), findsOneWidget);
     // One product is sold out: it shows in the stats and on its row.
     expect(find.text('Sold out'), findsNWidgets(2));
@@ -94,7 +94,7 @@ void main() {
     await tester.enterText(find.byKey(const Key('productName')), 'Saffron cake');
     await tester.enterText(find.byKey(const Key('productPrice')), '4,5x');
     await tapIn(tester, find.widgetWithText(FilledButton, 'Add product'));
-    expect(find.text('Use numbers only, like 3.50.'), findsOneWidget);
+    expect(find.text('Use numbers only, like 3.50, with up to 2 digits after the point.'), findsOneWidget);
 
     await tester.enterText(find.byKey(const Key('productPrice')), '4,50');
     await tapIn(tester, find.widgetWithText(FilledButton, 'Add product'));
@@ -393,7 +393,7 @@ void main() {
   });
 
   testWidgets('Arabic owners get My menu in Arabic, right to left', (tester) async {
-    await pumpSignedIn(tester, FakeBackend(), locale: const Locale('ar'));
+    await pumpSignedIn(tester, FakeBackend(currencyCode: 'JOD'), locale: const Locale('ar'));
     expect(find.text('عرض الموقع'), findsOneWidget);
     expect(find.text('3.50 د.أ'), findsOneWidget);
     expect(Directionality.of(tester.element(find.text('عرض الموقع'))), TextDirection.rtl);
@@ -487,5 +487,110 @@ void main() {
     final atelier = TemplateInfo.fromJson(Map<String, dynamic>.from(FakeBackend.templates[1]));
     expect(atelier.ar, isNull);
     expect(atelier.defaultsFor('ar'), atelier.defaults);
+  });
+
+  group('currency', () {
+    testWidgets('prices show in the business currency with its decimals', (tester) async {
+      await pumpSignedIn(tester, FakeBackend(currencyCode: 'JOD'));
+      expect(find.text('3.50 JD'), findsOneWidget);
+      expect(find.text('3.75 JD'), findsOneWidget);
+
+      // The price field takes the dinar's three decimals and shows its sign.
+      await tester.tap(find.text('Vanilla latte'));
+      await tester.pumpAndSettle();
+      expect(find.descendant(of: find.byKey(const Key('productPrice')), matching: find.text('3.500')), findsOneWidget);
+      expect(find.descendant(of: find.byKey(const Key('productPrice')), matching: find.text('JD')), findsOneWidget);
+      await tester.enterText(find.byKey(const Key('productPrice')), '3.2555');
+      await tapIn(tester, find.widgetWithText(FilledButton, 'Save changes'));
+      expect(find.text('Use numbers only, like 3.50, with up to 3 digits after the point.'), findsOneWidget);
+      await tester.enterText(find.byKey(const Key('productPrice')), '3.255');
+      await tapIn(tester, find.widgetWithText(FilledButton, 'Save changes'));
+      expect(find.text('3.255 JD'), findsOneWidget);
+    });
+
+    testWidgets('a whole-number currency takes whole prices only', (tester) async {
+      final backend = FakeBackend(currencyCode: 'JPY');
+      backend.products.first['price'] = 1200;
+      await pumpSignedIn(tester, backend);
+      expect(find.text('¥1,200'), findsOneWidget);
+      await tester.tap(find.text('Vanilla latte'));
+      await tester.pumpAndSettle();
+      await tester.enterText(find.byKey(const Key('productPrice')), '1200.5');
+      await tapIn(tester, find.widgetWithText(FilledButton, 'Save changes'));
+      expect(find.text('Use whole numbers only, like 350.'), findsOneWidget);
+    });
+
+    testWidgets('Settings changes the currency after confirming that prices keep their numbers', (tester) async {
+      final backend = FakeBackend();
+      await pumpSignedIn(tester, backend);
+      await openTab(tester, 'Settings');
+      await scrollTo(tester, find.byKey(const Key('currencyRow')));
+      expect(find.text('US dollar · USD'), findsOneWidget);
+
+      await tapIn(tester, find.byKey(const Key('currencyRow')));
+      expect(find.text('Choose your currency'), findsOneWidget);
+      expect(find.descendant(of: find.byKey(const Key('currency-USD')), matching: find.byIcon(Icons.check_rounded)), findsOneWidget);
+      await tester.enterText(find.byKey(const Key('currencySearch')), 'dinar');
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('currency-USD')), findsNothing);
+      await tester.tap(find.byKey(const Key('currency-JOD')));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Switch to Jordanian dinar?'), findsOneWidget);
+      expect(find.text(r'Your prices keep their numbers and only the currency changes: for example, $3.50 becomes 3.50 JD. Nothing is converted.'), findsOneWidget);
+      // Cancelling saves nothing.
+      await tester.tap(find.text('Cancel'));
+      await tester.pumpAndSettle();
+      expect(backend.requests, isNot(contains('PUT /api/v1/business')));
+      expect(find.text('US dollar · USD'), findsOneWidget);
+
+      await tapIn(tester, find.byKey(const Key('currencyRow')));
+      await tester.enterText(find.byKey(const Key('currencySearch')), 'jod');
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('currency-JOD')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('confirmCurrency')));
+      await tester.pumpAndSettle();
+
+      expect(backend.businessData['currencyCode'], 'JOD');
+      expect(backend.businessData['name'], 'Vanilla Menu', reason: 'the rest of the business info stays as saved');
+      expect(find.text('Currency changed · live on your website'), findsOneWidget);
+      expect(find.text('Jordanian dinar · JOD'), findsOneWidget);
+
+      await openTab(tester, 'Products');
+      expect(find.text('3.50 JD'), findsOneWidget);
+    });
+
+    testWidgets('with no products, Settings changes the currency without asking', (tester) async {
+      final backend = FakeBackend(withMenu: false);
+      await pumpSignedIn(tester, backend);
+      await openTab(tester, 'Settings');
+      await scrollTo(tester, find.byKey(const Key('currencyRow')));
+      await tapIn(tester, find.byKey(const Key('currencyRow')));
+      await tester.enterText(find.byKey(const Key('currencySearch')), 'nothing like this');
+      await tester.pumpAndSettle();
+      expect(find.text('No currency matches that search.'), findsOneWidget);
+      await tester.enterText(find.byKey(const Key('currencySearch')), '€');
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('currency-EUR')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('confirmCurrency')), findsNothing);
+      expect(backend.businessData['currencyCode'], 'EUR');
+      expect(find.text('Euro · EUR'), findsOneWidget);
+    });
+
+    testWidgets('in Arabic the currency list shows Arabic names, right to left', (tester) async {
+      await pumpSignedIn(tester, FakeBackend(currencyCode: 'SAR'), locale: const Locale('ar'));
+      await openTab(tester, 'الإعدادات');
+      await scrollTo(tester, find.byKey(const Key('currencyRow')));
+      expect(find.text('ريال سعودي · SAR'), findsOneWidget);
+      await tapIn(tester, find.byKey(const Key('currencyRow')));
+      expect(find.text('اختر عملتك'), findsOneWidget);
+      await tester.enterText(find.byKey(const Key('currencySearch')), 'دينار');
+      await tester.pumpAndSettle();
+      expect(find.text('دينار أردني'), findsOneWidget);
+      expect(find.byKey(const Key('currency-USD')), findsNothing);
+      expect(Directionality.of(tester.element(find.text('دينار أردني'))), TextDirection.rtl);
+    });
   });
 }

@@ -632,11 +632,83 @@ abstract class AppLocalizations {
   /// **'{price} {currency}'**
   String priceIn(String price, String currency);
 
-  /// No description provided for @currencyJod.
+  /// A price whose currency sign goes first, like $3.50.
   ///
   /// In en, this message translates to:
-  /// **'JD'**
-  String get currencyJod;
+  /// **'{currency}{price}'**
+  String pricePrefixed(String price, String currency);
+
+  /// No description provided for @errPriceWhole.
+  ///
+  /// In en, this message translates to:
+  /// **'Use whole numbers only, like 350.'**
+  String get errPriceWhole;
+
+  /// No description provided for @currency.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get currency;
+
+  /// No description provided for @currencyHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Your prices show in this currency. You can change it later in Settings.'**
+  String get currencyHelp;
+
+  /// No description provided for @chooseCurrency.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your currency'**
+  String get chooseCurrency;
+
+  /// No description provided for @chooseCurrencySub.
+  ///
+  /// In en, this message translates to:
+  /// **'Prices on your website show in this currency.'**
+  String get chooseCurrencySub;
+
+  /// No description provided for @searchCurrencies.
+  ///
+  /// In en, this message translates to:
+  /// **'Search currencies'**
+  String get searchCurrencies;
+
+  /// No description provided for @noCurrencyMatches.
+  ///
+  /// In en, this message translates to:
+  /// **'No currency matches that search.'**
+  String get noCurrencyMatches;
+
+  /// No description provided for @currencyChangeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to {currency}?'**
+  String currencyChangeTitle(String currency);
+
+  /// No description provided for @currencyChangeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your prices keep their numbers and only the currency changes: for example, {before} becomes {after}. Nothing is converted.'**
+  String currencyChangeBody(String before, String after);
+
+  /// No description provided for @currencyChangeConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Change currency'**
+  String get currencyChangeConfirm;
+
+  /// No description provided for @currencyChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency changed · live on your website'**
+  String get currencyChanged;
+
+  /// No description provided for @whatsAppHint.
+  ///
+  /// In en, this message translates to:
+  /// **'+XX XXX XXX XXXX'**
+  String get whatsAppHint;
 
   /// No description provided for @addCategoryFirst.
   ///
@@ -659,8 +731,8 @@ abstract class AppLocalizations {
   /// No description provided for @errPriceFormat.
   ///
   /// In en, this message translates to:
-  /// **'Use numbers only, like 3.50.'**
-  String get errPriceFormat;
+  /// **'Use numbers only, like 3.50, with up to {decimals, plural, =1{1 digit} other{{decimals} digits}} after the point.'**
+  String errPriceFormat(int decimals);
 
   /// No description provided for @savedLive.
   ///

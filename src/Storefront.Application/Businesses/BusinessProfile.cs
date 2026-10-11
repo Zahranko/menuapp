@@ -20,7 +20,19 @@ public sealed class GetBusinessHandler(ICurrentUser currentUser, IBusinessReposi
 }
 
 /// <summary>Business info shown in the site header, contact section and footer. The slug never changes here.</summary>
-public sealed record UpdateBusiness(string Name, string? WhatsApp, string? Email, string? Address, string? Instagram, string? Locale, string? TimeZone);
+/// <param name="CurrencyCode">
+/// Optional. A new currency re-labels every product price in it, keeping the numbers (no exchange rate) and rounding
+/// each one to the new currency's decimals.
+/// </param>
+public sealed record UpdateBusiness(
+    string Name,
+    string? WhatsApp,
+    string? Email,
+    string? Address,
+    string? Instagram,
+    string? Locale,
+    string? TimeZone,
+    string? CurrencyCode = null);
 
 public sealed class UpdateBusinessValidator : AbstractValidator<UpdateBusiness>
 {
@@ -35,14 +47,21 @@ public sealed class UpdateBusinessValidator : AbstractValidator<UpdateBusiness>
         RuleFor(x => x.Instagram!).Matches("^@?[A-Za-z0-9._]{1,30}$").WithMessage("Enter your Instagram username, like vanillamenu.")
             .When(x => !string.IsNullOrWhiteSpace(x.Instagram));
         RuleFor(x => x.Locale).Must(l => l is null || Business.Locales.Contains(l)).WithMessage("Language must be en or ar.");
-        RuleFor(x => x.TimeZone!).Must(BeATimeZone).WithMessage("Choose a time zone from the list.")
+        RuleFor(x => x.TimeZone!).Must(Business.IsTimeZone).WithMessage(Business.TimeZoneMessage)
             .When(x => !string.IsNullOrWhiteSpace(x.TimeZone));
+        RuleFor(x => x.CurrencyCode!).Must(Currencies.IsSupported).WithMessage(Currencies.UnsupportedMessage)
+            .When(x => !string.IsNullOrWhiteSpace(x.CurrencyCode));
     }
-
-    private static bool BeATimeZone(string id) => TimeZoneInfo.TryFindSystemTimeZoneById(id, out _);
 }
 
-public sealed class UpdateBusinessHandler(IValidator<UpdateBusiness> validator, ICurrentUser currentUser, IBusinessRepository businesses, IUnitOfWork uow, IClock clock, SiteLinks links)
+public sealed class UpdateBusinessHandler(
+    IValidator<UpdateBusiness> validator,
+    ICurrentUser currentUser,
+    IBusinessRepository businesses,
+    ICatalogRepository catalog,
+    IUnitOfWork uow,
+    IClock clock,
+    SiteLinks links)
 {
     public async Task<Result<BusinessDto>> Handle(UpdateBusiness cmd, CancellationToken ct)
     {
@@ -69,6 +88,20 @@ public sealed class UpdateBusinessHandler(IValidator<UpdateBusiness> validator, 
             if (!string.IsNullOrWhiteSpace(cmd.TimeZone))
             {
                 business.SetTimeZone(cmd.TimeZone);
+            }
+
+            if (!string.IsNullOrWhiteSpace(cmd.CurrencyCode))
+            {
+                var currency = Currencies.Normalize(cmd.CurrencyCode);
+                if (currency != business.CurrencyCode)
+                {
+                    business.SetCurrency(currency);
+                    var now = clock.UtcNow;
+                    foreach (var product in await catalog.ListProductsAsync(null, ct))
+                    {
+                        product.ChangeCurrency(currency, now);
+                    }
+                }
             }
         }
         catch (DomainException ex)

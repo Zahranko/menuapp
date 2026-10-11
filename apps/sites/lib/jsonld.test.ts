@@ -21,7 +21,7 @@ describe("JSON-LD", () => {
     expect(latte).toMatchObject({
       name: "Vanilla latte",
       offers: {
-        price: "3.50",
+        price: "3.5",
         priceCurrency: "JOD",
         availability: "https://schema.org/InStock",
       },

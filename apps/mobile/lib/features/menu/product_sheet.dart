@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/api/api_error.dart';
+import '../../core/currency.dart';
 import '../../core/providers.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/form_widgets.dart';
@@ -42,7 +43,7 @@ class ProductSheet extends ConsumerStatefulWidget {
 class _ProductSheetState extends ConsumerState<ProductSheet> {
   late final _name = TextEditingController(text: widget.product?.name ?? '');
   late final _description = TextEditingController(text: widget.product?.description ?? '');
-  late final _price = TextEditingController(text: widget.product == null ? '' : widget.product!.price.toStringAsFixed(2));
+  late final _price = TextEditingController(text: widget.product == null ? '' : _currency.inputText(widget.product!.price));
   late String _categoryId = widget.product?.categoryId ?? widget.categories.inDisplayOrder.first.id;
   late String? _label = widget.product?.label;
   late bool _available = widget.product?.isAvailable ?? true;
@@ -55,6 +56,12 @@ class _ProductSheetState extends ConsumerState<ProductSheet> {
 
   bool get _editing => widget.product != null;
 
+  /// The business currency: its sign shows in the price field and its decimals limit what can be typed.
+  Currency get _currency => currencyFor(switch (ref.read(authControllerProvider)) {
+        SignedIn(:final business) => business.currencyCode,
+        _ => defaultCurrencyCode,
+      });
+
   @override
   void dispose() {
     _name.dispose();
@@ -64,14 +71,14 @@ class _ProductSheetState extends ConsumerState<ProductSheet> {
   }
 
   /// Checks the name and price the same way the API does, so most mistakes show without a round trip.
-  static Map<String, String> validate(AppLocalizations t, String name, String price) {
+  static Map<String, String> validate(AppLocalizations t, String name, String price, Currency currency) {
     final errors = <String, String>{};
     if (name.trim().isEmpty) errors['name'] = t.errProductName;
     final p = price.trim().replaceAll(',', '.');
     if (p.isEmpty) {
       errors['price'] = t.errPrice;
-    } else if (!RegExp(r'^\d+(\.\d{1,3})?$').hasMatch(p)) {
-      errors['price'] = t.errPriceFormat;
+    } else if (!currency.acceptsPrice(p)) {
+      errors['price'] = currency.decimals == 0 ? t.errPriceWhole : t.errPriceFormat(currency.decimals);
     }
     return errors;
   }
@@ -93,7 +100,7 @@ class _ProductSheetState extends ConsumerState<ProductSheet> {
 
   Future<void> _save() async {
     final t = AppLocalizations.of(context);
-    final errors = validate(t, _name.text, _price.text);
+    final errors = validate(t, _name.text, _price.text, _currency);
     setState(() => _errors = errors);
     if (errors.isNotEmpty) return;
     setState(() => _busy = true);
@@ -140,8 +147,8 @@ class _ProductSheetState extends ConsumerState<ProductSheet> {
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
-    final auth = ref.watch(authControllerProvider);
-    final currency = auth is SignedIn && auth.business.currencyCode != 'JOD' ? auth.business.currencyCode : t.currencyJod;
+    ref.watch(authControllerProvider);
+    final currency = _currency;
     final ordered = widget.categories.inDisplayOrder;
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Text(_editing ? t.editProduct : t.newProduct, style: Ui.display(26)),
@@ -178,11 +185,11 @@ class _ProductSheetState extends ConsumerState<ProductSheet> {
           child: LabeledField(
             fieldKey: const Key('productPrice'),
             label: t.price,
-            hint: '0.00',
+            hint: currency.hint,
             controller: _price,
             error: _errors['price'],
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            suffix: Padding(padding: const EdgeInsets.all(14), child: Text(currency, style: TextStyle(color: BrandColors.muted))),
+            keyboardType: TextInputType.numberWithOptions(decimal: currency.decimals > 0),
+            suffix: Padding(padding: const EdgeInsets.all(14), child: Text(currency.symbolFor(context), style: TextStyle(color: BrandColors.muted))),
             onChanged: (_) => setState(() => _errors.remove('price')),
           ),
         ),

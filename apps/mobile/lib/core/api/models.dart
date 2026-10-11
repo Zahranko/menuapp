@@ -1,3 +1,5 @@
+import '../currency.dart';
+
 /// The owner's business as the API returns it (`BusinessDto`).
 class Business {
   const Business({
@@ -10,7 +12,7 @@ class Business {
     this.address,
     this.instagram,
     this.locale = 'en',
-    this.currencyCode = 'JOD',
+    this.currencyCode = defaultCurrencyCode,
   });
 
   factory Business.fromJson(Map<String, dynamic> json) => Business(
@@ -23,7 +25,7 @@ class Business {
         address: json['address'] as String?,
         instagram: json['instagram'] as String?,
         locale: json['locale'] as String? ?? 'en',
-        currencyCode: json['currencyCode'] as String? ?? 'JOD',
+        currencyCode: json['currencyCode'] as String? ?? defaultCurrencyCode,
       );
 
   final String id;

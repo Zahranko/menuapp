@@ -94,6 +94,21 @@ describe.each(ids)("template %s", (id) => {
     expect(page).toContain('aria-label="You are here"');
   });
 
+  it.each([
+    ["USD", "en", "$4.25"],
+    ["USD", "ar", "$4.25"],
+    ["KWD", "en", "1.375 KD"],
+    ["KWD", "ar", "1.375 د.ك"],
+  ])("shows prices in the business currency %s (%s), with nothing assuming JOD", (currencyCode, locale, expected) => {
+    const site = fixtureFor(id);
+    site.business = { ...site.business, currencyCode, locale, timeZone: currencyCode === "USD" ? "America/New_York" : "Asia/Kuwait" };
+    const price = expected.startsWith("$") ? 4.25 : 1.375;
+    site.categories = site.categories.map((c) => ({ ...c, products: c.products.map((p) => ({ ...p, price })) }));
+    const html = render(site);
+    expect(html).toContain(expected);
+    expect(html).not.toMatch(/\bJOD\b|\bJD\b|د\.أ|دينار/);
+  });
+
   it("has no empty menu when there are no products", () => {
     const site = fixtureFor(id);
     site.categories = [];

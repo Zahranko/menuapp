@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/api/api_error.dart';
 import '../../../core/brand.dart';
 import '../../../core/providers.dart';
+import '../../../core/region.dart';
 import '../../../core/widgets/form_widgets.dart';
 import '../../../core/widgets/language_picker.dart';
 import '../../../core/widgets/ui.dart';
@@ -24,7 +25,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _email = TextEditingController();
   final _phone = TextEditingController();
   final _password = TextEditingController();
-  String _code = countryCodes.first;
+  String _code = defaultDialCode();
   bool _withPhone = false;
   bool _busy = false;
   Map<String, String?> _errors = {};

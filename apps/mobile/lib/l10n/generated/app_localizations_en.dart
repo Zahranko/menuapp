@@ -296,7 +296,51 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get currencyJod => 'JD';
+  String pricePrefixed(String price, String currency) {
+    return '$currency$price';
+  }
+
+  @override
+  String get errPriceWhole => 'Use whole numbers only, like 350.';
+
+  @override
+  String get currency => 'Currency';
+
+  @override
+  String get currencyHelp =>
+      'Your prices show in this currency. You can change it later in Settings.';
+
+  @override
+  String get chooseCurrency => 'Choose your currency';
+
+  @override
+  String get chooseCurrencySub =>
+      'Prices on your website show in this currency.';
+
+  @override
+  String get searchCurrencies => 'Search currencies';
+
+  @override
+  String get noCurrencyMatches => 'No currency matches that search.';
+
+  @override
+  String currencyChangeTitle(String currency) {
+    return 'Switch to $currency?';
+  }
+
+  @override
+  String currencyChangeBody(String before, String after) {
+    return 'Your prices keep their numbers and only the currency changes: for example, $before becomes $after. Nothing is converted.';
+  }
+
+  @override
+  String get currencyChangeConfirm => 'Change currency';
+
+  @override
+  String get currencyChanged => 'Currency changed · live on your website';
+
+  @override
+  String get whatsAppHint => '+XX XXX XXX XXXX';
 
   @override
   String get addCategoryFirst => 'Add a category first';
@@ -308,7 +352,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errPrice => 'Enter a price.';
 
   @override
-  String get errPriceFormat => 'Use numbers only, like 3.50.';
+  String errPriceFormat(int decimals) {
+    String _temp0 = intl.Intl.pluralLogic(
+      decimals,
+      locale: localeName,
+      other: '$decimals digits',
+      one: '1 digit',
+    );
+    return 'Use numbers only, like 3.50, with up to $_temp0 after the point.';
+  }
 
   @override
   String get savedLive => 'Saved · live on your website';

@@ -104,7 +104,7 @@
     "accent": "#D3412F",
     "hero.title": "Coffee on wheels",
     "stamp": "Fresh",
-    "location": "Today: Rainbow Street, next to the old cinema",
+    "location": "Today: Main Street, next to the old cinema",
     "thanks": "Thank you, come again",
     "sections": ["announcement", "visit"],
     "announcement": "Bring your own cup, get 0.25 off",
@@ -121,7 +121,7 @@
   "defaultsAr": {
     "hero.title": "قهوة على عجلات",
     "stamp": "طازج",
-    "location": "اليوم: شارع الرينبو، بجانب السينما القديمة",
+    "location": "اليوم: الشارع الرئيسي، بجانب السينما القديمة",
     "thanks": "شكرًا لكم، نراكم مجددًا",
     "announcement": "أحضر كوبك الخاص واحصل على خصم 0.25"
   }

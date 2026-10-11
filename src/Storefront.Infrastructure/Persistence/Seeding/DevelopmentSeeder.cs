@@ -72,7 +72,7 @@ public sealed class DevelopmentSeeder(StorefrontDbContext db, ReferenceDataSeede
         owner.PasswordHash = new PasswordHasher<AppUser>().HashPassword(owner, SampleOwnerPassword);
         db.Users.Add(owner);
 
-        var business = Business.Create(owner.Id, "Vanilla Menu", slug, now);
+        var business = Business.Create(owner.Id, "Vanilla Menu", slug, now, currencyCode: "JOD", timeZone: "Asia/Amman");
         business.UpdateProfile("Vanilla Menu", PhoneNumber.Create("+962 79 000 0000"), "hello@example.com", "Rainbow Street 21, Jabal Amman", "vanillamenu", now);
         db.Businesses.Add(business);
 

@@ -1,18 +1,23 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/api/api_error.dart';
+import '../../core/currency.dart';
 import '../../core/providers.dart';
 import '../../core/theme.dart';
 import '../../core/l10n/app_language.dart';
+import '../../core/widgets/currency_picker.dart';
 import '../../core/widgets/form_widgets.dart';
 import '../../core/widgets/language_picker.dart';
 import '../../core/widgets/ui.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../auth/auth_controller.dart';
 import '../design/design_controller.dart';
+import 'catalog_controller.dart';
 import '../plan/plan_cards.dart';
 
 /// The signed-in owner's email and phone (`GET /me`).
@@ -91,6 +96,7 @@ class _BusinessCardState extends ConsumerState<_BusinessCard> {
   final _instagram = TextEditingController();
   Map<String, String> _errors = {};
   bool _busy = false;
+  bool _changingCurrency = false;
 
   @override
   void initState() {
@@ -144,17 +150,75 @@ class _BusinessCardState extends ConsumerState<_BusinessCard> {
     }
   }
 
+  /// Picks a new currency and saves it at once. With products on the menu, first confirms that
+  /// prices keep their numbers and only the currency changes.
+  Future<void> _changeCurrency() async {
+    final t = AppLocalizations.of(context);
+    final auth = ref.read(authControllerProvider);
+    if (auth is! SignedIn) return;
+    final b = auth.business;
+    final picked = await showCurrencyPicker(context, selected: b.currencyCode);
+    if (picked == null || picked == b.currencyCode || !mounted) return;
+
+    final products = ref.read(catalogProvider).value?.products ?? const [];
+    if (products.isNotEmpty) {
+      final sample = products.first.price;
+      final ok = await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(t.currencyChangeTitle(currencyFor(picked).nameFor(context))),
+          content: Text(t.currencyChangeBody(formatPrice(context, sample, b.currencyCode), formatPrice(context, sample, picked))),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(context, false), child: Text(t.cancel)),
+            FilledButton(
+              key: const Key('confirmCurrency'),
+              style: FilledButton.styleFrom(minimumSize: const Size(0, 44)),
+              onPressed: () => Navigator.pop(context, true),
+              child: Text(t.currencyChangeConfirm),
+            ),
+          ],
+        ),
+      );
+      if (ok != true || !mounted) return;
+    }
+
+    setState(() => _changingCurrency = true);
+    try {
+      // The saved info goes back unchanged, so only the currency changes (unsaved edits above stay in their fields).
+      final business = await ref.read(menuRepositoryProvider).updateBusiness(
+            name: b.name,
+            whatsApp: b.whatsApp,
+            address: b.address,
+            instagram: b.instagram,
+            email: b.email,
+            currencyCode: picked,
+          );
+      ref.read(authControllerProvider.notifier).businessChanged(business);
+      // Prices are rounded to the new currency's decimals on the server: show them as saved.
+      if (products.isNotEmpty) unawaited(ref.read(catalogProvider.notifier).refresh().catchError((_) {}));
+      if (mounted) showMessage(context, t.currencyChanged);
+    } on ApiError catch (e) {
+      if (mounted) showMessage(context, e.field('currencyCode') ?? errorText(t, e));
+    } finally {
+      if (mounted) setState(() => _changingCurrency = false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
+    final auth = ref.watch(authControllerProvider);
+    final currency = auth is SignedIn ? auth.business.currencyCode : defaultCurrencyCode;
     return SectionCard(title: t.businessInfo, icon: Icons.storefront_outlined, subtitle: t.businessInfoSub, children: [
       LabeledField(label: t.businessName, controller: _name, error: _errors['name'], icon: Icons.badge_outlined),
       const SizedBox(height: 14),
-      LabeledField(label: t.whatsApp, hint: '+962 79 123 4567', controller: _whatsApp, error: _errors['whatsApp'], keyboardType: TextInputType.phone, icon: Icons.chat_outlined),
+      LabeledField(label: t.whatsApp, hint: t.whatsAppHint, controller: _whatsApp, error: _errors['whatsApp'], keyboardType: TextInputType.phone, icon: Icons.chat_outlined),
       const SizedBox(height: 14),
       LabeledField(label: t.address, controller: _address, error: _errors['address'], icon: Icons.place_outlined),
       const SizedBox(height: 14),
       LabeledField(label: t.instagram, hint: '@vanillamenu', controller: _instagram, error: _errors['instagram'], textInputAction: TextInputAction.done, icon: Icons.alternate_email_rounded),
+      const SizedBox(height: 14),
+      CurrencyRow(code: currency, enabled: !_changingCurrency, onTap: _changeCurrency),
       const SizedBox(height: 18),
       BusyButton(label: t.saveChanges, busyLabel: t.saving, busy: _busy, onPressed: _save),
     ]);

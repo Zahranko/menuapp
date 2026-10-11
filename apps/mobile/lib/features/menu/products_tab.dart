@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/currency.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/form_widgets.dart';
 import '../../core/widgets/ui.dart';
@@ -98,7 +99,7 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
         if (shown(cat)) (cat, c.inCategory(cat.id).where(matches).toList()),
     ].where((g) => g.$2.isNotEmpty || (q.isEmpty && _filter == g.$1.id)).toList();
     if (groups.isEmpty) return [EmptyNote(title: t.noMatchesTitle, body: t.noMatchesBody)];
-    final currency = switch (ref.read(authControllerProvider)) { SignedIn(:final business) => business.currencyCode, _ => 'JOD' };
+    final currency = switch (ref.watch(authControllerProvider)) { SignedIn(:final business) => business.currencyCode, _ => defaultCurrencyCode };
 
     return [
       for (final (cat, products) in groups) ...[
@@ -179,7 +180,7 @@ class _ProductRow extends ConsumerWidget {
                 Text(p.name, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15.5, color: BrandColors.ink)),
                 const SizedBox(height: 4),
                 Wrap(spacing: 6, runSpacing: 4, crossAxisAlignment: WrapCrossAlignment.center, children: [
-                  Text(formatPrice(t, p.price, currency), style: TextStyle(color: BrandColors.muted, fontWeight: FontWeight.w500)),
+                  Text(formatPrice(context, p.price, currency), style: TextStyle(color: BrandColors.muted, fontWeight: FontWeight.w500)),
                   if (p.label != null) Pill(productLabelText(t, p.label!)),
                   if (!p.isAvailable) Pill(t.soldOut, color: BrandColors.highlight.withValues(alpha: 0.15), textColor: BrandColors.highlight),
                 ]),

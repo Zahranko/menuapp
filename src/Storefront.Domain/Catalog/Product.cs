@@ -48,6 +48,23 @@ public sealed class Product : AggregateRoot, ITenantOwned
         Raise(new ProductChanged(BusinessId, Id, ChangeKind.Updated, now));
     }
 
+    /// <summary>
+    /// The business switched currency: the price keeps its number (no exchange rate) and is rounded to the new
+    /// currency's decimals, away from zero (1.255 becomes 1.26 in USD, 3.5 becomes 4 in JPY).
+    /// No event: the business raises one for the whole site.
+    /// </summary>
+    public void ChangeCurrency(string currency, DateTimeOffset now)
+    {
+        var price = Money.Round(Price, currency);
+        if (price == Price)
+        {
+            return;
+        }
+
+        Price = price;
+        UpdatedAt = now;
+    }
+
     public void SetAvailability(bool isAvailable, DateTimeOffset now)
     {
         IsAvailable = isAvailable;

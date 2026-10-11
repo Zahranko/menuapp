@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../api/api_error.dart';
 import '../brand.dart';
+import '../currency.dart';
 import '../theme.dart';
 
 /// A white card with soft depth: the base surface of every screen.
@@ -106,11 +107,13 @@ class Pill extends StatelessWidget {
   );
 }
 
-/// "3.50 JD": two decimals, or three when the price needs them.
-String formatPrice(AppLocalizations t, double price, String currencyCode) {
-  var text = price.toStringAsFixed(3);
-  if (text.endsWith('0')) text = text.substring(0, text.length - 1);
-  return t.priceIn(text, currencyCode == 'JOD' ? t.currencyJod : currencyCode);
+/// A price in the business currency, like "\$3.50" or "3.50 JD": its sign, grouped thousands and its decimals.
+String formatPrice(BuildContext context, double price, String currencyCode) {
+  final t = AppLocalizations.of(context);
+  final currency = currencyFor(currencyCode);
+  final number = currency.formatNumber(price);
+  final symbol = currency.symbolFor(context);
+  return currency.symbolFirst ? t.pricePrefixed(number, symbol) : t.priceIn(number, symbol);
 }
 
 /// A product photo, or a tinted tile with the first letter when there is none.

@@ -10,7 +10,17 @@ using Storefront.Domain.Sites;
 
 namespace Storefront.Application.Accounts;
 
-public sealed record Register(string BusinessName, string Email, string Phone, string Password, string? DeviceName = null, string? Locale = null);
+/// <param name="CurrencyCode">ISO code of the currency the owner prices in (see <see cref="Currencies.All"/>). Defaults to USD.</param>
+/// <param name="TimeZone">IANA time zone of the business, like "Europe/London". Defaults to UTC.</param>
+public sealed record Register(
+    string BusinessName,
+    string Email,
+    string Phone,
+    string Password,
+    string? DeviceName = null,
+    string? Locale = null,
+    string? CurrencyCode = null,
+    string? TimeZone = null);
 
 public sealed class RegisterValidator : AbstractValidator<Register>
 {
@@ -25,6 +35,10 @@ public sealed class RegisterValidator : AbstractValidator<Register>
             .Must(BeAPhoneNumber).WithMessage("Enter a full phone number with the country code.");
         RuleFor(x => x.Password).Cascade(CascadeMode.Stop).StrongPassword();
         RuleFor(x => x.Locale).Must(l => l is null || Business.Locales.Contains(l)).WithMessage("Language must be en or ar.");
+        RuleFor(x => x.CurrencyCode!).Must(Currencies.IsSupported).WithMessage(Currencies.UnsupportedMessage)
+            .When(x => !string.IsNullOrWhiteSpace(x.CurrencyCode));
+        RuleFor(x => x.TimeZone!).Must(Business.IsTimeZone).WithMessage(Business.TimeZoneMessage)
+            .When(x => !string.IsNullOrWhiteSpace(x.TimeZone));
     }
 
     private static bool BeAPhoneNumber(string phone)
@@ -88,7 +102,14 @@ public sealed class RegisterHandler(
             }
 
             var now = clock.UtcNow;
-            var business = Business.Create(user.Value.Id, cmd.BusinessName, Slug.Create(slugValue, reserved.All), now, cmd.Locale ?? "en");
+            var business = Business.Create(
+                user.Value.Id,
+                cmd.BusinessName,
+                Slug.Create(slugValue, reserved.All),
+                now,
+                cmd.Locale ?? "en",
+                string.IsNullOrWhiteSpace(cmd.CurrencyCode) ? Currencies.Default : cmd.CurrencyCode,
+                string.IsNullOrWhiteSpace(cmd.TimeZone) ? Business.DefaultTimeZone : cmd.TimeZone.Trim());
             business.UpdateProfile(cmd.BusinessName, phone, cmd.Email.Trim(), null, null, now);
             business.ClearDomainEvents();
             businesses.Add(business);

@@ -65,7 +65,8 @@ class MenuRepository {
         return response.data!['url'] as String;
       });
 
-  Future<Business> updateBusiness({required String name, String? whatsApp, String? address, String? instagram, String? email}) =>
+  /// Saves business info. [currencyCode], when given, changes what prices show in: their numbers stay the same.
+  Future<Business> updateBusiness({required String name, String? whatsApp, String? address, String? instagram, String? email, String? currencyCode}) =>
       _call(() async {
         final response = await _dio.put<Map<String, dynamic>>('/api/v1/business', data: {
           'name': name,
@@ -73,6 +74,7 @@ class MenuRepository {
           'address': address,
           'instagram': instagram,
           'email': email,
+          'currencyCode': ?currencyCode,
         });
         return Business.fromJson(response.data!);
       });

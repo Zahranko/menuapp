@@ -292,7 +292,50 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get currencyJod => 'د.أ';
+  String pricePrefixed(String price, String currency) {
+    return '$price $currency';
+  }
+
+  @override
+  String get errPriceWhole => 'استخدم أرقامًا صحيحة فقط، مثل 350.';
+
+  @override
+  String get currency => 'العملة';
+
+  @override
+  String get currencyHelp =>
+      'تظهر أسعارك بهذه العملة. يمكنك تغييرها لاحقًا من الإعدادات.';
+
+  @override
+  String get chooseCurrency => 'اختر عملتك';
+
+  @override
+  String get chooseCurrencySub => 'تظهر الأسعار على موقعك بهذه العملة.';
+
+  @override
+  String get searchCurrencies => 'ابحث عن عملة';
+
+  @override
+  String get noCurrencyMatches => 'لا توجد عملة تطابق بحثك.';
+
+  @override
+  String currencyChangeTitle(String currency) {
+    return 'التحويل إلى $currency؟';
+  }
+
+  @override
+  String currencyChangeBody(String before, String after) {
+    return 'تبقى أرقام أسعارك كما هي وتتغير العملة فقط، فمثلًا $before يصبح $after. لا يتم تحويل أي سعر.';
+  }
+
+  @override
+  String get currencyChangeConfirm => 'غيّر العملة';
+
+  @override
+  String get currencyChanged => 'تم تغيير العملة · ظاهرة على موقعك';
+
+  @override
+  String get whatsAppHint => '+XX XXX XXX XXXX';
 
   @override
   String get addCategoryFirst => 'أضف صنفًا أولًا';
@@ -304,7 +347,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get errPrice => 'أدخل السعر.';
 
   @override
-  String get errPriceFormat => 'استخدم أرقامًا فقط، مثل 3.50.';
+  String errPriceFormat(int decimals) {
+    String _temp0 = intl.Intl.pluralLogic(
+      decimals,
+      locale: localeName,
+      other: '$decimals أرقام',
+      two: 'رقمين',
+      one: 'رقم واحد',
+    );
+    return 'استخدم أرقامًا فقط، مثل 3.50، وبحد أقصى $_temp0 بعد الفاصلة.';
+  }
 
   @override
   String get savedLive => 'تم الحفظ · ظاهر على موقعك';
