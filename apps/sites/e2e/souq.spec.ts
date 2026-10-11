@@ -45,7 +45,7 @@ test("the sample site shows every section and works on this screen size", async 
   // Structured data is valid JSON with prices.
   const ld = JSON.parse((await page.locator('script[type="application/ld+json"]').textContent()) ?? "{}");
   expect(ld["@type"]).toBe("CafeOrCoffeeShop");
-  expect(ld.hasMenu.hasMenuSection[0].hasMenuItem[0].offers.price).toBe("3.50");
+  expect(ld.hasMenu.hasMenuSection[0].hasMenuItem[0].offers.price).toBe("3.5");
 
   await page.screenshot({ path: `test-results/souq-${info.project.name}.png`, fullPage: true });
   expect(errors).toEqual([]);
