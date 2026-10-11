@@ -1,0 +1,179 @@
+/* Template 026 "Bloom" (Pro): soft and sweet. Pastels, blobs, round category bubbles and pillowy cards. */
+@import "../_premium/base.css";
+
+.t-bloom {
+  --card-ratio: 1;
+  --tile-ratio: 1;
+  --gap: 18px;
+  background-image:
+    radial-gradient(circle at 8% 12%, color-mix(in srgb, var(--acc) 12%, transparent) 0 120px, transparent 121px),
+    radial-gradient(circle at 96% 38%, color-mix(in srgb, var(--acc) 9%, transparent) 0 160px, transparent 161px);
+  background-repeat: no-repeat;
+
+  .orn {
+    width: 16px;
+    height: 16px;
+  }
+  .eyebrow {
+    letter-spacing: 0.06em;
+    text-transform: none;
+    font-size: 14px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--acc-soft);
+  }
+  .hero-cover .eyebrow,
+  .hero-slides .eyebrow {
+    background: rgb(255 255 255 / 0.18);
+  }
+  .hero-split {
+    background: transparent;
+  }
+  .hero-split .hero-media {
+    margin: 16px;
+    border-radius: 48% 52% 40% 60% / 55% 45% 55% 45%;
+    overflow: hidden;
+    box-shadow: 0 30px 60px -30px color-mix(in srgb, var(--acc) 70%, transparent);
+  }
+  @media (min-width: 900px) {
+    .hero-split .hero-media {
+      margin: 40px;
+    }
+  }
+  &.nav-floating .hero-split {
+    padding-top: calc(var(--nav-h) + 12px);
+  }
+  .hero-title {
+    font-size: clamp(44px, 8vw, 88px);
+  }
+  .hero-sub {
+    color: var(--muted);
+    opacity: 1;
+  }
+  .hero-split .hero-sub {
+    color: color-mix(in srgb, var(--ink) 82%, var(--bg));
+  }
+  .hero-cover .hero-sub,
+  .hero-slides .hero-sub {
+    color: #fff;
+  }
+  .btn {
+    border-radius: 999px;
+    box-shadow: 0 10px 24px -14px var(--acc);
+  }
+  .brand-logo {
+    background: var(--acc-soft);
+    color: var(--acc-text);
+  }
+  .nav-in {
+    border-radius: 999px;
+  }
+
+  .sec-head {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .sec-title {
+    max-width: 20ch;
+  }
+
+  .cat,
+  .card-media,
+  .story-media,
+  .shot,
+  .panel,
+  .quote {
+    border-radius: var(--r);
+  }
+  &.cats-circles .cat-media {
+    box-shadow:
+      0 0 0 3px var(--acc-soft),
+      0 18px 30px -18px var(--acc);
+    border: 6px solid var(--surf);
+    transition: transform 0.4s var(--ease);
+  }
+  &.cats-circles .cat:hover .cat-media {
+    transform: translateY(-6px) rotate(-3deg);
+  }
+  &.cats-circles .cat-name {
+    font-size: calc(19px * var(--fs));
+  }
+
+  &.cards-classic .card {
+    padding: 10px 10px 16px;
+    border-radius: calc(var(--r) * 1.1);
+    background: var(--surf);
+    box-shadow: 0 16px 30px -24px color-mix(in srgb, var(--acc) 80%, transparent);
+    text-align: center;
+  }
+  &.cards-classic .card-body {
+    justify-items: center;
+  }
+  &.cards-classic .card-media {
+    border-radius: calc(var(--r) * 0.8);
+  }
+  .card-price {
+    padding: 4px 14px;
+    border-radius: 999px;
+    background: var(--acc);
+    color: var(--acc-ink);
+    margin-top: 6px;
+  }
+  &.cards-minimal .card-price {
+    justify-self: start;
+  }
+  .badge {
+    background: var(--surf);
+    color: var(--acc-text);
+  }
+  .rank {
+    border-radius: 50%;
+  }
+
+  .sec-story.with-image .story-media {
+    border-radius: 999px 999px var(--r) var(--r);
+  }
+  .quote {
+    border: 0;
+    background: var(--acc-soft);
+    text-align: center;
+    align-items: center;
+  }
+  .quote blockquote {
+    font-size: calc(19px * var(--fs));
+  }
+  .sec-visit .panel {
+    border: 2px dashed color-mix(in srgb, var(--acc) 40%, transparent);
+    background: var(--surf);
+  }
+  .shot {
+    border-radius: calc(var(--r) * 1.1);
+  }
+  .page-head {
+    text-align: center;
+  }
+  .page-head .crumbs ol,
+  .page-head .chips {
+    justify-content: center;
+  }
+  .chip {
+    border: 0;
+    background: var(--acc-soft);
+    color: var(--acc-text);
+  }
+  .sub-title {
+    justify-content: center;
+  }
+  .sub-title::before {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  .foot {
+    --muted: color-mix(in srgb, var(--ink) 80%, var(--acc-soft));
+    background: var(--acc-soft);
+    border: 0;
+    border-radius: 40px 40px 0 0;
+  }
+}

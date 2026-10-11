@@ -220,6 +220,101 @@ export const SAMPLES = {
       ["Bags", "Market basket", "Woven palm leaf, leather handles", 18.5, null, false, null],
     ],
   },
+  /* Pro samples: "Parent/Child" puts a product in a sub-category. */
+  maison: {
+    name: "Maison Noor",
+    address: "Abdoun Circle 4, Amman",
+    instagram: "maisonnoor",
+    menu: [
+      ["Starters/Cold", "Beef carpaccio", "Shaved parmesan, rocket, truffle oil", 9.5, "Signature", true, "salad"],
+      ["Starters/Cold", "Burrata and heirloom tomato", "Basil oil, aged balsamic, sea salt", 8.75, "Vegan", false, "salad"],
+      ["Starters/Hot", "Lentil velouté", "Cumin crème, crispy shallots", 5.5, null, false, "soup"],
+      ["Starters/Hot", "Seared scallops", "Cauliflower purée, brown butter, capers", 12.0, "New", false, null],
+      ["Mains/From the sea", "Wild sea bass", "Saffron beurre blanc, fennel confit", 18.5, "Best seller", true, "sushi"],
+      ["Mains/From the sea", "Prawn linguine", "Garlic, chili, cherry tomato, parsley", 15.0, null, false, "noodles"],
+      ["Mains/From the grill", "Wagyu striploin", "Smoked salt, bone marrow jus, pommes purée", 32.0, "Signature", true, "grill"],
+      ["Mains/From the grill", "Lamb rack", "Za'atar crust, freekeh, mint yogurt", 24.0, "Best seller", false, "grill"],
+      ["Desserts", "Kunafa mille-feuille", "Orange blossom cream, pistachio praline", 7.5, "Best seller", true, "kunafa"],
+      ["Desserts", "Dark chocolate fondant", "Salted caramel, vanilla bean ice cream", 7.0, null, false, "cake"],
+      ["Drinks/Mocktails", "Rose and lychee spritz", "Rose water, lychee, sparkling water", 5.5, null, false, "mocktail"],
+      ["Drinks/Mocktails", "Smoked citrus", "Grapefruit, rosemary smoke, tonic", 5.75, "New", false, "juice"],
+      ["Drinks/Coffee", "Turkish coffee", "Cardamom, served with Turkish delight", 3.5, null, false, "cortado"],
+    ],
+  },
+  lumen: {
+    name: "Lumen Coffee",
+    address: "Weibdeh, Paris Circle 9, Amman",
+    instagram: "lumencoffee",
+    menu: [
+      ["Coffee/Espresso bar", "Flat white", "Double ristretto, silky milk", 3.25, "Best seller", true, "latte"],
+      ["Coffee/Espresso bar", "Cortado", "Equal parts espresso and warm milk", 2.75, null, false, "cortado"],
+      ["Coffee/Espresso bar", "Spanish latte", "Condensed milk, double shot", 3.75, "Signature", true, "spanish"],
+      ["Coffee/Filter", "V60 of the day", "Ask us which single origin is brewing", 3.95, null, false, "mug"],
+      ["Coffee/Iced", "Iced oat latte", "Oat milk, double shot, lots of ice", 3.75, "Vegan", false, "iced"],
+      ["Coffee/Iced", "Cold brew tonic", "18-hour cold brew over tonic and orange", 4.0, "New", false, "mocktail"],
+      ["Tea", "Karak chai", "Black tea slow cooked with milk and spices", 2.5, null, false, "karak"],
+      ["Tea", "Sage and mint", "Fresh maramiya and mint in a glass pot", 2.25, null, false, "tea"],
+      ["Bakery/Viennoiserie", "Butter croissant", "Laminated for three days", 1.95, "Best seller", true, "croissant"],
+      ["Bakery/Viennoiserie", "Za'atar croissant", "Olive oil, za'atar and sesame", 2.1, null, false, "zaatar"],
+      ["Bakery/Cookies", "Brown butter cookie", "Dark chocolate, flaky salt", 1.75, null, false, "cookie"],
+      ["Brunch", "Shakshuka", "Two eggs, spiced tomato, warm bread", 5.5, null, false, "soup"],
+      ["Brunch", "Avocado toast", "Sourdough, chili flakes, poached egg", 5.95, "Best seller", false, "salad"],
+    ],
+  },
+  atlas: {
+    name: "Atlas Supply",
+    address: "Jabal Al Lweibdeh 17, Amman",
+    instagram: "atlassupply",
+    menu: [
+      ["Home/Ceramics", "Speckled mug", "Hand thrown stoneware, 300 ml", 14.0, "Best seller", true, "mug"],
+      ["Home/Ceramics", "Serving bowl", "Matte glaze, 24 cm", 22.0, null, false, null],
+      ["Home/Candles", "Cedar and fig candle", "Soy wax, 50 hours", 18.0, "Signature", true, "candle"],
+      ["Home/Candles", "Oud and amber candle", "Soy wax, wooden wick", 21.0, "New", false, "candle"],
+      ["Home/Textiles", "Linen tea towel", "Stonewashed, set of two", 12.5, null, false, "bag"],
+      ["Bath and body/Soap", "Olive oil soap", "Cold pressed in Salt, Jordan", 4.5, "Best seller", true, "soap"],
+      ["Bath and body/Soap", "Dead Sea mud bar", "Mineral rich, unscented", 5.5, null, false, "soap"],
+      ["Bath and body/Care", "Hand balm", "Shea, almond oil and sage", 9.0, "Vegan", false, null],
+      ["Plants", "Snake plant", "In a ceramic pot, 40 cm", 16.0, null, false, "plant"],
+      ["Plants", "Olive tree", "Two years old, terracotta pot", 28.0, "Best seller", false, "plant"],
+      ["Gifts", "Market tote", "Heavy canvas, leather handles", 19.0, null, false, "bag"],
+    ],
+  },
+  ember: {
+    name: "Ember and Oak",
+    address: "Mecca Street 210, Amman",
+    instagram: "emberandoak",
+    menu: [
+      ["Burgers/Beef", "The Ember", "Double smash patty, cheddar, onion jam, ember sauce", 7.5, "Best seller", true, "burger"],
+      ["Burgers/Beef", "Truffle mushroom", "Swiss cheese, truffle mayo, sautéed mushrooms", 8.25, "Signature", true, "burger"],
+      ["Burgers/Chicken", "Nashville hot", "Crispy chicken, hot honey, pickles, slaw", 6.95, "Spicy", false, "burger"],
+      ["Burgers/Chicken", "Grilled chicken", "Lemon garlic marinade, lettuce, toum", 6.25, null, false, "wrap"],
+      ["Grill/Steaks", "Ribeye 300 g", "Charcoal grilled, chimichurri, fries", 19.5, "Signature", true, "grill"],
+      ["Grill/Skewers", "Shish tawouk", "Yogurt marinade, garlic, grilled peppers", 8.0, "Best seller", false, "grill"],
+      ["Grill/Skewers", "Lamb kofta", "Parsley, onion, sumac, flatbread", 8.5, null, false, null],
+      ["Sides", "Loaded fries", "Cheese sauce, jalapeño, crispy onions", 3.75, "Best seller", false, "fries"],
+      ["Sides", "Charred corn", "Chili butter, lime, cotija", 3.25, null, false, null],
+      ["Drinks/Shakes", "Salted caramel shake", "Vanilla ice cream, caramel, sea salt", 4.25, null, false, "smoothie"],
+      ["Drinks/Soft drinks", "Fresh lemonade", "Mint, lemon, crushed ice", 2.5, null, false, "juice"],
+    ],
+  },
+  bloom: {
+    name: "Bloom Bakery",
+    address: "Sweifieh, Wakalat Street 33, Amman",
+    instagram: "bloombakery",
+    menu: [
+      ["Cakes/Whole cakes", "Rose and pistachio cake", "Rose sponge, pistachio buttercream, dried petals", 28.0, "Signature", true, "cake"],
+      ["Cakes/Whole cakes", "Strawberry shortcake", "Vanilla chiffon, fresh cream, strawberries", 26.0, "Best seller", true, "cake"],
+      ["Cakes/Slices", "Lemon drizzle slice", "Lemon curd and crunchy sugar", 3.5, null, false, "cake"],
+      ["Cakes/Slices", "Carrot cake slice", "Walnuts, cream cheese frosting", 3.75, null, false, null],
+      ["Pastries", "Raspberry danish", "Butter pastry, vanilla custard", 2.5, "New", false, "croissant"],
+      ["Pastries", "Cinnamon roll", "Brown sugar, cream cheese glaze", 2.75, "Best seller", true, "croissant"],
+      ["Cookies", "Pink velvet cookie", "White chocolate chunks", 1.75, null, false, "cookie"],
+      ["Cupcakes", "Vanilla bean cupcake", "Whipped buttercream, sprinkles", 2.25, null, false, "cupcake"],
+      ["Cupcakes", "Mango cupcake", "Mango curd centre", 2.25, "Vegan", false, "cupcake"],
+      ["Drinks", "Strawberry milk", "Fresh strawberries, cold milk", 2.75, null, false, "smoothie"],
+      ["Drinks", "Iced rose latte", "Rose syrup, espresso, milk", 3.5, null, false, "iced"],
+    ],
+  },
 } satisfies Record<string, Sample>;
 
 export type SampleName = keyof typeof SAMPLES;
@@ -295,6 +390,17 @@ function sampleSettingsFor(templateId: string, sample: SampleName): Settings {
   return Object.fromEntries(Object.entries(settings).filter(([key]) => key in defaults));
 }
 
+/** "Coffee/Iced" adds a "Coffee" main category (without products of its own) before its first sub-category. */
+function categoriesOf(names: string[]): { name: string; parent: string | null }[] {
+  const out: { name: string; parent: string | null }[] = [];
+  for (const name of names) {
+    const parent = name.includes("/") ? name.split("/")[0] : null;
+    if (parent !== null && !out.some((c) => c.name === parent)) out.push({ name: parent, parent: null });
+    out.push({ name, parent });
+  }
+  return out;
+}
+
 export function fixtureFor(templateId: string, overrides: Partial<PublicSite> = {}, sampleName: SampleName = sampleFor(templateId)): PublicSite {
   const sample: Sample = SAMPLES[sampleName];
   const names = [...new Set(sample.menu.map((s) => s[0]))];
@@ -314,9 +420,10 @@ export function fixtureFor(templateId: string, overrides: Partial<PublicSite> = 
     },
     templateId,
     settings: { ...defaultsFor(templateId), ...sampleSettingsFor(templateId, sampleName) },
-    categories: names.map((name, ci) => ({
+    categories: categoriesOf(names).map(({ name, parent }, ci, all) => ({
       id: id(100 + ci),
-      name,
+      name: name.split("/").pop()!,
+      ...(parent !== null && { parentId: id(100 + all.findIndex((c) => c.name === parent)) }),
       products: sample.menu
         .map((s, i) => ({ s, i }))
         .filter(({ s }) => s[0] === name)

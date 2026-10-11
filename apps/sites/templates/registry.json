@@ -4831,6 +4831,2187 @@
           "fri": ""
         }
       }
+    },
+    {
+      "id": "maison",
+      "number": 22,
+      "name": "Maison",
+      "category": "Fine dining",
+      "description": "A dark, gold-lined restaurant site with a menu bar, category pages, best sellers and a gallery.",
+      "version": 1,
+      "tier": "pro",
+      "thumbnail": "/templates/maison/thumbnail.png",
+      "sample": "maison",
+      "schema": [
+        {
+          "key": "font",
+          "type": "choice",
+          "label": "Font style",
+          "group": "Brand",
+          "options": [
+            "elegant",
+            "classic",
+            "naskh"
+          ],
+          "optionLabels": {
+            "elegant": "Elegant",
+            "classic": "Classic",
+            "naskh": "Naskh"
+          }
+        },
+        {
+          "key": "logo",
+          "type": "image",
+          "label": "Logo",
+          "group": "Brand"
+        },
+        {
+          "key": "theme",
+          "type": "palette",
+          "label": "Color theme",
+          "group": "Brand",
+          "options": [
+            "noir",
+            "bordeaux",
+            "ivory",
+            "olive"
+          ],
+          "swatches": {
+            "noir": "#0E0D0B",
+            "bordeaux": "#1C0E12",
+            "ivory": "#F7F2E8",
+            "olive": "#151A13"
+          }
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "label": "Gold color",
+          "group": "Brand",
+          "options": [
+            "#C9A45C",
+            "#D8B98A",
+            "#B5523B",
+            "#8FA57A"
+          ]
+        },
+        {
+          "key": "corners",
+          "type": "choice",
+          "label": "Corners",
+          "group": "Brand",
+          "options": [
+            "rounded",
+            "sharp"
+          ],
+          "optionLabels": {
+            "rounded": "Rounded",
+            "sharp": "Sharp"
+          }
+        },
+        {
+          "key": "nav.style",
+          "type": "choice",
+          "label": "Menu bar",
+          "group": "Navigation",
+          "options": [
+            "classic",
+            "centered",
+            "floating"
+          ],
+          "optionLabels": {
+            "classic": "Classic",
+            "centered": "Centered name",
+            "floating": "Floating bar"
+          }
+        },
+        {
+          "key": "cta.label",
+          "type": "text",
+          "label": "Order button text",
+          "group": "Navigation",
+          "max": 30
+        },
+        {
+          "key": "hero.layout",
+          "type": "choice",
+          "label": "Layout",
+          "group": "Hero header",
+          "options": [
+            "cover",
+            "split",
+            "slides",
+            "text"
+          ],
+          "optionLabels": {
+            "cover": "Full image",
+            "split": "Split",
+            "slides": "Slideshow",
+            "text": "Text only"
+          }
+        },
+        {
+          "key": "hero.images",
+          "type": "images",
+          "label": "Hero photos (slideshow uses all)",
+          "group": "Hero header",
+          "max": 4,
+          "presets": [
+            "noir",
+            "loft",
+            "shelf",
+            "embers",
+            "blossom",
+            "marble",
+            "counter",
+            "arches",
+            "pour",
+            "beans",
+            "flames",
+            "leaves",
+            "sprinkles",
+            "tiles",
+            "dunes"
+          ]
+        },
+        {
+          "key": "hero.shade",
+          "type": "range",
+          "label": "Image darkness",
+          "group": "Hero header",
+          "min": 0,
+          "max": 90,
+          "step": 5
+        },
+        {
+          "key": "hero.eyebrow",
+          "type": "text",
+          "label": "Small line above the headline",
+          "group": "Hero header",
+          "max": 40
+        },
+        {
+          "key": "hero.title",
+          "type": "text",
+          "label": "Headline",
+          "group": "Hero header",
+          "max": 70
+        },
+        {
+          "key": "hero.subtitle",
+          "type": "textarea",
+          "label": "Subtext",
+          "group": "Hero header",
+          "max": 180
+        },
+        {
+          "key": "cards",
+          "type": "choice",
+          "label": "Product cards",
+          "group": "Layout",
+          "options": [
+            "classic",
+            "overlay",
+            "minimal"
+          ],
+          "optionLabels": {
+            "classic": "Photo and text",
+            "overlay": "Text on photo",
+            "minimal": "Compact list"
+          }
+        },
+        {
+          "key": "categories.style",
+          "type": "choice",
+          "label": "Category tiles",
+          "group": "Layout",
+          "options": [
+            "tiles",
+            "circles",
+            "banners"
+          ],
+          "optionLabels": {
+            "tiles": "Tiles",
+            "circles": "Circles",
+            "banners": "Wide banners"
+          }
+        },
+        {
+          "key": "density",
+          "type": "choice",
+          "label": "Grid",
+          "group": "Layout",
+          "options": [
+            "comfy",
+            "dense"
+          ],
+          "optionLabels": {
+            "comfy": "Roomy",
+            "dense": "More per row"
+          }
+        },
+        {
+          "key": "motion",
+          "type": "toggle",
+          "label": "Animations",
+          "group": "Layout"
+        },
+        {
+          "key": "sections",
+          "type": "toggles",
+          "label": "Home page sections",
+          "group": "Sections",
+          "options": [
+            "announcement",
+            "best",
+            "story",
+            "gallery",
+            "reviews",
+            "visit"
+          ],
+          "optionLabels": {
+            "announcement": "Announcement bar",
+            "best": "Best sellers",
+            "story": "About us",
+            "gallery": "Gallery",
+            "reviews": "Reviews",
+            "visit": "Hours and contact"
+          }
+        },
+        {
+          "key": "announcement",
+          "type": "text",
+          "label": "Announcement",
+          "group": "Sections",
+          "max": 80
+        },
+        {
+          "key": "categories.title",
+          "type": "text",
+          "label": "Categories headline",
+          "group": "Headlines",
+          "max": 60
+        },
+        {
+          "key": "best.title",
+          "type": "text",
+          "label": "Best sellers headline",
+          "group": "Headlines",
+          "max": 60
+        },
+        {
+          "key": "gallery.title",
+          "type": "text",
+          "label": "Gallery headline",
+          "group": "Headlines",
+          "max": 60
+        },
+        {
+          "key": "story.title",
+          "type": "text",
+          "label": "About headline",
+          "group": "About us",
+          "max": 70
+        },
+        {
+          "key": "story.text",
+          "type": "textarea",
+          "label": "About us",
+          "group": "About us",
+          "max": 600
+        },
+        {
+          "key": "story.image",
+          "type": "image",
+          "label": "About photo",
+          "group": "About us",
+          "presets": [
+            "noir",
+            "loft",
+            "shelf",
+            "embers",
+            "blossom",
+            "marble",
+            "counter",
+            "arches",
+            "pour",
+            "beans",
+            "flames",
+            "leaves",
+            "sprinkles",
+            "tiles",
+            "dunes"
+          ]
+        },
+        {
+          "key": "gallery",
+          "type": "images",
+          "label": "Gallery photos",
+          "group": "Gallery",
+          "max": 12
+        },
+        {
+          "key": "gallery.products",
+          "type": "toggle",
+          "label": "Add product photos to the gallery",
+          "group": "Gallery"
+        },
+        {
+          "key": "reviews.1.quote",
+          "type": "textarea",
+          "label": "Review 1",
+          "group": "Reviews",
+          "max": 220
+        },
+        {
+          "key": "reviews.1.name",
+          "type": "text",
+          "label": "Review 1 by",
+          "group": "Reviews",
+          "max": 40
+        },
+        {
+          "key": "reviews.2.quote",
+          "type": "textarea",
+          "label": "Review 2",
+          "group": "Reviews",
+          "max": 220
+        },
+        {
+          "key": "reviews.2.name",
+          "type": "text",
+          "label": "Review 2 by",
+          "group": "Reviews",
+          "max": 40
+        },
+        {
+          "key": "reviews.3.quote",
+          "type": "textarea",
+          "label": "Review 3",
+          "group": "Reviews",
+          "max": 220
+        },
+        {
+          "key": "reviews.3.name",
+          "type": "text",
+          "label": "Review 3 by",
+          "group": "Reviews",
+          "max": 40
+        },
+        {
+          "key": "footer.text",
+          "type": "textarea",
+          "label": "Line in the footer",
+          "group": "Footer",
+          "max": 140
+        },
+        {
+          "key": "hours",
+          "type": "hours",
+          "label": "Opening hours",
+          "group": "Visit us"
+        }
+      ],
+      "defaults": {
+        "font": "elegant",
+        "logo": "",
+        "theme": "noir",
+        "accent": "#C9A45C",
+        "corners": "rounded",
+        "nav.style": "centered",
+        "cta.label": "",
+        "hero.layout": "cover",
+        "hero.images": [
+          "preset:noir",
+          "preset:marble"
+        ],
+        "hero.shade": 35,
+        "hero.eyebrow": "Modern Levantine kitchen",
+        "hero.title": "An evening worth dressing up for.",
+        "hero.subtitle": "Seasonal tasting plates, a wood-fired grill and a quiet room above the city. Book a table or browse tonight's menu.",
+        "cards": "classic",
+        "categories.style": "banners",
+        "density": "comfy",
+        "motion": true,
+        "sections": [
+          "announcement",
+          "best",
+          "story",
+          "gallery",
+          "reviews",
+          "visit"
+        ],
+        "announcement": "Now taking bookings for the weekend",
+        "categories.title": "",
+        "best.title": "",
+        "gallery.title": "",
+        "story.title": "A kitchen built around fire, season and patience",
+        "story.text": "Maison Noor opened as a twelve-seat counter. Today the menu still changes with the market: fish from Aqaba, lamb from the Badia and herbs from our own rooftop.",
+        "story.image": "preset:marble",
+        "gallery": [],
+        "gallery.products": true,
+        "reviews.1.quote": "",
+        "reviews.1.name": "",
+        "reviews.2.quote": "",
+        "reviews.2.name": "",
+        "reviews.3.quote": "",
+        "reviews.3.name": "",
+        "footer.text": "Dinner from noon until late. Private dining for up to twenty guests.",
+        "hours": {
+          "sat": "12:00-23:30",
+          "sun": "12:00-23:30",
+          "mon": "12:00-23:30",
+          "tue": "12:00-23:30",
+          "wed": "12:00-23:30",
+          "thu": "12:00-00:30",
+          "fri": "13:00-00:30"
+        }
+      }
+    },
+    {
+      "id": "lumen",
+      "number": 23,
+      "name": "Lumen",
+      "category": "Specialty café",
+      "description": "A bright, airy café site with a split hero, sub-category pages, a best-seller rail and a photo gallery.",
+      "version": 1,
+      "tier": "pro",
+      "thumbnail": "/templates/lumen/thumbnail.png",
+      "sample": "lumen",
+      "schema": [
+        {
+          "key": "font",
+          "type": "choice",
+          "label": "Font style",
+          "group": "Brand",
+          "options": [
+            "modern",
+            "soft",
+            "grotesk"
+          ],
+          "optionLabels": {
+            "modern": "Modern",
+            "soft": "Soft serif",
+            "grotesk": "Grotesk"
+          }
+        },
+        {
+          "key": "logo",
+          "type": "image",
+          "label": "Logo",
+          "group": "Brand"
+        },
+        {
+          "key": "theme",
+          "type": "palette",
+          "label": "Color theme",
+          "group": "Brand",
+          "options": [
+            "daylight",
+            "oat",
+            "mist",
+            "espresso"
+          ],
+          "swatches": {
+            "daylight": "#FBF8F3",
+            "oat": "#F3ECE1",
+            "mist": "#EEF2F1",
+            "espresso": "#1B1714"
+          }
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "label": "Accent color",
+          "group": "Brand",
+          "options": [
+            "#2F6B57",
+            "#C8553D",
+            "#3B5BDB",
+            "#B7791F"
+          ]
+        },
+        {
+          "key": "corners",
+          "type": "choice",
+          "label": "Corners",
+          "group": "Brand",
+          "options": [
+            "rounded",
+            "sharp"
+          ],
+          "optionLabels": {
+            "rounded": "Rounded",
+            "sharp": "Sharp"
+          }
+        },
+        {
+          "key": "nav.style",
+          "type": "choice",
+          "label": "Menu bar",
+          "group": "Navigation",
+          "options": [
+            "classic",
+            "centered",
+            "floating"
+          ],
+          "optionLabels": {
+            "classic": "Classic",
+            "centered": "Centered name",
+            "floating": "Floating bar"
+          }
+        },
+        {
+          "key": "cta.label",
+          "type": "text",
+          "label": "Order button text",
+          "group": "Navigation",
+          "max": 30
+        },
+        {
+          "key": "hero.layout",
+          "type": "choice",
+          "label": "Layout",
+          "group": "Hero header",
+          "options": [
+            "cover",
+            "split",
+            "slides",
+            "text"
+          ],
+          "optionLabels": {
+            "cover": "Full image",
+            "split": "Split",
+            "slides": "Slideshow",
+            "text": "Text only"
+          }
+        },
+        {
+          "key": "hero.images",
+          "type": "images",
+          "label": "Hero photos (slideshow uses all)",
+          "group": "Hero header",
+          "max": 4,
+          "presets": [
+            "noir",
+            "loft",
+            "shelf",
+            "embers",
+            "blossom",
+            "marble",
+            "counter",
+            "arches",
+            "pour",
+            "beans",
+            "flames",
+            "leaves",
+            "sprinkles",
+            "tiles",
+            "dunes"
+          ]
+        },
+        {
+          "key": "hero.shade",
+          "type": "range",
+          "label": "Image darkness",
+          "group": "Hero header",
+          "min": 0,
+          "max": 90,
+          "step": 5
+        },
+        {
+          "key": "hero.eyebrow",
+          "type": "text",
+          "label": "Small line above the headline",
+          "group": "Hero header",
+          "max": 40
+        },
+        {
+          "key": "hero.title",
+          "type": "text",
+          "label": "Headline",
+          "group": "Hero header",
+          "max": 70
+        },
+        {
+          "key": "hero.subtitle",
+          "type": "textarea",
+          "label": "Subtext",
+          "group": "Hero header",
+          "max": 180
+        },
+        {
+          "key": "cards",
+          "type": "choice",
+          "label": "Product cards",
+          "group": "Layout",
+          "options": [
+            "classic",
+            "overlay",
+            "minimal"
+          ],
+          "optionLabels": {
+            "classic": "Photo and text",
+            "overlay": "Text on photo",
+            "minimal": "Compact list"
+          }
+        },
+        {
+          "key": "categories.style",
+          "type": "choice",
+          "label": "Category tiles",
+          "group": "Layout",
+          "options": [
+            "tiles",
+            "circles",
+            "banners"
+          ],
+          "optionLabels": {
+            "tiles": "Tiles",
+            "circles": "Circles",
+            "banners": "Wide banners"
+          }
+        },
+        {
+          "key": "density",
+          "type": "choice",
+          "label": "Grid",
+          "group": "Layout",
+          "options": [
+            "comfy",
+            "dense"
+          ],
+          "optionLabels": {
+            "comfy": "Roomy",
+            "dense": "More per row"
+          }
+        },
+        {
+          "key": "motion",
+          "type": "toggle",
+          "label": "Animations",
+          "group": "Layout"
+        },
+        {
+          "key": "sections",
+          "type": "toggles",
+          "label": "Home page sections",
+          "group": "Sections",
+          "options": [
+            "announcement",
+            "best",
+            "story",
+            "gallery",
+            "reviews",
+            "visit"
+          ],
+          "optionLabels": {
+            "announcement": "Announcement bar",
+            "best": "Best sellers",
+            "story": "About us",
+            "gallery": "Gallery",
+            "reviews": "Reviews",
+            "visit": "Hours and contact"
+          }
+        },
+        {
+          "key": "announcement",
+          "type": "text",
+          "label": "Announcement",
+          "group": "Sections",
+          "max": 80
+        },
+        {
+          "key": "categories.title",
+          "type": "text",
+          "label": "Categories headline",
+          "group": "Headlines",
+          "max": 60
+        },
+        {
+          "key": "best.title",
+          "type": "text",
+          "label": "Best sellers headline",
+          "group": "Headlines",
+          "max": 60
+        },
+        {
+          "key": "gallery.title",
+          "type": "text",
+          "label": "Gallery headline",
+          "group": "Headlines",
+          "max": 60
+        },
+        {
+          "key": "story.title",
+          "type": "text",
+          "label": "About headline",
+          "group": "About us",
+          "max": 70
+        },
+        {
+          "key": "story.text",
+          "type": "textarea",
+          "label": "About us",
+          "group": "About us",
+          "max": 600
+        },
+        {
+          "key": "story.image",
+          "type": "image",
+          "label": "About photo",
+          "group": "About us",
+          "presets": [
+            "noir",
+            "loft",
+            "shelf",
+            "embers",
+            "blossom",
+            "marble",
+            "counter",
+            "arches",
+            "pour",
+            "beans",
+            "flames",
+            "leaves",
+            "sprinkles",
+            "tiles",
+            "dunes"
+          ]
+        },
+        {
+          "key": "gallery",
+          "type": "images",
+          "label": "Gallery photos",
+          "group": "Gallery",
+          "max": 12
+        },
+        {
+          "key": "gallery.products",
+          "type": "toggle",
+          "label": "Add product photos to the gallery",
+          "group": "Gallery"
+        },
+        {
+          "key": "reviews.1.quote",
+          "type": "textarea",
+          "label": "Review 1",
+          "group": "Reviews",
+          "max": 220
+        },
+        {
+          "key": "reviews.1.name",
+          "type": "text",
+          "label": "Review 1 by",
+          "group": "Reviews",
+          "max": 40
+        },
+        {
+          "key": "reviews.2.quote",
+          "type": "textarea",
+          "label": "Review 2",
+          "group": "Reviews",
+          "max": 220
+        },
+        {
+          "key": "reviews.2.name",
+          "type": "text",
+          "label": "Review 2 by",
+          "group": "Reviews",
+          "max": 40
+        },
+        {
+          "key": "reviews.3.quote",
+          "type": "textarea",
+          "label": "Review 3",
+          "group": "Reviews",
+          "max": 220
+        },
+        {
+          "key": "reviews.3.name",
+          "type": "text",
+          "label": "Review 3 by",
+          "group": "Reviews",
+          "max": 40
+        },
+        {
+          "key": "footer.text",
+          "type": "textarea",
+          "label": "Line in the footer",
+          "group": "Footer",
+          "max": 140
+        },
+        {
+          "key": "hours",
+          "type": "hours",
+          "label": "Opening hours",
+          "group": "Visit us"
+        }
+      ],
+      "defaults": {
+        "font": "modern",
+        "logo": "",
+        "theme": "daylight",
+        "accent": "#2F6B57",
+        "corners": "rounded",
+        "nav.style": "floating",
+        "cta.label": "",
+        "hero.layout": "split",
+        "hero.images": [
+          "preset:loft",
+          "preset:pour"
+        ],
+        "hero.shade": 45,
+        "hero.eyebrow": "Specialty coffee · Weibdeh",
+        "hero.title": "Slow mornings, good coffee.",
+        "hero.subtitle": "Seasonal single origins, butter croissants laminated for three days and big windows full of light.",
+        "cards": "classic",
+        "categories.style": "tiles",
+        "density": "comfy",
+        "motion": true,
+        "sections": [
+          "announcement",
+          "best",
+          "story",
+          "gallery",
+          "reviews",
+          "visit"
+        ],
+        "announcement": "New single origin this week: Ethiopia Guji",
+        "categories.title": "",
+        "best.title": "",
+        "gallery.title": "",
+        "story.title": "A sunny corner for the neighborhood",
+        "story.text": "We roast twice a week, bake before sunrise and keep the music low. Come for a flat white, stay for the light.",
+        "story.image": "preset:pour",
+        "gallery": [],
+        "gallery.products": true,
+        "reviews.1.quote": "",
+        "reviews.1.name": "",
+        "reviews.2.quote": "",
+        "reviews.2.name": "",
+        "reviews.3.quote": "",
+        "reviews.3.name": "",
+        "footer.text": "Roasted in small batches. Baked every morning.",
+        "hours": {
+          "sat": "07:30-22:00",
+          "sun": "07:30-22:00",
+          "mon": "07:30-22:00",
+          "tue": "07:30-22:00",
+          "wed": "07:30-22:00",
+          "thu": "07:30-23:00",
+          "fri": "09:00-23:00"
+        }
+      }
+    },
+    {
+      "id": "atlas",
+      "number": 24,
+      "name": "Atlas",
+      "category": "Boutique shop",
+      "description": "A clean catalog for shops: a mega menu of departments and collections, product grids, best sellers and a lookbook.",
+      "version": 1,
+      "tier": "pro",
+      "thumbnail": "/templates/atlas/thumbnail.png",
+      "sample": "atlas",
+      "schema": [
+        {
+          "key": "font",
+          "type": "choice",
+          "label": "Font style",
+          "group": "Brand",
+          "options": [
+            "grotesk",
+            "modern",
+            "mono"
+          ],
+          "optionLabels": {
+            "grotesk": "Grotesk",
+            "modern": "Modern",
+            "mono": "Mono"
+          }
+        },
+        {
+          "key": "logo",
+          "type": "image",
+          "label": "Logo",
+          "group": "Brand"
+        },
+        {
+          "key": "theme",
+          "type": "palette",
+          "label": "Color theme",
+          "group": "Brand",
+          "options": [
+            "paper",
+            "stone",
+            "sand",
+            "ink"
+          ],
+          "swatches": {
+            "paper": "#FFFFFF",
+            "stone": "#F1EFEA",
+            "sand": "#EFE7DA",
+            "ink": "#111214"
+          }
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "label": "Accent color",
+          "group": "Brand",
+          "options": [
+            "#111214",
+            "#B5523B",
+            "#2F4B5C",
+            "#5E7F55"
+          ]
+        },
+        {
+          "key": "corners",
+          "type": "choice",
+          "label": "Corners",
+          "group": "Brand",
+          "options": [
+            "rounded",
+            "sharp"
+          ],
+          "optionLabels": {
+            "rounded": "Rounded",
+            "sharp": "Sharp"
+          }
+        },
+        {
+          "key": "nav.style",
+          "type": "choice",
+          "label": "Menu bar",
+          "group": "Navigation",
+          "options": [
+            "classic",
+            "centered",
+            "floating"
+          ],
+          "optionLabels": {
+            "classic": "Classic",
+            "centered": "Centered name",
+            "floating": "Floating bar"
+          }
+        },
+        {
+          "key": "cta.label",
+          "type": "text",
+          "label": "Order button text",
+          "group": "Navigation",
+          "max": 30
+        },
+        {
+          "key": "hero.layout",
+          "type": "choice",
+          "label": "Layout",
+          "group": "Hero header",
+          "options": [
+            "cover",
+            "split",
+            "slides",
+            "text"
+          ],
+          "optionLabels": {
+            "cover": "Full image",
+            "split": "Split",
+            "slides": "Slideshow",
+            "text": "Text only"
+          }
+        },
+        {
+          "key": "hero.images",
+          "type": "images",
+          "label": "Hero photos (slideshow uses all)",
+          "group": "Hero header",
+          "max": 4,
+          "presets": [
+            "noir",
+            "loft",
+            "shelf",
+            "embers",
+            "blossom",
+            "marble",
+            "counter",
+            "arches",
+            "pour",
+            "beans",
+            "flames",
+            "leaves",
+            "sprinkles",
+            "tiles",
+            "dunes"
+          ]
+        },
+        {
+          "key": "hero.shade",
+          "type": "range",
+          "label": "Image darkness",
+          "group": "Hero header",
+          "min": 0,
+          "max": 90,
+          "step": 5
+        },
+        {
+          "key": "hero.eyebrow",
+          "type": "text",
+          "label": "Small line above the headline",
+          "group": "Hero header",
+          "max": 40
+        },
+        {
+          "key": "hero.title",
+          "type": "text",
+          "label": "Headline",
+          "group": "Hero header",
+          "max": 70
+        },
+        {
+          "key": "hero.subtitle",
+          "type": "textarea",
+          "label": "Subtext",
+          "group": "Hero header",
+          "max": 180
+        },
+        {
+          "key": "cards",
+          "type": "choice",
+          "label": "Product cards",
+          "group": "Layout",
+          "options": [
+            "classic",
+            "overlay",
+            "minimal"
+          ],
+          "optionLabels": {
+            "classic": "Photo and text",
+            "overlay": "Text on photo",
+            "minimal": "Compact list"
+          }
+        },
+        {
+          "key": "categories.style",
+          "type": "choice",
+          "label": "Category tiles",
+          "group": "Layout",
+          "options": [
+            "tiles",
+            "circles",
+            "banners"
+          ],
+          "optionLabels": {
+            "tiles": "Tiles",
+            "circles": "Circles",
+            "banners": "Wide banners"
+          }
+        },
+        {
+          "key": "density",
+          "type": "choice",
+          "label": "Grid",
+          "group": "Layout",
+          "options": [
+            "comfy",
+            "dense"
+          ],
+          "optionLabels": {
+            "comfy": "Roomy",
+            "dense": "More per row"
+          }
+        },
+        {
+          "key": "motion",
+          "type": "toggle",
+          "label": "Animations",
+          "group": "Layout"
+        },
+        {
+          "key": "sections",
+          "type": "toggles",
+          "label": "Home page sections",
+          "group": "Sections",
+          "options": [
+            "announcement",
+            "best",
+            "story",
+            "gallery",
+            "reviews",
+            "visit"
+          ],
+          "optionLabels": {
+            "announcement": "Announcement bar",
+            "best": "Best sellers",
+            "story": "About us",
+            "gallery": "Gallery",
+            "reviews": "Reviews",
+            "visit": "Hours and contact"
+          }
+        },
+        {
+          "key": "announcement",
+          "type": "text",
+          "label": "Announcement",
+          "group": "Sections",
+          "max": 80
+        },
+        {
+          "key": "categories.title",
+          "type": "text",
+          "label": "Categories headline",
+          "group": "Headlines",
+          "max": 60
+        },
+        {
+          "key": "best.title",
+          "type": "text",
+          "label": "Best sellers headline",
+          "group": "Headlines",
+          "max": 60
+        },
+        {
+          "key": "gallery.title",
+          "type": "text",
+          "label": "Gallery headline",
+          "group": "Headlines",
+          "max": 60
+        },
+        {
+          "key": "story.title",
+          "type": "text",
+          "label": "About headline",
+          "group": "About us",
+          "max": 70
+        },
+        {
+          "key": "story.text",
+          "type": "textarea",
+          "label": "About us",
+          "group": "About us",
+          "max": 600
+        },
+        {
+          "key": "story.image",
+          "type": "image",
+          "label": "About photo",
+          "group": "About us",
+          "presets": [
+            "noir",
+            "loft",
+            "shelf",
+            "embers",
+            "blossom",
+            "marble",
+            "counter",
+            "arches",
+            "pour",
+            "beans",
+            "flames",
+            "leaves",
+            "sprinkles",
+            "tiles",
+            "dunes"
+          ]
+        },
+        {
+          "key": "gallery",
+          "type": "images",
+          "label": "Gallery photos",
+          "group": "Gallery",
+          "max": 12
+        },
+        {
+          "key": "gallery.products",
+          "type": "toggle",
+          "label": "Add product photos to the gallery",
+          "group": "Gallery"
+        },
+        {
+          "key": "reviews.1.quote",
+          "type": "textarea",
+          "label": "Review 1",
+          "group": "Reviews",
+          "max": 220
+        },
+        {
+          "key": "reviews.1.name",
+          "type": "text",
+          "label": "Review 1 by",
+          "group": "Reviews",
+          "max": 40
+        },
+        {
+          "key": "reviews.2.quote",
+          "type": "textarea",
+          "label": "Review 2",
+          "group": "Reviews",
+          "max": 220
+        },
+        {
+          "key": "reviews.2.name",
+          "type": "text",
+          "label": "Review 2 by",
+          "group": "Reviews",
+          "max": 40
+        },
+        {
+          "key": "reviews.3.quote",
+          "type": "textarea",
+          "label": "Review 3",
+          "group": "Reviews",
+          "max": 220
+        },
+        {
+          "key": "reviews.3.name",
+          "type": "text",
+          "label": "Review 3 by",
+          "group": "Reviews",
+          "max": 40
+        },
+        {
+          "key": "footer.text",
+          "type": "textarea",
+          "label": "Line in the footer",
+          "group": "Footer",
+          "max": 140
+        },
+        {
+          "key": "hours",
+          "type": "hours",
+          "label": "Opening hours",
+          "group": "Visit us"
+        }
+      ],
+      "defaults": {
+        "font": "grotesk",
+        "logo": "",
+        "theme": "paper",
+        "accent": "#111214",
+        "corners": "sharp",
+        "nav.style": "classic",
+        "cta.label": "",
+        "hero.layout": "slides",
+        "hero.images": [
+          "preset:shelf",
+          "preset:tiles",
+          "preset:leaves"
+        ],
+        "hero.shade": 45,
+        "hero.eyebrow": "Objects for everyday life",
+        "hero.title": "Made by hand. Chosen with care.",
+        "hero.subtitle": "Ceramics, candles, soaps and plants from small makers across Jordan.",
+        "cards": "classic",
+        "categories.style": "tiles",
+        "density": "dense",
+        "motion": true,
+        "sections": [
+          "announcement",
+          "best",
+          "story",
+          "gallery",
+          "reviews",
+          "visit"
+        ],
+        "announcement": "Free delivery in Amman on orders over 30 JOD",
+        "categories.title": "Shop by department",
+        "best.title": "",
+        "gallery.title": "",
+        "story.title": "A small shop for useful, beautiful things",
+        "story.text": "Atlas works directly with potters, soap makers and weavers. Every piece is made in small batches, and we visit every workshop we sell from.",
+        "story.image": "preset:shelf",
+        "gallery": [],
+        "gallery.products": true,
+        "reviews.1.quote": "",
+        "reviews.1.name": "",
+        "reviews.2.quote": "",
+        "reviews.2.name": "",
+        "reviews.3.quote": "",
+        "reviews.3.name": "",
+        "footer.text": "Gift wrapping on every order. Exchanges within 14 days.",
+        "hours": {
+          "sat": "10:00-21:00",
+          "sun": "10:00-21:00",
+          "mon": "10:00-21:00",
+          "tue": "10:00-21:00",
+          "wed": "10:00-21:00",
+          "thu": "10:00-22:00",
+          "fri": ""
+        }
+      }
+    },
+    {
+      "id": "ember",
+      "number": 25,
+      "name": "Ember",
+      "category": "Grill and burgers",
+      "description": "A bold, fiery site for grills and burger joints: big type, photo cards and a slideshow hero.",
+      "version": 1,
+      "tier": "pro",
+      "thumbnail": "/templates/ember/thumbnail.png",
+      "sample": "ember",
+      "schema": [
+        {
+          "key": "font",
+          "type": "choice",
+          "label": "Font style",
+          "group": "Brand",
+          "options": [
+            "condensed",
+            "bold",
+            "modern"
+          ],
+          "optionLabels": {
+            "condensed": "Poster",
+            "bold": "Bold",
+            "modern": "Modern"
+          }
+        },
+        {
+          "key": "logo",
+          "type": "image",
+          "label": "Logo",
+          "group": "Brand"
+        },
+        {
+          "key": "theme",
+          "type": "palette",
+          "label": "Color theme",
+          "group": "Brand",
+          "options": [
+            "charcoal",
+            "smoke",
+            "bone",
+            "rust"
+          ],
+          "swatches": {
+            "charcoal": "#0F0E0D",
+            "smoke": "#1D1B19",
+            "bone": "#F4EEE4",
+            "rust": "#2A120C"
+          }
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "label": "Flame color",
+          "group": "Brand",
+          "options": [
+            "#FF6B1A",
+            "#F4B400",
+            "#E63946",
+            "#7BC950"
+          ]
+        },
+        {
+          "key": "corners",
+          "type": "choice",
+          "label": "Corners",
+          "group": "Brand",
+          "options": [
+            "rounded",
+            "sharp"
+          ],
+          "optionLabels": {
+            "rounded": "Rounded",
+            "sharp": "Sharp"
+          }
+        },
+        {
+          "key": "nav.style",
+          "type": "choice",
+          "label": "Menu bar",
+          "group": "Navigation",
+          "options": [
+            "classic",
+            "centered",
+            "floating"
+          ],
+          "optionLabels": {
+            "classic": "Classic",
+            "centered": "Centered name",
+            "floating": "Floating bar"
+          }
+        },
+        {
+          "key": "cta.label",
+          "type": "text",
+          "label": "Order button text",
+          "group": "Navigation",
+          "max": 30
+        },
+        {
+          "key": "hero.layout",
+          "type": "choice",
+          "label": "Layout",
+          "group": "Hero header",
+          "options": [
+            "cover",
+            "split",
+            "slides",
+            "text"
+          ],
+          "optionLabels": {
+            "cover": "Full image",
+            "split": "Split",
+            "slides": "Slideshow",
+            "text": "Text only"
+          }
+        },
+        {
+          "key": "hero.images",
+          "type": "images",
+          "label": "Hero photos (slideshow uses all)",
+          "group": "Hero header",
+          "max": 4,
+          "presets": [
+            "noir",
+            "loft",
+            "shelf",
+            "embers",
+            "blossom",
+            "marble",
+            "counter",
+            "arches",
+            "pour",
+            "beans",
+            "flames",
+            "leaves",
+            "sprinkles",
+            "tiles",
+            "dunes"
+          ]
+        },
+        {
+          "key": "hero.shade",
+          "type": "range",
+          "label": "Image darkness",
+          "group": "Hero header",
+          "min": 0,
+          "max": 90,
+          "step": 5
+        },
+        {
+          "key": "hero.eyebrow",
+          "type": "text",
+          "label": "Small line above the headline",
+          "group": "Hero header",
+          "max": 40
+        },
+        {
+          "key": "hero.title",
+          "type": "text",
+          "label": "Headline",
+          "group": "Hero header",
+          "max": 70
+        },
+        {
+          "key": "hero.subtitle",
+          "type": "textarea",
+          "label": "Subtext",
+          "group": "Hero header",
+          "max": 180
+        },
+        {
+          "key": "cards",
+          "type": "choice",
+          "label": "Product cards",
+          "group": "Layout",
+          "options": [
+            "classic",
+            "overlay",
+            "minimal"
+          ],
+          "optionLabels": {
+            "classic": "Photo and text",
+            "overlay": "Text on photo",
+            "minimal": "Compact list"
+          }
+        },
+        {
+          "key": "categories.style",
+          "type": "choice",
+          "label": "Category tiles",
+          "group": "Layout",
+          "options": [
+            "tiles",
+            "circles",
+            "banners"
+          ],
+          "optionLabels": {
+            "tiles": "Tiles",
+            "circles": "Circles",
+            "banners": "Wide banners"
+          }
+        },
+        {
+          "key": "density",
+          "type": "choice",
+          "label": "Grid",
+          "group": "Layout",
+          "options": [
+            "comfy",
+            "dense"
+          ],
+          "optionLabels": {
+            "comfy": "Roomy",
+            "dense": "More per row"
+          }
+        },
+        {
+          "key": "motion",
+          "type": "toggle",
+          "label": "Animations",
+          "group": "Layout"
+        },
+        {
+          "key": "sections",
+          "type": "toggles",
+          "label": "Home page sections",
+          "group": "Sections",
+          "options": [
+            "announcement",
+            "best",
+            "story",
+            "gallery",
+            "reviews",
+            "visit"
+          ],
+          "optionLabels": {
+            "announcement": "Announcement bar",
+            "best": "Best sellers",
+            "story": "About us",
+            "gallery": "Gallery",
+            "reviews": "Reviews",
+            "visit": "Hours and contact"
+          }
+        },
+        {
+          "key": "announcement",
+          "type": "text",
+          "label": "Announcement",
+          "group": "Sections",
+          "max": 80
+        },
+        {
+          "key": "categories.title",
+          "type": "text",
+          "label": "Categories headline",
+          "group": "Headlines",
+          "max": 60
+        },
+        {
+          "key": "best.title",
+          "type": "text",
+          "label": "Best sellers headline",
+          "group": "Headlines",
+          "max": 60
+        },
+        {
+          "key": "gallery.title",
+          "type": "text",
+          "label": "Gallery headline",
+          "group": "Headlines",
+          "max": 60
+        },
+        {
+          "key": "story.title",
+          "type": "text",
+          "label": "About headline",
+          "group": "About us",
+          "max": 70
+        },
+        {
+          "key": "story.text",
+          "type": "textarea",
+          "label": "About us",
+          "group": "About us",
+          "max": 600
+        },
+        {
+          "key": "story.image",
+          "type": "image",
+          "label": "About photo",
+          "group": "About us",
+          "presets": [
+            "noir",
+            "loft",
+            "shelf",
+            "embers",
+            "blossom",
+            "marble",
+            "counter",
+            "arches",
+            "pour",
+            "beans",
+            "flames",
+            "leaves",
+            "sprinkles",
+            "tiles",
+            "dunes"
+          ]
+        },
+        {
+          "key": "gallery",
+          "type": "images",
+          "label": "Gallery photos",
+          "group": "Gallery",
+          "max": 12
+        },
+        {
+          "key": "gallery.products",
+          "type": "toggle",
+          "label": "Add product photos to the gallery",
+          "group": "Gallery"
+        },
+        {
+          "key": "reviews.1.quote",
+          "type": "textarea",
+          "label": "Review 1",
+          "group": "Reviews",
+          "max": 220
+        },
+        {
+          "key": "reviews.1.name",
+          "type": "text",
+          "label": "Review 1 by",
+          "group": "Reviews",
+          "max": 40
+        },
+        {
+          "key": "reviews.2.quote",
+          "type": "textarea",
+          "label": "Review 2",
+          "group": "Reviews",
+          "max": 220
+        },
+        {
+          "key": "reviews.2.name",
+          "type": "text",
+          "label": "Review 2 by",
+          "group": "Reviews",
+          "max": 40
+        },
+        {
+          "key": "reviews.3.quote",
+          "type": "textarea",
+          "label": "Review 3",
+          "group": "Reviews",
+          "max": 220
+        },
+        {
+          "key": "reviews.3.name",
+          "type": "text",
+          "label": "Review 3 by",
+          "group": "Reviews",
+          "max": 40
+        },
+        {
+          "key": "footer.text",
+          "type": "textarea",
+          "label": "Line in the footer",
+          "group": "Footer",
+          "max": 140
+        },
+        {
+          "key": "hours",
+          "type": "hours",
+          "label": "Opening hours",
+          "group": "Visit us"
+        }
+      ],
+      "defaults": {
+        "font": "condensed",
+        "logo": "",
+        "theme": "charcoal",
+        "accent": "#FF6B1A",
+        "corners": "sharp",
+        "nav.style": "classic",
+        "cta.label": "",
+        "hero.layout": "slides",
+        "hero.images": [
+          "preset:embers",
+          "preset:flames"
+        ],
+        "hero.shade": 30,
+        "hero.eyebrow": "Charcoal grill · Since 2018",
+        "hero.title": "Smash. Sear. Repeat.",
+        "hero.subtitle": "Double smash burgers, charcoal steaks and fries you will think about tomorrow.",
+        "cards": "overlay",
+        "categories.style": "tiles",
+        "density": "comfy",
+        "motion": true,
+        "sections": [
+          "announcement",
+          "best",
+          "story",
+          "gallery",
+          "reviews",
+          "visit"
+        ],
+        "announcement": "Burger Tuesday: second burger half price",
+        "categories.title": "",
+        "best.title": "",
+        "gallery.title": "",
+        "story.title": "Fire is our favorite ingredient",
+        "story.text": "Ember and Oak started as a food truck with one grill. We still grind beef every morning and cook over real charcoal.",
+        "story.image": "preset:flames",
+        "gallery": [],
+        "gallery.products": true,
+        "reviews.1.quote": "",
+        "reviews.1.name": "",
+        "reviews.2.quote": "",
+        "reviews.2.name": "",
+        "reviews.3.quote": "",
+        "reviews.3.name": "",
+        "footer.text": "Dine in, take away or order on WhatsApp.",
+        "hours": {
+          "sat": "12:00-23:30",
+          "sun": "12:00-23:30",
+          "mon": "12:00-23:30",
+          "tue": "12:00-23:30",
+          "wed": "12:00-23:30",
+          "thu": "12:00-00:30",
+          "fri": "13:00-00:30"
+        }
+      }
+    },
+    {
+      "id": "bloom",
+      "number": 26,
+      "name": "Bloom",
+      "category": "Bakery and sweets",
+      "description": "A soft, pastel site for bakeries and dessert shops: round category bubbles, best sellers and a sweet gallery.",
+      "version": 1,
+      "tier": "pro",
+      "thumbnail": "/templates/bloom/thumbnail.png",
+      "sample": "bloom",
+      "schema": [
+        {
+          "key": "font",
+          "type": "choice",
+          "label": "Font style",
+          "group": "Brand",
+          "options": [
+            "round",
+            "soft",
+            "hand"
+          ],
+          "optionLabels": {
+            "round": "Friendly",
+            "soft": "Soft serif",
+            "hand": "Handwritten"
+          }
+        },
+        {
+          "key": "logo",
+          "type": "image",
+          "label": "Logo",
+          "group": "Brand"
+        },
+        {
+          "key": "theme",
+          "type": "palette",
+          "label": "Color theme",
+          "group": "Brand",
+          "options": [
+            "blush",
+            "butter",
+            "lilac",
+            "cocoa"
+          ],
+          "swatches": {
+            "blush": "#FFF5F6",
+            "butter": "#FFF8E7",
+            "lilac": "#F6F2FD",
+            "cocoa": "#2B1D1A"
+          }
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "label": "Accent color",
+          "group": "Brand",
+          "options": [
+            "#E05A84",
+            "#F08A4B",
+            "#7C5CD6",
+            "#3FA88B"
+          ]
+        },
+        {
+          "key": "corners",
+          "type": "choice",
+          "label": "Corners",
+          "group": "Brand",
+          "options": [
+            "rounded",
+            "sharp"
+          ],
+          "optionLabels": {
+            "rounded": "Rounded",
+            "sharp": "Sharp"
+          }
+        },
+        {
+          "key": "nav.style",
+          "type": "choice",
+          "label": "Menu bar",
+          "group": "Navigation",
+          "options": [
+            "classic",
+            "centered",
+            "floating"
+          ],
+          "optionLabels": {
+            "classic": "Classic",
+            "centered": "Centered name",
+            "floating": "Floating bar"
+          }
+        },
+        {
+          "key": "cta.label",
+          "type": "text",
+          "label": "Order button text",
+          "group": "Navigation",
+          "max": 30
+        },
+        {
+          "key": "hero.layout",
+          "type": "choice",
+          "label": "Layout",
+          "group": "Hero header",
+          "options": [
+            "cover",
+            "split",
+            "slides",
+            "text"
+          ],
+          "optionLabels": {
+            "cover": "Full image",
+            "split": "Split",
+            "slides": "Slideshow",
+            "text": "Text only"
+          }
+        },
+        {
+          "key": "hero.images",
+          "type": "images",
+          "label": "Hero photos (slideshow uses all)",
+          "group": "Hero header",
+          "max": 4,
+          "presets": [
+            "noir",
+            "loft",
+            "shelf",
+            "embers",
+            "blossom",
+            "marble",
+            "counter",
+            "arches",
+            "pour",
+            "beans",
+            "flames",
+            "leaves",
+            "sprinkles",
+            "tiles",
+            "dunes"
+          ]
+        },
+        {
+          "key": "hero.shade",
+          "type": "range",
+          "label": "Image darkness",
+          "group": "Hero header",
+          "min": 0,
+          "max": 90,
+          "step": 5
+        },
+        {
+          "key": "hero.eyebrow",
+          "type": "text",
+          "label": "Small line above the headline",
+          "group": "Hero header",
+          "max": 40
+        },
+        {
+          "key": "hero.title",
+          "type": "text",
+          "label": "Headline",
+          "group": "Hero header",
+          "max": 70
+        },
+        {
+          "key": "hero.subtitle",
+          "type": "textarea",
+          "label": "Subtext",
+          "group": "Hero header",
+          "max": 180
+        },
+        {
+          "key": "cards",
+          "type": "choice",
+          "label": "Product cards",
+          "group": "Layout",
+          "options": [
+            "classic",
+            "overlay",
+            "minimal"
+          ],
+          "optionLabels": {
+            "classic": "Photo and text",
+            "overlay": "Text on photo",
+            "minimal": "Compact list"
+          }
+        },
+        {
+          "key": "categories.style",
+          "type": "choice",
+          "label": "Category tiles",
+          "group": "Layout",
+          "options": [
+            "tiles",
+            "circles",
+            "banners"
+          ],
+          "optionLabels": {
+            "tiles": "Tiles",
+            "circles": "Circles",
+            "banners": "Wide banners"
+          }
+        },
+        {
+          "key": "density",
+          "type": "choice",
+          "label": "Grid",
+          "group": "Layout",
+          "options": [
+            "comfy",
+            "dense"
+          ],
+          "optionLabels": {
+            "comfy": "Roomy",
+            "dense": "More per row"
+          }
+        },
+        {
+          "key": "motion",
+          "type": "toggle",
+          "label": "Animations",
+          "group": "Layout"
+        },
+        {
+          "key": "sections",
+          "type": "toggles",
+          "label": "Home page sections",
+          "group": "Sections",
+          "options": [
+            "announcement",
+            "best",
+            "story",
+            "gallery",
+            "reviews",
+            "visit"
+          ],
+          "optionLabels": {
+            "announcement": "Announcement bar",
+            "best": "Best sellers",
+            "story": "About us",
+            "gallery": "Gallery",
+            "reviews": "Reviews",
+            "visit": "Hours and contact"
+          }
+        },
+        {
+          "key": "announcement",
+          "type": "text",
+          "label": "Announcement",
+          "group": "Sections",
+          "max": 80
+        },
+        {
+          "key": "categories.title",
+          "type": "text",
+          "label": "Categories headline",
+          "group": "Headlines",
+          "max": 60
+        },
+        {
+          "key": "best.title",
+          "type": "text",
+          "label": "Best sellers headline",
+          "group": "Headlines",
+          "max": 60
+        },
+        {
+          "key": "gallery.title",
+          "type": "text",
+          "label": "Gallery headline",
+          "group": "Headlines",
+          "max": 60
+        },
+        {
+          "key": "story.title",
+          "type": "text",
+          "label": "About headline",
+          "group": "About us",
+          "max": 70
+        },
+        {
+          "key": "story.text",
+          "type": "textarea",
+          "label": "About us",
+          "group": "About us",
+          "max": 600
+        },
+        {
+          "key": "story.image",
+          "type": "image",
+          "label": "About photo",
+          "group": "About us",
+          "presets": [
+            "noir",
+            "loft",
+            "shelf",
+            "embers",
+            "blossom",
+            "marble",
+            "counter",
+            "arches",
+            "pour",
+            "beans",
+            "flames",
+            "leaves",
+            "sprinkles",
+            "tiles",
+            "dunes"
+          ]
+        },
+        {
+          "key": "gallery",
+          "type": "images",
+          "label": "Gallery photos",
+          "group": "Gallery",
+          "max": 12
+        },
+        {
+          "key": "gallery.products",
+          "type": "toggle",
+          "label": "Add product photos to the gallery",
+          "group": "Gallery"
+        },
+        {
+          "key": "reviews.1.quote",
+          "type": "textarea",
+          "label": "Review 1",
+          "group": "Reviews",
+          "max": 220
+        },
+        {
+          "key": "reviews.1.name",
+          "type": "text",
+          "label": "Review 1 by",
+          "group": "Reviews",
+          "max": 40
+        },
+        {
+          "key": "reviews.2.quote",
+          "type": "textarea",
+          "label": "Review 2",
+          "group": "Reviews",
+          "max": 220
+        },
+        {
+          "key": "reviews.2.name",
+          "type": "text",
+          "label": "Review 2 by",
+          "group": "Reviews",
+          "max": 40
+        },
+        {
+          "key": "reviews.3.quote",
+          "type": "textarea",
+          "label": "Review 3",
+          "group": "Reviews",
+          "max": 220
+        },
+        {
+          "key": "reviews.3.name",
+          "type": "text",
+          "label": "Review 3 by",
+          "group": "Reviews",
+          "max": 40
+        },
+        {
+          "key": "footer.text",
+          "type": "textarea",
+          "label": "Line in the footer",
+          "group": "Footer",
+          "max": 140
+        },
+        {
+          "key": "hours",
+          "type": "hours",
+          "label": "Opening hours",
+          "group": "Visit us"
+        }
+      ],
+      "defaults": {
+        "font": "round",
+        "logo": "",
+        "theme": "blush",
+        "accent": "#E05A84",
+        "corners": "rounded",
+        "nav.style": "floating",
+        "cta.label": "",
+        "hero.layout": "split",
+        "hero.images": [
+          "preset:blossom",
+          "preset:sprinkles"
+        ],
+        "hero.shade": 45,
+        "hero.eyebrow": "Baked fresh every morning",
+        "hero.title": "Little cakes, big happiness.",
+        "hero.subtitle": "Celebration cakes, cinnamon rolls and cupcakes, made by hand with real butter and lots of love.",
+        "cards": "classic",
+        "categories.style": "circles",
+        "density": "comfy",
+        "motion": true,
+        "sections": [
+          "announcement",
+          "best",
+          "story",
+          "gallery",
+          "reviews",
+          "visit"
+        ],
+        "announcement": "Order birthday cakes two days ahead on WhatsApp",
+        "categories.title": "",
+        "best.title": "",
+        "gallery.title": "",
+        "story.title": "From our oven to your table",
+        "story.text": "Bloom began in a home kitchen with one oven and a lot of sprinkles. We still bake everything ourselves, in small batches, every single morning.",
+        "story.image": "preset:sprinkles",
+        "gallery": [],
+        "gallery.products": true,
+        "reviews.1.quote": "",
+        "reviews.1.name": "",
+        "reviews.2.quote": "",
+        "reviews.2.name": "",
+        "reviews.3.quote": "",
+        "reviews.3.name": "",
+        "footer.text": "Custom cakes for birthdays, weddings and every little win.",
+        "hours": {
+          "sat": "07:30-22:00",
+          "sun": "07:30-22:00",
+          "mon": "07:30-22:00",
+          "tue": "07:30-22:00",
+          "wed": "07:30-22:00",
+          "thu": "07:30-23:00",
+          "fri": "09:00-23:00"
+        }
+      }
     }
   ]
 }

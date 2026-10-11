@@ -3,11 +3,11 @@
 // Each template's page loads only its own file, so adding templates never makes other sites heavier.
 // Usage: node scripts/build-styles.mjs [--watch]
 import { createHash } from "node:crypto";
-import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, watch, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, rmSync, watch, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import browserslist from "browserslist";
-import { browserslistToTargets, transform } from "lightningcss";
+import { browserslistToTargets, bundle } from "lightningcss";
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const templatesDir = path.join(root, "templates");
@@ -15,10 +15,10 @@ const outDir = path.join(root, "public", "styles");
 const mapFile = path.join(templatesDir, "styles.generated.json");
 const targets = browserslistToTargets(browserslist(["chrome >= 100", "safari >= 15.4", "firefox >= 110", "edge >= 100"]));
 
-/** Compiles one stylesheet; errors are shortened to "file:line:column message". */
+/** Compiles one stylesheet, inlining its @imports (the Pro templates share templates/_premium/base.css); errors are shortened to "file:line:column message". */
 function compile(source) {
   try {
-    return transform({ filename: source, code: readFileSync(source), minify: true, targets }).code;
+    return bundle({ filename: source, minify: true, targets }).code;
   } catch (error) {
     const where = error.loc ? `:${error.loc.line}:${error.loc.column}` : "";
     throw new Error(`${path.relative(process.cwd(), source)}${where} ${error.message}`);
@@ -50,7 +50,7 @@ build();
 if (process.argv.includes("--watch")) {
   let timer;
   watch(templatesDir, { recursive: true }, (_event, file) => {
-    if (!file?.endsWith("styles.css")) return;
+    if (!file?.endsWith(".css")) return;
     clearTimeout(timer);
     timer = setTimeout(() => {
       try {

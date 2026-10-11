@@ -1,0 +1,215 @@
+/* Template 025 "Ember" (Pro): loud and hungry. Poster type, flame accent, text-on-photo cards, angled edges. */
+@import "../_premium/base.css";
+
+.t-ember {
+  --card-ratio: 1;
+  --hero-h: min(90svh, 800px);
+  --gap: 14px;
+
+  .orn {
+    width: 12px;
+    height: 16px;
+  }
+  .eyebrow {
+    color: var(--acc-text);
+    letter-spacing: 0.18em;
+  }
+  h1,
+  h2,
+  h3 {
+    text-transform: uppercase;
+    line-height: 0.92;
+  }
+  .hero-title {
+    font-size: clamp(64px, 15vw, 180px);
+    line-height: 0.86;
+    max-width: 9ch;
+  }
+  .hero-cover .hero-title,
+  .hero-slides .hero-title {
+    text-shadow: 0 6px 40px rgb(0 0 0 / 0.4);
+  }
+  .hero-cover::after,
+  .hero-slides::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 -1px;
+    height: 48px;
+    background: var(--bg);
+    clip-path: polygon(0 100%, 100% 0, 100% 100%);
+  }
+  .btn {
+    border-radius: var(--r);
+    text-transform: uppercase;
+    font-family: var(--fd);
+    font-weight: var(--fw);
+    font-size: calc(18px * var(--fs) * 0.9);
+    letter-spacing: 0.04em;
+    min-height: 52px;
+  }
+  .btn:not(.btn-ghost) {
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .hero .btn:not(.btn-ghost) {
+    box-shadow: 4px 4px 0 #000;
+  }
+  .btn:not(.btn-ghost):hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .brand-name {
+    text-transform: uppercase;
+    font-size: calc(26px * var(--fs));
+  }
+  .brand-logo {
+    border-radius: var(--r);
+  }
+  .links > a,
+  .mega-top {
+    text-transform: uppercase;
+    font-family: var(--fd);
+    font-weight: var(--fw);
+    font-size: calc(18px * var(--fs) * 0.85);
+    letter-spacing: 0.04em;
+  }
+  .nav {
+    background: color-mix(in srgb, var(--bg) 92%, transparent);
+    border-bottom: 3px solid var(--acc);
+  }
+
+  .sec-title {
+    font-size: clamp(42px, 7vw, 84px);
+  }
+  .sec-title::after {
+    content: "";
+    display: block;
+    width: 64px;
+    height: 6px;
+    margin-top: 14px;
+    background: var(--acc);
+    transform: skewX(-18deg);
+  }
+  .more {
+    text-transform: uppercase;
+    font-family: var(--fd);
+    font-weight: var(--fw);
+    font-size: calc(18px * var(--fs) * 0.85);
+    letter-spacing: 0.04em;
+  }
+
+  .cat,
+  .card-media,
+  .story-media,
+  .shot,
+  .panel,
+  .quote {
+    border-radius: var(--r);
+  }
+  .cat-name {
+    text-transform: uppercase;
+    font-size: calc(clamp(26px, 3.4vw, 40px) * var(--fs));
+  }
+  .cat-go {
+    background: var(--acc);
+    color: var(--acc-ink);
+    border-radius: var(--r);
+  }
+  .cat-body {
+    background: linear-gradient(to top, rgb(0 0 0 / 0.85), transparent);
+  }
+
+  .card-name {
+    text-transform: uppercase;
+    font-size: calc(24px * var(--fs) * 0.9);
+    line-height: 1;
+  }
+  &.cards-overlay .card-name {
+    font-size: calc(28px * var(--fs) * 0.9);
+  }
+  .card-price {
+    font-family: var(--fd);
+    font-weight: var(--fw);
+    font-size: 22px;
+  }
+  &.cards-overlay .card-price {
+    justify-self: start;
+    padding: 2px 10px;
+    background: var(--acc);
+    color: var(--acc-ink);
+    transform: skewX(-8deg);
+  }
+  .badge {
+    border-radius: 0;
+    background: var(--acc);
+    color: var(--acc-ink);
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    transform: rotate(-3deg);
+  }
+  .rank {
+    font-size: 22px;
+    border-radius: 0;
+    transform: skewX(-8deg);
+  }
+
+  .sec-best {
+    max-width: none;
+    background: var(--acc);
+    color: var(--acc-ink);
+    margin-top: clamp(48px, 7vw, 96px);
+    padding-bottom: clamp(40px, 6vw, 80px);
+    --muted: color-mix(in srgb, var(--acc-ink) 75%, var(--acc));
+    --acc-text: var(--acc-ink);
+  }
+  .sec-best .sec-head,
+  .sec-best .rail {
+    max-width: var(--wrap);
+    margin-inline: auto;
+  }
+  .sec-best .rail {
+    padding-inline: 0;
+  }
+  .sec-best .sec-title::after {
+    background: var(--acc-ink);
+  }
+  .sec-best .card-price {
+    color: inherit;
+  }
+  .sec-best .badge,
+  .sec-best.sec .card-price {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  .quote {
+    background: var(--surf);
+    border: 0;
+    border-inline-start: 6px solid var(--acc);
+  }
+  .quote blockquote {
+    font-family: var(--fb);
+    font-weight: 600;
+    font-size: 17px;
+  }
+  .page-title {
+    font-size: clamp(56px, 11vw, 130px);
+  }
+  .chip {
+    border-radius: var(--r);
+    text-transform: uppercase;
+    font-family: var(--fd);
+    font-weight: var(--fw);
+    font-size: calc(17px * var(--fs) * 0.85);
+    letter-spacing: 0.04em;
+  }
+  .sub-title {
+    font-size: 30px;
+  }
+  .foot {
+    border-top: 3px solid var(--acc);
+  }
+  .foot .brand-name {
+    font-size: 34px;
+  }
+}

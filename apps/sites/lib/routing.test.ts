@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { apiBaseUrl, mainHosts, route } from "./routing";
+import { apiBaseUrl, mainHosts, route, siteBase } from "./routing";
 
 const main = new Set(["example.test", "www.example.test", "localhost"]);
 
 describe("route", () => {
   it("rewrites a slug on the main host", () => {
-    expect(route("example.test", "/vanillamenu", main)).toEqual({ kind: "rewrite", path: "/s/vanillamenu" });
-    expect(route("localhost:3000", "/vanillamenu/menu", main)).toEqual({ kind: "rewrite", path: "/s/vanillamenu/menu" });
+    expect(route("example.test", "/vanillamenu", main)).toEqual({ kind: "rewrite", path: "/s/vanillamenu", base: "/vanillamenu" });
+    expect(route("localhost:3000", "/VanillaMenu/menu", main)).toEqual({ kind: "rewrite", path: "/s/vanillamenu/menu", base: "/vanillamenu" });
   });
 
   it("serves reserved paths, the home page and files as they are", () => {
@@ -26,8 +26,9 @@ describe("route", () => {
   });
 
   it("rewrites preview links on any host", () => {
-    expect(route("example.test", "/_preview/abc.def", main)).toEqual({ kind: "rewrite", path: "/s-preview/abc.def" });
-    expect(route("shop.example.com", "/_preview/abc", main)).toEqual({ kind: "rewrite", path: "/s-preview/abc" });
+    expect(route("example.test", "/_preview/abc.def", main)).toEqual({ kind: "rewrite", path: "/s-preview/abc.def", base: "/_preview/abc.def" });
+    expect(route("shop.example.com", "/_preview/abc", main)).toEqual({ kind: "rewrite", path: "/s-preview/abc", base: "/_preview/abc" });
+    expect(route("example.test", "/_preview/abc/c/coffee-1234abcd", main)).toEqual({ kind: "rewrite", path: "/s-preview/abc/c/coffee-1234abcd", base: "/_preview/abc" });
   });
 
   it("looks up custom domains", () => {
@@ -36,12 +37,25 @@ describe("route", () => {
   });
 });
 
+describe("siteBase", () => {
+  it("keeps plain paths and the empty custom-domain base", () => {
+    expect(siteBase("/vanillamenu", "/x")).toBe("/vanillamenu");
+    expect(siteBase("/_preview/abc.def", "/x")).toBe("/_preview/abc.def");
+    expect(siteBase("", "/x")).toBe("");
+  });
+
+  it("falls back for a missing header or anything that is not a plain path", () => {
+    expect(siteBase(null, "/x")).toBe("/x");
+    for (const bad of ["javascript:alert(1)", "//evil.example", "/a b", "/a/b/c", "https://evil.example"]) expect(siteBase(bad, "/x")).toBe("/x");
+  });
+});
+
 describe("mainHosts", () => {
   it("includes the Vercel project's own addresses", () => {
     const hosts = mainHosts({ VERCEL_PROJECT_PRODUCTION_URL: "menuapp.vercel.app", VERCEL_URL: "menuapp-abc123.vercel.app" });
     expect(hosts.has("menuapp.vercel.app")).toBe(true);
     expect(hosts.has("menuapp-abc123.vercel.app")).toBe(true);
-    expect(route("menuapp.vercel.app", "/vanillamenu", hosts)).toEqual({ kind: "rewrite", path: "/s/vanillamenu" });
+    expect(route("menuapp.vercel.app", "/vanillamenu", hosts)).toEqual({ kind: "rewrite", path: "/s/vanillamenu", base: "/vanillamenu" });
   });
 });
 

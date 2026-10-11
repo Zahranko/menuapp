@@ -1,0 +1,208 @@
+/* Template 024 "Atlas" (Pro): a shop catalog. Uppercase grotesk, hairlines, dense product grid, slideshow hero. */
+@import "../_premium/base.css";
+
+.t-atlas {
+  --wrap: 1320px;
+  --card-ratio: 4 / 5;
+  --tile-ratio: 3 / 4;
+  --gap: 14px;
+  --nav-h: 60px;
+
+  .eyebrow {
+    color: var(--muted);
+    letter-spacing: 0.2em;
+    font-size: 11px;
+  }
+  .hero-title {
+    text-transform: uppercase;
+    font-size: clamp(38px, 7.4vw, 96px);
+    line-height: 0.92;
+    max-width: 12ch;
+  }
+  .hero-cover,
+  .hero-slides {
+    --hero-h: min(80svh, 720px);
+  }
+  .btn {
+    border-radius: var(--r);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 12.5px;
+  }
+  .brand-logo {
+    border-radius: var(--r);
+  }
+  .brand-name {
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 17px;
+  }
+  .links > a,
+  .mega-top {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 12.5px;
+    border-radius: var(--r);
+  }
+  .nav {
+    background: var(--bg);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-bottom: 1px solid var(--ink);
+  }
+  .mega-panel {
+    border-radius: 0;
+    border-color: var(--ink);
+    inset-inline: 0;
+    border-width: 1px 0;
+    box-shadow: 0 30px 40px -30px rgb(0 0 0 / 0.3);
+  }
+
+  .sec-head {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 14px;
+  }
+  .sec-title {
+    text-transform: uppercase;
+    font-size: clamp(24px, 3.4vw, 38px);
+  }
+  .more {
+    color: var(--ink);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 12px;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .cat,
+  .card-media,
+  .story-media,
+  .shot,
+  .panel,
+  .quote {
+    border-radius: var(--r);
+  }
+  &.cats-tiles .cat-body {
+    background: none;
+    padding: 14px;
+  }
+  &.cats-tiles .cat-name {
+    display: inline-block;
+    justify-self: start;
+    padding: 6px 12px;
+    background: var(--bg);
+    color: var(--ink);
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 0.06em;
+  }
+  &.cats-tiles .cat-count {
+    display: none;
+  }
+  &.cats-tiles .cat-go {
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: var(--r);
+  }
+
+  .card-media {
+    background: var(--surf);
+  }
+  .card-body {
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    gap: 2px 12px;
+    padding-top: 10px;
+  }
+  .card-name {
+    font-family: var(--fb);
+    font-weight: 600;
+    font-size: 14.5px;
+    letter-spacing: 0;
+  }
+  .card-desc {
+    grid-column: 1;
+    grid-row: 2;
+    font-size: 12.5px;
+    -webkit-line-clamp: 1;
+  }
+  .card-price {
+    grid-column: 2;
+    grid-row: 1;
+    color: var(--ink);
+    font-size: 14.5px;
+  }
+  &.cards-overlay .card-body,
+  &.cards-minimal .card-body {
+    grid-template-columns: 1fr;
+  }
+  &.cards-overlay .card-price,
+  &.cards-minimal .card-price {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  &.cards-overlay .card-price {
+    color: #fff;
+  }
+  .badge {
+    border-radius: 0;
+    background: var(--ink);
+    color: var(--bg);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 10px;
+    box-shadow: none;
+  }
+  .rank {
+    border-radius: 0;
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  .quote,
+  .panel {
+    background: transparent;
+    border-color: var(--ink);
+  }
+  .quote blockquote {
+    font-family: var(--fb);
+    font-size: 16px;
+  }
+  .stars {
+    color: var(--ink);
+  }
+
+  .page-title {
+    text-transform: uppercase;
+    font-size: clamp(36px, 6.4vw, 78px);
+  }
+  .chip {
+    border-radius: var(--r);
+    background: transparent;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+  }
+  .chip[aria-current] {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--bg);
+  }
+  .sub-title {
+    text-transform: uppercase;
+    font-size: 17px;
+    letter-spacing: 0.04em;
+  }
+
+  .foot {
+    background: var(--ink);
+    color: var(--bg);
+    --muted: color-mix(in srgb, var(--bg) 62%, var(--ink));
+    --line: color-mix(in srgb, var(--bg) 18%, var(--ink));
+    --acc-text: var(--bg);
+  }
+  .foot .brand-name {
+    font-size: 22px;
+  }
+}

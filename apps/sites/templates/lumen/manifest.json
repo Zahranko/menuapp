@@ -1,0 +1,436 @@
+{
+  "id": "lumen",
+  "number": 23,
+  "name": "Lumen",
+  "category": "Specialty café",
+  "description": "A bright, airy café site with a split hero, sub-category pages, a best-seller rail and a photo gallery.",
+  "version": 1,
+  "tier": "pro",
+  "thumbnail": "/templates/lumen/thumbnail.png",
+  "sample": "lumen",
+  "schema": [
+    {
+      "key": "font",
+      "type": "choice",
+      "label": "Font style",
+      "group": "Brand",
+      "options": [
+        "modern",
+        "soft",
+        "grotesk"
+      ],
+      "optionLabels": {
+        "modern": "Modern",
+        "soft": "Soft serif",
+        "grotesk": "Grotesk"
+      }
+    },
+    {
+      "key": "logo",
+      "type": "image",
+      "label": "Logo",
+      "group": "Brand"
+    },
+    {
+      "key": "theme",
+      "type": "palette",
+      "label": "Color theme",
+      "group": "Brand",
+      "options": [
+        "daylight",
+        "oat",
+        "mist",
+        "espresso"
+      ],
+      "swatches": {
+        "daylight": "#FBF8F3",
+        "oat": "#F3ECE1",
+        "mist": "#EEF2F1",
+        "espresso": "#1B1714"
+      }
+    },
+    {
+      "key": "accent",
+      "type": "color",
+      "label": "Accent color",
+      "group": "Brand",
+      "options": [
+        "#2F6B57",
+        "#C8553D",
+        "#3B5BDB",
+        "#B7791F"
+      ]
+    },
+    {
+      "key": "corners",
+      "type": "choice",
+      "label": "Corners",
+      "group": "Brand",
+      "options": [
+        "rounded",
+        "sharp"
+      ],
+      "optionLabels": {
+        "rounded": "Rounded",
+        "sharp": "Sharp"
+      }
+    },
+    {
+      "key": "nav.style",
+      "type": "choice",
+      "label": "Menu bar",
+      "group": "Navigation",
+      "options": [
+        "classic",
+        "centered",
+        "floating"
+      ],
+      "optionLabels": {
+        "classic": "Classic",
+        "centered": "Centered name",
+        "floating": "Floating bar"
+      }
+    },
+    {
+      "key": "cta.label",
+      "type": "text",
+      "label": "Order button text",
+      "group": "Navigation",
+      "max": 30
+    },
+    {
+      "key": "hero.layout",
+      "type": "choice",
+      "label": "Layout",
+      "group": "Hero header",
+      "options": [
+        "cover",
+        "split",
+        "slides",
+        "text"
+      ],
+      "optionLabels": {
+        "cover": "Full image",
+        "split": "Split",
+        "slides": "Slideshow",
+        "text": "Text only"
+      }
+    },
+    {
+      "key": "hero.images",
+      "type": "images",
+      "label": "Hero photos (slideshow uses all)",
+      "group": "Hero header",
+      "max": 4,
+      "presets": [
+        "noir",
+        "loft",
+        "shelf",
+        "embers",
+        "blossom",
+        "marble",
+        "counter",
+        "arches",
+        "pour",
+        "beans",
+        "flames",
+        "leaves",
+        "sprinkles",
+        "tiles",
+        "dunes"
+      ]
+    },
+    {
+      "key": "hero.shade",
+      "type": "range",
+      "label": "Image darkness",
+      "group": "Hero header",
+      "min": 0,
+      "max": 90,
+      "step": 5
+    },
+    {
+      "key": "hero.eyebrow",
+      "type": "text",
+      "label": "Small line above the headline",
+      "group": "Hero header",
+      "max": 40
+    },
+    {
+      "key": "hero.title",
+      "type": "text",
+      "label": "Headline",
+      "group": "Hero header",
+      "max": 70
+    },
+    {
+      "key": "hero.subtitle",
+      "type": "textarea",
+      "label": "Subtext",
+      "group": "Hero header",
+      "max": 180
+    },
+    {
+      "key": "cards",
+      "type": "choice",
+      "label": "Product cards",
+      "group": "Layout",
+      "options": [
+        "classic",
+        "overlay",
+        "minimal"
+      ],
+      "optionLabels": {
+        "classic": "Photo and text",
+        "overlay": "Text on photo",
+        "minimal": "Compact list"
+      }
+    },
+    {
+      "key": "categories.style",
+      "type": "choice",
+      "label": "Category tiles",
+      "group": "Layout",
+      "options": [
+        "tiles",
+        "circles",
+        "banners"
+      ],
+      "optionLabels": {
+        "tiles": "Tiles",
+        "circles": "Circles",
+        "banners": "Wide banners"
+      }
+    },
+    {
+      "key": "density",
+      "type": "choice",
+      "label": "Grid",
+      "group": "Layout",
+      "options": [
+        "comfy",
+        "dense"
+      ],
+      "optionLabels": {
+        "comfy": "Roomy",
+        "dense": "More per row"
+      }
+    },
+    {
+      "key": "motion",
+      "type": "toggle",
+      "label": "Animations",
+      "group": "Layout"
+    },
+    {
+      "key": "sections",
+      "type": "toggles",
+      "label": "Home page sections",
+      "group": "Sections",
+      "options": [
+        "announcement",
+        "best",
+        "story",
+        "gallery",
+        "reviews",
+        "visit"
+      ],
+      "optionLabels": {
+        "announcement": "Announcement bar",
+        "best": "Best sellers",
+        "story": "About us",
+        "gallery": "Gallery",
+        "reviews": "Reviews",
+        "visit": "Hours and contact"
+      }
+    },
+    {
+      "key": "announcement",
+      "type": "text",
+      "label": "Announcement",
+      "group": "Sections",
+      "max": 80
+    },
+    {
+      "key": "categories.title",
+      "type": "text",
+      "label": "Categories headline",
+      "group": "Headlines",
+      "max": 60
+    },
+    {
+      "key": "best.title",
+      "type": "text",
+      "label": "Best sellers headline",
+      "group": "Headlines",
+      "max": 60
+    },
+    {
+      "key": "gallery.title",
+      "type": "text",
+      "label": "Gallery headline",
+      "group": "Headlines",
+      "max": 60
+    },
+    {
+      "key": "story.title",
+      "type": "text",
+      "label": "About headline",
+      "group": "About us",
+      "max": 70
+    },
+    {
+      "key": "story.text",
+      "type": "textarea",
+      "label": "About us",
+      "group": "About us",
+      "max": 600
+    },
+    {
+      "key": "story.image",
+      "type": "image",
+      "label": "About photo",
+      "group": "About us",
+      "presets": [
+        "noir",
+        "loft",
+        "shelf",
+        "embers",
+        "blossom",
+        "marble",
+        "counter",
+        "arches",
+        "pour",
+        "beans",
+        "flames",
+        "leaves",
+        "sprinkles",
+        "tiles",
+        "dunes"
+      ]
+    },
+    {
+      "key": "gallery",
+      "type": "images",
+      "label": "Gallery photos",
+      "group": "Gallery",
+      "max": 12
+    },
+    {
+      "key": "gallery.products",
+      "type": "toggle",
+      "label": "Add product photos to the gallery",
+      "group": "Gallery"
+    },
+    {
+      "key": "reviews.1.quote",
+      "type": "textarea",
+      "label": "Review 1",
+      "group": "Reviews",
+      "max": 220
+    },
+    {
+      "key": "reviews.1.name",
+      "type": "text",
+      "label": "Review 1 by",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "reviews.2.quote",
+      "type": "textarea",
+      "label": "Review 2",
+      "group": "Reviews",
+      "max": 220
+    },
+    {
+      "key": "reviews.2.name",
+      "type": "text",
+      "label": "Review 2 by",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "reviews.3.quote",
+      "type": "textarea",
+      "label": "Review 3",
+      "group": "Reviews",
+      "max": 220
+    },
+    {
+      "key": "reviews.3.name",
+      "type": "text",
+      "label": "Review 3 by",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "footer.text",
+      "type": "textarea",
+      "label": "Line in the footer",
+      "group": "Footer",
+      "max": 140
+    },
+    {
+      "key": "hours",
+      "type": "hours",
+      "label": "Opening hours",
+      "group": "Visit us"
+    }
+  ],
+  "defaults": {
+    "font": "modern",
+    "logo": "",
+    "theme": "daylight",
+    "accent": "#2F6B57",
+    "corners": "rounded",
+    "nav.style": "floating",
+    "cta.label": "",
+    "hero.layout": "split",
+    "hero.images": [
+      "preset:loft",
+      "preset:pour"
+    ],
+    "hero.shade": 45,
+    "hero.eyebrow": "Specialty coffee · Weibdeh",
+    "hero.title": "Slow mornings, good coffee.",
+    "hero.subtitle": "Seasonal single origins, butter croissants laminated for three days and big windows full of light.",
+    "cards": "classic",
+    "categories.style": "tiles",
+    "density": "comfy",
+    "motion": true,
+    "sections": [
+      "announcement",
+      "best",
+      "story",
+      "gallery",
+      "reviews",
+      "visit"
+    ],
+    "announcement": "New single origin this week: Ethiopia Guji",
+    "categories.title": "",
+    "best.title": "",
+    "gallery.title": "",
+    "story.title": "A sunny corner for the neighborhood",
+    "story.text": "We roast twice a week, bake before sunrise and keep the music low. Come for a flat white, stay for the light.",
+    "story.image": "preset:pour",
+    "gallery": [],
+    "gallery.products": true,
+    "reviews.1.quote": "",
+    "reviews.1.name": "",
+    "reviews.2.quote": "",
+    "reviews.2.name": "",
+    "reviews.3.quote": "",
+    "reviews.3.name": "",
+    "footer.text": "Roasted in small batches. Baked every morning.",
+    "hours": {
+      "sat": "07:30-22:00",
+      "sun": "07:30-22:00",
+      "mon": "07:30-22:00",
+      "tue": "07:30-22:00",
+      "wed": "07:30-22:00",
+      "thu": "07:30-23:00",
+      "fri": "09:00-23:00"
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { apiBaseUrl, route, sitePath } from "./lib/routing";
+import { apiBaseUrl, route, SITE_BASE_HEADER, sitePath } from "./lib/routing";
 
 const HOST_TTL_MS = 60_000;
 const hostCache = new Map<string, { slug: string | null; until: number }>();
@@ -23,19 +23,29 @@ async function slugForHost(host: string): Promise<string | null> {
   return slug;
 }
 
+/** Rewrites to `path` and tells the page where the site's home page is, so its links work on every kind of address. */
+function rewrite(request: NextRequest, path: string, base: string) {
+  const url = request.nextUrl.clone();
+  url.pathname = path;
+  const headers = new Headers(request.headers);
+  headers.set(SITE_BASE_HEADER, base);
+  return NextResponse.rewrite(url, { request: { headers } });
+}
+
 export async function proxy(request: NextRequest) {
   const decision = route(request.headers.get("host") ?? "", request.nextUrl.pathname);
-  if (decision.kind === "pass") return NextResponse.next();
-
-  const url = request.nextUrl.clone();
-  if (decision.kind === "rewrite") {
-    url.pathname = decision.path;
-    return NextResponse.rewrite(url);
+  if (decision.kind === "pass") {
+    // Only the proxy sets the site base; drop one sent by the visitor.
+    if (!request.headers.has(SITE_BASE_HEADER)) return NextResponse.next();
+    const headers = new Headers(request.headers);
+    headers.delete(SITE_BASE_HEADER);
+    return NextResponse.next({ request: { headers } });
   }
 
+  if (decision.kind === "rewrite") return rewrite(request, decision.path, decision.base);
+
   const slug = await slugForHost(decision.host);
-  url.pathname = slug ? sitePath(slug) + decision.path : "/unknown-site";
-  const response = NextResponse.rewrite(url);
+  const response = rewrite(request, slug ? sitePath(slug) + decision.path : "/unknown-site", "");
   response.headers.set("x-site-host", decision.host);
   return response;
 }

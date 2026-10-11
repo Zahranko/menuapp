@@ -1,0 +1,204 @@
+/* Template 022 "Maison" (Pro): quiet luxury. Dark rooms, gold hairlines, serif headlines, banner categories. */
+@import "../_premium/base.css";
+
+.t-maison {
+  --wrap: 1240px;
+  --card-ratio: 4 / 5;
+  --hero-h: min(92svh, 820px);
+  --gap: 22px;
+
+  .eyebrow {
+    letter-spacing: 0.32em;
+    font-weight: 600;
+    font-size: 11px;
+  }
+  .orn {
+    width: 34px;
+    height: 10px;
+    stroke-width: 1;
+  }
+  h1,
+  h2,
+  h3 {
+    font-weight: var(--fw);
+  }
+  .hero-title {
+    font-size: clamp(44px, 9vw, 108px);
+    font-style: italic;
+    max-width: 15ch;
+  }
+  .hero-cover .hero-copy {
+    text-align: center;
+  }
+  .hero-cover .hero-title,
+  .hero-cover .hero-sub {
+    margin-inline: auto;
+  }
+  .hero-cover .hero-actions {
+    justify-content: center;
+  }
+  .hero-cover .hero-copy::before {
+    content: "";
+    display: block;
+    width: 1px;
+    height: 70px;
+    margin: 0 auto 26px;
+    background: linear-gradient(transparent, var(--acc));
+  }
+
+  .btn {
+    border-radius: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 12px;
+    padding: 0 28px;
+    min-height: 50px;
+  }
+  .btn-ghost {
+    border-color: color-mix(in srgb, currentColor 50%, transparent);
+  }
+
+  .nav {
+    border-bottom-color: color-mix(in srgb, var(--acc) 30%, transparent);
+  }
+  .brand-name {
+    font-style: italic;
+  }
+  .links > a,
+  .mega-top {
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 12px;
+  }
+  .nav-cta {
+    border-radius: 0;
+  }
+  .brand-logo {
+    background: transparent;
+    color: var(--acc-text);
+    border: 1px solid var(--acc);
+  }
+
+  .sec-head {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .sec-title {
+    max-width: 26ch;
+    font-size: clamp(32px, 4.8vw, 54px);
+  }
+  .sec-head .more {
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 11.5px;
+  }
+
+  .cat,
+  .card-media,
+  .story-media,
+  .shot,
+  .panel,
+  .quote {
+    border-radius: var(--r);
+  }
+  .cat {
+    outline: 1px solid color-mix(in srgb, var(--acc) 35%, transparent);
+    outline-offset: -10px;
+  }
+  .cat-body {
+    background: linear-gradient(to top, rgb(0 0 0 / 0.8), rgb(0 0 0 / 0.1) 70%, transparent);
+  }
+  .cat-name {
+    font-style: italic;
+  }
+  .cat-go {
+    background: var(--acc);
+    color: var(--acc-ink);
+  }
+
+  .card-body {
+    text-align: center;
+    justify-items: center;
+    padding-top: 16px;
+  }
+  .card-name {
+    font-size: calc(21px * var(--fs));
+  }
+  .card-price {
+    font-family: var(--fd);
+    font-size: 18px;
+    letter-spacing: 0.04em;
+  }
+  .card-price::before,
+  .card-price::after {
+    content: "—";
+    margin: 0 8px;
+    opacity: 0.4;
+    font-weight: 400;
+  }
+  .badge {
+    border-radius: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 10px;
+    background: var(--acc);
+    color: var(--acc-ink);
+  }
+  &.cards-minimal .card-body {
+    text-align: start;
+    justify-items: start;
+  }
+
+  .quote {
+    background: transparent;
+    border-color: color-mix(in srgb, var(--acc) 40%, transparent);
+    text-align: center;
+    align-items: center;
+  }
+  .quote blockquote {
+    font-style: italic;
+    font-size: calc(21px * var(--fs));
+  }
+
+  .story-media::after {
+    content: "";
+    position: absolute;
+    inset: 14px;
+    border: 1px solid color-mix(in srgb, var(--acc) 60%, transparent);
+    pointer-events: none;
+  }
+  .story-text {
+    font-size: 18px;
+  }
+
+  .page-head {
+    text-align: center;
+  }
+  .page-head .crumbs ol,
+  .page-head .chips {
+    justify-content: center;
+  }
+  .page-title {
+    font-style: italic;
+    font-size: clamp(44px, 8vw, 92px);
+  }
+  .chip {
+    border-radius: 0;
+    background: transparent;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 11.5px;
+  }
+  .sub-title {
+    font-style: italic;
+    font-size: 26px;
+  }
+
+  .foot {
+    border-top-color: color-mix(in srgb, var(--acc) 30%, transparent);
+  }
+  .foot .brand-name {
+    font-size: 26px;
+  }
+}

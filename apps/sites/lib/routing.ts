@@ -3,8 +3,11 @@ import { brand } from "./brand";
 
 export type Route =
   | { kind: "pass" }
-  | { kind: "rewrite"; path: string }
+  | { kind: "rewrite"; path: string; base: string }
   | { kind: "lookup-host"; host: string; path: string };
+
+/** Request header that tells a site page the public address of its home page ("/<slug>", "/_preview/<token>" or "" on a custom domain). */
+export const SITE_BASE_HEADER = "x-site-base";
 
 const reserved = new Set<string>([...reservedSlugs, brand.brandShortName.toLowerCase()]);
 
@@ -36,7 +39,7 @@ export function route(hostHeader: string, pathname: string, main: Set<string> = 
 
   // Preview tokens contain dots, so this comes before the file rule.
   if (first === "_preview" && segments[1]) {
-    return { kind: "rewrite", path: previewPath(decodeURIComponent(segments[1])) };
+    return { kind: "rewrite", path: previewPath(decodeURIComponent(segments[1])) + rest(segments.slice(2)), base: `/_preview/${segments[1]}` };
   }
 
   // Next.js internals, the API and files (anything whose last segment has an extension) are served as they are on every host.
@@ -50,10 +53,16 @@ export function route(hostHeader: string, pathname: string, main: Set<string> = 
       return { kind: "pass" };
     }
 
-    return { kind: "rewrite", path: sitePath(first) + rest(segments.slice(1)) };
+    return { kind: "rewrite", path: sitePath(first) + rest(segments.slice(1)), base: `/${first.toLowerCase()}` };
   }
 
   return { kind: "lookup-host", host, path: rest(segments) };
+}
+
+/** The site base from the request header, or `fallback` when it is missing or not a plain path. */
+export function siteBase(header: string | null, fallback: string): string {
+  if (header === null) return fallback;
+  return header === "" || /^(\/[A-Za-z0-9._~%-]+){1,2}$/.test(header) ? header : fallback;
 }
 
 const rest = (segments: string[]) => (segments.length ? `/${segments.join("/")}` : "");
