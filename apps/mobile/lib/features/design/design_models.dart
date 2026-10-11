@@ -61,6 +61,7 @@ class TemplateInfo {
     required this.category,
     this.description,
     this.thumbnailUrl,
+    this.tier = 'basic',
     required this.fields,
     required this.defaults,
   });
@@ -72,6 +73,7 @@ class TemplateInfo {
         category: json['category'] as String,
         description: json['description'] as String?,
         thumbnailUrl: json['thumbnailUrl'] as String?,
+        tier: json['tier'] as String? ?? 'basic',
         fields: [for (final f in (json['schema'] as List?) ?? const []) TemplateField.fromJson(f as Map<String, dynamic>)],
         defaults: Map<String, dynamic>.from((json['defaults'] as Map?) ?? const {}),
       );
@@ -82,8 +84,13 @@ class TemplateInfo {
   final String category;
   final String? description;
   final String? thumbnailUrl;
+
+  /// basic or pro. Pro templates need the Pro plan.
+  final String tier;
   final List<TemplateField> fields;
   final Map<String, dynamic> defaults;
+
+  bool get isPro => tier == 'pro';
 
   String get numberLabel => number.toString().padLeft(3, '0');
 

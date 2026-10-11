@@ -922,4 +922,51 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get onbHeroColor => 'لون الواجهة';
+
+  @override
+  String get showInside => 'اعرضه داخل';
+
+  @override
+  String get showInsideHelp =>
+      'ضعه داخل صنف رئيسي، مثل المشروبات الساخنة داخل القهوة.';
+
+  @override
+  String get mainCategoryOption => 'لا شيء · صنف رئيسي';
+
+  @override
+  String get parentLockedHint => 'فيه أصناف فرعية، لذلك يبقى صنفًا رئيسيًا.';
+
+  @override
+  String subCategoryCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count صنف فرعي',
+      many: '$count صنفًا فرعيًا',
+      few: '$count أصناف فرعية',
+      two: 'صنفان فرعيان',
+      one: 'صنف فرعي واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String categoryPath(String parent, String child) {
+    return '$parent › $child';
+  }
+
+  @override
+  String get deleteCategorySubs => 'أصنافه الفرعية تصبح أصنافًا رئيسية.';
+
+  @override
+  String get proTemplateTitle => 'هذا القالب ضمن الباقة الاحترافية';
+
+  @override
+  String proTemplateBody(String name) {
+    return 'رقِّ إلى الباقة الاحترافية لتستخدم $name وكل القوالب الاحترافية الأخرى. منتجاتك وأسعارك تبقى كما هي.';
+  }
+
+  @override
+  String get proTemplatesHint =>
+      'القوالب المعلّمة بـ«الاحترافية» متاحة في الباقة الاحترافية.';
 }

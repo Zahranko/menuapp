@@ -141,9 +141,9 @@ Integration tests prove that business A can never read or change business B's da
 |---|---|---|
 | `AspNetUsers` (Identity) | Id, Email, PhoneNumber, PasswordHash | Email and phone unique |
 | `Businesses` | Id, OwnerUserId, Name, Slug, WhatsApp, Email, Address, Instagram, CurrencyCode (`JOD`), Locale (`ar`/`en`), CreatedAt | Slug unique, case-insensitive |
-| `Categories` | Id, BusinessId, Name, SortOrder | Unique (BusinessId, lower(Name)) |
+| `Categories` | Id, BusinessId, Name, ParentId (nullable), SortOrder | Unique (BusinessId, lower(Name)). Sub-categories one level deep: ParentId points to a main category (FK, no cascade) |
 | `Products` | Id, BusinessId, CategoryId, Name, Description, Price `decimal(12,3)`, ImageUrl, Label (`Signature`, `New`, `Best seller`, `Vegan`, `Spicy` or null), IsAvailable, IsFeatured, SortOrder, CreatedAt, UpdatedAt | Sold out = `IsAvailable = false`. Featured = shown in "Signature picks" |
-| `Templates` | Id (`souq`), Number (1–100), Name, Category, ThumbnailUrl, SettingsSchema `jsonb`, DefaultSettings `jsonb`, Version, IsActive | Seeded from `apps/sites/templates/registry.json` |
+| `Templates` | Id (`souq`), Number (1–100), Name, Category, ThumbnailUrl, SettingsSchema `jsonb`, DefaultSettings `jsonb`, Version, Tier (`basic`, `pro`), IsActive | Seeded from `apps/sites/templates/registry.json`. Manifest `"tier": "pro"` marks a Pro-only template (absent = basic) |
 | `Sites` | Id, BusinessId (1:1), TemplateId, DraftSettings `jsonb`, PublishedSettings `jsonb`, PublishedAt | Design only. Content comes from Products and Categories |
 | `MediaAssets` | Id, BusinessId, Url, ContentType, SizeBytes, CreatedAt | Images up to 5 MB: jpeg, png, webp |
 | `Plans` | Code (`basic`, `pro`), PriceUsd, AllowsCustomDomain | Seeded |
@@ -156,6 +156,17 @@ Integration tests prove that business A can never read or change business B's da
 
 Deleting a category with products requires the caller to choose: `moveTo=<categoryId>` or `deleteProducts=true`
 (the prototype's confirm step). Categories without products are hidden on the public site.
+
+**Sub-categories** (for multi-page templates with category pages): one level deep. `POST`/`PUT /api/v1/categories` take an
+optional `parentId`; the parent must be a main category of the same business, a category with sub-categories cannot get a
+parent, and a category cannot be its own parent (400 on field `parentId`, codes `category.parent`, `category.parentNotFound`,
+`category.parentSelf`, `category.hasSubcategories`). `PUT` is a full update, so no `parentId` means top level. Deleting a
+main category moves its sub-categories to the top level. `SortOrder` stays one integer; clients order siblings by it.
+The public API keeps a flat list with `parentId`; a main category is kept when only its sub-categories have products.
+
+**Pro templates:** templates with tier `pro` can only be chosen (`PUT /site/template`) or published (`POST /site/publish`)
+by a business with a live Pro plan (same check as custom domains, `ProPlanChecker`); otherwise 403 with code `template.pro`.
+A site already live on a Pro template keeps rendering after a downgrade. `Billing:TestMode` makes everyone Pro.
 
 ## 5. API surface (v1)
 

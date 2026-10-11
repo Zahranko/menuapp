@@ -60,8 +60,12 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
               height: 42,
               child: ListView(scrollDirection: Axis.horizontal, clipBehavior: Clip.none, children: [
                 _chip(t.filterAll, _filter == null, () => setState(() => _filter = null)),
-                for (final cat in c.categories)
-                  _chip('${cat.name} · ${c.inCategory(cat.id).length}', _filter == cat.id, () => setState(() => _filter = cat.id)),
+                for (final cat in c.categories.inDisplayOrder)
+                  _chip(
+                    '${categoryLabel(t, cat, c.categories)} · ${(cat.isSub ? c.inCategory(cat.id) : c.inCategoryAndSubs(cat.id)).length}',
+                    _filter == cat.id,
+                    () => setState(() => _filter = cat.id),
+                  ),
               ]),
             ),
             const SizedBox(height: 6),
@@ -87,9 +91,11 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
     if (c.products.isEmpty) return [EmptyNote(title: t.noProductsTitle, body: t.noProductsBody)];
     final q = _query.trim().toLowerCase();
     bool matches(Product p) => q.isEmpty || '${p.name} ${p.description ?? ''}'.toLowerCase().contains(q);
+    // Filtering by a main category also shows its sub-categories.
+    bool shown(Category cat) => _filter == null || _filter == cat.id || (cat.parentId != null && _filter == cat.parentId);
     final groups = [
-      for (final cat in c.categories)
-        if (_filter == null || _filter == cat.id) (cat, c.inCategory(cat.id).where(matches).toList()),
+      for (final cat in c.categories.inDisplayOrder)
+        if (shown(cat)) (cat, c.inCategory(cat.id).where(matches).toList()),
     ].where((g) => g.$2.isNotEmpty || (q.isEmpty && _filter == g.$1.id)).toList();
     if (groups.isEmpty) return [EmptyNote(title: t.noMatchesTitle, body: t.noMatchesBody)];
     final currency = switch (ref.read(authControllerProvider)) { SignedIn(:final business) => business.currencyCode, _ => 'JOD' };
@@ -99,7 +105,7 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
         Padding(
           padding: const EdgeInsets.fromLTRB(4, 20, 4, 10),
           child: Row(children: [
-            Expanded(child: Text(cat.name, style: Ui.eyebrow.copyWith(letterSpacing: 0.3, fontSize: 13))),
+            Expanded(child: Text(categoryLabel(t, cat, c.categories), style: Ui.eyebrow.copyWith(letterSpacing: 0.3, fontSize: 13))),
             Text('${products.length}', style: Ui.eyebrow),
           ]),
         ),
@@ -195,6 +201,12 @@ class _ProductRow extends ConsumerWidget {
       ),
     );
   }
+}
+
+/// A category's name, as "Coffee › Hot drinks" when it is a sub-category.
+String categoryLabel(AppLocalizations t, Category c, List<Category> all) {
+  final parent = all.parentOf(c);
+  return parent == null ? c.name : t.categoryPath(parent.name, c.name);
 }
 
 /// The label as owners read it in their language.

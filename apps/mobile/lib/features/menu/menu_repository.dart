@@ -17,14 +17,9 @@ class MenuRepository {
           _dio.get<List<dynamic>>('/api/v1/categories'),
           _dio.get<List<dynamic>>('/api/v1/products'),
         ]);
-        final categories = [for (final c in responses[0].data!) Category.fromJson(c as Map<String, dynamic>)]
-          ..sort((a, b) => a.sortOrder.compareTo(b.sortOrder));
-        final order = {for (final (i, c) in categories.indexed) c.id: i};
-        final products = [for (final p in responses[1].data!) Product.fromJson(p as Map<String, dynamic>)]
-          ..sort((a, b) {
-            final byCategory = (order[a.categoryId] ?? 0).compareTo(order[b.categoryId] ?? 0);
-            return byCategory != 0 ? byCategory : a.sortOrder.compareTo(b.sortOrder);
-          });
+        final flat = [for (final c in responses[0].data!) Category.fromJson(c as Map<String, dynamic>)]..sort((a, b) => a.sortOrder.compareTo(b.sortOrder));
+        final categories = flat.inDisplayOrder;
+        final products = Catalog.sortProducts(categories, [for (final p in responses[1].data!) Product.fromJson(p as Map<String, dynamic>)]);
         return Catalog(categories: categories, products: products);
       });
 
@@ -43,13 +38,15 @@ class MenuRepository {
   Future<void> setAvailability(String id, bool available) =>
       _call(() => _dio.patch<void>('/api/v1/products/$id/availability', data: {'isAvailable': available}));
 
-  Future<Category> createCategory(String name) => _call(() async {
-        final response = await _dio.post<Map<String, dynamic>>('/api/v1/categories', data: {'name': name});
+  /// Adds a category; with [parentId] it is a sub-category inside that main category.
+  Future<Category> createCategory(String name, {String? parentId}) => _call(() async {
+        final response = await _dio.post<Map<String, dynamic>>('/api/v1/categories', data: {'name': name, 'parentId': parentId});
         return Category.fromJson(response.data!);
       });
 
-  Future<Category> renameCategory(String id, String name) => _call(() async {
-        final response = await _dio.put<Map<String, dynamic>>('/api/v1/categories/$id', data: {'name': name});
+  /// Renames a category and sets where it shows: inside [parentId], or as a main category when null.
+  Future<Category> updateCategory(String id, String name, {String? parentId}) => _call(() async {
+        final response = await _dio.put<Map<String, dynamic>>('/api/v1/categories/$id', data: {'name': name, 'parentId': parentId});
         return Category.fromJson(response.data!);
       });
 

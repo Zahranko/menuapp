@@ -2,6 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using Microsoft.Extensions.Options;
 using Storefront.Application.Abstractions;
+using Storefront.Application.Billing;
 using Storefront.Application.Common;
 using Storefront.Application.Templates;
 using Storefront.Domain.Sites;
@@ -33,6 +34,7 @@ internal static class SiteErrors
 {
     public static readonly Error NotFound = Error.NotFound("site.notFound", "Site not found.");
     public static readonly Error TemplateNotFound = Error.Validation("template.notFound", "Choose a template from the gallery.", "templateId");
+    public static readonly Error TemplateNeedsPro = Error.Forbidden("template.pro", "This template is part of the Pro plan. Upgrade to Pro to use it.");
 }
 
 /// <summary>Shared lookups for the site handlers.</summary>
@@ -57,8 +59,11 @@ public sealed class GetSiteHandler(SiteContext context)
 
 public sealed record ChangeTemplate(string TemplateId);
 
-/// <summary>Switching template resets the draft to that template's defaults; the live site changes only on publish.</summary>
-public sealed class ChangeTemplateHandler(SiteContext context, ITemplateRepository templates, IUnitOfWork uow, IAuditLog audit, IClock clock)
+/// <summary>
+/// Switching template resets the draft to that template's defaults; the live site changes only on publish.
+/// Pro templates need a live Pro plan.
+/// </summary>
+public sealed class ChangeTemplateHandler(SiteContext context, ITemplateRepository templates, ProPlanChecker plans, ICurrentUser user, IUnitOfWork uow, IAuditLog audit, IClock clock)
 {
     public async Task<Result<SiteDto>> Handle(ChangeTemplate cmd, CancellationToken ct)
     {
@@ -72,6 +77,11 @@ public sealed class ChangeTemplateHandler(SiteContext context, ITemplateReposito
         if (template is null || !template.IsActive)
         {
             return SiteErrors.TemplateNotFound;
+        }
+
+        if (template.IsPro && (user.BusinessId is not { } businessId || !await plans.IsProAsync(businessId, ct)))
+        {
+            return SiteErrors.TemplateNeedsPro;
         }
 
         site.ChangeTemplate(template.Id, template.DefaultSettings, clock.UtcNow);
@@ -118,7 +128,11 @@ public sealed class SaveDraftHandler(SiteContext context, ITemplateRepository te
     }
 }
 
-public sealed class PublishSiteHandler(SiteContext context, IUnitOfWork uow, IAuditLog audit, IClock clock)
+/// <summary>
+/// Makes the draft live. A Pro template needs a live Pro plan to publish; a site already live on one keeps rendering
+/// if the business later leaves Pro (only choosing and publishing are blocked).
+/// </summary>
+public sealed class PublishSiteHandler(SiteContext context, ITemplateRepository templates, ProPlanChecker plans, ICurrentUser user, IUnitOfWork uow, IAuditLog audit, IClock clock)
 {
     public async Task<Result<SiteDto>> Handle(CancellationToken ct)
     {
@@ -126,6 +140,12 @@ public sealed class PublishSiteHandler(SiteContext context, IUnitOfWork uow, IAu
         if (site is null)
         {
             return SiteErrors.NotFound;
+        }
+
+        var template = await templates.GetAsync(site.TemplateId, ct);
+        if (template is { IsPro: true } && (user.BusinessId is not { } businessId || !await plans.IsProAsync(businessId, ct)))
+        {
+            return SiteErrors.TemplateNeedsPro;
         }
 
         site.Publish(clock.UtcNow);

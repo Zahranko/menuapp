@@ -4,10 +4,11 @@ using Storefront.Domain.Templates;
 
 namespace Storefront.Application.Templates;
 
-public sealed record TemplateDto(string Id, int Number, string Name, string Category, string? Description, string? ThumbnailUrl, int Version, JsonElement Schema, JsonElement Defaults)
+/// <summary>A gallery template. <see cref="Tier"/> is "basic" (every plan) or "pro" (Pro plan only).</summary>
+public sealed record TemplateDto(string Id, int Number, string Name, string Category, string? Description, string? ThumbnailUrl, int Version, string Tier, JsonElement Schema, JsonElement Defaults)
 {
     public static TemplateDto From(Template t) => new(
-        t.Id, t.Number, t.Name, t.Category, t.Description, t.ThumbnailUrl, t.Version,
+        t.Id, t.Number, t.Name, t.Category, t.Description, t.ThumbnailUrl, t.Version, t.Tier,
         JsonDocument.Parse(t.SettingsSchema).RootElement.Clone(),
         JsonDocument.Parse(t.DefaultSettings).RootElement.Clone());
 }

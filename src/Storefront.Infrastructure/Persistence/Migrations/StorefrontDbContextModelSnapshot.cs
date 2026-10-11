@@ -343,10 +343,15 @@ namespace Storefront.Infrastructure.Persistence.Migrations
                         .HasColumnType("nvarchar(30)")
                         .HasComputedColumnSql("LOWER([Name])", true);
 
+                    b.Property<Guid?>("ParentId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("SortOrder")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
 
                     b.HasIndex("BusinessId", "NameKey")
                         .IsUnique();
@@ -587,6 +592,13 @@ namespace Storefront.Infrastructure.Persistence.Migrations
                     b.Property<string>("ThumbnailUrl")
                         .HasMaxLength(2048)
                         .HasColumnType("nvarchar(2048)");
+
+                    b.Property<string>("Tier")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)")
+                        .HasDefaultValue("basic");
 
                     b.Property<int>("Version")
                         .HasColumnType("int");
@@ -840,6 +852,11 @@ namespace Storefront.Infrastructure.Persistence.Migrations
                         .HasForeignKey("BusinessId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Storefront.Domain.Catalog.Category", null)
+                        .WithMany()
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.NoAction);
                 });
 
             modelBuilder.Entity("Storefront.Domain.Catalog.Product", b =>

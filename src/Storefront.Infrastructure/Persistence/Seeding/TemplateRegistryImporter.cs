@@ -41,6 +41,7 @@ public sealed class TemplateRegistryImporter(StorefrontDbContext db, IOptions<St
             var category = manifest.GetProperty("category").GetString()!;
             var thumbnail = manifest.TryGetProperty("thumbnail", out var t) ? t.GetString() : null;
             var description = manifest.TryGetProperty("description", out var d) ? d.GetString() : null;
+            var tier = manifest.TryGetProperty("tier", out var tr) && tr.ValueKind == JsonValueKind.String ? tr.GetString() : null;
             var version = manifest.GetProperty("version").GetInt32();
             var schema = manifest.GetProperty("schema").GetRawText();
             var defaults = manifest.GetProperty("defaults").GetRawText();
@@ -48,12 +49,12 @@ public sealed class TemplateRegistryImporter(StorefrontDbContext db, IOptions<St
 
             if (existing.TryGetValue(id, out var template))
             {
-                template.Update(number, name, category, description, thumbnail, schema, defaults, version);
+                template.Update(number, name, category, description, thumbnail, schema, defaults, version, tier);
                 template.Activate();
             }
             else
             {
-                db.Templates.Add(Template.Create(id, number, name, category, description, thumbnail, schema, defaults, version));
+                db.Templates.Add(Template.Create(id, number, name, category, description, thumbnail, schema, defaults, version, tier));
             }
         }
 

@@ -931,4 +931,48 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onbHeroColor => 'Hero color';
+
+  @override
+  String get showInside => 'Show inside';
+
+  @override
+  String get showInsideHelp =>
+      'Put it inside a main category, like Hot drinks inside Coffee.';
+
+  @override
+  String get mainCategoryOption => 'None · main category';
+
+  @override
+  String get parentLockedHint =>
+      'It has sub-categories, so it stays a main category.';
+
+  @override
+  String subCategoryCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count sub-categories',
+      one: '1 sub-category',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String categoryPath(String parent, String child) {
+    return '$parent › $child';
+  }
+
+  @override
+  String get deleteCategorySubs => 'Its sub-categories become main categories.';
+
+  @override
+  String get proTemplateTitle => 'This template is part of the Pro plan';
+
+  @override
+  String proTemplateBody(String name) {
+    return 'Upgrade to Pro to use $name and every other Pro template. Your products and prices stay the same.';
+  }
+
+  @override
+  String get proTemplatesHint => 'Templates marked Pro come with the Pro plan.';
 }

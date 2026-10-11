@@ -23,7 +23,11 @@ public sealed record PublicBusinessDto(
     string TimeZone,
     IReadOnlyList<string> CustomDomains);
 
-public sealed record PublicCategoryDto(Guid Id, string Name, IReadOnlyList<PublicProductDto> Products);
+/// <summary>
+/// A category with its products. <see cref="ParentId"/> is the main category it sits under (null for a main category).
+/// The list stays flat in display order; a main category with no products of its own is included when a sub-category has products.
+/// </summary>
+public sealed record PublicCategoryDto(Guid Id, string Name, Guid? ParentId, IReadOnlyList<PublicProductDto> Products);
 
 public sealed record PublicProductDto(
     Guid Id,

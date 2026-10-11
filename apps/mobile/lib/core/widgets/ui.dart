@@ -162,6 +162,7 @@ Future<({Uint8List bytes, String name})?> pickPhoto() async {
 String errorText(AppLocalizations t, Object error) {
   final e = ApiError.from(error);
   if (e.isNetwork) return t.errNetwork;
+  if (e.code == 'template.pro') return t.proTemplateTitle;
   return e.summary ?? t.errGeneric;
 }
 

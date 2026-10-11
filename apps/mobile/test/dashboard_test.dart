@@ -161,6 +161,130 @@ void main() {
     expect(backend.categories.map((c) => c['name']), ['Coffee', 'Desserts', 'Bakery']);
   });
 
+  testWidgets('a sub-category is added inside a main category and shows nested under it', (tester) async {
+    final backend = FakeBackend();
+    await pumpSignedIn(tester, backend);
+    await openTab(tester, 'Categories');
+
+    await tester.tap(find.byKey(const Key('addButton')));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const Key('categoryName')), 'Hot drinks');
+    await tapIn(tester, find.byKey(const Key('categoryParent')));
+    await tester.tap(find.text('Coffee').last);
+    await tester.pumpAndSettle();
+    await tapIn(tester, find.widgetWithText(FilledButton, 'Add category'));
+
+    final created = backend.categories.last;
+    expect(created['name'], 'Hot drinks');
+    expect(created['parentId'], 'c1');
+    expect(find.text('2 products · 1 sub-category'), findsOneWidget);
+    // Indented under Coffee, right after it.
+    final sub = find.byKey(Key('category-${created['id']}'));
+    expect(tester.getTopLeft(find.descendant(of: sub, matching: find.text('Hot drinks'))).dx, greaterThan(tester.getTopLeft(find.text('Coffee')).dx));
+    expect(tester.getTopLeft(sub).dy, lessThan(tester.getTopLeft(find.text('Bakery')).dy));
+
+    // A main category with sub-categories can't go inside another one.
+    await tester.tap(find.text('Coffee'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('parentLocked')), findsOneWidget);
+    expect(find.byKey(const Key('categoryParent')), findsNothing);
+  });
+
+  testWidgets('a sub-category can become a main category again', (tester) async {
+    final backend = FakeBackend()..categories.add({'id': 'c9', 'name': 'Hot drinks', 'parentId': 'c1', 'sortOrder': 3});
+    await pumpSignedIn(tester, backend);
+    await openTab(tester, 'Categories');
+    await tester.tap(find.text('Hot drinks'));
+    await tester.pumpAndSettle();
+    await tapIn(tester, find.byKey(const Key('categoryParent')));
+    await tester.tap(find.text('None · main category').last);
+    await tester.pumpAndSettle();
+    await tapIn(tester, find.widgetWithText(FilledButton, 'Save changes'));
+    expect(backend.categories.firstWhere((c) => c['id'] == 'c9')['parentId'], isNull);
+    expect(backend.requests, contains('PUT /api/v1/categories/c9'));
+  });
+
+  testWidgets('products in a sub-category are grouped as Parent › Child and moved there from the product sheet', (tester) async {
+    final backend = FakeBackend()..categories.add({'id': 'c9', 'name': 'Hot drinks', 'parentId': 'c1', 'sortOrder': 3});
+    await pumpSignedIn(tester, backend);
+    // Empty sub-categories have no group yet.
+    expect(find.text('Coffee › Hot drinks'), findsNothing);
+
+    await tester.tap(find.text('Spanish latte'));
+    await tester.pumpAndSettle();
+    await tapIn(tester, find.byKey(const Key('productCategory')));
+    await tester.tap(find.text('Hot drinks').last);
+    await tester.pumpAndSettle();
+    expect(find.descendant(of: find.byKey(const Key('productCategory')), matching: find.text('Coffee › Hot drinks')), findsOneWidget);
+    await tapIn(tester, find.widgetWithText(FilledButton, 'Save changes'));
+    expect(backend.products.firstWhere((p) => p['id'] == 'p2')['categoryId'], 'c9');
+
+    expect(find.text('Coffee › Hot drinks'), findsOneWidget);
+    // Filtering by the main category also shows its sub-category.
+    await tester.tap(find.text('Coffee · 2'));
+    await tester.pumpAndSettle();
+    expect(find.text('Spanish latte'), findsOneWidget);
+    expect(find.text('Pistachio croissant'), findsNothing);
+  });
+
+  testWidgets('moving a sub-category only swaps it with its siblings', (tester) async {
+    final backend = FakeBackend()
+      ..categories.addAll([
+        {'id': 'c8', 'name': 'Hot drinks', 'parentId': 'c1', 'sortOrder': 3},
+        {'id': 'c9', 'name': 'Iced drinks', 'parentId': 'c1', 'sortOrder': 4},
+      ]);
+    await pumpSignedIn(tester, backend);
+    await openTab(tester, 'Categories');
+    expect(tester.widget<IconButton>(find.widgetWithIcon(IconButton, Icons.keyboard_arrow_up_rounded).at(1)).onPressed, isNull,
+        reason: 'the first sub-category cannot go up');
+    await tester.tap(find.byTooltip('Move Iced drinks up'));
+    await tester.pumpAndSettle();
+    expect(backend.categories.map((c) => c['name']), ['Coffee', 'Iced drinks', 'Hot drinks', 'Bakery', 'Desserts']);
+  });
+
+  testWidgets('on Basic, a Pro template shows its badge and asks to upgrade instead of calling the API', (tester) async {
+    final backend = FakeBackend(plan: 'basic', testMode: false);
+    await pumpSignedIn(tester, backend);
+    await openTab(tester, 'Settings');
+    await tester.tap(find.text('Change template'));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const Key('proBadge-noir')), findsOneWidget);
+    expect(find.byKey(const Key('proBadge-souq')), findsNothing);
+    expect(find.text('Templates marked Pro come with the Pro plan.'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('templateFilter-pro')));
+    await tester.pumpAndSettle();
+    expect(find.text('Souq'), findsNothing);
+
+    await tester.tap(find.byKey(const Key('template-noir')));
+    await tester.pumpAndSettle();
+    expect(find.text('This template is part of the Pro plan'), findsOneWidget);
+    expect(backend.requests, isNot(contains('PUT /api/v1/site/template')));
+
+    // Upgrading carries on with the choice.
+    await tapIn(tester, find.byKey(const Key('proTemplateUpgrade')));
+    await tapIn(tester, find.byKey(const Key('confirmPlan')));
+    expect(backend.plan, 'pro');
+    expect(find.text('Use Noir?'), findsOneWidget);
+    await tester.tap(find.text('Use template'));
+    await tester.pumpAndSettle();
+    expect(backend.templateId, 'noir');
+  });
+
+  testWidgets('publishing a Pro template on Basic explains the Pro plan', (tester) async {
+    final backend = FakeBackend(plan: 'basic', testMode: false)
+      ..templateId = 'noir'
+      ..draft = {'hero.title': 'An evening to remember.'};
+    await pumpSignedIn(tester, backend);
+    await openTab(tester, 'Settings');
+    await tester.tap(find.text('Edit design'));
+    await tester.pumpAndSettle();
+    await tapIn(tester, find.widgetWithText(FilledButton, 'Publish'));
+    expect(backend.publishedAt, isNull);
+    expect(find.text('This template is part of the Pro plan'), findsOneWidget);
+    expect(find.textContaining('Upgrade to Pro to use Noir'), findsOneWidget);
+  });
+
   testWidgets('Settings shows the Pro test plan and requests, then cancels, a domain', (tester) async {
     final backend = FakeBackend();
     await pumpSignedIn(tester, backend);
@@ -256,6 +380,13 @@ void main() {
     await tapIn(tester, find.widgetWithText(FilledButton, 'Publish'));
     expect(backend.publishedAt, isNotNull);
     expect(find.text('Your site is live'), findsOneWidget);
+  });
+
+  testWidgets('in Arabic, sub-categories are indented from the right', (tester) async {
+    final backend = FakeBackend()..categories.add({'id': 'c9', 'name': 'Hot drinks', 'parentId': 'c1', 'sortOrder': 3});
+    await pumpSignedIn(tester, backend, locale: const Locale('ar'));
+    await openTab(tester, 'الأصناف');
+    expect(tester.getTopRight(find.text('Hot drinks')).dx, lessThan(tester.getTopRight(find.text('Coffee')).dx));
   });
 
   testWidgets('Arabic owners get My menu in Arabic, right to left', (tester) async {

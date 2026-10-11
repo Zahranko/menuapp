@@ -514,5 +514,39 @@
     }
   },
   "onbProNote": "Your own domain, set up by our support team",
-  "onbHeroColor": "Hero color"
+  "onbHeroColor": "Hero color",
+  "showInside": "Show inside",
+  "showInsideHelp": "Put it inside a main category, like Hot drinks inside Coffee.",
+  "mainCategoryOption": "None · main category",
+  "parentLockedHint": "It has sub-categories, so it stays a main category.",
+  "subCategoryCount": "{count, plural, =1{1 sub-category} other{{count} sub-categories}}",
+  "@subCategoryCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "categoryPath": "{parent} › {child}",
+  "@categoryPath": {
+    "placeholders": {
+      "parent": {
+        "type": "String"
+      },
+      "child": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteCategorySubs": "Its sub-categories become main categories.",
+  "proTemplateTitle": "This template is part of the Pro plan",
+  "proTemplateBody": "Upgrade to Pro to use {name} and every other Pro template. Your products and prices stay the same.",
+  "@proTemplateBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "proTemplatesHint": "Templates marked Pro come with the Pro plan."
 }

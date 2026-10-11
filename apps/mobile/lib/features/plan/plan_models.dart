@@ -37,7 +37,8 @@ class SubscriptionInfo {
   final bool allowsCustomDomain;
   final bool testMode;
 
-  bool get isPro => planCode == 'pro';
+  /// Pro features (custom domain, Pro templates) are unlocked.
+  bool get isPro => planCode == 'pro' || allowsCustomDomain;
 }
 
 /// A custom domain request (`DomainRequestDto`).

@@ -17,9 +17,9 @@ public class CatalogTests(StorefrontFactory factory) : IClassFixture<StorefrontF
         return (factory.CreateClient().Authorized(auth.AccessToken), auth.Business.Id);
     }
 
-    private static async Task<CategoryDto> CreateCategory(HttpClient client, string name)
+    private static async Task<CategoryDto> CreateCategory(HttpClient client, string name, Guid? parentId = null)
     {
-        var response = await client.PostAsJsonAsync("/api/v1/categories", new { name });
+        var response = await client.PostAsJsonAsync("/api/v1/categories", new { name, parentId });
         await Api.EnsureSuccess(response);
         return (await response.Content.ReadFromJsonAsync<CategoryDto>(Api.Json))!;
     }
@@ -104,6 +104,86 @@ public class CatalogTests(StorefrontFactory factory) : IClassFixture<StorefrontF
         await CreateProduct(client, coffee.Id, "Latte");
         var response = await client.DeleteAsync($"/api/v1/categories/{coffee.Id}?moveTo={coffee.Id}");
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task Sub_categories_sit_under_a_main_category_and_put_moves_them_back()
+    {
+        var (client, _) = await OwnerAsync();
+        var drinks = await CreateCategory(client, "Drinks");
+        var coffee = await CreateCategory(client, "Coffee", drinks.Id);
+        Assert.Null(drinks.ParentId);
+        Assert.Equal(drinks.Id, coffee.ParentId);
+
+        var tea = await CreateCategory(client, "Tea");
+        var moved = await client.PutAsJsonAsync($"/api/v1/categories/{tea.Id}", new { name = "Tea", parentId = drinks.Id });
+        await Api.EnsureSuccess(moved);
+        Assert.Equal(drinks.Id, (await moved.Content.ReadFromJsonAsync<CategoryDto>(Api.Json))!.ParentId);
+
+        var list = await client.GetFromJsonAsync<List<CategoryDto>>("/api/v1/categories", Api.Json);
+        Assert.Equal([null, drinks.Id, drinks.Id], list!.Select(c => c.ParentId));
+
+        // PUT is a full update: leaving parentId out puts the category back at the top level.
+        var back = await client.PutAsJsonAsync($"/api/v1/categories/{coffee.Id}", new { name = "Coffee" });
+        await Api.EnsureSuccess(back);
+        Assert.Null((await back.Content.ReadFromJsonAsync<CategoryDto>(Api.Json))!.ParentId);
+
+        // Reordering still takes every category.
+        await Api.EnsureSuccess(await client.PutAsJsonAsync("/api/v1/categories/order", new[] { tea.Id, coffee.Id, drinks.Id }));
+    }
+
+    [Fact]
+    public async Task Sub_categories_are_one_level_deep()
+    {
+        var (client, _) = await OwnerAsync();
+        var drinks = await CreateCategory(client, "Drinks");
+        var coffee = await CreateCategory(client, "Coffee", drinks.Id);
+        var food = await CreateCategory(client, "Food");
+
+        async Task AssertParentError(HttpResponseMessage response, string code, string message)
+        {
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            var problem = await Api.ProblemAsync(response);
+            Assert.Equal(code, problem.GetProperty("code").GetString());
+            Assert.Equal(message, problem.GetProperty("errors").GetProperty("parentId")[0].GetString());
+        }
+
+        await AssertParentError(
+            await client.PostAsJsonAsync("/api/v1/categories", new { name = "Espresso", parentId = coffee.Id }),
+            "category.parent", "Choose a main category, not a sub-category.");
+        await AssertParentError(
+            await client.PostAsJsonAsync("/api/v1/categories", new { name = "Espresso", parentId = Guid.CreateVersion7() }),
+            "category.parentNotFound", "Choose a main category from your list.");
+        await AssertParentError(
+            await client.PutAsJsonAsync($"/api/v1/categories/{food.Id}", new { name = "Food", parentId = food.Id }),
+            "category.parentSelf", "A category can't go inside itself. Choose another main category.");
+        await AssertParentError(
+            await client.PutAsJsonAsync($"/api/v1/categories/{drinks.Id}", new { name = "Drinks", parentId = food.Id }),
+            "category.hasSubcategories", "This category has its own sub-categories, so it can't go inside another one. Move them out first.");
+
+        // Another business's category is not found.
+        var (other, _) = await OwnerAsync();
+        var theirs = await CreateCategory(other, "Theirs");
+        await AssertParentError(
+            await client.PostAsJsonAsync("/api/v1/categories", new { name = "Sneaky", parentId = theirs.Id }),
+            "category.parentNotFound", "Choose a main category from your list.");
+    }
+
+    [Fact]
+    public async Task Deleting_a_main_category_moves_its_sub_categories_to_the_top()
+    {
+        var (client, _) = await OwnerAsync();
+        var drinks = await CreateCategory(client, "Drinks");
+        var coffee = await CreateCategory(client, "Coffee", drinks.Id);
+        var tea = await CreateCategory(client, "Tea", drinks.Id);
+        await CreateProduct(client, coffee.Id, "Latte");
+
+        Assert.Equal(HttpStatusCode.NoContent, (await client.DeleteAsync($"/api/v1/categories/{drinks.Id}")).StatusCode);
+
+        var list = (await client.GetFromJsonAsync<List<CategoryDto>>("/api/v1/categories", Api.Json))!;
+        Assert.Equal([coffee.Id, tea.Id], list.Select(c => c.Id));
+        Assert.All(list, c => Assert.Null(c.ParentId));
+        Assert.Equal(1, list[0].ProductCount);
     }
 
     [Fact]

@@ -268,5 +268,15 @@
   "onbProPrice": "10$",
   "onbBasicNote": "موقعك على {link}",
   "onbProNote": "نطاقك الخاص، يجهّزه فريق الدعم",
-  "onbHeroColor": "لون الواجهة"
+  "onbHeroColor": "لون الواجهة",
+  "showInside": "اعرضه داخل",
+  "showInsideHelp": "ضعه داخل صنف رئيسي، مثل المشروبات الساخنة داخل القهوة.",
+  "mainCategoryOption": "لا شيء · صنف رئيسي",
+  "parentLockedHint": "فيه أصناف فرعية، لذلك يبقى صنفًا رئيسيًا.",
+  "subCategoryCount": "{count, plural, =1{صنف فرعي واحد} =2{صنفان فرعيان} few{{count} أصناف فرعية} many{{count} صنفًا فرعيًا} other{{count} صنف فرعي}}",
+  "categoryPath": "{parent} › {child}",
+  "deleteCategorySubs": "أصنافه الفرعية تصبح أصنافًا رئيسية.",
+  "proTemplateTitle": "هذا القالب ضمن الباقة الاحترافية",
+  "proTemplateBody": "رقِّ إلى الباقة الاحترافية لتستخدم {name} وكل القوالب الاحترافية الأخرى. منتجاتك وأسعارك تبقى كما هي.",
+  "proTemplatesHint": "القوالب المعلّمة بـ«الاحترافية» متاحة في الباقة الاحترافية."
 }

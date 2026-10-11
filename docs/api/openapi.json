@@ -726,6 +726,16 @@
               }
             }
           },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
           "409": {
             "description": "Conflict",
             "content": {
@@ -1262,6 +1272,16 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
           }
         }
       }
@@ -1327,6 +1347,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SiteDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
                 }
               }
             }
@@ -1582,6 +1612,7 @@
         "required": [
           "id",
           "name",
+          "parentId",
           "sortOrder",
           "productCount"
         ],
@@ -1593,6 +1624,13 @@
           },
           "name": {
             "type": "string"
+          },
+          "parentId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
           },
           "sortOrder": {
             "pattern": "^-?(?:0|[1-9]\\d*)$",
@@ -2030,6 +2068,7 @@
         "required": [
           "id",
           "name",
+          "parentId",
           "products"
         ],
         "type": "object",
@@ -2040,6 +2079,13 @@
           },
           "name": {
             "type": "string"
+          },
+          "parentId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
           },
           "products": {
             "type": "array",
@@ -2245,6 +2291,13 @@
         "properties": {
           "name": {
             "type": "string"
+          },
+          "parentId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
           }
         }
       },
@@ -2442,6 +2495,7 @@
           "description",
           "thumbnailUrl",
           "version",
+          "tier",
           "schema",
           "defaults"
         ],
@@ -2483,6 +2537,9 @@
               "string"
             ],
             "format": "int32"
+          },
+          "tier": {
+            "type": "string"
           },
           "schema": {
             "$ref": "#/components/schemas/JsonElement"

@@ -7,6 +7,8 @@ import { fileURLToPath } from "node:url";
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "templates");
 const registryPath = path.join(root, "registry.json");
+// Optional "tier": "basic" (default when absent) or "pro" (Pro plan only; the backend gates choosing and publishing).
+const TIERS = new Set(["basic", "pro"]);
 const FIELD_TYPES = new Set(["choice", "palette", "color", "text", "textarea", "range", "image", "images", "toggle", "toggles", "hours"]);
 
 function fail(message) {
@@ -23,6 +25,7 @@ const manifests = readdirSync(root, { withFileTypes: true })
     for (const key of ["number", "name", "category", "version", "schema", "defaults"]) {
       if (manifest[key] === undefined) fail(`${d.name}: missing "${key}"`);
     }
+    if (manifest.tier !== undefined && !TIERS.has(manifest.tier)) fail(`${d.name}: "tier" must be "basic" or "pro" (or left out for basic)`);
     const keys = new Set();
     for (const field of manifest.schema) {
       if (!FIELD_TYPES.has(field.type)) fail(`${d.name}: field "${field.key}" has unknown type "${field.type}"`);

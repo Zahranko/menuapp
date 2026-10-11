@@ -40,6 +40,9 @@ internal sealed class CatalogRepository(StorefrontDbContext db) : ICatalogReposi
 
     public Task<Category?> GetCategoryAsync(Guid id, CancellationToken ct) => db.Categories.FirstOrDefaultAsync(c => c.Id == id, ct);
 
+    public async Task<IReadOnlyList<Category>> ListSubcategoriesAsync(Guid parentId, CancellationToken ct) =>
+        await db.Categories.Where(c => c.ParentId == parentId).OrderBy(c => c.SortOrder).ThenBy(c => c.Name).ToListAsync(ct);
+
     public Task<bool> CategoryNameExistsAsync(string name, Guid? exceptId, CancellationToken ct)
     {
         var key = name.Trim().ToLower();

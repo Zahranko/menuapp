@@ -47,11 +47,12 @@ class CatalogController extends AsyncNotifier<Catalog> {
     }
   }
 
-  Future<void> saveCategory(String? id, String name) async {
+  /// Adds or updates a category. [parentId] puts it inside a main category; null makes it a main category.
+  Future<void> saveCategory(String? id, String name, {String? parentId}) async {
     if (id == null) {
-      await _repo.createCategory(name);
+      await _repo.createCategory(name, parentId: parentId);
     } else {
-      await _repo.renameCategory(id, name);
+      await _repo.updateCategory(id, name, parentId: parentId);
     }
     await refresh();
   }
@@ -61,20 +62,26 @@ class CatalogController extends AsyncNotifier<Catalog> {
     await refresh();
   }
 
-  /// Moves a category one place up (-1) or down (+1), optimistically.
-  Future<void> moveCategory(int index, int direction) async {
+  /// Moves a category one place up (-1) or down (+1) among the categories with the same parent, optimistically.
+  Future<void> moveCategory(String id, int direction) async {
     final before = state.value;
     if (before == null) return;
-    final target = index + direction;
-    if (target < 0 || target >= before.categories.length) return;
+    final cat = before.categories.byId(id);
+    if (cat == null) return;
+    final siblings = before.categories.siblingsOf(cat);
+    final at = siblings.indexOf(cat);
+    final target = at + direction;
+    if (target < 0 || target >= siblings.length) return;
+    // Swap the two siblings in the flat list; everything else keeps its place.
     final categories = [...before.categories];
-    final moved = categories.removeAt(index);
-    categories.insert(target, moved);
-    final order = {for (final (i, c) in categories.indexed) c.id: i};
-    final products = [...before.products]..sort((a, b) => (order[a.categoryId] ?? 0).compareTo(order[b.categoryId] ?? 0));
-    state = AsyncData(Catalog(categories: categories, products: products));
+    final a = categories.indexOf(cat);
+    final b = categories.indexOf(siblings[target]);
+    categories[a] = siblings[target];
+    categories[b] = cat;
+    final ordered = categories.inDisplayOrder;
+    state = AsyncData(Catalog(categories: ordered, products: Catalog.sortProducts(ordered, before.products)));
     try {
-      await _repo.reorderCategories([for (final c in categories) c.id]);
+      await _repo.reorderCategories([for (final c in ordered) c.id]);
     } catch (_) {
       state = AsyncData(before);
       rethrow;

@@ -46,6 +46,7 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 - [S05] Still to do: payment webhook, DNS checker job for `AwaitingDns` requests, `/internal/caddy/ask`, and the real payment provider adapter once D5/D8 are decided. Staff move domain requests forward in the back office (S06) (found on the test branch).
 - [S13] Template schema labels and option labels are English only; the editor shows them as they are. Add Arabic labels to the manifests (for example `labelAr`) (found on the test branch).
 - [S12] Categories reorder with arrows only (no drag), and there is no RTL golden test yet (found on the test branch).
+- [S12/S13/S16+] Backend for Pro multi-page templates is on the `test` branch: categories take an optional `parentId` (one level deep; `CategoryDto.parentId`, `PublicCategoryDto.parentId`), templates have `tier` (`basic`/`pro`, manifest field validated by `templates:registry`), and choosing or publishing a pro template without Pro returns 403 `template.pro`. Migration `AddCategoryParentAndTemplateTier`. The app needs a parent picker in the category sheet and a Pro badge/upgrade prompt in the gallery; Next.js templates can build category and sub-category pages from `parentId` (found on the test branch).
 
 - [S11] Generate the Dart client from `docs/api/openapi.json` (`scripts/gen-dart-client.sh`) and replace the hand-written calls in `apps/mobile/lib/features/auth/auth_repository.dart` (found in S11 early).
 - [S02] API error messages are English only; the app shows them as they come. Return a localized message (Accept-Language) or a stable code the app can translate (found in S11 early).
@@ -60,6 +61,8 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 ## Decisions made during sessions
 
 (Anything decided that is not in PLAN.md, with the reason.)
+
+- test branch: Deleting a main category moves its sub-categories to the top level instead of failing, so owners never lose sub-categories by accident. "Is Pro" is one helper (`ProPlanChecker`: live subscription on a plan that allows a custom domain) shared by domain requests and Pro templates; domain requests keep their code `plan.proRequired`.
 
 - Test branch (owner asked for a fully working test build with a Pro account): the `test` branch deploys like `deploy` and turns on `Billing:TestMode`, which puts every account (new and existing) on an active Pro plan with provider `test`. Plan changes use `FakePaymentProvider` until D5/D8 are decided. `Storefront:SitesBaseUrl` (deploy variable `SITES_URL`) sets where site links and preview links point, so the websites can be hosted somewhere other than the brand domain at first. The API serves template thumbnails and preset pictures from `wwwroot` (copied by the deploy) so the app's gallery and editor work without the websites host; the app reads them from `assetsBaseUrl` (defaults to the API).
 - Mobile (S12 to S14 on the test branch): signed-in owners land on My menu; new owners see the welcome screen first with "Choose a template". Web views are built through `webViewBuilderProvider` so widget tests can replace them. Changes in the catalog reload the list from the API after saving (counts stay right); the sold-out switch and category order update at once and roll back on failure.

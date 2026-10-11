@@ -25,6 +25,55 @@ public class CatalogTests
     }
 
     [Fact]
+    public void Category_can_go_under_a_main_category_and_back()
+    {
+        var parent = Category.Create(Biz, "Drinks", 0, Now);
+        var child = Category.Create(Biz, "Coffee", 1, Now);
+        child.ClearDomainEvents();
+
+        child.SetParent(parent, Now);
+        Assert.Equal(parent.Id, child.ParentId);
+        Assert.Equal(ChangeKind.Updated, Assert.IsType<CategoryChanged>(Assert.Single(child.DomainEvents)).Kind);
+
+        child.SetParent(parent, Now);
+        Assert.Single(child.DomainEvents);
+
+        child.SetParent(null, Now);
+        Assert.Null(child.ParentId);
+        Assert.Equal(2, child.DomainEvents.Count);
+    }
+
+    [Fact]
+    public void Category_cannot_be_its_own_parent()
+    {
+        var category = Category.Create(Biz, "Drinks", 0, Now);
+        var ex = Assert.Throws<DomainException>(() => category.SetParent(category, Now));
+        Assert.Equal(CategoryRules.ParentSelf, ex.Code);
+        Assert.Equal("parentId", ex.Field);
+    }
+
+    [Fact]
+    public void Category_parent_must_be_a_main_category()
+    {
+        var top = Category.Create(Biz, "Drinks", 0, Now);
+        var middle = Category.Create(Biz, "Coffee", 1, Now);
+        var leaf = Category.Create(Biz, "Espresso", 2, Now);
+        middle.SetParent(top, Now);
+
+        var ex = Assert.Throws<DomainException>(() => leaf.SetParent(middle, Now));
+        Assert.Equal(CategoryRules.ParentNotTopLevel, ex.Code);
+        Assert.Null(leaf.ParentId);
+    }
+
+    [Fact]
+    public void Category_parent_must_belong_to_the_same_business()
+    {
+        var other = Category.Create(Guid.CreateVersion7(), "Drinks", 0, Now);
+        var category = Category.Create(Biz, "Coffee", 0, Now);
+        Assert.Equal(CategoryRules.ParentNotFound, Assert.Throws<DomainException>(() => category.SetParent(other, Now)).Code);
+    }
+
+    [Fact]
     public void Product_price_is_rounded_to_currency()
     {
         var product = Product.Create(Biz, Guid.CreateVersion7(), new ProductDetails("Latte", null, 3.4567m), "JOD", 0, Now);

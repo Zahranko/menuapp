@@ -42,7 +42,10 @@ internal sealed class CategoryConfiguration : IEntityTypeConfiguration<Category>
         b.Property<string>("NameKey").IsRequired().HasMaxLength(Category.NameMax).HasComputedColumnSql("LOWER([Name])", stored: true);
         b.HasIndex("BusinessId", "NameKey").IsUnique();
         b.HasIndex(x => new { x.BusinessId, x.SortOrder });
+        b.HasIndex(x => x.ParentId);
         b.HasOne<Business>().WithMany().HasForeignKey(x => x.BusinessId).OnDelete(DeleteBehavior.Cascade);
+        // Sub-categories, one level deep. Deleting a main category moves its sub-categories to the top level first (DeleteCategoryHandler).
+        b.HasOne<Category>().WithMany().HasForeignKey(x => x.ParentId).OnDelete(DeleteBehavior.NoAction);
     }
 }
 
@@ -71,6 +74,8 @@ internal sealed class TemplateConfiguration : IEntityTypeConfiguration<Template>
         b.Property(x => x.Category).HasMaxLength(40);
         b.Property(x => x.ThumbnailUrl).HasMaxLength(2048);
         b.Property(x => x.Description).HasMaxLength(300);
+        b.Property(x => x.Tier).IsRequired().HasMaxLength(TemplateTier.MaxLength).HasDefaultValue(TemplateTier.Basic);
+        b.Ignore(x => x.IsPro);
         b.HasIndex(x => x.Number).IsUnique();
     }
 }

@@ -1711,6 +1711,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Hero color'**
   String get onbHeroColor;
+
+  /// No description provided for @showInside.
+  ///
+  /// In en, this message translates to:
+  /// **'Show inside'**
+  String get showInside;
+
+  /// No description provided for @showInsideHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Put it inside a main category, like Hot drinks inside Coffee.'**
+  String get showInsideHelp;
+
+  /// No description provided for @mainCategoryOption.
+  ///
+  /// In en, this message translates to:
+  /// **'None · main category'**
+  String get mainCategoryOption;
+
+  /// No description provided for @parentLockedHint.
+  ///
+  /// In en, this message translates to:
+  /// **'It has sub-categories, so it stays a main category.'**
+  String get parentLockedHint;
+
+  /// No description provided for @subCategoryCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 sub-category} other{{count} sub-categories}}'**
+  String subCategoryCount(int count);
+
+  /// No description provided for @categoryPath.
+  ///
+  /// In en, this message translates to:
+  /// **'{parent} › {child}'**
+  String categoryPath(String parent, String child);
+
+  /// No description provided for @deleteCategorySubs.
+  ///
+  /// In en, this message translates to:
+  /// **'Its sub-categories become main categories.'**
+  String get deleteCategorySubs;
+
+  /// No description provided for @proTemplateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This template is part of the Pro plan'**
+  String get proTemplateTitle;
+
+  /// No description provided for @proTemplateBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrade to Pro to use {name} and every other Pro template. Your products and prices stay the same.'**
+  String proTemplateBody(String name);
+
+  /// No description provided for @proTemplatesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Templates marked Pro come with the Pro plan.'**
+  String get proTemplatesHint;
 }
 
 class _AppLocalizationsDelegate

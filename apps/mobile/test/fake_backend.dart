@@ -82,7 +82,29 @@ class FakeBackend {
       ],
       'defaults': {'hero.title': 'Hair, done right.'},
     },
+    {
+      'id': 'noir',
+      'number': 42,
+      'name': 'Noir',
+      'category': 'Restaurant',
+      'description': 'Dark fine-dining site',
+      'thumbnailUrl': '/templates/noir/thumbnail.png',
+      'tier': 'pro',
+      'version': 1,
+      'schema': [
+        {'key': 'hero.title', 'type': 'text', 'label': 'Headline', 'group': 'Hero header', 'max': 60},
+      ],
+      'defaults': {'hero.title': 'An evening to remember.'},
+    },
   ];
+
+  /// The 403 the API sends for a Pro template on the Basic plan.
+  static const FakeResponse proTemplateRefused = (
+    status: 403,
+    body: {'title': 'This template is part of the Pro plan.', 'status': 403, 'code': 'template.pro'},
+  );
+
+  bool _isProTemplate(String id) => templates.any((t) => t['id'] == id && t['tier'] == 'pro');
 
   Map<String, Object?> get _site => {
         'templateId': templateId,
@@ -111,7 +133,7 @@ class FakeBackend {
           for (final c in categories) {...c, 'productCount': products.where((p) => p['categoryId'] == c['id']).length},
         ]);
       case 'POST /api/v1/categories':
-        final c = {'id': 'c${_ids++}', 'name': body!['name'], 'sortOrder': categories.length};
+        final c = {'id': 'c${_ids++}', 'name': body!['name'], 'parentId': body['parentId'], 'sortOrder': categories.length};
         categories.add(c);
         return (status: 201, body: {...c, 'productCount': 0});
       case 'PUT /api/v1/categories/order':
@@ -132,6 +154,7 @@ class FakeBackend {
       case 'GET /api/v1/site':
         return (status: 200, body: _site);
       case 'PUT /api/v1/site/template':
+        if (plan != 'pro' && _isProTemplate(body!['templateId'] as String)) return proTemplateRefused;
         templateId = body!['templateId'] as String;
         draft = Map.of(templates.firstWhere((t) => t['id'] == templateId)['defaults'] as Map<String, Object?>);
         return (status: 200, body: _site);
@@ -140,6 +163,7 @@ class FakeBackend {
         drafts.add(draft);
         return (status: 200, body: _site);
       case 'POST /api/v1/site/publish':
+        if (plan != 'pro' && _isProTemplate(templateId)) return proTemplateRefused;
         publishedAt = DateTime.utc(2026, 1, 2);
         return (status: 200, body: _site);
       case 'POST /api/v1/site/preview-token':
@@ -200,9 +224,14 @@ class FakeBackend {
           moveTo == null ? products.remove(p) : p['categoryId'] = moveTo;
         }
         categories.removeWhere((c) => c['id'] == id);
+        for (final c in categories) {
+          if (c['parentId'] == id) c['parentId'] = null;
+        }
         return (status: 204, body: null);
       }
-      final c = categories.firstWhere((c) => c['id'] == id)..['name'] = body!['name'];
+      final c = categories.firstWhere((c) => c['id'] == id)
+        ..['name'] = body!['name']
+        ..['parentId'] = body['parentId'];
       return (status: 200, body: {...c, 'productCount': 0});
     }
 

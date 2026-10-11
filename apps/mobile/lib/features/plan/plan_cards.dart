@@ -163,6 +163,78 @@ class _PlanSheetState extends ConsumerState<_PlanSheet> {
   }
 }
 
+/// Explains that [templateName] needs the Pro plan and offers the upgrade. Returns true when the business is on Pro afterwards.
+Future<bool> openProTemplateSheet(BuildContext context, String templateName) async {
+  final container = ProviderScope.containerOf(context);
+  PlanState? state;
+  try {
+    state = await container.read(planProvider.future);
+  } catch (_) {
+    state = null;
+  }
+  if (!context.mounted) return false;
+  final proPlan = state?.plans.where((p) => p.allowsCustomDomain || p.code == 'pro').firstOrNull;
+  final upgrade = await showFormSheet<bool>(context, (_) => _ProTemplateSheet(templateName: templateName, canUpgrade: proPlan != null));
+  if (upgrade != true || proPlan == null || !context.mounted) return false;
+  await openPlanSheet(context, proPlan, state?.domainRequest);
+  return container.read(planProvider).value?.subscription.isPro ?? false;
+}
+
+class _ProTemplateSheet extends StatelessWidget {
+  const _ProTemplateSheet({required this.templateName, required this.canUpgrade});
+
+  final String templateName;
+  final bool canUpgrade;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      Align(alignment: AlignmentDirectional.centerStart, child: ProBadge(large: true)),
+      const SizedBox(height: 12),
+      Text(t.proTemplateTitle, style: Ui.display(26)),
+      const SizedBox(height: 6),
+      Text(t.proTemplateBody(templateName), style: TextStyle(color: BrandColors.muted, height: 1.4)),
+      const SizedBox(height: 18),
+      if (canUpgrade) ...[
+        FilledButton(
+          key: const Key('proTemplateUpgrade'),
+          style: FilledButton.styleFrom(backgroundColor: BrandColors.accent, foregroundColor: BrandColors.primary),
+          onPressed: () => Navigator.pop(context, true),
+          child: Text(t.upgradeToPro),
+        ),
+        const SizedBox(height: 10),
+      ],
+      LightButton(label: t.notNow, onPressed: () => Navigator.pop(context, false)),
+    ]);
+  }
+}
+
+/// The gold "Pro" mark on Pro templates and Pro features.
+class ProBadge extends StatelessWidget {
+  const ProBadge({super.key, this.large = false});
+
+  final bool large;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: large ? 11 : 8, vertical: large ? 5 : 3.5),
+      decoration: BoxDecoration(
+        color: BrandColors.accent,
+        borderRadius: BorderRadius.circular(99),
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.12), blurRadius: 6, offset: const Offset(0, 2))],
+      ),
+      child: Row(mainAxisSize: MainAxisSize.min, children: [
+        Icon(Icons.workspace_premium_rounded, size: large ? 16 : 13, color: BrandColors.primary),
+        const SizedBox(width: 4),
+        Text(t.planPro, style: TextStyle(fontSize: large ? 13 : 11.5, fontWeight: FontWeight.w800, letterSpacing: 0.2, color: BrandColors.primary)),
+      ]),
+    );
+  }
+}
+
 /// Locked on Basic; on Pro a request form, then the four progress steps.
 class DomainCard extends ConsumerStatefulWidget {
   const DomainCard({super.key});

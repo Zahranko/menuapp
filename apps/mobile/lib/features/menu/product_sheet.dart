@@ -43,7 +43,7 @@ class _ProductSheetState extends ConsumerState<ProductSheet> {
   late final _name = TextEditingController(text: widget.product?.name ?? '');
   late final _description = TextEditingController(text: widget.product?.description ?? '');
   late final _price = TextEditingController(text: widget.product == null ? '' : widget.product!.price.toStringAsFixed(2));
-  late String _categoryId = widget.product?.categoryId ?? widget.categories.first.id;
+  late String _categoryId = widget.product?.categoryId ?? widget.categories.inDisplayOrder.first.id;
   late String? _label = widget.product?.label;
   late bool _available = widget.product?.isAvailable ?? true;
   late bool _featured = widget.product?.isFeatured ?? false;
@@ -142,6 +142,7 @@ class _ProductSheetState extends ConsumerState<ProductSheet> {
     final t = AppLocalizations.of(context);
     final auth = ref.watch(authControllerProvider);
     final currency = auth is SignedIn && auth.business.currencyCode != 'JOD' ? auth.business.currencyCode : t.currencyJod;
+    final ordered = widget.categories.inDisplayOrder;
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Text(_editing ? t.editProduct : t.newProduct, style: Ui.display(26)),
       const SizedBox(height: 6),
@@ -191,9 +192,29 @@ class _ProductSheetState extends ConsumerState<ProductSheet> {
             Text(t.category, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13.5, color: BrandColors.ink)),
             const SizedBox(height: 8),
             DropdownButtonFormField<String>(
+              key: const Key('productCategory'),
               initialValue: _categoryId,
               isExpanded: true,
-              items: [for (final c in widget.categories) DropdownMenuItem(value: c.id, child: Text(c.name, overflow: TextOverflow.ellipsis))],
+              // In the list, sub-categories sit indented under their main category; once chosen they read "Coffee › Hot drinks".
+              selectedItemBuilder: (context) => [
+                for (final c in ordered) Text(categoryLabel(t, c, widget.categories), maxLines: 1, overflow: TextOverflow.ellipsis),
+              ],
+              items: [
+                for (final c in ordered)
+                  DropdownMenuItem(
+                    value: c.id,
+                    child: c.isSub && widget.categories.parentOf(c) != null
+                        ? Padding(
+                            padding: const EdgeInsetsDirectional.only(start: 14),
+                            child: Row(children: [
+                              Icon(Icons.subdirectory_arrow_right_rounded, size: 16, color: BrandColors.muted),
+                              const SizedBox(width: 6),
+                              Expanded(child: Text(c.name, overflow: TextOverflow.ellipsis)),
+                            ]),
+                          )
+                        : Text(c.name, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.w600)),
+                  ),
+              ],
               onChanged: (v) => setState(() => _categoryId = v ?? _categoryId),
             ),
           ]),

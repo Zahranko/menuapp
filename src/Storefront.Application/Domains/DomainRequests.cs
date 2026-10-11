@@ -57,7 +57,7 @@ public sealed record RequestDomain(string Domain);
 /// <summary>Pro owners ask for their own domain; support sends the DNS steps (see the back office).</summary>
 public sealed class RequestDomainHandler(
     IDomainRepository domains,
-    IBillingRepository billing,
+    ProPlanChecker plans,
     IBusinessRepository businesses,
     IEmailSender email,
     ICurrentUser user,
@@ -73,9 +73,7 @@ public sealed class RequestDomainHandler(
             return DomainErrors.NoBusiness;
         }
 
-        var subscription = await billing.GetSubscriptionAsync(businessId, ct);
-        var plan = subscription is null ? null : await billing.GetPlanAsync(subscription.PlanCode, ct);
-        if (subscription is not { IsLive: true } || plan is not { AllowsCustomDomain: true })
+        if (!await plans.IsProAsync(businessId, ct))
         {
             return DomainErrors.NeedsPro;
         }

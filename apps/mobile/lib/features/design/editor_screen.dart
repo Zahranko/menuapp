@@ -12,6 +12,8 @@ import '../../core/widgets/form_widgets.dart';
 import '../../core/widgets/ui.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../menu/dashboard_screen.dart';
+import '../plan/plan_cards.dart';
+import '../plan/plan_controller.dart';
 import '../site/site_web_view.dart';
 import 'design_controller.dart';
 import 'design_models.dart';
@@ -158,7 +160,16 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
         ),
       );
     } catch (e) {
-      if (mounted) showMessage(context, errorText(t, e));
+      if (!mounted) return;
+      if (e is ApiError && e.code == 'template.pro') {
+        // A Pro template on the Basic plan: explain and offer the upgrade instead of a bare error.
+        setState(() => _publishing = false);
+        ref.invalidate(planProvider);
+        final name = ref.read(templatesProvider).value?.where((x) => x.id == ref.read(siteProvider).value?.templateId).firstOrNull?.name;
+        await openProTemplateSheet(context, name ?? t.customize);
+      } else {
+        showMessage(context, errorText(t, e));
+      }
     } finally {
       if (mounted) setState(() => _publishing = false);
     }

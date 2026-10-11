@@ -21,15 +21,19 @@ public sealed class Template
     public string DefaultSettings { get; private set; } = "{}";
     public int Version { get; private set; }
     public bool IsActive { get; private set; } = true;
+    /// <summary><see cref="TemplateTier.Basic"/> (every plan) or <see cref="TemplateTier.Pro"/> (Pro plan only).</summary>
+    public string Tier { get; private set; } = TemplateTier.Basic;
 
-    public static Template Create(string id, int number, string name, string category, string? description, string? thumbnailUrl, string settingsSchema, string defaultSettings, int version)
+    public bool IsPro => Tier == TemplateTier.Pro;
+
+    public static Template Create(string id, int number, string name, string category, string? description, string? thumbnailUrl, string settingsSchema, string defaultSettings, int version, string? tier = null)
     {
         var template = new Template { Id = Guard.Text(id, "id", 1, 40, "template.id").ToLowerInvariant() };
-        template.Update(number, name, category, description, thumbnailUrl, settingsSchema, defaultSettings, version);
+        template.Update(number, name, category, description, thumbnailUrl, settingsSchema, defaultSettings, version, tier);
         return template;
     }
 
-    public void Update(int number, string name, string category, string? description, string? thumbnailUrl, string settingsSchema, string defaultSettings, int version)
+    public void Update(int number, string name, string category, string? description, string? thumbnailUrl, string settingsSchema, string defaultSettings, int version, string? tier = null)
     {
         if (number is < 1 or > 999)
         {
@@ -44,9 +48,29 @@ public sealed class Template
         SettingsSchema = settingsSchema;
         DefaultSettings = defaultSettings;
         Version = version;
+        Tier = TemplateTier.Normalize(tier);
     }
 
     public void Activate() => IsActive = true;
 
     public void Deactivate() => IsActive = false;
+}
+
+public static class TemplateTier
+{
+    public const string Basic = "basic";
+    public const string Pro = "pro";
+    public const int MaxLength = 10;
+
+    /// <summary>Missing means basic; anything other than basic or pro is a broken manifest.</summary>
+    public static string Normalize(string? tier)
+    {
+        var value = (tier ?? "").Trim().ToLowerInvariant();
+        return value switch
+        {
+            "" or Basic => Basic,
+            Pro => Pro,
+            _ => throw new DomainException("template.tier", "Template tier must be basic or pro.", "tier"),
+        };
+    }
 }
