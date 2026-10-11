@@ -1,6 +1,6 @@
 # Storefront
 
-Storefront is the code name. The product's public name is not fixed yet: it is currently **Sufrly**, a test name,
+Storefront is the code name. The product's public name is not fixed yet: it is currently **Katlio**,
 and it lives only in `brand.json` (see **Brand** below).
 
 The product lets a small business (café, restaurant, shop) build a menu or catalog website from a phone.

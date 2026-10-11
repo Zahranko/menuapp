@@ -2,24 +2,24 @@
 
 ## 0. Brand configuration: the name is changeable
 
-The public name is a test name for now (**Sufrly**, domain `sufrly.com`). It will change, maybe more than once,
+The public name is **Katlio** (domain `katlio.com`). It will change, maybe more than once,
 so it lives in one file and nothing else. In this plan, `{brand}` means the brand name and `{domain}` the brand domain.
 
 `brand.json` at the repo root (flat keys, so Flutter can read it with `--dart-define-from-file`):
 
 ```json
 {
-  "brandName": "Sufrly",
-  "brandShortName": "sufrly",
-  "brandNameAr": "سُفرة",
+  "brandName": "Katlio",
+  "brandShortName": "katlio",
+  "brandNameAr": "كاتليو",
   "tagline": "Your menu, beautifully served.",
-  "domain": "sufrly.com",
-  "apiHost": "api.sufrly.com",
-  "adminHost": "admin.sufrly.com",
+  "domain": "katlio.com",
+  "apiHost": "api.katlio.com",
+  "adminHost": "admin.katlio.com",
   "customDomainTarget": "edge.storefront-infra.net",
-  "supportEmail": "support@sufrly.com",
-  "noReplyEmail": "no-reply@sufrly.com",
-  "appId": "com.sufrly.app",
+  "supportEmail": "support@katlio.com",
+  "noReplyEmail": "no-reply@katlio.com",
+  "appId": "com.katlio.app",
   "colorPrimary": "#15291F",
   "colorPrimary2": "#1F3A2E",
   "colorAccent": "#F2B22E",
