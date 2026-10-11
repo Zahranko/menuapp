@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:storefront_app/core/auth/token_store.dart';
+import 'package:storefront_app/core/l10n/app_language.dart';
 import 'package:storefront_app/core/providers.dart';
+import 'package:storefront_app/features/design/design_models.dart';
 import 'package:storefront_app/features/design/editor_screen.dart';
 import 'package:storefront_app/features/site/site_web_view.dart';
 import 'package:storefront_app/main.dart';
@@ -11,7 +13,7 @@ import 'fake_api.dart';
 import 'fake_backend.dart';
 
 /// Starts the app with a saved session against [backend]; web views show their address as text.
-Future<MemoryTokenStore> pumpSignedIn(WidgetTester tester, FakeBackend backend, {Locale? locale}) async {
+Future<MemoryTokenStore> pumpSignedIn(WidgetTester tester, FakeBackend backend, {Locale? locale, LanguageStore? language}) async {
   final tokens = MemoryTokenStore();
   await tokens.save(access: 'a', refresh: 'r');
   if (locale != null) {
@@ -24,6 +26,7 @@ Future<MemoryTokenStore> pumpSignedIn(WidgetTester tester, FakeBackend backend, 
   await tester.pumpWidget(ProviderScope(
     overrides: [
       tokenStoreProvider.overrideWithValue(tokens),
+      languageStoreProvider.overrideWithValue(language ?? MemoryLanguageStore()),
       httpAdapterProvider.overrideWithValue(FakeApi(backend.handle)),
       webViewBuilderProvider.overrideWithValue((url, reload) => Center(child: Text('web $url #$reload'))),
     ],
@@ -394,5 +397,95 @@ void main() {
     expect(find.text('عرض الموقع'), findsOneWidget);
     expect(find.text('3.50 د.أ'), findsOneWidget);
     expect(Directionality.of(tester.element(find.text('عرض الموقع'))), TextDirection.rtl);
+  });
+
+  testWidgets('Settings switches the app language at once and remembers it', (tester) async {
+    final language = MemoryLanguageStore();
+    final backend = FakeBackend();
+    await pumpSignedIn(tester, backend, language: language);
+    await openTab(tester, 'Settings');
+    await scrollTo(tester, find.byKey(const Key('appLanguage')));
+    expect(find.text('Same as phone'), findsOneWidget);
+    await tapIn(tester, find.byKey(const Key('appLanguage')));
+    expect(find.text('App language'), findsWidgets);
+    await tester.tap(find.byKey(const Key('language-ar')));
+    await tester.pumpAndSettle();
+
+    expect(language.language, AppLanguage.ar);
+    expect(find.descendant(of: find.byType(NavigationBar), matching: find.text('الإعدادات')), findsOneWidget);
+    expect(Directionality.of(tester.element(find.byType(NavigationBar))), TextDirection.rtl);
+    expect(find.text('العربية'), findsOneWidget, reason: 'the row shows the choice');
+
+    // The sheet checks the current choice; going back to the phone's language shows English again.
+    await tapIn(tester, find.byKey(const Key('appLanguage')));
+    expect(find.descendant(of: find.byKey(const Key('language-ar')), matching: find.byIcon(Icons.check_rounded)), findsOneWidget);
+    await tester.tap(find.byKey(const Key('language-system')));
+    await tester.pumpAndSettle();
+    expect(language.language, AppLanguage.system);
+    expect(find.descendant(of: find.byType(NavigationBar), matching: find.text('Settings')), findsOneWidget);
+  });
+
+  testWidgets('in Arabic the gallery shows Arabic template names, falling back to English', (tester) async {
+    await pumpSignedIn(tester, FakeBackend(), language: MemoryLanguageStore(AppLanguage.ar));
+    await openTab(tester, 'الإعدادات');
+    await tester.tap(find.text('تغيير القالب'));
+    await tester.pumpAndSettle();
+    expect(find.text('سوق'), findsOneWidget);
+    expect(find.text('مقهى'), findsOneWidget);
+    expect(find.text('Souq'), findsNothing);
+    // Atelier has no Arabic texts yet.
+    expect(find.text('Atelier'), findsOneWidget);
+  });
+
+  testWidgets('in English the gallery shows English template names', (tester) async {
+    await pumpSignedIn(tester, FakeBackend());
+    await openTab(tester, 'Settings');
+    await tester.tap(find.text('Change template'));
+    await tester.pumpAndSettle();
+    expect(find.text('Souq'), findsOneWidget);
+    expect(find.text('Café'), findsOneWidget);
+    expect(find.text('سوق'), findsNothing);
+  });
+
+  testWidgets('in Arabic the editor shows Arabic labels, groups and options', (tester) async {
+    await pumpSignedIn(tester, FakeBackend(), language: MemoryLanguageStore(AppLanguage.ar));
+    await openTab(tester, 'الإعدادات');
+    await tester.tap(find.text('تعديل التصميم'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('سوق'), findsOneWidget);
+    expect(find.text('الهوية'), findsOneWidget);
+    expect(find.text('نمط الخط'), findsOneWidget);
+    expect(find.text('أنيق'), findsOneWidget);
+    expect(find.text('خلفية منقطة'), findsOneWidget);
+    expect(find.text('Font style'), findsNothing);
+    expect(find.text('Brand'), findsNothing);
+    // A setting without Arabic texts keeps its English label.
+    await scrollTo(tester, find.text('Headline'));
+    expect(find.text('Hero header'), findsOneWidget);
+  });
+
+  testWidgets('in English the editor shows English labels, groups and options', (tester) async {
+    await pumpSignedIn(tester, FakeBackend());
+    await openTab(tester, 'Settings');
+    await tester.tap(find.text('Edit design'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Brand'), findsOneWidget);
+    expect(find.text('Font style'), findsOneWidget);
+    expect(find.text('Elegant'), findsOneWidget);
+    expect(find.text('نمط الخط'), findsNothing);
+  });
+
+  test('templates parse Arabic texts, and missing ones fall back to English', () {
+    final souq = TemplateInfo.fromJson(Map<String, dynamic>.from(FakeBackend.templates[0]));
+    expect(souq.ar?.name, 'سوق');
+    expect(souq.fields.first.optionLabelsAr['elegant'], 'أنيق');
+    expect(souq.defaultsFor('ar')['hero.title'], 'قهوة تستحق المشوار.');
+    expect(souq.defaultsFor('ar')['font'], 'modern');
+    expect(souq.defaultsFor('en')['hero.title'], 'Coffee worth crossing the city for.');
+    final atelier = TemplateInfo.fromJson(Map<String, dynamic>.from(FakeBackend.templates[1]));
+    expect(atelier.ar, isNull);
+    expect(atelier.defaultsFor('ar'), atelier.defaults);
   });
 }

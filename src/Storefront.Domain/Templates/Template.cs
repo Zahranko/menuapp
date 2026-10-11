@@ -19,6 +19,12 @@ public sealed class Template
     public string SettingsSchema { get; private set; } = "[]";
     /// <summary>JSON object of the settings a new site starts with.</summary>
     public string DefaultSettings { get; private set; } = "{}";
+    /// <summary>Arabic gallery name, category and description from the registry's "ar" block; null when the template has none.</summary>
+    public string? NameAr { get; private set; }
+    public string? CategoryAr { get; private set; }
+    public string? DescriptionAr { get; private set; }
+    /// <summary>JSON object of Arabic text values that replace top-level keys of <see cref="DefaultSettings"/> for Arabic businesses.</summary>
+    public string DefaultSettingsAr { get; private set; } = "{}";
     public int Version { get; private set; }
     public bool IsActive { get; private set; } = true;
     /// <summary><see cref="TemplateTier.Basic"/> (every plan) or <see cref="TemplateTier.Pro"/> (Pro plan only).</summary>
@@ -49,6 +55,16 @@ public sealed class Template
         DefaultSettings = defaultSettings;
         Version = version;
         Tier = TemplateTier.Normalize(tier);
+    }
+
+    /// <summary>Sets the Arabic texts. Missing values mean the template has no Arabic yet (English is shown).</summary>
+    public void SetArabic(string? name, string? category, string? description, string? defaultSettings)
+    {
+        NameAr = Guard.OptionalText(name, "nameAr", 60, "template.name");
+        CategoryAr = Guard.OptionalText(category, "categoryAr", 40, "template.category");
+        var trimmed = string.IsNullOrWhiteSpace(description) ? null : description.Trim();
+        DescriptionAr = trimmed is { Length: > 300 } ? trimmed[..300] : trimmed;
+        DefaultSettingsAr = string.IsNullOrWhiteSpace(defaultSettings) ? "{}" : defaultSettings;
     }
 
     public void Activate() => IsActive = true;

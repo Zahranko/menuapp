@@ -548,5 +548,9 @@
       }
     }
   },
-  "proTemplatesHint": "Templates marked Pro come with the Pro plan."
+  "proTemplatesHint": "Templates marked Pro come with the Pro plan.",
+  "appLanguage": "App language",
+  "appLanguageSub": "The language of this app. Your website keeps its own language.",
+  "languageSystem": "Same as phone",
+  "changeLanguage": "Change language"
 }

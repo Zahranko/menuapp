@@ -975,4 +975,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get proTemplatesHint => 'Templates marked Pro come with the Pro plan.';
+
+  @override
+  String get appLanguage => 'App language';
+
+  @override
+  String get appLanguageSub =>
+      'The language of this app. Your website keeps its own language.';
+
+  @override
+  String get languageSystem => 'Same as phone';
+
+  @override
+  String get changeLanguage => 'Change language';
 }

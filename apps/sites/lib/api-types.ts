@@ -1877,6 +1877,11 @@ export interface components {
             allowsCustomDomain: boolean;
             testMode: boolean;
         };
+        TemplateArabicDto: {
+            name: string;
+            category: string;
+            description: string;
+        };
         TemplateDto: {
             id: string;
             /** Format: int32 */
@@ -1890,6 +1895,8 @@ export interface components {
             tier: string;
             schema: components["schemas"]["JsonElement"];
             defaults: components["schemas"]["JsonElement"];
+            ar: null | components["schemas"]["TemplateArabicDto"];
+            defaultsAr: components["schemas"]["JsonElement"];
         };
         UpdateBusiness: {
             name: string;

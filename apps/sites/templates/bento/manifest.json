@@ -4,6 +4,11 @@
   "name": "Bento",
   "category": "Juice bar",
   "description": "A bento box of tiles in mixed sizes; featured drinks get the big tiles.",
+  "ar": {
+    "name": "بينتو",
+    "category": "محل عصير",
+    "description": "علبة بينتو من مربعات بأحجام مختلفة، والمشروبات المميزة تأخذ المربعات الكبيرة."
+  },
   "version": 1,
   "thumbnail": "/templates/bento/thumbnail.png",
   "sample": "drinks",
@@ -173,5 +178,12 @@
       "thu": "08:00-00:00",
       "fri": "13:00-00:00"
     }
+  },
+  "defaultsAr": {
+    "hero.title": "معصور هذا الصباح، ومسكوب لك",
+    "hero.subtitle": "عصائر طازجة وسموذي وموكتيل تُحضَّر عند الطلب. بلا شراب سكري وبلا اختصارات.",
+    "announcement": "اصنع عصيرك بنفسك: اختر أي ثلاث فواكه",
+    "story.title": "الفاكهة أولًا",
+    "story.text": "نشتري الفاكهة من الحسبة المركزية كل صباح ونعصرها عند طلبك. وما لا نبيعه حتى المساء يذهب إلى السماد، لا إلى الغد."
   }
 }

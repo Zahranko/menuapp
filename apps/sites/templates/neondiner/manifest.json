@@ -4,6 +4,11 @@
   "name": "Neon Diner",
   "category": "Burgers, diner",
   "description": "A retro diner: neon sign, checkered strips and numbered combo cards.",
+  "ar": {
+    "name": "نيون داينر",
+    "category": "برغر وداينر",
+    "description": "داينر بطابع قديم: لافتة نيون، وشرائط مربعات، وبطاقات وجبات مرقّمة."
+  },
   "version": 1,
   "thumbnail": "/templates/neondiner/thumbnail.png",
   "sample": "fastfood",
@@ -141,5 +146,11 @@
       "thu": "12:00-00:30",
       "fri": "13:00-00:30"
     }
+  },
+  "defaultsAr": {
+    "hero.title": "برغر سماش، بطاطا ساخنة، ميلك شيك بارد",
+    "announcement": "ثلاثاء الوجبات: أي برغر مع بطاطا ومشروب",
+    "story.title": "منذ أول سماش",
+    "story.text": "صديقان، وصاج ساخن، ووصفة صلصة البيت التي ما زلنا نحتفظ بسرّها. كل شيء يُطبخ عند الطلب، فامنحونا بضع دقائق."
   }
 }

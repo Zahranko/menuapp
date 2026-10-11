@@ -4,6 +4,11 @@
   "name": "Pulse",
   "category": "Gym, fitness studio",
   "description": "A high-energy site for a gym or studio: pricing cards with a most popular plan, a class list, first-week steps and a big join call.",
+  "ar": {
+    "name": "نبض",
+    "category": "نادٍ رياضي أو استوديو لياقة",
+    "description": "موقع مليء بالحيوية لنادٍ رياضي أو استوديو: بطاقات اشتراكات مع الأكثر طلبًا، وقائمة حصص، وخطوات الأسبوع الأول، ودعوة كبيرة للاشتراك."
+  },
   "version": 1,
   "thumbnail": "/templates/pulse/thumbnail.png",
   "sample": "gym",
@@ -414,5 +419,32 @@
       "thu": "06:00-23:00",
       "fri": "10:00-20:00"
     }
+  },
+  "defaultsAr": {
+    "hero.title": "أقوى كل أسبوع",
+    "hero.subtitle": "نادٍ مفتوح، و30 حصة جماعية في الأسبوع، ومدربون يعرفونك بالاسم. بلا عقود، وألغِ متى شئت.",
+    "book.message": "مرحبًا! أود أن أشترك:",
+    "services.title": "الاشتراكات والحصص",
+    "announcement": "للأعضاء الجدد: الحصة الأولى مجانًا هذا الشهر",
+    "highlights.1.title": "6 صباحًا",
+    "highlights.1.text": "نفتح باكرًا، كل يوم",
+    "highlights.2.title": "+30",
+    "highlights.2.text": "حصة جماعية في الأسبوع",
+    "highlights.3.title": "0 دينار",
+    "highlights.3.text": "رسوم الانتساب",
+    "steps.title": "أسبوعك الأول",
+    "steps.1.title": "جولة مجانية",
+    "steps.1.text": "تعال وشاهد النادي وتعرّف على أحد المدربين. بلا أي ضغط للاشتراك.",
+    "steps.2.title": "فحص الجسم",
+    "steps.2.text": "فحص سريع وحديث قصير عن أهدافك.",
+    "steps.3.title": "خطتك",
+    "steps.3.text": "احصل على خطة بسيطة لصالة التمارين واختر الحصص التي ستستمتع بها.",
+    "faq.1.q": "هل أحتاج إلى توقيع عقد؟",
+    "faq.1.a": "لا. ادفع شهرًا بشهر وتوقف متى شئت.",
+    "faq.2.q": "هل توجد أوقات مخصصة للسيدات؟",
+    "faq.2.a": "نعم، يوميًا من 10 صباحًا حتى 2 ظهرًا، مع مدربة في الصالة.",
+    "faq.3.q": "هل يتوفر موقف للسيارات؟",
+    "faq.3.a": "موقف مجاني للأعضاء في المبنى، والمدخل من الشارع الجانبي.",
+    "cta.title": "حصتك الأولى علينا"
   }
 }

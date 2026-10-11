@@ -246,6 +246,12 @@ The **settings schema** is a list of typed fields. The Flutter editor renders co
 `npm run templates:registry` builds `apps/sites/templates/registry.json` from all manifests. The backend seeds the
 `Templates` table from that file, so the backend and Next.js always agree.
 
+**Arabic:** a manifest may carry `"ar": { "name", "category", "description" }`, `"defaultsAr"` (Arabic text values that
+replace top-level keys of `defaults`) and, on schema fields, `labelAr`, `groupAr`, `optionLabelsAr`. The importer stores
+them (`Templates.NameAr`, `CategoryAr`, `DescriptionAr`, `DefaultSettingsAr`, checking `defaultsAr` against the schema and
+skipping keys that fail), the schema is returned untouched, and `GET /api/v1/templates` adds `ar` (or null) and `defaultsAr`.
+When a business whose locale is `ar` signs up or chooses a template, its draft starts from `defaults` merged with `defaultsAr`.
+
 **Editor preview:** the Flutter editor saves the draft (debounced), asks for a preview token and shows
 `https://{domain}/_preview/<token>` in a WebView. What the owner sees is the real template.
 
@@ -275,6 +281,11 @@ The **settings schema** is a list of typed fields. The Flutter editor renders co
 - State: Riverpod. Routing: go_router with an auth redirect. HTTP: dio with token refresh interceptor, using the generated client.
 - Secure storage for tokens (`flutter_secure_storage`). Images: `image_picker`, compressed before upload. Preview: `webview_flutter`.
 - Localization: ARB files for `ar` and `en`, follows the device language, with an in-app switch. Full RTL support.
+- API messages: the app sends `Accept-Language: ar` or `en` with every request. ProblemDetails `title` and every message in
+  `errors` (and the slug check's `message`) come back in that language; `code` values never change, so the app branches on codes.
+  Messages are raised in English in Domain/Application/Infrastructure and translated in Web (request localization, UI culture only)
+  through `Application/Common/Localization/Messages.cs`: exact English text, then sentences with placeholders, then the error code.
+  A unit test fails if any error code or message in `src/` has no Arabic. Emails to owners follow the business locale.
 - Theme colors and fonts come from `brand.json` (section 0), never from constants in Dart. Current values match the prototype.
   The font files for the current brand are bundled as assets; `rebrand.sh` swaps them if the brand fonts change.
 - Screens: splash, onboarding, sign up, log in, forgot password, welcome, template gallery, design editor, my site (WebView), My menu dashboard (Products, Categories, Settings), product and category sheets, plan change, domain request.

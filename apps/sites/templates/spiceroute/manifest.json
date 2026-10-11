@@ -4,6 +4,11 @@
   "name": "Spice Route",
   "category": "Middle Eastern restaurant",
   "description": "Geometric star borders, an arched window and centered courses. Looks its best in Arabic.",
+  "ar": {
+    "name": "طريق البهارات",
+    "category": "مطعم شرقي",
+    "description": "حواف نجمية هندسية، ونافذة مقوّسة، وأطباق في الوسط. يبدو في أجمل حالاته بالعربية."
+  },
   "version": 1,
   "thumbnail": "/templates/spiceroute/thumbnail.png",
   "sample": "restaurant",
@@ -161,5 +166,11 @@
       "thu": "12:00-00:30",
       "fri": "13:00-00:30"
     }
+  },
+  "defaultsAr": {
+    "hero.title": "وصفات من مطابخ بلاد الشام، على سفرة كبيرة تجمعنا",
+    "announcement": "صواني عائلية لأربعة أشخاص كل جمعة",
+    "story.title": "قصتنا",
+    "story.text": "ثلاثة أجيال من الطهاة، وسفرة واحدة طويلة. نطحن بهاراتنا بأيدينا، ونخبز الخبز في فرن حجري، ونقدّم كل المقبلات للمشاركة."
   }
 }

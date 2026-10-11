@@ -4,6 +4,11 @@
   "name": "Polaroid",
   "category": "Desserts, sweets",
   "description": "A wall of instant photos, slightly tilted, taped up and captioned by hand.",
+  "ar": {
+    "name": "بولارويد",
+    "category": "حلويات",
+    "description": "جدار من الصور الفورية، مائلة قليلًا، ملصقة بشريط ومكتوب تحتها بخط اليد."
+  },
   "version": 1,
   "thumbnail": "/templates/polaroid/thumbnail.png",
   "sample": "sweets",
@@ -134,5 +139,11 @@
       "thu": "12:00-01:00",
       "fri": "14:00-01:00"
     }
+  },
+  "defaultsAr": {
+    "hero.title": "بوظة ودونات وكيك، محضّرة اليوم",
+    "announcement": "رشّة ملوّنة مجانية على كل كرة بوظة هذا الأسبوع",
+    "story.title": "سلام منّا",
+    "story.text": "نحن محل حلويات صغير بثلاجة كبيرة. كل شيء يُحضَّر في مطبخنا صباحًا ويُباع حتى ينفد."
   }
 }

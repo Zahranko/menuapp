@@ -2,6 +2,7 @@ using Microsoft.Extensions.Options;
 using Storefront.Application.Abstractions;
 using Storefront.Application.Billing;
 using Storefront.Application.Common;
+using Storefront.Application.Common.Localization;
 using Storefront.Domain.Common;
 using Storefront.Domain.Domains;
 
@@ -114,14 +115,14 @@ public sealed class RequestDomainHandler(
         audit.Record("domainRequest.created", "DomainRequest", request.Id.ToString());
         await uow.SaveChangesAsync(ct);
 
-        await NotifyAsync(business.Name, business.Email, domain.Value, b, ct);
+        await NotifyAsync(business.Name, business.Email, business.Locale, domain.Value, b, ct);
         return DomainRequestDto.From(request, b.CustomDomainTarget);
     }
 
     private static bool IsSameOrSub(string domain, string ours) =>
         !string.IsNullOrWhiteSpace(ours) && (domain == ours || domain.EndsWith("." + ours, StringComparison.Ordinal));
 
-    private async Task NotifyAsync(string businessName, string? ownerEmail, string domain, BrandOptions b, CancellationToken ct)
+    private async Task NotifyAsync(string businessName, string? ownerEmail, string locale, string domain, BrandOptions b, CancellationToken ct)
     {
         if (!string.IsNullOrWhiteSpace(b.SupportEmail))
         {
@@ -134,11 +135,19 @@ public sealed class RequestDomainHandler(
 
         if (!string.IsNullOrWhiteSpace(ownerEmail))
         {
-            await email.SendAsync(new EmailMessage(
-                ownerEmail,
-                $"We got your request for {domain}",
-                $"Thanks! Our team will email you the DNS steps for {domain} soon.",
-                $"<p>Thanks! Our team will email you the DNS steps for <b>{System.Net.WebUtility.HtmlEncode(domain)}</b> soon.</p>"), ct);
+            // Support reads English; the owner gets their business's language.
+            var encoded = System.Net.WebUtility.HtmlEncode(domain);
+            await email.SendAsync(Messages.IsArabic(locale)
+                ? new EmailMessage(
+                    ownerEmail,
+                    $"استلمنا طلبك للنطاق {domain}",
+                    $"شكرًا لك! سيرسل لك فريقنا خطوات إعداد DNS للنطاق {domain} قريبًا.",
+                    $"<div dir=\"rtl\" lang=\"ar\"><p>شكرًا لك! سيرسل لك فريقنا خطوات إعداد DNS للنطاق <b>{encoded}</b> قريبًا.</p></div>")
+                : new EmailMessage(
+                    ownerEmail,
+                    $"We got your request for {domain}",
+                    $"Thanks! Our team will email you the DNS steps for {domain} soon.",
+                    $"<p>Thanks! Our team will email you the DNS steps for <b>{encoded}</b> soon.</p>"), ct);
         }
     }
 }

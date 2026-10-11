@@ -969,4 +969,16 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get proTemplatesHint =>
       'القوالب المعلّمة بـ«الاحترافية» متاحة في الباقة الاحترافية.';
+
+  @override
+  String get appLanguage => 'لغة التطبيق';
+
+  @override
+  String get appLanguageSub => 'لغة هذا التطبيق. موقعك يحتفظ بلغته.';
+
+  @override
+  String get languageSystem => 'حسب لغة الهاتف';
+
+  @override
+  String get changeLanguage => 'تغيير اللغة';
 }

@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/brand.dart';
 import '../../../core/theme.dart';
+import '../../../core/widgets/language_picker.dart';
 import '../../../core/widgets/ui.dart';
 import '../../../l10n/generated/app_localizations.dart';
 
@@ -54,11 +55,16 @@ class _StartScreenState extends State<StartScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(24, 10, 12, 0),
+                padding: const EdgeInsetsDirectional.fromSTEB(24, 10, 12, 0),
                 child: Row(
                   children: [
-                    const Wordmark(size: 22),
+                    // Shrinks rather than overflows on narrow phones, next to the language button and Skip.
+                    const Flexible(
+                      child: FittedBox(fit: BoxFit.scaleDown, alignment: AlignmentDirectional.centerStart, child: Wordmark(size: 22)),
+                    ),
                     const Spacer(),
+                    // Choose the language before signing up; sign-up sends it as the site's language.
+                    const LanguageToggle(),
                     AnimatedOpacity(
                       opacity: last ? 0 : 1,
                       duration: const Duration(milliseconds: 250),
@@ -843,6 +849,6 @@ class _CaretState extends State<_Caret> {
   @override
   Widget build(BuildContext context) => Opacity(
     opacity: _on ? 1 : 0,
-    child: Container(width: 2, height: 18, margin: const EdgeInsets.only(left: 1), color: widget.color),
+    child: Container(width: 2, height: 18, margin: const EdgeInsetsDirectional.only(start: 1), color: widget.color),
   );
 }

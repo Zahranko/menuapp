@@ -6,6 +6,7 @@ import '../../../core/api/api_error.dart';
 import '../../../core/brand.dart';
 import '../../../core/providers.dart';
 import '../../../core/widgets/form_widgets.dart';
+import '../../../core/widgets/language_picker.dart';
 import '../../../core/widgets/ui.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../auth_controller.dart';
@@ -83,7 +84,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
     return Scaffold(
-      appBar: AuthHeader(onBack: () => context.go('/'), wordmark: const Wordmark(size: 20)),
+      appBar: AuthHeader(onBack: () => context.go('/'), wordmark: const Wordmark(size: 20), action: const LanguageToggle()),
       body: SafeArea(
         child: AutofillGroup(
           child: ListView(

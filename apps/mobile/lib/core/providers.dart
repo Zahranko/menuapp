@@ -9,6 +9,7 @@ import '../features/plan/plan_repository.dart';
 import 'api/api_client.dart';
 import 'auth/token_store.dart';
 import 'config.dart';
+import 'l10n/app_language.dart';
 
 final tokenStoreProvider = Provider<TokenStore>((ref) => SecureTokenStore());
 
@@ -19,6 +20,8 @@ final dioProvider = Provider<Dio>((ref) => createApiClient(
       baseUrl: AppConfig.apiBaseUrl,
       tokens: ref.watch(tokenStoreProvider),
       adapter: ref.watch(httpAdapterProvider),
+      // Read, not watched: a language switch must not rebuild the client (and every repository).
+      language: () => ref.read(appLanguageProvider.notifier).languageCode,
       // A refresh that fails means the session is over everywhere in the app.
       onSignedOut: () => ref.read(authControllerProvider.notifier).sessionExpired(),
     ));

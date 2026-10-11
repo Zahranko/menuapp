@@ -4,6 +4,11 @@
   "name": "Bloom",
   "category": "Bakery and sweets",
   "description": "A soft, pastel site for bakeries and dessert shops: round category bubbles, best sellers and a sweet gallery.",
+  "ar": {
+    "name": "بلوم",
+    "category": "مخابز وحلويات",
+    "description": "موقع ناعم بألوان الباستيل للمخابز ومحلات الحلويات: فقاعات دائرية للأقسام، والأكثر مبيعًا، ومعرض حلو."
+  },
   "version": 1,
   "tier": "pro",
   "thumbnail": "/templates/bloom/thumbnail.png",
@@ -432,5 +437,14 @@
       "thu": "07:30-23:00",
       "fri": "09:00-23:00"
     }
+  },
+  "defaultsAr": {
+    "hero.eyebrow": "مخبوز طازجًا كل صباح",
+    "hero.title": "كيكات صغيرة، وسعادة كبيرة.",
+    "hero.subtitle": "كيك للمناسبات، ولفائف القرفة، وكب كيك، نصنعها بأيدينا بزبدة حقيقية وكثير من الحب.",
+    "announcement": "اطلب كيك أعياد الميلاد قبل يومين على واتساب",
+    "story.title": "من فرننا إلى طاولتك",
+    "story.text": "بدأت بلوم في مطبخ بيتي بفرن واحد وكثير من الرشّات الملوّنة. وما زلنا نخبز كل شيء بأنفسنا، على دفعات صغيرة، كل صباح.",
+    "footer.text": "كيك حسب الطلب لأعياد الميلاد والأعراس وكل فرحة صغيرة."
   }
 }

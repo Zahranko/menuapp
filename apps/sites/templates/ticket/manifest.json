@@ -4,6 +4,11 @@
   "name": "Ticket",
   "category": "Coffee truck, kiosk",
   "description": "A menu printed as a till receipt: monospace lines, zigzag edges and a barcode.",
+  "ar": {
+    "name": "تذكرة",
+    "category": "عربة قهوة وكشك",
+    "description": "منيو مطبوع كإيصال صندوق: سطور بخط الآلة الكاتبة، وحواف متعرجة، وباركود."
+  },
   "version": 1,
   "thumbnail": "/templates/ticket/thumbnail.png",
   "sample": "cafe",
@@ -112,5 +117,12 @@
       "thu": "07:00-16:00",
       "fri": ""
     }
+  },
+  "defaultsAr": {
+    "hero.title": "قهوة على عجلات",
+    "stamp": "طازج",
+    "location": "اليوم: شارع الرينبو، بجانب السينما القديمة",
+    "thanks": "شكرًا لكم، نراكم مجددًا",
+    "announcement": "أحضر كوبك الخاص واحصل على خصم 0.25"
   }
 }

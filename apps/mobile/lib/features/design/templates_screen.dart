@@ -51,13 +51,13 @@ class _TemplatesScreenState extends ConsumerState<TemplatesScreen> {
     }
     if (template.isPro && !_hasPro) {
       // Don't ask the API: explain the Pro plan, and carry on if the owner upgrades.
-      if (!await openProTemplateSheet(context, template.name) || !mounted) return;
+      if (!await openProTemplateSheet(context, template.nameFor(context)) || !mounted) return;
     }
     if (site != null && (site.isPublished || site.hasUnpublishedChanges)) {
       final ok = await showDialog<bool>(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text(t.replaceDesignTitle(template.name)),
+          title: Text(t.replaceDesignTitle(template.nameFor(context))),
           content: Text(t.replaceDesignBody),
           actions: [
             TextButton(onPressed: () => Navigator.pop(context, false), child: Text(t.cancel)),
@@ -81,7 +81,7 @@ class _TemplatesScreenState extends ConsumerState<TemplatesScreen> {
         // The plan changed since it loaded: reload it and explain.
         ref.invalidate(planProvider);
         setState(() => _busyId = null);
-        await openProTemplateSheet(context, template.name);
+        await openProTemplateSheet(context, template.nameFor(context));
       } else {
         showMessage(context, errorText(t, e));
       }
@@ -253,7 +253,7 @@ class _TemplateCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  template.name,
+                  template.nameFor(context),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15, color: BrandColors.ink),
@@ -267,7 +267,7 @@ class _TemplateCard extends StatelessWidget {
           ),
           const SizedBox(height: 1),
           Text(
-            template.category,
+            template.categoryFor(context),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(color: BrandColors.muted, fontSize: 12.5),

@@ -6,7 +6,9 @@ import 'package:go_router/go_router.dart';
 import '../../core/api/api_error.dart';
 import '../../core/providers.dart';
 import '../../core/theme.dart';
+import '../../core/l10n/app_language.dart';
 import '../../core/widgets/form_widgets.dart';
+import '../../core/widgets/language_picker.dart';
 import '../../core/widgets/ui.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../auth/auth_controller.dart';
@@ -52,7 +54,7 @@ class _WebsiteCard extends ConsumerWidget {
       icon: Icons.language_rounded,
       badge: Pill(live ? t.live : t.notPublished,
           color: live ? BrandColors.live.withValues(alpha: 0.15) : BrandColors.paper, textColor: live ? BrandColors.live : BrandColors.muted),
-      subtitle: template == null ? auth.business.displayUrl : t.websiteTemplate(auth.business.displayUrl, template.numberLabel, template.name),
+      subtitle: template == null ? auth.business.displayUrl : t.websiteTemplate(auth.business.displayUrl, template.numberLabel, template.nameFor(context)),
       children: [
         Wrap(spacing: 8, runSpacing: 8, children: [
           FilledButton.icon(
@@ -174,10 +176,16 @@ class _AccountCard extends ConsumerWidget {
           Text(account.email, style: TextStyle(color: BrandColors.ink, fontWeight: FontWeight.w600)),
           if (account.phone != null) ...[
             const SizedBox(height: 2),
-            Text(account.phone!, textDirection: TextDirection.ltr, textAlign: TextAlign.start, style: TextStyle(color: BrandColors.muted)),
+            // Left to right so the number reads in order, but on the layout's start side like the email above.
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: Text(account.phone!, textDirection: TextDirection.ltr, style: TextStyle(color: BrandColors.muted)),
+            ),
           ],
           const SizedBox(height: 14),
         ],
+        const _LanguageRow(),
+        const SizedBox(height: 14),
         Row(children: [
           Expanded(
             child: LightButton(
@@ -198,6 +206,30 @@ class _AccountCard extends ConsumerWidget {
           Expanded(child: LightButton(label: t.logOut, danger: true, onPressed: () => ref.read(authControllerProvider.notifier).logOut())),
         ]),
       ],
+    );
+  }
+}
+
+/// "App language" with the current choice; opens the choice sheet.
+class _LanguageRow extends ConsumerWidget {
+  const _LanguageRow();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = AppLocalizations.of(context);
+    final language = ref.watch(appLanguageProvider);
+    return Material(
+      color: BrandColors.paper,
+      borderRadius: BorderRadius.circular(16),
+      clipBehavior: Clip.antiAlias,
+      child: ListTile(
+        key: const Key('appLanguage'),
+        leading: Icon(Icons.translate_rounded, color: BrandColors.primary),
+        title: Text(t.appLanguage, style: TextStyle(fontWeight: FontWeight.w600, color: BrandColors.ink)),
+        subtitle: Text(languageLabel(t, language), locale: language.locale, style: TextStyle(color: BrandColors.muted)),
+        trailing: Icon(Icons.chevron_right_rounded, color: BrandColors.muted),
+        onTap: () => showLanguageSheet(context),
+      ),
     );
   }
 }

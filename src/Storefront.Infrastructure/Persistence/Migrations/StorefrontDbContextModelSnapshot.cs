@@ -566,11 +566,25 @@ namespace Storefront.Infrastructure.Persistence.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
+                    b.Property<string>("CategoryAr")
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
                     b.Property<string>("DefaultSettings")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("DefaultSettingsAr")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("{}");
+
                     b.Property<string>("Description")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<string>("DescriptionAr")
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
@@ -579,6 +593,10 @@ namespace Storefront.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.Property<string>("NameAr")
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 

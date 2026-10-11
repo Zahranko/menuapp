@@ -74,6 +74,10 @@ internal sealed class TemplateConfiguration : IEntityTypeConfiguration<Template>
         b.Property(x => x.Category).HasMaxLength(40);
         b.Property(x => x.ThumbnailUrl).HasMaxLength(2048);
         b.Property(x => x.Description).HasMaxLength(300);
+        b.Property(x => x.NameAr).HasMaxLength(60);
+        b.Property(x => x.CategoryAr).HasMaxLength(40);
+        b.Property(x => x.DescriptionAr).HasMaxLength(300);
+        b.Property(x => x.DefaultSettingsAr).IsRequired().HasDefaultValue("{}");
         b.Property(x => x.Tier).IsRequired().HasMaxLength(TemplateTier.MaxLength).HasDefaultValue(TemplateTier.Basic);
         b.Ignore(x => x.IsPro);
         b.HasIndex(x => x.Number).IsUnique();

@@ -63,7 +63,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                       Text(auth.justSignedUp ? t.welcomeNew : t.welcomeBack, style: TextStyle(color: soft, fontSize: 15.5, height: 1.5)),
                       const SizedBox(height: 28),
                       Container(
-                        padding: const EdgeInsets.fromLTRB(18, 14, 10, 14),
+                        padding: const EdgeInsetsDirectional.fromSTEB(18, 14, 10, 14),
                         decoration: BoxDecoration(
                           color: onDark.withValues(alpha: 0.06),
                           borderRadius: BorderRadius.circular(Ui.radius),

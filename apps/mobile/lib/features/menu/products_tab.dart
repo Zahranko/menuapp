@@ -141,7 +141,7 @@ class _Stat extends StatelessWidget {
       child: AppCard(
         radius: 18,
         color: warn ? Color.lerp(Colors.white, BrandColors.highlight, 0.07) : null,
-        padding: const EdgeInsets.fromLTRB(14, 12, 10, 12),
+        padding: const EdgeInsetsDirectional.fromSTEB(14, 12, 10, 12),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(children: [
             Expanded(child: Text('$value', style: Ui.display(26, color: color))),

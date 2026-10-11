@@ -4,6 +4,11 @@
   "name": "Atlas",
   "category": "Boutique shop",
   "description": "A clean catalog for shops: a mega menu of departments and collections, product grids, best sellers and a lookbook.",
+  "ar": {
+    "name": "أطلس",
+    "category": "متجر بوتيك",
+    "description": "كتالوج أنيق للمتاجر: قائمة كبيرة للأقسام والمجموعات، وشبكات منتجات، والأكثر مبيعًا، وكتالوج صور."
+  },
   "version": 1,
   "tier": "pro",
   "thumbnail": "/templates/atlas/thumbnail.png",
@@ -433,5 +438,15 @@
       "thu": "10:00-22:00",
       "fri": ""
     }
+  },
+  "defaultsAr": {
+    "hero.eyebrow": "أغراض للحياة اليومية",
+    "hero.title": "مصنوعة باليد. مختارة بعناية.",
+    "hero.subtitle": "خزف وشموع وصابون ونباتات من حرفيين صغار في أنحاء الأردن.",
+    "announcement": "توصيل مجاني داخل عمّان للطلبات فوق 30 دينارًا",
+    "categories.title": "تسوّق حسب القسم",
+    "story.title": "متجر صغير للأشياء المفيدة والجميلة",
+    "story.text": "يعمل أطلس مباشرة مع صانعي الفخار والصابون والنسّاجين. كل قطعة تُصنع بكميات صغيرة، ونزور كل ورشة نبيع منتجاتها.",
+    "footer.text": "تغليف هدايا لكل طلب. الاستبدال خلال 14 يومًا."
   }
 }

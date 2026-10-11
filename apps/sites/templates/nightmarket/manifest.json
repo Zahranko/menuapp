@@ -4,6 +4,11 @@
   "name": "Night Market",
   "category": "Street food",
   "description": "Dark and loud: big photo cards you swipe through, one row per category.",
+  "ar": {
+    "name": "سوق الليل",
+    "category": "أكل الشارع",
+    "description": "داكن وجريء: بطاقات صور كبيرة تمررها بإصبعك، صف لكل قسم."
+  },
   "version": 1,
   "thumbnail": "/templates/nightmarket/thumbnail.png",
   "sample": "fastfood",
@@ -172,5 +177,11 @@
       "thu": "16:00-24:00",
       "fri": "14:00-24:00"
     }
+  },
+  "defaultsAr": {
+    "hero.title": "مضغوط. متراكم. يُقدَّم ساخنًا.",
+    "hero.subtitle": "برغر وبيتزا وبطاطا محمّلة حتى وقت متأخر. اطلب مسبقًا على واتساب ووفّر وقت الانتظار.",
+    "hero.sticker": "نسهر لوقت متأخر",
+    "announcement": "بطاطا مجانية مع كل دبل يوم الثلاثاء"
   }
 }

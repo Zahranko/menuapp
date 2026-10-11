@@ -39,7 +39,7 @@ class SettingField extends StatelessWidget {
     if (field.type == 'toggle' || field.type == 'bool') {
       return SwitchListTile(
         contentPadding: EdgeInsets.zero,
-        title: Text(field.label, style: TextStyle(fontWeight: FontWeight.w600, color: BrandColors.ink)),
+        title: Text(field.labelFor(context), style: TextStyle(fontWeight: FontWeight.w600, color: BrandColors.ink)),
         value: value == true,
         onChanged: onChanged,
       );
@@ -52,7 +52,7 @@ class SettingField extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         if (field.type != 'range') ...[
-          Text(field.label, style: TextStyle(fontWeight: FontWeight.w600, color: BrandColors.ink)),
+          Text(field.labelFor(context), style: TextStyle(fontWeight: FontWeight.w600, color: BrandColors.ink)),
           const SizedBox(height: 8),
         ],
         control,
@@ -104,7 +104,7 @@ class _ChoiceSetting extends StatelessWidget {
   Widget build(BuildContext context) => Wrap(spacing: 8, runSpacing: 8, children: [
         for (final o in field.options)
           ChoiceChip(
-            label: Text(field.optionLabel(o)),
+            label: Text(field.optionLabelFor(context, o)),
             selected: value == o,
             showCheckmark: false,
             selectedColor: BrandColors.primary,
@@ -131,11 +131,11 @@ class _SwatchSetting extends StatelessWidget {
   Widget build(BuildContext context) => Wrap(spacing: 10, runSpacing: 10, children: [
         for (final o in field.options)
           Tooltip(
-            message: field.optionLabel(o),
+            message: field.optionLabelFor(context, o),
             child: Semantics(
               button: true,
               selected: value == o,
-              label: field.optionLabel(o),
+              label: field.optionLabelFor(context, o),
               child: InkWell(
                 customBorder: const CircleBorder(),
                 onTap: () => onChanged(o),
@@ -168,7 +168,7 @@ class _RangeSetting extends StatelessWidget {
     final divisions = ((max - min) / step).round();
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Row(children: [
-        Expanded(child: Text(field.label, style: TextStyle(fontWeight: FontWeight.w600, color: BrandColors.ink))),
+        Expanded(child: Text(field.labelFor(context), style: TextStyle(fontWeight: FontWeight.w600, color: BrandColors.ink))),
         Text(value.toStringAsFixed(value == value.roundToDouble() ? 0 : 1), style: TextStyle(color: BrandColors.muted)),
       ]),
       Slider(
@@ -196,7 +196,7 @@ class _TogglesSetting extends StatelessWidget {
           SwitchListTile(
             dense: true,
             contentPadding: EdgeInsets.zero,
-            title: Text(field.optionLabel(o)),
+            title: Text(field.optionLabelFor(context, o)),
             value: value.contains(o),
             // Keep the template's order so the sections list stays stable.
             onChanged: (on) => onChanged([for (final x in field.options) if (x == o ? on : value.contains(x)) x]),

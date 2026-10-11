@@ -17,7 +17,8 @@ builder.Host.UseSerilog((context, logger) => logger
     .WriteTo.Console(new RenderedCompactJsonFormatter()));
 
 builder.Services.Configure<BrandOptions>(builder.Configuration.GetSection(BrandOptions.SectionName));
-builder.Services.AddProblemDetails();
+builder.Services.AddProblemDetails(o => o.CustomizeProblemDetails = c => ApiLocalization.LocalizeFrameworkProblem(c.ProblemDetails));
+builder.Services.AddStorefrontLocalization();
 builder.Services.AddOpenApi("v1");
 builder.Services.AddHealthChecks();
 builder.Services.AddHttpContextAccessor();
@@ -34,6 +35,8 @@ var app = builder.Build();
 app.CheckSigningKey();
 await app.PrepareDatabaseAsync();
 
+// First, so every response (including refusals and rate limits) speaks the Accept-Language of the request.
+app.UseRequestLocalization();
 app.UseStorefrontSecurity();
 app.UseExceptionHandler();
 app.UseStatusCodePages();

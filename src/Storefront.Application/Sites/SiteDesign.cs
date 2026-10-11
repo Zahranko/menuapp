@@ -42,9 +42,16 @@ public sealed class SiteContext(ISiteRepository sites, IBusinessRepository busin
 {
     public async Task<(Site? Site, string SiteUrl)> LoadAsync(CancellationToken ct)
     {
+        var (site, url, _) = await LoadWithLocaleAsync(ct);
+        return (site, url);
+    }
+
+    /// <summary>Also the business's language, which picks the Arabic or English template defaults.</summary>
+    public async Task<(Site? Site, string SiteUrl, string Locale)> LoadWithLocaleAsync(CancellationToken ct)
+    {
         var site = await sites.GetForCurrentBusinessAsync(ct);
         var business = user.BusinessId is { } id ? await businesses.GetAsync(id, ct) : null;
-        return (site, business is null ? "" : links.Site(business.Slug.Value));
+        return (site, business is null ? "" : links.Site(business.Slug.Value), business?.Locale ?? "en");
     }
 }
 
@@ -60,14 +67,14 @@ public sealed class GetSiteHandler(SiteContext context)
 public sealed record ChangeTemplate(string TemplateId);
 
 /// <summary>
-/// Switching template resets the draft to that template's defaults; the live site changes only on publish.
-/// Pro templates need a live Pro plan.
+/// Switching template resets the draft to that template's defaults (with its Arabic texts for an Arabic business);
+/// the live site changes only on publish. Pro templates need a live Pro plan.
 /// </summary>
 public sealed class ChangeTemplateHandler(SiteContext context, ITemplateRepository templates, ProPlanChecker plans, ICurrentUser user, IUnitOfWork uow, IAuditLog audit, IClock clock)
 {
     public async Task<Result<SiteDto>> Handle(ChangeTemplate cmd, CancellationToken ct)
     {
-        var (site, url) = await context.LoadAsync(ct);
+        var (site, url, locale) = await context.LoadWithLocaleAsync(ct);
         if (site is null)
         {
             return SiteErrors.NotFound;
@@ -84,7 +91,7 @@ public sealed class ChangeTemplateHandler(SiteContext context, ITemplateReposito
             return SiteErrors.TemplateNeedsPro;
         }
 
-        site.ChangeTemplate(template.Id, template.DefaultSettings, clock.UtcNow);
+        site.ChangeTemplate(template.Id, TemplateDefaults.JsonFor(template, locale), clock.UtcNow);
         audit.Record("template", nameof(Site), template.Id);
         await uow.SaveChangesAsync(ct);
         return SiteDto.From(site, url);
@@ -97,7 +104,7 @@ public sealed class SaveDraftHandler(SiteContext context, ITemplateRepository te
 {
     public async Task<Result<SiteDto>> Handle(SaveDraft cmd, CancellationToken ct)
     {
-        var (site, url) = await context.LoadAsync(ct);
+        var (site, url, locale) = await context.LoadWithLocaleAsync(ct);
         if (site is null || user.BusinessId is not { } businessId)
         {
             return SiteErrors.NotFound;
@@ -114,7 +121,8 @@ public sealed class SaveDraftHandler(SiteContext context, ITemplateRepository te
             return SiteErrors.TemplateNotFound;
         }
 
-        var defaults = (JsonObject)JsonNode.Parse(template.DefaultSettings)!;
+        // Missing keys take the defaults the business started with (Arabic texts for an Arabic business).
+        var defaults = TemplateDefaults.For(template, locale);
         var (valid, errors) = await TemplateSchema.Parse(template.SettingsSchema)
             .ValidateAsync(settings, defaults, imageUrl => media.UrlBelongsToBusinessAsync(businessId, imageUrl, ct));
         if (valid is null)

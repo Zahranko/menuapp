@@ -354,6 +354,11 @@ export function defaultsFor(templateId: string): Settings {
   return { ...(templateInfo(templateId).defaults as Settings) };
 }
 
+/** The template's Arabic starter text (manifest "defaultsAr"), which overrides its English text defaults for Arabic businesses. */
+export function arabicDefaultsFor(templateId: string): Settings {
+  return { ...((templateInfo(templateId) as { defaultsAr?: Settings }).defaultsAr ?? {}) };
+}
+
 export function sampleFor(templateId: string): SampleName {
   const name = templateInfo(templateId).sample;
   return name && name in SAMPLES ? (name as SampleName) : "cafe";
@@ -483,6 +488,7 @@ export function fixtureBySlug(slug: string): PublicSite | null {
 /**
  * Fixture previews: "fixture" is the sample café; "fixture.<template>.<theme>.<locale>" renders any template in one of
  * its themes and languages (used by the accessibility checks). Theme "default" keeps the template's default.
+ * Locale "ar" also swaps in the template's Arabic starter text.
  */
 export function fixturePreview(token: string): PublicSite | null {
   if (token === "fixture") return { ...fixtureSite, isPreview: true };
@@ -490,6 +496,9 @@ export function fixturePreview(token: string): PublicSite | null {
   if (prefix !== "fixture" || !registry.templates.some((t) => t.id === templateId)) return null;
   const site = fixtureFor(templateId, { isPreview: true });
   if (theme && theme !== "default") site.settings = { ...site.settings, theme };
-  if (locale === "ar") site.business = { ...site.business, locale: "ar" };
+  if (locale === "ar") {
+    site.business = { ...site.business, locale: "ar" };
+    site.settings = { ...site.settings, ...arabicDefaultsFor(templateId) };
+  }
   return site;
 }

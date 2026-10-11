@@ -11,6 +11,7 @@ import '../../core/theme.dart';
 import '../../core/widgets/form_widgets.dart';
 import '../../core/widgets/ui.dart';
 import '../../l10n/generated/app_localizations.dart';
+import '../auth/auth_controller.dart';
 import '../menu/dashboard_screen.dart';
 import '../plan/plan_cards.dart';
 import '../plan/plan_controller.dart';
@@ -110,13 +111,19 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
     return template?.fields ?? const [];
   }
 
+  /// The website's language (chosen at sign-up), which picks the template's starting texts.
+  String get _siteLocale => switch (ref.read(authControllerProvider)) {
+        SignedIn(:final business) => business.locale,
+        _ => 'en',
+      };
+
   Future<void> _reset(TemplateInfo template) async {
     final t = AppLocalizations.of(context);
     final ok = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(t.resetTitle),
-        content: Text(t.resetBody(template.name)),
+        content: Text(t.resetBody(template.nameFor(context))),
         actions: [
           TextButton(onPressed: () => Navigator.pop(context, false), child: Text(t.cancel)),
           FilledButton(
@@ -129,7 +136,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
     );
     if (ok != true || !mounted) return;
     setState(() {
-      _settings = Map<String, dynamic>.from(template.defaults);
+      _settings = template.defaultsFor(_siteLocale);
       _errors = {};
       _generation++;
     });
@@ -165,7 +172,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
         // A Pro template on the Basic plan: explain and offer the upgrade instead of a bare error.
         setState(() => _publishing = false);
         ref.invalidate(planProvider);
-        final name = ref.read(templatesProvider).value?.where((x) => x.id == ref.read(siteProvider).value?.templateId).firstOrNull?.name;
+        final name = ref.read(templatesProvider).value?.where((x) => x.id == ref.read(siteProvider).value?.templateId).firstOrNull?.nameFor(context);
         await openProTemplateSheet(context, name ?? t.customize);
       } else {
         showMessage(context, errorText(t, e));
@@ -216,7 +223,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
     ];
     final groups = <String, List<TemplateField>>{};
     for (final f in fields) {
-      groups.putIfAbsent(f.group ?? t.groupMore, () => []).add(f);
+      groups.putIfAbsent(f.groupFor(context) ?? t.groupMore, () => []).add(f);
     }
 
     return PopScope(
@@ -253,7 +260,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
                               child: Column(
                                 children: [
                                   Text(
-                                    template?.name ?? t.customize,
+                                    template?.nameFor(context) ?? t.customize,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: Ui.display(18, color: Colors.white, weight: FontWeight.w700),

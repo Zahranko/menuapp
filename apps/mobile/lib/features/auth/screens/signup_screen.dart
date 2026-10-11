@@ -10,6 +10,7 @@ import '../../../core/brand.dart';
 import '../../../core/providers.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/form_widgets.dart';
+import '../../../core/widgets/language_picker.dart';
 import '../../../core/widgets/ui.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../auth_controller.dart';
@@ -132,7 +133,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
         : [t.strengthTooShort, t.strengthWeak, t.strengthOkay, t.strengthGood, t.strengthStrong][strength];
 
     return Scaffold(
-      appBar: AuthHeader(onBack: () => context.go('/'), wordmark: const Wordmark(size: 20)),
+      appBar: AuthHeader(onBack: () => context.go('/'), wordmark: const Wordmark(size: 20), action: const LanguageToggle()),
       body: SafeArea(
         child: AutofillGroup(
           child: ListView(

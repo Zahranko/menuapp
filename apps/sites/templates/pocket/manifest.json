@@ -4,6 +4,11 @@
   "name": "Pocket Catalog",
   "category": "Shop",
   "description": "A shop catalog: filter by category, sort by price and ask about any item on WhatsApp.",
+  "ar": {
+    "name": "كتالوج الجيب",
+    "category": "متجر",
+    "description": "كتالوج لمتجرك: تصفية حسب القسم، وترتيب حسب السعر، والسؤال عن أي منتج على واتساب."
+  },
   "version": 1,
   "thumbnail": "/templates/pocket/thumbnail.png",
   "sample": "shop",
@@ -181,5 +186,13 @@
       "thu": "10:00-22:00",
       "fri": ""
     }
+  },
+  "defaultsAr": {
+    "hero.title": "أشياء لصباحات هادئة في البيت",
+    "hero.subtitle": "شموع وأكواب وصابون ونباتات مصنوعة يدويًا من حرفيين صغار في عمّان. اسألنا عن أي منتج على واتساب.",
+    "ask": "مرحبًا! أود أن أطلب:",
+    "announcement": "توصيل مجاني داخل عمّان للطلبات فوق 25 دينارًا",
+    "story.title": "من صنع أناس نعرفهم",
+    "story.text": "كل منتج في متجرنا يأتي من حرفي التقينا به شخصيًا. نُبقي القائمة صغيرة ونغيّرها مع المواسم."
   }
 }

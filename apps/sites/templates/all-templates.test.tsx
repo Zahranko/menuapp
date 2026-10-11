@@ -1,6 +1,6 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { bigMenu, fixtureFor } from "@/lib/fixtures";
+import { arabicDefaultsFor, bigMenu, fixtureFor, fixturePreview } from "@/lib/fixtures";
 import type { PublicSite } from "@/lib/types";
 import { allPaths } from "./_premium/pages";
 import registry from "./registry.json";
@@ -45,6 +45,15 @@ describe.each(ids)("template %s", (id) => {
     const html = render(site);
     expect(html).toMatch(/نفد|غير متاح حاليًا/);
     expect(html).not.toMatch(/Sold out|Not available/);
+  });
+
+  it("shows its Arabic starter text in an Arabic preview", () => {
+    const site = fixturePreview(`fixture.${id}.default.ar`)!;
+    const title = arabicDefaultsFor(id)["hero.title"] as string;
+    expect(title).toMatch(/[\u0600-\u06FF]/);
+    const html = render(site);
+    expect(html).toContain(title);
+    expect(html).not.toContain(fixtureFor(id).settings["hero.title"] as string);
   });
 
   it("handles one product, and 200 products with long names and no photos", () => {

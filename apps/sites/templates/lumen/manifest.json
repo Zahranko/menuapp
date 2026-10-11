@@ -4,6 +4,11 @@
   "name": "Lumen",
   "category": "Specialty café",
   "description": "A bright, airy café site with a split hero, sub-category pages, a best-seller rail and a photo gallery.",
+  "ar": {
+    "name": "لومن",
+    "category": "مقهى مختص",
+    "description": "موقع مقهى مشرق وفسيح بواجهة مقسومة، وصفحات للأقسام الفرعية، وشريط للأكثر مبيعًا، ومعرض صور."
+  },
   "version": 1,
   "tier": "pro",
   "thumbnail": "/templates/lumen/thumbnail.png",
@@ -432,5 +437,14 @@
       "thu": "07:30-23:00",
       "fri": "09:00-23:00"
     }
+  },
+  "defaultsAr": {
+    "hero.eyebrow": "قهوة مختصة · اللويبدة",
+    "hero.title": "صباحات هادئة، وقهوة طيبة.",
+    "hero.subtitle": "قهوة موسمية من محصول واحد، وكرواسون بالزبدة نرقّق عجينته ثلاثة أيام، ونوافذ كبيرة مليئة بالضوء.",
+    "announcement": "محصول جديد هذا الأسبوع: إثيوبيا غوجي",
+    "story.title": "ركن مشمس لأهل الحي",
+    "story.text": "نحمّص مرتين في الأسبوع، ونخبز قبل الشروق، ونُبقي الموسيقى هادئة. تعال من أجل فلات وايت، وابقَ من أجل الضوء.",
+    "footer.text": "محمّصة على دفعات صغيرة. مخبوزة كل صباح."
   }
 }

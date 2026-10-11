@@ -2,6 +2,7 @@ using FluentValidation;
 using Microsoft.Extensions.Options;
 using Storefront.Application.Abstractions;
 using Storefront.Application.Common;
+using Storefront.Application.Templates;
 using Storefront.Domain.Billing;
 using Storefront.Domain.Businesses;
 using Storefront.Domain.Common;
@@ -91,7 +92,7 @@ public sealed class RegisterHandler(
             business.UpdateProfile(cmd.BusinessName, phone, cmd.Email.Trim(), null, null, now);
             business.ClearDomainEvents();
             businesses.Add(business);
-            sites.Add(Site.Create(business.Id, template.Id, template.DefaultSettings, now));
+            sites.Add(Site.Create(business.Id, template.Id, TemplateDefaults.JsonFor(template, business.Locale), now));
             billing.Add(billingOptions.Value.TestMode
                 ? Subscription.Start(business.Id, Plan.Pro, SubscriptionStatus.Active, "test", null, null)
                 : Subscription.Start(business.Id, Plan.Basic, SubscriptionStatus.Trialing, "none", null, now + TrialLength));

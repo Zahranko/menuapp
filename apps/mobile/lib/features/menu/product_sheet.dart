@@ -207,7 +207,12 @@ class _ProductSheetState extends ConsumerState<ProductSheet> {
                         ? Padding(
                             padding: const EdgeInsetsDirectional.only(start: 14),
                             child: Row(children: [
-                              Icon(Icons.subdirectory_arrow_right_rounded, size: 16, color: BrandColors.muted),
+                              // This icon doesn't mirror by itself: point it the reading way.
+                              Icon(
+                                Directionality.of(context) == TextDirection.rtl ? Icons.subdirectory_arrow_left_rounded : Icons.subdirectory_arrow_right_rounded,
+                                size: 16,
+                                color: BrandColors.muted,
+                              ),
                               const SizedBox(width: 6),
                               Expanded(child: Text(c.name, overflow: TextOverflow.ellipsis)),
                             ]),

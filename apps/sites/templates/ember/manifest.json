@@ -4,6 +4,11 @@
   "name": "Ember",
   "category": "Grill and burgers",
   "description": "A bold, fiery site for grills and burger joints: big type, photo cards and a slideshow hero.",
+  "ar": {
+    "name": "جمر",
+    "category": "مشاوي وبرغر",
+    "description": "موقع جريء وناري للمشاوي ومحلات البرغر: خط كبير، وبطاقات صور، وواجهة بعرض متحرك."
+  },
   "version": 1,
   "tier": "pro",
   "thumbnail": "/templates/ember/thumbnail.png",
@@ -432,5 +437,14 @@
       "thu": "12:00-00:30",
       "fri": "13:00-00:30"
     }
+  },
+  "defaultsAr": {
+    "hero.eyebrow": "مشاوي على الفحم · منذ 2018",
+    "hero.title": "اضغط. اشوِ. كرّر.",
+    "hero.subtitle": "برغر سماش دبل، وستيك على الفحم، وبطاطا ستبقى تفكر فيها حتى الغد.",
+    "announcement": "ثلاثاء البرغر: البرغر الثاني بنصف السعر",
+    "story.title": "النار مكوّننا المفضل",
+    "story.text": "بدأ جمر وسنديان كعربة طعام بشواية واحدة. وما زلنا نفرم اللحم كل صباح ونطبخ على فحم حقيقي.",
+    "footer.text": "تناول طعامك عندنا، أو خذه معك، أو اطلب على واتساب."
   }
 }

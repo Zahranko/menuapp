@@ -4,6 +4,11 @@
   "name": "Linen List",
   "category": "Restaurant",
   "description": "A printed menu on linen paper: text only, dotted lines to the prices, one or two columns.",
+  "ar": {
+    "name": "لينن",
+    "category": "مطعم",
+    "description": "منيو مطبوع على ورق كتّان: نص فقط، ونقاط تمتد إلى الأسعار، بعمود أو عمودين."
+  },
   "version": 1,
   "thumbnail": "/templates/linen/thumbnail.png",
   "sample": "restaurant",
@@ -175,5 +180,13 @@
       "thu": "12:00-24:00",
       "fri": "13:00-24:00"
     }
+  },
+  "defaultsAr": {
+    "note": "الأسعار شاملة الضريبة. أخبرونا عن أي حساسية من الطعام.",
+    "hero.title": "طبخ بيتي، مثلما كانت تطبخ جدّاتنا.",
+    "hero.subtitle": "مقبلات للمشاركة، وخبز طازج من الفرن، وأطباق مطبوخة على مهل من وصفات العائلة. تعالوا جائعين.",
+    "announcement": "غداء عائلي كل جمعة من الساعة 1 ظهرًا",
+    "story.title": "مطبخنا",
+    "story.text": "كل وصفة في هذا المنيو جاءت من مطبخ عائلي. ونطبخ بالطريقة نفسها: طازج كل صباح، على مهل، وبزيت زيتون أكثر مما تتوقع."
   }
 }

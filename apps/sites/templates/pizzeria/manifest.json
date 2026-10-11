@@ -4,6 +4,11 @@
   "name": "Pizzeria",
   "category": "Pizza",
   "description": "A wood-fired pizza place: round photo cutouts on colored bands, one per category.",
+  "ar": {
+    "name": "بيتزيريا",
+    "category": "بيتزا",
+    "description": "مطعم بيتزا على الحطب: صور دائرية على شرائط ملوّنة، شريط لكل قسم."
+  },
   "version": 1,
   "thumbnail": "/templates/pizzeria/thumbnail.png",
   "sample": "pizza",
@@ -150,5 +155,13 @@
       "thu": "12:00-00:30",
       "fri": "13:00-00:30"
     }
+  },
+  "defaultsAr": {
+    "hero.title": "على الحطب، تسعون ثانية، وجاهزة",
+    "hero.subtitle": "عجينة ترتاح 48 ساعة، وبندورة من إيطاليا، وزعتر من جبالنا.",
+    "stamp": "على الحطب",
+    "announcement": "بيتزاتان وسلطة بـ 15 دينارًا، كل يوم اثنين",
+    "story.title": "من فرننا",
+    "story.text": "بُني فرننا باليد ويشتعل بخشب السنديان على 450 درجة. تنضج البيتزا في تسعين ثانية، وهي مدة تكفي بالضبط لتختار التالية."
   }
 }

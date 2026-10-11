@@ -1771,6 +1771,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Templates marked Pro come with the Pro plan.'**
   String get proTemplatesHint;
+
+  /// No description provided for @appLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'App language'**
+  String get appLanguage;
+
+  /// No description provided for @appLanguageSub.
+  ///
+  /// In en, this message translates to:
+  /// **'The language of this app. Your website keeps its own language.'**
+  String get appLanguageSub;
+
+  /// No description provided for @languageSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'Same as phone'**
+  String get languageSystem;
+
+  /// No description provided for @changeLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Change language'**
+  String get changeLanguage;
 }
 
 class _AppLocalizationsDelegate

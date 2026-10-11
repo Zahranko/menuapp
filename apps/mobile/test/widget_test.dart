@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:storefront_app/core/auth/token_store.dart';
 import 'package:storefront_app/core/brand.dart';
+import 'package:storefront_app/core/l10n/app_language.dart';
 import 'package:storefront_app/core/providers.dart';
 import 'package:storefront_app/features/auth/screens/signup_screen.dart';
 import 'package:storefront_app/main.dart';
@@ -10,7 +11,7 @@ import 'package:storefront_app/main.dart';
 import 'fake_api.dart';
 
 Future<FakeApi> pumpApp(WidgetTester tester, FakeResponse Function(String path, Object? body) handle,
-    {TokenStore? tokens, Locale? locale, bool settle = true}) async {
+    {TokenStore? tokens, LanguageStore? language, Locale? locale, bool settle = true}) async {
   final api = FakeApi((r) => handle(r.path, r.data));
   if (locale != null) {
     tester.platformDispatcher.localesTestValue = [locale];
@@ -22,6 +23,7 @@ Future<FakeApi> pumpApp(WidgetTester tester, FakeResponse Function(String path, 
   await tester.pumpWidget(ProviderScope(
     overrides: [
       tokenStoreProvider.overrideWithValue(tokens ?? MemoryTokenStore()),
+      languageStoreProvider.overrideWithValue(language ?? MemoryLanguageStore()),
       httpAdapterProvider.overrideWithValue(api),
     ],
     child: const StorefrontApp(),
@@ -167,5 +169,102 @@ void main() {
 
     expect(find.text('جهّز نشاطك التجاري'), findsOneWidget);
     expect(Directionality.of(tester.element(find.text('جهّز نشاطك التجاري'))), TextDirection.rtl);
+  });
+
+  testWidgets('the language button on the start screen switches to Arabic, right to left, and is remembered', (tester) async {
+    final language = MemoryLanguageStore();
+    await pumpApp(tester, slugFree, language: language);
+    expect(find.text('العربية'), findsOneWidget);
+    expect(Directionality.of(tester.element(find.text('Skip'))), TextDirection.ltr);
+
+    await tester.tap(find.byKey(const Key('languageToggle')));
+    await tester.pumpAndSettle();
+    expect(find.text('تخطٍّ'), findsOneWidget);
+    expect(find.text('English'), findsOneWidget, reason: 'the button now offers English');
+    expect(Directionality.of(tester.element(find.text('تخطٍّ'))), TextDirection.rtl);
+    expect(language.language, AppLanguage.ar);
+
+    // Start the app again with the same storage: still Arabic.
+    await tester.pumpWidget(const SizedBox());
+    await pumpApp(tester, slugFree, language: language);
+    expect(find.text('تخطٍّ'), findsOneWidget);
+    expect(Directionality.of(tester.element(find.text('تخطٍّ'))), TextDirection.rtl);
+
+    // And back to English.
+    await tester.tap(find.byKey(const Key('languageToggle')));
+    await tester.pumpAndSettle();
+    expect(find.text('Skip'), findsOneWidget);
+    expect(language.language, AppLanguage.en);
+  });
+
+  testWidgets('an English choice wins over an Arabic phone', (tester) async {
+    await pumpApp(tester, slugFree, language: MemoryLanguageStore(AppLanguage.en), locale: const Locale('ar'));
+    expect(find.text('Skip'), findsOneWidget);
+  });
+
+  testWidgets('sign-up and log-in have the language button, and sign-up sends the chosen language', (tester) async {
+    Object? sent;
+    await pumpApp(tester, (path, body) {
+      if (path.endsWith('/register')) {
+        sent = body;
+        return (status: 200, body: authBody());
+      }
+      return slugFree(path, body);
+    });
+    await tester.tap(find.text('Log in'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('languageToggle')), findsOneWidget);
+    await tester.tap(find.byTooltip(MaterialLocalizations.of(tester.element(find.byType(Scaffold).first)).backButtonTooltip));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Skip'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('languageToggle')));
+    await tester.pumpAndSettle();
+    expect(find.text('جهّز نشاطك التجاري'), findsOneWidget);
+
+    await tester.enterText(find.byKey(const Key('businessName')), 'Vanilla Menu');
+    await tester.enterText(find.byKey(const Key('email')), 'hello@vanillamenu.test');
+    await tester.enterText(find.byKey(const Key('phone')), '079 123 4567');
+    await tester.enterText(find.byKey(const Key('password')), 'Vanilla2026');
+    await tester.pump(const Duration(milliseconds: 500));
+    await tester.pumpAndSettle();
+    final create = find.widgetWithText(FilledButton, 'إنشاء حساب');
+    await tester.scrollUntilVisible(create, 200, scrollable: find.byType(Scrollable).first);
+    await tester.pumpAndSettle();
+    await tester.tap(create);
+    await tester.pumpAndSettle();
+    expect(sent, containsPair('locale', 'ar'));
+  });
+
+  testWidgets('every API call says which language the app shows', (tester) async {
+    final api = await pumpApp(tester, (path, body) => path.endsWith('/login')
+        ? (status: 401, body: {'title': 'No match', 'errors': <String, Object>{}})
+        : (status: 404, body: null));
+    await tester.tap(find.text('Log in'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const Key('email')), 'hello@vanillamenu.test');
+    await tester.enterText(find.byKey(const Key('password')), 'wrong-password');
+    await tester.tap(find.widgetWithText(FilledButton, 'Log in'));
+    await tester.pumpAndSettle();
+    expect(api.requests.last.headers['Accept-Language'], 'en');
+
+    await tester.tap(find.byKey(const Key('languageToggle')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byType(FilledButton).first);
+    await tester.pumpAndSettle();
+    expect(api.requests.last.path, endsWith('/login'));
+    expect(api.requests.last.headers['Accept-Language'], 'ar');
+  });
+
+  testWidgets('following an Arabic phone, API calls ask for Arabic', (tester) async {
+    final api = await pumpApp(tester, (path, body) => (status: 401, body: {'title': 'No match'}), locale: const Locale('ar'));
+    await tester.tap(find.text('تسجيل الدخول'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const Key('email')), 'hello@vanillamenu.test');
+    await tester.enterText(find.byKey(const Key('password')), 'wrong-password');
+    await tester.tap(find.byType(FilledButton).first);
+    await tester.pumpAndSettle();
+    expect(api.requests.last.headers['Accept-Language'], 'ar');
   });
 }

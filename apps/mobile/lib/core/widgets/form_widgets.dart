@@ -38,8 +38,14 @@ class LabeledField extends StatelessWidget {
   /// A small icon at the start of the field, when there is no [prefix].
   final IconData? icon;
 
+  /// Phone numbers, emails and links are typed left to right even in Arabic, so "079 123 4567"
+  /// keeps its digit groups in order; in a right-to-left layout they still sit on the right.
+  static const _ltrTypes = [TextInputType.phone, TextInputType.emailAddress, TextInputType.url];
+
   @override
   Widget build(BuildContext context) {
+    final ltr = _ltrTypes.contains(keyboardType);
+    final rtlLayout = Directionality.of(context) == TextDirection.rtl;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -53,7 +59,10 @@ class LabeledField extends StatelessWidget {
           autofillHints: autofillHints,
           textInputAction: textInputAction,
           onChanged: onChanged,
+          textDirection: ltr ? TextDirection.ltr : null,
+          textAlign: ltr && rtlLayout ? TextAlign.end : TextAlign.start,
           decoration: InputDecoration(
+            hintTextDirection: ltr ? TextDirection.ltr : null,
             hintText: hint,
             errorText: error,
             errorMaxLines: 3,
@@ -194,12 +203,15 @@ class FormTitle extends StatelessWidget {
   }
 }
 
-/// The top of the sign-up and log-in screens: a round back button and the brand wordmark.
+/// The top of the sign-up and log-in screens: a round back button, an optional [action] and the brand wordmark.
 class AuthHeader extends StatelessWidget implements PreferredSizeWidget {
-  const AuthHeader({super.key, required this.onBack, required this.wordmark});
+  const AuthHeader({super.key, required this.onBack, required this.wordmark, this.action});
 
   final VoidCallback onBack;
   final Widget wordmark;
+
+  /// Shown before the wordmark, like the language switch.
+  final Widget? action;
 
   @override
   Size get preferredSize => const Size.fromHeight(64);
@@ -209,10 +221,11 @@ class AuthHeader extends StatelessWidget implements PreferredSizeWidget {
     return SafeArea(
       bottom: false,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 10, 24, 6),
+        padding: const EdgeInsetsDirectional.fromSTEB(16, 10, 24, 6),
         child: Row(children: [
           RoundIconButton(icon: Icons.arrow_back_rounded, tooltip: MaterialLocalizations.of(context).backButtonTooltip, onPressed: onBack),
           const Spacer(),
+          if (action != null) ...[action!, const SizedBox(width: 6)],
           wordmark,
         ]),
       ),

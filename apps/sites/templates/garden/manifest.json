@@ -4,6 +4,11 @@
   "name": "Garden",
   "category": "Brunch, healthy",
   "description": "Organic shapes, leaves and cards that put diet tags first.",
+  "ar": {
+    "name": "حديقة",
+    "category": "برانش وأكل صحي",
+    "description": "أشكال طبيعية وأوراق شجر وبطاقات تُبرز الوسوم الغذائية أولًا."
+  },
   "version": 1,
   "thumbnail": "/templates/garden/thumbnail.png",
   "sample": "brunch",
@@ -162,5 +167,12 @@
       "thu": "08:00-17:00",
       "fri": "09:00-15:00"
     }
+  },
+  "defaultsAr": {
+    "hero.title": "صباحات هادئة وأكل طيّب",
+    "hero.subtitle": "برانش طوال اليوم، وأطباق كبيرة، وعصير طازج. معظم المنيو نباتي وكل طبق عليه علامته.",
+    "announcement": "برانش نهاية الأسبوع من 9، بلا حجز مسبق",
+    "story.title": "مزروع بحب",
+    "story.text": "تأتي خضارنا من مزرعتين عائليتين في غور الأردن. نطبخ ما يجود به الموسم ونخبز خبزنا كل صباح."
   }
 }

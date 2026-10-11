@@ -2486,6 +2486,25 @@
           }
         }
       },
+      "TemplateArabicDto": {
+        "required": [
+          "name",
+          "category",
+          "description"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
       "TemplateDto": {
         "required": [
           "id",
@@ -2497,7 +2516,9 @@
           "version",
           "tier",
           "schema",
-          "defaults"
+          "defaults",
+          "ar",
+          "defaultsAr"
         ],
         "type": "object",
         "properties": {
@@ -2545,6 +2566,19 @@
             "$ref": "#/components/schemas/JsonElement"
           },
           "defaults": {
+            "$ref": "#/components/schemas/JsonElement"
+          },
+          "ar": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/TemplateArabicDto"
+              }
+            ]
+          },
+          "defaultsAr": {
             "$ref": "#/components/schemas/JsonElement"
           }
         }
