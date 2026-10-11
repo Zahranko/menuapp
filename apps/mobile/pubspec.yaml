@@ -69,6 +69,11 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  # Real screenshots of the app and of a website for the onboarding slides, in English and Arabic.
+  # Remade with brand-free sample data; they must never show the brand name or domain.
+  assets:
+    - assets/onboarding/
+
   # The brand fonts (brand.json's fontDisplay and fontBody, each joined with fontArabic; OFL licensed).
   # Code refers to them by role, so a rebrand only swaps the files. See assets/fonts/README.md.
   fonts:

@@ -22,7 +22,7 @@ describe("JSON-LD", () => {
       name: "Vanilla latte",
       offers: {
         price: "3.5",
-        priceCurrency: "JOD",
+        priceCurrency: "USD",
         availability: "https://schema.org/InStock",
       },
     });

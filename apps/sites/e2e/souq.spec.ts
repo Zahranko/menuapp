@@ -25,7 +25,7 @@ test("the sample site shows every section and works on this screen size", async 
   await page.locator("#menu-list").getByRole("button", { name: /Karak chai/ }).click();
   const dialog = page.getByRole("dialog");
   await expect(dialog).toContainText("Karak chai");
-  await expect(dialog).toContainText("2.50 JD");
+  await expect(dialog).toContainText("$2.50");
   await dialog.getByRole("button", { name: "Close" }).click();
   await expect(dialog).toBeHidden();
 

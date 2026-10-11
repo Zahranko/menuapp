@@ -11,7 +11,7 @@ type Sample = { name: string; address: string; instagram: string; menu: Row[]; s
 export const SAMPLES = {
   cafe: {
     name: "Vanilla Menu",
-    address: "Rainbow Street 21, Jabal Amman",
+    address: "12 Market Street, Old Town",
     instagram: "vanillamenu",
     menu: [
       ["Coffee", "Vanilla latte", "Double shot, Madagascar vanilla, oat or full milk", 3.5, "Signature", true, "latte"],
@@ -29,7 +29,7 @@ export const SAMPLES = {
   },
   restaurant: {
     name: "Bait Sitti",
-    address: "Al-Rainbow Street 8, Jabal Amman",
+    address: "8 Olive Lane, Old Town",
     instagram: "baitsitti",
     menu: [
       ["Cold mezze", "Hummus beiruti", "Chickpeas, tahini, lemon, parsley and a little chili", 2.25, "Vegan", true, "hummus"],
@@ -46,7 +46,7 @@ export const SAMPLES = {
   },
   sweets: {
     name: "Sugar Lane",
-    address: "Mecca Street 112, Amman",
+    address: "112 Main Street, Riverside",
     instagram: "sugarlane",
     menu: [
       ["Ice cream", "Pistachio scoop", "Sicilian pistachio, a little salt", 1.75, "Best seller", true, "icecream"],
@@ -62,7 +62,7 @@ export const SAMPLES = {
   },
   drinks: {
     name: "Juice Lab",
-    address: "Wasfi Al-Tal Street 40, Amman",
+    address: "40 Park Avenue, Riverside",
     instagram: "juicelab",
     menu: [
       ["Fresh juice", "Orange and carrot", "Pressed to order", 2.25, "Best seller", true, "juice"],
@@ -77,7 +77,7 @@ export const SAMPLES = {
   },
   fastfood: {
     name: "Smash Corner",
-    address: "Gardens Street 77, Amman",
+    address: "77 Garden Road, Riverside",
     instagram: "smashcorner",
     menu: [
       ["Burgers", "Double smash", "Two smashed patties, cheese, pickles, house sauce", 5.5, "Best seller", true, "burger"],
@@ -92,7 +92,7 @@ export const SAMPLES = {
   },
   asian: {
     name: "Koi Kitchen",
-    address: "Abdoun Circle 5, Amman",
+    address: "5 Hill Street, Old Town",
     instagram: "koikitchen",
     menu: [
       ["Sushi", "Salmon nigiri", "Two pieces, hand pressed", 3.5, "Signature", true, "sushi"],
@@ -106,7 +106,7 @@ export const SAMPLES = {
   },
   brunch: {
     name: "Green Fork",
-    address: "Abdali Boulevard 9, Amman",
+    address: "9 Central Boulevard, Downtown",
     instagram: "greenfork",
     menu: [
       ["Brunch", "Shakshuka", "Eggs baked in spiced tomato and peppers, warm bread", 4.5, "Best seller", true, "soup"],
@@ -122,7 +122,7 @@ export const SAMPLES = {
   },
   pizza: {
     name: "Forno Rosso",
-    address: "Al-Baouniyah Street 14, Jabal Al-Luweibdeh",
+    address: "14 Church Street, Old Town",
     instagram: "fornorosso",
     menu: [
       ["Pizza", "Margherita", "San Marzano tomato, fior di latte, basil", 6.0, "Best seller", true, "pizza"],
@@ -138,7 +138,7 @@ export const SAMPLES = {
   },
   salon: {
     name: "Maison Lina",
-    address: "Abdoun, Prince Hashem Street 12",
+    address: "12 Hill Street, Old Town",
     instagram: "maisonlina",
     menu: [
       ["Hair", "Cut and blow dry", "Consultation, wash, cut and finish, 60 minutes", 25, "Best seller", true, "services/scissors"],
@@ -167,7 +167,7 @@ export const SAMPLES = {
   },
   studio: {
     name: "Northline Studio",
-    address: "Jabal Amman, First Circle, Studio 4",
+    address: "Studio 4, 1 Square Road, Old Town",
     instagram: "northline",
     menu: [
       ["Brand", "Brand identity", "Logo, colors, type and a short brand guide", 900, "Best seller", true, "services/pen"],
@@ -180,7 +180,7 @@ export const SAMPLES = {
   },
   gym: {
     name: "Pulse Fitness",
-    address: "Sweifieh, Wakalat Street 5",
+    address: "5 High Street, Downtown",
     instagram: "pulsefitness",
     menu: [
       ["Memberships", "Monthly membership", "Gym floor and all group classes", 45, "Best seller", true, "services/dumbbell"],
@@ -195,7 +195,7 @@ export const SAMPLES = {
   },
   home: {
     name: "Handy Pro",
-    address: "Serving all of Amman",
+    address: "Serving the whole city",
     instagram: "handypro",
     menu: [
       ["Cleaning", "Home deep clean", "Two cleaners, up to 150 square meters", 45, "Best seller", true, "services/spray"],
@@ -208,7 +208,7 @@ export const SAMPLES = {
   },
   shop: {
     name: "Olive and Thread",
-    address: "Jabal Al-Weibdeh, Paris Circle 3",
+    address: "3 Paris Square, Old Town",
     instagram: "oliveandthread",
     menu: [
       ["Home", "Olive wood candle", "Soy wax, olive wood wick, 40 hours", 12.0, "Best seller", true, "candle"],
@@ -223,7 +223,7 @@ export const SAMPLES = {
   /* Pro samples: "Parent/Child" puts a product in a sub-category. */
   maison: {
     name: "Maison Noor",
-    address: "Abdoun Circle 4, Amman",
+    address: "4 Hill Street, Old Town",
     instagram: "maisonnoor",
     menu: [
       ["Starters/Cold", "Beef carpaccio", "Shaved parmesan, rocket, truffle oil", 9.5, "Signature", true, "salad"],
@@ -243,7 +243,7 @@ export const SAMPLES = {
   },
   lumen: {
     name: "Lumen Coffee",
-    address: "Weibdeh, Paris Circle 9, Amman",
+    address: "9 Paris Square, Old Town",
     instagram: "lumencoffee",
     menu: [
       ["Coffee/Espresso bar", "Flat white", "Double ristretto, silky milk", 3.25, "Best seller", true, "latte"],
@@ -263,7 +263,7 @@ export const SAMPLES = {
   },
   atlas: {
     name: "Atlas Supply",
-    address: "Jabal Al Lweibdeh 17, Amman",
+    address: "17 Church Street, Old Town",
     instagram: "atlassupply",
     menu: [
       ["Home/Ceramics", "Speckled mug", "Hand thrown stoneware, 300 ml", 14.0, "Best seller", true, "mug"],
@@ -271,7 +271,7 @@ export const SAMPLES = {
       ["Home/Candles", "Cedar and fig candle", "Soy wax, 50 hours", 18.0, "Signature", true, "candle"],
       ["Home/Candles", "Oud and amber candle", "Soy wax, wooden wick", 21.0, "New", false, "candle"],
       ["Home/Textiles", "Linen tea towel", "Stonewashed, set of two", 12.5, null, false, "bag"],
-      ["Bath and body/Soap", "Olive oil soap", "Cold pressed in Salt, Jordan", 4.5, "Best seller", true, "soap"],
+      ["Bath and body/Soap", "Olive oil soap", "Cold pressed from local olive oil", 4.5, "Best seller", true, "soap"],
       ["Bath and body/Soap", "Dead Sea mud bar", "Mineral rich, unscented", 5.5, null, false, "soap"],
       ["Bath and body/Care", "Hand balm", "Shea, almond oil and sage", 9.0, "Vegan", false, null],
       ["Plants", "Snake plant", "In a ceramic pot, 40 cm", 16.0, null, false, "plant"],
@@ -281,7 +281,7 @@ export const SAMPLES = {
   },
   ember: {
     name: "Ember and Oak",
-    address: "Mecca Street 210, Amman",
+    address: "210 Main Street, Riverside",
     instagram: "emberandoak",
     menu: [
       ["Burgers/Beef", "The Ember", "Double smash patty, cheddar, onion jam, ember sauce", 7.5, "Best seller", true, "burger"],
@@ -299,7 +299,7 @@ export const SAMPLES = {
   },
   bloom: {
     name: "Bloom Bakery",
-    address: "Sweifieh, Wakalat Street 33, Amman",
+    address: "33 High Street, Downtown",
     instagram: "bloombakery",
     menu: [
       ["Cakes/Whole cakes", "Rose and pistachio cake", "Rose sponge, pistachio buttercream, dried petals", 28.0, "Signature", true, "cake"],
@@ -321,7 +321,7 @@ export type SampleName = keyof typeof SAMPLES;
 
 /** Content a real owner would type in, so every section of a sample site has something to show. */
 const sampleSettings: Settings = {
-  "hero.eyebrow": "Since 2019 · Jabal Amman",
+  "hero.eyebrow": "Since 2019 · Old Town",
   "story.since": "2019",
   gallery: ["/samples/latte-art.svg", "/presets/counter.svg", "/samples/food/croissant.svg", "/templates/souq/art/store.svg", "/presets/beans.svg", "/samples/food/kunafa.svg"],
   "reviews.1.quote": "Best vanilla latte in town, and the pistachio croissant is dangerous. I come here to work every Sunday.",
@@ -366,7 +366,7 @@ export function sampleFor(templateId: string): SampleName {
 
 /** Sample content for the keys this template has. */
 const otherReviews: Settings = {
-  "hero.eyebrow": "Since 2019 · Amman",
+  "hero.eyebrow": "Since 2019 · Old Town",
   "reviews.1.quote": "Everything tastes fresh and the portions are generous. We order from here every week.",
   "reviews.2.quote": "Friendly people, quick service and the menu is easy to browse on the phone.",
   "reviews.3.quote": "Our favorite place in the neighborhood. Try the signature, you will not regret it.",
@@ -414,13 +414,13 @@ export function fixtureFor(templateId: string, overrides: Partial<PublicSite> = 
     business: {
       name: sample.name,
       slug: sampleName === "cafe" ? "vanillamenu" : slug,
-      whatsApp: "+962790000000",
+      whatsApp: "+15555550123",
       email: "hello@example.com",
       address: sample.address,
       instagram: sample.instagram,
       locale: "en",
-      currencyCode: "JOD",
-      timeZone: "Asia/Amman",
+      currencyCode: "USD",
+      timeZone: "UTC",
       customDomains: sampleName === "cafe" ? ["vanillamenu.example.com"] : [],
     },
     templateId,
