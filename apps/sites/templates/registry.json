@@ -7764,13 +7764,13 @@
       "number": 25,
       "name": "Ember",
       "category": "Grill and burgers",
-      "description": "A bold, fiery site for grills and burger joints: big type, photo cards and a slideshow hero.",
+      "description": "A loud street-food site for grills and burger joints: giant poster type, a specials ticker, combo cards with price stickers and a Hall of Flame.",
       "ar": {
         "name": "جمر",
         "category": "مشاوي وبرغر",
-        "description": "موقع جريء وناري للمشاوي ومحلات البرغر: خط كبير، وبطاقات صور، وواجهة بعرض متحرك."
+        "description": "موقع صاخب بروح أكل الشارع للمشاوي ومحلات البرغر: خط ملصقات ضخم، وشريط عروض متحرك، وبطاقات وجبات بملصقات أسعار، وقاعة اللهب."
       },
-      "version": 1,
+      "version": 2,
       "tier": "pro",
       "thumbnail": "/templates/ember/thumbnail.png",
       "sample": "ember",
@@ -7815,15 +7815,15 @@
           "groupAr": "الهوية",
           "options": [
             "charcoal",
-            "smoke",
-            "bone",
-            "rust"
+            "ketchup",
+            "mustard",
+            "diner"
           ],
           "swatches": {
-            "charcoal": "#0F0E0D",
-            "smoke": "#1D1B19",
-            "bone": "#F4EEE4",
-            "rust": "#2A120C"
+            "charcoal": "#121110",
+            "ketchup": "#9E150D",
+            "mustard": "#F5B800",
+            "diner": "#F6F4F1"
           }
         },
         {
@@ -7834,9 +7834,9 @@
           "group": "Brand",
           "groupAr": "الهوية",
           "options": [
-            "#FF6B1A",
-            "#F4B400",
-            "#E63946",
+            "#FF5A1F",
+            "#FFC21A",
+            "#E5281E",
             "#7BC950"
           ]
         },
@@ -7848,40 +7848,25 @@
           "group": "Brand",
           "groupAr": "الهوية",
           "options": [
-            "rounded",
-            "sharp"
+            "sharp",
+            "rounded"
           ],
           "optionLabels": {
-            "rounded": "Rounded",
-            "sharp": "Sharp"
+            "sharp": "Sharp",
+            "rounded": "Rounded"
           },
           "optionLabelsAr": {
-            "rounded": "مستدير",
-            "sharp": "حاد"
+            "sharp": "حاد",
+            "rounded": "مستدير"
           }
         },
         {
-          "key": "nav.style",
-          "type": "choice",
-          "label": "Menu bar",
-          "labelAr": "شريط القائمة",
-          "group": "Navigation",
-          "groupAr": "التنقل",
-          "options": [
-            "classic",
-            "centered",
-            "floating"
-          ],
-          "optionLabels": {
-            "classic": "Classic",
-            "centered": "Centered name",
-            "floating": "Floating bar"
-          },
-          "optionLabelsAr": {
-            "classic": "كلاسيكي",
-            "centered": "الاسم في الوسط",
-            "floating": "شريط عائم"
-          }
+          "key": "grain",
+          "type": "toggle",
+          "label": "Film grain texture",
+          "labelAr": "ملمس حبيبات الفيلم",
+          "group": "Brand",
+          "groupAr": "الهوية"
         },
         {
           "key": "cta.label",
@@ -7900,32 +7885,29 @@
           "group": "Hero header",
           "groupAr": "الواجهة الرئيسية",
           "options": [
-            "cover",
-            "split",
-            "slides",
-            "text"
+            "poster",
+            "full",
+            "type"
           ],
           "optionLabels": {
-            "cover": "Full image",
-            "split": "Split",
-            "slides": "Slideshow",
-            "text": "Text only"
+            "poster": "Photo stack",
+            "full": "Full image",
+            "type": "Text only"
           },
           "optionLabelsAr": {
-            "cover": "صورة كاملة",
-            "split": "مقسوم",
-            "slides": "عرض متحرك",
-            "text": "نص فقط"
+            "poster": "كومة صور",
+            "full": "صورة كاملة",
+            "type": "نص فقط"
           }
         },
         {
           "key": "hero.images",
           "type": "images",
-          "label": "Hero photos (slideshow uses all)",
-          "labelAr": "صور الواجهة (العرض المتحرك يستخدمها كلها)",
+          "label": "Hero photos (up to 3, stacked)",
+          "labelAr": "صور الواجهة (حتى 3، فوق بعضها)",
           "group": "Hero header",
           "groupAr": "الواجهة الرئيسية",
-          "max": 4,
+          "max": 3,
           "presets": [
             "noir",
             "loft",
@@ -7990,62 +7972,16 @@
           "group": "Layout",
           "groupAr": "التخطيط",
           "options": [
-            "classic",
-            "overlay",
-            "minimal"
+            "combo",
+            "board"
           ],
           "optionLabels": {
-            "classic": "Photo and text",
-            "overlay": "Text on photo",
-            "minimal": "Compact list"
+            "combo": "Combo cards",
+            "board": "Menu board"
           },
           "optionLabelsAr": {
-            "classic": "صورة ونص",
-            "overlay": "نص فوق الصورة",
-            "minimal": "قائمة مختصرة"
-          }
-        },
-        {
-          "key": "categories.style",
-          "type": "choice",
-          "label": "Category tiles",
-          "labelAr": "مربعات الأقسام",
-          "group": "Layout",
-          "groupAr": "التخطيط",
-          "options": [
-            "tiles",
-            "circles",
-            "banners"
-          ],
-          "optionLabels": {
-            "tiles": "Tiles",
-            "circles": "Circles",
-            "banners": "Wide banners"
-          },
-          "optionLabelsAr": {
-            "tiles": "مربعات",
-            "circles": "دوائر",
-            "banners": "لافتات عريضة"
-          }
-        },
-        {
-          "key": "density",
-          "type": "choice",
-          "label": "Grid",
-          "labelAr": "شبكة",
-          "group": "Layout",
-          "groupAr": "التخطيط",
-          "options": [
-            "comfy",
-            "dense"
-          ],
-          "optionLabels": {
-            "comfy": "Roomy",
-            "dense": "More per row"
-          },
-          "optionLabelsAr": {
-            "comfy": "واسع",
-            "dense": "عدد أكبر في كل صف"
+            "combo": "بطاقات الوجبات",
+            "board": "لوح المنيو"
           }
         },
         {
@@ -8072,16 +8008,16 @@
             "visit"
           ],
           "optionLabels": {
-            "announcement": "Announcement bar",
-            "best": "Best sellers",
+            "announcement": "Specials ticker",
+            "best": "Hall of Flame",
             "story": "About us",
             "gallery": "Gallery",
             "reviews": "Reviews",
             "visit": "Hours and contact"
           },
           "optionLabelsAr": {
-            "announcement": "شريط الإعلان",
-            "best": "الأكثر مبيعًا",
+            "announcement": "شريط العروض",
+            "best": "قاعة اللهب",
             "story": "من نحن",
             "gallery": "معرض الصور",
             "reviews": "آراء الزبائن",
@@ -8091,8 +8027,8 @@
         {
           "key": "announcement",
           "type": "text",
-          "label": "Announcement",
-          "labelAr": "الإعلان",
+          "label": "Ticker message",
+          "labelAr": "رسالة الشريط",
           "group": "Sections",
           "groupAr": "الأقسام",
           "max": 80
@@ -8109,11 +8045,11 @@
         {
           "key": "best.title",
           "type": "text",
-          "label": "Best sellers headline",
-          "labelAr": "عنوان الأكثر مبيعًا",
+          "label": "Line under Hall of Flame",
+          "labelAr": "السطر تحت قاعة اللهب",
           "group": "Headlines",
           "groupAr": "العناوين",
-          "max": 60
+          "max": 80
         },
         {
           "key": "gallery.title",
@@ -8260,22 +8196,20 @@
         "font": "condensed",
         "logo": "",
         "theme": "charcoal",
-        "accent": "#FF6B1A",
+        "accent": "#FF5A1F",
         "corners": "sharp",
-        "nav.style": "classic",
+        "grain": true,
         "cta.label": "",
-        "hero.layout": "slides",
+        "hero.layout": "poster",
         "hero.images": [
           "preset:embers",
           "preset:flames"
         ],
-        "hero.shade": 30,
-        "hero.eyebrow": "Charcoal grill · Since 2018",
+        "hero.shade": 40,
+        "hero.eyebrow": "Charcoal grill, since 2018",
         "hero.title": "Smash. Sear. Repeat.",
         "hero.subtitle": "Double smash burgers, charcoal steaks and fries you will think about tomorrow.",
-        "cards": "overlay",
-        "categories.style": "tiles",
-        "density": "comfy",
+        "cards": "combo",
         "motion": true,
         "sections": [
           "announcement",
@@ -8312,7 +8246,7 @@
         }
       },
       "defaultsAr": {
-        "hero.eyebrow": "مشاوي على الفحم · منذ 2018",
+        "hero.eyebrow": "مشاوي على الفحم، منذ 2018",
         "hero.title": "اضغط. اشوِ. كرّر.",
         "hero.subtitle": "برغر سماش دبل، وستيك على الفحم، وبطاطا ستبقى تفكر فيها حتى الغد.",
         "announcement": "ثلاثاء البرغر: البرغر الثاني بنصف السعر",
