@@ -3,13 +3,13 @@
   "number": 22,
   "name": "Maison",
   "category": "Fine dining",
-  "description": "A dark, gold-lined restaurant site with a menu bar, category pages, best sellers and a gallery.",
+  "description": "A cinematic fine-dining site: a full-screen opening shot, a full-screen menu, numbered chapters and a menu set like a printed carte.",
   "ar": {
     "name": "ميزون",
     "category": "مطعم راقٍ",
-    "description": "موقع مطعم داكن بلمسات ذهبية، مع شريط قائمة وصفحات للأقسام والأكثر مبيعًا ومعرض صور."
+    "description": "موقع مطعم راقٍ بطابع سينمائي: صورة افتتاحية بملء الشاشة، وقائمة تنقّل بملء الشاشة، وفصول مرقّمة، ومنيو مطبوع بأناقة."
   },
-  "version": 1,
+  "version": 2,
   "tier": "pro",
   "thumbnail": "/templates/maison/thumbnail.png",
   "sample": "maison",
@@ -44,14 +44,16 @@
       "options": [
         "noir",
         "bordeaux",
-        "ivory",
-        "olive"
+        "nuit",
+        "olive",
+        "ivory"
       ],
       "swatches": {
-        "noir": "#0E0D0B",
-        "bordeaux": "#1C0E12",
-        "ivory": "#F7F2E8",
-        "olive": "#151A13"
+        "noir": "#0D0C0B",
+        "bordeaux": "#170B0E",
+        "nuit": "#0B0F16",
+        "olive": "#11150F",
+        "ivory": "#F3EEE5"
       }
     },
     {
@@ -67,41 +69,12 @@
       ]
     },
     {
-      "key": "corners",
-      "type": "choice",
-      "label": "Corners",
-      "group": "Brand",
-      "options": [
-        "rounded",
-        "sharp"
-      ],
-      "optionLabels": {
-        "rounded": "Rounded",
-        "sharp": "Sharp"
-      }
-    },
-    {
-      "key": "nav.style",
-      "type": "choice",
-      "label": "Menu bar",
-      "group": "Navigation",
-      "options": [
-        "classic",
-        "centered",
-        "floating"
-      ],
-      "optionLabels": {
-        "classic": "Classic",
-        "centered": "Centered name",
-        "floating": "Floating bar"
-      }
-    },
-    {
       "key": "cta.label",
       "type": "text",
-      "label": "Order button text",
+      "label": "Reserve button text",
       "group": "Navigation",
-      "max": 30
+      "max": 30,
+      "labelAr": "نص زر الحجز"
     },
     {
       "key": "hero.layout",
@@ -110,15 +83,21 @@
       "group": "Hero header",
       "options": [
         "cover",
-        "split",
         "slides",
+        "split",
         "text"
       ],
       "optionLabels": {
-        "cover": "Full image",
-        "split": "Split",
+        "cover": "Full screen photo",
         "slides": "Slideshow",
-        "text": "Text only"
+        "split": "Framed photo",
+        "text": "Name only"
+      },
+      "optionLabelsAr": {
+        "cover": "صورة بملء الشاشة",
+        "slides": "عرض شرائح",
+        "split": "صورة داخل إطار",
+        "text": "الاسم فقط"
       }
     },
     {
@@ -164,61 +143,39 @@
     {
       "key": "hero.title",
       "type": "text",
-      "label": "Headline",
+      "label": "Line under the name",
       "group": "Hero header",
-      "max": 70
+      "max": 70,
+      "labelAr": "سطر تحت الاسم"
     },
     {
       "key": "hero.subtitle",
       "type": "textarea",
-      "label": "Subtext",
+      "label": "Opening paragraph",
       "group": "Hero header",
-      "max": 180
+      "max": 180,
+      "labelAr": "الفقرة الافتتاحية"
     },
     {
-      "key": "cards",
+      "key": "carte.style",
       "type": "choice",
-      "label": "Product cards",
+      "label": "Menu style",
+      "labelAr": "شكل القائمة",
       "group": "Layout",
       "options": [
-        "classic",
-        "overlay",
-        "minimal"
+        "leaders",
+        "pictures",
+        "centered"
       ],
       "optionLabels": {
-        "classic": "Photo and text",
-        "overlay": "Text on photo",
-        "minimal": "Compact list"
-      }
-    },
-    {
-      "key": "categories.style",
-      "type": "choice",
-      "label": "Category tiles",
-      "group": "Layout",
-      "options": [
-        "tiles",
-        "circles",
-        "banners"
-      ],
-      "optionLabels": {
-        "tiles": "Tiles",
-        "circles": "Circles",
-        "banners": "Wide banners"
-      }
-    },
-    {
-      "key": "density",
-      "type": "choice",
-      "label": "Grid",
-      "group": "Layout",
-      "options": [
-        "comfy",
-        "dense"
-      ],
-      "optionLabels": {
-        "comfy": "Roomy",
-        "dense": "More per row"
+        "leaders": "Dotted lines to prices",
+        "pictures": "With dish photos",
+        "centered": "Centred, like a printed menu"
+      },
+      "optionLabelsAr": {
+        "leaders": "نقاط حتى السعر",
+        "pictures": "مع صور الأطباق",
+        "centered": "في المنتصف كقائمة مطبوعة"
       }
     },
     {
@@ -259,9 +216,10 @@
     {
       "key": "categories.title",
       "type": "text",
-      "label": "Categories headline",
+      "label": "Menu headline",
       "group": "Headlines",
-      "max": 60
+      "max": 60,
+      "labelAr": "عنوان القائمة"
     },
     {
       "key": "best.title",
@@ -388,21 +346,17 @@
     "logo": "",
     "theme": "noir",
     "accent": "#C9A45C",
-    "corners": "rounded",
-    "nav.style": "centered",
-    "cta.label": "",
+    "cta.label": "Reserve a table",
     "hero.layout": "cover",
     "hero.images": [
       "preset:noir",
       "preset:marble"
     ],
-    "hero.shade": 35,
+    "hero.shade": 40,
     "hero.eyebrow": "Modern Levantine kitchen",
     "hero.title": "An evening worth dressing up for.",
     "hero.subtitle": "Seasonal tasting plates, a wood-fired grill and a quiet room above the city. Book a table or browse tonight's menu.",
-    "cards": "classic",
-    "categories.style": "banners",
-    "density": "comfy",
+    "carte.style": "leaders",
     "motion": true,
     "sections": [
       "announcement",
@@ -413,8 +367,8 @@
       "visit"
     ],
     "announcement": "Now taking bookings for the weekend",
-    "categories.title": "",
-    "best.title": "",
+    "categories.title": "Tonight's menu",
+    "best.title": "The signatures",
     "gallery.title": "",
     "story.title": "A kitchen built around fire, season and patience",
     "story.text": "Maison Noor opened as a twelve-seat counter. Today the menu still changes with the market: fish from the coast, lamb from local farms and herbs from our own rooftop.",
@@ -439,10 +393,13 @@
     }
   },
   "defaultsAr": {
+    "cta.label": "احجز طاولتك",
     "hero.eyebrow": "مطبخ شامي عصري",
     "hero.title": "أمسية تستحق أن تتأنق لها.",
     "hero.subtitle": "أطباق تذوّق موسمية، وشواية على الحطب، وقاعة هادئة تطل على المدينة. احجز طاولتك أو تصفّح منيو الليلة.",
     "announcement": "نستقبل الآن حجوزات نهاية الأسبوع",
+    "categories.title": "قائمة الليلة",
+    "best.title": "أطباقنا المميزة",
     "story.title": "مطبخ قائم على النار والموسم والصبر",
     "story.text": "بدأ ميزون نور كاونترًا باثني عشر مقعدًا. واليوم ما زال المنيو يتغيّر مع السوق: سمك من الساحل، ولحم من مزارع محلية، وأعشاب من سطحنا.",
     "footer.text": "العشاء من الظهر حتى وقت متأخر. غرفة خاصة تتسع لعشرين ضيفًا."
