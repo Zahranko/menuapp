@@ -6792,13 +6792,13 @@
       "number": 23,
       "name": "Lumen",
       "category": "Specialty café",
-      "description": "A bright, airy café site with a split hero, sub-category pages, a best-seller rail and a photo gallery.",
+      "description": "A loud, happy coffee-bar site: giant type, color-block tiles, rotated stickers, a scrolling word ticker and a bottom tab bar on phones.",
       "ar": {
         "name": "لومن",
         "category": "مقهى مختص",
-        "description": "موقع مقهى مشرق وفسيح بواجهة مقسومة، وصفحات للأقسام الفرعية، وشريط للأكثر مبيعًا، ومعرض صور."
+        "description": "موقع مقهى مرح وصاخب: خط ضخم، ومربعات ملوّنة، وملصقات مائلة، وشريط كلمات متحرك، وشريط تنقل سفلي على الهاتف."
       },
-      "version": 1,
+      "version": 2,
       "tier": "pro",
       "thumbnail": "/templates/lumen/thumbnail.png",
       "sample": "lumen",
@@ -6812,18 +6812,21 @@
           "groupAr": "الهوية",
           "options": [
             "modern",
-            "soft",
-            "grotesk"
+            "grotesk",
+            "bold",
+            "round"
           ],
           "optionLabels": {
-            "modern": "Modern",
-            "soft": "Soft serif",
-            "grotesk": "Grotesk"
+            "modern": "Playful grotesk",
+            "grotesk": "Swiss grotesk",
+            "bold": "Wide bold",
+            "round": "Friendly round"
           },
           "optionLabelsAr": {
-            "modern": "عصري",
-            "soft": "مذيّل ناعم",
-            "grotesk": "غروتيسك"
+            "modern": "غروتيسك مرح",
+            "grotesk": "غروتيسك سويسري",
+            "bold": "عريض وواسع",
+            "round": "دائري ودود"
           }
         },
         {
@@ -6842,16 +6845,28 @@
           "group": "Brand",
           "groupAr": "الهوية",
           "options": [
-            "daylight",
-            "oat",
-            "mist",
-            "espresso"
+            "cream",
+            "matcha",
+            "pop",
+            "roast"
           ],
+          "optionLabels": {
+            "cream": "Cream and espresso",
+            "matcha": "Matcha",
+            "pop": "Pop",
+            "roast": "Dark roast"
+          },
+          "optionLabelsAr": {
+            "cream": "كريمي وإسبريسو",
+            "matcha": "ماتشا",
+            "pop": "ألوان صاخبة",
+            "roast": "تحميص داكن"
+          },
           "swatches": {
-            "daylight": "#FBF8F3",
-            "oat": "#F3ECE1",
-            "mist": "#EEF2F1",
-            "espresso": "#1B1714"
+            "cream": "#FFF4DE",
+            "matcha": "#E7F1D5",
+            "pop": "#F3EFFF",
+            "roast": "#1D130E"
           }
         },
         {
@@ -6862,10 +6877,10 @@
           "group": "Brand",
           "groupAr": "الهوية",
           "options": [
-            "#2F6B57",
-            "#C8553D",
-            "#3B5BDB",
-            "#B7791F"
+            "#FF5A1F",
+            "#2F8F4E",
+            "#2C4BFF",
+            "#FF3D8B"
           ]
         },
         {
@@ -6889,29 +6904,6 @@
           }
         },
         {
-          "key": "nav.style",
-          "type": "choice",
-          "label": "Menu bar",
-          "labelAr": "شريط القائمة",
-          "group": "Navigation",
-          "groupAr": "التنقل",
-          "options": [
-            "classic",
-            "centered",
-            "floating"
-          ],
-          "optionLabels": {
-            "classic": "Classic",
-            "centered": "Centered name",
-            "floating": "Floating bar"
-          },
-          "optionLabelsAr": {
-            "classic": "كلاسيكي",
-            "centered": "الاسم في الوسط",
-            "floating": "شريط عائم"
-          }
-        },
-        {
           "key": "cta.label",
           "type": "text",
           "label": "Order button text",
@@ -6928,43 +6920,36 @@
           "group": "Hero header",
           "groupAr": "الواجهة الرئيسية",
           "options": [
-            "cover",
-            "split",
-            "slides",
-            "text"
+            "bento",
+            "poster"
           ],
           "optionLabels": {
-            "cover": "Full image",
-            "split": "Split",
-            "slides": "Slideshow",
-            "text": "Text only"
+            "bento": "Photo and tiles",
+            "poster": "Big type poster"
           },
           "optionLabelsAr": {
-            "cover": "صورة كاملة",
-            "split": "مقسوم",
-            "slides": "عرض متحرك",
-            "text": "نص فقط"
+            "bento": "صورة ومربعات",
+            "poster": "ملصق بخط كبير"
           }
         },
         {
-          "key": "hero.images",
-          "type": "images",
-          "label": "Hero photos (slideshow uses all)",
-          "labelAr": "صور الواجهة (العرض المتحرك يستخدمها كلها)",
+          "key": "hero.image",
+          "type": "image",
+          "label": "Hero photo",
+          "labelAr": "صورة الواجهة",
           "group": "Hero header",
           "groupAr": "الواجهة الرئيسية",
-          "max": 4,
           "presets": [
-            "noir",
+            "pour",
+            "beans",
+            "counter",
             "loft",
             "shelf",
+            "noir",
             "embers",
             "blossom",
             "marble",
-            "counter",
             "arches",
-            "pour",
-            "beans",
             "flames",
             "leaves",
             "sprinkles",
@@ -6973,24 +6958,13 @@
           ]
         },
         {
-          "key": "hero.shade",
-          "type": "range",
-          "label": "Image darkness",
-          "labelAr": "تعتيم الصورة",
-          "group": "Hero header",
-          "groupAr": "الواجهة الرئيسية",
-          "min": 0,
-          "max": 90,
-          "step": 5
-        },
-        {
-          "key": "hero.eyebrow",
+          "key": "hero.sticker",
           "type": "text",
-          "label": "Small line above the headline",
-          "labelAr": "سطر صغير فوق العنوان",
+          "label": "Sticker",
+          "labelAr": "الملصق",
           "group": "Hero header",
           "groupAr": "الواجهة الرئيسية",
-          "max": 40
+          "max": 28
         },
         {
           "key": "hero.title",
@@ -6999,7 +6973,7 @@
           "labelAr": "العنوان",
           "group": "Hero header",
           "groupAr": "الواجهة الرئيسية",
-          "max": 70
+          "max": 60
         },
         {
           "key": "hero.subtitle",
@@ -7008,7 +6982,16 @@
           "labelAr": "النص الفرعي",
           "group": "Hero header",
           "groupAr": "الواجهة الرئيسية",
-          "max": 180
+          "max": 140
+        },
+        {
+          "key": "ticker",
+          "type": "text",
+          "label": "Scrolling words (separate with commas)",
+          "labelAr": "كلمات الشريط المتحرك (افصل بينها بفواصل)",
+          "group": "Hero header",
+          "groupAr": "الواجهة الرئيسية",
+          "max": 120
         },
         {
           "key": "cards",
@@ -7018,62 +7001,16 @@
           "group": "Layout",
           "groupAr": "التخطيط",
           "options": [
-            "classic",
-            "overlay",
-            "minimal"
+            "stickers",
+            "list"
           ],
           "optionLabels": {
-            "classic": "Photo and text",
-            "overlay": "Text on photo",
-            "minimal": "Compact list"
+            "stickers": "Photo cards",
+            "list": "Compact list"
           },
           "optionLabelsAr": {
-            "classic": "صورة ونص",
-            "overlay": "نص فوق الصورة",
-            "minimal": "قائمة مختصرة"
-          }
-        },
-        {
-          "key": "categories.style",
-          "type": "choice",
-          "label": "Category tiles",
-          "labelAr": "مربعات الأقسام",
-          "group": "Layout",
-          "groupAr": "التخطيط",
-          "options": [
-            "tiles",
-            "circles",
-            "banners"
-          ],
-          "optionLabels": {
-            "tiles": "Tiles",
-            "circles": "Circles",
-            "banners": "Wide banners"
-          },
-          "optionLabelsAr": {
-            "tiles": "مربعات",
-            "circles": "دوائر",
-            "banners": "لافتات عريضة"
-          }
-        },
-        {
-          "key": "density",
-          "type": "choice",
-          "label": "Grid",
-          "labelAr": "شبكة",
-          "group": "Layout",
-          "groupAr": "التخطيط",
-          "options": [
-            "comfy",
-            "dense"
-          ],
-          "optionLabels": {
-            "comfy": "Roomy",
-            "dense": "More per row"
-          },
-          "optionLabelsAr": {
-            "comfy": "واسع",
-            "dense": "عدد أكبر في كل صف"
+            "stickers": "بطاقات بالصور",
+            "list": "قائمة مختصرة"
           }
         },
         {
@@ -7092,7 +7029,7 @@
           "group": "Sections",
           "groupAr": "الأقسام",
           "options": [
-            "announcement",
+            "ticker",
             "best",
             "story",
             "gallery",
@@ -7100,7 +7037,7 @@
             "visit"
           ],
           "optionLabels": {
-            "announcement": "Announcement bar",
+            "ticker": "Scrolling words",
             "best": "Best sellers",
             "story": "About us",
             "gallery": "Gallery",
@@ -7108,22 +7045,13 @@
             "visit": "Hours and contact"
           },
           "optionLabelsAr": {
-            "announcement": "شريط الإعلان",
+            "ticker": "الشريط المتحرك",
             "best": "الأكثر مبيعًا",
             "story": "من نحن",
             "gallery": "معرض الصور",
             "reviews": "آراء الزبائن",
             "visit": "أوقات العمل والتواصل"
           }
-        },
-        {
-          "key": "announcement",
-          "type": "text",
-          "label": "Announcement",
-          "labelAr": "الإعلان",
-          "group": "Sections",
-          "groupAr": "الأقسام",
-          "max": 80
         },
         {
           "key": "categories.title",
@@ -7178,16 +7106,16 @@
           "group": "About us",
           "groupAr": "من نحن",
           "presets": [
-            "noir",
+            "pour",
+            "beans",
+            "counter",
             "loft",
             "shelf",
+            "noir",
             "embers",
             "blossom",
             "marble",
-            "counter",
             "arches",
-            "pour",
-            "beans",
             "flames",
             "leaves",
             "sprinkles",
@@ -7287,39 +7215,32 @@
       "defaults": {
         "font": "modern",
         "logo": "",
-        "theme": "daylight",
-        "accent": "#2F6B57",
+        "theme": "cream",
+        "accent": "#FF5A1F",
         "corners": "rounded",
-        "nav.style": "floating",
         "cta.label": "",
-        "hero.layout": "split",
-        "hero.images": [
-          "preset:loft",
-          "preset:pour"
-        ],
-        "hero.shade": 45,
-        "hero.eyebrow": "Specialty coffee · Old Town",
-        "hero.title": "Slow mornings, good coffee.",
-        "hero.subtitle": "Seasonal single origins, butter croissants laminated for three days and big windows full of light.",
-        "cards": "classic",
-        "categories.style": "tiles",
-        "density": "comfy",
+        "hero.layout": "bento",
+        "hero.image": "preset:pour",
+        "hero.sticker": "Roasted this week",
+        "hero.title": "Loud coffee for sunny mornings.",
+        "hero.subtitle": "Seasonal single origins, oat milk on tap and croissants baked before sunrise.",
+        "ticker": "Fresh roast, Oat milk, Butter croissants, Single origins, Iced everything",
+        "cards": "stickers",
         "motion": true,
         "sections": [
-          "announcement",
+          "ticker",
           "best",
           "story",
           "gallery",
           "reviews",
           "visit"
         ],
-        "announcement": "New single origin this week: Ethiopia Guji",
         "categories.title": "",
         "best.title": "",
         "gallery.title": "",
-        "story.title": "A sunny corner for the neighborhood",
-        "story.text": "We roast twice a week, bake before sunrise and keep the music low. Come for a flat white, stay for the light.",
-        "story.image": "preset:pour",
+        "story.title": "Tiny bar, big espresso machine.",
+        "story.text": "We roast twice a week, bake before sunrise and play the good records. Come for a flat white, stay for the light.",
+        "story.image": "preset:beans",
         "gallery": [],
         "gallery.products": true,
         "reviews.1.quote": "",
@@ -7340,12 +7261,12 @@
         }
       },
       "defaultsAr": {
-        "hero.eyebrow": "قهوة مختصة · البلدة القديمة",
-        "hero.title": "صباحات هادئة، وقهوة طيبة.",
-        "hero.subtitle": "قهوة موسمية من محصول واحد، وكرواسون بالزبدة نرقّق عجينته ثلاثة أيام، ونوافذ كبيرة مليئة بالضوء.",
-        "announcement": "محصول جديد هذا الأسبوع: إثيوبيا غوجي",
-        "story.title": "ركن مشمس لأهل الحي",
-        "story.text": "نحمّص مرتين في الأسبوع، ونخبز قبل الشروق، ونُبقي الموسيقى هادئة. تعال من أجل فلات وايت، وابقَ من أجل الضوء.",
+        "hero.sticker": "محمّصة هذا الأسبوع",
+        "hero.title": "قهوة بصوت عالٍ لصباحات مشمسة.",
+        "hero.subtitle": "محاصيل موسمية مختصة، وحليب الشوفان دائمًا، وكرواسون نخبزه قبل شروق الشمس.",
+        "ticker": "تحميص طازج، حليب الشوفان، كرواسون بالزبدة، محاصيل مختصة، كل شيء مثلّج",
+        "story.title": "بار صغير، وآلة إسبريسو كبيرة.",
+        "story.text": "نحمّص مرتين في الأسبوع، ونخبز قبل الشروق، ونشغّل أجمل الأسطوانات. تعال من أجل فلات وايت، وابقَ من أجل الضوء.",
         "footer.text": "محمّصة على دفعات صغيرة. مخبوزة كل صباح."
       }
     },
