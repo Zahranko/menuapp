@@ -3,13 +3,13 @@
   "number": 26,
   "name": "Bloom",
   "category": "Bakery and sweets",
-  "description": "A soft, pastel site for bakeries and dessert shops: round category bubbles, best sellers and a sweet gallery.",
+  "description": "A dreamy pastel patisserie site: cakes on lace doilies, floating category bubbles, a carousel of today's bakes and a scrapbook gallery.",
   "ar": {
     "name": "بلوم",
     "category": "مخابز وحلويات",
-    "description": "موقع ناعم بألوان الباستيل للمخابز ومحلات الحلويات: فقاعات دائرية للأقسام، والأكثر مبيعًا، ومعرض حلو."
+    "description": "موقع حالم بألوان الباستيل للمخابز والحلويات: كيك على مفارش دانتيل، وأقسام كفقاعات طائرة، وشريط لمخبوزات اليوم، ومعرض صور كدفتر ذكريات."
   },
-  "version": 1,
+  "version": 2,
   "tier": "pro",
   "thumbnail": "/templates/bloom/thumbnail.png",
   "sample": "bloom",
@@ -19,15 +19,16 @@
       "type": "choice",
       "label": "Font style",
       "group": "Brand",
-      "options": [
-        "round",
-        "soft",
-        "hand"
-      ],
+      "options": ["soft", "round", "classic"],
       "optionLabels": {
-        "round": "Friendly",
         "soft": "Soft serif",
-        "hand": "Handwritten"
+        "round": "Friendly",
+        "classic": "Classic serif"
+      },
+      "optionLabelsAr": {
+        "soft": "مذيّل ناعم",
+        "round": "ودود",
+        "classic": "مذيّل كلاسيكي"
       }
     },
     {
@@ -41,17 +42,24 @@
       "type": "palette",
       "label": "Color theme",
       "group": "Brand",
-      "options": [
-        "blush",
-        "butter",
-        "lilac",
-        "cocoa"
-      ],
+      "options": ["strawberry", "pistachio", "lavender", "vanilla"],
+      "optionLabels": {
+        "strawberry": "Strawberry milk",
+        "pistachio": "Pistachio",
+        "lavender": "Lavender",
+        "vanilla": "Vanilla"
+      },
+      "optionLabelsAr": {
+        "strawberry": "حليب الفراولة",
+        "pistachio": "فستق",
+        "lavender": "لافندر",
+        "vanilla": "فانيلا"
+      },
       "swatches": {
-        "blush": "#FFF5F6",
-        "butter": "#FFF8E7",
-        "lilac": "#F6F2FD",
-        "cocoa": "#2B1D1A"
+        "strawberry": "#FFD1DC",
+        "pistachio": "#D3EBC4",
+        "lavender": "#E1D3FA",
+        "vanilla": "#FFEFC2"
       }
     },
     {
@@ -59,42 +67,14 @@
       "type": "color",
       "label": "Accent color",
       "group": "Brand",
-      "options": [
-        "#E05A84",
-        "#F08A4B",
-        "#7C5CD6",
-        "#3FA88B"
-      ]
+      "options": ["#D6467A", "#4E9A5B", "#8159D1", "#E07A3F"]
     },
     {
-      "key": "corners",
-      "type": "choice",
-      "label": "Corners",
-      "group": "Brand",
-      "options": [
-        "rounded",
-        "sharp"
-      ],
-      "optionLabels": {
-        "rounded": "Rounded",
-        "sharp": "Sharp"
-      }
-    },
-    {
-      "key": "nav.style",
-      "type": "choice",
-      "label": "Menu bar",
-      "group": "Navigation",
-      "options": [
-        "classic",
-        "centered",
-        "floating"
-      ],
-      "optionLabels": {
-        "classic": "Classic",
-        "centered": "Centered name",
-        "floating": "Floating bar"
-      }
+      "key": "doodles",
+      "type": "toggle",
+      "label": "Sprinkles and doodles",
+      "labelAr": "رشّات ورسومات صغيرة",
+      "group": "Brand"
     },
     {
       "key": "cta.label",
@@ -108,51 +88,26 @@
       "type": "choice",
       "label": "Layout",
       "group": "Hero header",
-      "options": [
-        "cover",
-        "split",
-        "slides",
-        "text"
-      ],
+      "options": ["blob", "bubbles", "text"],
       "optionLabels": {
-        "cover": "Full image",
-        "split": "Split",
-        "slides": "Slideshow",
+        "blob": "Photo in a soft shape",
+        "bubbles": "Round photo bubbles",
         "text": "Text only"
+      },
+      "optionLabelsAr": {
+        "blob": "صورة بشكل ناعم",
+        "bubbles": "فقاعات صور دائرية",
+        "text": "نص فقط"
       }
     },
     {
       "key": "hero.images",
       "type": "images",
-      "label": "Hero photos (slideshow uses all)",
+      "label": "Hero photos (bubbles use up to three)",
+      "labelAr": "صور الواجهة (الفقاعات تستخدم حتى ثلاث)",
       "group": "Hero header",
-      "max": 4,
-      "presets": [
-        "noir",
-        "loft",
-        "shelf",
-        "embers",
-        "blossom",
-        "marble",
-        "counter",
-        "arches",
-        "pour",
-        "beans",
-        "flames",
-        "leaves",
-        "sprinkles",
-        "tiles",
-        "dunes"
-      ]
-    },
-    {
-      "key": "hero.shade",
-      "type": "range",
-      "label": "Image darkness",
-      "group": "Hero header",
-      "min": 0,
-      "max": 90,
-      "step": 5
+      "max": 3,
+      "presets": ["blossom", "sprinkles", "marble", "counter", "shelf", "pour", "tiles", "leaves", "arches", "loft"]
     },
     {
       "key": "hero.eyebrow",
@@ -176,55 +131,16 @@
       "max": 180
     },
     {
-      "key": "cards",
-      "type": "choice",
-      "label": "Product cards",
-      "group": "Layout",
-      "options": [
-        "classic",
-        "overlay",
-        "minimal"
-      ],
-      "optionLabels": {
-        "classic": "Photo and text",
-        "overlay": "Text on photo",
-        "minimal": "Compact list"
-      }
-    },
-    {
-      "key": "categories.style",
-      "type": "choice",
-      "label": "Category tiles",
-      "group": "Layout",
-      "options": [
-        "tiles",
-        "circles",
-        "banners"
-      ],
-      "optionLabels": {
-        "tiles": "Tiles",
-        "circles": "Circles",
-        "banners": "Wide banners"
-      }
-    },
-    {
-      "key": "density",
-      "type": "choice",
-      "label": "Grid",
-      "group": "Layout",
-      "options": [
-        "comfy",
-        "dense"
-      ],
-      "optionLabels": {
-        "comfy": "Roomy",
-        "dense": "More per row"
-      }
-    },
-    {
       "key": "motion",
       "type": "toggle",
       "label": "Animations",
+      "group": "Layout"
+    },
+    {
+      "key": "carousel.autoplay",
+      "type": "toggle",
+      "label": "Slide today's bakes by themselves",
+      "labelAr": "تحريك مخبوزات اليوم تلقائيًا",
       "group": "Layout"
     },
     {
@@ -232,21 +148,22 @@
       "type": "toggles",
       "label": "Home page sections",
       "group": "Sections",
-      "options": [
-        "announcement",
-        "best",
-        "story",
-        "gallery",
-        "reviews",
-        "visit"
-      ],
+      "options": ["announcement", "best", "story", "gallery", "reviews", "visit"],
       "optionLabels": {
         "announcement": "Announcement bar",
-        "best": "Best sellers",
+        "best": "Today's bakes",
         "story": "About us",
         "gallery": "Gallery",
         "reviews": "Reviews",
         "visit": "Hours and contact"
+      },
+      "optionLabelsAr": {
+        "announcement": "شريط الإعلان",
+        "best": "مخبوزات اليوم",
+        "story": "من نحن",
+        "gallery": "معرض الصور",
+        "reviews": "آراء الزبائن",
+        "visit": "أوقات العمل والتواصل"
       }
     },
     {
@@ -266,7 +183,8 @@
     {
       "key": "best.title",
       "type": "text",
-      "label": "Best sellers headline",
+      "label": "Today's bakes headline",
+      "labelAr": "عنوان مخبوزات اليوم",
       "group": "Headlines",
       "max": 60
     },
@@ -296,23 +214,7 @@
       "type": "image",
       "label": "About photo",
       "group": "About us",
-      "presets": [
-        "noir",
-        "loft",
-        "shelf",
-        "embers",
-        "blossom",
-        "marble",
-        "counter",
-        "arches",
-        "pour",
-        "beans",
-        "flames",
-        "leaves",
-        "sprinkles",
-        "tiles",
-        "dunes"
-      ]
+      "presets": ["blossom", "sprinkles", "marble", "counter", "shelf", "pour", "tiles", "leaves", "arches", "loft"]
     },
     {
       "key": "gallery",
@@ -384,38 +286,24 @@
     }
   ],
   "defaults": {
-    "font": "round",
+    "font": "soft",
     "logo": "",
-    "theme": "blush",
-    "accent": "#E05A84",
-    "corners": "rounded",
-    "nav.style": "floating",
+    "theme": "strawberry",
+    "accent": "#D6467A",
+    "doodles": true,
     "cta.label": "",
-    "hero.layout": "split",
-    "hero.images": [
-      "preset:blossom",
-      "preset:sprinkles"
-    ],
-    "hero.shade": 45,
+    "hero.layout": "blob",
+    "hero.images": ["preset:blossom", "preset:sprinkles"],
     "hero.eyebrow": "Baked fresh every morning",
     "hero.title": "Little cakes, big happiness.",
     "hero.subtitle": "Celebration cakes, cinnamon rolls and cupcakes, made by hand with real butter and lots of love.",
-    "cards": "classic",
-    "categories.style": "circles",
-    "density": "comfy",
     "motion": true,
-    "sections": [
-      "announcement",
-      "best",
-      "story",
-      "gallery",
-      "reviews",
-      "visit"
-    ],
+    "carousel.autoplay": true,
+    "sections": ["announcement", "best", "story", "gallery", "reviews", "visit"],
     "announcement": "Order birthday cakes two days ahead on WhatsApp",
-    "categories.title": "",
-    "best.title": "",
-    "gallery.title": "",
+    "categories.title": "What are you craving?",
+    "best.title": "Today's bakes",
+    "gallery.title": "Our little scrapbook",
     "story.title": "From our oven to your table",
     "story.text": "Bloom began in a home kitchen with one oven and a lot of sprinkles. We still bake everything ourselves, in small batches, every single morning.",
     "story.image": "preset:sprinkles",
@@ -443,6 +331,9 @@
     "hero.title": "كيكات صغيرة، وسعادة كبيرة.",
     "hero.subtitle": "كيك للمناسبات، ولفائف القرفة، وكب كيك، نصنعها بأيدينا بزبدة حقيقية وكثير من الحب.",
     "announcement": "اطلب كيك أعياد الميلاد قبل يومين على واتساب",
+    "categories.title": "ماذا تشتهي اليوم؟",
+    "best.title": "مخبوزات اليوم",
+    "gallery.title": "دفتر ذكرياتنا الصغير",
     "story.title": "من فرننا إلى طاولتك",
     "story.text": "بدأت بلوم في مطبخ بيتي بفرن واحد وكثير من الرشّات الملوّنة. وما زلنا نخبز كل شيء بأنفسنا، على دفعات صغيرة، كل صباح.",
     "footer.text": "كيك حسب الطلب لأعياد الميلاد والأعراس وكل فرحة صغيرة."
