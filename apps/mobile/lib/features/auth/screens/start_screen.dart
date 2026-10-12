@@ -8,7 +8,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/brand.dart';
 import '../../../core/theme.dart';
 import '../../../core/widgets/language_picker.dart';
-import '../../../core/widgets/ui.dart';
+import '../../../core/widgets/logo_mark.dart';
 import '../../../l10n/generated/app_localizations.dart';
 
 /// Onboarding, the first screen for signed-out owners: three slides showing real screenshots of the app and
@@ -59,10 +59,12 @@ class _StartScreenState extends State<StartScreen> {
                 child: Row(
                   children: [
                     // Shrinks rather than overflows on narrow phones, next to the language button and Skip.
-                    const Flexible(
-                      child: FittedBox(fit: BoxFit.scaleDown, alignment: AlignmentDirectional.centerStart, child: Wordmark(size: 22)),
+                    const Expanded(
+                      child: Align(
+                        alignment: AlignmentDirectional.centerStart,
+                        child: FittedBox(fit: BoxFit.scaleDown, alignment: AlignmentDirectional.centerStart, child: BrandLockup(size: 22)),
+                      ),
                     ),
-                    const Spacer(),
                     // Choose the language before signing up; sign-up sends it as the site's language.
                     const LanguageToggle(),
                     AnimatedOpacity(

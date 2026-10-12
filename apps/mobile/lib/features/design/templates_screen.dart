@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/api/api_error.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/form_widgets.dart';
+import '../../core/widgets/logo_mark.dart';
 import '../../core/widgets/ui.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../menu/dashboard_screen.dart';
@@ -97,7 +98,7 @@ class _TemplatesScreenState extends ConsumerState<TemplatesScreen> {
     final current = ref.watch(siteProvider).value?.templateId;
     final locked = ref.watch(planProvider).value?.subscription.isPro == false;
     return Scaffold(
-      appBar: AuthHeader(onBack: () => context.canPop() ? context.pop() : context.go('/menu'), wordmark: const Wordmark(size: 20)),
+      appBar: AuthHeader(onBack: () => context.canPop() ? context.pop() : context.go('/menu'), wordmark: const BrandLockup(size: 20)),
       body: templates.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => LoadError(error: e, onRetry: () => ref.invalidate(templatesProvider)),

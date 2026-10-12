@@ -42,6 +42,7 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 
 (Things a session found that belong to another session. Format: `- [S07] what and why (found in S03)`.)
 
+- [S06] The back office (Areas/Admin) has no views yet. Its layout header should show the logo mark (`brand/favicon.svg` geometry: rounded square, "k", accent dot) drawn inline with colors from `BrandOptions`, next to the brand name; the app (`LogoMark`) and sites (`components/brand/logo-mark.tsx`) already do. Emails are plain inline HTML with no logo, so nothing to change there yet (found on the test branch).
 - [S15] The owners' websites (`apps/sites`) go on Vercel (owner's choice): setup in `docs/deploy-vercel.md`. Until `SITES_URL` is set, "View site" and the editor preview show "This page isn't online yet" (found on the test branch).
 - [S05] Still to do: payment webhook, DNS checker job for `AwaitingDns` requests, `/internal/caddy/ask`, and the real payment provider adapter once D5/D8 are decided. Staff move domain requests forward in the back office (S06) (found on the test branch).
 - [S13] Template schema labels and option labels are English only; the editor shows them as they are. Add Arabic labels to the manifests (for example `labelAr`) (found on the test branch).

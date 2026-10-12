@@ -1,4 +1,3 @@
-import { brand } from "@/lib/brand";
 import { initial } from "@/lib/format";
 import { madeWith } from "@/lib/i18n";
 import type { SiteContext } from "./context";
@@ -6,6 +5,7 @@ import { Mail, Pin, WhatsApp } from "./icons";
 import { ItemSheet, type SheetItem } from "./ItemSheet";
 import { Picture } from "./Picture";
 import { tintFor, type MenuItem } from "./site-data";
+import { MadeWithLink } from "@/components/brand/logo-mark";
 
 /*
  * Small building blocks with plain class names. Each template styles them in its own styles.css
@@ -107,7 +107,7 @@ export function Credits({ ctx, className = "credits" }: { ctx: SiteContext; clas
       <span>
         © {ctx.now.getFullYear()} {ctx.site.business.name}. {ctx.t.rights}
       </span>
-      <a href={`https://${brand.domain}`}>{madeWith(ctx.locale)}</a>
+      <MadeWithLink label={madeWith(ctx.locale)} />
     </div>
   );
 }

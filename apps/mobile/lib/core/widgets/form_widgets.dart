@@ -222,9 +222,13 @@ class AuthHeader extends StatelessWidget implements PreferredSizeWidget {
         padding: const EdgeInsetsDirectional.fromSTEB(16, 10, 24, 6),
         child: Row(children: [
           RoundIconButton(icon: Icons.arrow_back_rounded, tooltip: MaterialLocalizations.of(context).backButtonTooltip, onPressed: onBack),
-          const Spacer(),
-          if (action != null) ...[action!, const SizedBox(width: 6)],
-          wordmark,
+          Expanded(
+            child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+              if (action != null) ...[action!, const SizedBox(width: 6)],
+              // Shrinks rather than overflows on narrow phones or with long language labels.
+              Flexible(child: FittedBox(fit: BoxFit.scaleDown, alignment: AlignmentDirectional.centerEnd, child: wordmark)),
+            ]),
+          ),
         ]),
       ),
     );

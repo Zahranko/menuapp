@@ -6,14 +6,16 @@ import 'package:flutter/services.dart';
 
 import '../../core/brand.dart';
 import '../../core/theme.dart';
+import '../../core/widgets/logo_mark.dart';
 import '../../l10n/generated/app_localizations.dart';
 
 /// The launch splash. One timeline drives every layer:
 ///
 /// 1. A soft aurora of brand colors breathes in over the brand background (the native launch color).
 /// 2. The brand's accent dot falls in, bounces with a squash, and sends out a ripple.
-/// 3. The dot blooms on a spring into a paper card: a little storefront with a striped awning that
-///    unfurls and menu rows that write themselves, then a light sweep glints across it.
+/// 3. The dot springs open into the logo mark's rounded square (a soft paper edge and halo keep it
+///    readable on the same green), the k draws itself stroke by stroke, and a fresh accent dot drops
+///    into its top-right spot as the final beat, followed by a soft light sweep.
 /// 4. The name rises in letter by letter out of a soft blur (Arabic and other joined scripts are
 ///    wiped in as one word so their letters stay connected), and the accent dot pops in last.
 /// 5. The tagline and the domain settle in underneath.
@@ -31,8 +33,6 @@ class SplashView extends StatelessWidget {
     final t = AppLocalizations.of(context);
     final arabic = Localizations.localeOf(context).languageCode == 'ar' && Brand.brandNameAr.isNotEmpty;
     final name = arabic ? Brand.brandNameAr : Brand.brandName;
-    final rtl = Directionality.of(context) == TextDirection.rtl;
-
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Material(
@@ -49,7 +49,7 @@ class SplashView extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     RepaintBoundary(
-                      child: SizedBox.square(dimension: 168, child: CustomPaint(painter: _Mark(progress, rtl: rtl))),
+                      child: SizedBox.square(dimension: 168, child: CustomPaint(painter: _Mark(progress))),
                     ),
                     const SizedBox(height: 18),
                     RepaintBoundary(child: _Name(progress: progress, name: name)),
@@ -282,16 +282,15 @@ class _Aurora extends CustomPainter {
   bool shouldRepaint(_Aurora old) => old.progress != progress;
 }
 
-/// The logo mark: the falling dot that blooms into a little storefront menu card.
+/// The logo mark: the falling dot springs open into the brand's rounded square, the k draws itself
+/// stroke by stroke, and a fresh dot drops into its top-right spot as the final beat. Brand marks never
+/// mirror, so this reads the same in right-to-left.
 class _Mark extends CustomPainter {
-  _Mark(this.progress, {required this.rtl}) : super(repaint: progress);
+  _Mark(this.progress) : super(repaint: progress);
 
   final Animation<double> progress;
-  final bool rtl;
 
-  static const _cardW = 100.0;
-  static const _cardH = 116.0;
-  static const _cardR = 26.0;
+  static const _side = 112.0; // the mark's size at rest, inside the 168 canvas
   static const _dot = 11.0;
 
   @override
@@ -300,50 +299,37 @@ class _Mark extends CustomPainter {
     final c = size.center(Offset.zero);
     final accent = BrandColors.accent;
     final paper = BrandColors.paper;
+    final primary = BrandColors.primary;
 
     // --- 1. The drop: falls, stretches, squashes on impact, a small second bounce.
     const drop = _Span(40, 620);
     final u = drop.of(p);
-    double height; // 1 = start (high), 0 = on the ground
-    var squash = 0.0;
-    if (u < 0.56) {
-      final f = u / 0.56;
-      height = 1 - f * f;
-      squash = -0.28 * f * f; // stretched while falling fast
-    } else if (u < 0.86) {
-      final b = (u - 0.56) / 0.30;
-      height = 0.16 * 4 * b * (1 - b);
-    } else {
-      final b = (u - 0.86) / 0.14;
-      height = 0.035 * 4 * b * (1 - b);
-    }
-    double pulse(double at, double width) => math.max(0, 1 - (u - at).abs() / width);
-    squash += 0.42 * pulse(0.58, 0.09) + 0.16 * pulse(0.87, 0.06);
+    final (height, squash) = _bounce(u, firstHit: 0.56);
 
-    // --- 2. The bloom: a little anticipation, then a jelly spring into the card.
+    // --- 2. The bloom: a little anticipation, then a jelly spring open into the rounded square.
     final antic = math.sin(math.pi * const _Span(600, 110).of(p));
     final bw = const _Span(650, 700).of(p, const _Spring(0.38));
     final bh = const _Span(690, 700).of(p, const _Spring(0.38));
-    final tone = const _Span(660, 380).of(p, Curves.easeOutCubic);
+    final tone = const _Span(660, 340).of(p, Curves.easeOutCubic);
     final float = -4 * const _Span(1500, 900).of(p, _easeInOut);
 
-    // Ripples: one when the dot lands, one as the card opens.
+    // Ripples: one when the dot lands, one as the square opens.
     final impact = const _Span(380, 820).of(p);
     _ripple(canvas, c, 14 + 92 * Curves.easeOutCubic.transform(impact), impact, accent, 0.55);
     final open = const _Span(720, 900).of(p);
-    _ripple(canvas, c, 50 + 100 * Curves.easeOutCubic.transform(open), open, Colors.white, 0.18);
+    _ripple(canvas, c, 58 + 96 * Curves.easeOutCubic.transform(open), open, Colors.white, 0.18);
 
     // A warm glow behind the mark.
     final glow = const _Span(420, 900).of(p, Curves.easeOut);
     if (glow > 0) {
       canvas.drawCircle(
         c,
-        110,
+        118,
         Paint()
           ..shader = RadialGradient(
-            colors: [accent.withValues(alpha: 0.22 * glow), accent.withValues(alpha: 0.06 * glow), accent.withValues(alpha: 0)],
+            colors: [accent.withValues(alpha: 0.20 * glow), accent.withValues(alpha: 0.05 * glow), accent.withValues(alpha: 0)],
             stops: const [0, 0.5, 1],
-          ).createShader(Rect.fromCircle(center: c, radius: 110)),
+          ).createShader(Rect.fromCircle(center: c, radius: 118)),
       );
     }
 
@@ -351,141 +337,154 @@ class _Mark extends CustomPainter {
       // Still the dot.
       if (u <= 0) return;
       final center = c + Offset(0, -150 * height + float);
-      final r = _dot * (1 - 0.14 * antic);
-      final rect = Rect.fromCenter(center: center + Offset(0, r * squash * 0.5), width: 2 * r * (1 + squash), height: 2 * r * (1 - squash));
-      canvas.drawOval(rect.inflate(6), Paint()..color = accent.withValues(alpha: 0.25 * math.min(1, u * 4)) ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8));
-      canvas.drawOval(rect, Paint()..color = accent.withValues(alpha: math.min(1, u * 5)));
+      _drawDot(canvas, center, _dot * (1 - 0.14 * antic), squash, math.min(1, u * 5), accent);
       return;
     }
 
-    final w = ui.lerpDouble(_dot * 2, _cardW, bw)!;
-    final h = ui.lerpDouble(_dot * 2, _cardH, bh)!;
-    final r = math.min(ui.lerpDouble(_dot, _cardR, bw.clamp(0.0, 1.0))!, math.min(w, h) / 2);
-    final card = Rect.fromCenter(center: c + Offset(0, float), width: math.max(0, w), height: math.max(0, h));
-    final rrect = RRect.fromRectAndRadius(card, Radius.circular(r));
-
-    // Soft shadow under the card.
+    final w = ui.lerpDouble(_dot * 2, _side, bw)!;
+    final h = ui.lerpDouble(_dot * 2, _side, bh)!;
+    final rest = _side * LogoMarkShape.radius / LogoMarkShape.box;
+    final r = math.min(ui.lerpDouble(_dot, rest, bw.clamp(0.0, 1.0))!, math.min(w, h) / 2);
+    final box = Rect.fromCenter(center: c + Offset(0, float), width: math.max(0, w), height: math.max(0, h));
+    final rrect = RRect.fromRectAndRadius(box, Radius.circular(r));
     final lift = bw.clamp(0.0, 1.0);
+
+    // A soft halo in paper so the dark square lifts off the dark background, and a shadow under it.
+    canvas.drawRRect(
+      rrect.inflate(4),
+      Paint()
+        ..color = paper.withValues(alpha: 0.10 * lift)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 16),
+    );
     canvas.drawRRect(
       rrect.shift(Offset(0, 16 * lift)).deflate(6),
       Paint()
-        ..color = Colors.black.withValues(alpha: 0.42 * lift)
+        ..color = Colors.black.withValues(alpha: 0.45 * lift)
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 18),
     );
-    canvas.drawRRect(rrect, Paint()..color = Color.lerp(accent, paper, tone)!);
+
+    // The square: the accent dot's color gives way to the brand color as it opens.
+    canvas.drawRRect(rrect, Paint()..color = Color.lerp(accent, primary, tone)!);
     if (tone > 0) {
-      // A soft top light and a crisp inner edge make the card feel like a real object.
+      // A gentle top light and a fine paper edge, so the square reads as an object on the same green.
       canvas.drawRRect(
         rrect,
         Paint()
           ..shader = LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Colors.white.withValues(alpha: 0.35 * tone), Colors.white.withValues(alpha: 0), BrandColors.ink.withValues(alpha: 0.05 * tone)],
-            stops: const [0, 0.55, 1],
-          ).createShader(card),
+            colors: [Colors.white.withValues(alpha: 0.09 * tone), Colors.white.withValues(alpha: 0), Colors.black.withValues(alpha: 0.10 * tone)],
+            stops: const [0, 0.5, 1],
+          ).createShader(box),
       );
-    }
-
-    canvas.save();
-    canvas.clipRRect(rrect);
-    canvas.translate(card.left, card.top);
-    if (rtl) {
-      canvas.translate(card.width, 0);
-      canvas.scale(-1, 1);
-    }
-    _storefront(canvas, card.size, p);
-    canvas.restore();
-    if (tone > 0) {
       canvas.drawRRect(
-        rrect.deflate(0.5),
+        rrect.deflate(0.6),
         Paint()
           ..style = PaintingStyle.stroke
-          ..strokeWidth = 1
-          ..color = Colors.white.withValues(alpha: 0.45 * tone),
+          ..strokeWidth = 1.2
+          ..shader = LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [paper.withValues(alpha: 0.42 * tone), paper.withValues(alpha: 0.14 * tone)],
+          ).createShader(box),
       );
     }
 
-    // --- 3. A light sweep across the card.
-    final sweep = const _Span(1420, 620).of(p, _easeInOut);
+    // --- 3. The k draws itself in the square's own coordinates (it springs with the square).
+    canvas.save();
+    canvas.translate(box.left, box.top);
+    canvas.scale(box.width / LogoMarkShape.box, box.height / LogoMarkShape.box);
+    final ink = LogoMarkShape.letterPaint(paper);
+    _stroke(canvas, [LogoMarkShape.stemTop, LogoMarkShape.stemBottom], const _Span(880, 380).of(p, _easeInOut), ink);
+    _stroke(canvas, [LogoMarkShape.armTop, LogoMarkShape.armJoin, LogoMarkShape.legBottom], const _Span(1120, 520).of(p, _easeInOut), ink);
+    canvas.restore();
+
+    // --- 4. The final beat: a fresh accent dot drops into the top-right spot, squashes and settles.
+    final at = Offset(box.left + box.width * LogoMarkShape.dotCenter.dx / LogoMarkShape.box, box.top + box.height * LogoMarkShape.dotCenter.dy / LogoMarkShape.box);
+    final dotR = _side * LogoMarkShape.dotRadius / LogoMarkShape.box;
+    final land = const _Span(1500, 560).of(p);
+    if (land > 0) {
+      final (lh, ls) = _bounce(land, firstHit: 0.5);
+      final pop = const _Span(1500, 160).of(p, Curves.easeOut);
+      _drawDot(canvas, at + Offset(0, -64 * lh), dotR * (0.6 + 0.4 * pop), ls, pop, accent);
+    }
+    final hit = const _Span(1780, 560).of(p);
+    _ripple(canvas, at, dotR + 26 * Curves.easeOutCubic.transform(hit), hit, accent, 0.6);
+
+    // --- 5. A soft light sweep across the finished mark.
+    final sweep = const _Span(1860, 480).of(p, _easeInOut);
     if (sweep > 0 && sweep < 1) {
       canvas.save();
       canvas.clipRRect(rrect);
-      final x = card.left - 70 + (card.width + 140) * sweep;
-      final band = Rect.fromLTWH(x - 40, card.top - 20, 80, card.height + 40);
+      final x = box.left - 70 + (box.width + 140) * sweep;
+      final band = Rect.fromLTWH(x - 36, box.top - 20, 72, box.height + 40);
       canvas.translate(band.center.dx, band.center.dy);
       canvas.rotate(0.35);
       canvas.translate(-band.center.dx, -band.center.dy);
       canvas.drawRect(
         band,
         Paint()
+          ..blendMode = BlendMode.plus
           ..shader = LinearGradient(colors: [
             Colors.white.withValues(alpha: 0),
-            Colors.white.withValues(alpha: 0.65),
+            Colors.white.withValues(alpha: 0.16),
             Colors.white.withValues(alpha: 0),
           ]).createShader(band),
       );
       canvas.restore();
     }
 
-    // --- 4. Two small sparkles as it settles.
-    final sx = rtl ? -1.0 : 1.0;
-    _sparkle(canvas, card.center + Offset(sx * (card.width / 2 + 4), -card.height / 2 - 2), 10, const _Span(1620, 520).of(p, const _Spring(0.5)), Colors.white);
-    _sparkle(canvas, card.center + Offset(-sx * (card.width / 2 + 12), card.height / 2 - 18), 6, const _Span(1760, 520).of(p, const _Spring(0.5)), accent);
+    // --- 6. Two small sparkles as it settles.
+    _sparkle(canvas, box.center + Offset(box.width / 2 + 8, -box.height / 2 + 2), 9, const _Span(1820, 440).of(p, const _Spring(0.5)), Colors.white);
+    _sparkle(canvas, box.center + Offset(-box.width / 2 - 12, box.height / 2 - 16), 6, const _Span(1940, 440).of(p, const _Spring(0.5)), accent);
   }
 
-  /// The awning and menu rows inside the card, drawn in card coordinates (mirrored for right-to-left).
-  void _storefront(Canvas canvas, Size card, double p) {
-    final w = card.width;
-    final scale = w / _cardW;
-    canvas.scale(scale, card.height / _cardH);
-
-    // Awning: stripes unfurl down from the top, with a scalloped edge.
-    final unfurl = const _Span(880, 620).of(p, const _Spring(0.3));
-    if (unfurl > 0) {
-      const stripes = 5;
-      const sw = _cardW / stripes;
-      final depth = 30 * unfurl;
-      for (var i = 0; i < stripes; i++) {
-        final color = i.isEven ? BrandColors.highlight : BrandColors.accent;
-        final paint = Paint()..color = color;
-        final x = i * sw;
-        canvas.drawRect(Rect.fromLTWH(x, 0, sw + 0.5, depth), paint);
-        canvas.drawArc(Rect.fromLTWH(x, depth - sw / 2, sw, sw), 0, math.pi, true, paint);
-      }
-      // A soft shade under the scallops.
-      canvas.drawRect(
-        Rect.fromLTWH(0, depth + sw / 2 - 1, _cardW, 6),
-        Paint()
-          ..shader = LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [BrandColors.ink.withValues(alpha: 0.10 * unfurl), BrandColors.ink.withValues(alpha: 0)],
-          ).createShader(Rect.fromLTWH(0, depth + sw / 2 - 1, _cardW, 6)),
-      );
+  /// A drop with a bounce, over [u] from 0 to 1: the height (1 high, 0 resting) and a squash amount
+  /// (negative stretches while falling fast, positive flattens on impact).
+  static (double, double) _bounce(double u, {required double firstHit}) {
+    final second = firstHit + (1 - firstHit) * 0.68;
+    double height;
+    var squash = 0.0;
+    if (u < firstHit) {
+      final f = u / firstHit;
+      height = 1 - f * f;
+      squash = -0.28 * f * f;
+    } else if (u < second) {
+      final b = (u - firstHit) / (second - firstHit);
+      height = 0.16 * 4 * b * (1 - b);
+    } else {
+      final b = (u - second) / (1 - second);
+      height = 0.035 * 4 * b * (1 - b);
     }
+    double pulse(double at, double width) => math.max(0, 1 - (u - at).abs() / width);
+    squash += 0.42 * pulse(firstHit + 0.02, 0.09) + 0.16 * pulse(second + 0.01, 0.06);
+    return (height, squash);
+  }
 
-    // Menu rows write themselves one after another: a bullet, a name, a price.
-    final ink = BrandColors.ink;
-    const rows = [(y: 62.0, len: 36.0), (y: 78.0, len: 28.0), (y: 94.0, len: 40.0)];
-    for (var i = 0; i < rows.length; i++) {
-      final row = rows[i];
-      final v = _Span(1080 + i * 95, 460).of(p, _easeOut);
-      if (v <= 0) continue;
-      final bullet = _Span(1080 + i * 95, 360).of(p, const _Spring(0.5));
-      canvas.drawCircle(Offset(16, row.y), 3.2 * bullet.clamp(0.0, 1.4), Paint()..color = BrandColors.primary);
-      canvas.drawRRect(
-        RRect.fromRectAndRadius(Rect.fromLTWH(25, row.y - 2.5, row.len * v, 5), const Radius.circular(3)),
-        Paint()..color = ink.withValues(alpha: 0.20),
-      );
-      final price = _Span(1200 + i * 95, 380).of(p, _easeOut);
-      if (price > 0) {
-        canvas.drawRRect(
-          RRect.fromRectAndRadius(Rect.fromLTWH(_cardW - 14 - 12 * price, row.y - 2.5, 12 * price, 5), const Radius.circular(3)),
-          Paint()..color = BrandColors.primary2.withValues(alpha: 0.75 * price),
-        );
-      }
+  static void _drawDot(Canvas canvas, Offset center, double r, double squash, double alpha, Color color) {
+    final rect = Rect.fromCenter(center: center + Offset(0, r * squash * 0.5), width: 2 * r * (1 + squash), height: 2 * r * (1 - squash));
+    canvas.drawOval(
+      rect.inflate(r * 0.55),
+      Paint()
+        ..color = color.withValues(alpha: 0.25 * alpha)
+        ..maskFilter = MaskFilter.blur(BlurStyle.normal, r * 0.7),
+    );
+    canvas.drawOval(rect, Paint()..color = color.withValues(alpha: alpha));
+  }
+
+  /// Draws the first [t] of the polyline through [points], like a pen moving along it.
+  static void _stroke(Canvas canvas, List<Offset> points, double t, Paint paint) {
+    if (t <= 0) return;
+    final path = Path()..moveTo(points.first.dx, points.first.dy);
+    for (final point in points.skip(1)) {
+      path.lineTo(point.dx, point.dy);
     }
+    if (t >= 1) {
+      canvas.drawPath(path, paint);
+      return;
+    }
+    final metric = path.computeMetrics().first;
+    canvas.drawPath(metric.extractPath(0, math.max(0.01, metric.length * t)), paint);
   }
 
   void _ripple(Canvas canvas, Offset c, double radius, double t, Color color, double alpha) {
@@ -519,5 +518,5 @@ class _Mark extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_Mark old) => old.progress != progress || old.rtl != rtl;
+  bool shouldRepaint(_Mark old) => old.progress != progress;
 }

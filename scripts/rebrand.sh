@@ -1,7 +1,7 @@
 #!/bin/bash
 # Writes brand values from brand.json and brand/ into the places that can't read config at runtime:
 # Android applicationId and label, iOS bundle ID and display name, the Codemagic signing bundle ID,
-# launcher icons, launch screen colors, and the sites favicon.
+# launcher icons (legacy and adaptive), launch screen colors, and the sites favicon.
 # Safe to run any number of times. Needs python3; icons also need Pillow (pip install pillow).
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -72,6 +72,35 @@ for density, size in android.items():
     out = mobile / f"android/app/src/main/res/mipmap-{density}/ic_launcher.png"
     if out.parent.exists():
         src.resize((size, size), Image.LANCZOS).save(out)
+
+# Android 8+ adaptive icon: brand/app-icon-foreground.png (the mark on transparent, inside the 66/108 safe
+# circle) over the brand color. Android 13 themed icons reuse the foreground as the monochrome layer.
+fg_path = root / "brand/app-icon-foreground.png"
+res = mobile / "android/app/src/main/res"
+if fg_path.exists() and res.exists():
+    fg = Image.open(fg_path).convert("RGBA")
+    for density, size in android.items():
+        px = size * 108 // 48
+        fg.resize((px, px), Image.LANCZOS).save(res / f"mipmap-{density}/ic_launcher_foreground.png")
+    colors = res / "values/colors.xml"
+    text = colors.read_text()
+    entry = f'<color name="ic_launcher_background">#{primary}</color>'
+    if 'name="ic_launcher_background"' in text:
+        text = re.sub(r'<color name="ic_launcher_background">[^<]*</color>', entry, text)
+    else:
+        text = text.replace("</resources>", f"    {entry}\n</resources>")
+    colors.write_text(text)
+    anydpi = res / "mipmap-anydpi-v26"
+    anydpi.mkdir(exist_ok=True)
+    (anydpi / "ic_launcher.xml").write_text(
+        '<?xml version="1.0" encoding="utf-8"?>\n'
+        '<!-- Written by scripts/rebrand.sh from brand/app-icon-foreground.png and brand.json (colorPrimary). -->\n'
+        '<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">\n'
+        '    <background android:drawable="@color/ic_launcher_background" />\n'
+        '    <foreground android:drawable="@mipmap/ic_launcher_foreground" />\n'
+        '    <monochrome android:drawable="@mipmap/ic_launcher_foreground" />\n'
+        '</adaptive-icon>\n')
+    print("rebrand: updated Android adaptive icon")
 
 iconset = mobile / "ios/Runner/Assets.xcassets/AppIcon.appiconset"
 contents = iconset / "Contents.json"

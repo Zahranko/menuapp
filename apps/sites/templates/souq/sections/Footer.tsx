@@ -1,8 +1,8 @@
-import { brand } from "@/lib/brand";
 import { madeWith } from "@/lib/i18n";
 import { Instagram, Mail, WhatsApp } from "../../_kit/icons";
 import type { SouqContext } from "../context";
 import { Logo, navLinks } from "./Header";
+import { MadeWithLink } from "@/components/brand/logo-mark";
 
 export function Footer({ ctx }: { ctx: SouqContext }) {
   const { business } = ctx.site;
@@ -71,7 +71,7 @@ export function Footer({ ctx }: { ctx: SouqContext }) {
           <span>
             © {year} {business.name}. {c.rights}
           </span>
-          <a href={`https://${brand.domain}`}>{madeWith(business.locale)}</a>
+          <MadeWithLink label={madeWith(business.locale)} />
         </div>
       </div>
     </footer>
