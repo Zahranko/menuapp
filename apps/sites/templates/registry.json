@@ -7275,13 +7275,13 @@
       "number": 24,
       "name": "Atlas",
       "category": "Boutique shop",
-      "description": "A clean catalog for shops: a mega menu of departments and collections, product grids, best sellers and a lookbook.",
+      "description": "A modern online-store look: a department menu, a search bar, a shoppable hero, product quick view, ranked best sellers and a lookbook.",
       "ar": {
         "name": "أطلس",
         "category": "متجر بوتيك",
-        "description": "كتالوج أنيق للمتاجر: قائمة كبيرة للأقسام والمجموعات، وشبكات منتجات، والأكثر مبيعًا، وكتالوج صور."
+        "description": "مظهر متجر إلكتروني عصري: قائمة أقسام، وشريط بحث، وواجهة تعرض منتجًا، ونظرة سريعة على المنتجات، والأكثر مبيعًا بالترتيب، ومعرض صور."
       },
-      "version": 1,
+      "version": 2,
       "tier": "pro",
       "thumbnail": "/templates/atlas/thumbnail.png",
       "sample": "atlas",
@@ -7325,16 +7325,28 @@
           "group": "Brand",
           "groupAr": "الهوية",
           "options": [
-            "paper",
+            "white",
             "stone",
             "sand",
-            "ink"
+            "black"
           ],
+          "optionLabels": {
+            "white": "White",
+            "stone": "Stone",
+            "sand": "Sand",
+            "black": "Black"
+          },
+          "optionLabelsAr": {
+            "white": "أبيض",
+            "stone": "حجري",
+            "sand": "رملي",
+            "black": "أسود"
+          },
           "swatches": {
-            "paper": "#FFFFFF",
-            "stone": "#F1EFEA",
-            "sand": "#EFE7DA",
-            "ink": "#111214"
+            "white": "#FFFFFF",
+            "stone": "#ECEBE7",
+            "sand": "#E6DCCB",
+            "black": "#0D0D0D"
           }
         },
         {
@@ -7345,10 +7357,10 @@
           "group": "Brand",
           "groupAr": "الهوية",
           "options": [
-            "#111214",
-            "#B5523B",
-            "#2F4B5C",
-            "#5E7F55"
+            "#2447D9",
+            "#C2410C",
+            "#1F7A4D",
+            "#121212"
           ]
         },
         {
@@ -7372,29 +7384,6 @@
           }
         },
         {
-          "key": "nav.style",
-          "type": "choice",
-          "label": "Menu bar",
-          "labelAr": "شريط القائمة",
-          "group": "Navigation",
-          "groupAr": "التنقل",
-          "options": [
-            "classic",
-            "centered",
-            "floating"
-          ],
-          "optionLabels": {
-            "classic": "Classic",
-            "centered": "Centered name",
-            "floating": "Floating bar"
-          },
-          "optionLabelsAr": {
-            "classic": "كلاسيكي",
-            "centered": "الاسم في الوسط",
-            "floating": "شريط عائم"
-          }
-        },
-        {
           "key": "cta.label",
           "type": "text",
           "label": "Order button text",
@@ -7404,6 +7393,15 @@
           "max": 30
         },
         {
+          "key": "announcement",
+          "type": "text",
+          "label": "Announcement",
+          "labelAr": "الإعلان",
+          "group": "Navigation",
+          "groupAr": "التنقل",
+          "max": 80
+        },
+        {
           "key": "hero.layout",
           "type": "choice",
           "label": "Layout",
@@ -7411,60 +7409,40 @@
           "group": "Hero header",
           "groupAr": "الواجهة الرئيسية",
           "options": [
-            "cover",
             "split",
-            "slides",
+            "flip",
             "text"
           ],
           "optionLabels": {
-            "cover": "Full image",
-            "split": "Split",
-            "slides": "Slideshow",
+            "split": "Photo at the end",
+            "flip": "Photo at the start",
             "text": "Text only"
           },
           "optionLabelsAr": {
-            "cover": "صورة كاملة",
-            "split": "مقسوم",
-            "slides": "عرض متحرك",
+            "split": "الصورة في جهة النهاية",
+            "flip": "الصورة في جهة البداية",
             "text": "نص فقط"
           }
         },
         {
-          "key": "hero.images",
-          "type": "images",
-          "label": "Hero photos (slideshow uses all)",
-          "labelAr": "صور الواجهة (العرض المتحرك يستخدمها كلها)",
+          "key": "hero.image",
+          "type": "image",
+          "label": "Hero image",
+          "labelAr": "صورة الواجهة",
           "group": "Hero header",
           "groupAr": "الواجهة الرئيسية",
-          "max": 4,
           "presets": [
-            "noir",
-            "loft",
             "shelf",
-            "embers",
-            "blossom",
-            "marble",
-            "counter",
-            "arches",
-            "pour",
-            "beans",
-            "flames",
-            "leaves",
-            "sprinkles",
             "tiles",
-            "dunes"
+            "leaves",
+            "marble",
+            "loft",
+            "noir",
+            "arches",
+            "dunes",
+            "counter",
+            "blossom"
           ]
-        },
-        {
-          "key": "hero.shade",
-          "type": "range",
-          "label": "Image darkness",
-          "labelAr": "تعتيم الصورة",
-          "group": "Hero header",
-          "groupAr": "الواجهة الرئيسية",
-          "min": 0,
-          "max": 90,
-          "step": 5
         },
         {
           "key": "hero.eyebrow",
@@ -7491,59 +7469,13 @@
           "labelAr": "النص الفرعي",
           "group": "Hero header",
           "groupAr": "الواجهة الرئيسية",
-          "max": 180
-        },
-        {
-          "key": "cards",
-          "type": "choice",
-          "label": "Product cards",
-          "labelAr": "بطاقات المنتجات",
-          "group": "Layout",
-          "groupAr": "التخطيط",
-          "options": [
-            "classic",
-            "overlay",
-            "minimal"
-          ],
-          "optionLabels": {
-            "classic": "Photo and text",
-            "overlay": "Text on photo",
-            "minimal": "Compact list"
-          },
-          "optionLabelsAr": {
-            "classic": "صورة ونص",
-            "overlay": "نص فوق الصورة",
-            "minimal": "قائمة مختصرة"
-          }
-        },
-        {
-          "key": "categories.style",
-          "type": "choice",
-          "label": "Category tiles",
-          "labelAr": "مربعات الأقسام",
-          "group": "Layout",
-          "groupAr": "التخطيط",
-          "options": [
-            "tiles",
-            "circles",
-            "banners"
-          ],
-          "optionLabels": {
-            "tiles": "Tiles",
-            "circles": "Circles",
-            "banners": "Wide banners"
-          },
-          "optionLabelsAr": {
-            "tiles": "مربعات",
-            "circles": "دوائر",
-            "banners": "لافتات عريضة"
-          }
+          "max": 140
         },
         {
           "key": "density",
           "type": "choice",
-          "label": "Grid",
-          "labelAr": "شبكة",
+          "label": "Product grid",
+          "labelAr": "شبكة المنتجات",
           "group": "Layout",
           "groupAr": "التخطيط",
           "options": [
@@ -7576,6 +7508,7 @@
           "groupAr": "الأقسام",
           "options": [
             "announcement",
+            "arrivals",
             "best",
             "story",
             "gallery",
@@ -7584,14 +7517,16 @@
           ],
           "optionLabels": {
             "announcement": "Announcement bar",
+            "arrivals": "Product picks",
             "best": "Best sellers",
             "story": "About us",
-            "gallery": "Gallery",
+            "gallery": "Lookbook",
             "reviews": "Reviews",
             "visit": "Hours and contact"
           },
           "optionLabelsAr": {
             "announcement": "شريط الإعلان",
+            "arrivals": "منتجات مختارة",
             "best": "الأكثر مبيعًا",
             "story": "من نحن",
             "gallery": "معرض الصور",
@@ -7600,22 +7535,22 @@
           }
         },
         {
-          "key": "announcement",
-          "type": "text",
-          "label": "Announcement",
-          "labelAr": "الإعلان",
-          "group": "Sections",
-          "groupAr": "الأقسام",
-          "max": 80
-        },
-        {
           "key": "categories.title",
           "type": "text",
-          "label": "Categories headline",
+          "label": "Departments headline",
           "labelAr": "عنوان الأقسام",
           "group": "Headlines",
           "groupAr": "العناوين",
-          "max": 60
+          "max": 50
+        },
+        {
+          "key": "arrivals.title",
+          "type": "text",
+          "label": "Product picks headline",
+          "labelAr": "عنوان المنتجات المختارة",
+          "group": "Headlines",
+          "groupAr": "العناوين",
+          "max": 50
         },
         {
           "key": "best.title",
@@ -7624,16 +7559,16 @@
           "labelAr": "عنوان الأكثر مبيعًا",
           "group": "Headlines",
           "groupAr": "العناوين",
-          "max": 60
+          "max": 50
         },
         {
           "key": "gallery.title",
           "type": "text",
-          "label": "Gallery headline",
+          "label": "Lookbook headline",
           "labelAr": "عنوان معرض الصور",
           "group": "Headlines",
           "groupAr": "العناوين",
-          "max": 60
+          "max": 50
         },
         {
           "key": "story.title",
@@ -7651,7 +7586,7 @@
           "labelAr": "من نحن",
           "group": "About us",
           "groupAr": "من نحن",
-          "max": 600
+          "max": 400
         },
         {
           "key": "story.image",
@@ -7661,21 +7596,16 @@
           "group": "About us",
           "groupAr": "من نحن",
           "presets": [
-            "noir",
-            "loft",
             "shelf",
-            "embers",
-            "blossom",
-            "marble",
-            "counter",
-            "arches",
-            "pour",
-            "beans",
-            "flames",
-            "leaves",
-            "sprinkles",
             "tiles",
-            "dunes"
+            "leaves",
+            "marble",
+            "loft",
+            "noir",
+            "arches",
+            "dunes",
+            "counter",
+            "blossom"
           ]
         },
         {
@@ -7683,7 +7613,7 @@
           "type": "images",
           "label": "Gallery photos",
           "labelAr": "صور المعرض",
-          "group": "Gallery",
+          "group": "Lookbook",
           "groupAr": "معرض الصور",
           "max": 12
         },
@@ -7692,7 +7622,7 @@
           "type": "toggle",
           "label": "Add product photos to the gallery",
           "labelAr": "أضف صور المنتجات إلى المعرض",
-          "group": "Gallery",
+          "group": "Lookbook",
           "groupAr": "معرض الصور"
         },
         {
@@ -7702,7 +7632,7 @@
           "labelAr": "التقييم 1",
           "group": "Reviews",
           "groupAr": "آراء الزبائن",
-          "max": 220
+          "max": 200
         },
         {
           "key": "reviews.1.name",
@@ -7720,7 +7650,7 @@
           "labelAr": "التقييم 2",
           "group": "Reviews",
           "groupAr": "آراء الزبائن",
-          "max": 220
+          "max": 200
         },
         {
           "key": "reviews.2.name",
@@ -7738,7 +7668,7 @@
           "labelAr": "التقييم 3",
           "group": "Reviews",
           "groupAr": "آراء الزبائن",
-          "max": 220
+          "max": 200
         },
         {
           "key": "reviews.3.name",
@@ -7770,40 +7700,34 @@
       "defaults": {
         "font": "grotesk",
         "logo": "",
-        "theme": "paper",
-        "accent": "#111214",
-        "corners": "sharp",
-        "nav.style": "classic",
+        "theme": "white",
+        "accent": "#2447D9",
+        "corners": "rounded",
         "cta.label": "",
-        "hero.layout": "slides",
-        "hero.images": [
-          "preset:shelf",
-          "preset:tiles",
-          "preset:leaves"
-        ],
-        "hero.shade": 45,
-        "hero.eyebrow": "Objects for everyday life",
-        "hero.title": "Made by hand. Chosen with care.",
+        "announcement": "Free delivery on larger orders. Exchanges within 14 days.",
+        "hero.layout": "split",
+        "hero.image": "preset:shelf",
+        "hero.eyebrow": "New season",
+        "hero.title": "Everyday objects, made by hand.",
         "hero.subtitle": "Ceramics, candles, soaps and plants from small independent makers.",
-        "cards": "classic",
-        "categories.style": "tiles",
-        "density": "dense",
+        "density": "comfy",
         "motion": true,
         "sections": [
           "announcement",
+          "arrivals",
           "best",
           "story",
           "gallery",
           "reviews",
           "visit"
         ],
-        "announcement": "Free delivery on larger orders",
         "categories.title": "Shop by department",
+        "arrivals.title": "Picked for you",
         "best.title": "",
         "gallery.title": "",
         "story.title": "A small shop for useful, beautiful things",
         "story.text": "Atlas works directly with potters, soap makers and weavers. Every piece is made in small batches, and we visit every workshop we sell from.",
-        "story.image": "preset:shelf",
+        "story.image": "preset:tiles",
         "gallery": [],
         "gallery.products": true,
         "reviews.1.quote": "",
@@ -7812,7 +7736,7 @@
         "reviews.2.name": "",
         "reviews.3.quote": "",
         "reviews.3.name": "",
-        "footer.text": "Gift wrapping on every order. Exchanges within 14 days.",
+        "footer.text": "Gift wrapping on every order. Questions? Message us on WhatsApp.",
         "hours": {
           "sat": "10:00-21:00",
           "sun": "10:00-21:00",
@@ -7824,14 +7748,15 @@
         }
       },
       "defaultsAr": {
-        "hero.eyebrow": "أغراض للحياة اليومية",
-        "hero.title": "مصنوعة باليد. مختارة بعناية.",
+        "announcement": "توصيل مجاني للطلبات الكبيرة. الاستبدال خلال 14 يومًا.",
+        "hero.eyebrow": "موسم جديد",
+        "hero.title": "أغراض يومية مصنوعة باليد.",
         "hero.subtitle": "خزف وشموع وصابون ونباتات من حرفيين صغار مستقلين.",
-        "announcement": "توصيل مجاني للطلبات الكبيرة",
         "categories.title": "تسوّق حسب القسم",
+        "arrivals.title": "اخترناها لك",
         "story.title": "متجر صغير للأشياء المفيدة والجميلة",
         "story.text": "يعمل أطلس مباشرة مع صانعي الفخار والصابون والنسّاجين. كل قطعة تُصنع بكميات صغيرة، ونزور كل ورشة نبيع منتجاتها.",
-        "footer.text": "تغليف هدايا لكل طلب. الاستبدال خلال 14 يومًا."
+        "footer.text": "تغليف هدايا لكل طلب. لديك سؤال؟ راسلنا على واتساب."
       }
     },
     {
