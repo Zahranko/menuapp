@@ -1,5 +1,5 @@
 import type { TemplateProps } from "@/lib/types";
-import { ContactList, Credits, HoursList, Logo, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Arrow, Clock, WhatsApp } from "../_kit/icons";
@@ -35,13 +35,13 @@ export default function PulseTemplate({ site, now }: TemplateProps & { now?: Dat
   const popular = plans?.products.find((p) => p.isFeatured && p.isAvailable)?.id;
 
   return (
-    <div data-template="pulse" className={cx("t-pulse", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["condensed", "bold", "grotesk"], defaultAccent: "#FF4D1C", radius: { rounded: "16px", sharp: "0px" } })}>
+    <div data-template="pulse" {...logoRoot(ctx)} className={cx("t-pulse", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["condensed", "bold", "grotesk"], defaultAccent: "#FF4D1C", radius: { rounded: "16px", sharp: "0px" } })}>
       <TemplateStyles id="pulse" />
       <TopBars ctx={ctx} />
-      <header className="head" data-section="header">
-        <a className="brand" href="#top">
+      <header className="head kit-head" data-section="header">
+        <a className="brand kit-lockup" href="#top">
           <Logo ctx={ctx} />
-          <span>{site.business.name}</span>
+          <BrandName ctx={ctx} />
         </a>
         <nav aria-label={c.menu}>
           <a href="#menu">{c.plans}</a>

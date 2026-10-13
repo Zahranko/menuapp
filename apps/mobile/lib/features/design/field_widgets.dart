@@ -38,6 +38,7 @@ class SettingField extends StatelessWidget {
     };
     if (field.type == 'toggle' || field.type == 'bool') {
       return SwitchListTile(
+        key: Key('setting-${field.key}'),
         contentPadding: EdgeInsets.zero,
         title: Text(field.labelFor(context), style: TextStyle(fontWeight: FontWeight.w600, color: BrandColors.ink)),
         value: value == true,
@@ -169,14 +170,16 @@ class _RangeSetting extends StatelessWidget {
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Row(children: [
         Expanded(child: Text(field.labelFor(context), style: TextStyle(fontWeight: FontWeight.w600, color: BrandColors.ink))),
-        Text(value.toStringAsFixed(value == value.roundToDouble() ? 0 : 1), style: TextStyle(color: BrandColors.muted)),
+        Text('${value.toStringAsFixed(value == value.roundToDouble() ? 0 : 1)}${field.unit ?? ''}', style: TextStyle(color: BrandColors.muted)),
       ]),
       Slider(
+        key: Key('setting-${field.key}'),
         value: value.clamp(min, max),
         min: min,
         max: max,
         divisions: divisions > 0 ? divisions : null,
         activeColor: BrandColors.primary,
+        label: '${value.round()}${field.unit ?? ''}',
         onChanged: (v) => onChanged(v == v.roundToDouble() ? v.toInt() : v),
       ),
     ]);

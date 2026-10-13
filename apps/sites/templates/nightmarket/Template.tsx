@@ -1,5 +1,5 @@
 import { CategoryTabs } from "../_kit/CategoryTabs";
-import { ContactList, Credits, HoursList, Logo, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Arrow, Clock, WhatsApp } from "../_kit/icons";
@@ -32,16 +32,16 @@ export default function NightMarketTemplate({ site, now }: TemplateProps & { now
 
   return (
     <div
-      data-template="nightmarket"
+      data-template="nightmarket" {...logoRoot(ctx)}
       className={cx("t-night", fontVariables, ctx.contact.whatsapp && "has-order")}
       style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["condensed", "bold", "grotesk"], defaultAccent: "#FFD23F", radius: { rounded: "20px", sharp: "0px" } })}
     >
       <TemplateStyles id="nightmarket" />
       <TopBars ctx={ctx} />
-      <header className="bar" data-section="header">
-        <a href="#top" className="brand">
+      <header className="bar kit-head" data-section="header">
+        <a href="#top" className="brand kit-lockup">
           <Logo ctx={ctx} />
-          <span>{site.business.name}</span>
+          <BrandName ctx={ctx} />
         </a>
         {ctx.today && (
           <span className="open">

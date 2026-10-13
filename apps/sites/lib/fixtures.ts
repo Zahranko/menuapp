@@ -492,7 +492,7 @@ export function fixtureBySlug(slug: string): PublicSite | null {
  */
 export function fixturePreview(token: string): PublicSite | null {
   if (token === "fixture") return { ...fixtureSite, isPreview: true };
-  const [prefix, templateId, theme, locale] = token.split(".");
+  const [prefix, templateId, theme, locale, logo] = token.split(".");
   if (prefix !== "fixture" || !registry.templates.some((t) => t.id === templateId)) return null;
   const site = fixtureFor(templateId, { isPreview: true });
   if (theme && theme !== "default") site.settings = { ...site.settings, theme };
@@ -500,5 +500,26 @@ export function fixturePreview(token: string): PublicSite | null {
     site.business = { ...site.business, locale: "ar" };
     site.settings = { ...site.settings, ...arabicDefaultsFor(templateId) };
   }
+  if (logo) site.settings = { ...site.settings, ...fixtureLogoSettings(logo, site.business.slug) };
   return site;
+}
+
+/** Host of the sample logo in fixture previews; it does not exist, so tests and screenshots answer it themselves. */
+export const FIXTURE_LOGO_HOST = "fixture-logo.invalid";
+
+/**
+ * Logo options for a fixture preview, from the token's fifth part ("fixture.<id>.<theme>.<locale>.<options>"):
+ * options joined by "-": "logo" (a sample logo at https://fixture-logo.invalid/<slug>.png), "bare" (frame off),
+ * "s70" to "s180" (size), "center" (centered) and "noname" (business name hidden).
+ */
+export function fixtureLogoSettings(options: string, slug: string): Settings {
+  const settings: Settings = {};
+  for (const option of options.split("-")) {
+    if (option === "logo") settings.logo = `https://${FIXTURE_LOGO_HOST}/${slug}.png`;
+    else if (option === "bare") settings["logo.frame"] = false;
+    else if (option === "center") settings["logo.position"] = "center";
+    else if (option === "noname") settings["logo.name"] = false;
+    else if (/^s\d{2,3}$/.test(option)) settings["logo.size"] = Number(option.slice(1));
+  }
+  return settings;
 }

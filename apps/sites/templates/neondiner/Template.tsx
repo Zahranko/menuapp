@@ -1,14 +1,6 @@
 import type { TemplateProps } from "@/lib/types";
 import { flag } from "@/lib/settings";
-import {
-  ContactList,
-  Credits,
-  HoursList,
-  Logo,
-  ProductPicture,
-  ProductSheet,
-  TopBars,
-} from "../_kit/blocks";
+import { ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { WhatsApp } from "../_kit/icons";
@@ -99,7 +91,7 @@ export default function NeonDinerTemplate({
 
   return (
     <div
-      data-template="neondiner"
+      data-template="neondiner" {...logoRoot(ctx)}
       className={cx("t-diner", fontVariables)}
       style={themeVars(site.settings, ctx.locale, {
         palettes: PALETTES,
@@ -118,7 +110,7 @@ export default function NeonDinerTemplate({
             </span>
           )}
         </div>
-        <h1 className="neon">{site.business.name}</h1>
+        <h1 className="neon kit-name">{site.business.name}</h1>
         {ctx.text("hero.title") && (
           <p className="sign-sub">{ctx.text("hero.title")}</p>
         )}

@@ -3,7 +3,7 @@ import { initial, whatsappLink } from "@/lib/format";
 import { itemCount } from "@/lib/i18n";
 import { choice, flag, image, text } from "@/lib/settings";
 import type { TemplateProps } from "@/lib/types";
-import { ContactList, Credits, HoursList, Logo, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
 import { cx, siteContext, type SiteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Arrow, Instagram, Pin, WhatsApp } from "../_kit/icons";
@@ -86,6 +86,7 @@ export default function LumenTemplate({ site, path = [], base, now }: TemplatePr
   return (
     <div
       data-template="lumen"
+      {...logoRoot(ctx)}
       data-page={page.kind}
       className={cx("t-lumen", fontVariables, `cards-${v.cards}`, `corners-${choice(site.settings, "corners", ["rounded", "sharp"] as const, "rounded")}`, v.order && "has-order", flag(site.settings, "motion", true) && "motion")}
       style={style}
@@ -127,10 +128,10 @@ function Header({ v }: { v: View }) {
   ];
   return (
     <header className="top" data-section="header">
-      <div className="top-in">
-        <a className="brand" href={href("")}>
+      <div className="top-in kit-head">
+        <a className="brand kit-lockup" href={href("")}>
           <Logo ctx={ctx} className="brand-logo" sizes="44px" />
-          <span className="brand-name">{ctx.site.business.name}</span>
+          <BrandName ctx={ctx} className="brand-name" />
         </a>
         {ctx.today && <span className="status">{ctx.today}</span>}
         <nav className="tabs" aria-label={c.pages}>

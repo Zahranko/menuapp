@@ -1,5 +1,7 @@
 /* Template 019 "Agency": giant type on a dark page, a moving strip of services, numbered service rows that light up, work grid, process. */
 
+@import "../_kit/logo.css";
+
 .t-agency {
   container: page / inline-size;
   font-size: 15.5px;

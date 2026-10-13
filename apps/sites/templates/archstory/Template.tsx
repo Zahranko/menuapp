@@ -1,4 +1,4 @@
-import { ContactList, Credits, HoursList, Logo, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Arrow, WhatsApp } from "../_kit/icons";
@@ -33,13 +33,13 @@ export default function ArchStoryTemplate({ site, now }: TemplateProps & { now?:
   const links: [string, string][] = [["#menu", ctx.t.menu], ...(storyText ? [["#story", c.story] as [string, string]] : []), ...(ctx.on("visit") ? [["#visit", ctx.t.visit] as [string, string]] : [])];
 
   return (
-    <div data-template="archstory" className={cx("t-arch", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["soft", "elegant", "classic"], defaultAccent: "#C2577A", radius: { rounded: "24px", sharp: "6px" } })}>
+    <div data-template="archstory" {...logoRoot(ctx)} className={cx("t-arch", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["soft", "elegant", "classic"], defaultAccent: "#C2577A", radius: { rounded: "24px", sharp: "6px" } })}>
       <TemplateStyles id="archstory" />
       <TopBars ctx={ctx} />
-      <header className="top" data-section="header">
-        <a className="brand" href="#top">
+      <header className="top kit-head" data-section="header">
+        <a className="brand kit-lockup" href="#top">
           <Logo ctx={ctx} />
-          <span>{site.business.name}</span>
+          <BrandName ctx={ctx} />
         </a>
         <nav aria-label={c.nav}>
           {links.map(([href, label]) => (

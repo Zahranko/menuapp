@@ -1,4 +1,5 @@
 import type { TemplateProps } from "@/lib/types";
+import { logoRoot } from "../_kit/blocks";
 import { fontVariables } from "../_kit/fonts";
 import { ItemSheet, type SheetItem } from "../_kit/ItemSheet";
 import { tintFor } from "../_kit/site-data";
@@ -34,7 +35,7 @@ export default function SouqTemplate({ site, preview, now }: TemplateProps & { n
   );
 
   return (
-    <div data-template="souq" className={`t-souq ${fontVariables} ${dotted(site.settings) ? "pat" : ""}`} style={souqVars(site.settings, site.business.locale)}>
+    <div data-template="souq" {...logoRoot(ctx)} className={`t-souq ${fontVariables} ${dotted(site.settings) ? "pat" : ""}`} style={souqVars(site.settings, site.business.locale)}>
       <TemplateStyles id="souq" />
       <a className="skip" href="#menu">
         {ctx.c.viewMenu}

@@ -1,5 +1,7 @@
 /* Template 005 "Pocket Catalog": a shop catalog. Search, category chips and price sorting over a product grid. */
 
+@import "../_kit/logo.css";
+
 .t-pocket {
   container: page / inline-size;
   font-size: 15px;

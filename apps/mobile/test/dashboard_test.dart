@@ -370,6 +370,7 @@ void main() {
     expect(find.textContaining('web https://example.test/_preview/t'), findsOneWidget);
 
     await tester.tap(find.text('Elegant'));
+    await scrollTo(tester, find.byKey(const Key('setting-hero.title')));
     await tester.enterText(find.byKey(const Key('setting-hero.title')), 'Best coffee in town');
     await tester.pump(const Duration(milliseconds: 300));
     expect(backend.drafts, isEmpty);
@@ -383,6 +384,51 @@ void main() {
     await tapIn(tester, find.widgetWithText(FilledButton, 'Publish'));
     expect(backend.publishedAt, isNotNull);
     expect(find.text('Your site is live'), findsOneWidget);
+  });
+
+  testWidgets('the editor shows the logo options with their defaults and saves changes to them', (tester) async {
+    final backend = FakeBackend();
+    expect(backend.draft.containsKey('logo.frame'), isFalse, reason: 'a site made before the logo options existed');
+    await pumpSignedIn(tester, backend);
+    await openTab(tester, 'Settings');
+    await tester.tap(find.text('Edit design'));
+    await tester.pumpAndSettle();
+
+    await scrollTo(tester, find.text('Show business name'));
+    SwitchListTile switchOf(String key) => tester.widget<SwitchListTile>(find.byKey(Key('setting-$key')));
+    expect(switchOf('logo.frame').value, isTrue, reason: 'a missing setting shows its default');
+    expect(switchOf('logo.name').value, isTrue);
+    expect(find.text('100%'), findsOneWidget);
+    final slider = tester.widget<Slider>(find.byKey(const Key('setting-logo.size')));
+    expect((slider.min, slider.max, slider.divisions), (70.0, 180.0, 11));
+    expect(find.text('Template default'), findsOneWidget);
+
+    for (final finder in [find.text('Centered'), find.byKey(const Key('setting-logo.name'))]) {
+      await tester.ensureVisible(finder);
+      await tester.pumpAndSettle();
+      await tester.tap(finder);
+    }
+    tester.widget<Slider>(find.byKey(const Key('setting-logo.size'))).onChanged!(180);
+    await tester.pump(EditorScreen.saveDelay);
+    await tester.pumpAndSettle();
+
+    expect(backend.draft['logo.position'], 'center');
+    expect(backend.draft['logo.name'], false);
+    expect(backend.draft['logo.size'], 180);
+    expect(backend.draft['logo.frame'], true);
+    expect(find.text('180%'), findsOneWidget);
+    expect(find.textContaining(RegExp(r'_preview/t #([2-9]|\d\d)$')), findsOneWidget, reason: 'the preview reloads after the save');
+  });
+
+  testWidgets('the logo options are in Arabic for Arabic owners', (tester) async {
+    await pumpSignedIn(tester, FakeBackend(), locale: const Locale('ar'));
+    await openTab(tester, 'الإعدادات');
+    await tester.tap(find.text('تعديل التصميم'));
+    await tester.pumpAndSettle();
+    await scrollTo(tester, find.text('إظهار اسم النشاط'));
+    for (final label in ['إطار الشعار', 'حجم الشعار', 'مكان الشعار', 'كما في القالب', 'في المنتصف']) {
+      expect(find.text(label), findsOneWidget, reason: label);
+    }
   });
 
   testWidgets('in Arabic, sub-categories are indented from the right', (tester) async {

@@ -1,5 +1,7 @@
 /* Template 018 "Clinic": a calm, trustworthy practice website. Split hero with a floating info card, service cards, steps, FAQ, CTA band. */
 
+@import "../_kit/logo.css";
+
 .t-clinic {
   container: page / inline-size;
   font-size: 15.5px;

@@ -1,5 +1,7 @@
 /* Template 003 "Night Market": dark, loud, big photo cards in a sideways row per category. */
 
+@import "../_kit/logo.css";
+
 .t-night {
   container: page / inline-size;
   font-size: 15px;

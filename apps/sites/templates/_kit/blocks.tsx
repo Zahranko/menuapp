@@ -1,9 +1,10 @@
 import { initial } from "@/lib/format";
 import { madeWith } from "@/lib/i18n";
-import type { SiteContext } from "./context";
+import { cx, type SiteContext } from "./context";
 import { Mail, Pin, WhatsApp } from "./icons";
 import { ItemSheet, type SheetItem } from "./ItemSheet";
-import { Picture } from "./Picture";
+import { bareLogo, logoAttributes } from "./logo";
+import { NaturalPicture, Picture } from "./Picture";
 import { tintFor, type MenuItem } from "./site-data";
 import { MadeWithLink } from "@/components/brand/logo-mark";
 
@@ -30,11 +31,27 @@ export function TopBars({ ctx, announcement = true }: { ctx: SiteContext; announ
   );
 }
 
-/** The logo setting, or the business's first letter. */
+/**
+ * The logo setting, or the business's first letter. Follows the owner's logo options (_kit/logo.ts, _kit/logo.css):
+ * its size, and with the frame off the uploaded picture at its own proportions with none of the template's tile around it.
+ */
 export function Logo({ ctx, className = "logo", sizes = "48px" }: { ctx: SiteContext; className?: string; sizes?: string }) {
   const logo = ctx.image("logo");
-  return <span className={className}>{logo ? <Picture src={logo} sizes={sizes} /> : initial(ctx.site.business.name)}</span>;
+  const bare = logo !== null && bareLogo(ctx.logo);
+  return (
+    <span className={cx(className, "kit-logo", bare && "kit-logo-bare")}>
+      {logo ? bare ? <NaturalPicture src={logo} /> : <Picture src={logo} sizes={sizes} /> : initial(ctx.site.business.name)}
+    </span>
+  );
 }
+
+/** The business name next to the logo. Hidden on screen (kept for screen readers) when the owner turns the name off. */
+export function BrandName({ ctx, className }: { ctx: SiteContext; className?: string }) {
+  return <span className={cx(className, "kit-name")}>{ctx.site.business.name}</span>;
+}
+
+/** Data attributes for a template's root element that switch on the owner's logo options in _kit/logo.css. */
+export const logoRoot = (ctx: SiteContext) => logoAttributes(ctx.logo);
 
 /** A product photo, or a tinted tile with the first letter. Put it inside a positioned box. */
 export function ProductPicture({ item, sizes }: { item: MenuItem; sizes: string }) {

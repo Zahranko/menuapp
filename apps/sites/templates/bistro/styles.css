@@ -1,5 +1,7 @@
 /* Template 010 "Bistro Card": a folded paper menu on a tablecloth. Cover page, courses inside, a clipped note for today's dish. */
 
+@import "../_kit/logo.css";
+
 .t-bistro {
   container: page / inline-size;
   font-size: 15.5px;

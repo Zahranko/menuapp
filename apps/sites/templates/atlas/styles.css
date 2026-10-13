@@ -5,6 +5,8 @@
  * Variables from themeVars(): --bg --surf --ink --muted --line --acc --acc-ink --acc-text --acc-soft --fd --fb --fw --ft --fs --r.
  */
 
+@import "../_kit/logo.css";
+
 .t-atlas {
   --pad: clamp(16px, 4vw, 48px);
   --wrap: 1440px;
@@ -1628,9 +1630,46 @@
     }
   }
 
+  /* A bigger logo makes the header row taller (its fixed height also sets where sticky bars stop). */
+  &[data-logo-size] {
+    --head-h: max(56px, calc(32px * var(--logo-scale) + 20px));
+  }
+
   @media (min-width: 1024px) {
     --head-h: 68px;
     --find-h: 0px;
+    &[data-logo-size] {
+      --head-h: max(68px, calc(32px * var(--logo-scale) + 28px));
+    }
+    /* Logo centered: search at the start, the logo in the middle, the order button at the end, and the links centered
+       on a second row (which takes the place of the phone's search row in the sticky height). */
+    /* A logo without its frame gets the room its proportions need (up to a cap) before the links share the row. */
+    &[data-logo-frame="off"]:not([data-logo-pos="center"]) .a-head-row {
+      grid-template-columns: fit-content(420px) 1fr minmax(240px, 340px) auto;
+    }
+    &[data-logo-pos="center"] {
+      --find-h: 48px;
+    }
+    &[data-logo-pos="center"] .a-head-row {
+      grid-template-columns: 1fr auto 1fr;
+      grid-template-areas:
+        "find brand order"
+        "nav nav nav";
+    }
+    &[data-logo-pos="center"] .a-brand {
+      justify-self: center;
+    }
+    &[data-logo-pos="center"] .finder {
+      justify-self: start;
+      width: min(100%, 340px);
+    }
+    &[data-logo-pos="center"] .a-head-order {
+      justify-self: end;
+    }
+    &[data-logo-pos="center"] .a-nav {
+      justify-self: center;
+      height: var(--find-h);
+    }
     --cols: 4;
     --gx: 20px;
     &.grid-dense {

@@ -1,6 +1,6 @@
 import type { TemplateProps } from "@/lib/types";
 import { flag } from "@/lib/settings";
-import { ContactList, Credits, HoursList, Logo, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { hasHours } from "../_kit/site-data";
@@ -38,13 +38,13 @@ export default function ZenTemplate({ site, now }: TemplateProps & { now?: Date 
   const story = ctx.on("story") && ctx.text("story.text");
 
   return (
-    <div data-template="zen" className={cx("t-zen", !ctx.rtl && "vertical", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["elegant", "modern", "mono"], defaultAccent: "#B7282E", radius: { rounded: "4px", sharp: "0px" } })}>
+    <div data-template="zen" {...logoRoot(ctx)} className={cx("t-zen", !ctx.rtl && "vertical", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["elegant", "modern", "mono"], defaultAccent: "#B7282E", radius: { rounded: "4px", sharp: "0px" } })}>
       <TemplateStyles id="zen" />
       <TopBars ctx={ctx} />
-      <header className="head" data-section="header">
-        <a className="brand" href="#top">
+      <header className="head kit-head" data-section="header">
+        <a className="brand kit-lockup" href="#top">
           <Logo ctx={ctx} className="seal" />
-          <span>{site.business.name}</span>
+          <BrandName ctx={ctx} />
         </a>
         <nav aria-label={c.jump}>
           <a href="#menu">{c.menu}</a>

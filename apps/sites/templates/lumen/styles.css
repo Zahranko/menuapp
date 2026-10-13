@@ -6,6 +6,8 @@
  * Motion rule: tilts use the `rotate` property, animations use `transform`, so both stack.
  */
 
+@import "../_kit/logo.css";
+
 .t-lumen {
   --wrap: 1240px;
   --pad: clamp(16px, 4.2vw, 40px);
@@ -332,8 +334,25 @@
     color: var(--bg);
   }
 
+  /* The owner's logo options change the bar's height; --top-h also places the sticky category bar under it. */
+  &[data-logo-size] {
+    --top-h: max(66px, calc(42px * var(--logo-scale) + 24px));
+  }
+  &[data-logo-pos="center"] {
+    --top-h: calc(42px * var(--logo-scale, 1) + 64px);
+  }
   @media (min-width: 900px) {
     --top-h: 76px;
+    &[data-logo-size] {
+      --top-h: max(76px, calc(42px * var(--logo-scale) + 30px));
+    }
+    &[data-logo-pos="center"] {
+      --top-h: calc(42px * var(--logo-scale, 1) + 74px);
+    }
+    &[data-logo-size] .tabs,
+    &[data-logo-frame="off"] .tabs {
+      flex-shrink: 0;
+    }
     .tabs {
       position: static;
       margin-inline-start: auto;

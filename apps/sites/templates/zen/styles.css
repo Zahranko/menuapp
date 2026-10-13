@@ -1,5 +1,7 @@
 /* Template 009 "Zen": quiet and minimal. An ensō, a red seal, big thin numerals, hairlines and lots of space. */
 
+@import "../_kit/logo.css";
+
 .t-zen {
   container: page / inline-size;
   font-size: 15px;

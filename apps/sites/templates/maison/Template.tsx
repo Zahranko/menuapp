@@ -3,7 +3,7 @@ import { whatsappLink } from "@/lib/format";
 import { itemCount } from "@/lib/i18n";
 import { choice, flag, image, list, number, text } from "@/lib/settings";
 import type { TemplateProps } from "@/lib/types";
-import { Credits, Logo, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, Credits, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
 import { cx, siteContext, type SiteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Arrow, Instagram, Mail, Pin, WhatsApp } from "../_kit/icons";
@@ -90,6 +90,7 @@ export default function MaisonTemplate({ site, path = [], base, now }: TemplateP
   return (
     <div
       data-template="maison"
+      {...logoRoot(ctx)}
       data-page={page.kind}
       className={cx("mx", fontVariables, `font-${font}`, `carte-${v.carte}`, flag(site.settings, "motion", true) && "mx-motion")}
       style={style as CSSProperties}
@@ -186,9 +187,9 @@ function Header({ v }: { v: View }) {
             </div>
           </Overlay>
         </div>
-        <a className="mx-mark" href={href("")}>
+        <a className="mx-mark kit-lockup" href={href("")}>
           {ctx.image("logo") && <Logo ctx={ctx} className="mx-logo" sizes="40px" />}
-          <span className="mx-mark-name">{name}</span>
+          <BrandName ctx={ctx} className="mx-mark-name" />
         </a>
         <div className="mx-head-end">
           {v.order && (

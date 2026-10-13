@@ -1,6 +1,7 @@
 import { madeWith } from "@/lib/i18n";
 import { Instagram, Mail, WhatsApp } from "../../_kit/icons";
 import type { SouqContext } from "../context";
+import { BrandName } from "../../_kit/blocks";
 import { Logo, navLinks } from "./Header";
 import { MadeWithLink } from "@/components/brand/logo-mark";
 
@@ -15,7 +16,7 @@ export function Footer({ ctx }: { ctx: SouqContext }) {
           <div>
             <div className="brand">
               <Logo ctx={ctx} />
-              <span className="brandName">{business.name}</span>
+              <BrandName ctx={ctx} className="brandName" />
             </div>
             {ctx.text("hero.subtitle") && <p>{ctx.text("hero.subtitle")}</p>}
             <div className="soc">

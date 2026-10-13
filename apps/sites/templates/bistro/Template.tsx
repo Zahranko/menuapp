@@ -1,14 +1,6 @@
 import { choice } from "@/lib/settings";
 import type { TemplateProps } from "@/lib/types";
-import {
-  ContactList,
-  Credits,
-  HoursList,
-  Logo,
-  ProductPicture,
-  ProductSheet,
-  TopBars,
-} from "../_kit/blocks";
+import { ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { WhatsApp } from "../_kit/icons";
@@ -113,7 +105,7 @@ export default function BistroCardTemplate({
 
   return (
     <div
-      data-template="bistro"
+      data-template="bistro" {...logoRoot(ctx)}
       className={cx("t-bistro", fontVariables)}
       style={themeVars(site.settings, ctx.locale, {
         palettes: PALETTES,
@@ -128,7 +120,7 @@ export default function BistroCardTemplate({
           <header className="page cover" data-section="header">
             <Logo ctx={ctx} className="monogram" />
             <p className="est">{ctx.text("hero.eyebrow")}</p>
-            <h1>{site.business.name}</h1>
+            <h1 className="kit-name">{site.business.name}</h1>
             {ctx.text("hero.title") && (
               <p className="tagline">{ctx.text("hero.title")}</p>
             )}

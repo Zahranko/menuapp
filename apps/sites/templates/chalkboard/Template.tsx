@@ -1,6 +1,6 @@
 import { flag } from "@/lib/settings";
 import type { TemplateProps } from "@/lib/types";
-import { ContactList, Credits, HoursList, Logo, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { WhatsApp } from "../_kit/icons";
@@ -63,7 +63,7 @@ export default function ChalkBoardTemplate({ site, now }: TemplateProps & { now?
 
   return (
     <div
-      data-template="chalkboard"
+      data-template="chalkboard" {...logoRoot(ctx)}
       className={cx("t-chalk", dust && "dust", fontVariables)}
       style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["hand", "round", "condensed"], defaultAccent: "#F2C14E" })}
     >
@@ -72,7 +72,7 @@ export default function ChalkBoardTemplate({ site, now }: TemplateProps & { now?
       <div className="board">
         <header className="head" data-section="header">
           <Logo ctx={ctx} />
-          <h1>{site.business.name}</h1>
+          <h1 className="kit-name">{site.business.name}</h1>
           <Squiggle />
           {ctx.text("hero.title") && <p className="tagline">{ctx.text("hero.title")}</p>}
           {ctx.today && <p className="today">{ctx.today}</p>}

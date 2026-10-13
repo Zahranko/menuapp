@@ -1,5 +1,7 @@
 /* Template 002 "Linen List": a printed menu card. Text only, dotted leaders, one or two columns. */
 
+@import "../_kit/logo.css";
+
 .t-linen {
   container: page / inline-size;
   background:

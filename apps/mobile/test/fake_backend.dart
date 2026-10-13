@@ -62,6 +62,10 @@ class FakeBackend {
 
   static const souqDefaults = <String, Object?>{'font': 'modern', 'accent': '#D9542C', 'hero.title': 'Coffee worth crossing the city for.', 'texture': false};
 
+  /// Settings added to every template later (the logo options). The starting draft does not have them, like a site
+  /// made before they existed.
+  static const logoDefaults = <String, Object?>{'logo.frame': true, 'logo.size': 100, 'logo.position': 'start', 'logo.name': true};
+
   static final templates = [
     {
       'id': 'souq',
@@ -84,13 +88,27 @@ class FakeBackend {
           'optionLabels': {'modern': 'Modern', 'elegant': 'Elegant'},
           'optionLabelsAr': {'modern': 'عصري', 'elegant': 'أنيق'},
         },
+        {'key': 'logo.frame', 'type': 'toggle', 'label': 'Logo frame', 'labelAr': 'إطار الشعار', 'group': 'Brand', 'groupAr': 'الهوية'},
+        {'key': 'logo.size', 'type': 'range', 'label': 'Logo size', 'labelAr': 'حجم الشعار', 'group': 'Brand', 'groupAr': 'الهوية', 'min': 70, 'max': 180, 'step': 10, 'unit': '%'},
+        {
+          'key': 'logo.position',
+          'type': 'choice',
+          'label': 'Logo position',
+          'labelAr': 'مكان الشعار',
+          'group': 'Brand',
+          'groupAr': 'الهوية',
+          'options': ['start', 'center'],
+          'optionLabels': {'start': 'Template default', 'center': 'Centered'},
+          'optionLabelsAr': {'start': 'كما في القالب', 'center': 'في المنتصف'},
+        },
+        {'key': 'logo.name', 'type': 'toggle', 'label': 'Show business name', 'labelAr': 'إظهار اسم النشاط', 'group': 'Brand', 'groupAr': 'الهوية'},
         {'key': 'accent', 'type': 'color', 'label': 'Accent color', 'labelAr': 'اللون المميز', 'group': 'Brand', 'groupAr': 'الهوية', 'options': ['#D9542C', '#2B6B4F']},
         {'key': 'texture', 'type': 'toggle', 'label': 'Dotted texture', 'labelAr': 'خلفية منقطة', 'group': 'Brand', 'groupAr': 'الهوية'},
         // No Arabic texts: the English ones show in Arabic too.
         {'key': 'hero.title', 'type': 'text', 'label': 'Headline', 'group': 'Hero header', 'max': 60},
         {'key': 'sparkles', 'type': 'hologram', 'label': 'Future setting', 'group': 'Hero header'},
       ],
-      'defaults': souqDefaults,
+      'defaults': {...souqDefaults, ...logoDefaults},
       'defaultsAr': {'hero.title': 'قهوة تستحق المشوار.'},
     },
     {

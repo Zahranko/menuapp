@@ -1,6 +1,6 @@
 import { whatsappLink } from "@/lib/format";
 import type { TemplateProps } from "@/lib/types";
-import { ContactList, Credits, HoursList, Logo, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
 import { CatalogControls } from "../_kit/CatalogControls";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
@@ -35,16 +35,16 @@ export default function PocketCatalogTemplate({ site, now }: TemplateProps & { n
 
   return (
     <div
-      data-template="pocket"
+      data-template="pocket" {...logoRoot(ctx)}
       className={cx("t-pocket", fontVariables)}
       style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["grotesk", "modern", "bold"], defaultAccent: "#1F3A5F", radius: { rounded: "16px", sharp: "0px" } })}
     >
       <TemplateStyles id="pocket" />
       <TopBars ctx={ctx} />
-      <header className="head" data-section="header">
-        <a className="brand" href="#top">
+      <header className="head kit-head" data-section="header">
+        <a className="brand kit-lockup" href="#top">
           <Logo ctx={ctx} />
-          <span>{site.business.name}</span>
+          <BrandName ctx={ctx} />
         </a>
         {ctx.contact.whatsapp && (
           <a className="head-ask" href={ctx.contact.whatsapp} rel="noopener" target="_blank" aria-label={c.ask}>

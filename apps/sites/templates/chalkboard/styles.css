@@ -1,5 +1,7 @@
 /* Template 006 "Chalk Board": a café blackboard. Hand lettering, chalk dust, a daily special and hand-drawn boxes. */
 
+@import "../_kit/logo.css";
+
 .t-chalk {
   container: page / inline-size;
   --chalk: color-mix(in srgb, var(--ink) 72%, transparent);

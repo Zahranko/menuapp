@@ -5,6 +5,8 @@
  * the root also carries font-<name>, carte-<style> and mx-motion, and gets data-past once the opening image has scrolled away.
  */
 
+@import "../_kit/logo.css";
+
 html.mx-locked {
   overflow: hidden;
 }

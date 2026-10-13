@@ -208,15 +208,17 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
       );
     }
 
+    final template = all.where((x) => x.id == info.templateId).firstOrNull;
     if (_templateId != info.templateId) {
-      // First load, or the template changed in the gallery: start from the saved draft.
+      // First load, or the template changed in the gallery: start from the saved draft. Settings the draft does not
+      // have yet (added to the template after the site was made, like the logo options) show their defaults, which is
+      // also what the site uses and what the API saves for them.
       _templateId = info.templateId;
-      _settings = Map<String, dynamic>.from(info.draft);
+      _settings = {...?template?.defaultsFor(_siteLocale), ...info.draft};
       _generation++;
       _previewUrl = null;
       Future.microtask(_refreshPreview);
     }
-    final template = all.where((x) => x.id == info.templateId).firstOrNull;
     final fields = [
       for (final f in template?.fields ?? const <TemplateField>[])
         if (supportedFieldTypes.contains(f.type)) f,

@@ -1,5 +1,7 @@
 /* Template 016 "Polaroid": instant photos taped to a wall, each slightly tilted, captions in handwriting. */
 
+@import "../_kit/logo.css";
+
 .t-polaroid {
   container: page / inline-size;
   --paper: #fffdf9;

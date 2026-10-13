@@ -3,7 +3,7 @@ import { whatsappLink } from "@/lib/format";
 import { itemCount } from "@/lib/i18n";
 import { choice, flag, image, list, text } from "@/lib/settings";
 import type { PublicSite, Settings, TemplateProps } from "@/lib/types";
-import { ContactList, Credits, Logo, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
 import { cx, siteContext, type SiteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Arrow, Instagram, Pin, WhatsApp } from "../_kit/icons";
@@ -141,6 +141,7 @@ export default function BloomTemplate(props: TemplateProps & { now?: Date }) {
   return (
     <div
       data-template="bloom"
+      {...logoRoot(ctx)}
       data-page={page.kind}
       className={cx("bl", fontVariables, ctx.rtl && "is-ar", flag(s, "motion", true) && "motion", flag(s, "doodles", true) && "doodly")}
       style={style}
@@ -182,10 +183,10 @@ function Header({ v }: { v: View }) {
   ];
   return (
     <header className="top" data-section="header">
-      <div className="top-in">
-        <a className="brand" href={href("")}>
+      <div className="top-in kit-head">
+        <a className="brand kit-lockup" href={href("")}>
           <Logo ctx={ctx} className="brand-logo" sizes="48px" />
-          <span className="brand-name">{ctx.site.business.name}</span>
+          <BrandName ctx={ctx} className="brand-name" />
         </a>
         <nav className="dock" aria-label={c.pages}>
           {links.map((l) => (
@@ -749,7 +750,7 @@ function Footer({ v }: { v: View }) {
       <div className="foot-in">
         <a className="brand foot-brand" href={href("")}>
           <Logo ctx={ctx} className="brand-logo" sizes="64px" />
-          <span className="brand-name">{site.business.name}</span>
+          <BrandName ctx={ctx} className="brand-name" />
         </a>
         {tagline && <p className="foot-note">{tagline}</p>}
         <nav className="foot-links" aria-label={c.pages}>

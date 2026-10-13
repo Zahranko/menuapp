@@ -1,5 +1,7 @@
 /* Template 021 "Handy": a friendly home-services site. Service picker in the hero, trust badges, cards with a Request button, areas, sticky request bar. */
 
+@import "../_kit/logo.css";
+
 .t-handy {
   container: page / inline-size;
   font-size: 15.5px;

@@ -1,5 +1,5 @@
 import type { TemplateProps } from "@/lib/types";
-import { ContactList, Credits, HoursList, Logo, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { WhatsApp } from "../_kit/icons";
@@ -44,13 +44,13 @@ export default function PizzeriaTemplate({ site, now }: TemplateProps & { now?: 
   const stamp = ctx.text("stamp");
 
   return (
-    <div data-template="pizzeria" className={cx("t-pizza", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["classic", "bold", "hand"], defaultAccent: "#C8102E" })}>
+    <div data-template="pizzeria" {...logoRoot(ctx)} className={cx("t-pizza", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["classic", "bold", "hand"], defaultAccent: "#C8102E" })}>
       <TemplateStyles id="pizzeria" />
       <TopBars ctx={ctx} />
-      <header className="head" data-section="header">
-        <a className="brand" href="#top">
+      <header className="head kit-head" data-section="header">
+        <a className="brand kit-lockup" href="#top">
           <Logo ctx={ctx} />
-          <span>{site.business.name}</span>
+          <BrandName ctx={ctx} />
         </a>
         {ctx.today && <span className="head-today">{ctx.today}</span>}
       </header>

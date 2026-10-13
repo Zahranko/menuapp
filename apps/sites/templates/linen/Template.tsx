@@ -1,6 +1,6 @@
 import type { TemplateProps } from "@/lib/types";
 import { choice, flag } from "@/lib/settings";
-import { ContactList, Credits, HoursList, Logo, ProductSheet, TopBars } from "../_kit/blocks";
+import { ContactList, Credits, HoursList, Logo, logoRoot, ProductSheet, TopBars } from "../_kit/blocks";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { WhatsApp } from "../_kit/icons";
@@ -43,13 +43,13 @@ export default function LinenTemplate({ site, now }: TemplateProps & { now?: Dat
   const links: [string, string][] = [["#menu", c.menu], ...(story ? [["#story", c.story] as [string, string]] : []), ...(ctx.on("visit") ? [["#visit", c.visit] as [string, string]] : [])];
 
   return (
-    <div data-template="linen" className={cx("t-linen", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["classic", "elegant", "soft"], defaultAccent: "#8C2F39" })}>
+    <div data-template="linen" {...logoRoot(ctx)} className={cx("t-linen", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["classic", "elegant", "soft"], defaultAccent: "#8C2F39" })}>
       <TemplateStyles id="linen" />
       <TopBars ctx={ctx} />
       <div className="paper">
         <header className="masthead" data-section="header">
           <Logo ctx={ctx} />
-          <h1>{site.business.name}</h1>
+          <h1 className="kit-name">{site.business.name}</h1>
           {ctx.text("hero.title") && <p className="tagline">{ctx.text("hero.title")}</p>}
           {ornaments && <Flourish />}
           <nav aria-label={ctx.t.menu}>

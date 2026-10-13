@@ -1,6 +1,6 @@
 import type { TemplateProps } from "@/lib/types";
 import { flag } from "@/lib/settings";
-import { ContactList, Credits, HoursList, Logo, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { WhatsApp } from "../_kit/icons";
@@ -47,13 +47,13 @@ export default function GardenTemplate({ site, now }: TemplateProps & { now?: Da
   const story = ctx.on("story") && ctx.text("story.text");
 
   return (
-    <div data-template="garden" className={cx("t-garden", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["soft", "round", "elegant"], defaultAccent: "#3F7D4E" })}>
+    <div data-template="garden" {...logoRoot(ctx)} className={cx("t-garden", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["soft", "round", "elegant"], defaultAccent: "#3F7D4E" })}>
       <TemplateStyles id="garden" />
       <TopBars ctx={ctx} />
-      <header className="head" data-section="header">
-        <a className="brand" href="#top">
+      <header className="head kit-head" data-section="header">
+        <a className="brand kit-lockup" href="#top">
           <Logo ctx={ctx} />
-          <span>{site.business.name}</span>
+          <BrandName ctx={ctx} />
         </a>
         {ctx.today && <span className="pill">{ctx.today}</span>}
       </header>

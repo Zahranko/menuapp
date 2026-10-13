@@ -26,6 +26,7 @@ class TemplateField {
     this.max,
     this.min,
     this.step,
+    this.unit,
   });
 
   factory TemplateField.fromJson(Map<String, dynamic> json) {
@@ -45,6 +46,7 @@ class TemplateField {
       max: (json['max'] as num?)?.toDouble(),
       min: (json['min'] as num?)?.toDouble(),
       step: (json['step'] as num?)?.toDouble(),
+      unit: _text(json['unit']),
     );
   }
 
@@ -70,6 +72,9 @@ class TemplateField {
   final double? max;
   final double? min;
   final double? step;
+
+  /// Shown after a range's value, for example "%" for the logo size; null for a plain number.
+  final String? unit;
 
   String optionLabel(String option) => optionLabels[option] ?? option;
 

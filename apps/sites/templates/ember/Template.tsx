@@ -3,7 +3,7 @@ import { whatsappLink } from "@/lib/format";
 import { itemCount } from "@/lib/i18n";
 import { choice, flag, image, list, number, text } from "@/lib/settings";
 import type { TemplateProps } from "@/lib/types";
-import { ContactList, Credits, HoursList, Logo, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
 import { cx, siteContext, type SiteContext } from "../_kit/context";
 import { Drawer } from "../_kit/Drawer";
 import { fontVariables } from "../_kit/fonts";
@@ -79,6 +79,7 @@ export default function EmberTemplate({ site, path = [], base, now }: TemplatePr
   return (
     <div
       data-template="ember"
+      {...logoRoot(ctx)}
       data-page={page.kind}
       className={cx("em", fontVariables, `cards-${v.cards}`, ctx.rtl && "is-ar", flag(site.settings, "grain", true) && "grain", flag(site.settings, "motion", true) && "motion", v.order && "has-pill")}
       style={style}
@@ -162,10 +163,10 @@ function Header({ v }: { v: View }) {
   ];
 
   return (
-    <header className="bar" data-section="header">
-      <a className="brand" href={href("")} aria-current={current("home")}>
+    <header className="bar kit-head" data-section="header">
+      <a className="brand kit-lockup" href={href("")} aria-current={current("home")}>
         <Logo ctx={ctx} className="brand-logo" sizes="40px" />
-        <span className="brand-name">{ctx.site.business.name}</span>
+        <BrandName ctx={ctx} className="brand-name" />
       </a>
       <nav className="bar-links" aria-label={c.pages}>
         {links.map((l) => (

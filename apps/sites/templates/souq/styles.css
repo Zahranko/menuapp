@@ -1,6 +1,8 @@
 /* Template 001 "Souq", ported from the prototype's .w-* styles. Colors, fonts and radius come from souqVars().
    Everything is nested under .t-souq so it cannot affect other templates; scripts/build-styles.mjs compiles it. */
 
+@import "../_kit/logo.css";
+
 .t-souq {
   container: site / inline-size;
   min-height: 100vh;
@@ -229,6 +231,21 @@
     align-items: center;
     justify-content: center;
     color: var(--sink);
+  }
+  /* Logo centered on phones: the menu button stays on the logo's row, at the end. */
+  @container site (max-width: 759.98px) {
+    &[data-logo-pos="center"] .navIn {
+      position: relative;
+    }
+    &[data-logo-pos="center"] .burger {
+      position: absolute;
+      top: 12px;
+      inset-inline-end: 18px;
+    }
+    &[data-logo-pos="center"] .brand {
+      min-height: 44px;
+      padding-inline: 56px;
+    }
   }
   .drawer {
     flex-basis: 100%;

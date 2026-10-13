@@ -5,6 +5,8 @@
  * Motion is transform-only for text (it stays readable from the first frame) and switches off with "Animations" or reduced motion.
  */
 
+@import "../_kit/logo.css";
+
 .em {
   --pad: clamp(16px, 4.5vw, 48px);
   --wrap: 1240px;
@@ -302,8 +304,15 @@
     font-size: 15px;
   }
 
+  /* A bigger logo makes the bar taller (the bar has a fixed height that other parts use). */
+  &[data-logo-size] {
+    --bar-h: max(62px, calc(40px * var(--logo-scale) + 22px));
+  }
   @media (min-width: 960px) {
     --bar-h: 72px;
+    &[data-logo-size] {
+      --bar-h: max(72px, calc(40px * var(--logo-scale) + 26px));
+    }
     .bar-toggle,
     .drawer {
       display: none;

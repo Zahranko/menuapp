@@ -1,5 +1,5 @@
 import type { TemplateProps } from "@/lib/types";
-import { ContactList, Credits, HoursList, Logo, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { WhatsApp } from "../_kit/icons";
@@ -26,12 +26,12 @@ export default function PolaroidTemplate({ site, now }: TemplateProps & { now?: 
   const story = ctx.on("story") && ctx.text("story.text");
 
   return (
-    <div data-template="polaroid" className={cx("t-polaroid", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["hand", "round", "soft"], defaultAccent: "#E0457B" })}>
+    <div data-template="polaroid" {...logoRoot(ctx)} className={cx("t-polaroid", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["hand", "round", "soft"], defaultAccent: "#E0457B" })}>
       <TemplateStyles id="polaroid" />
       <TopBars ctx={ctx} />
       <header className="head" data-section="header">
         <Logo ctx={ctx} />
-        <h1>{site.business.name}</h1>
+        <h1 className="kit-name">{site.business.name}</h1>
         {ctx.text("hero.title") && <p className="tagline">{ctx.text("hero.title")}</p>}
         {ctx.today && <p className="today">{ctx.today}</p>}
       </header>

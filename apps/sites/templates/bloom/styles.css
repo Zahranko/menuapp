@@ -6,6 +6,8 @@
  * Shape rule: everything is round. Interactive things are full pills or circles; cards and panels use --r (28px).
  */
 
+@import "../_kit/logo.css";
+
 .bl {
   --wrap: 1160px;
   --pad: clamp(16px, 4.5vw, 40px);

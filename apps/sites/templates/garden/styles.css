@@ -1,5 +1,7 @@
 /* Template 013 "Garden": soft blobs, leaves and waves. Cards lead with diet tags so people find what they can eat. */
 
+@import "../_kit/logo.css";
+
 .t-garden {
   container: page / inline-size;
   font-size: 15.5px;

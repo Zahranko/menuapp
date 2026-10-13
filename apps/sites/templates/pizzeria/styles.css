@@ -1,5 +1,7 @@
 /* Template 011 "Pizzeria": a slowly turning pizza, a round stamp and colored bands with round photo cutouts. */
 
+@import "../_kit/logo.css";
+
 .t-pizza {
   container: page / inline-size;
   font-size: 15.5px;

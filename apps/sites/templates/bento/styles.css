@@ -1,5 +1,7 @@
 /* Template 007 "Bento": everything is a tile. Mixed tile sizes, pastel colors, featured drinks take the big tiles. */
 
+@import "../_kit/logo.css";
+
 .t-bento {
   container: page / inline-size;
   font-size: 15px;

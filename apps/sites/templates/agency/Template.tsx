@@ -1,6 +1,6 @@
 import { flag } from "@/lib/settings";
 import type { TemplateProps } from "@/lib/types";
-import { ContactList, Credits, HoursList, Logo, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, ProductSheet, TopBars } from "../_kit/blocks";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Arrow, Mail, WhatsApp } from "../_kit/icons";
@@ -39,13 +39,13 @@ export default function AgencyTemplate({ site, now }: TemplateProps & { now?: Da
   const offsets = ctx.sections.map((_, i) => ctx.sections.slice(0, i).reduce((n, s) => n + s.products.length, 0));
 
   return (
-    <div data-template="agency" className={cx("t-agency", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["bold", "grotesk", "modern", "condensed"], defaultAccent: "#D7FF3A", radius: { rounded: "22px", sharp: "0px" } })}>
+    <div data-template="agency" {...logoRoot(ctx)} className={cx("t-agency", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["bold", "grotesk", "modern", "condensed"], defaultAccent: "#D7FF3A", radius: { rounded: "22px", sharp: "0px" } })}>
       <TemplateStyles id="agency" />
       <TopBars ctx={ctx} />
-      <header className="head" data-section="header">
-        <a className="brand" href="#top">
+      <header className="head kit-head" data-section="header">
+        <a className="brand kit-lockup" href="#top">
           <Logo ctx={ctx} />
-          <span>{site.business.name}</span>
+          <BrandName ctx={ctx} />
         </a>
         <nav aria-label={c.menu}>
           <a href="#menu">{c.services}</a>

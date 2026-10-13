@@ -6,6 +6,10 @@
 // English → Arabic dictionary of editor strings; a field that already has them in its manifest keeps its own.
 // Each manifest carries "ar" (name, category, description) and "defaultsAr", the Arabic starter text that
 // overrides "defaults" for Arabic businesses: one entry for every non-empty text default, within the field's max.
+//
+// Logo options: every template's schema gets the shared fields of templates/_kit/logo-settings.json (logo frame, size,
+// position and "show business name") right after its "logo" field, in the same group, with their defaults. Manifests
+// never list them; templates/_kit/logo.ts reads them, and _kit/logo.css styles them.
 import { readdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -17,6 +21,7 @@ const TIERS = new Set(["basic", "pro"]);
 const FIELD_TYPES = new Set(["choice", "palette", "color", "text", "textarea", "range", "image", "images", "toggle", "toggles", "hours"]);
 const TEXT_TYPES = new Set(["text", "textarea"]);
 const dictionary = JSON.parse(readFileSync(path.join(root, "_i18n", "ar.json"), "utf8"));
+const logoSettings = JSON.parse(readFileSync(path.join(root, "_kit", "logo-settings.json"), "utf8"));
 
 function fail(message) {
   console.error(`templates:registry: ${message}`);
@@ -33,6 +38,7 @@ const manifests = readdirSync(root, { withFileTypes: true })
       if (manifest[key] === undefined) fail(`${d.name}: missing "${key}"`);
     }
     if (manifest.tier !== undefined && !TIERS.has(manifest.tier)) fail(`${d.name}: "tier" must be "basic" or "pro" (or left out for basic)`);
+    withLogoOptions(d.name, manifest);
     const keys = new Set();
     for (const field of manifest.schema) {
       if (!FIELD_TYPES.has(field.type)) fail(`${d.name}: field "${field.key}" has unknown type "${field.type}"`);
@@ -45,6 +51,27 @@ const manifests = readdirSync(root, { withFileTypes: true })
     return manifest;
   })
   .sort((a, b) => a.number - b.number);
+
+/** Adds the shared logo options after the "logo" image field, and their defaults after the logo's default. */
+function withLogoOptions(id, manifest) {
+  const at = manifest.schema.findIndex((f) => f.key === "logo");
+  if (at < 0 || manifest.schema[at].type !== "image") fail(`${id}: every template needs a "logo" image field (the logo options attach to it)`);
+  for (const field of logoSettings.fields) {
+    if (manifest.schema.some((f) => f.key === field.key) || field.key in manifest.defaults) {
+      fail(`${id}: "${field.key}" comes from templates/_kit/logo-settings.json; remove it from the manifest`);
+    }
+  }
+  const group = manifest.schema[at].group;
+  const fields = logoSettings.fields.map((field) => (group === undefined ? { ...field } : { key: field.key, type: field.type, label: field.label, group, ...field }));
+  manifest.schema.splice(at + 1, 0, ...fields);
+  const defaults = {};
+  for (const [key, value] of Object.entries(manifest.defaults)) {
+    defaults[key] = value;
+    if (key === "logo") Object.assign(defaults, logoSettings.defaults);
+  }
+  if (!("logo" in manifest.defaults)) Object.assign(defaults, logoSettings.defaults);
+  manifest.defaults = defaults;
+}
 
 /** The Arabic for an editor string: the manifest's own, else the dictionary's. */
 function arabic(id, field, what, english, own) {

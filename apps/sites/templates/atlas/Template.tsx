@@ -3,7 +3,7 @@ import { initial, whatsappLink } from "@/lib/format";
 import { itemCount } from "@/lib/i18n";
 import { choice, flag, text } from "@/lib/settings";
 import type { TemplateProps } from "@/lib/types";
-import { ContactList, Credits, HoursList, Logo, ProductPicture } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture } from "../_kit/blocks";
 import { cx, siteContext, type SiteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Arrow, Instagram, Pin, WhatsApp } from "../_kit/icons";
@@ -95,6 +95,7 @@ export default function AtlasTemplate({ site, path = [], base, now }: TemplatePr
   return (
     <div
       data-template="atlas"
+      {...logoRoot(ctx)}
       data-page={page.kind}
       className={cx("t-atlas", fontVariables, `grid-${choice(site.settings, "density", DENSITY, "comfy")}`, flag(site.settings, "motion", true) && "motion")}
       style={style}
@@ -216,9 +217,9 @@ function Header({ v }: { v: View }) {
           {ctx.today && <p className="side-today">{ctx.today}</p>}
         </SideDrawer>
 
-        <a className="a-brand" href={href("")}>
+        <a className="a-brand kit-lockup" href={href("")}>
           <Logo ctx={ctx} className="a-logo" sizes="40px" />
-          <span className="a-brand-name">{ctx.site.business.name}</span>
+          <BrandName ctx={ctx} className="a-brand-name" />
         </a>
 
         <nav className="a-nav" aria-label={c.pages}>

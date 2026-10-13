@@ -46,6 +46,54 @@
           "groupAr": "الهوية"
         },
         {
+          "key": "logo.frame",
+          "type": "toggle",
+          "label": "Logo frame",
+          "labelAr": "إطار الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.size",
+          "type": "range",
+          "label": "Logo size",
+          "labelAr": "حجم الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "min": 70,
+          "max": 180,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "key": "logo.position",
+          "type": "choice",
+          "label": "Logo position",
+          "labelAr": "مكان الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "options": [
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "start": "Template default",
+            "center": "Centered"
+          },
+          "optionLabelsAr": {
+            "start": "كما في القالب",
+            "center": "في المنتصف"
+          }
+        },
+        {
+          "key": "logo.name",
+          "type": "toggle",
+          "label": "Show business name",
+          "labelAr": "إظهار اسم النشاط",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
           "key": "theme",
           "type": "palette",
           "label": "Color theme",
@@ -393,6 +441,10 @@
       "defaults": {
         "font": "modern",
         "logo": "",
+        "logo.frame": true,
+        "logo.size": 100,
+        "logo.position": "start",
+        "logo.name": true,
         "theme": "cream",
         "accent": "#D9542C",
         "corners": "rounded",
@@ -497,6 +549,54 @@
           "type": "image",
           "label": "Logo",
           "labelAr": "الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.frame",
+          "type": "toggle",
+          "label": "Logo frame",
+          "labelAr": "إطار الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.size",
+          "type": "range",
+          "label": "Logo size",
+          "labelAr": "حجم الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "min": 70,
+          "max": 180,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "key": "logo.position",
+          "type": "choice",
+          "label": "Logo position",
+          "labelAr": "مكان الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "options": [
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "start": "Template default",
+            "center": "Centered"
+          },
+          "optionLabelsAr": {
+            "start": "كما في القالب",
+            "center": "في المنتصف"
+          }
+        },
+        {
+          "key": "logo.name",
+          "type": "toggle",
+          "label": "Show business name",
+          "labelAr": "إظهار اسم النشاط",
           "group": "Brand",
           "groupAr": "الهوية"
         },
@@ -654,6 +754,10 @@
       "defaults": {
         "font": "classic",
         "logo": "",
+        "logo.frame": true,
+        "logo.size": 100,
+        "logo.position": "start",
+        "logo.name": true,
         "theme": "linen",
         "accent": "#8C2F39",
         "ornaments": true,
@@ -732,6 +836,54 @@
           "type": "image",
           "label": "Logo",
           "labelAr": "الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.frame",
+          "type": "toggle",
+          "label": "Logo frame",
+          "labelAr": "إطار الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.size",
+          "type": "range",
+          "label": "Logo size",
+          "labelAr": "حجم الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "min": 70,
+          "max": 180,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "key": "logo.position",
+          "type": "choice",
+          "label": "Logo position",
+          "labelAr": "مكان الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "options": [
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "start": "Template default",
+            "center": "Centered"
+          },
+          "optionLabelsAr": {
+            "start": "كما في القالب",
+            "center": "في المنتصف"
+          }
+        },
+        {
+          "key": "logo.name",
+          "type": "toggle",
+          "label": "Show business name",
+          "labelAr": "إظهار اسم النشاط",
           "group": "Brand",
           "groupAr": "الهوية"
         },
@@ -885,6 +1037,10 @@
       "defaults": {
         "font": "condensed",
         "logo": "",
+        "logo.frame": true,
+        "logo.size": 100,
+        "logo.position": "start",
+        "logo.name": true,
         "theme": "midnight",
         "accent": "#FFD23F",
         "corners": "rounded",
@@ -960,6 +1116,54 @@
           "type": "image",
           "label": "Logo",
           "labelAr": "الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.frame",
+          "type": "toggle",
+          "label": "Logo frame",
+          "labelAr": "إطار الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.size",
+          "type": "range",
+          "label": "Logo size",
+          "labelAr": "حجم الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "min": 70,
+          "max": 180,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "key": "logo.position",
+          "type": "choice",
+          "label": "Logo position",
+          "labelAr": "مكان الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "options": [
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "start": "Template default",
+            "center": "Centered"
+          },
+          "optionLabelsAr": {
+            "start": "كما في القالب",
+            "center": "في المنتصف"
+          }
+        },
+        {
+          "key": "logo.name",
+          "type": "toggle",
+          "label": "Show business name",
+          "labelAr": "إظهار اسم النشاط",
           "group": "Brand",
           "groupAr": "الهوية"
         },
@@ -1174,6 +1378,10 @@
       "defaults": {
         "font": "soft",
         "logo": "",
+        "logo.frame": true,
+        "logo.size": 100,
+        "logo.position": "start",
+        "logo.name": true,
         "theme": "blush",
         "accent": "#C2577A",
         "hero.image": "preset:sprinkles",
@@ -1259,6 +1467,54 @@
           "type": "image",
           "label": "Logo",
           "labelAr": "الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.frame",
+          "type": "toggle",
+          "label": "Logo frame",
+          "labelAr": "إطار الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.size",
+          "type": "range",
+          "label": "Logo size",
+          "labelAr": "حجم الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "min": 70,
+          "max": 180,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "key": "logo.position",
+          "type": "choice",
+          "label": "Logo position",
+          "labelAr": "مكان الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "options": [
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "start": "Template default",
+            "center": "Centered"
+          },
+          "optionLabelsAr": {
+            "start": "كما في القالب",
+            "center": "في المنتصف"
+          }
+        },
+        {
+          "key": "logo.name",
+          "type": "toggle",
+          "label": "Show business name",
+          "labelAr": "إظهار اسم النشاط",
           "group": "Brand",
           "groupAr": "الهوية"
         },
@@ -1422,6 +1678,10 @@
       "defaults": {
         "font": "grotesk",
         "logo": "",
+        "logo.frame": true,
+        "logo.size": 100,
+        "logo.position": "start",
+        "logo.name": true,
         "theme": "paper",
         "accent": "#1F3A5F",
         "corners": "rounded",
@@ -1500,6 +1760,54 @@
           "type": "image",
           "label": "Logo",
           "labelAr": "الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.frame",
+          "type": "toggle",
+          "label": "Logo frame",
+          "labelAr": "إطار الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.size",
+          "type": "range",
+          "label": "Logo size",
+          "labelAr": "حجم الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "min": 70,
+          "max": 180,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "key": "logo.position",
+          "type": "choice",
+          "label": "Logo position",
+          "labelAr": "مكان الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "options": [
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "start": "Template default",
+            "center": "Centered"
+          },
+          "optionLabelsAr": {
+            "start": "كما في القالب",
+            "center": "في المنتصف"
+          }
+        },
+        {
+          "key": "logo.name",
+          "type": "toggle",
+          "label": "Show business name",
+          "labelAr": "إظهار اسم النشاط",
           "group": "Brand",
           "groupAr": "الهوية"
         },
@@ -1645,6 +1953,10 @@
       "defaults": {
         "font": "hand",
         "logo": "",
+        "logo.frame": true,
+        "logo.size": 100,
+        "logo.position": "start",
+        "logo.name": true,
         "theme": "board",
         "accent": "#F2C14E",
         "texture": true,
@@ -1723,6 +2035,54 @@
           "type": "image",
           "label": "Logo",
           "labelAr": "الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.frame",
+          "type": "toggle",
+          "label": "Logo frame",
+          "labelAr": "إطار الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.size",
+          "type": "range",
+          "label": "Logo size",
+          "labelAr": "حجم الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "min": 70,
+          "max": 180,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "key": "logo.position",
+          "type": "choice",
+          "label": "Logo position",
+          "labelAr": "مكان الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "options": [
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "start": "Template default",
+            "center": "Centered"
+          },
+          "optionLabelsAr": {
+            "start": "كما في القالب",
+            "center": "في المنتصف"
+          }
+        },
+        {
+          "key": "logo.name",
+          "type": "toggle",
+          "label": "Show business name",
+          "labelAr": "إظهار اسم النشاط",
           "group": "Brand",
           "groupAr": "الهوية"
         },
@@ -1877,6 +2237,10 @@
       "defaults": {
         "font": "round",
         "logo": "",
+        "logo.frame": true,
+        "logo.size": 100,
+        "logo.position": "start",
+        "logo.name": true,
         "theme": "fresh",
         "accent": "#2F8F4E",
         "corners": "rounded",
@@ -1953,6 +2317,54 @@
           "type": "image",
           "label": "Logo",
           "labelAr": "الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.frame",
+          "type": "toggle",
+          "label": "Logo frame",
+          "labelAr": "إطار الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.size",
+          "type": "range",
+          "label": "Logo size",
+          "labelAr": "حجم الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "min": 70,
+          "max": 180,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "key": "logo.position",
+          "type": "choice",
+          "label": "Logo position",
+          "labelAr": "مكان الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "options": [
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "start": "Template default",
+            "center": "Centered"
+          },
+          "optionLabelsAr": {
+            "start": "كما في القالب",
+            "center": "في المنتصف"
+          }
+        },
+        {
+          "key": "logo.name",
+          "type": "toggle",
+          "label": "Show business name",
+          "labelAr": "إظهار اسم النشاط",
           "group": "Brand",
           "groupAr": "الهوية"
         },
@@ -2069,6 +2481,10 @@
       "defaults": {
         "font": "condensed",
         "logo": "",
+        "logo.frame": true,
+        "logo.size": 100,
+        "logo.position": "start",
+        "logo.name": true,
         "theme": "diner",
         "accent": "#D7263D",
         "checks": true,
@@ -2141,6 +2557,54 @@
           "type": "image",
           "label": "Logo",
           "labelAr": "الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.frame",
+          "type": "toggle",
+          "label": "Logo frame",
+          "labelAr": "إطار الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.size",
+          "type": "range",
+          "label": "Logo size",
+          "labelAr": "حجم الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "min": 70,
+          "max": 180,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "key": "logo.position",
+          "type": "choice",
+          "label": "Logo position",
+          "labelAr": "مكان الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "options": [
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "start": "Template default",
+            "center": "Centered"
+          },
+          "optionLabelsAr": {
+            "start": "كما في القالب",
+            "center": "في المنتصف"
+          }
+        },
+        {
+          "key": "logo.name",
+          "type": "toggle",
+          "label": "Show business name",
+          "labelAr": "إظهار اسم النشاط",
           "group": "Brand",
           "groupAr": "الهوية"
         },
@@ -2266,6 +2730,10 @@
       "defaults": {
         "font": "elegant",
         "logo": "",
+        "logo.frame": true,
+        "logo.size": 100,
+        "logo.position": "start",
+        "logo.name": true,
         "theme": "washi",
         "accent": "#B7282E",
         "photos": true,
@@ -2339,6 +2807,54 @@
           "type": "image",
           "label": "Logo",
           "labelAr": "الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.frame",
+          "type": "toggle",
+          "label": "Logo frame",
+          "labelAr": "إطار الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.size",
+          "type": "range",
+          "label": "Logo size",
+          "labelAr": "حجم الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "min": 70,
+          "max": 180,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "key": "logo.position",
+          "type": "choice",
+          "label": "Logo position",
+          "labelAr": "مكان الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "options": [
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "start": "Template default",
+            "center": "Centered"
+          },
+          "optionLabelsAr": {
+            "start": "كما في القالب",
+            "center": "في المنتصف"
+          }
+        },
+        {
+          "key": "logo.name",
+          "type": "toggle",
+          "label": "Show business name",
+          "labelAr": "إظهار اسم النشاط",
           "group": "Brand",
           "groupAr": "الهوية"
         },
@@ -2468,6 +2984,10 @@
       "defaults": {
         "font": "elegant",
         "logo": "",
+        "logo.frame": true,
+        "logo.size": 100,
+        "logo.position": "start",
+        "logo.name": true,
         "theme": "gingham",
         "accent": "#9E2A2B",
         "hero.eyebrow": "Est. 2019",
@@ -2543,6 +3063,54 @@
           "type": "image",
           "label": "Logo",
           "labelAr": "الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.frame",
+          "type": "toggle",
+          "label": "Logo frame",
+          "labelAr": "إطار الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.size",
+          "type": "range",
+          "label": "Logo size",
+          "labelAr": "حجم الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "min": 70,
+          "max": 180,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "key": "logo.position",
+          "type": "choice",
+          "label": "Logo position",
+          "labelAr": "مكان الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "options": [
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "start": "Template default",
+            "center": "Centered"
+          },
+          "optionLabelsAr": {
+            "start": "كما في القالب",
+            "center": "في المنتصف"
+          }
+        },
+        {
+          "key": "logo.name",
+          "type": "toggle",
+          "label": "Show business name",
+          "labelAr": "إظهار اسم النشاط",
           "group": "Brand",
           "groupAr": "الهوية"
         },
@@ -2669,6 +3237,10 @@
       "defaults": {
         "font": "classic",
         "logo": "",
+        "logo.frame": true,
+        "logo.size": 100,
+        "logo.position": "start",
+        "logo.name": true,
         "theme": "napoli",
         "accent": "#C8102E",
         "hero.title": "Wood fired, ninety seconds, done",
@@ -2738,6 +3310,62 @@
             "grotesk": "بسيط",
             "condensed": "ملصق"
           }
+        },
+        {
+          "key": "logo",
+          "type": "image",
+          "label": "Logo",
+          "labelAr": "الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.frame",
+          "type": "toggle",
+          "label": "Logo frame",
+          "labelAr": "إطار الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.size",
+          "type": "range",
+          "label": "Logo size",
+          "labelAr": "حجم الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "min": 70,
+          "max": 180,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "key": "logo.position",
+          "type": "choice",
+          "label": "Logo position",
+          "labelAr": "مكان الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "options": [
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "start": "Template default",
+            "center": "Centered"
+          },
+          "optionLabelsAr": {
+            "start": "كما في القالب",
+            "center": "في المنتصف"
+          }
+        },
+        {
+          "key": "logo.name",
+          "type": "toggle",
+          "label": "Show business name",
+          "labelAr": "إظهار اسم النشاط",
+          "group": "Brand",
+          "groupAr": "الهوية"
         },
         {
           "key": "theme",
@@ -2849,6 +3477,11 @@
       ],
       "defaults": {
         "font": "mono",
+        "logo": "",
+        "logo.frame": true,
+        "logo.size": 100,
+        "logo.position": "start",
+        "logo.name": true,
         "theme": "thermal",
         "accent": "#D3412F",
         "hero.title": "Coffee on wheels",
@@ -2921,6 +3554,54 @@
           "type": "image",
           "label": "Logo",
           "labelAr": "الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.frame",
+          "type": "toggle",
+          "label": "Logo frame",
+          "labelAr": "إطار الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.size",
+          "type": "range",
+          "label": "Logo size",
+          "labelAr": "حجم الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "min": 70,
+          "max": 180,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "key": "logo.position",
+          "type": "choice",
+          "label": "Logo position",
+          "labelAr": "مكان الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "options": [
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "start": "Template default",
+            "center": "Centered"
+          },
+          "optionLabelsAr": {
+            "start": "كما في القالب",
+            "center": "في المنتصف"
+          }
+        },
+        {
+          "key": "logo.name",
+          "type": "toggle",
+          "label": "Show business name",
+          "labelAr": "إظهار اسم النشاط",
           "group": "Brand",
           "groupAr": "الهوية"
         },
@@ -3060,6 +3741,10 @@
       "defaults": {
         "font": "soft",
         "logo": "",
+        "logo.frame": true,
+        "logo.size": 100,
+        "logo.position": "start",
+        "logo.name": true,
         "theme": "sage",
         "accent": "#3F7D4E",
         "leaves": true,
@@ -3129,6 +3814,62 @@
             "modern": "عصري",
             "mono": "أحادي المسافة"
           }
+        },
+        {
+          "key": "logo",
+          "type": "image",
+          "label": "Logo",
+          "labelAr": "الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.frame",
+          "type": "toggle",
+          "label": "Logo frame",
+          "labelAr": "إطار الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.size",
+          "type": "range",
+          "label": "Logo size",
+          "labelAr": "حجم الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "min": 70,
+          "max": 180,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "key": "logo.position",
+          "type": "choice",
+          "label": "Logo position",
+          "labelAr": "مكان الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "options": [
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "start": "Template default",
+            "center": "Centered"
+          },
+          "optionLabelsAr": {
+            "start": "كما في القالب",
+            "center": "في المنتصف"
+          }
+        },
+        {
+          "key": "logo.name",
+          "type": "toggle",
+          "label": "Show business name",
+          "labelAr": "إظهار اسم النشاط",
+          "group": "Brand",
+          "groupAr": "الهوية"
         },
         {
           "key": "theme",
@@ -3234,6 +3975,11 @@
       ],
       "defaults": {
         "font": "grotesk",
+        "logo": "",
+        "logo.frame": true,
+        "logo.size": 100,
+        "logo.position": "start",
+        "logo.name": true,
         "theme": "white",
         "accent": "#FF3B00",
         "hero.title": "Objects for everyday use. Made in small batches, sold in one room.",
@@ -3304,6 +4050,54 @@
           "type": "image",
           "label": "Logo",
           "labelAr": "الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.frame",
+          "type": "toggle",
+          "label": "Logo frame",
+          "labelAr": "إطار الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.size",
+          "type": "range",
+          "label": "Logo size",
+          "labelAr": "حجم الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "min": 70,
+          "max": 180,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "key": "logo.position",
+          "type": "choice",
+          "label": "Logo position",
+          "labelAr": "مكان الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "options": [
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "start": "Template default",
+            "center": "Centered"
+          },
+          "optionLabelsAr": {
+            "start": "كما في القالب",
+            "center": "في المنتصف"
+          }
+        },
+        {
+          "key": "logo.name",
+          "type": "toggle",
+          "label": "Show business name",
+          "labelAr": "إظهار اسم النشاط",
           "group": "Brand",
           "groupAr": "الهوية"
         },
@@ -3443,6 +4237,10 @@
       "defaults": {
         "font": "naskh",
         "logo": "",
+        "logo.frame": true,
+        "logo.size": 100,
+        "logo.position": "start",
+        "logo.name": true,
         "theme": "saffron",
         "accent": "#1F5F5B",
         "pattern": true,
@@ -3516,6 +4314,54 @@
           "type": "image",
           "label": "Logo",
           "labelAr": "الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.frame",
+          "type": "toggle",
+          "label": "Logo frame",
+          "labelAr": "إطار الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.size",
+          "type": "range",
+          "label": "Logo size",
+          "labelAr": "حجم الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "min": 70,
+          "max": 180,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "key": "logo.position",
+          "type": "choice",
+          "label": "Logo position",
+          "labelAr": "مكان الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "options": [
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "start": "Template default",
+            "center": "Centered"
+          },
+          "optionLabelsAr": {
+            "start": "كما في القالب",
+            "center": "في المنتصف"
+          }
+        },
+        {
+          "key": "logo.name",
+          "type": "toggle",
+          "label": "Show business name",
+          "labelAr": "إظهار اسم النشاط",
           "group": "Brand",
           "groupAr": "الهوية"
         },
@@ -3624,6 +4470,10 @@
       "defaults": {
         "font": "hand",
         "logo": "",
+        "logo.frame": true,
+        "logo.size": 100,
+        "logo.position": "start",
+        "logo.name": true,
         "theme": "pastel",
         "accent": "#E0457B",
         "hero.title": "Ice cream, doughnuts and cake, made today",
@@ -3695,6 +4545,54 @@
           "type": "image",
           "label": "Logo",
           "labelAr": "الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.frame",
+          "type": "toggle",
+          "label": "Logo frame",
+          "labelAr": "إطار الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.size",
+          "type": "range",
+          "label": "Logo size",
+          "labelAr": "حجم الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "min": 70,
+          "max": 180,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "key": "logo.position",
+          "type": "choice",
+          "label": "Logo position",
+          "labelAr": "مكان الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "options": [
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "start": "Template default",
+            "center": "Centered"
+          },
+          "optionLabelsAr": {
+            "start": "كما في القالب",
+            "center": "في المنتصف"
+          }
+        },
+        {
+          "key": "logo.name",
+          "type": "toggle",
+          "label": "Show business name",
+          "labelAr": "إظهار اسم النشاط",
           "group": "Brand",
           "groupAr": "الهوية"
         },
@@ -3992,6 +4890,10 @@
       "defaults": {
         "font": "elegant",
         "logo": "",
+        "logo.frame": true,
+        "logo.size": 100,
+        "logo.position": "start",
+        "logo.name": true,
         "theme": "blush",
         "accent": "#B76E79",
         "hero.eyebrow": "Hair, nails and skin",
@@ -4094,6 +4996,54 @@
           "type": "image",
           "label": "Logo",
           "labelAr": "الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.frame",
+          "type": "toggle",
+          "label": "Logo frame",
+          "labelAr": "إطار الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.size",
+          "type": "range",
+          "label": "Logo size",
+          "labelAr": "حجم الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "min": 70,
+          "max": 180,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "key": "logo.position",
+          "type": "choice",
+          "label": "Logo position",
+          "labelAr": "مكان الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "options": [
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "start": "Template default",
+            "center": "Centered"
+          },
+          "optionLabelsAr": {
+            "start": "كما في القالب",
+            "center": "في المنتصف"
+          }
+        },
+        {
+          "key": "logo.name",
+          "type": "toggle",
+          "label": "Show business name",
+          "labelAr": "إظهار اسم النشاط",
           "group": "Brand",
           "groupAr": "الهوية"
         },
@@ -4514,6 +5464,10 @@
       "defaults": {
         "font": "modern",
         "logo": "",
+        "logo.frame": true,
+        "logo.size": 100,
+        "logo.position": "start",
+        "logo.name": true,
         "theme": "fresh",
         "accent": "#1F6FEB",
         "corners": "rounded",
@@ -4640,6 +5594,54 @@
           "type": "image",
           "label": "Logo",
           "labelAr": "الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.frame",
+          "type": "toggle",
+          "label": "Logo frame",
+          "labelAr": "إطار الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.size",
+          "type": "range",
+          "label": "Logo size",
+          "labelAr": "حجم الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "min": 70,
+          "max": 180,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "key": "logo.position",
+          "type": "choice",
+          "label": "Logo position",
+          "labelAr": "مكان الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "options": [
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "start": "Template default",
+            "center": "Centered"
+          },
+          "optionLabelsAr": {
+            "start": "كما في القالب",
+            "center": "في المنتصف"
+          }
+        },
+        {
+          "key": "logo.name",
+          "type": "toggle",
+          "label": "Show business name",
+          "labelAr": "إظهار اسم النشاط",
           "group": "Brand",
           "groupAr": "الهوية"
         },
@@ -5112,6 +6114,10 @@
       "defaults": {
         "font": "bold",
         "logo": "",
+        "logo.frame": true,
+        "logo.size": 100,
+        "logo.position": "start",
+        "logo.name": true,
         "theme": "ink",
         "accent": "#D7FF3A",
         "corners": "rounded",
@@ -5249,6 +6255,54 @@
           "type": "image",
           "label": "Logo",
           "labelAr": "الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.frame",
+          "type": "toggle",
+          "label": "Logo frame",
+          "labelAr": "إطار الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.size",
+          "type": "range",
+          "label": "Logo size",
+          "labelAr": "حجم الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "min": 70,
+          "max": 180,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "key": "logo.position",
+          "type": "choice",
+          "label": "Logo position",
+          "labelAr": "مكان الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "options": [
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "start": "Template default",
+            "center": "Centered"
+          },
+          "optionLabelsAr": {
+            "start": "كما في القالب",
+            "center": "في المنتصف"
+          }
+        },
+        {
+          "key": "logo.name",
+          "type": "toggle",
+          "label": "Show business name",
+          "labelAr": "إظهار اسم النشاط",
           "group": "Brand",
           "groupAr": "الهوية"
         },
@@ -5674,6 +6728,10 @@
       "defaults": {
         "font": "condensed",
         "logo": "",
+        "logo.frame": true,
+        "logo.size": 100,
+        "logo.position": "start",
+        "logo.name": true,
         "theme": "carbon",
         "accent": "#FF4D1C",
         "corners": "rounded",
@@ -5801,6 +6859,54 @@
           "type": "image",
           "label": "Logo",
           "labelAr": "الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.frame",
+          "type": "toggle",
+          "label": "Logo frame",
+          "labelAr": "إطار الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.size",
+          "type": "range",
+          "label": "Logo size",
+          "labelAr": "حجم الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "min": 70,
+          "max": 180,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "key": "logo.position",
+          "type": "choice",
+          "label": "Logo position",
+          "labelAr": "مكان الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "options": [
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "start": "Template default",
+            "center": "Centered"
+          },
+          "optionLabelsAr": {
+            "start": "كما في القالب",
+            "center": "في المنتصف"
+          }
+        },
+        {
+          "key": "logo.name",
+          "type": "toggle",
+          "label": "Show business name",
+          "labelAr": "إظهار اسم النشاط",
           "group": "Brand",
           "groupAr": "الهوية"
         },
@@ -6225,6 +7331,10 @@
       "defaults": {
         "font": "round",
         "logo": "",
+        "logo.frame": true,
+        "logo.size": 100,
+        "logo.position": "start",
+        "logo.name": true,
         "theme": "clean",
         "accent": "#1E5BB8",
         "corners": "rounded",
@@ -6354,6 +7464,54 @@
           "type": "image",
           "label": "Logo",
           "labelAr": "الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.frame",
+          "type": "toggle",
+          "label": "Logo frame",
+          "labelAr": "إطار الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.size",
+          "type": "range",
+          "label": "Logo size",
+          "labelAr": "حجم الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "min": 70,
+          "max": 180,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "key": "logo.position",
+          "type": "choice",
+          "label": "Logo position",
+          "labelAr": "مكان الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "options": [
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "start": "Template default",
+            "center": "Centered"
+          },
+          "optionLabelsAr": {
+            "start": "كما في القالب",
+            "center": "في المنتصف"
+          }
+        },
+        {
+          "key": "logo.name",
+          "type": "toggle",
+          "label": "Show business name",
+          "labelAr": "إظهار اسم النشاط",
           "group": "Brand",
           "groupAr": "الهوية"
         },
@@ -6726,6 +7884,10 @@
       "defaults": {
         "font": "elegant",
         "logo": "",
+        "logo.frame": true,
+        "logo.size": 100,
+        "logo.position": "start",
+        "logo.name": true,
         "theme": "noir",
         "accent": "#C9A45C",
         "cta.label": "Reserve a table",
@@ -6834,6 +7996,54 @@
           "type": "image",
           "label": "Logo",
           "labelAr": "الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.frame",
+          "type": "toggle",
+          "label": "Logo frame",
+          "labelAr": "إطار الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.size",
+          "type": "range",
+          "label": "Logo size",
+          "labelAr": "حجم الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "min": 70,
+          "max": 180,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "key": "logo.position",
+          "type": "choice",
+          "label": "Logo position",
+          "labelAr": "مكان الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "options": [
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "start": "Template default",
+            "center": "Centered"
+          },
+          "optionLabelsAr": {
+            "start": "كما في القالب",
+            "center": "في المنتصف"
+          }
+        },
+        {
+          "key": "logo.name",
+          "type": "toggle",
+          "label": "Show business name",
+          "labelAr": "إظهار اسم النشاط",
           "group": "Brand",
           "groupAr": "الهوية"
         },
@@ -7215,6 +8425,10 @@
       "defaults": {
         "font": "modern",
         "logo": "",
+        "logo.frame": true,
+        "logo.size": 100,
+        "logo.position": "start",
+        "logo.name": true,
         "theme": "cream",
         "accent": "#FF5A1F",
         "corners": "rounded",
@@ -7314,6 +8528,54 @@
           "type": "image",
           "label": "Logo",
           "labelAr": "الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.frame",
+          "type": "toggle",
+          "label": "Logo frame",
+          "labelAr": "إطار الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.size",
+          "type": "range",
+          "label": "Logo size",
+          "labelAr": "حجم الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "min": 70,
+          "max": 180,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "key": "logo.position",
+          "type": "choice",
+          "label": "Logo position",
+          "labelAr": "مكان الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "options": [
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "start": "Template default",
+            "center": "Centered"
+          },
+          "optionLabelsAr": {
+            "start": "كما في القالب",
+            "center": "في المنتصف"
+          }
+        },
+        {
+          "key": "logo.name",
+          "type": "toggle",
+          "label": "Show business name",
+          "labelAr": "إظهار اسم النشاط",
           "group": "Brand",
           "groupAr": "الهوية"
         },
@@ -7700,6 +8962,10 @@
       "defaults": {
         "font": "grotesk",
         "logo": "",
+        "logo.frame": true,
+        "logo.size": 100,
+        "logo.position": "start",
+        "logo.name": true,
         "theme": "white",
         "accent": "#2447D9",
         "corners": "rounded",
@@ -7803,6 +9069,54 @@
           "type": "image",
           "label": "Logo",
           "labelAr": "الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.frame",
+          "type": "toggle",
+          "label": "Logo frame",
+          "labelAr": "إطار الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.size",
+          "type": "range",
+          "label": "Logo size",
+          "labelAr": "حجم الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "min": 70,
+          "max": 180,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "key": "logo.position",
+          "type": "choice",
+          "label": "Logo position",
+          "labelAr": "مكان الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "options": [
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "start": "Template default",
+            "center": "Centered"
+          },
+          "optionLabelsAr": {
+            "start": "كما في القالب",
+            "center": "في المنتصف"
+          }
+        },
+        {
+          "key": "logo.name",
+          "type": "toggle",
+          "label": "Show business name",
+          "labelAr": "إظهار اسم النشاط",
           "group": "Brand",
           "groupAr": "الهوية"
         },
@@ -8195,6 +9509,10 @@
       "defaults": {
         "font": "condensed",
         "logo": "",
+        "logo.frame": true,
+        "logo.size": 100,
+        "logo.position": "start",
+        "logo.name": true,
         "theme": "charcoal",
         "accent": "#FF5A1F",
         "corners": "sharp",
@@ -8299,6 +9617,54 @@
           "type": "image",
           "label": "Logo",
           "labelAr": "الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.frame",
+          "type": "toggle",
+          "label": "Logo frame",
+          "labelAr": "إطار الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.size",
+          "type": "range",
+          "label": "Logo size",
+          "labelAr": "حجم الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "min": 70,
+          "max": 180,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "key": "logo.position",
+          "type": "choice",
+          "label": "Logo position",
+          "labelAr": "مكان الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "options": [
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "start": "Template default",
+            "center": "Centered"
+          },
+          "optionLabelsAr": {
+            "start": "كما في القالب",
+            "center": "في المنتصف"
+          }
+        },
+        {
+          "key": "logo.name",
+          "type": "toggle",
+          "label": "Show business name",
+          "labelAr": "إظهار اسم النشاط",
           "group": "Brand",
           "groupAr": "الهوية"
         },
@@ -8650,6 +10016,10 @@
       "defaults": {
         "font": "soft",
         "logo": "",
+        "logo.frame": true,
+        "logo.size": 100,
+        "logo.position": "start",
+        "logo.name": true,
         "theme": "strawberry",
         "accent": "#D6467A",
         "doodles": true,

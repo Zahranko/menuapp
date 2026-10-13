@@ -1,5 +1,7 @@
 /* Template 004 "Arch Story": a sweet-shop magazine. Arched pictures, menu chapters, cards you swipe. */
 
+@import "../_kit/logo.css";
+
 .t-arch {
   container: page / inline-size;
   font-size: 15.5px;

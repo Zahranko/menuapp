@@ -1,6 +1,6 @@
 import type { TemplateProps } from "@/lib/types";
 import { itemCount } from "@/lib/i18n";
-import { ContactList, Credits, HoursList, Logo, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Arrow, Clock, Instagram, Pin } from "../_kit/icons";
@@ -30,13 +30,13 @@ export default function BentoTemplate({ site, now }: TemplateProps & { now?: Dat
   const pick = ctx.picks[0];
 
   return (
-    <div data-template="bento" className={cx("t-bento", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["round", "grotesk", "bold"], defaultAccent: "#2F8F4E", radius: { rounded: "26px", sharp: "4px" } })}>
+    <div data-template="bento" {...logoRoot(ctx)} className={cx("t-bento", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["round", "grotesk", "bold"], defaultAccent: "#2F8F4E", radius: { rounded: "26px", sharp: "4px" } })}>
       <TemplateStyles id="bento" />
       <TopBars ctx={ctx} />
-      <header className="head" data-section="header">
-        <a className="brand" href="#top">
+      <header className="head kit-head" data-section="header">
+        <a className="brand kit-lockup" href="#top">
           <Logo ctx={ctx} />
-          <span>{site.business.name}</span>
+          <BrandName ctx={ctx} />
         </a>
         {ctx.contact.instagram && (
           <a className="round-link" href={ctx.contact.instagram} rel="noopener" target="_blank" aria-label="Instagram">

@@ -30,6 +30,12 @@
       }
     },
     {
+      "key": "logo",
+      "type": "image",
+      "label": "Logo",
+      "group": "Brand"
+    },
+    {
       "key": "theme",
       "type": "palette",
       "label": "Color theme",
@@ -112,6 +118,7 @@
   ],
   "defaults": {
     "font": "grotesk",
+    "logo": "",
     "theme": "white",
     "accent": "#FF3B00",
     "hero.title": "Objects for everyday use. Made in small batches, sold in one room.",

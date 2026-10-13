@@ -1,6 +1,6 @@
 import { flag } from "@/lib/settings";
 import type { TemplateProps } from "@/lib/types";
-import { ContactList, Credits, HoursList, Logo, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Clock, Pin, WhatsApp } from "../_kit/icons";
@@ -43,13 +43,13 @@ export default function ClinicTemplate({ site, now }: TemplateProps & { now?: Da
   const questions = faqs(ctx);
 
   return (
-    <div data-template="clinic" className={cx("t-clinic", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["modern", "grotesk", "round"], defaultAccent: "#1F6FEB", radius: { rounded: "20px", sharp: "6px" } })}>
+    <div data-template="clinic" {...logoRoot(ctx)} className={cx("t-clinic", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["modern", "grotesk", "round"], defaultAccent: "#1F6FEB", radius: { rounded: "20px", sharp: "6px" } })}>
       <TemplateStyles id="clinic" />
       <TopBars ctx={ctx} />
-      <header className="head" data-section="header">
-        <a className="brand" href="#top">
+      <header className="head kit-head" data-section="header">
+        <a className="brand kit-lockup" href="#top">
           <Logo ctx={ctx} />
-          <span>{site.business.name}</span>
+          <BrandName ctx={ctx} />
         </a>
         <nav aria-label={c.menu}>
           <a href="#menu">{c.services}</a>

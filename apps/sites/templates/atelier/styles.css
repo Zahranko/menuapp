@@ -1,5 +1,7 @@
 /* Template 017 "Atelier": an editorial salon website. Full-bleed hero, price list with a Book link per service, gallery, reviews. */
 
+@import "../_kit/logo.css";
+
 .t-atelier {
   container: page / inline-size;
   font-size: 15.5px;

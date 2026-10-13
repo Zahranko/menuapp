@@ -1,6 +1,6 @@
 import { flag } from "@/lib/settings";
 import type { TemplateProps } from "@/lib/types";
-import { ContactList, Credits, HoursList, Logo, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Clock, Pin, WhatsApp } from "../_kit/icons";
@@ -48,13 +48,13 @@ export default function HandyTemplate({ site, now }: TemplateProps & { now?: Dat
     .filter(Boolean);
 
   return (
-    <div data-template="handy" className={cx("t-handy", fontVariables, book && "has-bar")} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["round", "modern", "grotesk"], defaultAccent: "#1E5BB8", radius: { rounded: "18px", sharp: "4px" } })}>
+    <div data-template="handy" {...logoRoot(ctx)} className={cx("t-handy", fontVariables, book && "has-bar")} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["round", "modern", "grotesk"], defaultAccent: "#1E5BB8", radius: { rounded: "18px", sharp: "4px" } })}>
       <TemplateStyles id="handy" />
       <TopBars ctx={ctx} />
-      <header className="head" data-section="header">
-        <a className="brand" href="#top">
+      <header className="head kit-head" data-section="header">
+        <a className="brand kit-lockup" href="#top">
           <Logo ctx={ctx} />
-          <span>{site.business.name}</span>
+          <BrandName ctx={ctx} />
         </a>
         <nav aria-label={c.menu}>
           <a href="#menu">{c.services}</a>

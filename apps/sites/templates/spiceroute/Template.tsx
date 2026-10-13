@@ -1,6 +1,6 @@
 import type { TemplateProps } from "@/lib/types";
 import { flag } from "@/lib/settings";
-import { ContactList, Credits, HoursList, Logo, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { WhatsApp } from "../_kit/icons";
@@ -57,14 +57,14 @@ export default function SpiceRouteTemplate({ site, now }: TemplateProps & { now?
   const story = ctx.on("story") && ctx.text("story.text");
 
   return (
-    <div data-template="spiceroute" className={cx("t-spice", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["naskh", "classic", "elegant"], defaultAccent: "#1F5F5B" })}>
+    <div data-template="spiceroute" {...logoRoot(ctx)} className={cx("t-spice", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["naskh", "classic", "elegant"], defaultAccent: "#1F5F5B" })}>
       <TemplateStyles id="spiceroute" />
       <TopBars ctx={ctx} />
       {pattern && <StarBand id="stars-top" />}
       <header className="head" data-section="header">
         <Logo ctx={ctx} className="medallion" />
         <p className="welcome">{ctx.text("hero.eyebrow") || c.welcome}</p>
-        <h1>{site.business.name}</h1>
+        <h1 className="kit-name">{site.business.name}</h1>
         {ctx.text("hero.title") && <p className="tagline">{ctx.text("hero.title")}</p>}
         {ctx.today && <p className="today">{ctx.today}</p>}
       </header>

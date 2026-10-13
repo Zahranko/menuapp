@@ -1,5 +1,7 @@
 /* Template 008 "Neon Diner": a neon sign, checkered strips, jukebox buttons and numbered combo cards with offset shadows. */
 
+@import "../_kit/logo.css";
+
 .t-diner {
   container: page / inline-size;
   font-size: 15px;
@@ -64,6 +66,10 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
+  }
+  &[data-logo-pos="center"] .sign-top {
+    flex-direction: column;
+    gap: 12px;
   }
   .logo {
     position: relative;

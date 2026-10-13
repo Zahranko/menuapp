@@ -1,5 +1,7 @@
 /* Template 020 "Pulse": tall athletic type, a slanted hero, pricing cards with a "most popular" ribbon, a class list and a join band. */
 
+@import "../_kit/logo.css";
+
 .t-pulse {
   container: page / inline-size;
   --slant: 5cqi;
