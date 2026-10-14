@@ -66,6 +66,77 @@ class FakeBackend {
   /// made before they existed.
   static const logoDefaults = <String, Object?>{'logo.frame': true, 'logo.size': 100, 'logo.position': 'start', 'logo.name': true};
 
+  /// The site options shared by every template (fonts, footer, social accounts, order button), added later like the
+  /// logo options: the starting draft does not have them.
+  static const siteOptionDefaults = <String, Object?>{
+    'font.family': 'default',
+    'footer.nameSize': 'large',
+    'social.show': <String>[],
+    'order.action': 'auto',
+    'order.shape': 'auto',
+    'order.label': '',
+  };
+
+  /// The shared fields as the API's template registry lists them (from the sites' _kit/site-options.json).
+  static const siteOptionFields = <Map<String, Object?>>[
+    {
+      'key': 'font.family',
+      'type': 'choice',
+      'label': 'Font',
+      'labelAr': 'الخط',
+      'group': 'Fonts & colors',
+      'groupAr': 'الخطوط والألوان',
+      'options': ['default', 'cairo', 'amiri'],
+      'optionLabels': {'default': 'Template default', 'cairo': 'Cairo', 'amiri': 'Amiri (classic)'},
+      'optionLabelsAr': {'default': 'كما في القالب', 'cairo': 'القاهرة (Cairo)', 'amiri': 'أميري، خط كلاسيكي (Amiri)'},
+    },
+    {
+      'key': 'footer.nameSize',
+      'type': 'choice',
+      'label': 'Business name size in the footer',
+      'labelAr': 'حجم اسم النشاط في أسفل الصفحة',
+      'group': 'Footer',
+      'groupAr': 'التذييل',
+      'options': ['large', 'medium', 'small'],
+      'optionLabels': {'large': 'Large (as designed)', 'medium': 'Medium', 'small': 'Small'},
+      'optionLabelsAr': {'large': 'كبير (كما في التصميم)', 'medium': 'متوسط', 'small': 'صغير'},
+    },
+    {
+      'key': 'social.show',
+      'type': 'toggles',
+      'label': 'Accounts to show on your website',
+      'labelAr': 'الحسابات التي تظهر في موقعك',
+      'group': 'Social media',
+      'groupAr': 'حسابات التواصل الاجتماعي',
+      'options': ['instagram', 'whatsapp', 'facebook', 'tiktok', 'snapchat', 'phone'],
+      'optionLabels': {'instagram': 'Instagram', 'whatsapp': 'WhatsApp', 'facebook': 'Facebook', 'tiktok': 'TikTok', 'snapchat': 'Snapchat', 'phone': 'Phone (call us)'},
+      'optionLabelsAr': {'instagram': 'إنستغرام', 'whatsapp': 'واتساب', 'facebook': 'فيسبوك', 'tiktok': 'تيك توك', 'snapchat': 'سناب شات', 'phone': 'الهاتف (اتصل بنا)'},
+    },
+    {
+      'key': 'order.action',
+      'type': 'choice',
+      'label': 'What the button does',
+      'labelAr': 'ماذا يفعل الزر',
+      'group': 'Order button',
+      'groupAr': 'زر الطلب',
+      'options': ['auto', 'whatsapp', 'call', 'instagram', 'facebook', 'hide'],
+      'optionLabels': {'auto': 'Template default', 'whatsapp': 'Order on WhatsApp', 'call': 'Call us', 'instagram': 'Open Instagram', 'facebook': 'Open Facebook', 'hide': 'Hide the button'},
+      'optionLabelsAr': {'auto': 'كما في القالب', 'whatsapp': 'اطلب عبر واتساب', 'call': 'اتصل بنا', 'instagram': 'افتح إنستغرام', 'facebook': 'افتح فيسبوك', 'hide': 'إخفاء الزر'},
+    },
+    {
+      'key': 'order.shape',
+      'type': 'choice',
+      'label': 'Button shape',
+      'labelAr': 'شكل الزر',
+      'group': 'Order button',
+      'groupAr': 'زر الطلب',
+      'options': ['auto', 'pill', 'rounded', 'circle'],
+      'optionLabels': {'auto': 'Template default', 'pill': 'Pill', 'rounded': 'Rounded square', 'circle': 'Round icon only'},
+      'optionLabelsAr': {'auto': 'كما في القالب', 'pill': 'بيضاوي', 'rounded': 'مربع بزوايا دائرية', 'circle': 'دائرة بأيقونة فقط'},
+    },
+    {'key': 'order.label', 'type': 'text', 'label': 'Button text (leave empty for the usual text)', 'labelAr': 'نص الزر (اتركه فارغًا للنص المعتاد)', 'group': 'Order button', 'groupAr': 'زر الطلب', 'max': 28},
+  ];
+
   static final templates = [
     {
       'id': 'souq',
@@ -102,13 +173,14 @@ class FakeBackend {
           'optionLabelsAr': {'start': 'كما في القالب', 'center': 'في المنتصف'},
         },
         {'key': 'logo.name', 'type': 'toggle', 'label': 'Show business name', 'labelAr': 'إظهار اسم النشاط', 'group': 'Brand', 'groupAr': 'الهوية'},
-        {'key': 'accent', 'type': 'color', 'label': 'Accent color', 'labelAr': 'اللون المميز', 'group': 'Brand', 'groupAr': 'الهوية', 'options': ['#D9542C', '#2B6B4F']},
+        {'key': 'accent', 'type': 'color', 'label': 'Accent color', 'labelAr': 'اللون المميز', 'group': 'Brand', 'groupAr': 'الهوية', 'options': ['#D9542C', '#2B6B4F'], 'custom': true},
         {'key': 'texture', 'type': 'toggle', 'label': 'Dotted texture', 'labelAr': 'خلفية منقطة', 'group': 'Brand', 'groupAr': 'الهوية'},
         // No Arabic texts: the English ones show in Arabic too.
         {'key': 'hero.title', 'type': 'text', 'label': 'Headline', 'group': 'Hero header', 'max': 60},
         {'key': 'sparkles', 'type': 'hologram', 'label': 'Future setting', 'group': 'Hero header'},
+        ...siteOptionFields,
       ],
-      'defaults': {...souqDefaults, ...logoDefaults},
+      'defaults': {...souqDefaults, ...logoDefaults, ...siteOptionDefaults},
       'defaultsAr': {'hero.title': 'قهوة تستحق المشوار.'},
     },
     {
@@ -173,7 +245,10 @@ class FakeBackend {
         if (currency != null && !currencyDecimals.containsKey(currency)) {
           return (status: 400, body: {'title': 'Check the highlighted fields.', 'status': 400, 'code': 'business.currency', 'errors': {'currencyCode': ['Choose a currency from the list.']}});
         }
-        for (final k in ['name', 'whatsApp', 'address', 'instagram', 'email', 'timeZone']) {
+        if ((body['facebook'] as String?)?.contains(' ') ?? false) {
+          return (status: 400, body: {'title': 'Check the highlighted fields.', 'status': 400, 'code': 'business.facebook', 'errors': {'facebook': ['Enter your Facebook page name or link, like facebook.com/vanillamenu.']}});
+        }
+        for (final k in ['name', 'whatsApp', 'address', 'instagram', 'phone', 'facebook', 'tikTok', 'snapchat', 'email', 'timeZone']) {
           if (body.containsKey(k)) businessData[k] = body[k];
         }
         if (currency != null && currency != businessData['currencyCode']) {

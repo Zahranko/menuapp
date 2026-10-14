@@ -27,6 +27,7 @@ class TemplateField {
     this.min,
     this.step,
     this.unit,
+    this.custom = false,
   });
 
   factory TemplateField.fromJson(Map<String, dynamic> json) {
@@ -47,6 +48,7 @@ class TemplateField {
       min: (json['min'] as num?)?.toDouble(),
       step: (json['step'] as num?)?.toDouble(),
       unit: _text(json['unit']),
+      custom: json['custom'] == true,
     );
   }
 
@@ -75,6 +77,9 @@ class TemplateField {
 
   /// Shown after a range's value, for example "%" for the logo size; null for a plain number.
   final String? unit;
+
+  /// A color field that also takes the owner's own color (any #RRGGBB), not only its [options].
+  final bool custom;
 
   String optionLabel(String option) => optionLabels[option] ?? option;
 

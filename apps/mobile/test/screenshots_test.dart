@@ -35,8 +35,8 @@ Future<void> _loadFonts() async {
   }
 }
 
-Future<void> _pump(WidgetTester tester, {required bool signedIn, FakeBackend? backend}) async {
-  tester.platformDispatcher.localesTestValue = const [Locale('ar')];
+Future<void> _pump(WidgetTester tester, {required bool signedIn, FakeBackend? backend, Locale locale = const Locale('ar')}) async {
+  tester.platformDispatcher.localesTestValue = [locale];
   addTearDown(tester.platformDispatcher.clearLocalesTestValue);
   tester.view.physicalSize = const Size(780, 1688);
   tester.view.devicePixelRatio = 2;
@@ -126,6 +126,58 @@ void main() {
     await _pump(tester, signedIn: true, backend: _arabicMenu());
     await tester.pumpAndSettle();
     await _save(tester, 'dashboard-ar');
+  });
+
+  // The shared site options in the design editor (fonts and colors, footer, social media, order button).
+  Future<void> openEditor(WidgetTester tester, Locale locale) async {
+    final backend = locale.languageCode == 'ar' ? _arabicMenu() : FakeBackend();
+    backend.businessData['instagram'] = 'vanillamenu';
+    backend.businessData['whatsApp'] = '+15555550123';
+    await _pump(tester, signedIn: true, backend: backend, locale: locale);
+    await tester.pumpAndSettle();
+    await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text(locale.languageCode == 'ar' ? 'الإعدادات' : 'Settings')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(locale.languageCode == 'ar' ? 'تعديل التصميم' : 'Edit design'));
+    await tester.pumpAndSettle();
+  }
+
+  Future<void> scrollToTop(WidgetTester tester, Finder finder) async {
+    await tester.scrollUntilVisible(finder, 300, scrollable: find.byType(Scrollable).hitTestable().first);
+    await tester.pumpAndSettle();
+    // Put the found widget near the top of the list.
+    await tester.drag(find.byType(Scrollable).hitTestable().first, Offset(0, -(tester.getTopLeft(finder).dy - 400)));
+    await tester.pumpAndSettle();
+  }
+
+  for (final locale in const [Locale('en'), Locale('ar')]) {
+    final lang = locale.languageCode;
+    _shot('$lang editor: social media and order button', (tester) async {
+      await openEditor(tester, locale);
+      await scrollToTop(tester, find.text(lang == 'ar' ? 'حسابات التواصل الاجتماعي' : 'Social media'));
+      await _save(tester, 'editor-social-$lang');
+      await scrollToTop(tester, find.text(lang == 'ar' ? 'زر الطلب' : 'Order button'));
+      await _save(tester, 'editor-order-button-$lang');
+    });
+  }
+
+  _shot('editor: fonts and the custom color picker', (tester) async {
+    await openEditor(tester, const Locale('en'));
+    await scrollToTop(tester, find.text('Fonts & colors'));
+    await _save(tester, 'editor-fonts-en');
+    await tester.scrollUntilVisible(find.byKey(const Key('setting-accent-custom')), -300, scrollable: find.byType(Scrollable).hitTestable().first);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('setting-accent-custom')));
+    await tester.pumpAndSettle();
+    await _save(tester, 'editor-custom-color-en');
+  });
+
+  _shot('Arabic business info with social accounts', (tester) async {
+    await _pump(tester, signedIn: true, backend: _arabicMenu()..businessData['facebook'] = 'vanillamenu', locale: const Locale('ar'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('الإعدادات')));
+    await tester.pumpAndSettle();
+    await scrollToTop(tester, find.text('حسابات التواصل والاتصال'));
+    await _save(tester, 'settings-social-ar');
   });
 }
 

@@ -1867,6 +1867,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Change language'**
   String get changeLanguage;
+
+  /// No description provided for @phoneForCalls.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone for calls'**
+  String get phoneForCalls;
+
+  /// No description provided for @phoneForCallsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave empty to use your WhatsApp number'**
+  String get phoneForCallsHint;
+
+  /// No description provided for @facebook.
+  ///
+  /// In en, this message translates to:
+  /// **'Facebook'**
+  String get facebook;
+
+  /// No description provided for @facebookHint.
+  ///
+  /// In en, this message translates to:
+  /// **'facebook.com/vanillamenu'**
+  String get facebookHint;
+
+  /// No description provided for @tikTok.
+  ///
+  /// In en, this message translates to:
+  /// **'TikTok'**
+  String get tikTok;
+
+  /// No description provided for @tikTokHint.
+  ///
+  /// In en, this message translates to:
+  /// **'@vanillamenu'**
+  String get tikTokHint;
+
+  /// No description provided for @snapchat.
+  ///
+  /// In en, this message translates to:
+  /// **'Snapchat'**
+  String get snapchat;
+
+  /// No description provided for @snapchatHint.
+  ///
+  /// In en, this message translates to:
+  /// **'vanillamenu'**
+  String get snapchatHint;
+
+  /// No description provided for @socialAccounts.
+  ///
+  /// In en, this message translates to:
+  /// **'Social media and calls'**
+  String get socialAccounts;
+
+  /// No description provided for @socialAccountsSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Type your username or paste the link to your page. Choose which ones show on your website in Edit design, under Social media.'**
+  String get socialAccountsSub;
+
+  /// No description provided for @customColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Your own color'**
+  String get customColor;
+
+  /// No description provided for @customColorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick your color'**
+  String get customColorTitle;
+
+  /// No description provided for @colorHue.
+  ///
+  /// In en, this message translates to:
+  /// **'Color'**
+  String get colorHue;
+
+  /// No description provided for @colorSaturation.
+  ///
+  /// In en, this message translates to:
+  /// **'Strength'**
+  String get colorSaturation;
+
+  /// No description provided for @colorBrightness.
+  ///
+  /// In en, this message translates to:
+  /// **'Brightness'**
+  String get colorBrightness;
+
+  /// No description provided for @colorHexLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Color code'**
+  String get colorHexLabel;
+
+  /// No description provided for @colorHexInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Use a code like #D9542C'**
+  String get colorHexInvalid;
+
+  /// No description provided for @colorReadableNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Your website keeps text readable on this color.'**
+  String get colorReadableNote;
+
+  /// No description provided for @useColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Use this color'**
+  String get useColor;
+
+  /// No description provided for @accountMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'Add it in Business info first'**
+  String get accountMissing;
 }
 
 class _AppLocalizationsDelegate

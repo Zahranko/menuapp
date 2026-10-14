@@ -401,7 +401,7 @@ void main() {
     expect(find.text('100%'), findsOneWidget);
     final slider = tester.widget<Slider>(find.byKey(const Key('setting-logo.size')));
     expect((slider.min, slider.max, slider.divisions), (70.0, 180.0, 11));
-    expect(find.text('Template default'), findsOneWidget);
+    expect(find.text('Template default'), findsWidgets);
 
     for (final finder in [find.text('Centered'), find.byKey(const Key('setting-logo.name'))]) {
       await tester.ensureVisible(finder);
@@ -426,9 +426,10 @@ void main() {
     await tester.tap(find.text('تعديل التصميم'));
     await tester.pumpAndSettle();
     await scrollTo(tester, find.text('إظهار اسم النشاط'));
-    for (final label in ['إطار الشعار', 'حجم الشعار', 'مكان الشعار', 'كما في القالب', 'في المنتصف']) {
+    for (final label in ['إطار الشعار', 'حجم الشعار', 'مكان الشعار', 'في المنتصف']) {
       expect(find.text(label), findsOneWidget, reason: label);
     }
+    expect(find.text('كما في القالب'), findsWidgets);
   });
 
   testWidgets('in Arabic, sub-categories are indented from the right', (tester) async {
@@ -521,6 +522,159 @@ void main() {
     expect(find.text('Font style'), findsOneWidget);
     expect(find.text('Elegant'), findsOneWidget);
     expect(find.text('نمط الخط'), findsNothing);
+  });
+
+  group('site options', () {
+    Future<void> openEditor(WidgetTester tester, FakeBackend backend, {AppLanguage? language}) async {
+      await pumpSignedIn(tester, backend, language: language == null ? null : MemoryLanguageStore(language));
+      await openTab(tester, language == AppLanguage.ar ? 'الإعدادات' : 'Settings');
+      await tester.tap(find.text(language == AppLanguage.ar ? 'تعديل التصميم' : 'Edit design'));
+      await tester.pumpAndSettle();
+    }
+
+    /// The chip [label] of the choice field that also has the chip [sibling] (several fields have "Template default").
+    Finder chipNear(String sibling, String label) => find.descendant(
+          of: find.ancestor(of: find.widgetWithText(ChoiceChip, sibling), matching: find.byType(Wrap)).first,
+          matching: find.widgetWithText(ChoiceChip, label),
+        );
+    bool selected(WidgetTester tester, Finder chip) => tester.widget<ChoiceChip>(chip).selected;
+
+    testWidgets('the editor groups the shared options, shows their defaults and saves changes', (tester) async {
+      final backend = FakeBackend();
+      expect(backend.draft.containsKey('order.action'), isFalse, reason: 'a site made before the shared options existed');
+      backend.businessData['instagram'] = 'vanillamenu';
+      await openEditor(tester, backend);
+
+      // The editor list only scrolls down here, so the checks follow the screen's order.
+      await scrollTo(tester, find.text('Fonts & colors'));
+      await scrollTo(tester, find.text('Amiri (classic)'));
+      expect(selected(tester, chipNear('Cairo', 'Template default')), isTrue, reason: 'a missing setting shows its default');
+      await scrollTo(tester, find.text('Footer'));
+      await scrollTo(tester, find.text('Large (as designed)'));
+      expect(selected(tester, find.widgetWithText(ChoiceChip, 'Large (as designed)')), isTrue);
+      await scrollTo(tester, find.text('Social media'));
+      await scrollTo(tester, find.byKey(const Key('setting-social.show-phone')));
+      SwitchListTile toggle(String network) => tester.widget<SwitchListTile>(find.byKey(Key('setting-social.show-$network')));
+      for (final network in ['instagram', 'whatsapp', 'facebook', 'tiktok', 'snapchat', 'phone']) {
+        expect(toggle(network).value, isFalse, reason: network);
+      }
+      // Instagram is filled in; the others say where to add them first.
+      expect(toggle('instagram').subtitle, isNull);
+      expect(find.text('Add it in Business info first'), findsNWidgets(5));
+      await tapIn(tester, find.byKey(const Key('setting-social.show-instagram')));
+      await tapIn(tester, find.byKey(const Key('setting-social.show-phone')));
+
+      await scrollTo(tester, find.text('Order button'));
+      await scrollTo(tester, find.text('Round icon only'));
+      expect(selected(tester, chipNear('Call us', 'Template default')), isTrue);
+      expect(selected(tester, chipNear('Pill', 'Template default')), isTrue);
+      await tapIn(tester, find.widgetWithText(ChoiceChip, 'Call us'));
+      await tapIn(tester, find.widgetWithText(ChoiceChip, 'Round icon only'));
+      await scrollTo(tester, find.byKey(const Key('setting-order.label')));
+      await tester.enterText(find.byKey(const Key('setting-order.label')), 'Ring us');
+      await tester.pump(EditorScreen.saveDelay);
+      await tester.pumpAndSettle();
+
+      expect(backend.draft['social.show'], ['instagram', 'phone']);
+      expect(backend.draft['order.action'], 'call');
+      expect(backend.draft['order.shape'], 'circle');
+      expect(backend.draft['order.label'], 'Ring us');
+      expect(backend.draft['footer.nameSize'], 'large');
+      expect(backend.draft['font.family'], 'default');
+    });
+
+    testWidgets('a font and the owner\'s own accent color are saved', (tester) async {
+      final backend = FakeBackend();
+      await openEditor(tester, backend);
+
+      await tapIn(tester, find.byKey(const Key('setting-accent-custom')));
+      expect(find.text('Pick your color'), findsOneWidget);
+      expect(find.text('Your website keeps text readable on this color.'), findsOneWidget);
+      await tester.enterText(find.byKey(const Key('color-code')), '#12');
+      await tester.tap(find.byKey(const Key('color-use')));
+      await tester.pumpAndSettle();
+      expect(find.text('Use a code like #D9542C'), findsOneWidget, reason: 'an incomplete code is refused');
+      await tester.enterText(find.byKey(const Key('color-code')), '0e7c86');
+      await tester.tap(find.byKey(const Key('color-use')));
+      await tester.pumpAndSettle();
+      expect(find.text('Pick your color'), findsNothing);
+      await tester.pump(EditorScreen.saveDelay);
+      await tester.pumpAndSettle();
+      expect(backend.draft['accent'], '#0E7C86');
+      expect(find.descendant(of: find.byKey(const Key('setting-accent-custom')), matching: find.byIcon(Icons.check)), findsOneWidget);
+
+      // The sliders change the color too; cancel keeps the saved one.
+      await tapIn(tester, find.byKey(const Key('setting-accent-custom')));
+      expect(tester.widget<TextField>(find.byKey(const Key('color-code'))).controller!.text, '#0E7C86');
+      tester.widget<Slider>(find.byKey(const Key('color-brightness'))).onChanged!(0);
+      await tester.pumpAndSettle();
+      expect(tester.widget<TextField>(find.byKey(const Key('color-code'))).controller!.text, '#000000');
+      await tester.tap(find.text('Cancel'));
+      await tester.pumpAndSettle();
+
+      await scrollTo(tester, find.text('Amiri (classic)'));
+      await tapIn(tester, find.widgetWithText(ChoiceChip, 'Amiri (classic)'));
+      await tester.pump(EditorScreen.saveDelay);
+      await tester.pumpAndSettle();
+      expect(backend.draft['font.family'], 'amiri');
+      expect(backend.draft['accent'], '#0E7C86');
+    });
+
+    testWidgets('the shared options are in Arabic for Arabic owners', (tester) async {
+      await openEditor(tester, FakeBackend(), language: AppLanguage.ar);
+      for (final label in [
+        'الخطوط والألوان',
+        'الخط',
+        'التذييل',
+        'كبير (كما في التصميم)',
+        'حسابات التواصل الاجتماعي',
+        'سناب شات',
+        'زر الطلب',
+        'ماذا يفعل الزر',
+        'دائرة بأيقونة فقط',
+        'نص الزر (اتركه فارغًا للنص المعتاد)',
+      ]) {
+        await scrollTo(tester, find.text(label));
+        expect(find.text(label), findsOneWidget, reason: label);
+        if (label == 'سناب شات') expect(find.text('أضفه أولًا في معلومات النشاط'), findsWidgets);
+      }
+      expect(find.text('Order button'), findsNothing);
+    });
+
+    testWidgets('Settings saves the social accounts and the phone for calls, and shows their errors', (tester) async {
+      final backend = FakeBackend();
+      await pumpSignedIn(tester, backend);
+      await openTab(tester, 'Settings');
+      await scrollTo(tester, find.text('Social media and calls'));
+      Finder field(String label) => find.descendant(of: find.ancestor(of: find.text(label), matching: find.byType(Column)).first, matching: find.byType(TextField));
+      Future<void> type(String label, String text) async {
+        await scrollTo(tester, find.text(label));
+        await tester.enterText(field(label), text);
+      }
+
+      await type('Facebook', 'vanilla menu');
+      await type('TikTok', '@vanillamenu');
+      await type('Snapchat', 'vanillasnap');
+      await type('Phone for calls', '+15555550199');
+      await tapIn(tester, find.text('Save changes'));
+      expect(find.text('Enter your Facebook page name or link, like facebook.com/vanillamenu.'), findsOneWidget);
+      expect(backend.businessData['tikTok'], isNull, reason: 'nothing is saved while a field is wrong');
+
+      await type('Facebook', 'facebook.com/vanillamenu');
+      await tapIn(tester, find.text('Save changes'));
+      expect(backend.businessData['facebook'], 'facebook.com/vanillamenu');
+      expect(backend.businessData['tikTok'], '@vanillamenu');
+      expect(backend.businessData['snapchat'], 'vanillasnap');
+      expect(backend.businessData['phone'], '+15555550199');
+      expect(find.text('Enter your Facebook page name or link, like facebook.com/vanillamenu.'), findsNothing);
+    });
+  });
+
+  test('a color field parses whether it takes the owner\'s own color', () {
+    final souq = TemplateInfo.fromJson(Map<String, dynamic>.from(FakeBackend.templates[0]));
+    expect(souq.fields.firstWhere((f) => f.key == 'accent').custom, isTrue);
+    expect(souq.fields.firstWhere((f) => f.key == 'font').custom, isFalse);
+    expect(souq.defaultsFor('en')['order.action'], 'auto');
   });
 
   test('templates parse Arabic texts, and missing ones fall back to English', () {

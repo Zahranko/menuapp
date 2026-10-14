@@ -94,6 +94,10 @@ class _BusinessCardState extends ConsumerState<_BusinessCard> {
   final _whatsApp = TextEditingController();
   final _address = TextEditingController();
   final _instagram = TextEditingController();
+  final _phone = TextEditingController();
+  final _facebook = TextEditingController();
+  final _tikTok = TextEditingController();
+  final _snapchat = TextEditingController();
   Map<String, String> _errors = {};
   bool _busy = false;
   bool _changingCurrency = false;
@@ -108,12 +112,16 @@ class _BusinessCardState extends ConsumerState<_BusinessCard> {
       _whatsApp.text = b.whatsApp ?? '';
       _address.text = b.address ?? '';
       _instagram.text = b.instagram ?? '';
+      _phone.text = b.phone ?? '';
+      _facebook.text = b.facebook ?? '';
+      _tikTok.text = b.tikTok ?? '';
+      _snapchat.text = b.snapchat ?? '';
     }
   }
 
   @override
   void dispose() {
-    for (final c in [_name, _whatsApp, _address, _instagram]) {
+    for (final c in [_name, _whatsApp, _address, _instagram, _phone, _facebook, _tikTok, _snapchat]) {
       c.dispose();
     }
     super.dispose();
@@ -134,6 +142,10 @@ class _BusinessCardState extends ConsumerState<_BusinessCard> {
             whatsApp: clean(_whatsApp),
             address: clean(_address),
             instagram: clean(_instagram)?.replaceFirst('@', ''),
+            phone: clean(_phone),
+            facebook: clean(_facebook),
+            tikTok: clean(_tikTok),
+            snapchat: clean(_snapchat),
             email: auth is SignedIn ? auth.business.email : null,
           );
       ref.read(authControllerProvider.notifier).businessChanged(business);
@@ -141,7 +153,7 @@ class _BusinessCardState extends ConsumerState<_BusinessCard> {
     } on ApiError catch (e) {
       if (!mounted) return;
       setState(() => _errors = {
-            for (final k in ['name', 'whatsApp', 'address', 'instagram'])
+            for (final k in ['name', 'whatsApp', 'address', 'instagram', 'phone', 'facebook', 'tikTok', 'snapchat'])
               if (e.field(k) != null) k: e.field(k)!,
           });
       if (_errors.isEmpty) showMessage(context, errorText(t, e));
@@ -190,6 +202,10 @@ class _BusinessCardState extends ConsumerState<_BusinessCard> {
             whatsApp: b.whatsApp,
             address: b.address,
             instagram: b.instagram,
+            phone: b.phone,
+            facebook: b.facebook,
+            tikTok: b.tikTok,
+            snapchat: b.snapchat,
             email: b.email,
             currencyCode: picked,
           );
@@ -216,9 +232,29 @@ class _BusinessCardState extends ConsumerState<_BusinessCard> {
       const SizedBox(height: 14),
       LabeledField(label: t.address, controller: _address, error: _errors['address'], icon: Icons.place_outlined),
       const SizedBox(height: 14),
-      LabeledField(label: t.instagram, hint: '@vanillamenu', controller: _instagram, error: _errors['instagram'], textInputAction: TextInputAction.done, icon: Icons.alternate_email_rounded),
-      const SizedBox(height: 14),
       CurrencyRow(code: currency, enabled: !_changingCurrency, onTap: _changeCurrency),
+      const SizedBox(height: 22),
+      Text(t.socialAccounts, style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: BrandColors.ink)),
+      const SizedBox(height: 4),
+      Text(t.socialAccountsSub, style: TextStyle(color: BrandColors.muted, fontSize: 13, height: 1.4)),
+      const SizedBox(height: 14),
+      LabeledField(label: t.instagram, hint: '@vanillamenu', controller: _instagram, error: _errors['instagram'], keyboardType: TextInputType.url, icon: Icons.camera_alt_outlined),
+      const SizedBox(height: 14),
+      LabeledField(label: t.facebook, hint: t.facebookHint, controller: _facebook, error: _errors['facebook'], keyboardType: TextInputType.url, icon: Icons.facebook_rounded),
+      const SizedBox(height: 14),
+      LabeledField(label: t.tikTok, hint: t.tikTokHint, controller: _tikTok, error: _errors['tikTok'], keyboardType: TextInputType.url, icon: Icons.music_note_outlined),
+      const SizedBox(height: 14),
+      LabeledField(label: t.snapchat, hint: t.snapchatHint, controller: _snapchat, error: _errors['snapchat'], keyboardType: TextInputType.url, icon: Icons.chat_bubble_outline_rounded),
+      const SizedBox(height: 14),
+      LabeledField(
+        label: t.phoneForCalls,
+        hint: t.phoneForCallsHint,
+        controller: _phone,
+        error: _errors['phone'],
+        keyboardType: TextInputType.phone,
+        textInputAction: TextInputAction.done,
+        icon: Icons.call_outlined,
+      ),
       const SizedBox(height: 18),
       BusyButton(label: t.saveChanges, busyLabel: t.saving, busy: _busy, onPressed: _save),
     ]);

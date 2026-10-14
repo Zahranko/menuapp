@@ -1040,4 +1040,66 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get changeLanguage => 'Change language';
+
+  @override
+  String get phoneForCalls => 'Phone for calls';
+
+  @override
+  String get phoneForCallsHint => 'Leave empty to use your WhatsApp number';
+
+  @override
+  String get facebook => 'Facebook';
+
+  @override
+  String get facebookHint => 'facebook.com/vanillamenu';
+
+  @override
+  String get tikTok => 'TikTok';
+
+  @override
+  String get tikTokHint => '@vanillamenu';
+
+  @override
+  String get snapchat => 'Snapchat';
+
+  @override
+  String get snapchatHint => 'vanillamenu';
+
+  @override
+  String get socialAccounts => 'Social media and calls';
+
+  @override
+  String get socialAccountsSub =>
+      'Type your username or paste the link to your page. Choose which ones show on your website in Edit design, under Social media.';
+
+  @override
+  String get customColor => 'Your own color';
+
+  @override
+  String get customColorTitle => 'Pick your color';
+
+  @override
+  String get colorHue => 'Color';
+
+  @override
+  String get colorSaturation => 'Strength';
+
+  @override
+  String get colorBrightness => 'Brightness';
+
+  @override
+  String get colorHexLabel => 'Color code';
+
+  @override
+  String get colorHexInvalid => 'Use a code like #D9542C';
+
+  @override
+  String get colorReadableNote =>
+      'Your website keeps text readable on this color.';
+
+  @override
+  String get useColor => 'Use this color';
+
+  @override
+  String get accountMissing => 'Add it in Business info first';
 }

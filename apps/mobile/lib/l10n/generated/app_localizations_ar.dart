@@ -1033,4 +1033,65 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get changeLanguage => 'تغيير اللغة';
+
+  @override
+  String get phoneForCalls => 'رقم الهاتف للاتصال';
+
+  @override
+  String get phoneForCallsHint => 'اتركه فارغًا لاستخدام رقم واتساب';
+
+  @override
+  String get facebook => 'فيسبوك';
+
+  @override
+  String get facebookHint => 'facebook.com/vanillamenu';
+
+  @override
+  String get tikTok => 'تيك توك';
+
+  @override
+  String get tikTokHint => '@vanillamenu';
+
+  @override
+  String get snapchat => 'سناب شات';
+
+  @override
+  String get snapchatHint => 'vanillamenu';
+
+  @override
+  String get socialAccounts => 'حسابات التواصل والاتصال';
+
+  @override
+  String get socialAccountsSub =>
+      'اكتب اسم المستخدم أو الصق رابط صفحتك. اختر ما يظهر منها في موقعك من تعديل التصميم، في قسم حسابات التواصل الاجتماعي.';
+
+  @override
+  String get customColor => 'لونك الخاص';
+
+  @override
+  String get customColorTitle => 'اختر لونك';
+
+  @override
+  String get colorHue => 'اللون';
+
+  @override
+  String get colorSaturation => 'قوة اللون';
+
+  @override
+  String get colorBrightness => 'السطوع';
+
+  @override
+  String get colorHexLabel => 'رمز اللون';
+
+  @override
+  String get colorHexInvalid => 'استخدم رمزًا مثل ‎#D9542C';
+
+  @override
+  String get colorReadableNote => 'يحافظ موقعك على وضوح النص فوق هذا اللون.';
+
+  @override
+  String get useColor => 'استخدم هذا اللون';
+
+  @override
+  String get accountMissing => 'أضفه أولًا في معلومات النشاط';
 }

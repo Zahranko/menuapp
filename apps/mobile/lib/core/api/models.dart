@@ -11,6 +11,10 @@ class Business {
     this.email,
     this.address,
     this.instagram,
+    this.phone,
+    this.facebook,
+    this.tikTok,
+    this.snapchat,
     this.locale = 'en',
     this.currencyCode = defaultCurrencyCode,
   });
@@ -24,6 +28,10 @@ class Business {
         email: json['email'] as String?,
         address: json['address'] as String?,
         instagram: json['instagram'] as String?,
+        phone: json['phone'] as String?,
+        facebook: json['facebook'] as String?,
+        tikTok: json['tikTok'] as String?,
+        snapchat: json['snapchat'] as String?,
         locale: json['locale'] as String? ?? 'en',
         currencyCode: json['currencyCode'] as String? ?? defaultCurrencyCode,
       );
@@ -36,6 +44,14 @@ class Business {
   final String? email;
   final String? address;
   final String? instagram;
+
+  /// The number customers call; the website's "Call us" uses the WhatsApp number when it is empty.
+  final String? phone;
+
+  /// Facebook page name (or "profile.php?id=…"), TikTok and Snapchat usernames, as the API stores them.
+  final String? facebook;
+  final String? tikTok;
+  final String? snapchat;
   final String locale;
   final String currencyCode;
 

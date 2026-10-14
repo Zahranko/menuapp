@@ -66,13 +66,29 @@ class MenuRepository {
       });
 
   /// Saves business info. [currencyCode], when given, changes what prices show in: their numbers stay the same.
-  Future<Business> updateBusiness({required String name, String? whatsApp, String? address, String? instagram, String? email, String? currencyCode}) =>
+  /// Every field is sent (a full update): pass the saved value for anything that should stay as it is.
+  Future<Business> updateBusiness({
+    required String name,
+    String? whatsApp,
+    String? address,
+    String? instagram,
+    String? email,
+    String? currencyCode,
+    String? phone,
+    String? facebook,
+    String? tikTok,
+    String? snapchat,
+  }) =>
       _call(() async {
         final response = await _dio.put<Map<String, dynamic>>('/api/v1/business', data: {
           'name': name,
           'whatsApp': whatsApp,
           'address': address,
           'instagram': instagram,
+          'phone': phone,
+          'facebook': facebook,
+          'tikTok': tikTok,
+          'snapchat': snapchat,
           'email': email,
           'currencyCode': ?currencyCode,
         });

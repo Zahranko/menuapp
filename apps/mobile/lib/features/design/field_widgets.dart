@@ -8,6 +8,9 @@ import '../../core/theme.dart';
 import '../../core/widgets/form_widgets.dart';
 import '../../core/widgets/ui.dart';
 import '../../l10n/generated/app_localizations.dart';
+import '../../core/api/models.dart';
+import '../auth/auth_controller.dart';
+import 'color_picker.dart';
 import 'design_models.dart';
 
 /// Field types the editor knows. Others are skipped (with a log line) so a newer template never breaks the app.
@@ -32,6 +35,7 @@ class SettingField extends StatelessWidget {
       'images' => _ImagesSetting(field: field, value: [for (final v in (value as List?) ?? const []) v.toString()], onChanged: onChanged),
       'range' => _RangeSetting(field: field, value: (value as num?)?.toDouble() ?? field.min ?? 0, onChanged: onChanged),
       'toggle' || 'bool' => null,
+      'toggles' when field.key == socialShowKey => _SocialTogglesSetting(field: field, value: [for (final v in (value as List?) ?? const []) v.toString()], onChanged: onChanged),
       'toggles' => _TogglesSetting(field: field, value: [for (final v in (value as List?) ?? const []) v.toString()], onChanged: onChanged),
       'hours' => _HoursSetting(value: Map<String, dynamic>.from((value as Map?) ?? const {}), onChanged: onChanged),
       _ => null,
@@ -115,10 +119,7 @@ class _ChoiceSetting extends StatelessWidget {
       ]);
 }
 
-Color? _hex(String? hex) {
-  if (hex == null || !RegExp(r'^#[0-9a-fA-F]{6}$').hasMatch(hex)) return null;
-  return Color(int.parse('FF${hex.substring(1)}', radix: 16));
-}
+Color? _hex(String? hex) => colorFromHex(hex);
 
 /// Round swatches: the option's own color for "color", the theme's swatch for "palette".
 class _SwatchSetting extends StatelessWidget {
@@ -129,7 +130,12 @@ class _SwatchSetting extends StatelessWidget {
   final ValueChanged<Object?> onChanged;
 
   @override
-  Widget build(BuildContext context) => Wrap(spacing: 10, runSpacing: 10, children: [
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
+    final own = field.type == 'color' && field.custom;
+    // A color the owner picked themselves (not one of the template's swatches) shows in the last swatch.
+    final ownColor = own && value != null && !field.options.any((o) => o.toLowerCase() == value!.toLowerCase()) ? _hex(value) : null;
+    return Wrap(spacing: 10, runSpacing: 10, children: [
         for (final o in field.options)
           Tooltip(
             message: field.optionLabelFor(context, o),
@@ -153,7 +159,38 @@ class _SwatchSetting extends StatelessWidget {
               ),
             ),
           ),
+        if (own)
+          Tooltip(
+            message: t.customColor,
+            child: Semantics(
+              button: true,
+              selected: ownColor != null,
+              label: t.customColor,
+              child: InkWell(
+                key: Key('setting-${field.key}-custom'),
+                customBorder: const CircleBorder(),
+                onTap: () async {
+                  final picked = await pickColor(context, initial: value ?? (field.options.isEmpty ? '#D9542C' : field.options.first));
+                  if (picked != null) onChanged(picked);
+                },
+                child: Container(
+                  width: 44,
+                  height: 44,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: ownColor,
+                    gradient: ownColor == null
+                        ? const SweepGradient(colors: [Color(0xFFE53935), Color(0xFFFDD835), Color(0xFF43A047), Color(0xFF1E88E5), Color(0xFF8E24AA), Color(0xFFE53935)])
+                        : null,
+                    border: Border.all(color: ownColor != null ? BrandColors.primary : BrandColors.line, width: ownColor != null ? 3 : 1),
+                  ),
+                  child: Icon(ownColor != null ? Icons.check : Icons.colorize_rounded, size: 18, color: ownColor != null && ownColor.computeLuminance() < 0.4 ? Colors.white : BrandColors.ink),
+                ),
+              ),
+            ),
+          ),
       ]);
+  }
 }
 
 class _RangeSetting extends StatelessWidget {
@@ -205,6 +242,52 @@ class _TogglesSetting extends StatelessWidget {
             onChanged: (on) => onChanged([for (final x in field.options) if (x == o ? on : value.contains(x)) x]),
           ),
       ]);
+}
+
+/// The shared "Accounts to show on your website" setting (see the sites' _kit/site-options.json).
+const socialShowKey = 'social.show';
+
+/// Whether the business filled in the account behind a "social.show" option. "phone" falls back to the WhatsApp number,
+/// like the website's "Call us".
+bool hasAccount(Business b, String network) {
+  bool filled(String? v) => v != null && v.trim().isNotEmpty;
+  return switch (network) {
+    'instagram' => filled(b.instagram),
+    'whatsapp' => filled(b.whatsApp),
+    'facebook' => filled(b.facebook),
+    'tiktok' => filled(b.tikTok),
+    'snapchat' => filled(b.snapchat),
+    'phone' => filled(b.phone) || filled(b.whatsApp),
+    _ => true,
+  };
+}
+
+/// The social accounts toggles; an account the business has not filled in says where to add it (the website skips it).
+class _SocialTogglesSetting extends ConsumerWidget {
+  const _SocialTogglesSetting({required this.field, required this.value, required this.onChanged});
+
+  final TemplateField field;
+  final List<String> value;
+  final ValueChanged<Object?> onChanged;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = AppLocalizations.of(context);
+    final auth = ref.watch(authControllerProvider);
+    final business = auth is SignedIn ? auth.business : null;
+    return Column(children: [
+      for (final o in field.options)
+        SwitchListTile(
+          key: Key('setting-${field.key}-$o'),
+          dense: true,
+          contentPadding: EdgeInsets.zero,
+          title: Text(field.optionLabelFor(context, o)),
+          subtitle: business != null && !hasAccount(business, o) ? Text(t.accountMissing, style: TextStyle(color: BrandColors.muted)) : null,
+          value: value.contains(o),
+          onChanged: (on) => onChanged([for (final x in field.options) if (x == o ? on : value.contains(x)) x]),
+        ),
+    ]);
+  }
 }
 
 /// Uploads a photo for an image setting and returns its address, or null when cancelled or failed.
