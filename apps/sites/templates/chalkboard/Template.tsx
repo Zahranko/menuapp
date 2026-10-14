@@ -1,6 +1,7 @@
 import { flag } from "@/lib/settings";
 import type { TemplateProps } from "@/lib/types";
-import { ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { ContactList, Credits, HoursList, Logo, logoRoot, optionRoot, OrderFab, ProductPicture, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { WhatsApp } from "../_kit/icons";
@@ -61,9 +62,10 @@ export default function ChalkBoardTemplate({ site, now }: TemplateProps & { now?
   const special = ctx.on("special") ? ctx.picks[0] : undefined;
   const story = ctx.on("story") && ctx.text("story.text");
 
+  const order = orderButton(site, { label: c.order });
   return (
     <div
-      data-template="chalkboard" {...logoRoot(ctx)}
+      data-template="chalkboard" {...logoRoot(ctx)} {...optionRoot(ctx, order)}
       className={cx("t-chalk", dust && "dust", fontVariables)}
       style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["hand", "round", "condensed"], defaultAccent: "#F2C14E" })}
     >
@@ -185,9 +187,11 @@ export default function ChalkBoardTemplate({ site, now }: TemplateProps & { now?
         </main>
 
         <footer className="foot" data-section="footer">
+          <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
           <Credits ctx={ctx} />
         </footer>
       </div>
+      <OrderFab order={order} />
       <ProductSheet ctx={ctx} />
     </div>
   );

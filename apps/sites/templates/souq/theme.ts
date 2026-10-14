@@ -1,7 +1,9 @@
 import type { CSSProperties } from "react";
 import { accentTokens, isDark, readable } from "../_kit/color";
 import { fontPairs, forLocale } from "../_kit/fonts";
-import { choice, flag, text } from "@/lib/settings";
+import { typeface } from "../_kit/options";
+import { accentColor } from "../_kit/theme";
+import { choice, flag } from "@/lib/settings";
 import type { Settings } from "@/lib/types";
 
 /** Souq's four color themes, from the prototype. */
@@ -18,8 +20,8 @@ export const THEME_NAMES = Object.keys(THEMES) as ThemeName[];
 /** The prototype's siteVars(): every color, font and radius as a CSS variable on the site's root element. */
 export function souqVars(settings: Settings, locale: string): CSSProperties {
   const theme = THEMES[choice(settings, "theme", THEME_NAMES, "cream")];
-  const font = forLocale(fontPairs[choice(settings, "font", ["modern", "elegant", "bold"] as const, "modern")], locale);
-  const accent = accentTokens(text(settings, "accent", "#D9542C"), theme.bg, theme.surf, theme.ink);
+  const font = typeface(settings, locale) ?? forLocale(fontPairs[choice(settings, "font", ["modern", "elegant", "bold"] as const, "modern")], locale);
+  const accent = accentTokens(accentColor(settings, "#D9542C"), theme.bg, theme.surf, theme.ink);
   const dark = isDark(theme.bg);
   return {
     "--sbg": theme.bg,

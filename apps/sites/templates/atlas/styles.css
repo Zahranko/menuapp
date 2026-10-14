@@ -6,6 +6,7 @@
  */
 
 @import "../_kit/logo.css";
+@import "../_kit/options.css";
 
 .t-atlas {
   --pad: clamp(16px, 4vw, 48px);
@@ -1319,6 +1320,7 @@
   }
   .a-socials {
     display: flex;
+    flex-wrap: wrap;
     gap: 4px;
     margin-inline-start: -10px;
   }
@@ -1360,9 +1362,7 @@
     line-height: 1.1;
     padding-bottom: 6px;
     letter-spacing: calc(var(--ft) * 1.5);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: clip;
+    text-wrap: balance;
     color: var(--ink);
     user-select: none;
   }

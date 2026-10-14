@@ -1,5 +1,6 @@
 import type { TemplateProps } from "@/lib/types";
-import { ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { ContactList, Credits, HoursList, Logo, logoRoot, optionRoot, OrderFab, ProductPicture, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { WhatsApp } from "../_kit/icons";
@@ -25,8 +26,9 @@ export default function PolaroidTemplate({ site, now }: TemplateProps & { now?: 
   const c = copy[ctx.locale];
   const story = ctx.on("story") && ctx.text("story.text");
 
+  const order = orderButton(site, { label: c.order });
   return (
-    <div data-template="polaroid" {...logoRoot(ctx)} className={cx("t-polaroid", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["hand", "round", "soft"], defaultAccent: "#E0457B" })}>
+    <div data-template="polaroid" {...logoRoot(ctx)} {...optionRoot(ctx, order)} className={cx("t-polaroid", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["hand", "round", "soft"], defaultAccent: "#E0457B" })}>
       <TemplateStyles id="polaroid" />
       <TopBars ctx={ctx} />
       <header className="head" data-section="header">
@@ -125,8 +127,10 @@ export default function PolaroidTemplate({ site, now }: TemplateProps & { now?: 
       </main>
 
       <footer className="foot" data-section="footer">
+        <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
         <Credits ctx={ctx} />
       </footer>
+      <OrderFab order={order} />
       <ProductSheet ctx={ctx} />
     </div>
   );

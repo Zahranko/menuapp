@@ -400,7 +400,11 @@
       "wed": "07:30-22:00",
       "thu": "07:30-23:00",
       "fri": "09:00-23:00"
-    }
+    },
+    "social.show": [
+      "instagram",
+      "whatsapp"
+    ]
   },
   "defaultsAr": {
     "hero.sticker": "محمّصة هذا الأسبوع",

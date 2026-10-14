@@ -78,6 +78,24 @@ export function instagramLink(handle: string): string {
   return `https://instagram.com/${handle.replace(/^@/, "")}`;
 }
 
+/** A Facebook page name ("vanillamenu" or "profile.php?id=…", as the API stores it) → its address. */
+export function facebookLink(page: string): string {
+  return `https://www.facebook.com/${page.replace(/^@/, "")}`;
+}
+
+export function tiktokLink(handle: string): string {
+  return `https://www.tiktok.com/@${handle.replace(/^@/, "")}`;
+}
+
+export function snapchatLink(handle: string): string {
+  return `https://www.snapchat.com/add/${handle.replace(/^@/, "")}`;
+}
+
+/** "tel:" link for a phone number: the leading + and the digits only. */
+export function phoneLink(phone: string): string {
+  return `tel:${phone.trim().startsWith("+") ? "+" : ""}${phone.replace(/[^0-9]/g, "")}`;
+}
+
 /** First letter for logo badges, falling back to a dot for names without letters. */
 export function initial(name: string): string {
   return (name.trim()[0] ?? "•").toUpperCase();

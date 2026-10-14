@@ -7,6 +7,7 @@
  */
 
 @import "../_kit/logo.css";
+@import "../_kit/options.css";
 
 .bl {
   --wrap: 1160px;
@@ -419,7 +420,15 @@
     transform: scale(0.9);
   }
 
+  /* The shared order button floats above the dock on phones. */
+  .kit-fab {
+    bottom: calc(var(--dock-h) + 22px + env(safe-area-inset-bottom));
+  }
+
   @media (min-width: 960px) {
+    .kit-fab {
+      bottom: max(16px, env(safe-area-inset-bottom));
+    }
     .top {
       position: sticky;
       top: 12px;
@@ -1504,6 +1513,7 @@
   .foot-brand {
     flex-direction: column;
     flex: none;
+    max-width: 100%;
     gap: 10px;
   }
   .foot-brand .brand-logo {
@@ -1514,6 +1524,7 @@
   .foot-brand .brand-name {
     font-size: calc(28px * var(--fs));
     white-space: normal;
+    text-align: center;
   }
   .foot-note {
     font: 700 22px / 1.3 var(--hand);
@@ -1547,6 +1558,8 @@
   }
   .socials {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 10px;
   }
   .socials a {

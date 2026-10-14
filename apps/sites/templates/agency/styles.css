@@ -1,6 +1,7 @@
 /* Template 019 "Agency": giant type on a dark page, a moving strip of services, numbered service rows that light up, work grid, process. */
 
 @import "../_kit/logo.css";
+@import "../_kit/options.css";
 
 .t-agency {
   container: page / inline-size;
@@ -577,6 +578,15 @@
     color: var(--muted);
   }
 
+  /* Social accounts the owner shows (_kit/options.css draws the round icon links). */
+  .foot-social {
+    justify-content: flex-start;
+    margin-bottom: 16px;
+    color: var(--acc-text);
+  }
+  .foot-social a {
+    border-color: color-mix(in srgb, currentColor 40%, transparent);
+  }
   .foot {
     padding: 0 18px 28px;
     color: var(--muted);
@@ -588,13 +598,17 @@
     letter-spacing: -0.04em;
     color: var(--ink);
     opacity: 0.1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: clip;
+    /* A long name wraps (even one long word) instead of running off the screen. */
+    overflow-wrap: anywhere;
+    text-wrap: balance;
   }
   .foot-name::before {
     /* Decorative watermark, drawn by CSS so it is not read or contrast-checked as text. */
     content: attr(data-name);
+  }
+  &[data-foot-name] .foot-name::before {
+    display: block;
+    font-size: calc(1em * var(--foot-scale));
   }
   .credits {
     display: flex;

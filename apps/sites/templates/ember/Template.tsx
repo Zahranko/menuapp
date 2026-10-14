@@ -3,11 +3,12 @@ import { whatsappLink } from "@/lib/format";
 import { itemCount } from "@/lib/i18n";
 import { choice, flag, image, list, number, text } from "@/lib/settings";
 import type { TemplateProps } from "@/lib/types";
-import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, FootName, HoursList, Logo, logoRoot, optionRoot, OrderContent, orderLink, ProductPicture, ProductSheet, SocialIcons, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext, type SiteContext } from "../_kit/context";
 import { Drawer } from "../_kit/Drawer";
 import { fontVariables } from "../_kit/fonts";
-import { Arrow, Close, Instagram, Pin, WhatsApp } from "../_kit/icons";
+import { Arrow, Close, Pin } from "../_kit/icons";
 import { Picture } from "../_kit/Picture";
 import { hasHours, type MenuItem } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
@@ -75,13 +76,15 @@ export default function EmberTemplate({ site, path = [], base, now }: TemplatePr
     orderLabel: text(site.settings, "cta.label") || e.orderNow,
   };
   const style = themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: FONTS, defaultAccent: "#FF5A1F", radius: { rounded: "16px", sharp: "0px" } });
+  const order = orderButton(site, { label: v.orderLabel });
 
   return (
     <div
       data-template="ember"
       {...logoRoot(ctx)}
+      {...optionRoot(ctx, order, true)}
       data-page={page.kind}
-      className={cx("em", fontVariables, `cards-${v.cards}`, ctx.rtl && "is-ar", flag(site.settings, "grain", true) && "grain", flag(site.settings, "motion", true) && "motion", v.order && "has-pill")}
+      className={cx("em", fontVariables, `cards-${v.cards}`, ctx.rtl && "is-ar", flag(site.settings, "grain", true) && "grain", flag(site.settings, "motion", true) && "motion", order && "has-pill")}
       style={style}
     >
       <TemplateStyles id="ember" />
@@ -102,10 +105,9 @@ export default function EmberTemplate({ site, path = [], base, now }: TemplatePr
         </main>
       )}
       <Footer v={v} />
-      {v.order && (
-        <a className="pill" href={v.order} target="_blank" rel="noopener noreferrer" data-section="order">
-          <WhatsApp />
-          <span>{v.orderLabel}</span>
+      {order && (
+        <a className="pill kit-order" {...orderLink(order)} data-section="order">
+          <OrderContent order={order} icon />
         </a>
       )}
       <ProductSheet ctx={ctx} />
@@ -743,26 +745,21 @@ function VisitPage({ v }: { v: View }) {
 
 /* ---------- footer ---------- */
 
+/** What the footer showed before the owner could choose (also the manifest's "social.show" default). */
+const SOCIAL_DEFAULT = ["instagram", "whatsapp"] as const;
+
 function Footer({ v }: { v: View }) {
   const { ctx, c, e, href, tree } = v;
   const { site, contact } = ctx;
   const tagline = ctx.text("footer.text");
+  const social = socialAccounts(site, SOCIAL_DEFAULT);
   return (
     <footer className="foot" data-section="footer">
       <div className="foot-in">
         <div className="foot-brand">
           {tagline && <p className="foot-text">{tagline}</p>}
           <div className="socials">
-            {contact.instagram && (
-              <a href={contact.instagram} target="_blank" rel="noopener noreferrer" aria-label={ctx.t.instagram}>
-                <Instagram />
-              </a>
-            )}
-            {contact.whatsapp && (
-              <a href={contact.whatsapp} target="_blank" rel="noopener noreferrer" aria-label={ctx.t.phone}>
-                <WhatsApp />
-              </a>
-            )}
+            <SocialIcons accounts={social} />
             {contact.maps && (
               <a href={contact.maps} target="_blank" rel="noopener noreferrer" aria-label={ctx.t.directions}>
                 <Pin />
@@ -804,9 +801,7 @@ function Footer({ v }: { v: View }) {
           </nav>
         )}
       </div>
-      <p className="foot-mark" aria-hidden="true">
-        {site.business.name}
-      </p>
+      <FootName ctx={ctx} className="foot-mark" decorative />
       <Credits ctx={ctx} />
     </footer>
   );

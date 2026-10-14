@@ -1,6 +1,7 @@
 /* Template 004 "Arch Story": a sweet-shop magazine. Arched pictures, menu chapters, cards you swipe. */
 
 @import "../_kit/logo.css";
+@import "../_kit/options.css";
 
 .t-arch {
   container: page / inline-size;
@@ -365,6 +366,15 @@
     margin-top: 18px;
   }
 
+  /* Social accounts the owner shows (_kit/options.css draws the round icon links). */
+  .foot-social {
+    justify-content: center;
+    margin-bottom: 16px;
+    color: var(--acc-text);
+  }
+  .foot-social a {
+    border-color: color-mix(in srgb, currentColor 40%, transparent);
+  }
   .foot {
     padding: 50px 18px 26px;
     color: var(--muted);

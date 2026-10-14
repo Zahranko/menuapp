@@ -1,6 +1,7 @@
 import { flag } from "@/lib/settings";
 import type { TemplateProps } from "@/lib/types";
-import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, optionRoot, OrderFab, ProductPicture, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Clock, Pin, WhatsApp } from "../_kit/icons";
@@ -42,8 +43,9 @@ export default function ClinicTemplate({ site, now }: TemplateProps & { now?: Da
   const how = steps(ctx);
   const questions = faqs(ctx);
 
+  const order = orderButton(site, { label: c.book, whatsapp: book });
   return (
-    <div data-template="clinic" {...logoRoot(ctx)} className={cx("t-clinic", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["modern", "grotesk", "round"], defaultAccent: "#1F6FEB", radius: { rounded: "20px", sharp: "6px" } })}>
+    <div data-template="clinic" {...logoRoot(ctx)} {...optionRoot(ctx, order)} className={cx("t-clinic", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["modern", "grotesk", "round"], defaultAccent: "#1F6FEB", radius: { rounded: "20px", sharp: "6px" } })}>
       <TemplateStyles id="clinic" />
       <TopBars ctx={ctx} />
       <header className="head kit-head" data-section="header">
@@ -236,8 +238,10 @@ export default function ClinicTemplate({ site, now }: TemplateProps & { now?: Da
       </main>
 
       <footer className="foot" data-section="footer">
+        <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
         <Credits ctx={ctx} />
       </footer>
+      <OrderFab order={order} />
       <ProductSheet ctx={ctx} services />
     </div>
   );

@@ -1,5 +1,6 @@
 import { CategoryTabs } from "../_kit/CategoryTabs";
-import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, FootName, HoursList, Logo, logoRoot, optionRoot, OrderContent, orderLink, ProductPicture, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Arrow, Clock, WhatsApp } from "../_kit/icons";
@@ -29,11 +30,12 @@ export default function NightMarketTemplate({ site, now }: TemplateProps & { now
   const hero = ctx.image("hero.image");
   const sticker = ctx.text("hero.sticker");
   const [lead, ...rest] = ctx.picks;
+  const order = orderButton(site, { label: c.order });
 
   return (
     <div
-      data-template="nightmarket" {...logoRoot(ctx)}
-      className={cx("t-night", fontVariables, ctx.contact.whatsapp && "has-order")}
+      data-template="nightmarket" {...logoRoot(ctx)} {...optionRoot(ctx, order, true)}
+      className={cx("t-night", fontVariables, order && "has-order")}
       style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["condensed", "bold", "grotesk"], defaultAccent: "#FFD23F", radius: { rounded: "20px", sharp: "0px" } })}
     >
       <TemplateStyles id="nightmarket" />
@@ -174,13 +176,14 @@ export default function NightMarketTemplate({ site, now }: TemplateProps & { now
       </main>
 
       <footer className="foot" data-section="footer">
-        <span className="foot-name">{site.business.name}</span>
+        <FootName ctx={ctx} as="span" className="foot-name" />
+        <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
         <Credits ctx={ctx} />
       </footer>
 
-      {ctx.contact.whatsapp && (
-        <a className="order-bar" href={ctx.contact.whatsapp} rel="noopener" target="_blank">
-          <WhatsApp /> {c.order}
+      {order && (
+        <a className="order-bar kit-order" {...orderLink(order)}>
+          <OrderContent order={order} icon />
         </a>
       )}
       <ProductSheet ctx={ctx} />

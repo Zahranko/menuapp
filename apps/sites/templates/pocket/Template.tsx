@@ -1,6 +1,7 @@
 import { whatsappLink } from "@/lib/format";
 import type { TemplateProps } from "@/lib/types";
-import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, optionRoot, OrderFab, ProductPicture, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { CatalogControls } from "../_kit/CatalogControls";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
@@ -33,9 +34,10 @@ export default function PocketCatalogTemplate({ site, now }: TemplateProps & { n
   // Featured first, then menu order; the sort control can reorder by price.
   const order = new Map([...products].sort((a, b) => Number(b.isFeatured) - Number(a.isFeatured)).map((p, i) => [p.id, i]));
 
+  const orderFab = orderButton(site);
   return (
     <div
-      data-template="pocket" {...logoRoot(ctx)}
+      data-template="pocket" {...logoRoot(ctx)} {...optionRoot(ctx, orderFab)}
       className={cx("t-pocket", fontVariables)}
       style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["grotesk", "modern", "bold"], defaultAccent: "#1F3A5F", radius: { rounded: "16px", sharp: "0px" } })}
     >
@@ -147,8 +149,10 @@ export default function PocketCatalogTemplate({ site, now }: TemplateProps & { n
       </main>
 
       <footer className="foot" data-section="footer">
+        <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
         <Credits ctx={ctx} />
       </footer>
+      <OrderFab order={orderFab} />
       <ProductSheet ctx={ctx} />
     </div>
   );

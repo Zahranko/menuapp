@@ -1,5 +1,6 @@
 import type { TemplateProps } from "@/lib/types";
-import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, optionRoot, OrderFab, ProductPicture, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Arrow, Clock, WhatsApp } from "../_kit/icons";
@@ -34,8 +35,9 @@ export default function PulseTemplate({ site, now }: TemplateProps & { now?: Dat
   // One plan gets the ribbon: the first featured plan that can be joined.
   const popular = plans?.products.find((p) => p.isFeatured && p.isAvailable)?.id;
 
+  const order = orderButton(site, { label: c.join, whatsapp: join });
   return (
-    <div data-template="pulse" {...logoRoot(ctx)} className={cx("t-pulse", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["condensed", "bold", "grotesk"], defaultAccent: "#FF4D1C", radius: { rounded: "16px", sharp: "0px" } })}>
+    <div data-template="pulse" {...logoRoot(ctx)} {...optionRoot(ctx, order)} className={cx("t-pulse", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["condensed", "bold", "grotesk"], defaultAccent: "#FF4D1C", radius: { rounded: "16px", sharp: "0px" } })}>
       <TemplateStyles id="pulse" />
       <TopBars ctx={ctx} />
       <header className="head kit-head" data-section="header">
@@ -259,8 +261,10 @@ export default function PulseTemplate({ site, now }: TemplateProps & { now?: Dat
       </main>
 
       <footer className="foot" data-section="footer">
+        <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
         <Credits ctx={ctx} />
       </footer>
+      <OrderFab order={order} />
       <ProductSheet ctx={ctx} services />
     </div>
   );

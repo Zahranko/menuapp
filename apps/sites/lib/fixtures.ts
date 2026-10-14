@@ -504,8 +504,39 @@ export function fixturePreview(token: string): PublicSite | null {
     site.business = { ...site.business, locale: "ar" };
     site.settings = { ...site.settings, ...arabicDefaultsFor(templateId) };
   }
-  if (logo) site.settings = { ...site.settings, ...fixtureLogoSettings(logo, site.business.slug) };
+  if (logo) {
+    site.settings = { ...site.settings, ...fixtureLogoSettings(logo, site.business.slug) };
+    applySiteOptions(site, logo);
+  }
   return site;
+}
+
+/** Long business names for footer tests: one with spaces, one long word, in English and Arabic (all within 60 characters). */
+export const LONG_NAMES = {
+  en: { name: "The Golden Spoon Family Restaurant and Café of Old Town", word: "Supercalifragilisticexpialidociousbakeryandcafe" },
+  ar: { name: "مطعم ومقهى الملعقة الذهبية العائلي في البلدة القديمة", word: "مخبزالملعقةالذهبيةالعائليةللحلوياتوالمعجناتالشرقية" },
+};
+
+/**
+ * Site options for a fixture preview, from the same token part as the logo options ("-" between options):
+ * "longname" / "longword" (a long business name), "foot:medium" / "foot:small" (footer name size), "social" (every
+ * account shown), "order:<action>" (whatsapp, call, instagram, facebook, hide), "shape:<shape>" (pill, rounded, circle),
+ * "font:<name>" (a shared font, see _kit/fonts.ts), "accent:<rrggbb>" (a custom accent color) and "nowa" (no WhatsApp).
+ */
+export function applySiteOptions(site: PublicSite, options: string): void {
+  const locale = site.business.locale === "ar" ? "ar" : "en";
+  for (const option of options.split("-")) {
+    const [key, value = ""] = option.split(":");
+    if (key === "longname") site.business = { ...site.business, name: LONG_NAMES[locale].name };
+    else if (key === "longword") site.business = { ...site.business, name: LONG_NAMES[locale].word };
+    else if (key === "nowa") site.business = { ...site.business, whatsApp: null };
+    else if (key === "social") site.settings = { ...site.settings, "social.show": ["instagram", "whatsapp", "facebook", "tiktok", "snapchat", "phone"] };
+    else if (key === "foot") site.settings = { ...site.settings, "footer.nameSize": value };
+    else if (key === "order") site.settings = { ...site.settings, "order.action": value };
+    else if (key === "shape") site.settings = { ...site.settings, "order.shape": value };
+    else if (key === "font") site.settings = { ...site.settings, "font.family": value };
+    else if (key === "accent") site.settings = { ...site.settings, accent: `#${value.toUpperCase()}` };
+  }
 }
 
 /** Host of the sample logo in fixture previews; it does not exist, so tests and screenshots answer it themselves. */

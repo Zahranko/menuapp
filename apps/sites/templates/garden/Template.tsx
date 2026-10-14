@@ -1,6 +1,7 @@
 import type { TemplateProps } from "@/lib/types";
 import { flag } from "@/lib/settings";
-import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, optionRoot, OrderFab, ProductPicture, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { WhatsApp } from "../_kit/icons";
@@ -46,8 +47,9 @@ export default function GardenTemplate({ site, now }: TemplateProps & { now?: Da
   const hero = ctx.image("hero.image");
   const story = ctx.on("story") && ctx.text("story.text");
 
+  const order = orderButton(site, { label: c.order });
   return (
-    <div data-template="garden" {...logoRoot(ctx)} className={cx("t-garden", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["soft", "round", "elegant"], defaultAccent: "#3F7D4E" })}>
+    <div data-template="garden" {...logoRoot(ctx)} {...optionRoot(ctx, order)} className={cx("t-garden", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["soft", "round", "elegant"], defaultAccent: "#3F7D4E" })}>
       <TemplateStyles id="garden" />
       <TopBars ctx={ctx} />
       <header className="head kit-head" data-section="header">
@@ -153,8 +155,10 @@ export default function GardenTemplate({ site, now }: TemplateProps & { now?: Da
       </main>
 
       <footer className="foot" data-section="footer">
+        <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
         <Credits ctx={ctx} />
       </footer>
+      <OrderFab order={order} />
       <ProductSheet ctx={ctx} />
     </div>
   );

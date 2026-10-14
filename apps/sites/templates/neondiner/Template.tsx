@@ -1,6 +1,7 @@
 import type { TemplateProps } from "@/lib/types";
 import { flag } from "@/lib/settings";
-import { ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { ContactList, Credits, HoursList, Logo, logoRoot, optionRoot, OrderFab, ProductPicture, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { WhatsApp } from "../_kit/icons";
@@ -89,9 +90,10 @@ export default function NeonDinerTemplate({
     ctx.sections.flatMap((s) => s.products).map((p, i) => [p.id, i + 1]),
   );
 
+  const order = orderButton(site, { label: c.order });
   return (
     <div
-      data-template="neondiner" {...logoRoot(ctx)}
+      data-template="neondiner" {...logoRoot(ctx)} {...optionRoot(ctx, order)}
       className={cx("t-diner", fontVariables)}
       style={themeVars(site.settings, ctx.locale, {
         palettes: PALETTES,
@@ -242,8 +244,10 @@ export default function NeonDinerTemplate({
 
       <Strip on={checks} />
       <footer className="foot" data-section="footer">
+        <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
         <Credits ctx={ctx} />
       </footer>
+      <OrderFab order={order} />
       <ProductSheet ctx={ctx} />
     </div>
   );

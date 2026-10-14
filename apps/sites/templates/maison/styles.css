@@ -6,6 +6,7 @@
  */
 
 @import "../_kit/logo.css";
+@import "../_kit/options.css";
 
 html.mx-locked {
   overflow: hidden;
@@ -1493,6 +1494,8 @@ html.mx-locked {
   }
   .mx-socials {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 10px;
   }
   .mx-socials a {

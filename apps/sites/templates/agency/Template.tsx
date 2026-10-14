@@ -1,6 +1,7 @@
 import { flag } from "@/lib/settings";
 import type { TemplateProps } from "@/lib/types";
-import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, optionRoot, OrderFab, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Arrow, Mail, WhatsApp } from "../_kit/icons";
@@ -38,8 +39,9 @@ export default function AgencyTemplate({ site, now }: TemplateProps & { now?: Da
   // Numbering runs across groups: 01, 02 in the first group, 03 in the next, and so on.
   const offsets = ctx.sections.map((_, i) => ctx.sections.slice(0, i).reduce((n, s) => n + s.products.length, 0));
 
+  const order = orderButton(site, { label: c.start, whatsapp: book });
   return (
-    <div data-template="agency" {...logoRoot(ctx)} className={cx("t-agency", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["bold", "grotesk", "modern", "condensed"], defaultAccent: "#D7FF3A", radius: { rounded: "22px", sharp: "0px" } })}>
+    <div data-template="agency" {...logoRoot(ctx)} {...optionRoot(ctx, order)} className={cx("t-agency", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["bold", "grotesk", "modern", "condensed"], defaultAccent: "#D7FF3A", radius: { rounded: "22px", sharp: "0px" } })}>
       <TemplateStyles id="agency" />
       <TopBars ctx={ctx} />
       <header className="head kit-head" data-section="header">
@@ -244,8 +246,10 @@ export default function AgencyTemplate({ site, now }: TemplateProps & { now?: Da
 
       <footer className="foot" data-section="footer">
         <p className="foot-name" data-name={site.business.name} aria-hidden="true" />
+        <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
         <Credits ctx={ctx} />
       </footer>
+      <OrderFab order={order} />
       <ProductSheet ctx={ctx} services />
     </div>
   );

@@ -1,5 +1,6 @@
 import type { TemplateProps } from "@/lib/types";
-import { ContactList, Credits, HoursList, Logo, logoRoot, ProductSheet, TopBars } from "../_kit/blocks";
+import { ContactList, Credits, HoursList, Logo, logoRoot, optionRoot, OrderFab, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { WhatsApp } from "../_kit/icons";
@@ -110,9 +111,10 @@ export default function TicketTemplate({
   const location = ctx.text("location");
   const count = ctx.sections.reduce((n, s) => n + s.products.length, 0);
 
+  const order = orderButton(site, { label: c.order });
   return (
     <div
-      data-template="ticket" {...logoRoot(ctx)}
+      data-template="ticket" {...logoRoot(ctx)} {...optionRoot(ctx, order)}
       className={cx("t-ticket", fontVariables)}
       style={themeVars(site.settings, ctx.locale, {
         palettes: PALETTES,
@@ -248,10 +250,12 @@ export default function TicketTemplate({
           <footer className="foot" data-section="footer">
             <p className="thanks">{ctx.text("thanks") || c.thanks}</p>
             <Barcode name={site.business.name} />
+            <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
             <Credits ctx={ctx} />
           </footer>
         </div>
       </div>
+      <OrderFab order={order} />
       <ProductSheet ctx={ctx} />
     </div>
   );

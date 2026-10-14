@@ -1,5 +1,6 @@
 import type { TemplateProps } from "@/lib/types";
-import { ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { ContactList, Credits, HoursList, Logo, logoRoot, optionRoot, OrderFab, ProductPicture, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { hasHours } from "../_kit/site-data";
@@ -27,8 +28,9 @@ export default function MonoGridTemplate({ site, now }: TemplateProps & { now?: 
   const story = ctx.on("story") && ctx.text("story.text");
   const numbers = new Map(ctx.sections.flatMap((s) => s.products).map((p, i) => [p.id, i + 1]));
 
+  const order = orderButton(site);
   return (
-    <div data-template="monogrid" {...logoRoot(ctx)} className={cx("t-mono", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["grotesk", "modern", "mono"], defaultAccent: "#FF3B00", radius: { rounded: "0px", sharp: "0px" } })}>
+    <div data-template="monogrid" {...logoRoot(ctx)} {...optionRoot(ctx, order)} className={cx("t-mono", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["grotesk", "modern", "mono"], defaultAccent: "#FF3B00", radius: { rounded: "0px", sharp: "0px" } })}>
       <TemplateStyles id="monogrid" />
       <TopBars ctx={ctx} />
       <header className="head" data-section="header">
@@ -120,8 +122,10 @@ export default function MonoGridTemplate({ site, now }: TemplateProps & { now?: 
       </main>
 
       <footer className="foot" data-section="footer">
+        <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
         <Credits ctx={ctx} />
       </footer>
+      <OrderFab order={order} />
       <ProductSheet ctx={ctx} />
     </div>
   );

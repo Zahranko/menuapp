@@ -1,9 +1,13 @@
 import { madeWith } from "@/lib/i18n";
-import { Instagram, Mail, WhatsApp } from "../../_kit/icons";
+import { Mail } from "../../_kit/icons";
 import type { SouqContext } from "../context";
-import { BrandName } from "../../_kit/blocks";
+import { FootName, SocialIcons } from "../../_kit/blocks";
+import { socialAccounts } from "../../_kit/options";
 import { Logo, navLinks } from "./Header";
 import { MadeWithLink } from "@/components/brand/logo-mark";
+
+/** What Souq's footer showed before the owner could choose: Instagram and WhatsApp (also its manifest's default). */
+export const SOUQ_SOCIAL = ["instagram", "whatsapp"] as const;
 
 export function Footer({ ctx }: { ctx: SouqContext }) {
   const { business } = ctx.site;
@@ -16,20 +20,11 @@ export function Footer({ ctx }: { ctx: SouqContext }) {
           <div>
             <div className="brand">
               <Logo ctx={ctx} />
-              <BrandName ctx={ctx} className="brandName" />
+              <FootName ctx={ctx} as="span" className="brandName kit-name" />
             </div>
             {ctx.text("hero.subtitle") && <p>{ctx.text("hero.subtitle")}</p>}
             <div className="soc">
-              {contact.instagram && (
-                <a href={contact.instagram} rel="noopener" target="_blank" aria-label={t.instagram}>
-                  <Instagram />
-                </a>
-              )}
-              {contact.whatsapp && (
-                <a href={contact.whatsapp} rel="noopener" target="_blank" aria-label={c.whatsapp}>
-                  <WhatsApp />
-                </a>
-              )}
+              <SocialIcons accounts={socialAccounts(ctx.site, SOUQ_SOCIAL)} />
               {contact.email && (
                 <a href={contact.email} aria-label={c.email}>
                   <Mail />
@@ -69,7 +64,7 @@ export function Footer({ ctx }: { ctx: SouqContext }) {
           </div>
         </div>
         <div className="footBot">
-          <span>
+          <span className="kit-credits-text">
             © {year} {business.name}. {c.rights}
           </span>
           <MadeWithLink label={madeWith(business.locale)} />

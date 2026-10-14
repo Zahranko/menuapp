@@ -3,10 +3,11 @@ import { initial, whatsappLink } from "@/lib/format";
 import { itemCount } from "@/lib/i18n";
 import { choice, flag, text } from "@/lib/settings";
 import type { TemplateProps } from "@/lib/types";
-import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, FootName, HoursList, Logo, logoRoot, optionRoot, OrderFab, ProductPicture, SocialIcons } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext, type SiteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
-import { Arrow, Instagram, Pin, WhatsApp } from "../_kit/icons";
+import { Arrow, Pin, WhatsApp } from "../_kit/icons";
 import { Picture } from "../_kit/Picture";
 import { hasHours, tintFor, type MenuItem } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
@@ -76,6 +77,7 @@ export default function AtlasTemplate({ site, path = [], base, now }: TemplatePr
     cta: text(site.settings, "cta.label") || c.order,
     deptOf,
   };
+  const order = orderButton(site, { label: v.cta });
   const style = themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: FONTS, defaultAccent: "#2447D9", radius: { rounded: "12px", sharp: "0px" } });
 
   const quick: QuickItem[] = tree.items.map((p) => ({
@@ -96,6 +98,7 @@ export default function AtlasTemplate({ site, path = [], base, now }: TemplatePr
     <div
       data-template="atlas"
       {...logoRoot(ctx)}
+      {...optionRoot(ctx, order)}
       data-page={page.kind}
       className={cx("t-atlas", fontVariables, `grid-${choice(site.settings, "density", DENSITY, "comfy")}`, flag(site.settings, "motion", true) && "motion")}
       style={style}
@@ -118,6 +121,7 @@ export default function AtlasTemplate({ site, path = [], base, now }: TemplatePr
       )}
       <Footer v={v} />
       <QuickView items={quick} labels={{ close: ctx.t.close, soldOut: ctx.t.soldOut, inStock: a.inStock, order: v.cta }} />
+      <OrderFab order={order} />
       {v.photos.length > 0 && <Lightbox photos={v.photos} labels={{ close: ctx.t.close, prev: c.prev, next: c.next, photo: c.photo }} />}
     </div>
   );
@@ -780,26 +784,21 @@ function VisitPage({ v }: { v: View }) {
 
 /* ---------- footer ---------- */
 
+/** What the footer showed before the owner could choose (also the manifest's "social.show" default). */
+const SOCIAL_DEFAULT = ["instagram", "whatsapp"] as const;
+
 function Footer({ v }: { v: View }) {
   const { ctx, c, a, href, tree } = v;
   const { site, contact } = ctx;
   const tagline = ctx.text("footer.text");
+  const social = socialAccounts(site, SOCIAL_DEFAULT);
   return (
     <footer className="a-foot" data-section="footer">
       <div className="a-foot-grid">
         <div className="a-foot-brand">
           {tagline && <p className="a-foot-text">{tagline}</p>}
           <div className="a-socials">
-            {contact.instagram && (
-              <a className="a-icon" href={contact.instagram} target="_blank" rel="noopener noreferrer" aria-label={ctx.t.instagram}>
-                <Instagram />
-              </a>
-            )}
-            {contact.whatsapp && (
-              <a className="a-icon" href={contact.whatsapp} target="_blank" rel="noopener noreferrer" aria-label={ctx.t.phone}>
-                <WhatsApp />
-              </a>
-            )}
+            <SocialIcons accounts={social} className="a-icon" />
             {contact.maps && (
               <a className="a-icon" href={contact.maps} target="_blank" rel="noopener noreferrer" aria-label={ctx.t.directions}>
                 <Pin />
@@ -848,9 +847,7 @@ function Footer({ v }: { v: View }) {
           </div>
         )}
       </div>
-      <p className="a-wordmark" aria-hidden="true">
-        {site.business.name}
-      </p>
+      <FootName ctx={ctx} className="a-wordmark" decorative />
       <Credits ctx={ctx} className="a-credits" />
     </footer>
   );

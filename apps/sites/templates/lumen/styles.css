@@ -7,6 +7,7 @@
  */
 
 @import "../_kit/logo.css";
+@import "../_kit/options.css";
 
 .t-lumen {
   --wrap: 1240px;
@@ -309,6 +310,16 @@
     box-shadow: var(--shadow-s);
     transition: transform 0.3s var(--spring);
   }
+  /* The owner's button shape replaces the sticker with a plain button, above the tab bar like it. */
+  .fab-plain {
+    z-index: 34;
+    inset-inline-end: 14px;
+    bottom: calc(var(--tab-h) + 24px + env(safe-area-inset-bottom));
+    border: 2px solid var(--ink);
+    box-shadow: var(--shadow-s);
+    font-family: var(--fb);
+    font-weight: 800;
+  }
   .fab:hover {
     transform: scale(1.06) rotate(calc(var(--sx) * -6deg));
   }
@@ -398,7 +409,8 @@
       font-size: 14px;
       box-shadow: var(--shadow-s);
     }
-    .fab {
+    .fab,
+    .fab-plain {
       display: none;
     }
   }
@@ -1442,6 +1454,9 @@
     letter-spacing: calc(var(--ft) * 2);
     overflow-wrap: anywhere;
   }
+  &[data-foot-name] .foot-mark {
+    font-size: calc(clamp(56px, 17vw, 220px) * var(--fs) * var(--foot-scale));
+  }
   [dir="rtl"] & .foot-mark {
     line-height: 1.15;
   }
@@ -1488,6 +1503,7 @@
   }
   .socials {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
     margin-top: 18px;
   }

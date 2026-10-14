@@ -286,6 +286,7 @@
     }
   ],
   "defaults": {
+    "social.show": ["instagram", "whatsapp"],
     "font": "soft",
     "logo": "",
     "theme": "strawberry",

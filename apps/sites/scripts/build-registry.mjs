@@ -10,6 +10,16 @@
 // Logo options: every template's schema gets the shared fields of templates/_kit/logo-settings.json (logo frame, size,
 // position and "show business name") right after its "logo" field, in the same group, with their defaults. Manifests
 // never list them; templates/_kit/logo.ts reads them, and _kit/logo.css styles them.
+//
+// Site options: every template also gets the shared fields of templates/_kit/site-options.json, read by
+// templates/_kit/options.ts and styled by _kit/options.css:
+//  - "Fonts & colors": the template's own "font", "theme" and "accent" move into this group (right after the logo's
+//    group), with the shared font choice ("font.family") after "font". The accent gets more color presets and
+//    "custom": true (any #RRGGBB color; the sites keep its text readable with _kit/color.ts).
+//  - "Footer" (footer.nameSize, after the template's own footer fields if it has some), "Social media" (social.show)
+//    and "Order button" (order.action, order.shape, order.label) at the end.
+// Their defaults keep every site as it was. A manifest may only set its own default for "social.show" (templates whose
+// footer already showed Instagram and WhatsApp icons list them, so those icons stay).
 import { readdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -22,6 +32,9 @@ const FIELD_TYPES = new Set(["choice", "palette", "color", "text", "textarea", "
 const TEXT_TYPES = new Set(["text", "textarea"]);
 const dictionary = JSON.parse(readFileSync(path.join(root, "_i18n", "ar.json"), "utf8"));
 const logoSettings = JSON.parse(readFileSync(path.join(root, "_kit", "logo-settings.json"), "utf8"));
+const siteOptions = JSON.parse(readFileSync(path.join(root, "_kit", "site-options.json"), "utf8"));
+/** Shared settings a manifest may give its own default (in "defaults"). */
+const OWN_DEFAULTS = new Set(["social.show"]);
 
 function fail(message) {
   console.error(`templates:registry: ${message}`);
@@ -39,6 +52,7 @@ const manifests = readdirSync(root, { withFileTypes: true })
     }
     if (manifest.tier !== undefined && !TIERS.has(manifest.tier)) fail(`${d.name}: "tier" must be "basic" or "pro" (or left out for basic)`);
     withLogoOptions(d.name, manifest);
+    withSiteOptions(d.name, manifest);
     const keys = new Set();
     for (const field of manifest.schema) {
       if (!FIELD_TYPES.has(field.type)) fail(`${d.name}: field "${field.key}" has unknown type "${field.type}"`);
@@ -71,6 +85,52 @@ function withLogoOptions(id, manifest) {
   }
   if (!("logo" in manifest.defaults)) Object.assign(defaults, logoSettings.defaults);
   manifest.defaults = defaults;
+}
+
+/** Adds the shared site options (fonts and colors, footer, social media, order button); see the header comment. */
+function withSiteOptions(id, manifest) {
+  const shared = [...siteOptions.fontsAndColors.fields, ...siteOptions.fields];
+  for (const field of shared) {
+    if (manifest.schema.some((f) => f.key === field.key)) fail(`${id}: "${field.key}" comes from templates/_kit/site-options.json; remove it from the manifest`);
+    if (field.key in manifest.defaults && !OWN_DEFAULTS.has(field.key)) fail(`${id}: "${field.key}" comes from templates/_kit/site-options.json; remove its default`);
+  }
+  const own = Object.fromEntries([...OWN_DEFAULTS].filter((key) => key in manifest.defaults).map((key) => [key, manifest.defaults[key]]));
+  for (const key of Object.keys(own)) delete manifest.defaults[key];
+
+  // Fonts and colors: the template's own fields move after the logo's group, with the shared font choice.
+  const { group, moves, accentExtras } = siteOptions.fontsAndColors;
+  const moved = moves.map((key) => {
+    const at = manifest.schema.findIndex((f) => f.key === key);
+    if (at < 0) fail(`${id}: every template needs a "${key}" field (the shared font and color options attach to it)`);
+    return manifest.schema.splice(at, 1)[0];
+  });
+  const [font, theme, accent] = moved.map((f) => ({ ...f, group, groupAr: undefined }));
+  if (accent.type !== "color") fail(`${id}: "accent" must be a color field`);
+  const lower = new Set(accent.options.map((o) => o.toUpperCase()));
+  accent.options = [...accent.options, ...accentExtras.filter((c) => !lower.has(c.toUpperCase()))];
+  accent.custom = true;
+  const logoGroup = manifest.schema.find((f) => f.key === "logo").group;
+  const afterLogo = manifest.schema.findLastIndex((f) => f.group === logoGroup) + 1;
+  manifest.schema.splice(afterLogo, 0, font, ...siteOptions.fontsAndColors.fields.map((f) => ({ ...f, group })), theme, accent);
+
+  // Footer, social media and order button.
+  for (const field of siteOptions.fields) {
+    const last = manifest.schema.findLastIndex((f) => f.group === field.group);
+    manifest.schema.splice(last < 0 ? manifest.schema.length : last + 1, 0, { ...field });
+  }
+
+  const defaults = {};
+  for (const [key, value] of Object.entries(manifest.defaults)) {
+    defaults[key] = value;
+    if (key === "font") defaults["font.family"] = siteOptions.defaults["font.family"];
+  }
+  for (const [key, value] of Object.entries(siteOptions.defaults)) {
+    if (!(key in defaults)) defaults[key] = key in own ? own[key] : value;
+  }
+  manifest.defaults = defaults;
+  for (const value of own["social.show"] ?? []) {
+    if (!siteOptions.fields.find((f) => f.key === "social.show").options.includes(value)) fail(`${id}: unknown account "${value}" in "social.show"`);
+  }
 }
 
 /** The Arabic for an editor string: the manifest's own, else the dictionary's. */

@@ -2,6 +2,7 @@
    Everything is nested under .t-souq so it cannot affect other templates; scripts/build-styles.mjs compiles it. */
 
 @import "../_kit/logo.css";
+@import "../_kit/options.css";
 
 .t-souq {
   container: site / inline-size;
@@ -921,6 +922,11 @@
   }
   .foot .brandName {
     color: var(--sfootink);
+    white-space: normal;
+    overflow: visible;
+  }
+  .footTop > div {
+    min-width: 0;
   }
   .foot p {
     font-size: 14px;
@@ -930,6 +936,7 @@
   }
   .soc {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
     margin-top: 18px;
   }
@@ -1195,7 +1202,7 @@
       min-height: 100%;
     }
     .footTop {
-      grid-template-columns: 1.3fr 2fr;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 2fr);
       gap: 60px;
     }
     .cols {

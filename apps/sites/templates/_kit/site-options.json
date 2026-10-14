@@ -1,0 +1,100 @@
+{
+  "fontsAndColors": {
+    "group": "Fonts & colors",
+    "moves": ["font", "theme", "accent"],
+    "fields": [
+      {
+        "key": "font.family",
+        "type": "choice",
+        "label": "Font",
+        "options": ["default", "cairo", "tajawal", "almarai", "plex", "kufi", "readex", "messiri", "amiri", "lalezar", "rubik"],
+        "optionLabels": {
+          "default": "Template default",
+          "cairo": "Cairo",
+          "tajawal": "Tajawal",
+          "almarai": "Almarai",
+          "plex": "IBM Plex",
+          "kufi": "Noto Kufi",
+          "readex": "Readex Pro",
+          "messiri": "El Messiri",
+          "amiri": "Amiri (classic)",
+          "lalezar": "Lalezar (poster)",
+          "rubik": "Rubik (rounded)"
+        }
+      }
+    ],
+    "accentExtras": ["#C8102E", "#E8590C", "#D99A00", "#2F8F4E", "#0E7C86", "#1F6FEB", "#5B3FD0", "#D6336C", "#7A4E2D", "#2B2B2B"]
+  },
+  "fields": [
+    {
+      "key": "footer.nameSize",
+      "type": "choice",
+      "label": "Business name size in the footer",
+      "group": "Footer",
+      "options": ["large", "medium", "small"],
+      "optionLabels": {
+        "large": "Large (as designed)",
+        "medium": "Medium",
+        "small": "Small"
+      }
+    },
+    {
+      "key": "social.show",
+      "type": "toggles",
+      "label": "Accounts to show on your website",
+      "group": "Social media",
+      "options": ["instagram", "whatsapp", "facebook", "tiktok", "snapchat", "phone"],
+      "optionLabels": {
+        "instagram": "Instagram",
+        "whatsapp": "WhatsApp",
+        "facebook": "Facebook",
+        "tiktok": "TikTok",
+        "snapchat": "Snapchat",
+        "phone": "Phone (call us)"
+      }
+    },
+    {
+      "key": "order.action",
+      "type": "choice",
+      "label": "What the button does",
+      "group": "Order button",
+      "options": ["auto", "whatsapp", "call", "instagram", "facebook", "hide"],
+      "optionLabels": {
+        "auto": "Template default",
+        "whatsapp": "Order on WhatsApp",
+        "call": "Call us",
+        "instagram": "Open Instagram",
+        "facebook": "Open Facebook",
+        "hide": "Hide the button"
+      }
+    },
+    {
+      "key": "order.shape",
+      "type": "choice",
+      "label": "Button shape",
+      "group": "Order button",
+      "options": ["auto", "pill", "rounded", "circle"],
+      "optionLabels": {
+        "auto": "Template default",
+        "pill": "Pill",
+        "rounded": "Rounded square",
+        "circle": "Round icon only"
+      }
+    },
+    {
+      "key": "order.label",
+      "type": "text",
+      "label": "Button text (leave empty for the usual text)",
+      "group": "Order button",
+      "max": 28
+    }
+  ],
+  "defaults": {
+    "font.family": "default",
+    "footer.nameSize": "large",
+    "social.show": [],
+    "order.action": "auto",
+    "order.shape": "auto",
+    "order.label": ""
+  }
+}

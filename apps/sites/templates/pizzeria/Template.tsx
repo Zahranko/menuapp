@@ -1,5 +1,6 @@
 import type { TemplateProps } from "@/lib/types";
-import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, optionRoot, OrderFab, ProductPicture, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { WhatsApp } from "../_kit/icons";
@@ -43,8 +44,9 @@ export default function PizzeriaTemplate({ site, now }: TemplateProps & { now?: 
   const story = ctx.on("story") && ctx.text("story.text");
   const stamp = ctx.text("stamp");
 
+  const order = orderButton(site, { label: c.order });
   return (
-    <div data-template="pizzeria" {...logoRoot(ctx)} className={cx("t-pizza", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["classic", "bold", "hand"], defaultAccent: "#C8102E" })}>
+    <div data-template="pizzeria" {...logoRoot(ctx)} {...optionRoot(ctx, order)} className={cx("t-pizza", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["classic", "bold", "hand"], defaultAccent: "#C8102E" })}>
       <TemplateStyles id="pizzeria" />
       <TopBars ctx={ctx} />
       <header className="head kit-head" data-section="header">
@@ -143,8 +145,10 @@ export default function PizzeriaTemplate({ site, now }: TemplateProps & { now?: 
       </main>
 
       <footer className="foot" data-section="footer">
+        <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
         <Credits ctx={ctx} />
       </footer>
+      <OrderFab order={order} />
       <ProductSheet ctx={ctx} />
     </div>
   );

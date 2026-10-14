@@ -3,6 +3,7 @@ import { choice, flag, text } from "@/lib/settings";
 import type { Settings } from "@/lib/types";
 import { accentTokens, isDark, readable } from "./color";
 import { fontPairs, forLocale, type FontName } from "./fonts";
+import { typeface } from "./options";
 
 /** A color theme. Extra keys become CSS variables too (`stripe` → `--stripe`). */
 export type Palette = { bg: string; surf: string; ink: string; muted: string; line: string; [extra: string]: string };
@@ -23,8 +24,8 @@ type Options<T extends string> = {
 export function themeVars<T extends string>(settings: Settings, locale: string, o: Options<T>): CSSProperties {
   const names = Object.keys(o.palettes) as T[];
   const palette = o.palettes[choice(settings, "theme", names, names[0])];
-  const font = forLocale(fontPairs[choice(settings, "font", o.fonts, o.fonts[0])], locale);
-  const accent = accentTokens(text(settings, "accent", o.defaultAccent ?? "#D9542C"), palette.bg, palette.surf, palette.ink);
+  const font = typeface(settings, locale) ?? forLocale(fontPairs[choice(settings, "font", o.fonts, o.fonts[0])], locale);
+  const accent = accentTokens(accentColor(settings, o.defaultAccent ?? "#D9542C"), palette.bg, palette.surf, palette.ink);
   const radius = o.radius ?? { rounded: "18px", sharp: "2px" };
   const vars: Record<string, string | number> = {
     "--acc": accent.fill,
@@ -42,6 +43,12 @@ export function themeVars<T extends string>(settings: Settings, locale: string, 
   for (const [key, value] of Object.entries(palette)) vars[`--${key}`] = value;
   vars["--muted"] = readable(palette.muted, [palette.bg, palette.surf], palette.ink);
   return vars as CSSProperties;
+}
+
+/** The owner's accent color (a preset or their own #RRGGBB), or the template's default when it is not a color. */
+export function accentColor(settings: Settings, fallback: string): string {
+  const value = text(settings, "accent").trim();
+  return /^#[0-9a-f]{6}$/i.test(value) ? value : fallback;
 }
 
 export const textured = (settings: Settings, key = "texture") => flag(settings, key);

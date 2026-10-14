@@ -1,6 +1,7 @@
 import { flag } from "@/lib/settings";
 import type { TemplateProps } from "@/lib/types";
-import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, optionRoot, OrderContent, orderLink, ProductPicture, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Clock, Pin, WhatsApp } from "../_kit/icons";
@@ -37,6 +38,7 @@ export default function HandyTemplate({ site, now }: TemplateProps & { now?: Dat
   const c = copy[ctx.locale];
   const hero = ctx.image("hero.image");
   const book = bookLink(ctx);
+  const order = orderButton(site, { label: c.request, whatsapp: book });
   const from = flag(site.settings, "prices.from", true);
   const badges = highlights(ctx);
   const how = steps(ctx);
@@ -48,7 +50,7 @@ export default function HandyTemplate({ site, now }: TemplateProps & { now?: Dat
     .filter(Boolean);
 
   return (
-    <div data-template="handy" {...logoRoot(ctx)} className={cx("t-handy", fontVariables, book && "has-bar")} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["round", "modern", "grotesk"], defaultAccent: "#1E5BB8", radius: { rounded: "18px", sharp: "4px" } })}>
+    <div data-template="handy" {...logoRoot(ctx)} {...optionRoot(ctx, order, true)} className={cx("t-handy", fontVariables, order && "has-bar")} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["round", "modern", "grotesk"], defaultAccent: "#1E5BB8", radius: { rounded: "18px", sharp: "4px" } })}>
       <TemplateStyles id="handy" />
       <TopBars ctx={ctx} />
       <header className="head kit-head" data-section="header">
@@ -248,13 +250,14 @@ export default function HandyTemplate({ site, now }: TemplateProps & { now?: Dat
       </main>
 
       <footer className="foot" data-section="footer">
+        <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
         <Credits ctx={ctx} />
       </footer>
-      {book && (
+      {order && (
         <div className="bar">
           {ctx.today && <span className="bar-today">{ctx.today}</span>}
-          <a className="btn" href={book} rel="noopener" target="_blank">
-            <WhatsApp /> {c.request}
+          <a className="btn kit-order" {...orderLink(order)}>
+            <OrderContent order={order} icon />
           </a>
         </div>
       )}

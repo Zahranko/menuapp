@@ -3,10 +3,11 @@ import { initial, whatsappLink } from "@/lib/format";
 import { itemCount } from "@/lib/i18n";
 import { choice, flag, image, text } from "@/lib/settings";
 import type { TemplateProps } from "@/lib/types";
-import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, optionRoot, OrderIcon, orderLink, ProductPicture, ProductSheet, SocialIcons, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts, type OrderButton } from "../_kit/options";
 import { cx, siteContext, type SiteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
-import { Arrow, Instagram, Pin, WhatsApp } from "../_kit/icons";
+import { Arrow, Pin, WhatsApp } from "../_kit/icons";
 import { Picture } from "../_kit/Picture";
 import { hasHours, type MenuItem } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
@@ -47,6 +48,8 @@ type View = {
   photos: { src: string; caption: string | null }[];
   order: string | null;
   cta: string;
+  /** The floating order sticker (phones) and the bar's order button (desktop): the owner's order button options. */
+  fab: OrderButton | null;
 };
 
 /** The tile color of a category: its position among the top-level categories (sub-categories share the parent's). */
@@ -80,6 +83,7 @@ export default function LumenTemplate({ site, path = [], base, now }: TemplatePr
     photos: galleryPhotos(site, tree),
     order: phone ? whatsappLink(phone) : null,
     cta: text(site.settings, "cta.label") || c.order,
+    fab: orderButton(site, { label: text(site.settings, "cta.label") || c.order }),
   };
   const style = themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: FONTS, defaultAccent: "#FF5A1F", radius: { rounded: "22px", sharp: "3px" } });
 
@@ -87,8 +91,9 @@ export default function LumenTemplate({ site, path = [], base, now }: TemplatePr
     <div
       data-template="lumen"
       {...logoRoot(ctx)}
+      {...optionRoot(ctx, v.fab, true)}
       data-page={page.kind}
-      className={cx("t-lumen", fontVariables, `cards-${v.cards}`, `corners-${choice(site.settings, "corners", ["rounded", "sharp"] as const, "rounded")}`, v.order && "has-order", flag(site.settings, "motion", true) && "motion")}
+      className={cx("t-lumen", fontVariables, `cards-${v.cards}`, `corners-${choice(site.settings, "corners", ["rounded", "sharp"] as const, "rounded")}`, v.fab && "has-order", flag(site.settings, "motion", true) && "motion")}
       style={style}
     >
       <TemplateStyles id="lumen" />
@@ -108,7 +113,7 @@ export default function LumenTemplate({ site, path = [], base, now }: TemplatePr
         </main>
       )}
       <Footer v={v} />
-      {v.order && <OrderSticker v={v} />}
+      {v.fab && <OrderSticker v={v} order={v.fab} />}
       <ProductSheet ctx={ctx} />
       {v.photos.length > 0 && <Lightbox photos={v.photos} labels={{ close: ctx.t.close, prev: c.prev, next: c.next, photo: c.photo }} />}
     </div>
@@ -146,10 +151,10 @@ function Header({ v }: { v: View }) {
             ))}
           </ul>
         </nav>
-        {v.order && (
-          <a className="btn btn-acc top-order" href={v.order} target="_blank" rel="noopener noreferrer">
-            <WhatsApp />
-            <span>{v.cta}</span>
+        {v.fab && (
+          <a className="btn btn-acc top-order" {...orderLink(v.fab)}>
+            <OrderIcon action={v.fab.action} />
+            <span>{v.fab.label}</span>
           </a>
         )}
       </div>
@@ -157,14 +162,25 @@ function Header({ v }: { v: View }) {
   );
 }
 
-/** Phones: a round sticker above the tab bar with the order text running around its edge. */
-function OrderSticker({ v }: { v: View }) {
-  const label = v.cta.toUpperCase();
+/**
+ * Phones: a round sticker above the tab bar with the order text running around its edge. When the owner picks a button
+ * shape, a plain button in that shape takes its place.
+ */
+function OrderSticker({ v, order }: { v: View; order: OrderButton }) {
+  if (order.shape !== "auto") {
+    return (
+      <a className="kit-fab kit-order fab-plain" {...orderLink(order)} aria-label={order.label}>
+        <OrderIcon action={order.action} />
+        <span className="kit-order-label">{order.label}</span>
+      </a>
+    );
+  }
+  const label = order.label.toUpperCase();
   const ring = label.length < 14 ? `${label} • ${label} •` : `${label} •`;
   // The ring is about 230 units long: shrink the letters for long labels instead of squeezing them.
   const size = Math.min(10.5, Math.max(6.5, 230 / (ring.length * 0.68)));
   return (
-    <a className="fab" href={v.order!} target="_blank" rel="noopener noreferrer" aria-label={v.cta}>
+    <a className="fab kit-order" {...orderLink(order)} aria-label={order.label}>
       {/* Arabic letters do not join well along a curve, so Arabic sites get a dashed ring instead of running text. */}
       <svg className="fab-ring" viewBox="0 0 100 100" aria-hidden="true">
         {v.ctx.rtl ? (
@@ -183,7 +199,7 @@ function OrderSticker({ v }: { v: View }) {
         )}
       </svg>
       <span className="fab-core">
-        <WhatsApp />
+        <OrderIcon action={order.action} />
       </span>
     </a>
   );
@@ -703,14 +719,18 @@ function VisitPage({ v }: { v: View }) {
 
 /* ---------- footer ---------- */
 
+/** What the footer showed before the owner could choose (also the manifest's "social.show" default). */
+const SOCIAL_DEFAULT = ["instagram", "whatsapp"] as const;
+
 function Footer({ v }: { v: View }) {
   const { ctx, c, href, tree } = v;
   const { site, contact } = ctx;
   const tagline = ctx.text("footer.text");
+  const social = socialAccounts(site, SOCIAL_DEFAULT);
   return (
     <footer className="foot" data-section="footer">
       <div className="foot-in">
-        <p className="foot-mark" aria-hidden="true">
+        <p className="foot-mark kit-foot-name" aria-hidden="true">
           {site.business.name}
           <span className="foot-dot">{initial(site.business.name)}</span>
         </p>
@@ -718,16 +738,7 @@ function Footer({ v }: { v: View }) {
           <div className="foot-brand">
             {tagline && <p className="foot-text">{tagline}</p>}
             <div className="socials">
-              {contact.instagram && (
-                <a href={contact.instagram} target="_blank" rel="noopener noreferrer" aria-label={ctx.t.instagram}>
-                  <Instagram />
-                </a>
-              )}
-              {contact.whatsapp && (
-                <a href={contact.whatsapp} target="_blank" rel="noopener noreferrer" aria-label={ctx.t.phone}>
-                  <WhatsApp />
-                </a>
-              )}
+              <SocialIcons accounts={social} />
               {contact.maps && (
                 <a href={contact.maps} target="_blank" rel="noopener noreferrer" aria-label={ctx.t.directions}>
                   <Pin />

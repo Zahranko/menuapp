@@ -6,6 +6,7 @@
  */
 
 @import "../_kit/logo.css";
+@import "../_kit/options.css";
 
 .em {
   --pad: clamp(16px, 4.5vw, 48px);
@@ -1624,7 +1625,7 @@
     letter-spacing: var(--ft);
     line-height: 0.82;
     text-transform: uppercase;
-    white-space: nowrap;
+    text-wrap: balance;
     color: var(--acc-text);
   }
   .credits {
@@ -1666,6 +1667,10 @@
     transition:
       rotate 0.3s var(--spring),
       scale 0.3s var(--spring);
+  }
+  &[data-order-shape="circle"] .pill svg {
+    width: 26px;
+    height: 26px;
   }
   .pill svg {
     width: 22px;

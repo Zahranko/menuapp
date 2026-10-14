@@ -1,4 +1,5 @@
-import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, FootName, Credits, HoursList, Logo, logoRoot, optionRoot, OrderFab, ProductPicture, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Arrow, WhatsApp } from "../_kit/icons";
@@ -32,8 +33,9 @@ export default function ArchStoryTemplate({ site, now }: TemplateProps & { now?:
   const reviews = ctx.on("reviews") ? ctx.reviews.slice(0, 3) : [];
   const links: [string, string][] = [["#menu", ctx.t.menu], ...(storyText ? [["#story", c.story] as [string, string]] : []), ...(ctx.on("visit") ? [["#visit", ctx.t.visit] as [string, string]] : [])];
 
+  const order = orderButton(site, { label: c.order });
   return (
-    <div data-template="archstory" {...logoRoot(ctx)} className={cx("t-arch", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["soft", "elegant", "classic"], defaultAccent: "#C2577A", radius: { rounded: "24px", sharp: "6px" } })}>
+    <div data-template="archstory" {...logoRoot(ctx)} {...optionRoot(ctx, order)} className={cx("t-arch", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["soft", "elegant", "classic"], defaultAccent: "#C2577A", radius: { rounded: "24px", sharp: "6px" } })}>
       <TemplateStyles id="archstory" />
       <TopBars ctx={ctx} />
       <header className="top kit-head" data-section="header">
@@ -182,9 +184,11 @@ export default function ArchStoryTemplate({ site, now }: TemplateProps & { now?:
       </main>
 
       <footer className="foot" data-section="footer">
-        <p className="wordmark">{site.business.name}</p>
+        <FootName ctx={ctx} className="wordmark" />
+        <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
         <Credits ctx={ctx} />
       </footer>
+      <OrderFab order={order} />
       <ProductSheet ctx={ctx} />
     </div>
   );

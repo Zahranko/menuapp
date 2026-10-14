@@ -405,7 +405,11 @@
       "wed": "12:00-23:30",
       "thu": "12:00-00:30",
       "fri": "13:00-00:30"
-    }
+    },
+    "social.show": [
+      "instagram",
+      "whatsapp"
+    ]
   },
   "defaultsAr": {
     "hero.eyebrow": "مشاوي على الفحم، منذ 2018",

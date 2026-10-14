@@ -1,6 +1,7 @@
 /* Template 003 "Night Market": dark, loud, big photo cards in a sideways row per category. */
 
 @import "../_kit/logo.css";
+@import "../_kit/options.css";
 
 .t-night {
   container: page / inline-size;
@@ -476,6 +477,15 @@
     font: var(--fw) calc(40px * var(--fs)) / 1 var(--fd);
     text-transform: uppercase;
     color: var(--ink);
+  }
+
+  /* Social accounts the owner shows (_kit/options.css draws the round icon links). */
+  .foot-social {
+    justify-content: flex-start;
+    color: var(--acc-text);
+  }
+  .foot-social a {
+    border-color: color-mix(in srgb, currentColor 40%, transparent);
   }
 
   .order-bar {

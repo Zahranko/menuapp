@@ -3,7 +3,8 @@ import { whatsappLink } from "@/lib/format";
 import { itemCount } from "@/lib/i18n";
 import { choice, flag, image, list, number, text } from "@/lib/settings";
 import type { TemplateProps } from "@/lib/types";
-import { BrandName, Credits, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, Credits, FootName, Logo, logoRoot, optionRoot, OrderContent, orderLink, ProductPicture, ProductSheet, SocialIcons, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts, type OrderButton } from "../_kit/options";
 import { cx, siteContext, type SiteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Arrow, Instagram, Mail, Pin, WhatsApp } from "../_kit/icons";
@@ -45,6 +46,8 @@ type View = {
   photos: { src: string; caption: string | null }[];
   order: string | null;
   cta: string;
+  /** The reserve bar's button: the owner's order button options (action, text, shape). */
+  fab: OrderButton | null;
   carte: (typeof CARTE)[number];
   menuWord: string;
 };
@@ -75,6 +78,7 @@ export default function MaisonTemplate({ site, path = [], base, now }: TemplateP
     photos: galleryPhotos(site, tree),
     order: phone ? whatsappLink(phone) : null,
     cta: text(site.settings, "cta.label") || c.order,
+    fab: orderButton(site, { label: text(site.settings, "cta.label") || c.order }),
     carte: choice(site.settings, "carte.style", CARTE, "leaders"),
     menuWord: c.menu,
   };
@@ -91,6 +95,7 @@ export default function MaisonTemplate({ site, path = [], base, now }: TemplateP
     <div
       data-template="maison"
       {...logoRoot(ctx)}
+      {...optionRoot(ctx, v.fab, true)}
       data-page={page.kind}
       className={cx("mx", fontVariables, `font-${font}`, `carte-${v.carte}`, flag(site.settings, "motion", true) && "mx-motion")}
       style={style as CSSProperties}
@@ -807,15 +812,19 @@ function VisitPage({ v }: { v: View }) {
 
 /* ---------- footer and reserve bar ---------- */
 
+/** What the footer showed before the owner could choose (also the manifest's "social.show" default). */
+const SOCIAL_DEFAULT = ["instagram", "whatsapp"] as const;
+
 function Footer({ v }: { v: View }) {
   const { ctx, c, href, tree } = v;
   const { site, contact } = ctx;
   const tagline = ctx.text("footer.text");
+  const social = socialAccounts(site, SOCIAL_DEFAULT);
   return (
     <footer className="mx-foot" data-section="footer">
       <div className="mx-foot-in">
         <Rule />
-        <p className="mx-foot-name">{site.business.name}</p>
+        <FootName ctx={ctx} className="mx-foot-name" />
         {tagline && <p className="mx-foot-text">{tagline}</p>}
         <nav className="mx-foot-nav" aria-label={c.pages}>
           <a href={href(PAGE_PATHS.menu)}>{v.menuWord}</a>
@@ -839,18 +848,9 @@ function Footer({ v }: { v: View }) {
             {ctx.today}
           </p>
         )}
-        {(contact.instagram || contact.whatsapp || contact.maps) && (
+        {(social.length > 0 || contact.maps) && (
           <div className="mx-socials">
-            {contact.instagram && (
-              <a href={contact.instagram} target="_blank" rel="noopener noreferrer" aria-label={ctx.t.instagram}>
-                <Instagram />
-              </a>
-            )}
-            {contact.whatsapp && (
-              <a href={contact.whatsapp} target="_blank" rel="noopener noreferrer" aria-label={ctx.t.phone}>
-                <WhatsApp />
-              </a>
-            )}
+            <SocialIcons accounts={social} />
             {contact.maps && (
               <a href={contact.maps} target="_blank" rel="noopener noreferrer" aria-label={ctx.t.directions}>
                 <Pin />
@@ -868,19 +868,20 @@ function Footer({ v }: { v: View }) {
 function ReserveBar({ v }: { v: View }) {
   const { ctx, href, page } = v;
   const toMenu = page.kind !== "menu" && page.kind !== "category";
-  if (!v.order && !toMenu) return null;
+  const order = v.fab;
+  if (!order && !toMenu) return null;
   return (
     <div className="mx-bar">
       <p className="mx-bar-note">{ctx.today ?? ctx.site.business.name}</p>
       <div className="mx-bar-actions">
         {toMenu && (
-          <a className={cx("mx-bar-menu", v.order && "is-secondary")} href={href(PAGE_PATHS.menu)}>
+          <a className={cx("mx-bar-menu", order && "is-secondary")} href={href(PAGE_PATHS.menu)}>
             {v.menuWord}
           </a>
         )}
-        {v.order && (
-          <a className="mx-bar-cta" href={v.order} target="_blank" rel="noopener noreferrer">
-            {v.cta}
+        {order && (
+          <a className="mx-bar-cta kit-order" {...orderLink(order)}>
+            <OrderContent order={order} />
           </a>
         )}
       </div>

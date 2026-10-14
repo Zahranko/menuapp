@@ -3,10 +3,11 @@ import { whatsappLink } from "@/lib/format";
 import { itemCount } from "@/lib/i18n";
 import { choice, flag, image, list, text } from "@/lib/settings";
 import type { PublicSite, Settings, TemplateProps } from "@/lib/types";
-import { BrandName, ContactList, Credits, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, FootName, Logo, logoRoot, optionRoot, OrderFab, ProductPicture, ProductSheet, SocialIcons, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext, type SiteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
-import { Arrow, Instagram, Pin, WhatsApp } from "../_kit/icons";
+import { Arrow, Pin, WhatsApp } from "../_kit/icons";
 import { Picture } from "../_kit/Picture";
 import { hasHours, type MenuItem } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
@@ -136,12 +137,14 @@ export default function BloomTemplate(props: TemplateProps & { now?: Date }) {
     order: site.business.whatsApp ? whatsappLink(site.business.whatsApp) : null,
     cta: text(s, "cta.label") || c.order,
   };
+  const order = orderButton(site, { label: v.cta });
   const style = themeVars(s, ctx.locale, { palettes: PALETTES, fonts: ["soft", "round", "classic"], defaultAccent: "#D6467A", radius: { rounded: "28px", sharp: "28px" } });
 
   return (
     <div
       data-template="bloom"
       {...logoRoot(ctx)}
+      {...optionRoot(ctx, order)}
       data-page={page.kind}
       className={cx("bl", fontVariables, ctx.rtl && "is-ar", flag(s, "motion", true) && "motion", flag(s, "doodles", true) && "doodly")}
       style={style}
@@ -163,6 +166,7 @@ export default function BloomTemplate(props: TemplateProps & { now?: Date }) {
         </main>
       )}
       <Footer v={v} />
+      <OrderFab order={order} />
       <ProductSheet ctx={ctx} />
       {v.photos.length > 0 && <Lightbox photos={v.photos} labels={{ close: ctx.t.close, prev: c.prev, next: c.next, photo: c.photo }} />}
     </div>
@@ -740,17 +744,21 @@ function VisitPage({ v }: { v: View }) {
 
 /* ---------- footer ---------- */
 
+/** What the footer showed before the owner could choose (also the manifest's "social.show" default). */
+const SOCIAL_DEFAULT = ["instagram", "whatsapp"] as const;
+
 function Footer({ v }: { v: View }) {
   const { ctx, c, href, tree } = v;
   const { site, contact } = ctx;
   const tagline = ctx.text("footer.text");
+  const social = socialAccounts(site, SOCIAL_DEFAULT);
   return (
     <footer className="foot" data-section="footer">
       <Doodles set="foot" />
       <div className="foot-in">
         <a className="brand foot-brand" href={href("")}>
           <Logo ctx={ctx} className="brand-logo" sizes="64px" />
-          <BrandName ctx={ctx} className="brand-name" />
+          <FootName ctx={ctx} as="span" className="brand-name kit-name" />
         </a>
         {tagline && <p className="foot-note">{tagline}</p>}
         <nav className="foot-links" aria-label={c.pages}>
@@ -768,18 +776,9 @@ function Footer({ v }: { v: View }) {
             ))}
           </nav>
         )}
-        {(contact.instagram || contact.whatsapp || contact.maps) && (
+        {(social.length > 0 || contact.maps) && (
           <div className="socials">
-            {contact.instagram && (
-              <a href={contact.instagram} target="_blank" rel="noopener noreferrer" aria-label={ctx.t.instagram}>
-                <Instagram />
-              </a>
-            )}
-            {contact.whatsapp && (
-              <a href={contact.whatsapp} target="_blank" rel="noopener noreferrer" aria-label={ctx.t.phone}>
-                <WhatsApp />
-              </a>
-            )}
+            <SocialIcons accounts={social} />
             {contact.maps && (
               <a href={contact.maps} target="_blank" rel="noopener noreferrer" aria-label={ctx.t.directions}>
                 <Pin />

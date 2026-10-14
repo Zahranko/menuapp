@@ -1,5 +1,6 @@
 import type { TemplateProps } from "@/lib/types";
-import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, FootName, HoursList, Logo, logoRoot, optionRoot, OrderContent, orderLink, ProductPicture, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Arrow } from "../_kit/icons";
@@ -83,13 +84,14 @@ export default function AtelierTemplate({
   const hero = ctx.image("hero.image");
   const story = ctx.on("story") && ctx.text("story.text");
   const book = bookLink(ctx);
+  const order = orderButton(site, { label: c.book, whatsapp: book });
   const points = highlights(ctx);
   const storyImage = ctx.image("story.image");
 
   return (
     <div
-      data-template="atelier" {...logoRoot(ctx)}
-      className={cx("t-atelier", book && "has-book", fontVariables)}
+      data-template="atelier" {...logoRoot(ctx)} {...optionRoot(ctx, order, true)}
+      className={cx("t-atelier", order && "has-book", fontVariables)}
       style={themeVars(site.settings, ctx.locale, {
         palettes: PALETTES,
         fonts: ["elegant", "classic", "modern"],
@@ -335,12 +337,13 @@ export default function AtelierTemplate({
       </main>
 
       <footer className="foot" data-section="footer">
-        <span className="foot-name">{site.business.name}</span>
+        <FootName ctx={ctx} as="span" className="foot-name" />
+        <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
         <Credits ctx={ctx} />
       </footer>
-      {book && (
-        <a className="book-bar" href={book} rel="noopener" target="_blank">
-          {c.book}
+      {order && (
+        <a className="book-bar kit-order" {...orderLink(order)}>
+          <OrderContent order={order} />
         </a>
       )}
       <ProductSheet ctx={ctx} services />
