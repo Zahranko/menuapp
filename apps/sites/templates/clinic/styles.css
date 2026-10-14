@@ -125,6 +125,11 @@
     justify-content: center;
     font-weight: 800;
   }
+  /* The booking button keeps its one line; a very long business name gives way instead. */
+  .head > .btn {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
   .head nav {
     display: none;
     gap: 6px;

@@ -93,6 +93,23 @@ for (const template of registry.templates) {
         if (shape === "circle") expect(Math.abs(box.width - box.height), "round button").toBeLessThanOrEqual(2);
         const action = options.match(/order_([a-z]+)/)![1];
         expect(await button.getAttribute("data-order-action")).toBe(action === "call" ? "call" : action);
+
+        // At the very bottom of the page the floating button leaves the credits uncovered.
+        await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+        await page.waitForTimeout(150);
+        const fab = (await button.boundingBox())!;
+        // The lines of text in the credits (their boxes can be as wide as the footer).
+        const credits = await page.locator(".kit-credits").evaluateAll((els) =>
+          els.flatMap((el) => {
+            const range = document.createRange();
+            range.selectNodeContents(el);
+            return [...range.getClientRects()].map((r) => r.toJSON() as DOMRect).filter((r) => r.width > 0 && r.height > 0);
+          }),
+        );
+        for (const c of credits) {
+          const overlaps = c.left < fab.x + fab.width && fab.x < c.right && c.top < fab.y + fab.height && fab.y < c.bottom;
+          expect(overlaps, "the order button covers the credits").toBe(false);
+        }
       }
       expect(errors).toEqual([]);
     });

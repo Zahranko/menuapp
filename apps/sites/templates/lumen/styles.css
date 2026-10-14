@@ -1444,6 +1444,12 @@
     color: var(--bg);
     padding-bottom: calc(var(--tab-h) + 26px + env(safe-area-inset-bottom));
   }
+  /* A wide plain button (pill or rounded) needs its own row above the tab bar so it never covers the credits. */
+  @media (max-width: 899px) {
+    &:is([data-order-shape="pill"], [data-order-shape="rounded"]) .foot {
+      padding-bottom: calc(var(--tab-h) + 96px + env(safe-area-inset-bottom));
+    }
+  }
   .foot-in {
     max-width: var(--wrap);
     margin: 0 auto;

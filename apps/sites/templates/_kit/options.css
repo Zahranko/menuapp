@@ -112,7 +112,7 @@
 }
 /* The page keeps room at its foot so the button never covers the credits. */
 [data-order-fab] [data-section="footer"] {
-  padding-bottom: 88px;
+  padding-bottom: 88px !important;
 }
 
 /* Shapes: pill, rounded square, or a round icon-only button (its text stays for screen readers). */
