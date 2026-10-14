@@ -519,14 +519,15 @@ export const LONG_NAMES = {
 
 /**
  * Site options for a fixture preview, from the same token part as the logo options ("-" between options):
- * "longname" / "longword" (a long business name), "foot:medium" / "foot:small" (footer name size), "social" (every
- * account shown), "order:<action>" (whatsapp, call, instagram, facebook, hide), "shape:<shape>" (pill, rounded, circle),
- * "font:<name>" (a shared font, see _kit/fonts.ts), "accent:<rrggbb>" (a custom accent color) and "nowa" (no WhatsApp).
+ * "longname" / "longword" (a long business name), "foot_medium" / "foot_small" (footer name size), "social" (every
+ * account shown), "order_<action>" (whatsapp, call, instagram, facebook, hide), "shape_<shape>" (pill, rounded, circle),
+ * "font_<name>" (a shared font, see _kit/fonts.ts), "accent_<rrggbb>" (a custom accent color) and "nowa" (no WhatsApp).
+ * ":" works in place of "_" in tests; page addresses escape it, so links use "_".
  */
 export function applySiteOptions(site: PublicSite, options: string): void {
   const locale = site.business.locale === "ar" ? "ar" : "en";
   for (const option of options.split("-")) {
-    const [key, value = ""] = option.split(":");
+    const [key, value = ""] = option.split(/[:_]/);
     if (key === "longname") site.business = { ...site.business, name: LONG_NAMES[locale].name };
     else if (key === "longword") site.business = { ...site.business, name: LONG_NAMES[locale].word };
     else if (key === "nowa") site.business = { ...site.business, whatsApp: null };

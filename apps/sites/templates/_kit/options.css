@@ -23,6 +23,16 @@
   min-width: 0;
   max-width: 100%;
 }
+/* The same for the name next to the logo in the header: it breaks (or keeps its template's ellipsis) inside the screen. */
+.kit-name {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.kit-lockup {
+  min-width: 0;
+  max-width: 100%;
+}
 
 /* ---------- footer name size ---------- */
 [data-foot-name="medium"] {
@@ -76,8 +86,6 @@
   min-height: 54px;
   padding: 0 22px;
   border-radius: 999px;
-  background: var(--acc, var(--sacc, #1f1f1f));
-  color: var(--acc-ink, var(--saccink, #fff));
   box-shadow: 0 10px 28px rgb(0 0 0 / 0.28);
   font: 700 15px/1.15 var(--fb, var(--sbody, system-ui, sans-serif));
   text-decoration: none;
@@ -92,6 +100,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+/* Colors win over a template's own link colors, so the text always has its contrast-safe color on the fill. */
+.kit-fab {
+  background: var(--acc, var(--sacc, #1f1f1f)) !important;
+  color: var(--acc-ink, var(--saccink, #fff)) !important;
 }
 .kit-fab:focus-visible {
   outline: 3px solid var(--acc-text, var(--sacctext, currentColor));
