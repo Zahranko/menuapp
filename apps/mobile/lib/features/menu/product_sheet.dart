@@ -151,7 +151,7 @@ class _ProductSheetState extends ConsumerState<ProductSheet> {
     final currency = _currency;
     final ordered = widget.categories.inDisplayOrder;
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Text(_editing ? t.editProduct : t.newProduct, style: Ui.display(26)),
+      Text(_editing ? t.editProduct : t.newProduct, style: Ui.display(context, 26)),
       const SizedBox(height: 6),
       Text(_editing ? t.editProductSub : t.newProductSub, style: TextStyle(color: BrandColors.muted, fontSize: 14.5)),
       const SizedBox(height: 18),

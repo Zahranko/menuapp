@@ -30,7 +30,7 @@ so it lives in one file and nothing else. In this plan, `{brand}` means the bran
   "colorLine": "#DAD8C9",
   "fontDisplay": "Bricolage Grotesque",
   "fontBody": "DM Sans",
-  "fontArabic": "IBM Plex Sans Arabic"
+  "fontArabic": "Cairo"
 }
 ```
 

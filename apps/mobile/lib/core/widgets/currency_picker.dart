@@ -36,7 +36,7 @@ class _CurrencyPickerSheetState extends State<CurrencyPickerSheet> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(t.chooseCurrency, style: Ui.display(24)),
+        Text(t.chooseCurrency, style: Ui.display(context, 24)),
         const SizedBox(height: 6),
         Text(t.chooseCurrencySub, style: TextStyle(color: BrandColors.muted, height: 1.4)),
         const SizedBox(height: 14),

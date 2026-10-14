@@ -48,22 +48,67 @@ abstract final class Ui {
         BoxShadow(color: BrandColors.primary.withValues(alpha: 0.18), blurRadius: 28, offset: const Offset(0, 12)),
       ];
 
-  /// A display heading in the brand's display font.
-  static TextStyle display(double size, {Color? color, FontWeight weight = FontWeight.w800}) => TextStyle(
-        fontFamily: AppFonts.display,
-        fontSize: size,
-        fontWeight: weight,
-        height: 1.08,
-        letterSpacing: -0.4,
-        color: color ?? BrandColors.ink,
-      );
+  /// True when the app shows Arabic. Arabic letters join, so Arabic text is never letter-spaced, and its
+  /// taller marks and descenders need more line height than Latin.
+  static bool isArabic(BuildContext context) => Localizations.maybeLocaleOf(context)?.languageCode == 'ar';
 
-  /// Small uppercase label above a group.
-  static TextStyle get eyebrow =>
-      TextStyle(fontSize: 12, fontWeight: FontWeight.w700, letterSpacing: 1.1, color: BrandColors.muted);
+  /// A display heading in the brand's display font: tight Latin tracking, no tracking and roomier lines in Arabic.
+  static TextStyle display(BuildContext context, double size, {Color? color, FontWeight weight = FontWeight.w800}) {
+    final arabic = isArabic(context);
+    return TextStyle(
+      fontFamily: AppFonts.display,
+      fontSize: size,
+      fontWeight: weight,
+      height: arabic ? arabicHeadingHeight : 1.08,
+      letterSpacing: arabic ? 0 : -0.4,
+      color: color ?? BrandColors.ink,
+    );
+  }
+
+  /// Small label above a group: letter-spaced in Latin, plain in Arabic.
+  static TextStyle eyebrow(BuildContext context) =>
+      TextStyle(fontSize: 12, fontWeight: FontWeight.w700, letterSpacing: 1.1, color: BrandColors.muted).tracked(context);
+
+  /// Line height for Arabic headings: Arabic hamza and dots sit above the Latin cap height.
+  static const arabicHeadingHeight = 1.32;
 }
 
-ThemeData buildTheme() {
+extension ArabicTracking on TextStyle {
+  /// This style without letter spacing when the app shows Arabic, since spacing would break the joins between letters.
+  TextStyle tracked(BuildContext context) => letterSpacing == null || letterSpacing == 0 || !Ui.isArabic(context) ? this : copyWith(letterSpacing: 0);
+}
+
+/// Arabic: no letter spacing anywhere, and headings get room for Arabic marks.
+TextStyle? _arabicStyle(TextStyle? style, {bool heading = false}) {
+  if (style == null) return null;
+  final height = style.height;
+  return style.copyWith(
+    letterSpacing: 0,
+    height: heading && (height == null || height < Ui.arabicHeadingHeight) ? Ui.arabicHeadingHeight : height,
+  );
+}
+
+TextTheme _arabicTextTheme(TextTheme t) => TextTheme(
+      displayLarge: _arabicStyle(t.displayLarge, heading: true),
+      displayMedium: _arabicStyle(t.displayMedium, heading: true),
+      displaySmall: _arabicStyle(t.displaySmall, heading: true),
+      headlineLarge: _arabicStyle(t.headlineLarge, heading: true),
+      headlineMedium: _arabicStyle(t.headlineMedium, heading: true),
+      headlineSmall: _arabicStyle(t.headlineSmall, heading: true),
+      titleLarge: _arabicStyle(t.titleLarge, heading: true),
+      titleMedium: _arabicStyle(t.titleMedium),
+      titleSmall: _arabicStyle(t.titleSmall),
+      bodyLarge: _arabicStyle(t.bodyLarge),
+      bodyMedium: _arabicStyle(t.bodyMedium),
+      bodySmall: _arabicStyle(t.bodySmall),
+      labelLarge: _arabicStyle(t.labelLarge),
+      labelMedium: _arabicStyle(t.labelMedium),
+      labelSmall: _arabicStyle(t.labelSmall),
+    );
+
+/// The app theme. With [arabic] (MaterialApp.builder passes it when the app shows Arabic) no text is letter-spaced
+/// and headings get Arabic line heights.
+ThemeData buildTheme({bool arabic = false}) {
   const body = AppFonts.body;
   const display = AppFonts.display;
   final scheme = ColorScheme.fromSeed(
@@ -81,13 +126,14 @@ ThemeData buildTheme() {
   );
   final radius = BorderRadius.circular(Ui.radiusSmall);
   final base = ThemeData(useMaterial3: true, colorScheme: scheme, fontFamily: body);
-  final text = base.textTheme.copyWith(
+  final latinText = base.textTheme.copyWith(
         headlineLarge: TextStyle(fontFamily: display, fontSize: 32, fontWeight: FontWeight.w800, height: 1.08, color: BrandColors.ink),
         headlineMedium: TextStyle(fontFamily: display, fontSize: 26, fontWeight: FontWeight.w800, height: 1.1, color: BrandColors.ink),
         headlineSmall: TextStyle(fontFamily: display, fontSize: 21, fontWeight: FontWeight.w700, height: 1.15, color: BrandColors.ink),
         titleLarge: TextStyle(fontFamily: display, fontSize: 19, fontWeight: FontWeight.w700, color: BrandColors.ink),
       ).apply(bodyColor: BrandColors.ink, displayColor: BrandColors.ink);
-  final buttonText = TextStyle(fontFamily: body, fontSize: 16, fontWeight: FontWeight.w700, letterSpacing: 0.1);
+  final text = arabic ? _arabicTextTheme(latinText) : latinText;
+  final buttonText = TextStyle(fontFamily: body, fontSize: 16, fontWeight: FontWeight.w700, letterSpacing: arabic ? 0 : 0.1);
 
   return base.copyWith(
     textTheme: text,

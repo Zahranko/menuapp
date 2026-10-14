@@ -53,7 +53,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Text(business.name.isEmpty ? '?' : business.name.characters.first.toUpperCase(),
-                    style: Ui.display(22, color: Colors.white)),
+                    style: Ui.display(context, 22, color: Colors.white)),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -62,7 +62,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                   const SizedBox(height: 2),
                   AnimatedSwitcher(
                     duration: const Duration(milliseconds: 200),
-                    child: Text(titles[_tab], key: ValueKey(_tab), style: Ui.display(27)),
+                    child: Text(titles[_tab], key: ValueKey(_tab), style: Ui.display(context, 27)),
                   ),
                 ]),
               ),
@@ -187,7 +187,7 @@ class EmptyNote extends StatelessWidget {
           child: Column(children: [
             IconTile(Icons.inventory_2_outlined, size: 54),
             const SizedBox(height: 14),
-            Text(title, textAlign: TextAlign.center, style: Ui.display(19, weight: FontWeight.w700)),
+            Text(title, textAlign: TextAlign.center, style: Ui.display(context, 19, weight: FontWeight.w700)),
             const SizedBox(height: 6),
             Text(body, textAlign: TextAlign.center, style: TextStyle(color: BrandColors.muted, height: 1.45)),
           ]),

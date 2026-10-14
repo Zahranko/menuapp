@@ -194,7 +194,7 @@ class FormTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text(title, style: Ui.display(32)),
+      Text(title, style: Ui.display(context, 32)),
       const SizedBox(height: 10),
       Text(subtitle, style: TextStyle(fontSize: 15.5, height: 1.45, color: BrandColors.muted)),
     ]);

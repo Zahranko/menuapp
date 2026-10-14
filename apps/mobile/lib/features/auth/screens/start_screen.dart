@@ -190,7 +190,7 @@ class _Slide extends StatelessWidget {
         children: [
           Expanded(child: art),
           const SizedBox(height: 8),
-          Text(title, style: Ui.display(31)),
+          Text(title, style: Ui.display(context, 31)),
           const SizedBox(height: 12),
           Text(body, style: TextStyle(color: BrandColors.muted, fontSize: 15.5, height: 1.5)),
           const SizedBox(height: 20),
@@ -512,7 +512,7 @@ class _TemplatesArtState extends State<_TemplatesArt> with SingleTickerProviderS
                     const SizedBox(width: 8),
                     Text(
                       t.templateOf(number.toString().padLeft(3, '0')),
-                      style: Ui.display(14, weight: FontWeight.w700).copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
+                      style: Ui.display(context, 14, weight: FontWeight.w700).copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
                     ),
                   ],
                 ),
@@ -615,7 +615,7 @@ class _LinkArtState extends State<_LinkArt> with SingleTickerProviderStateMixin,
       children: [
         Text(
           name.toUpperCase(),
-          style: TextStyle(fontSize: 10.5, fontWeight: FontWeight.w700, letterSpacing: 0.8, color: pro ? BrandColors.accent : BrandColors.muted),
+          style: TextStyle(fontSize: 10.5, fontWeight: FontWeight.w700, letterSpacing: 0.8, color: pro ? BrandColors.accent : BrandColors.muted).tracked(context),
         ),
         Text.rich(
           TextSpan(
@@ -627,7 +627,7 @@ class _LinkArtState extends State<_LinkArt> with SingleTickerProviderStateMixin,
               ),
             ],
           ),
-          style: Ui.display(20, color: pro ? Colors.white : BrandColors.ink).copyWith(letterSpacing: -0.5),
+          style: Ui.display(context, 20, color: pro ? Colors.white : BrandColors.ink).copyWith(letterSpacing: -0.5).tracked(context),
         ),
       ],
     );

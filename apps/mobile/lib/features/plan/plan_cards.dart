@@ -90,7 +90,7 @@ class _PlanTile extends StatelessWidget {
             Text(current ? t.planCurrent(name) : name, style: TextStyle(color: current ? BrandColors.accent : BrandColors.muted, fontSize: 12.5, fontWeight: FontWeight.w600)),
             const SizedBox(height: 4),
             Text.rich(TextSpan(children: [
-              TextSpan(text: plan.price, style: Ui.display(28, color: current ? Colors.white : BrandColors.ink)),
+              TextSpan(text: plan.price, style: Ui.display(context, 28, color: current ? Colors.white : BrandColors.ink)),
               TextSpan(text: ' ${t.perMonth}', style: TextStyle(color: current ? Colors.white70 : BrandColors.muted)),
             ])),
             const SizedBox(height: 4),
@@ -147,7 +147,7 @@ class _PlanSheetState extends ConsumerState<_PlanSheet> {
     var body = up ? t.upgradeBody(price) : t.downgradeBody(price);
     if (!up && widget.domain != null) body = '$body ${t.downgradeDomain(widget.domain!.domain)}';
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Text(up ? t.upgradeToPro : t.switchToBasic, style: Ui.display(26)),
+      Text(up ? t.upgradeToPro : t.switchToBasic, style: Ui.display(context, 26)),
       const SizedBox(height: 6),
       Text(body, style: TextStyle(color: BrandColors.muted, height: 1.4)),
       const SizedBox(height: 18),
@@ -192,7 +192,7 @@ class _ProTemplateSheet extends StatelessWidget {
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Align(alignment: AlignmentDirectional.centerStart, child: ProBadge(large: true)),
       const SizedBox(height: 12),
-      Text(t.proTemplateTitle, style: Ui.display(26)),
+      Text(t.proTemplateTitle, style: Ui.display(context, 26)),
       const SizedBox(height: 6),
       Text(t.proTemplateBody(templateName), style: TextStyle(color: BrandColors.muted, height: 1.4)),
       const SizedBox(height: 18),
@@ -229,7 +229,7 @@ class ProBadge extends StatelessWidget {
       child: Row(mainAxisSize: MainAxisSize.min, children: [
         Icon(Icons.workspace_premium_rounded, size: large ? 16 : 13, color: BrandColors.primary),
         const SizedBox(width: 4),
-        Text(t.planPro, style: TextStyle(fontSize: large ? 13 : 11.5, fontWeight: FontWeight.w800, letterSpacing: 0.2, color: BrandColors.primary)),
+        Text(t.planPro, style: TextStyle(fontSize: large ? 13 : 11.5, fontWeight: FontWeight.w800, letterSpacing: 0.2, color: BrandColors.primary).tracked(context)),
       ]),
     );
   }

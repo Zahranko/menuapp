@@ -116,7 +116,7 @@ class _TemplatesScreenState extends ConsumerState<TemplatesScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(t.chooseTemplate, style: Ui.display(32)),
+                      Text(t.chooseTemplate, style: Ui.display(context, 32)),
                       const SizedBox(height: 10),
                       Text(t.templatesSub(all.length), style: TextStyle(color: BrandColors.muted, fontSize: 15.5, height: 1.45)),
                       if (locked && all.any((x) => x.isPro)) ...[
@@ -197,7 +197,7 @@ class _TemplateCard extends StatelessWidget {
         gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [BrandColors.primary2, BrandColors.primary]),
       ),
       child: Center(
-        child: Text(template.numberLabel, style: Ui.display(30, color: BrandColors.accent)),
+        child: Text(template.numberLabel, style: Ui.display(context, 30, color: BrandColors.accent)),
       ),
     );
     return GestureDetector(

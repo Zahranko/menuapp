@@ -58,6 +58,8 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 - [S04] `PublicBusinessDto` has no logo; Souq reads the logo from its `logo` setting. If the business profile gets a logo later, use it as the default (found in S08).
 - [S13] Souq's schema grew: `logo`, `hero.eyebrow`, `highlights.{1,2,3}.title/text`, `story.title`, `story.since`, `reviews.{1,2,3}.quote/name`. The editor renders them from the schema; group order follows the manifest (found in S08).
 - [S10] The OpenAPI document has no bearer security scheme yet; add one (document transformer) before generating the Flutter client (found in S02).
+- [S11/S12] The app's Arabic font is now Cairo (brand.json `fontArabic`; merged into `assets/fonts`, see its README). The Arabic onboarding screenshots `assets/onboarding/products_ar.webp` and `templates_ar.webp` are pictures of the app and still show the old Arabic font; retake them (`test/screenshots_test.dart` renders screens with the real fonts: `SCREENSHOT_DIR=<dir> flutter test test/screenshots_test.dart --dart-define-from-file=../../brand.json`) (found in the Cairo font change).
+- [S09] The marketing pages use `system-ui` and don't load the brand fonts (`fontDisplay`, `fontBody`, `fontArabic`) at all; templates pick their own Arabic font (`templates/_kit/fonts.ts`, IBM Plex Sans Arabic or Amiri) by design (found in the Cairo font change).
 
 ## Decisions made during sessions
 

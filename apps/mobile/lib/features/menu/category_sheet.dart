@@ -110,7 +110,7 @@ class _CategorySheetState extends ConsumerState<CategorySheet> {
       (false, false) => t.deleteCategoryEmpty,
     };
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Text(category == null ? t.newCategory : t.editCategory, style: Ui.display(26)),
+      Text(category == null ? t.newCategory : t.editCategory, style: Ui.display(context, 26)),
       const SizedBox(height: 4),
       Text(category == null ? t.newCategorySub : t.productsInCategory(count), style: TextStyle(color: BrandColors.muted)),
       const SizedBox(height: 16),

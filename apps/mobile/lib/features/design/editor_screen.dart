@@ -265,7 +265,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
                                     template?.nameFor(context) ?? t.customize,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
-                                    style: Ui.display(18, color: Colors.white, weight: FontWeight.w700),
+                                    style: Ui.display(context, 18, color: Colors.white, weight: FontWeight.w700),
                                   ),
                                   if (template != null)
                                     Text(
@@ -399,7 +399,7 @@ class _Published extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
-        Text(t.publishedTitle, style: Ui.display(26)),
+        Text(t.publishedTitle, style: Ui.display(context, 26)),
         const SizedBox(height: 8),
         Text(t.publishedBody, style: TextStyle(color: BrandColors.muted, height: 1.45, fontSize: 15)),
         const SizedBox(height: 18),

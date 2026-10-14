@@ -106,8 +106,8 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
         Padding(
           padding: const EdgeInsets.fromLTRB(4, 20, 4, 10),
           child: Row(children: [
-            Expanded(child: Text(categoryLabel(t, cat, c.categories), style: Ui.eyebrow.copyWith(letterSpacing: 0.3, fontSize: 13))),
-            Text('${products.length}', style: Ui.eyebrow),
+            Expanded(child: Text(categoryLabel(t, cat, c.categories), style: Ui.eyebrow(context).copyWith(letterSpacing: 0.3, fontSize: 13).tracked(context))),
+            Text('${products.length}', style: Ui.eyebrow(context)),
           ]),
         ),
         if (products.isEmpty)
@@ -145,7 +145,7 @@ class _Stat extends StatelessWidget {
         padding: const EdgeInsetsDirectional.fromSTEB(14, 12, 10, 12),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(children: [
-            Expanded(child: Text('$value', style: Ui.display(26, color: color))),
+            Expanded(child: Text('$value', style: Ui.display(context, 26, color: color))),
             Icon(icon, size: 17, color: warn ? BrandColors.highlight : BrandColors.muted.withValues(alpha: 0.7)),
           ]),
           const SizedBox(height: 2),

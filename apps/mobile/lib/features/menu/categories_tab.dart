@@ -124,7 +124,7 @@ class _CategoryTile extends StatelessWidget {
               border: sub ? Border.all(color: BrandColors.hairline) : null,
               borderRadius: BorderRadius.circular(sub ? 11 : 14),
             ),
-            child: Text(cat.name.isEmpty ? '?' : cat.name.characters.first.toUpperCase(), style: Ui.display(sub ? 15 : 18, color: BrandColors.primary)),
+            child: Text(cat.name.isEmpty ? '?' : cat.name.characters.first.toUpperCase(), style: Ui.display(context, sub ? 15 : 18, color: BrandColors.primary)),
           ),
           SizedBox(width: sub ? 12 : 14),
           Expanded(

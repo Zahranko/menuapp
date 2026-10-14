@@ -28,6 +28,9 @@ Future<void> main() async {
   ));
 }
 
+final _theme = buildTheme();
+final _arabicTheme = buildTheme(arabic: true);
+
 class StorefrontApp extends ConsumerWidget {
   const StorefrontApp({super.key});
 
@@ -36,10 +39,14 @@ class StorefrontApp extends ConsumerWidget {
     return MaterialApp.router(
       title: Brand.brandName,
       debugShowCheckedModeBanner: false,
-      theme: buildTheme(),
+      theme: _theme,
       routerConfig: ref.watch(routerProvider),
       // The launch splash plays over the first screen while the saved session is checked.
-      builder: (context, child) => SplashGate(child: child ?? const SizedBox.shrink()),
+      // Arabic gets its own type settings: no letter spacing, roomier headings.
+      builder: (context, child) => Theme(
+        data: Ui.isArabic(context) ? _arabicTheme : _theme,
+        child: SplashGate(child: child ?? const SizedBox.shrink()),
+      ),
       // The owner's choice, or the device language when it's null; Arabic lays out right to left.
       locale: ref.watch(appLanguageProvider).locale,
       supportedLocales: AppLocalizations.supportedLocales,

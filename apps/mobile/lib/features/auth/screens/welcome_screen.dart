@@ -58,7 +58,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                         ),
                       ),
                       const SizedBox(height: 28),
-                      Text.rich(_title(t.welcomeTitle(business.name), business.name), style: Ui.display(36, color: onDark)),
+                      Text.rich(_title(t.welcomeTitle(business.name), business.name), style: Ui.display(context, 36, color: onDark)),
                       const SizedBox(height: 14),
                       Text(auth.justSignedUp ? t.welcomeNew : t.welcomeBack, style: TextStyle(color: soft, fontSize: 15.5, height: 1.5)),
                       const SizedBox(height: 28),
@@ -75,7 +75,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(t.yourLink.toUpperCase(), style: Ui.eyebrow.copyWith(color: soft, fontSize: 11)),
+                                  Text(t.yourLink.toUpperCase(), style: Ui.eyebrow(context).copyWith(color: soft, fontSize: 11)),
                                   const SizedBox(height: 6),
                                   SelectableText(
                                     link,

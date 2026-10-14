@@ -74,7 +74,7 @@ class SectionCard extends StatelessWidget {
             Row(
               children: [
                 if (icon != null) ...[IconTile(icon!, size: 38), const SizedBox(width: 12)],
-                Expanded(child: Text(title, style: Ui.display(18, weight: FontWeight.w700))),
+                Expanded(child: Text(title, style: Ui.display(context, 18, weight: FontWeight.w700))),
                 ?badge,
               ],
             ),
@@ -102,7 +102,7 @@ class Pill extends StatelessWidget {
     decoration: BoxDecoration(color: color ?? BrandColors.accent.withValues(alpha: 0.24), borderRadius: BorderRadius.circular(99)),
     child: Text(
       text,
-      style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700, letterSpacing: 0.2, color: textColor ?? BrandColors.ink),
+      style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700, letterSpacing: 0.2, color: textColor ?? BrandColors.ink).tracked(context),
     ),
   );
 }
@@ -135,7 +135,7 @@ class ProductThumb extends StatelessWidget {
       alignment: Alignment.center,
       child: name.trim().isEmpty
           ? Icon(Icons.add_a_photo_outlined, size: size * 0.36, color: BrandColors.muted)
-          : Text(name.characters.first.toUpperCase(), style: Ui.display(size * 0.4, color: BrandColors.ink.withValues(alpha: 0.62))),
+          : Text(name.characters.first.toUpperCase(), style: Ui.display(context, size * 0.4, color: BrandColors.ink.withValues(alpha: 0.62))),
     );
     return ClipRRect(
       borderRadius: BorderRadius.circular(radius),
@@ -217,7 +217,7 @@ class Wordmark extends StatelessWidget {
   Widget build(BuildContext context) {
     final arabic = Localizations.localeOf(context).languageCode == 'ar' && Brand.brandNameAr.isNotEmpty;
     return Row(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.end, children: [
-      Text(arabic ? Brand.brandNameAr : Brand.brandName, style: Ui.display(size, color: onDark ? Colors.white : BrandColors.ink)),
+      Text(arabic ? Brand.brandNameAr : Brand.brandName, style: Ui.display(context, size, color: onDark ? Colors.white : BrandColors.ink)),
       Container(
         width: size * 0.26,
         height: size * 0.26,

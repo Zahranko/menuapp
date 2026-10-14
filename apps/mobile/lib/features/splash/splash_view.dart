@@ -51,9 +51,10 @@ class SplashView extends StatelessWidget {
                     RepaintBoundary(
                       child: SizedBox.square(dimension: 168, child: CustomPaint(painter: _Mark(progress))),
                     ),
-                    const SizedBox(height: 18),
+                    // Arabic lines are taller (room for the dots and hamza), so the gaps shrink to keep the same rhythm.
+                    SizedBox(height: arabic ? 10 : 18),
                     RepaintBoundary(child: _Name(progress: progress, name: name)),
-                    const SizedBox(height: 12),
+                    SizedBox(height: arabic ? 4 : 12),
                     _Rise(
                       progress: progress,
                       at: const _Span(1700, 600),
@@ -61,7 +62,8 @@ class SplashView extends StatelessWidget {
                       child: Text(
                         t.splashTagline,
                         textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white.withValues(alpha: 0.66), fontSize: 15, height: 1.3, letterSpacing: 0.1),
+                        style: TextStyle(color: Colors.white.withValues(alpha: 0.66), fontSize: 15, height: arabic ? 1.6 : 1.3, letterSpacing: 0.1)
+                            .tracked(context),
                       ),
                     ),
                   ],
@@ -163,8 +165,10 @@ class _Name extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = Ui.display(_size, color: Colors.white).copyWith(letterSpacing: -1.4, height: 1.15);
     final split = _latin.hasMatch(name);
+    // Joined scripts are never letter-spaced, and get the font's full line height so the wipe and blur
+    // layers, which are only as big as the text box, never cut off dots, hamza or descenders.
+    final style = Ui.display(context, _size, color: Colors.white).copyWith(letterSpacing: split ? -1.4 : 0, height: split ? 1.15 : 1.5);
     final letters = split ? name.characters.toList() : [name];
     final stagger = split ? math.min(60, 420 ~/ math.max(1, letters.length)) : 0;
     final textStart = 1100;
@@ -210,7 +214,8 @@ class _Name extends StatelessWidget {
           children: [
             for (var i = 0; i < letters.length; i++) letter(i),
             Padding(
-              padding: EdgeInsets.only(bottom: _size * 0.2, left: 3, right: 3),
+              // The dot sits on the baseline like a full stop; the taller joined-script box puts the baseline higher.
+              padding: EdgeInsets.only(bottom: _size * (split ? 0.2 : 0.3), left: split ? 3 : 1, right: split ? 3 : 1),
               child: Transform.translate(
                 offset: Offset(0, -_size * 0.5 * (1 - dotAt.of(p, _easeOut))),
                 child: Transform.scale(

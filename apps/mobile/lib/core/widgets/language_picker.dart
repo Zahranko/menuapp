@@ -31,7 +31,7 @@ class LanguageToggle extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8),
           minimumSize: const Size(0, 40),
           visualDensity: VisualDensity.compact,
-          textStyle: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600),
+          textStyle: const TextStyle(fontFamily: AppFonts.body, fontSize: 13.5, fontWeight: FontWeight.w600),
         ),
         onPressed: () => ref.read(appLanguageProvider.notifier).choose(other),
         icon: const Icon(Icons.translate_rounded, size: 16),
@@ -54,7 +54,7 @@ class _LanguageSheet extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(t.appLanguage, style: Ui.display(24)),
+        Text(t.appLanguage, style: Ui.display(context, 24)),
         const SizedBox(height: 6),
         Text(t.appLanguageSub, style: TextStyle(color: BrandColors.muted, height: 1.4)),
         const SizedBox(height: 12),
