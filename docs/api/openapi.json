@@ -1556,7 +1556,11 @@
           "instagram",
           "locale",
           "currencyCode",
-          "timeZone"
+          "timeZone",
+          "phone",
+          "facebook",
+          "tikTok",
+          "snapchat"
         ],
         "type": "object",
         "properties": {
@@ -1605,6 +1609,30 @@
           },
           "timeZone": {
             "type": "string"
+          },
+          "phone": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "facebook": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "tikTok": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "snapchat": {
+            "type": [
+              "null",
+              "string"
+            ]
           }
         }
       },
@@ -2013,7 +2041,11 @@
           "locale",
           "currencyCode",
           "timeZone",
-          "customDomains"
+          "customDomains",
+          "phone",
+          "facebook",
+          "tikTok",
+          "snapchat"
         ],
         "type": "object",
         "properties": {
@@ -2061,6 +2093,30 @@
             "items": {
               "type": "string"
             }
+          },
+          "phone": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "facebook": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "tikTok": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "snapchat": {
+            "type": [
+              "null",
+              "string"
+            ]
           }
         }
       },
@@ -2647,6 +2703,30 @@
             ]
           },
           "currencyCode": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "phone": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "facebook": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "tikTok": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "snapchat": {
             "type": [
               "null",
               "string"

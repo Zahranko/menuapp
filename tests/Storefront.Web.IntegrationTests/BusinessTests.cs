@@ -20,6 +20,10 @@ public class BusinessTests(StorefrontFactory factory) : IClassFixture<Storefront
             email = "hello@example.com",
             address = "Rainbow Street 21",
             instagram = "@newname",
+            phone = "+962 6 555 0100",
+            facebook = "https://www.facebook.com/newname/",
+            tikTok = "@newname",
+            snapchat = "snapchat.com/add/newname",
             locale = "ar",
             timeZone = "Asia/Amman",
         });
@@ -30,6 +34,10 @@ public class BusinessTests(StorefrontFactory factory) : IClassFixture<Storefront
         Assert.Equal(auth.Business.Slug, business.Slug);
         Assert.Equal("+962791234567", business.WhatsApp);
         Assert.Equal("newname", business.Instagram);
+        Assert.Equal("+96265550100", business.Phone);
+        Assert.Equal("newname", business.Facebook);
+        Assert.Equal("newname", business.TikTok);
+        Assert.Equal("newname", business.Snapchat);
         Assert.Equal("ar", business.Locale);
     }
 
@@ -38,12 +46,14 @@ public class BusinessTests(StorefrontFactory factory) : IClassFixture<Storefront
     {
         var auth = await Api.RegisterAsync(factory.CreateClient());
         var client = factory.CreateClient().Authorized(auth.AccessToken);
-        var response = await client.PutAsJsonAsync("/api/v1/business", new { name = "", email = "bad", locale = "fr", whatsApp = "123" });
+        var response = await client.PutAsJsonAsync("/api/v1/business", new { name = "", email = "bad", locale = "fr", whatsApp = "123", facebook = "https://instagram.com/x", tikTok = "two words" });
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         var errors = (await Api.ProblemAsync(response)).GetProperty("errors");
         Assert.True(errors.TryGetProperty("name", out _));
         Assert.True(errors.TryGetProperty("email", out _));
         Assert.True(errors.TryGetProperty("locale", out _));
+        Assert.True(errors.TryGetProperty("facebook", out _));
+        Assert.True(errors.TryGetProperty("tikTok", out _));
     }
 
     [Fact]

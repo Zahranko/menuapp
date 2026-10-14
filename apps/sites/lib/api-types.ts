@@ -1659,6 +1659,10 @@ export interface components {
             locale: string;
             currencyCode: string;
             timeZone: string;
+            phone: null | string;
+            facebook: null | string;
+            tikTok: null | string;
+            snapchat: null | string;
         };
         CategoryDto: {
             /** Format: uuid */
@@ -1774,6 +1778,10 @@ export interface components {
             currencyCode: string;
             timeZone: string;
             customDomains: string[];
+            phone: null | string;
+            facebook: null | string;
+            tikTok: null | string;
+            snapchat: null | string;
         };
         PublicCategoryDto: {
             /** Format: uuid */
@@ -1909,6 +1917,10 @@ export interface components {
             locale: null | string;
             timeZone: null | string;
             currencyCode?: null | string;
+            phone?: null | string;
+            facebook?: null | string;
+            tikTok?: null | string;
+            snapchat?: null | string;
         };
         ValidationProblemDetails: {
             type?: null | string;

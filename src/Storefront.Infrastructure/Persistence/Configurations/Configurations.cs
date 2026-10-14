@@ -24,7 +24,10 @@ internal sealed class BusinessConfiguration : IEntityTypeConfiguration<Business>
         b.HasIndex(x => x.OwnerUserId).IsUnique();
         b.Property(x => x.Email).HasMaxLength(254);
         b.Property(x => x.Address).HasMaxLength(200);
-        b.Property(x => x.Instagram).HasMaxLength(30);
+        b.Property(x => x.Instagram).HasMaxLength(SocialAccounts.InstagramMax);
+        b.Property(x => x.Facebook).HasMaxLength(SocialAccounts.FacebookMax);
+        b.Property(x => x.TikTok).HasMaxLength(SocialAccounts.TikTokMax);
+        b.Property(x => x.Snapchat).HasMaxLength(SocialAccounts.SnapchatMax);
         b.Property(x => x.CurrencyCode).HasMaxLength(3);
         b.Property(x => x.Locale).HasMaxLength(5);
         b.Property(x => x.TimeZone).HasMaxLength(64);

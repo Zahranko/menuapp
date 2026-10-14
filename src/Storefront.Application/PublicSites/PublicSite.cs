@@ -21,7 +21,11 @@ public sealed record PublicBusinessDto(
     string Locale,
     string CurrencyCode,
     string TimeZone,
-    IReadOnlyList<string> CustomDomains);
+    IReadOnlyList<string> CustomDomains,
+    string? Phone,
+    string? Facebook,
+    string? TikTok,
+    string? Snapchat);
 
 /// <summary>
 /// A category with its products. <see cref="ParentId"/> is the main category it sits under (null for a main category).

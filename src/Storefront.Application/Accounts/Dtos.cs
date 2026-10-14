@@ -13,11 +13,16 @@ public sealed record BusinessDto(
     string? Instagram,
     string Locale,
     string CurrencyCode,
-    string TimeZone)
+    string TimeZone,
+    string? Phone,
+    string? Facebook,
+    string? TikTok,
+    string? Snapchat)
 {
     public static BusinessDto From(Business b, Common.SiteLinks links) => new(
         b.Id, b.Name, b.Slug.Value, links.Site(b.Slug.Value),
-        b.WhatsApp?.Value, b.Email, b.Address, b.Instagram, b.Locale, b.CurrencyCode, b.TimeZone);
+        b.WhatsApp?.Value, b.Email, b.Address, b.Instagram, b.Locale, b.CurrencyCode, b.TimeZone,
+        b.Phone?.Value, b.Facebook, b.TikTok, b.Snapchat);
 }
 
 public sealed record AuthResponse(string AccessToken, DateTimeOffset AccessTokenExpiresAt, string RefreshToken, DateTimeOffset RefreshTokenExpiresAt, BusinessDto Business);

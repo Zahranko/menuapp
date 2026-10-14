@@ -20,6 +20,12 @@ public sealed class Business : AggregateRoot
     public string? Email { get; private set; }
     public string? Address { get; private set; }
     public string? Instagram { get; private set; }
+    /// <summary>The number customers call; when empty, the site's "Call us" uses the WhatsApp number.</summary>
+    public PhoneNumber? Phone { get; private set; }
+    /// <summary>Facebook page name, or "profile.php?id=…" (see <see cref="SocialAccounts"/>).</summary>
+    public string? Facebook { get; private set; }
+    public string? TikTok { get; private set; }
+    public string? Snapchat { get; private set; }
     public string CurrencyCode { get; private set; } = Currencies.Default;
     public string Locale { get; private set; } = "en";
     /// <summary>IANA time zone, used to highlight today's opening hours on the site.</summary>
@@ -47,7 +53,20 @@ public sealed class Business : AggregateRoot
         WhatsApp = whatsApp;
         Email = Guard.OptionalText(email, "email", 254, "business.email");
         Address = Guard.OptionalText(address, "address", 200, "business.address");
-        Instagram = Guard.OptionalText(instagram?.TrimStart('@'), "instagram", 30, "business.instagram");
+        Instagram = SocialAccounts.Instagram(instagram);
+        Raise(new BusinessChanged(Id, now));
+    }
+
+    /// <summary>
+    /// The phone number for calls and the Facebook, TikTok and Snapchat accounts. Each takes a username or a profile link
+    /// and is stored as the username; empty clears it. Which ones the site shows is a design setting.
+    /// </summary>
+    public void UpdateContactAccounts(PhoneNumber? phone, string? facebook, string? tikTok, string? snapchat, DateTimeOffset now)
+    {
+        Phone = phone;
+        Facebook = SocialAccounts.Facebook(facebook);
+        TikTok = SocialAccounts.TikTok(tikTok);
+        Snapchat = SocialAccounts.Snapchat(snapchat);
         Raise(new BusinessChanged(Id, now));
     }
 

@@ -280,6 +280,10 @@ namespace Storefront.Infrastructure.Persistence.Migrations
                         .HasMaxLength(254)
                         .HasColumnType("nvarchar(254)");
 
+                    b.Property<string>("Facebook")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
                     b.Property<string>("Instagram")
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
@@ -297,10 +301,22 @@ namespace Storefront.Infrastructure.Persistence.Migrations
                     b.Property<Guid>("OwnerUserId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Phone")
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
+
                     b.Property<string>("Slug")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Snapchat")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<string>("TikTok")
+                        .HasMaxLength(24)
+                        .HasColumnType("nvarchar(24)");
 
                     b.Property<string>("TimeZone")
                         .IsRequired()

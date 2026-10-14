@@ -24,6 +24,10 @@ public sealed class GetBusinessHandler(ICurrentUser currentUser, IBusinessReposi
 /// Optional. A new currency re-labels every product price in it, keeping the numbers (no exchange rate) and rounding
 /// each one to the new currency's decimals.
 /// </param>
+/// <param name="Phone">Optional. The number customers call; the site's "Call us" uses the WhatsApp number when it is empty.</param>
+/// <param name="Facebook">Optional. A Facebook page name or link; stored as the page name.</param>
+/// <param name="TikTok">Optional. A TikTok username (with or without @) or profile link.</param>
+/// <param name="Snapchat">Optional. A Snapchat username or snapchat.com/add link.</param>
 public sealed record UpdateBusiness(
     string Name,
     string? WhatsApp,
@@ -32,7 +36,11 @@ public sealed record UpdateBusiness(
     string? Instagram,
     string? Locale,
     string? TimeZone,
-    string? CurrencyCode = null);
+    string? CurrencyCode = null,
+    string? Phone = null,
+    string? Facebook = null,
+    string? TikTok = null,
+    string? Snapchat = null);
 
 public sealed class UpdateBusinessValidator : AbstractValidator<UpdateBusiness>
 {
@@ -44,13 +52,30 @@ public sealed class UpdateBusinessValidator : AbstractValidator<UpdateBusiness>
         RuleFor(x => x.Email!).Matches(Rules.EmailPattern).WithMessage("Check the email format, like name@business.com.")
             .MaximumLength(254).When(x => !string.IsNullOrWhiteSpace(x.Email));
         RuleFor(x => x.Address).MaximumLength(200).WithMessage("Address can be at most 200 characters.");
-        RuleFor(x => x.Instagram!).Matches("^@?[A-Za-z0-9._]{1,30}$").WithMessage("Enter your Instagram username, like vanillamenu.")
-            .When(x => !string.IsNullOrWhiteSpace(x.Instagram));
+        RuleFor(x => x.Instagram).Must(v => SocialAccounts.IsValid(SocialAccounts.Instagram, v)).WithMessage(SocialAccounts.InstagramMessage);
+        RuleFor(x => x.Phone!).Must(BeAPhoneNumber).WithMessage("Enter the number with its country code, starting with +.")
+            .When(x => !string.IsNullOrWhiteSpace(x.Phone));
+        RuleFor(x => x.Facebook).Must(v => SocialAccounts.IsValid(SocialAccounts.Facebook, v)).WithMessage(SocialAccounts.FacebookMessage);
+        RuleFor(x => x.TikTok).Must(v => SocialAccounts.IsValid(SocialAccounts.TikTok, v)).WithMessage(SocialAccounts.TikTokMessage);
+        RuleFor(x => x.Snapchat).Must(v => SocialAccounts.IsValid(SocialAccounts.Snapchat, v)).WithMessage(SocialAccounts.SnapchatMessage);
         RuleFor(x => x.Locale).Must(l => l is null || Business.Locales.Contains(l)).WithMessage("Language must be en or ar.");
         RuleFor(x => x.TimeZone!).Must(Business.IsTimeZone).WithMessage(Business.TimeZoneMessage)
             .When(x => !string.IsNullOrWhiteSpace(x.TimeZone));
         RuleFor(x => x.CurrencyCode!).Must(Currencies.IsSupported).WithMessage(Currencies.UnsupportedMessage)
             .When(x => !string.IsNullOrWhiteSpace(x.CurrencyCode));
+    }
+
+    private static bool BeAPhoneNumber(string phone)
+    {
+        try
+        {
+            PhoneNumber.Create(phone);
+            return true;
+        }
+        catch (DomainException)
+        {
+            return false;
+        }
     }
 }
 
@@ -80,6 +105,8 @@ public sealed class UpdateBusinessHandler(
         {
             var whatsApp = string.IsNullOrWhiteSpace(cmd.WhatsApp) ? null : PhoneNumber.Create(cmd.WhatsApp, "whatsApp");
             business.UpdateProfile(cmd.Name, whatsApp, cmd.Email, cmd.Address, cmd.Instagram, clock.UtcNow);
+            var phone = string.IsNullOrWhiteSpace(cmd.Phone) ? null : PhoneNumber.Create(cmd.Phone, "phone");
+            business.UpdateContactAccounts(phone, cmd.Facebook, cmd.TikTok, cmd.Snapchat, clock.UtcNow);
             if (cmd.Locale is not null)
             {
                 business.SetLocale(cmd.Locale);

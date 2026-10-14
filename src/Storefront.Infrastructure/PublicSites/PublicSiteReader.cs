@@ -70,7 +70,8 @@ internal sealed class PublicSiteReader(StorefrontDbContext db) : IPublicSiteRead
         var settingsJson = draft ? site.DraftSettings : site.PublishedSettings!;
         return new PublicSiteDto(
             new PublicBusinessDto(business.Name, business.Slug.Value, business.WhatsApp?.Value, business.Email, business.Address, business.Instagram,
-                business.Locale, business.CurrencyCode, business.TimeZone, domains),
+                business.Locale, business.CurrencyCode, business.TimeZone, domains,
+                business.Phone?.Value, business.Facebook, business.TikTok, business.Snapchat),
             draft ? site.TemplateId : site.PublishedTemplateId ?? site.TemplateId,
             JsonDocument.Parse(settingsJson).RootElement.Clone(),
             visible,
