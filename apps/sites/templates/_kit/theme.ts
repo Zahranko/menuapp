@@ -25,7 +25,7 @@ export function themeVars<T extends string>(settings: Settings, locale: string, 
   const names = Object.keys(o.palettes) as T[];
   const palette = o.palettes[choice(settings, "theme", names, names[0])];
   const font = typeface(settings, locale) ?? forLocale(fontPairs[choice(settings, "font", o.fonts, o.fonts[0])], locale);
-  const accent = accentTokens(accentColor(settings, o.defaultAccent ?? "#D9542C"), palette.bg, palette.surf, palette.ink);
+  const accent = accentTokens(accentColor(settings, o.defaultAccent ?? "#D9542C"), palette.bg, palette.surf, palette.ink, panels(palette));
   const radius = o.radius ?? { rounded: "18px", sharp: "2px" };
   const vars: Record<string, string | number> = {
     "--acc": accent.fill,
@@ -41,9 +41,12 @@ export function themeVars<T extends string>(settings: Settings, locale: string, 
     colorScheme: isDark(palette.bg) ? "dark" : "light",
   };
   for (const [key, value] of Object.entries(palette)) vars[`--${key}`] = value;
-  vars["--muted"] = readable(palette.muted, [palette.bg, palette.surf], palette.ink);
+  vars["--muted"] = readable(palette.muted, [palette.bg, palette.surf, ...panels(palette)], palette.ink);
   return vars as CSSProperties;
 }
+
+/** Extra panel colors in a palette (such as `card`) that text sits on, so contrast is checked against them too. */
+const panels = (p: Palette) => (p.card ? [p.card] : []);
 
 /** The owner's accent color (a preset or their own #RRGGBB), or the template's default when it is not a color. */
 export function accentColor(settings: Settings, fallback: string): string {
