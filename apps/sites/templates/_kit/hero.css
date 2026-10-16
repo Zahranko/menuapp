@@ -19,6 +19,8 @@
 .kit-slider .kit-slides {
   position: absolute;
   inset: 0;
+  /* Its own layer, so the photo on top (z-index below) never covers the template's text over the photos. */
+  isolation: isolate;
 }
 .kit-slider .kit-slide {
   position: absolute;

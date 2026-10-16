@@ -129,8 +129,13 @@ void main() {
   });
 
   // The shared site options in the design editor (fonts and colors, footer, social media, order button).
-  Future<void> openEditor(WidgetTester tester, Locale locale) async {
+  Future<void> openEditor(WidgetTester tester, Locale locale, {String? template}) async {
     final backend = locale.languageCode == 'ar' ? _arabicMenu() : FakeBackend();
+    if (template != null) {
+      backend
+        ..templateId = template
+        ..draft = {'hero.title': 'Hair, done right.'};
+    }
     backend.businessData['instagram'] = 'vanillamenu';
     backend.businessData['whatsApp'] = '+15555550123';
     await _pump(tester, signedIn: true, backend: backend, locale: locale);
@@ -157,6 +162,15 @@ void main() {
       await _save(tester, 'editor-social-$lang');
       await scrollToTop(tester, find.text(lang == 'ar' ? 'زر الطلب' : 'Order button'));
       await _save(tester, 'editor-order-button-$lang');
+    });
+
+    // The card options and the hero slider (the fake Atelier template has some of their fields).
+    _shot('$lang editor: cards and hero slider', (tester) async {
+      await openEditor(tester, locale, template: 'atelier');
+      await scrollToTop(tester, find.text(lang == 'ar' ? 'البطاقات' : 'Cards'));
+      await _save(tester, 'editor-cards-$lang');
+      await scrollToTop(tester, find.text(lang == 'ar' ? 'صور الواجهة المتحركة' : 'Hero slider'));
+      await _save(tester, 'editor-hero-slider-$lang');
     });
   }
 

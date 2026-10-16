@@ -170,6 +170,21 @@ for (const template of registry.templates) {
       expect(await current(page), "no autoplay for reduced motion").toBe(0);
     });
 
+    test("faded photos stay under the headline", async ({ page }, info) => {
+      test.skip(info.project.name !== "desktop", "checked once, on desktop");
+      await open(page, id, "en", "slides_3-auto_off-trans_fade-ctrl_both");
+      await page.locator(".kit-slider-next").first().click();
+      await page.evaluate(() => window.scrollTo(0, 0));
+      const covered = await page.locator("h1").first().evaluate((h) => {
+        // Some heroes let clicks through their text (Maison); hit-test the headline anyway.
+        h.style.pointerEvents = "auto";
+        const r = h.getBoundingClientRect();
+        const top = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+        return top !== null && !h.contains(top) && top.closest(".kit-slider") !== null;
+      });
+      expect(covered, "a photo covers the headline").toBe(false);
+    });
+
     if (keys.has("hero.height")) {
       test("height options", async ({ page }) => {
         const viewport = page.viewportSize()!;
