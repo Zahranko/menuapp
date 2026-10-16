@@ -10,7 +10,7 @@
     "description": "موقع مطعم راقٍ بطابع سينمائي: صورة افتتاحية بملء الشاشة، وقائمة تنقّل بملء الشاشة، وفصول مرقّمة، ومنيو مطبوع بأناقة."
   },
   "version": 2,
-  "heroSlider": { "kind": "backdrop", "source": "hero.images", "skip": ["hero.overlay", "hero.height", "hero.textPosition"] },
+  "heroSlider": { "kind": "backdrop", "source": "hero.images", "skip": ["hero.overlay", "hero.height", "hero.textPosition"], "defaults": { "hero.transition": "fade", "hero.controls": [] } },
   "tier": "pro",
   "thumbnail": "/templates/maison/thumbnail.png",
   "sample": "maison",

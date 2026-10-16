@@ -1,5 +1,5 @@
 import type { SiteContext } from "./context";
-import { heroOptions, sliderLabels } from "./hero";
+import { heroOptions, sliderLabels, type HeroTransition } from "./hero";
 import { HeroSlider } from "./HeroSlider";
 import { Picture } from "./Picture";
 
@@ -10,16 +10,18 @@ type Props = {
   sizes: string;
   /** Buttons centered at the foot of the photo (a framed photo), or in its corner (text sits on the photo). */
   placement?: "center" | "corner";
+  /** The template's own defaults (its manifest's heroSlider.defaults), for sites saved before the options existed. */
+  defaults?: { transition?: HeroTransition; controls?: string[] };
 };
 
 /**
  * The hero's photo, or its slider once the owner adds more photos. Put it in the template's own positioned photo box:
  * the slider fills it, so the box keeps its size and shape whether there is one photo or six.
  */
-export function HeroPhotos({ ctx, photos, sizes, placement = "center" }: Props) {
+export function HeroPhotos({ ctx, photos, sizes, placement = "center", defaults }: Props) {
   if (photos.length === 0) return null;
   if (photos.length === 1) return <Picture src={photos[0]} sizes={sizes} priority />;
-  const o = heroOptions(ctx.site.settings);
+  const o = heroOptions(ctx.site.settings, defaults);
   return (
     <HeroSlider
       slides={photos.map((src, i) => (

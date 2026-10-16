@@ -568,7 +568,7 @@ function applyCardAndHeroOption(site: PublicSite, key: string, value: string): v
     if ("hero.images" in site.settings) {
       // Templates with several hero photos of their own: the slideshow layout where they have one.
       const layout = site.settings["hero.layout"];
-      const slider = layout === "cover" || layout === "split" ? "slides" : layout === "poster" ? "full" : layout;
+      const slider = layout === "cover" || layout === "split" || layout === "poster" || layout === "full" ? "slides" : layout === "blob" ? "slider" : layout;
       set({ "hero.images": photos, ...(typeof layout === "string" ? { "hero.layout": slider } : {}) });
     } else if (typeof site.settings["hero.image"] === "string") set({ "hero.image": photos[0], "hero.slides": photos.slice(1) });
     else set({ "hero.slides": photos });

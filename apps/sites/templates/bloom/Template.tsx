@@ -90,7 +90,7 @@ const PALETTES = {
   },
 } satisfies Record<string, Palette>;
 
-const LAYOUTS = ["blob", "bubbles", "text"] as const;
+const LAYOUTS = ["blob", "slider", "bubbles", "text"] as const;
 
 /** Sites saved with Bloom's first version keep a close look: old theme and hero names map onto the new ones. */
 const OLD_THEMES: Record<string, keyof typeof PALETTES> = { blush: "strawberry", butter: "vanilla", lilac: "lavender", cocoa: "strawberry" };
@@ -355,7 +355,7 @@ function Hero({ v }: { v: View }) {
   const subtitle = text(s, "hero.subtitle");
 
   return (
-    <section className={cx("hero", art ? `hero-${layout}` : "hero-text")} data-section="hero">
+    <section className={cx("hero", art ? (layout === "slider" ? "hero-blob hero-slider" : `hero-${layout}`) : "hero-text")} data-section="hero">
       <span className="mesh" aria-hidden="true" />
       <Doodles set="hero" />
       <div className="hero-in">
@@ -381,9 +381,9 @@ function Hero({ v }: { v: View }) {
         </div>
         {art && (
           <div className="hero-art">
-            {layout === "blob" ? (
+            {layout === "blob" || layout === "slider" ? (
               <div className="blob">
-                <HeroPhotos ctx={ctx} photos={pics} sizes="(min-width: 900px) 46vw, 92vw" />
+                <HeroPhotos ctx={ctx} photos={layout === "slider" ? pics : pics.slice(0, 1)} sizes="(min-width: 900px) 46vw, 92vw" />
               </div>
             ) : (
               <div className={`orbs orbs-${pics.length}`}>

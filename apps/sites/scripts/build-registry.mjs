@@ -26,7 +26,8 @@
 // _kit/cards.css styles every product card (.kit-card) and category tile (.kit-cat). "auto" keeps the template's look.
 //
 // Hero slider: each manifest says what its opening looks like in "heroSlider" (left out of registry.json):
-//   { "kind": "backdrop" | "panel" | "band", "source": "hero.image" | "hero.images", "skip": ["hero.overlay", ...] }
+//   { "kind": "backdrop" | "panel" | "band", "source": "hero.image" | "hero.images", "skip": ["hero.overlay", ...],
+//     "defaults": { "hero.transition": "fade" } }   (optional: the template's own defaults, so its slideshow stays as it was)
 // backdrop: text on the photo; panel: the photo in its own frame; band: no photo before (a photo strip appears once the
 // owner adds photos). The fields of templates/_kit/hero-settings.json whose "kinds" include the template's kind go in a
 // "Hero slider" group right after the group of the template's hero photo (or headline). With "source": "hero.image" the
@@ -197,7 +198,9 @@ function withHeroOptions(id, manifest) {
     if (kinds.includes(hero.kind) && !skip.has(field.key)) fields.push(field);
   }
   const grouped = fields.map((f) => ({ key: f.key, type: f.type, label: f.label, group: heroSettings.group, ...f }));
-  insertGroup(manifest, grouped, heroSettings.defaults, anchor?.group);
+  const own = hero.defaults ?? {};
+  for (const key of Object.keys(own)) if (!grouped.some((f) => f.key === key)) fail(`${id}: "heroSlider.defaults" has "${key}", which the template does not get`);
+  insertGroup(manifest, grouped, { ...heroSettings.defaults, ...own }, anchor?.group);
 }
 
 /** The Arabic for an editor string: the manifest's own, else the dictionary's. */

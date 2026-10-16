@@ -18338,13 +18338,10 @@
         "cards.corners": "auto",
         "cards.photo": "auto",
         "cards.spacing": "auto",
-        "hero.transition": "slide",
+        "hero.transition": "fade",
         "hero.autoplay": true,
         "hero.speed": "normal",
-        "hero.controls": [
-          "dots",
-          "arrows"
-        ]
+        "hero.controls": []
       },
       "defaultsAr": {
         "cta.label": "احجز طاولتك",
@@ -20738,16 +20735,19 @@
           "options": [
             "poster",
             "full",
+            "slides",
             "type"
           ],
           "optionLabels": {
             "poster": "Photo stack",
             "full": "Full image",
+            "slides": "Full image slideshow",
             "type": "Text only"
           },
           "optionLabelsAr": {
             "poster": "كومة صور",
             "full": "صورة كاملة",
+            "slides": "عرض صور بملء الشاشة",
             "type": "نص فقط"
           }
         },
@@ -21719,16 +21719,19 @@
           "groupAr": "الواجهة الرئيسية",
           "options": [
             "blob",
+            "slider",
             "bubbles",
             "text"
           ],
           "optionLabels": {
             "blob": "Photo in a soft shape",
+            "slider": "Photos taking turns in a soft shape",
             "bubbles": "Round photo bubbles",
             "text": "Text only"
           },
           "optionLabelsAr": {
             "blob": "صورة بشكل ناعم",
+            "slider": "صور تتناوب بشكل ناعم",
             "bubbles": "فقاعات صور دائرية",
             "text": "نص فقط"
           }

@@ -35,7 +35,7 @@ const PALETTES = {
 } satisfies Record<string, Palette>;
 
 const FONTS = ["condensed", "bold", "modern"] as const;
-const HERO = ["poster", "full", "type"] as const;
+const HERO = ["poster", "full", "slides", "type"] as const;
 const CARDS = ["combo", "board"] as const;
 
 type View = {
@@ -435,10 +435,10 @@ function Hero({ v }: { v: View }) {
   const words = title.split(/\s+/).filter(Boolean);
 
   return (
-    <section className={cx("hero", `hero-${kind}`)} data-section="hero" style={{ "--shade": shade / 100 } as CSSProperties}>
-      {kind === "full" && (
+    <section className={cx("hero", kind === "slides" ? "hero-full hero-slides" : `hero-${kind}`)} data-section="hero" style={{ "--shade": shade / 100 } as CSSProperties}>
+      {(kind === "full" || kind === "slides") && (
         <div className="hero-bg">
-          <HeroPhotos ctx={ctx} photos={pics} sizes="100vw" placement="corner" />
+          <HeroPhotos ctx={ctx} photos={kind === "slides" ? pics : pics.slice(0, 1)} sizes="100vw" placement="corner" />
         </div>
       )}
       <div className="hero-copy">

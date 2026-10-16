@@ -44,10 +44,11 @@ export type HeroOptions = {
 
 const defaults = heroSettings.defaults;
 
-export function heroOptions(settings: Settings): HeroOptions {
-  const controls = Array.isArray(settings["hero.controls"]) ? list(settings, "hero.controls") : defaults["hero.controls"];
+/** The options, with `own` as the template's own defaults for a site saved before they existed (see heroSlider.defaults). */
+export function heroOptions(settings: Settings, own: { transition?: HeroTransition; controls?: string[] } = {}): HeroOptions {
+  const controls = Array.isArray(settings["hero.controls"]) ? list(settings, "hero.controls") : (own.controls ?? defaults["hero.controls"]);
   return {
-    transition: choice(settings, "hero.transition", HERO_TRANSITIONS, defaults["hero.transition"] as HeroTransition),
+    transition: choice(settings, "hero.transition", HERO_TRANSITIONS, own.transition ?? (defaults["hero.transition"] as HeroTransition)),
     autoplay: flag(settings, "hero.autoplay", defaults["hero.autoplay"]),
     interval: HERO_INTERVALS[choice(settings, "hero.speed", HERO_SPEEDS, defaults["hero.speed"] as HeroSpeed)],
     dots: controls.includes("dots"),

@@ -301,7 +301,7 @@ function Hero({ v, layout }: { v: View; layout: (typeof HERO)[number] }) {
         <div className={cx("mx-hero-media", media.length > 1 && "is-slider")}>
           {media.length > 1 ? (
             // The slideshow: the shared hero slider (transition, autoplay, speed and buttons from the owner's options).
-            <HeroPhotos ctx={ctx} photos={media} sizes="100vw" placement="corner" />
+            <HeroPhotos ctx={ctx} photos={media} sizes="100vw" placement="corner" defaults={{ transition: "fade", controls: [] }} />
           ) : (
             <div className="mx-slide" style={{ "--i": 0 } as CSSProperties}>
               <Picture src={media[0]} sizes={kind === "split" ? "(min-width: 900px) 60vw, 100vw" : "100vw"} priority />
