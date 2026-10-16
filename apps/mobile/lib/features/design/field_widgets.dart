@@ -135,8 +135,19 @@ class _SwatchSetting extends StatelessWidget {
     final own = field.type == 'color' && field.custom;
     // A color the owner picked themselves (not one of the template's swatches) shows in the last swatch.
     final ownColor = own && value != null && !field.options.any((o) => o.toLowerCase() == value!.toLowerCase()) ? _hex(value) : null;
-    return Wrap(spacing: 10, runSpacing: 10, children: [
-        for (final o in field.options)
+    return Wrap(spacing: 10, runSpacing: 10, crossAxisAlignment: WrapCrossAlignment.center, children: [
+        // Options that are not a color ("Template default", "Accent color") are named chips before the swatches.
+        for (final o in field.options.where((o) => field.type == 'color' && _hex(o) == null))
+          ChoiceChip(
+            key: Key('setting-${field.key}-$o'),
+            label: Text(field.optionLabelFor(context, o)),
+            selected: value == o,
+            showCheckmark: false,
+            selectedColor: BrandColors.primary,
+            labelStyle: TextStyle(color: value == o ? Colors.white : BrandColors.ink, fontWeight: FontWeight.w600),
+            onSelected: (_) => onChanged(o),
+          ),
+        for (final o in field.options.where((o) => field.type != 'color' || _hex(o) != null))
           Tooltip(
             message: field.optionLabelFor(context, o),
             child: Semantics(
@@ -170,7 +181,7 @@ class _SwatchSetting extends StatelessWidget {
                 key: Key('setting-${field.key}-custom'),
                 customBorder: const CircleBorder(),
                 onTap: () async {
-                  final picked = await pickColor(context, initial: value ?? (field.options.isEmpty ? '#D9542C' : field.options.first));
+                  final picked = await pickColor(context, initial: _hex(value) != null ? value! : field.options.firstWhere((o) => _hex(o) != null, orElse: () => '#D9542C'));
                   if (picked != null) onChanged(picked);
                 },
                 child: Container(

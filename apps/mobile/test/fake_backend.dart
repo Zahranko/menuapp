@@ -137,6 +137,74 @@ class FakeBackend {
     {'key': 'order.label', 'type': 'text', 'label': 'Button text (leave empty for the usual text)', 'labelAr': 'نص الزر (اتركه فارغًا للنص المعتاد)', 'group': 'Order button', 'groupAr': 'زر الطلب', 'max': 28},
   ];
 
+  /// Some of the card and hero slider fields as the API lists them (from the sites' _kit/card-settings.json and
+  /// _kit/hero-settings.json). The Atelier template has them.
+  static const cardAndHeroFields = <Map<String, Object?>>[
+    {
+      'key': 'cards.style',
+      'type': 'choice',
+      'label': 'Card style',
+      'labelAr': 'شكل البطاقات',
+      'group': 'Cards',
+      'groupAr': 'البطاقات',
+      'options': ['auto', 'flat', 'glass'],
+      'optionLabels': {'auto': 'Template default', 'flat': 'Flat', 'glass': 'Glass'},
+      'optionLabelsAr': {'auto': 'كما في القالب', 'flat': 'مسطّحة', 'glass': 'زجاجية'},
+    },
+    {
+      'key': 'cards.borderColor',
+      'type': 'color',
+      'label': 'Border color',
+      'labelAr': 'لون الإطار',
+      'group': 'Cards',
+      'groupAr': 'البطاقات',
+      'options': ['auto', 'accent', 'ink'],
+      'optionLabels': {'auto': 'Template default', 'accent': 'Accent color', 'ink': 'Text color'},
+      'optionLabelsAr': {'auto': 'كما في القالب', 'accent': 'اللون المميز', 'ink': 'لون النص'},
+      'custom': true,
+    },
+    {
+      'key': 'hero.slides',
+      'type': 'images',
+      'label': 'More photos for the top (they take turns)',
+      'labelAr': 'صور إضافية لأعلى الصفحة (تتناوب في الظهور)',
+      'group': 'Hero slider',
+      'groupAr': 'صور الواجهة المتحركة',
+      'max': 5,
+    },
+    {
+      'key': 'hero.transition',
+      'type': 'choice',
+      'label': 'How the photos change',
+      'labelAr': 'طريقة تبديل الصور',
+      'group': 'Hero slider',
+      'groupAr': 'صور الواجهة المتحركة',
+      'options': ['slide', 'fade', 'zoom'],
+      'optionLabels': {'slide': 'Slide', 'fade': 'Fade', 'zoom': 'Fade with a slow zoom'},
+      'optionLabelsAr': {'slide': 'انزلاق', 'fade': 'تلاشٍ', 'zoom': 'تلاشٍ مع تكبير بطيء'},
+    },
+    {'key': 'hero.autoplay', 'type': 'toggle', 'label': 'Change photos automatically', 'labelAr': 'تبديل الصور تلقائيًا', 'group': 'Hero slider', 'groupAr': 'صور الواجهة المتحركة'},
+    {
+      'key': 'hero.controls',
+      'type': 'toggles',
+      'label': 'Buttons on the photos',
+      'labelAr': 'أزرار على الصور',
+      'group': 'Hero slider',
+      'groupAr': 'صور الواجهة المتحركة',
+      'options': ['dots', 'arrows'],
+      'optionLabels': {'dots': 'Dots', 'arrows': 'Arrows'},
+      'optionLabelsAr': {'dots': 'نقاط', 'arrows': 'أسهم'},
+    },
+  ];
+  static const cardAndHeroDefaults = <String, Object?>{
+    'cards.style': 'auto',
+    'cards.borderColor': 'auto',
+    'hero.slides': <String>[],
+    'hero.transition': 'slide',
+    'hero.autoplay': true,
+    'hero.controls': ['dots', 'arrows'],
+  };
+
   static final templates = [
     {
       'id': 'souq',
@@ -193,8 +261,9 @@ class FakeBackend {
       'version': 1,
       'schema': [
         {'key': 'hero.title', 'type': 'text', 'label': 'Headline', 'group': 'Hero header', 'max': 60},
+        ...cardAndHeroFields,
       ],
-      'defaults': {'hero.title': 'Hair, done right.'},
+      'defaults': {'hero.title': 'Hair, done right.', ...cardAndHeroDefaults},
     },
     {
       'id': 'noir',

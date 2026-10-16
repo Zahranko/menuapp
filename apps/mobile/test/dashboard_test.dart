@@ -641,6 +641,53 @@ void main() {
       expect(find.text('Order button'), findsNothing);
     });
 
+    testWidgets('the Cards and Hero slider groups show their defaults, name the border colors and save changes', (tester) async {
+      final backend = FakeBackend()
+        ..templateId = 'atelier'
+        ..draft = {'hero.title': 'Hair, done right.'};
+      await openEditor(tester, backend);
+
+      await scrollTo(tester, find.text('Cards'));
+      await scrollTo(tester, find.text('Glass'));
+      expect(selected(tester, chipNear('Glass', 'Template default')), isTrue, reason: 'a missing setting shows its default');
+      // The border colors that are not a color of their own are named chips, next to the owner's own color.
+      await scrollTo(tester, find.byKey(const Key('setting-cards.borderColor-custom')));
+      for (final o in ['auto', 'accent', 'ink']) {
+        expect(find.byKey(Key('setting-cards.borderColor-$o')), findsOneWidget, reason: o);
+      }
+      expect(selected(tester, find.byKey(const Key('setting-cards.borderColor-auto'))), isTrue);
+      expect(find.widgetWithText(ChoiceChip, 'Accent color'), findsOneWidget);
+      await tapIn(tester, find.widgetWithText(ChoiceChip, 'Glass'));
+      await tapIn(tester, find.byKey(const Key('setting-cards.borderColor-accent')));
+
+      await scrollTo(tester, find.text('Hero slider'));
+      await scrollTo(tester, find.text('Fade with a slow zoom'));
+      expect(selected(tester, find.widgetWithText(ChoiceChip, 'Slide')), isTrue);
+      await tapIn(tester, find.widgetWithText(ChoiceChip, 'Fade'));
+      await scrollTo(tester, find.byKey(const Key('setting-hero.autoplay')));
+      expect(tester.widget<SwitchListTile>(find.byKey(const Key('setting-hero.autoplay'))).value, isTrue);
+      await tapIn(tester, find.byKey(const Key('setting-hero.autoplay')));
+      await tester.pump(EditorScreen.saveDelay);
+      await tester.pumpAndSettle();
+
+      expect(backend.draft['cards.style'], 'glass');
+      expect(backend.draft['cards.borderColor'], 'accent');
+      expect(backend.draft['hero.transition'], 'fade');
+      expect(backend.draft['hero.autoplay'], false);
+    });
+
+    testWidgets('the Cards and Hero slider groups are in Arabic for Arabic owners', (tester) async {
+      final backend = FakeBackend()
+        ..templateId = 'atelier'
+        ..draft = {'hero.title': 'Hair, done right.'};
+      await openEditor(tester, backend, language: AppLanguage.ar);
+      for (final label in ['البطاقات', 'شكل البطاقات', 'زجاجية', 'لون الإطار', 'اللون المميز', 'صور الواجهة المتحركة', 'طريقة تبديل الصور', 'تلاشٍ مع تكبير بطيء', 'أزرار على الصور', 'أسهم']) {
+        await scrollTo(tester, find.text(label));
+        expect(find.text(label), findsOneWidget, reason: label);
+      }
+      expect(find.text('Hero slider'), findsNothing);
+    });
+
     testWidgets('Settings saves the social accounts and the phone for calls, and shows their errors', (tester) async {
       final backend = FakeBackend();
       await pumpSignedIn(tester, backend);
