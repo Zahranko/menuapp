@@ -76,6 +76,7 @@ class _WebsiteCard extends ConsumerWidget {
               if (context.mounted) showMessage(context, t.linkCopied);
             },
           ),
+          LightButton(key: const Key('settingsQr'), label: t.qrCode, icon: Icons.qr_code_2_rounded, onPressed: () => context.push('/qr')),
         ]),
       ],
     );

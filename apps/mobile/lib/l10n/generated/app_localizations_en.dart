@@ -1149,7 +1149,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'It still scans: the code makes up for the covered part.';
 
   @override
-  String get qrSave => 'Save to phone';
+  String get qrSave => 'Save image';
 
   @override
   String get qrShare => 'Share';

@@ -26,6 +26,8 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Choose photos of your products and your business to show on your website.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Save your QR code and poster to your photos.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Take photos of your products to show on your website.</string>
 	<key>ITSAppUsesNonExemptEncryption</key>

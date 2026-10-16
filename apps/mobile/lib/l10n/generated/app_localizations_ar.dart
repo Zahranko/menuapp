@@ -1139,7 +1139,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get qrLogoHelp => 'يبقى قابلًا للمسح: الرمز يعوّض الجزء المغطّى.';
 
   @override
-  String get qrSave => 'حفظ في الهاتف';
+  String get qrSave => 'حفظ الصورة';
 
   @override
   String get qrShare => 'مشاركة';

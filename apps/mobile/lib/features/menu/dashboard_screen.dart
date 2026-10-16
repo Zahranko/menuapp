@@ -101,6 +101,16 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                 child: Text(t.savesGoLive,
                     maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.end, style: TextStyle(color: BrandColors.muted, fontSize: 12)),
               ),
+              const SizedBox(width: 4),
+              IconButton(
+                key: const Key('qrButton'),
+                tooltip: t.qrCode,
+                visualDensity: VisualDensity.compact,
+                constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
+                padding: EdgeInsets.zero,
+                onPressed: () => context.push('/qr'),
+                icon: Icon(Icons.qr_code_2_rounded, color: BrandColors.ink, size: 22),
+              ),
             ]),
           ),
           Expanded(

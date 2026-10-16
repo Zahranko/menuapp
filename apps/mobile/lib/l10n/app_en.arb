@@ -634,7 +634,7 @@
   "qrColor": "Code color",
   "qrLogo": "Logo in the middle",
   "qrLogoHelp": "It still scans: the code makes up for the covered part.",
-  "qrSave": "Save to phone",
+  "qrSave": "Save image",
   "qrShare": "Share",
   "qrSaved": "Saved to your photos",
   "qrSaveFailed": "Couldn't save. Allow access to your photos and try again.",

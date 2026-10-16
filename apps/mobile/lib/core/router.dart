@@ -10,11 +10,12 @@ import '../features/auth/screens/welcome_screen.dart';
 import '../features/design/editor_screen.dart';
 import '../features/design/templates_screen.dart';
 import '../features/menu/dashboard_screen.dart';
+import '../features/qr/qr_screen.dart';
 import '../features/site/site_screen.dart';
 import 'theme.dart';
 
 const _signedOutRoutes = {'/', '/signup', '/login'};
-const _signedInRoutes = {'/welcome', '/menu', '/templates', '/design', '/site'};
+const _signedInRoutes = {'/welcome', '/menu', '/templates', '/design', '/site', '/qr'};
 
 /// Routes plus the auth redirect: signed-out owners stay on the start, sign-up and log-in screens;
 /// new owners see the welcome screen, returning owners land on My menu.
@@ -45,6 +46,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/templates', builder: (_, _) => const TemplatesScreen()),
       GoRoute(path: '/design', builder: (_, _) => const EditorScreen()),
       GoRoute(path: '/site', builder: (_, _) => const SiteScreen()),
+      GoRoute(path: '/qr', builder: (_, _) => const QrScreen()),
     ],
   );
 });

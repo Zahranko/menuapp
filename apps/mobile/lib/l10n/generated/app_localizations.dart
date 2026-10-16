@@ -2075,7 +2075,7 @@ abstract class AppLocalizations {
   /// No description provided for @qrSave.
   ///
   /// In en, this message translates to:
-  /// **'Save to phone'**
+  /// **'Save image'**
   String get qrSave;
 
   /// No description provided for @qrShare.
