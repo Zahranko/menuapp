@@ -392,6 +392,14 @@ namespace Storefront.Infrastructure.Persistence.Migrations
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<string>("CustomLabel")
+                        .HasMaxLength(24)
+                        .HasColumnType("nvarchar(24)");
+
+                    b.Property<string>("CustomLabelAr")
+                        .HasMaxLength(24)
+                        .HasColumnType("nvarchar(24)");
+
                     b.Property<string>("Description")
                         .HasMaxLength(140)
                         .HasColumnType("nvarchar(140)");

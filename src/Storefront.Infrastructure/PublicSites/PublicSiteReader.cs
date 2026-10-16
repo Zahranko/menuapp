@@ -63,7 +63,7 @@ internal sealed class PublicSiteReader(StorefrontDbContext db) : IPublicSiteRead
         var visible = categories
             .Where(c => byCategory[c.Id].Any() || parentsWithProducts.Contains(c.Id))
             .Select(c => new PublicCategoryDto(c.Id, c.Name, c.ParentId, byCategory[c.Id]
-                .Select(p => new PublicProductDto(p.Id, p.Name, p.Description, p.Price, p.ImageUrl, p.Label, p.IsAvailable, p.IsFeatured))
+                .Select(p => new PublicProductDto(p.Id, p.Name, p.Description, p.Price, p.ImageUrl, p.Label, p.IsAvailable, p.IsFeatured, p.CustomLabel, p.CustomLabelAr))
                 .ToList()))
             .ToList();
 

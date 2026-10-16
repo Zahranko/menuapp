@@ -33,6 +33,10 @@ public sealed record PublicBusinessDto(
 /// </summary>
 public sealed record PublicCategoryDto(Guid Id, string Name, Guid? ParentId, IReadOnlyList<PublicProductDto> Products);
 
+/// <summary>
+/// A product. <see cref="Label"/> is one of the fixed labels (the site translates it) or "Custom", whose text is
+/// <see cref="CustomLabel"/> and, for Arabic, <see cref="CustomLabelAr"/> (either may be null, never both).
+/// </summary>
 public sealed record PublicProductDto(
     Guid Id,
     string Name,
@@ -41,7 +45,9 @@ public sealed record PublicProductDto(
     string? ImageUrl,
     string? Label,
     bool IsAvailable,
-    bool IsFeatured);
+    bool IsFeatured,
+    string? CustomLabel,
+    string? CustomLabelAr);
 
 /// <summary>Cross-tenant reads for the public site (Infrastructure, no tenant filter).</summary>
 public interface IPublicSiteReader

@@ -104,6 +104,60 @@ public class CatalogTests
     public void Product_accepts_fixed_labels(string? label) =>
         Assert.Equal(label, Product.Create(Biz, Guid.CreateVersion7(), new ProductDetails("Latte", null, 1, label), "JOD", 0, Now).Label);
 
+    private static Product WithLabel(string? label, string? text, string? textAr = null) =>
+        Product.Create(Biz, Guid.CreateVersion7(), new ProductDetails("Latte", null, 1, label, CustomLabel: text, CustomLabelAr: textAr), "JOD", 0, Now);
+
+    [Fact]
+    public void Custom_label_keeps_trimmed_text_in_both_languages()
+    {
+        var product = WithLabel(ProductLabel.Custom, "  Chef's   choice ", " اختيار  الشيف ");
+        Assert.Equal("Custom", product.Label);
+        Assert.Equal("Chef's choice", product.CustomLabel);
+        Assert.Equal("اختيار الشيف", product.CustomLabelAr);
+    }
+
+    [Theory]
+    [InlineData("Gluten free", null)]
+    [InlineData(null, "خالٍ من الغلوتين")]
+    [InlineData("  ", "حلال")]
+    public void Custom_label_needs_text_in_one_language(string? text, string? textAr)
+    {
+        var product = WithLabel(ProductLabel.Custom, text, textAr);
+        Assert.Equal(string.IsNullOrWhiteSpace(text) ? null : text, product.CustomLabel);
+        Assert.Equal(textAr, product.CustomLabelAr);
+    }
+
+    [Theory]
+    [InlineData(null, null)]
+    [InlineData("  ", " ")]
+    [InlineData("1234567890123456789012345", null)]
+    [InlineData(null, "١٢٣٤٥٦٧٨٩٠١٢٣٤٥٦٧٨٩٠١٢٣٤٥")]
+    [InlineData("Two\nlines", null)]
+    [InlineData("Tab\there", null)]
+    public void Custom_label_rejects_empty_long_or_multiline_text(string? text, string? textAr)
+    {
+        var ex = Assert.Throws<DomainException>(() => WithLabel(ProductLabel.Custom, text, textAr));
+        Assert.Equal("product.customLabel", ex.Code);
+    }
+
+    [Fact]
+    public void Custom_label_allows_exactly_24_characters()
+    {
+        var text = new string('x', ProductLabel.CustomTextMax);
+        Assert.Equal(text, WithLabel(ProductLabel.Custom, text).CustomLabel);
+    }
+
+    [Fact]
+    public void Fixed_labels_clear_custom_text()
+    {
+        var product = WithLabel(ProductLabel.Custom, "Halal");
+        product.Update(product.CategoryId, new ProductDetails("Latte", null, 1, ProductLabel.New, CustomLabel: "Halal", CustomLabelAr: "حلال"), "JOD", Now);
+        Assert.Equal("New", product.Label);
+        Assert.Null(product.CustomLabel);
+        Assert.Null(product.CustomLabelAr);
+        Assert.Null(WithLabel(null, "Ignored").CustomLabel);
+    }
+
     [Fact]
     public void Marking_sold_out_records_a_change()
     {

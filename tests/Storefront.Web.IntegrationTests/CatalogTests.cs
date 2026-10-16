@@ -246,6 +246,27 @@ public class CatalogTests(StorefrontFactory factory) : IClassFixture<StorefrontF
 
         var badLabel = await client.PostAsJsonAsync("/api/v1/products", new { categoryId = coffee.Id, name = "Latte", price = 3m, label = "Hot" });
         Assert.True((await Api.ProblemAsync(badLabel)).GetProperty("errors").TryGetProperty("label", out _));
+
+        var noText = await client.PostAsJsonAsync("/api/v1/products", new { categoryId = coffee.Id, name = "Latte", price = 3m, label = "Custom", customLabel = " " });
+        Assert.Equal("Type the label text.", (await Api.ProblemAsync(noText)).GetProperty("errors").GetProperty("customLabel")[0].GetString());
+
+        var tooLong = await client.PostAsJsonAsync("/api/v1/products", new { categoryId = coffee.Id, name = "Latte", price = 3m, label = "Custom", customLabelAr = new string('ح', 25) });
+        Assert.Equal("Labels can be up to 24 characters.", (await Api.ProblemAsync(tooLong)).GetProperty("errors").GetProperty("customLabelAr")[0].GetString());
+    }
+
+    [Fact]
+    public async Task Custom_labels_keep_their_text_in_both_languages()
+    {
+        var (client, _) = await OwnerAsync();
+        var coffee = await CreateCategory(client, "Coffee");
+        var created = await client.PostAsJsonAsync("/api/v1/products", new { categoryId = coffee.Id, name = "Latte", price = 3m, label = "Custom", customLabel = "  Chef's choice ", customLabelAr = "اختيار الشيف" });
+        await Api.EnsureSuccess(created);
+        var latte = (await created.Content.ReadFromJsonAsync<ProductDto>(Api.Json))!;
+        Assert.Equal(("Custom", "Chef's choice", "اختيار الشيف"), (latte.Label, latte.CustomLabel, latte.CustomLabelAr));
+
+        var update = await client.PutAsJsonAsync($"/api/v1/products/{latte.Id}", new { categoryId = coffee.Id, name = "Latte", price = 3m, label = "New", customLabel = "Chef's choice" });
+        var updated = (await update.Content.ReadFromJsonAsync<ProductDto>(Api.Json))!;
+        Assert.Equal(("New", (string?)null, (string?)null), (updated.Label, updated.CustomLabel, updated.CustomLabelAr));
     }
 
     [Fact]

@@ -1969,7 +1969,9 @@
           "isAvailable",
           "isFeatured",
           "sortOrder",
-          "updatedAt"
+          "updatedAt",
+          "customLabel",
+          "customLabelAr"
         ],
         "type": "object",
         "properties": {
@@ -2027,6 +2029,18 @@
           "updatedAt": {
             "type": "string",
             "format": "date-time"
+          },
+          "customLabel": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "customLabelAr": {
+            "type": [
+              "null",
+              "string"
+            ]
           }
         }
       },
@@ -2160,7 +2174,9 @@
           "imageUrl",
           "label",
           "isAvailable",
-          "isFeatured"
+          "isFeatured",
+          "customLabel",
+          "customLabelAr"
         ],
         "type": "object",
         "properties": {
@@ -2202,6 +2218,18 @@
           },
           "isFeatured": {
             "type": "boolean"
+          },
+          "customLabel": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "customLabelAr": {
+            "type": [
+              "null",
+              "string"
+            ]
           }
         }
       },
@@ -2427,6 +2455,18 @@
             "default": false
           },
           "imageUrl": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "customLabel": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "customLabelAr": {
             "type": [
               "null",
               "string"

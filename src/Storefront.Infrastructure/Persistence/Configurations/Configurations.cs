@@ -60,6 +60,8 @@ internal sealed class ProductConfiguration : IEntityTypeConfiguration<Product>
         b.Property(x => x.Name).HasMaxLength(Product.NameMax);
         b.Property(x => x.Description).HasMaxLength(Product.DescriptionMax);
         b.Property(x => x.Label).HasMaxLength(20);
+        b.Property(x => x.CustomLabel).HasMaxLength(ProductLabel.CustomTextMax);
+        b.Property(x => x.CustomLabelAr).HasMaxLength(ProductLabel.CustomTextMax);
         b.Property(x => x.ImageUrl).HasMaxLength(2048);
         b.HasIndex(x => new { x.BusinessId, x.CategoryId, x.SortOrder });
         b.HasOne<Business>().WithMany().HasForeignKey(x => x.BusinessId).OnDelete(DeleteBehavior.Cascade);

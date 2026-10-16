@@ -21,6 +21,8 @@
     <PackageVersion Include="Microsoft.Extensions.Options" Version="10.0.12" />
     <PackageVersion Include="AWSSDK.S3" Version="4.0.104.1" />
     <PackageVersion Include="SkiaSharp" Version="3.119.2" />
+    <!-- Transitive (SqlServer client); pinned past the 9.0.11 security advisories. -->
+    <PackageVersion Include="System.Security.Cryptography.Pkcs" Version="10.0.13" />
     <PackageVersion Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="3.119.2" />
   </ItemGroup>
 </Project>

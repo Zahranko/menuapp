@@ -19,10 +19,13 @@ public sealed record ProductDto(
     bool IsAvailable,
     bool IsFeatured,
     int SortOrder,
-    DateTimeOffset UpdatedAt)
+    DateTimeOffset UpdatedAt,
+    string? CustomLabel,
+    string? CustomLabelAr)
 {
     public static ProductDto From(Product p) =>
-        new(p.Id, p.CategoryId, p.Name, p.Description, p.Price, p.ImageUrl, p.Label, p.IsAvailable, p.IsFeatured, p.SortOrder, p.UpdatedAt);
+        new(p.Id, p.CategoryId, p.Name, p.Description, p.Price, p.ImageUrl, p.Label, p.IsAvailable, p.IsFeatured, p.SortOrder, p.UpdatedAt,
+            p.CustomLabel, p.CustomLabelAr);
 }
 
 internal static class CatalogErrors

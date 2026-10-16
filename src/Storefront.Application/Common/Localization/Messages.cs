@@ -105,6 +105,7 @@ public static partial class Messages
         ["product.description"] = "يمكن أن يصل الوصف إلى 140 حرفًا.",
         ["product.price"] = "استخدم أرقامًا فقط، مثل 3.50.",
         ["product.label"] = "اختر شارة من القائمة.",
+        ["product.customLabel"] = "اكتب نص الشارة، حتى 24 حرفًا في سطر واحد.",
         ["product.category"] = "اختر صنفًا.",
         ["product.image"] = "ارفع الصورة مرة أخرى.",
 
@@ -221,6 +222,9 @@ public static partial class Messages
         ["Enter a product name."] = "أدخل اسم المنتج.",
         ["Product names can be up to 60 characters."] = "يمكن أن يصل اسم المنتج إلى 60 حرفًا.",
         ["Descriptions can be up to 140 characters."] = "يمكن أن يصل الوصف إلى 140 حرفًا.",
+        ["Type the label text."] = "اكتب نص الشارة.",
+        ["Keep the label on one line."] = "اكتب الشارة في سطر واحد.",
+        ["Labels can be up to 24 characters."] = "يمكن أن تصل الشارة إلى 24 حرفًا.",
         ["Enter a price."] = "أدخل السعر.",
         ["Use numbers only, like 3.50."] = "استخدم أرقامًا فقط، مثل 3.50.",
         ["That price is too high."] = "هذا السعر مرتفع جدًا.",

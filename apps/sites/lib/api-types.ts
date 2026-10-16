@@ -1766,6 +1766,8 @@ export interface components {
             sortOrder: number | string;
             /** Format: date-time */
             updatedAt: string;
+            customLabel: null | string;
+            customLabelAr: null | string;
         };
         PublicBusinessDto: {
             name: string;
@@ -1802,6 +1804,8 @@ export interface components {
             label: null | string;
             isAvailable: boolean;
             isFeatured: boolean;
+            customLabel: null | string;
+            customLabelAr: null | string;
         };
         PublicSiteDto: {
             business: components["schemas"]["PublicBusinessDto"];
@@ -1859,6 +1863,8 @@ export interface components {
             /** @default false */
             isFeatured: boolean;
             imageUrl?: null | string;
+            customLabel?: null | string;
+            customLabelAr?: null | string;
         };
         SetAvailability: {
             isAvailable: boolean;

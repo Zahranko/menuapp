@@ -10,6 +10,7 @@
     <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" />
     <PackageReference Include="AWSSDK.S3" />
     <!-- Photo resizing and WebP compression. The Linux assets are for CI and Linux hosts; Windows assets come with SkiaSharp. -->
+    <PackageReference Include="System.Security.Cryptography.Pkcs" />
     <PackageReference Include="SkiaSharp" />
     <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" />
   </ItemGroup>
