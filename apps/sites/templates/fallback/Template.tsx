@@ -1,5 +1,5 @@
 import { formatPrice } from "@/lib/format";
-import { label, madeWith, strings } from "@/lib/i18n";
+import { madeWith, productLabel, strings } from "@/lib/i18n";
 import type { TemplateProps } from "@/lib/types";
 import styles from "./fallback.module.css";
 import { MadeWithLink } from "@/components/brand/logo-mark";
@@ -22,7 +22,7 @@ export default function FallbackTemplate({ site }: TemplateProps) {
               <li key={product.id} className={product.isAvailable ? undefined : styles.out}>
                 <div>
                   <strong>{product.name}</strong>
-                  {product.label && <span className={styles.tag}>{label(product.label, business.locale)}</span>}
+                  {product.label && <span className={styles.tag}>{productLabel(product, business.locale)}</span>}
                   {!product.isAvailable && <span className={styles.tag}>{t.soldOut}</span>}
                   {product.description && <p>{product.description}</p>}
                 </div>

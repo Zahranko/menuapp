@@ -1,5 +1,5 @@
 import { formatPrice, instagramLink, mapsLink, whatsappLink } from "@/lib/format";
-import { label, strings } from "@/lib/i18n";
+import { productLabel, strings } from "@/lib/i18n";
 import { hours as hoursSetting, type Hours } from "@/lib/settings";
 import type { PublicCategory, PublicProduct, PublicSite } from "@/lib/types";
 
@@ -59,7 +59,7 @@ export function menuItem(site: PublicSite, category: PublicCategory, p: PublicPr
   return {
     ...p,
     priceText: formatPrice(p.price, currencyCode, locale),
-    labelText: p.label ? label(p.label, locale) : null,
+    labelText: productLabel(p, locale),
     search: `${p.name} ${p.description ?? ""} ${category.name}`.toLowerCase(),
   };
 }

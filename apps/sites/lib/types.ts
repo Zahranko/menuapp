@@ -2,7 +2,12 @@ import type { components } from "./api-types";
 
 type Schemas = components["schemas"];
 
-export type PublicProduct = Omit<Schemas["PublicProductDto"], "price"> & { price: number };
+/** A product. `label` "Custom" shows `customLabel` / `customLabelAr` (older payloads and fixtures may leave them out). */
+export type PublicProduct = Omit<Schemas["PublicProductDto"], "price" | "customLabel" | "customLabelAr"> & {
+  price: number;
+  customLabel?: string | null;
+  customLabelAr?: string | null;
+};
 /** A category; `parentId` is set on a sub-category (one level deep). */
 export type PublicCategory = Omit<Schemas["PublicCategoryDto"], "products" | "parentId"> & { products: PublicProduct[]; parentId?: string | null };
 export type PublicBusiness = Schemas["PublicBusinessDto"];

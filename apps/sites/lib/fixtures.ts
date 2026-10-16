@@ -521,7 +521,8 @@ export const LONG_NAMES = {
  * Site options for a fixture preview, from the same token part as the logo options ("-" between options):
  * "longname" / "longword" (a long business name), "foot_medium" / "foot_small" (footer name size), "social" (every
  * account shown), "order_<action>" (whatsapp, call, instagram, facebook, hide), "shape_<shape>" (pill, rounded, circle),
- * "font_<name>" (a shared font, see _kit/fonts.ts), "accent_<rrggbb>" (a custom accent color) and "nowa" (no WhatsApp).
+ * "font_<name>" (a shared font, see _kit/fonts.ts), "accent_<rrggbb>" (a custom accent color), "nowa" (no WhatsApp) and
+ * "labels" (every product label, including long custom ones).
  * ":" works in place of "_" in tests; page addresses escape it, so links use "_".
  */
 export function applySiteOptions(site: PublicSite, options: string): void {
@@ -537,7 +538,29 @@ export function applySiteOptions(site: PublicSite, options: string): void {
     else if (key === "shape") site.settings = { ...site.settings, "order.shape": value };
     else if (key === "font") site.settings = { ...site.settings, "font.family": value };
     else if (key === "accent") site.settings = { ...site.settings, accent: `#${value.toUpperCase()}` };
+    else if (key === "labels") applyAllLabels(site);
   }
+}
+
+/** Custom label texts at the 24-character limit: one with spaces, one long word (badge layout tests). */
+export const LONG_LABELS = {
+  en: { text: "Limited weekend special!", word: "Chefsrecommendationtoday" },
+  ar: { text: "عرض خاص لنهاية الأسبوع", word: "توصيةالشيفلهذااليومفقط" },
+};
+
+/** Gives the products, in menu order, every label in turn: the five fixed ones, then two long custom ones. */
+function applyAllLabels(site: PublicSite): void {
+  const fixed = ["Signature", "New", "Best seller", "Vegan", "Spicy"];
+  let n = 0;
+  site.categories = site.categories.map((c) => ({
+    ...c,
+    products: c.products.map((p) => {
+      const i = n++ % (fixed.length + 2);
+      if (i < fixed.length) return { ...p, label: fixed[i], customLabel: null, customLabelAr: null };
+      const key = i === fixed.length ? "text" : "word";
+      return { ...p, label: "Custom", customLabel: LONG_LABELS.en[key], customLabelAr: LONG_LABELS.ar[key] };
+    }),
+  }));
 }
 
 /** Host of the sample logo in fixture previews; it does not exist, so tests and screenshots answer it themselves. */
