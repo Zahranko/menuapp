@@ -106,7 +106,7 @@ internal sealed class IdentityService(UserManager<AppUser> users, IClock clock) 
     }
 }
 
-/// <summary>Identity's password messages in the prototype's words.</summary>
+/// <summary>Identity's messages in the prototype's words (the API translates them by wording, see Messages).</summary>
 internal sealed class FriendlyIdentityErrors : IdentityErrorDescriber
 {
     public override IdentityError PasswordTooShort(int length) => new() { Code = nameof(PasswordTooShort), Description = $"Password needs at least {length} characters." };
@@ -118,4 +118,8 @@ internal sealed class FriendlyIdentityErrors : IdentityErrorDescriber
     public override IdentityError DuplicateEmail(string email) => new() { Code = nameof(DuplicateEmail), Description = "An account with this email already exists. Log in instead." };
 
     public override IdentityError DuplicateUserName(string userName) => new() { Code = nameof(DuplicateUserName), Description = "An account with this email already exists. Log in instead." };
+
+    public override IdentityError InvalidEmail(string? email) => new() { Code = nameof(InvalidEmail), Description = "Check the email format, like name@business.com." };
+
+    public override IdentityError InvalidUserName(string? userName) => new() { Code = nameof(InvalidUserName), Description = "Check the email format, like name@business.com." };
 }

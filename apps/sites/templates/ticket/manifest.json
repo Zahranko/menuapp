@@ -4,7 +4,13 @@
   "name": "Ticket",
   "category": "Coffee truck, kiosk",
   "description": "A menu printed as a till receipt: monospace lines, zigzag edges and a barcode.",
+  "ar": {
+    "name": "تذكرة",
+    "category": "عربة قهوة وكشك",
+    "description": "منيو مطبوع كإيصال صندوق: سطور بخط الآلة الكاتبة، وحواف متعرجة، وباركود."
+  },
   "version": 1,
+  "heroSlider": { "kind": "band" },
   "thumbnail": "/templates/ticket/thumbnail.png",
   "sample": "cafe",
   "schema": [
@@ -19,6 +25,12 @@
         "grotesk": "Clean",
         "condensed": "Poster"
       }
+    },
+    {
+      "key": "logo",
+      "type": "image",
+      "label": "Logo",
+      "group": "Brand"
     },
     {
       "key": "theme",
@@ -95,11 +107,12 @@
   ],
   "defaults": {
     "font": "mono",
+    "logo": "",
     "theme": "thermal",
     "accent": "#D3412F",
     "hero.title": "Coffee on wheels",
     "stamp": "Fresh",
-    "location": "Today: Rainbow Street, next to the old cinema",
+    "location": "Today: Main Street, next to the old cinema",
     "thanks": "Thank you, come again",
     "sections": ["announcement", "visit"],
     "announcement": "Bring your own cup, get 0.25 off",
@@ -112,5 +125,12 @@
       "thu": "07:00-16:00",
       "fri": ""
     }
+  },
+  "defaultsAr": {
+    "hero.title": "قهوة على عجلات",
+    "stamp": "طازج",
+    "location": "اليوم: الشارع الرئيسي، بجانب السينما القديمة",
+    "thanks": "شكرًا لكم، نراكم مجددًا",
+    "announcement": "أحضر كوبك الخاص واحصل على خصم 0.25"
   }
 }

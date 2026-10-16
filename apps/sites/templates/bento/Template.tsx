@@ -1,10 +1,12 @@
 import type { TemplateProps } from "@/lib/types";
 import { itemCount } from "@/lib/i18n";
-import { ContactList, Credits, HoursList, Logo, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, optionRoot, OrderFab, ProductPicture, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Arrow, Clock, Instagram, Pin } from "../_kit/icons";
-import { Picture } from "../_kit/Picture";
+import { heroPhotos } from "../_kit/hero";
+import { HeroPhotos } from "../_kit/HeroPhotos";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
@@ -25,18 +27,20 @@ const PALETTES = {
 export default function BentoTemplate({ site, now }: TemplateProps & { now?: Date }) {
   const ctx = siteContext(site, now);
   const c = copy[ctx.locale];
-  const hero = ctx.image("hero.image");
+  const heroPics = heroPhotos(site.settings, "hero.image");
+  const hero = heroPics[0] ?? null;
   const story = ctx.on("story") && ctx.text("story.text");
   const pick = ctx.picks[0];
 
+  const order = orderButton(site);
   return (
-    <div data-template="bento" className={cx("t-bento", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["round", "grotesk", "bold"], defaultAccent: "#2F8F4E", radius: { rounded: "26px", sharp: "4px" } })}>
+    <div data-template="bento" {...logoRoot(ctx)} {...optionRoot(ctx, order)} className={cx("t-bento", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["round", "grotesk", "bold"], defaultAccent: "#2F8F4E", radius: { rounded: "26px", sharp: "4px" } })}>
       <TemplateStyles id="bento" />
       <TopBars ctx={ctx} />
-      <header className="head" data-section="header">
-        <a className="brand" href="#top">
+      <header className="head kit-head" data-section="header">
+        <a className="brand kit-lockup" href="#top">
           <Logo ctx={ctx} />
-          <span>{site.business.name}</span>
+          <BrandName ctx={ctx} />
         </a>
         {ctx.contact.instagram && (
           <a className="round-link" href={ctx.contact.instagram} rel="noopener" target="_blank" aria-label="Instagram">
@@ -57,7 +61,7 @@ export default function BentoTemplate({ site, now }: TemplateProps & { now?: Dat
             </div>
             {hero && (
               <div className="tile tile-photo">
-                <Picture src={hero} sizes="(min-width: 760px) 30vw, 100vw" priority />
+                <HeroPhotos ctx={ctx} photos={heroPics} sizes="(min-width: 760px) 30vw, 100vw" />
               </div>
             )}
             <div className="tile tile-small c2">
@@ -105,11 +109,11 @@ export default function BentoTemplate({ site, now }: TemplateProps & { now?: Dat
                 <h2 id={`${section.anchor}-h`}>{section.name}</h2>
                 <span>{itemCount(section.products.length, ctx.locale)}</span>
               </div>
-              <ul className="plain bento">
+              <ul className="plain bento kit-cards">
                 {section.products.map((item, i) => (
                   <li key={item.id} className={cx("cell", item.isFeatured && item.isAvailable && "big", `c${((si + i) % 4) + 1}`)}>
-                    <button type="button" className={cx("tile", "item", !item.isAvailable && "out")} data-item-id={item.id}>
-                      <span className="item-media">
+                    <button type="button" className={cx("tile", "item", "kit-card", !item.isAvailable && "out")} data-item-id={item.id}>
+                      <span className="item-media kit-card-media">
                         <ProductPicture item={item} sizes="(min-width: 760px) 25vw, 50vw" />
                       </span>
                       <span className="item-text">
@@ -156,8 +160,10 @@ export default function BentoTemplate({ site, now }: TemplateProps & { now?: Dat
       </main>
 
       <footer className="foot" data-section="footer">
+        <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
         <Credits ctx={ctx} />
       </footer>
+      <OrderFab order={order} />
       <ProductSheet ctx={ctx} />
     </div>
   );

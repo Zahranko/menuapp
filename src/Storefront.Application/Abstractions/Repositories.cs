@@ -29,6 +29,9 @@ public interface ICatalogRepository
 
     Task<Category?> GetCategoryAsync(Guid id, CancellationToken ct);
 
+    /// <summary>The sub-categories directly under <paramref name="parentId"/>.</summary>
+    Task<IReadOnlyList<Category>> ListSubcategoriesAsync(Guid parentId, CancellationToken ct);
+
     Task<bool> CategoryNameExistsAsync(string name, Guid? exceptId, CancellationToken ct);
 
     Task<IReadOnlyList<Product>> ListProductsAsync(Guid? categoryId, CancellationToken ct);

@@ -1,5 +1,10 @@
 /* Template 014 "Mono Grid": Swiss style. A huge name, an index, a hairline product grid and a single signal color. */
 
+@import "../_kit/logo.css";
+@import "../_kit/options.css";
+@import "../_kit/cards.css";
+@import "../_kit/hero.css";
+
 .t-mono {
   container: page / inline-size;
   font-size: 14px;
@@ -42,6 +47,22 @@
     letter-spacing: 0.5px;
     padding-bottom: 12px;
     border-bottom: 1px solid var(--line);
+  }
+  /* The owner's logo, only when one is uploaded: a plain square above the name, in keeping with the grid. */
+  .logo {
+    position: relative;
+    display: block;
+    width: 56px;
+    height: 56px;
+    margin-top: 22px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .logo + .name {
+    margin-top: 14px;
+  }
+  &[data-logo-pos="center"] .logo {
+    margin-inline: auto;
   }
   .name {
     margin-top: 22px;
@@ -221,6 +242,15 @@
     color: var(--acc-ink);
   }
 
+  /* Social accounts the owner shows (_kit/options.css draws the round icon links). */
+  .foot-social {
+    justify-content: flex-start;
+    margin-bottom: 16px;
+    color: var(--acc-text);
+  }
+  .foot-social a {
+    border-color: color-mix(in srgb, currentColor 40%, transparent);
+  }
   .foot {
     padding: 16px 14px 28px;
     color: var(--muted);

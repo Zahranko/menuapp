@@ -17,6 +17,9 @@ The bundle ID is `appId` from `brand.json`. `scripts/rebrand.sh` writes it into 
 2. Choose **Flutter App** and **codemagic.yaml** as the configuration. Codemagic reads the file from the branch you build,
    so pick a branch that has it.
 
+Which branch to build: `test` has the whole app (My menu, templates, editor, plans) and its server runs in test mode,
+where every account is on Pro for free. `main` has only what has been merged.
+
 ## 2. Try the unsigned build (optional, no Apple account)
 
 Start a build, choose the **iOS · unsigned IPA** workflow and the branch. The IPA appears under the build's Artifacts.

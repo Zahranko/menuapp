@@ -11,7 +11,7 @@ type Sample = { name: string; address: string; instagram: string; menu: Row[]; s
 export const SAMPLES = {
   cafe: {
     name: "Vanilla Menu",
-    address: "Rainbow Street 21, Jabal Amman",
+    address: "12 Market Street, Old Town",
     instagram: "vanillamenu",
     menu: [
       ["Coffee", "Vanilla latte", "Double shot, Madagascar vanilla, oat or full milk", 3.5, "Signature", true, "latte"],
@@ -29,7 +29,7 @@ export const SAMPLES = {
   },
   restaurant: {
     name: "Bait Sitti",
-    address: "Al-Rainbow Street 8, Jabal Amman",
+    address: "8 Olive Lane, Old Town",
     instagram: "baitsitti",
     menu: [
       ["Cold mezze", "Hummus beiruti", "Chickpeas, tahini, lemon, parsley and a little chili", 2.25, "Vegan", true, "hummus"],
@@ -46,7 +46,7 @@ export const SAMPLES = {
   },
   sweets: {
     name: "Sugar Lane",
-    address: "Mecca Street 112, Amman",
+    address: "112 Main Street, Riverside",
     instagram: "sugarlane",
     menu: [
       ["Ice cream", "Pistachio scoop", "Sicilian pistachio, a little salt", 1.75, "Best seller", true, "icecream"],
@@ -62,7 +62,7 @@ export const SAMPLES = {
   },
   drinks: {
     name: "Juice Lab",
-    address: "Wasfi Al-Tal Street 40, Amman",
+    address: "40 Park Avenue, Riverside",
     instagram: "juicelab",
     menu: [
       ["Fresh juice", "Orange and carrot", "Pressed to order", 2.25, "Best seller", true, "juice"],
@@ -77,7 +77,7 @@ export const SAMPLES = {
   },
   fastfood: {
     name: "Smash Corner",
-    address: "Gardens Street 77, Amman",
+    address: "77 Garden Road, Riverside",
     instagram: "smashcorner",
     menu: [
       ["Burgers", "Double smash", "Two smashed patties, cheese, pickles, house sauce", 5.5, "Best seller", true, "burger"],
@@ -92,7 +92,7 @@ export const SAMPLES = {
   },
   asian: {
     name: "Koi Kitchen",
-    address: "Abdoun Circle 5, Amman",
+    address: "5 Hill Street, Old Town",
     instagram: "koikitchen",
     menu: [
       ["Sushi", "Salmon nigiri", "Two pieces, hand pressed", 3.5, "Signature", true, "sushi"],
@@ -106,7 +106,7 @@ export const SAMPLES = {
   },
   brunch: {
     name: "Green Fork",
-    address: "Abdali Boulevard 9, Amman",
+    address: "9 Central Boulevard, Downtown",
     instagram: "greenfork",
     menu: [
       ["Brunch", "Shakshuka", "Eggs baked in spiced tomato and peppers, warm bread", 4.5, "Best seller", true, "soup"],
@@ -122,7 +122,7 @@ export const SAMPLES = {
   },
   pizza: {
     name: "Forno Rosso",
-    address: "Al-Baouniyah Street 14, Jabal Al-Luweibdeh",
+    address: "14 Church Street, Old Town",
     instagram: "fornorosso",
     menu: [
       ["Pizza", "Margherita", "San Marzano tomato, fior di latte, basil", 6.0, "Best seller", true, "pizza"],
@@ -138,7 +138,7 @@ export const SAMPLES = {
   },
   salon: {
     name: "Maison Lina",
-    address: "Abdoun, Prince Hashem Street 12",
+    address: "12 Hill Street, Old Town",
     instagram: "maisonlina",
     menu: [
       ["Hair", "Cut and blow dry", "Consultation, wash, cut and finish, 60 minutes", 25, "Best seller", true, "services/scissors"],
@@ -167,7 +167,7 @@ export const SAMPLES = {
   },
   studio: {
     name: "Northline Studio",
-    address: "Jabal Amman, First Circle, Studio 4",
+    address: "Studio 4, 1 Square Road, Old Town",
     instagram: "northline",
     menu: [
       ["Brand", "Brand identity", "Logo, colors, type and a short brand guide", 900, "Best seller", true, "services/pen"],
@@ -180,7 +180,7 @@ export const SAMPLES = {
   },
   gym: {
     name: "Pulse Fitness",
-    address: "Sweifieh, Wakalat Street 5",
+    address: "5 High Street, Downtown",
     instagram: "pulsefitness",
     menu: [
       ["Memberships", "Monthly membership", "Gym floor and all group classes", 45, "Best seller", true, "services/dumbbell"],
@@ -195,7 +195,7 @@ export const SAMPLES = {
   },
   home: {
     name: "Handy Pro",
-    address: "Serving all of Amman",
+    address: "Serving the whole city",
     instagram: "handypro",
     menu: [
       ["Cleaning", "Home deep clean", "Two cleaners, up to 150 square meters", 45, "Best seller", true, "services/spray"],
@@ -208,7 +208,7 @@ export const SAMPLES = {
   },
   shop: {
     name: "Olive and Thread",
-    address: "Jabal Al-Weibdeh, Paris Circle 3",
+    address: "3 Paris Square, Old Town",
     instagram: "oliveandthread",
     menu: [
       ["Home", "Olive wood candle", "Soy wax, olive wood wick, 40 hours", 12.0, "Best seller", true, "candle"],
@@ -220,13 +220,108 @@ export const SAMPLES = {
       ["Bags", "Market basket", "Woven palm leaf, leather handles", 18.5, null, false, null],
     ],
   },
+  /* Pro samples: "Parent/Child" puts a product in a sub-category. */
+  maison: {
+    name: "Maison Noor",
+    address: "4 Hill Street, Old Town",
+    instagram: "maisonnoor",
+    menu: [
+      ["Starters/Cold", "Beef carpaccio", "Shaved parmesan, rocket, truffle oil", 9.5, "Signature", true, "salad"],
+      ["Starters/Cold", "Burrata and heirloom tomato", "Basil oil, aged balsamic, sea salt", 8.75, "Vegan", false, "salad"],
+      ["Starters/Hot", "Lentil velouté", "Cumin crème, crispy shallots", 5.5, null, false, "soup"],
+      ["Starters/Hot", "Seared scallops", "Cauliflower purée, brown butter, capers", 12.0, "New", false, null],
+      ["Mains/From the sea", "Wild sea bass", "Saffron beurre blanc, fennel confit", 18.5, "Best seller", true, "sushi"],
+      ["Mains/From the sea", "Prawn linguine", "Garlic, chili, cherry tomato, parsley", 15.0, null, false, "noodles"],
+      ["Mains/From the grill", "Wagyu striploin", "Smoked salt, bone marrow jus, pommes purée", 32.0, "Signature", true, "grill"],
+      ["Mains/From the grill", "Lamb rack", "Za'atar crust, freekeh, mint yogurt", 24.0, "Best seller", false, "grill"],
+      ["Desserts", "Kunafa mille-feuille", "Orange blossom cream, pistachio praline", 7.5, "Best seller", true, "kunafa"],
+      ["Desserts", "Dark chocolate fondant", "Salted caramel, vanilla bean ice cream", 7.0, null, false, "cake"],
+      ["Drinks/Mocktails", "Rose and lychee spritz", "Rose water, lychee, sparkling water", 5.5, null, false, "mocktail"],
+      ["Drinks/Mocktails", "Smoked citrus", "Grapefruit, rosemary smoke, tonic", 5.75, "New", false, "juice"],
+      ["Drinks/Coffee", "Turkish coffee", "Cardamom, served with Turkish delight", 3.5, null, false, "cortado"],
+    ],
+  },
+  lumen: {
+    name: "Lumen Coffee",
+    address: "9 Paris Square, Old Town",
+    instagram: "lumencoffee",
+    menu: [
+      ["Coffee/Espresso bar", "Flat white", "Double ristretto, silky milk", 3.25, "Best seller", true, "latte"],
+      ["Coffee/Espresso bar", "Cortado", "Equal parts espresso and warm milk", 2.75, null, false, "cortado"],
+      ["Coffee/Espresso bar", "Spanish latte", "Condensed milk, double shot", 3.75, "Signature", true, "spanish"],
+      ["Coffee/Filter", "V60 of the day", "Ask us which single origin is brewing", 3.95, null, false, "mug"],
+      ["Coffee/Iced", "Iced oat latte", "Oat milk, double shot, lots of ice", 3.75, "Vegan", false, "iced"],
+      ["Coffee/Iced", "Cold brew tonic", "18-hour cold brew over tonic and orange", 4.0, "New", false, "mocktail"],
+      ["Tea", "Karak chai", "Black tea slow cooked with milk and spices", 2.5, null, false, "karak"],
+      ["Tea", "Sage and mint", "Fresh maramiya and mint in a glass pot", 2.25, null, false, "tea"],
+      ["Bakery/Viennoiserie", "Butter croissant", "Laminated for three days", 1.95, "Best seller", true, "croissant"],
+      ["Bakery/Viennoiserie", "Za'atar croissant", "Olive oil, za'atar and sesame", 2.1, null, false, "zaatar"],
+      ["Bakery/Cookies", "Brown butter cookie", "Dark chocolate, flaky salt", 1.75, null, false, "cookie"],
+      ["Brunch", "Shakshuka", "Two eggs, spiced tomato, warm bread", 5.5, null, false, "soup"],
+      ["Brunch", "Avocado toast", "Sourdough, chili flakes, poached egg", 5.95, "Best seller", false, "salad"],
+    ],
+  },
+  atlas: {
+    name: "Atlas Supply",
+    address: "17 Church Street, Old Town",
+    instagram: "atlassupply",
+    menu: [
+      ["Home/Ceramics", "Speckled mug", "Hand thrown stoneware, 300 ml", 14.0, "Best seller", true, "mug"],
+      ["Home/Ceramics", "Serving bowl", "Matte glaze, 24 cm", 22.0, null, false, null],
+      ["Home/Candles", "Cedar and fig candle", "Soy wax, 50 hours", 18.0, "Signature", true, "candle"],
+      ["Home/Candles", "Oud and amber candle", "Soy wax, wooden wick", 21.0, "New", false, "candle"],
+      ["Home/Textiles", "Linen tea towel", "Stonewashed, set of two", 12.5, null, false, "bag"],
+      ["Bath and body/Soap", "Olive oil soap", "Cold pressed from local olive oil", 4.5, "Best seller", true, "soap"],
+      ["Bath and body/Soap", "Dead Sea mud bar", "Mineral rich, unscented", 5.5, null, false, "soap"],
+      ["Bath and body/Care", "Hand balm", "Shea, almond oil and sage", 9.0, "Vegan", false, null],
+      ["Plants", "Snake plant", "In a ceramic pot, 40 cm", 16.0, null, false, "plant"],
+      ["Plants", "Olive tree", "Two years old, terracotta pot", 28.0, "Best seller", false, "plant"],
+      ["Gifts", "Market tote", "Heavy canvas, leather handles", 19.0, null, false, "bag"],
+    ],
+  },
+  ember: {
+    name: "Ember and Oak",
+    address: "210 Main Street, Riverside",
+    instagram: "emberandoak",
+    menu: [
+      ["Burgers/Beef", "The Ember", "Double smash patty, cheddar, onion jam, ember sauce", 7.5, "Best seller", true, "burger"],
+      ["Burgers/Beef", "Truffle mushroom", "Swiss cheese, truffle mayo, sautéed mushrooms", 8.25, "Signature", true, "burger"],
+      ["Burgers/Chicken", "Nashville hot", "Crispy chicken, hot honey, pickles, slaw", 6.95, "Spicy", false, "burger"],
+      ["Burgers/Chicken", "Grilled chicken", "Lemon garlic marinade, lettuce, toum", 6.25, null, false, "wrap"],
+      ["Grill/Steaks", "Ribeye 300 g", "Charcoal grilled, chimichurri, fries", 19.5, "Signature", true, "grill"],
+      ["Grill/Skewers", "Shish tawouk", "Yogurt marinade, garlic, grilled peppers", 8.0, "Best seller", false, "grill"],
+      ["Grill/Skewers", "Lamb kofta", "Parsley, onion, sumac, flatbread", 8.5, null, false, null],
+      ["Sides", "Loaded fries", "Cheese sauce, jalapeño, crispy onions", 3.75, "Best seller", false, "fries"],
+      ["Sides", "Charred corn", "Chili butter, lime, cotija", 3.25, null, false, null],
+      ["Drinks/Shakes", "Salted caramel shake", "Vanilla ice cream, caramel, sea salt", 4.25, null, false, "smoothie"],
+      ["Drinks/Soft drinks", "Fresh lemonade", "Mint, lemon, crushed ice", 2.5, null, false, "juice"],
+    ],
+  },
+  bloom: {
+    name: "Bloom Bakery",
+    address: "33 High Street, Downtown",
+    instagram: "bloombakery",
+    menu: [
+      ["Cakes/Whole cakes", "Rose and pistachio cake", "Rose sponge, pistachio buttercream, dried petals", 28.0, "Signature", true, "cake"],
+      ["Cakes/Whole cakes", "Strawberry shortcake", "Vanilla chiffon, fresh cream, strawberries", 26.0, "Best seller", true, "cake"],
+      ["Cakes/Slices", "Lemon drizzle slice", "Lemon curd and crunchy sugar", 3.5, null, false, "cake"],
+      ["Cakes/Slices", "Carrot cake slice", "Walnuts, cream cheese frosting", 3.75, null, false, null],
+      ["Pastries", "Raspberry danish", "Butter pastry, vanilla custard", 2.5, "New", false, "croissant"],
+      ["Pastries", "Cinnamon roll", "Brown sugar, cream cheese glaze", 2.75, "Best seller", true, "croissant"],
+      ["Cookies", "Pink velvet cookie", "White chocolate chunks", 1.75, null, false, "cookie"],
+      ["Cupcakes", "Vanilla bean cupcake", "Whipped buttercream, sprinkles", 2.25, null, false, "cupcake"],
+      ["Cupcakes", "Mango cupcake", "Mango curd centre", 2.25, "Vegan", false, "cupcake"],
+      ["Drinks", "Strawberry milk", "Fresh strawberries, cold milk", 2.75, null, false, "smoothie"],
+      ["Drinks", "Iced rose latte", "Rose syrup, espresso, milk", 3.5, null, false, "iced"],
+    ],
+  },
 } satisfies Record<string, Sample>;
 
 export type SampleName = keyof typeof SAMPLES;
 
 /** Content a real owner would type in, so every section of a sample site has something to show. */
 const sampleSettings: Settings = {
-  "hero.eyebrow": "Since 2019 · Jabal Amman",
+  "hero.eyebrow": "Since 2019 · Old Town",
   "story.since": "2019",
   gallery: ["/samples/latte-art.svg", "/presets/counter.svg", "/samples/food/croissant.svg", "/templates/souq/art/store.svg", "/presets/beans.svg", "/samples/food/kunafa.svg"],
   "reviews.1.quote": "Best vanilla latte in town, and the pistachio croissant is dangerous. I come here to work every Sunday.",
@@ -259,6 +354,11 @@ export function defaultsFor(templateId: string): Settings {
   return { ...(templateInfo(templateId).defaults as Settings) };
 }
 
+/** The template's Arabic starter text (manifest "defaultsAr"), which overrides its English text defaults for Arabic businesses. */
+export function arabicDefaultsFor(templateId: string): Settings {
+  return { ...((templateInfo(templateId) as { defaultsAr?: Settings }).defaultsAr ?? {}) };
+}
+
 export function sampleFor(templateId: string): SampleName {
   const name = templateInfo(templateId).sample;
   return name && name in SAMPLES ? (name as SampleName) : "cafe";
@@ -266,7 +366,7 @@ export function sampleFor(templateId: string): SampleName {
 
 /** Sample content for the keys this template has. */
 const otherReviews: Settings = {
-  "hero.eyebrow": "Since 2019 · Amman",
+  "hero.eyebrow": "Since 2019 · Old Town",
   "reviews.1.quote": "Everything tastes fresh and the portions are generous. We order from here every week.",
   "reviews.2.quote": "Friendly people, quick service and the menu is easy to browse on the phone.",
   "reviews.3.quote": "Our favorite place in the neighborhood. Try the signature, you will not regret it.",
@@ -295,6 +395,17 @@ function sampleSettingsFor(templateId: string, sample: SampleName): Settings {
   return Object.fromEntries(Object.entries(settings).filter(([key]) => key in defaults));
 }
 
+/** "Coffee/Iced" adds a "Coffee" main category (without products of its own) before its first sub-category. */
+function categoriesOf(names: string[]): { name: string; parent: string | null }[] {
+  const out: { name: string; parent: string | null }[] = [];
+  for (const name of names) {
+    const parent = name.includes("/") ? name.split("/")[0] : null;
+    if (parent !== null && !out.some((c) => c.name === parent)) out.push({ name: parent, parent: null });
+    out.push({ name, parent });
+  }
+  return out;
+}
+
 export function fixtureFor(templateId: string, overrides: Partial<PublicSite> = {}, sampleName: SampleName = sampleFor(templateId)): PublicSite {
   const sample: Sample = SAMPLES[sampleName];
   const names = [...new Set(sample.menu.map((s) => s[0]))];
@@ -303,20 +414,25 @@ export function fixtureFor(templateId: string, overrides: Partial<PublicSite> = 
     business: {
       name: sample.name,
       slug: sampleName === "cafe" ? "vanillamenu" : slug,
-      whatsApp: "+962790000000",
+      whatsApp: "+15555550123",
       email: "hello@example.com",
       address: sample.address,
       instagram: sample.instagram,
       locale: "en",
-      currencyCode: "JOD",
-      timeZone: "Asia/Amman",
+      currencyCode: "USD",
+      timeZone: "UTC",
       customDomains: sampleName === "cafe" ? ["vanillamenu.example.com"] : [],
+      phone: "+15555550100",
+      facebook: sample.instagram,
+      tikTok: sample.instagram,
+      snapchat: sample.instagram,
     },
     templateId,
     settings: { ...defaultsFor(templateId), ...sampleSettingsFor(templateId, sampleName) },
-    categories: names.map((name, ci) => ({
+    categories: categoriesOf(names).map(({ name, parent }, ci, all) => ({
       id: id(100 + ci),
-      name,
+      name: name.split("/").pop()!,
+      ...(parent !== null && { parentId: id(100 + all.findIndex((c) => c.name === parent)) }),
       products: sample.menu
         .map((s, i) => ({ s, i }))
         .filter(({ s }) => s[0] === name)
@@ -376,13 +492,126 @@ export function fixtureBySlug(slug: string): PublicSite | null {
 /**
  * Fixture previews: "fixture" is the sample café; "fixture.<template>.<theme>.<locale>" renders any template in one of
  * its themes and languages (used by the accessibility checks). Theme "default" keeps the template's default.
+ * Locale "ar" also swaps in the template's Arabic starter text.
  */
 export function fixturePreview(token: string): PublicSite | null {
   if (token === "fixture") return { ...fixtureSite, isPreview: true };
-  const [prefix, templateId, theme, locale] = token.split(".");
+  const [prefix, templateId, theme, locale, logo] = token.split(".");
   if (prefix !== "fixture" || !registry.templates.some((t) => t.id === templateId)) return null;
   const site = fixtureFor(templateId, { isPreview: true });
   if (theme && theme !== "default") site.settings = { ...site.settings, theme };
-  if (locale === "ar") site.business = { ...site.business, locale: "ar" };
+  if (locale === "ar") {
+    site.business = { ...site.business, locale: "ar" };
+    site.settings = { ...site.settings, ...arabicDefaultsFor(templateId) };
+  }
+  if (logo) {
+    site.settings = { ...site.settings, ...fixtureLogoSettings(logo, site.business.slug) };
+    applySiteOptions(site, logo);
+  }
   return site;
+}
+
+/** Long business names for footer tests: one with spaces, one long word, in English and Arabic (all within 60 characters). */
+export const LONG_NAMES = {
+  en: { name: "The Golden Spoon Family Restaurant and Café of Old Town", word: "Supercalifragilisticexpialidociousbakeryandcafe" },
+  ar: { name: "مطعم ومقهى الملعقة الذهبية العائلي في البلدة القديمة", word: "مخبزالملعقةالذهبيةالعائليةللحلوياتوالمعجناتالشرقية" },
+};
+
+/**
+ * Site options for a fixture preview, from the same token part as the logo options ("-" between options):
+ * "longname" / "longword" (a long business name), "foot_medium" / "foot_small" (footer name size), "social" (every
+ * account shown), "order_<action>" (whatsapp, call, instagram, facebook, hide), "shape_<shape>" (pill, rounded, circle),
+ * "font_<name>" (a shared font, see _kit/fonts.ts), "accent_<rrggbb>" (a custom accent color), "nowa" (no WhatsApp) and
+ * "labels" (every product label, including long custom ones).
+ * ":" works in place of "_" in tests; page addresses escape it, so links use "_".
+ */
+export function applySiteOptions(site: PublicSite, options: string): void {
+  const locale = site.business.locale === "ar" ? "ar" : "en";
+  for (const option of options.split("-")) {
+    const [key, value = ""] = option.split(/[:_]/);
+    if (key === "longname") site.business = { ...site.business, name: LONG_NAMES[locale].name };
+    else if (key === "longword") site.business = { ...site.business, name: LONG_NAMES[locale].word };
+    else if (key === "nowa") site.business = { ...site.business, whatsApp: null };
+    else if (key === "social") site.settings = { ...site.settings, "social.show": ["instagram", "whatsapp", "facebook", "tiktok", "snapchat", "phone"] };
+    else if (key === "foot") site.settings = { ...site.settings, "footer.nameSize": value };
+    else if (key === "order") site.settings = { ...site.settings, "order.action": value };
+    else if (key === "shape") site.settings = { ...site.settings, "order.shape": value };
+    else if (key === "font") site.settings = { ...site.settings, "font.family": value };
+    else if (key === "accent") site.settings = { ...site.settings, accent: `#${value.toUpperCase()}` };
+    else if (key === "labels") applyAllLabels(site);
+    else applyCardAndHeroOption(site, key, value);
+  }
+}
+
+/** Sample hero photos for slider previews ("slides"), at most six. */
+export const FIXTURE_SLIDES = ["/presets/loft.svg", "/presets/counter.svg", "/presets/marble.svg", "/presets/pour.svg", "/presets/arches.svg", "/presets/shelf.svg"];
+
+const CARD_KEYS: Record<string, string> = { card: "cards.style", border: "cards.border", corners: "cards.corners", photo: "cards.photo", spacing: "cards.spacing" };
+const HERO_KEYS: Record<string, string> = { trans: "hero.transition", speed: "hero.speed", height: "hero.height", overlay: "hero.overlay", text: "hero.textPosition" };
+
+/**
+ * Card and hero slider options for fixture previews (same token part as applySiteOptions): "card_<style>",
+ * "border_<width>", "bc_<accent|ink|rrggbb>" (border color), "corners_<size>", "photo_<shape>", "spacing_<tight|airy>";
+ * "slides" or "slides_<n>" (n hero photos in all, 2 to 6), "trans_<slide|fade|zoom>", "speed_<slow|normal|fast>",
+ * "auto_off" (no autoplay), "ctrl_<both|dots|arrows|none>", "height_<size>", "overlay_<amount>", "text_<position>".
+ */
+function applyCardAndHeroOption(site: PublicSite, key: string, value: string): void {
+  const set = (settings: Settings) => (site.settings = { ...site.settings, ...settings });
+  if (key in CARD_KEYS) set({ [CARD_KEYS[key]]: value });
+  else if (key === "bc") set({ "cards.borderColor": /^[0-9a-f]{6}$/i.test(value) ? `#${value.toUpperCase()}` : value });
+  else if (key in HERO_KEYS) set({ [HERO_KEYS[key]]: value });
+  else if (key === "auto") set({ "hero.autoplay": value !== "off" });
+  else if (key === "ctrl") set({ "hero.controls": value === "both" ? ["dots", "arrows"] : value === "none" ? [] : [value] });
+  else if (key === "slides") {
+    const count = Math.min(6, Math.max(2, Number(value) || 3));
+    const photos = FIXTURE_SLIDES.slice(0, count);
+    if ("hero.images" in site.settings) {
+      // Templates with several hero photos of their own: the slideshow layout where they have one.
+      const layout = site.settings["hero.layout"];
+      const slider = layout === "cover" || layout === "split" || layout === "poster" || layout === "full" ? "slides" : layout === "blob" ? "slider" : layout;
+      set({ "hero.images": photos, ...(typeof layout === "string" ? { "hero.layout": slider } : {}) });
+    } else if (typeof site.settings["hero.image"] === "string") set({ "hero.image": photos[0], "hero.slides": photos.slice(1) });
+    else set({ "hero.slides": photos });
+  }
+}
+
+/** Custom label texts at the 24-character limit: one with spaces, one long word (badge layout tests). */
+export const LONG_LABELS = {
+  en: { text: "Limited weekend special!", word: "Chefsrecommendationtoday" },
+  ar: { text: "عرض خاص لنهاية الأسبوع", word: "توصيةالشيفلهذااليومفقط" },
+};
+
+/** Gives the products, in menu order, every label in turn: the five fixed ones, then two long custom ones. */
+function applyAllLabels(site: PublicSite): void {
+  const fixed = ["Signature", "New", "Best seller", "Vegan", "Spicy"];
+  let n = 0;
+  site.categories = site.categories.map((c) => ({
+    ...c,
+    products: c.products.map((p) => {
+      const i = n++ % (fixed.length + 2);
+      if (i < fixed.length) return { ...p, label: fixed[i], customLabel: null, customLabelAr: null };
+      const key = i === fixed.length ? "text" : "word";
+      return { ...p, label: "Custom", customLabel: LONG_LABELS.en[key], customLabelAr: LONG_LABELS.ar[key] };
+    }),
+  }));
+}
+
+/** Host of the sample logo in fixture previews; it does not exist, so tests and screenshots answer it themselves. */
+export const FIXTURE_LOGO_HOST = "fixture-logo.invalid";
+
+/**
+ * Logo options for a fixture preview, from the token's fifth part ("fixture.<id>.<theme>.<locale>.<options>"):
+ * options joined by "-": "logo" (a sample logo at https://fixture-logo.invalid/<slug>.png), "bare" (frame off),
+ * "s70" to "s180" (size), "center" (centered) and "noname" (business name hidden).
+ */
+export function fixtureLogoSettings(options: string, slug: string): Settings {
+  const settings: Settings = {};
+  for (const option of options.split("-")) {
+    if (option === "logo") settings.logo = `https://${FIXTURE_LOGO_HOST}/${slug}.png`;
+    else if (option === "bare") settings["logo.frame"] = false;
+    else if (option === "center") settings["logo.position"] = "center";
+    else if (option === "noname") settings["logo.name"] = false;
+    else if (/^s\d{2,3}$/.test(option)) settings["logo.size"] = Number(option.slice(1));
+  }
+  return settings;
 }

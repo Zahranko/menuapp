@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Threading.RateLimiting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
+using Storefront.Web.Configuration;
 
 namespace Storefront.Web.Auth;
 
@@ -61,7 +62,7 @@ public static class RateLimits
             new ProblemDetails
             {
                 Status = StatusCodes.Status429TooManyRequests,
-                Title = "Too many requests. Wait a minute and try again.",
+                Title = ApiLocalization.Text("Too many requests. Wait a minute and try again."),
                 Type = "https://tools.ietf.org/html/rfc6585#section-4",
             },
             options: null,

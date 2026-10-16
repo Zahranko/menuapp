@@ -4,7 +4,13 @@
   "name": "Arch Story",
   "category": "Bakery and desserts",
   "description": "A magazine for sweet shops: arched photos, menu chapters and cards you swipe.",
+  "ar": {
+    "name": "حكاية القوس",
+    "category": "مخابز وحلويات",
+    "description": "مجلة لمحلات الحلويات: صور بأقواس، وفصول للمنيو، وبطاقات تمررها بإصبعك."
+  },
   "version": 1,
+  "heroSlider": { "kind": "panel", "source": "hero.image" },
   "thumbnail": "/templates/archstory/thumbnail.png",
   "sample": "sweets",
   "schema": [
@@ -230,5 +236,13 @@
       "thu": "11:00-24:00",
       "fri": "13:00-24:00"
     }
+  },
+  "defaultsAr": {
+    "hero.eyebrow": "نحضّرها طازجة كل صباح",
+    "hero.title": "حلويات صغيرة، نصنعها على مهل.",
+    "hero.subtitle": "بوظة نصنعها في المحل، ودونات من عجينة البريوش، وكيك يناسب كل يوم.",
+    "announcement": "نكهة جديدة كل جمعة",
+    "story.title": "كل نكهة تبدأ في مطبخنا",
+    "story.text": "نصنع البوظة على دفعات صغيرة بالحليب الطازج والفواكه الحقيقية، ونخبز الدونات في صباح اليوم نفسه الذي تأكلها فيه. لا شيء يبيت على الرف."
   }
 }

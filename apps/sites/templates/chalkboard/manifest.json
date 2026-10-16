@@ -4,7 +4,13 @@
   "name": "Chalk Board",
   "category": "Café",
   "description": "A café blackboard: hand lettering, a daily special and boxed menu sections.",
+  "ar": {
+    "name": "لوح الطباشير",
+    "category": "مقهى",
+    "description": "سبّورة مقهى: كتابة بخط اليد، وطبق اليوم، وأقسام منيو داخل إطارات."
+  },
   "version": 1,
+  "heroSlider": { "kind": "band" },
   "thumbnail": "/templates/chalkboard/thumbnail.png",
   "sample": "cafe",
   "schema": [
@@ -167,5 +173,13 @@
       "thu": "07:00-00:00",
       "fri": "14:00-00:00"
     }
+  },
+  "defaultsAr": {
+    "hero.title": "قهوة وكيك وأحاديث حلوة",
+    "announcement": "كرواسون طازج كل صباح من الساعة 7",
+    "special.title": "طبق اليوم",
+    "special.note": "اسألونا عنه، نحن نحبه كثيرًا",
+    "story.title": "أهلًا وسهلًا!",
+    "story.text": "نحن مقهى صغير بسبّورة كبيرة. يتغيّر المنيو مع المواسم، فلا تتأخروا علينا."
   }
 }

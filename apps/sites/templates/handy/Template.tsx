@@ -1,10 +1,12 @@
 import { flag } from "@/lib/settings";
 import type { TemplateProps } from "@/lib/types";
-import { ContactList, Credits, HoursList, Logo, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, optionRoot, OrderContent, orderLink, ProductPicture, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Clock, Pin, WhatsApp } from "../_kit/icons";
-import { Picture } from "../_kit/Picture";
+import { heroPhotos } from "../_kit/hero";
+import { HeroPhotos } from "../_kit/HeroPhotos";
 import { bookLink, faqs, highlights, steps } from "../_kit/services";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
@@ -35,8 +37,10 @@ function Shield() {
 export default function HandyTemplate({ site, now }: TemplateProps & { now?: Date }) {
   const ctx = siteContext(site, now);
   const c = copy[ctx.locale];
-  const hero = ctx.image("hero.image");
+  const heroPics = heroPhotos(site.settings, "hero.image");
+  const hero = heroPics[0] ?? null;
   const book = bookLink(ctx);
+  const order = orderButton(site, { label: c.request, whatsapp: book });
   const from = flag(site.settings, "prices.from", true);
   const badges = highlights(ctx);
   const how = steps(ctx);
@@ -48,13 +52,13 @@ export default function HandyTemplate({ site, now }: TemplateProps & { now?: Dat
     .filter(Boolean);
 
   return (
-    <div data-template="handy" className={cx("t-handy", fontVariables, book && "has-bar")} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["round", "modern", "grotesk"], defaultAccent: "#1E5BB8", radius: { rounded: "18px", sharp: "4px" } })}>
+    <div data-template="handy" {...logoRoot(ctx)} {...optionRoot(ctx, order, true)} className={cx("t-handy", fontVariables, order && "has-bar")} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["round", "modern", "grotesk"], defaultAccent: "#1E5BB8", radius: { rounded: "18px", sharp: "4px" } })}>
       <TemplateStyles id="handy" />
       <TopBars ctx={ctx} />
-      <header className="head" data-section="header">
-        <a className="brand" href="#top">
+      <header className="head kit-head" data-section="header">
+        <a className="brand kit-lockup" href="#top">
           <Logo ctx={ctx} />
-          <span>{site.business.name}</span>
+          <BrandName ctx={ctx} />
         </a>
         <nav aria-label={c.menu}>
           <a href="#menu">{c.services}</a>
@@ -93,7 +97,7 @@ export default function HandyTemplate({ site, now }: TemplateProps & { now?: Dat
           {hero && (
             <div className="hero-art">
               <div className="hero-image">
-                <Picture src={hero} sizes="(min-width: 760px) 45vw, 100vw" priority />
+                <HeroPhotos ctx={ctx} photos={heroPics} sizes="(min-width: 760px) 45vw, 100vw" />
               </div>
               {ctx.today && (
                 <p className="sticker">
@@ -125,11 +129,11 @@ export default function HandyTemplate({ site, now }: TemplateProps & { now?: Dat
           {ctx.sections.map((section) => (
             <section key={section.id} id={section.anchor} className="group" aria-labelledby={`${section.anchor}-h`}>
               <h3 id={`${section.anchor}-h`}>{section.name}</h3>
-              <ul className="plain cards">
+              <ul className="plain cards kit-cards">
                 {section.products.map((item) => (
-                  <li key={item.id} className={cx("card", !item.isAvailable && "out")}>
+                  <li key={item.id} className={cx("card kit-card", !item.isAvailable && "out")}>
                     <button type="button" className="card-main" data-item-id={item.id}>
-                      <span className="card-pic">
+                      <span className="card-pic kit-card-media kit-flush">
                         <ProductPicture item={item} sizes="(min-width: 760px) 30vw, 90vw" />
                         {item.labelText && <span className="tag">{item.labelText}</span>}
                       </span>
@@ -248,13 +252,14 @@ export default function HandyTemplate({ site, now }: TemplateProps & { now?: Dat
       </main>
 
       <footer className="foot" data-section="footer">
+        <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
         <Credits ctx={ctx} />
       </footer>
-      {book && (
+      {order && (
         <div className="bar">
           {ctx.today && <span className="bar-today">{ctx.today}</span>}
-          <a className="btn" href={book} rel="noopener" target="_blank">
-            <WhatsApp /> {c.request}
+          <a className="btn kit-order" {...orderLink(order)}>
+            <OrderContent order={order} icon />
           </a>
         </div>
       )}

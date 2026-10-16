@@ -68,4 +68,19 @@ public class TemplateSchemaTests
         Assert.Null(settings);
         Assert.True(errors.ContainsKey(key), string.Join(", ", errors.Keys));
     }
+
+    [Theory]
+    [InlineData("#0E7C66", true)]
+    [InlineData("#d9542c", true)]
+    [InlineData("#D9542C", true)]
+    [InlineData("red", false)]
+    [InlineData("#12345", false)]
+    [InlineData("#12345678", false)]
+    public async Task A_color_field_with_custom_takes_any_hex_color(string color, bool valid)
+    {
+        const string schema = """[{ "key": "accent", "type": "color", "label": "Accent", "options": ["#D9542C"], "custom": true }]""";
+        var defaults = (JsonObject)JsonNode.Parse("""{ "accent": "#D9542C" }""")!;
+        var (_, errors) = await TemplateSchema.Parse(schema).ValidateAsync(new JsonObject { ["accent"] = color }, defaults, _ => Task.FromResult(false));
+        Assert.Equal(valid, errors.Count == 0);
+    }
 }

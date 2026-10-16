@@ -1,10 +1,11 @@
 # Publishes the API (src/Storefront.Web) to the site4now Windows/IIS host over FTPS. Setup: docs/deploy-site4now.md.
-# Runs on every push to main, on a push to the "deploy" branch (to ship a branch before it is merged), or by hand.
+# Runs on every push to main, on a push to the "deploy" or "test" branch (to ship a branch before it is merged), or by hand.
+# The "test" branch also turns on billing test mode: every account is on an active Pro plan.
 name: Deploy API (site4now)
 
 on:
   push:
-    branches: [main, deploy]
+    branches: [main, deploy, test]
   workflow_dispatch:
 
 concurrency:
@@ -22,12 +23,18 @@ env:
   DB_USER: ${{ vars.DB_USER || 'db_acc171_mobiletest_admin' }}
   # The site's public address: health check, HTTPS enforcement (https only) and photo URLs.
   API_URL: ${{ vars.API_URL || 'https://alamalhosp-001-site7.itempurl.com' }}
+  # Where owners' websites are hosted (apps/sites). Empty means the brand domain.
+  # The test branch defaults to its Vercel branch address (project "menuapp").
+  SITES_URL: ${{ vars.SITES_URL || (github.ref_name == 'test' && 'https://menuapp-alpha-eight.vercel.app') || '' }}
+  BILLING_TEST_MODE: ${{ vars.BILLING_TEST_MODE || (github.ref_name == 'test' && 'true') || 'false' }}
   DOTNET_CLI_TELEMETRY_OPTOUT: "1"
   DOTNET_NOLOGO: "1"
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    # A stuck upload must not keep the site offline for hours ("Bring the site back" still runs on timeout).
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
 
@@ -62,12 +69,19 @@ jobs:
           mkdir -p out/docs out/apps/sites/templates
           cp docs/reserved-slugs.txt out/docs/
           cp apps/sites/templates/registry.json out/apps/sites/templates/
+          # Template thumbnails and preset pictures, served by the API for the app's gallery and editor.
+          mkdir -p out/wwwroot/templates
+          for dir in apps/sites/public/templates/*/; do
+            id=$(basename "$dir"); mkdir -p "out/wwwroot/templates/$id"; cp "$dir/thumbnail.png" "out/wwwroot/templates/$id/"
+          done
+          cp -r apps/sites/public/presets out/wwwroot/presets
           mkdir -p out/logs
 
       - name: Write web.config
         env:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
+          REVALIDATE_SECRET: ${{ secrets.REVALIDATE_SECRET }}
         run: python3 scripts/site4now-web-config.py > out/web.config
 
       - name: Take the site offline
@@ -96,9 +110,10 @@ jobs:
           LFTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
         run: |
           sudo apt-get update -qq >/dev/null && sudo apt-get install -y -qq lftp >/dev/null
-          lftp --env-password -u "$FTP_USERNAME" "$FTP_SERVER" -e "
+          # A data connection can hang on this host; give up after 12 minutes instead of waiting forever.
+          timeout 720 lftp --env-password -u "$FTP_USERNAME" "$FTP_SERVER" -e "
             set ftp:ssl-force true; set ftp:ssl-protect-data true; set ssl:verify-certificate yes;
-            set net:max-retries 3; set net:reconnect-interval-base 5; set net:timeout 60;
+            set net:max-retries 3; set net:reconnect-interval-base 5; set net:timeout 30;
             mirror --reverse --only-newer --no-perms --parallel=4 --exclude-glob App_Data/ --exclude-glob logs/ out/ '${FTP_DIR}';
             bye" \
             || { echo "::error title=Upload failed::lftp could not upload to $FTP_SERVER$FTP_DIR."; exit 1; }

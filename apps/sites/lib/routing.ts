@@ -3,15 +3,22 @@ import { brand } from "./brand";
 
 export type Route =
   | { kind: "pass" }
-  | { kind: "rewrite"; path: string }
+  | { kind: "rewrite"; path: string; base: string }
   | { kind: "lookup-host"; host: string; path: string };
+
+/** Request header that tells a site page the public address of its home page ("/<slug>", "/_preview/<token>" or "" on a custom domain). */
+export const SITE_BASE_HEADER = "x-site-base";
 
 const reserved = new Set<string>([...reservedSlugs, brand.brandShortName.toLowerCase()]);
 
-/** Hosts that serve the marketing pages and {domain}/<slug> sites. */
-export function mainHosts(): Set<string> {
-  const extra = (process.env.SITES_MAIN_HOSTS ?? "localhost,127.0.0.1").split(",");
-  return new Set([brand.domain, `www.${brand.domain}`, ...extra].map((h) => h.trim().toLowerCase()).filter(Boolean));
+/**
+ * Hosts that serve the marketing pages and {domain}/<slug> sites. On Vercel the project's own addresses
+ * (set by Vercel) count too, so sites work at <project>.vercel.app/<slug> before the brand domain is connected.
+ */
+export function mainHosts(env: Record<string, string | undefined> = process.env): Set<string> {
+  const extra = (env.SITES_MAIN_HOSTS ?? "localhost,127.0.0.1").split(",");
+  const vercel = [env.VERCEL_PROJECT_PRODUCTION_URL, env.VERCEL_BRANCH_URL, env.VERCEL_URL].filter((h): h is string => !!h);
+  return new Set([brand.domain, `www.${brand.domain}`, ...extra, ...vercel].map((h) => h.trim().toLowerCase()).filter(Boolean));
 }
 
 export const isReserved = (segment: string) => reserved.has(segment.toLowerCase());
@@ -32,7 +39,7 @@ export function route(hostHeader: string, pathname: string, main: Set<string> = 
 
   // Preview tokens contain dots, so this comes before the file rule.
   if (first === "_preview" && segments[1]) {
-    return { kind: "rewrite", path: previewPath(decodeURIComponent(segments[1])) };
+    return { kind: "rewrite", path: previewPath(decodeURIComponent(segments[1])) + rest(segments.slice(2)), base: `/_preview/${segments[1]}` };
   }
 
   // Next.js internals, the API and files (anything whose last segment has an extension) are served as they are on every host.
@@ -46,10 +53,25 @@ export function route(hostHeader: string, pathname: string, main: Set<string> = 
       return { kind: "pass" };
     }
 
-    return { kind: "rewrite", path: sitePath(first) + rest(segments.slice(1)) };
+    return { kind: "rewrite", path: sitePath(first) + rest(segments.slice(1)), base: `/${first.toLowerCase()}` };
   }
 
   return { kind: "lookup-host", host, path: rest(segments) };
 }
 
+/** The site base from the request header, or `fallback` when it is missing or not a plain path. */
+export function siteBase(header: string | null, fallback: string): string {
+  if (header === null) return fallback;
+  return header === "" || /^(\/[A-Za-z0-9._~%-]+){1,2}$/.test(header) ? header : fallback;
+}
+
 const rest = (segments: string[]) => (segments.length ? `/${segments.join("/")}` : "");
+
+/** The test server, used by Vercel builds of the `test` branch when STOREFRONT_API_URL is not set. */
+const TEST_API_URL = "https://alamalhosp-001-site7.itempurl.com";
+
+/** Base URL of the Storefront API, for example http://localhost:5080. */
+export function apiBaseUrl(env: Record<string, string | undefined> = process.env): string {
+  const fallback = env.VERCEL_GIT_COMMIT_REF === "test" ? TEST_API_URL : "http://localhost:5080";
+  return (env.STOREFRONT_API_URL || fallback).replace(/\/$/, "");
+}

@@ -4,7 +4,13 @@
   "name": "Mono Grid",
   "category": "Concept store",
   "description": "A Swiss-style catalog: hairline grid, index numbers and one signal color.",
+  "ar": {
+    "name": "مونو غريد",
+    "category": "متجر مفاهيمي",
+    "description": "كتالوج بالطراز السويسري: شبكة بخطوط رفيعة، وأرقام فهرسة، ولون تمييز واحد."
+  },
   "version": 1,
+  "heroSlider": { "kind": "band" },
   "thumbnail": "/templates/monogrid/thumbnail.png",
   "sample": "shop",
   "schema": [
@@ -23,6 +29,12 @@
         "modern": "Modern",
         "mono": "Mono"
       }
+    },
+    {
+      "key": "logo",
+      "type": "image",
+      "label": "Logo",
+      "group": "Brand"
     },
     {
       "key": "theme",
@@ -107,6 +119,7 @@
   ],
   "defaults": {
     "font": "grotesk",
+    "logo": "",
     "theme": "white",
     "accent": "#FF3B00",
     "hero.title": "Objects for everyday use. Made in small batches, sold in one room.",
@@ -126,5 +139,11 @@
       "thu": "11:00-21:00",
       "fri": ""
     }
+  },
+  "defaultsAr": {
+    "hero.title": "أغراض للاستعمال اليومي. تُصنع بكميات صغيرة، وتُباع في غرفة واحدة.",
+    "announcement": "قطع جديدة في أول سبت من كل شهر",
+    "story.title": "من نحن",
+    "story.text": "متجر مفاهيمي صغير للأشياء المفيدة. نعمل مع حرفيين محليين ونُبقي كل قطعة متوفرة ما داموا يصنعونها."
   }
 }

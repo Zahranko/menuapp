@@ -1,0 +1,152 @@
+/*
+ * The owner's site options shared by every template (each styles.css starts with @import "../_kit/options.css").
+ * templates/_kit/options.ts puts data attributes on the template's root only when an option differs from its default,
+ * so the option rules below apply only to sites that changed them. Shared classes:
+ *   .kit-foot-name      the business name set large in the footer (FootName); .kit-foot-name-text is its text
+ *   .kit-credits        the "© year name" line (Credits); .kit-credits-text is its text
+ *   .kit-social         a row of social icon links (SocialLinks); .kit-social-link is one link
+ *   .kit-order          the floating order button, the template's own or the shared one (.kit-fab)
+ *   .kit-order-label    the button's text; .kit-order-icon its icon
+ * Rules without a data attribute are fixes that apply to every site: a long business name wraps instead of running
+ * off the screen. The !important flags are owner overrides of each template's own styles, which are nested under the
+ * template's root class and so always more specific.
+ */
+
+/* ---------- long names never overflow ---------- */
+.kit-foot-name,
+.kit-credits-text {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.kit-credits {
+  min-width: 0;
+  max-width: 100%;
+}
+/* The same for the name next to the logo in the header: it breaks (or keeps its template's ellipsis) inside the screen. */
+.kit-name {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.kit-lockup {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* ---------- footer name size ---------- */
+[data-foot-name="medium"] {
+  --foot-scale: 0.75;
+}
+[data-foot-name="small"] {
+  --foot-scale: 0.55;
+}
+/* The text scales from the template's own size: 1em is the size the template gives the name. */
+[data-foot-name] .kit-foot-name-text {
+  display: block;
+  font-size: calc(1em * var(--foot-scale));
+}
+/* A footer whose name is only in the credits line: the line shrinks a little, never below 10px. */
+[data-foot-name] [data-section="footer"]:not(:has(.kit-foot-name)) .kit-credits-text {
+  font-size: max(10px, calc(1em * (0.5 + var(--foot-scale) / 2)));
+}
+
+/* ---------- social icons ---------- */
+:where(.kit-social) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+:where(.kit-social) :where(.kit-social-link) {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  color: inherit;
+  text-decoration: none;
+}
+:where(.kit-social-link) svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ---------- order button ---------- */
+/* The shared floating button, for templates without their own. Colors and fonts follow the template. */
+:where(.kit-fab) {
+  position: fixed;
+  z-index: 60;
+  inset-inline-end: 16px;
+  bottom: max(16px, env(safe-area-inset-bottom));
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  max-width: calc(100vw - 32px);
+  min-height: 54px;
+  padding: 0 22px;
+  border-radius: 999px;
+  box-shadow: 0 10px 28px rgb(0 0 0 / 0.28);
+  font: 700 15px/1.15 var(--fb, var(--sbody, system-ui, sans-serif));
+  text-decoration: none;
+}
+:where(.kit-fab) svg {
+  flex: none;
+  width: 21px;
+  height: 21px;
+}
+:where(.kit-fab) .kit-order-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* Colors win over a template's own link colors, so the text always has its contrast-safe color on the fill. */
+.kit-fab {
+  background: var(--acc, var(--sacc, #1f1f1f)) !important;
+  color: var(--acc-ink, var(--saccink, #fff)) !important;
+}
+.kit-fab:focus-visible {
+  outline: 3px solid var(--acc-text, var(--sacctext, currentColor));
+  outline-offset: 3px;
+}
+/* The page keeps room at its foot so the button never covers the credits. */
+[data-order-fab] [data-section="footer"] {
+  padding-bottom: 88px !important;
+}
+
+/* Shapes: pill, rounded square, or a round icon-only button (its text stays for screen readers). */
+[data-order-shape="pill"] .kit-order {
+  border-radius: 999px !important;
+}
+[data-order-shape="rounded"] .kit-order {
+  border-radius: 14px !important;
+}
+[data-order-shape="circle"] .kit-order {
+  flex: none !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  width: 60px !important;
+  min-width: 0 !important;
+  height: 60px !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  /* A full-width bar becomes a round button at the end of the screen. */
+  inset-inline-start: auto !important;
+}
+[data-order-shape="circle"] .kit-order svg {
+  display: block !important;
+  width: 26px !important;
+  height: 26px !important;
+}
+[data-order-shape="circle"] .kit-order .kit-order-label {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+}

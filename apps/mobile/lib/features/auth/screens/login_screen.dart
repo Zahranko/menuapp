@@ -5,7 +5,10 @@ import 'package:go_router/go_router.dart';
 import '../../../core/api/api_error.dart';
 import '../../../core/brand.dart';
 import '../../../core/providers.dart';
+import '../../../core/region.dart';
 import '../../../core/widgets/form_widgets.dart';
+import '../../../core/widgets/language_picker.dart';
+import '../../../core/widgets/logo_mark.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../auth_controller.dart';
 
@@ -22,7 +25,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _email = TextEditingController();
   final _phone = TextEditingController();
   final _password = TextEditingController();
-  String _code = countryCodes.first;
+  String _code = defaultDialCode();
   bool _withPhone = false;
   bool _busy = false;
   Map<String, String?> _errors = {};
@@ -82,11 +85,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
     return Scaffold(
-      appBar: AppBar(leading: BackButton(onPressed: () => context.go('/'))),
+      appBar: AuthHeader(onBack: () => context.go('/'), wordmark: const BrandLockup(size: 20), action: const LanguageToggle()),
       body: SafeArea(
         child: AutofillGroup(
           child: ListView(
-            padding: const EdgeInsets.fromLTRB(24, 8, 24, 32),
+            padding: const EdgeInsets.fromLTRB(24, 18, 24, 32),
             children: [
               FormTitle(title: t.loginTitle, subtitle: t.loginSubtitle),
               const SizedBox(height: 24),
@@ -123,6 +126,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   error: _errors['login'],
                   keyboardType: TextInputType.emailAddress,
                   autofillHints: const [AutofillHints.email],
+                  icon: Icons.mail_outline_rounded,
                 ),
               const SizedBox(height: 16),
               PasswordField(label: t.password, controller: _password, hint: t.passwordHintLogin, error: _errors['password']),

@@ -1,15 +1,10 @@
 import type { TemplateProps } from "@/lib/types";
 import { flag } from "@/lib/settings";
-import {
-  ContactList,
-  Credits,
-  HoursList,
-  Logo,
-  ProductPicture,
-  ProductSheet,
-  TopBars,
-} from "../_kit/blocks";
+import { ContactList, Credits, HoursList, Logo, logoRoot, optionRoot, OrderFab, ProductPicture, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
+import { heroPhotos } from "../_kit/hero";
+import { HeroBand } from "../_kit/HeroPhotos";
 import { fontVariables } from "../_kit/fonts";
 import { WhatsApp } from "../_kit/icons";
 import { hasHours } from "../_kit/site-data";
@@ -97,9 +92,10 @@ export default function NeonDinerTemplate({
     ctx.sections.flatMap((s) => s.products).map((p, i) => [p.id, i + 1]),
   );
 
+  const order = orderButton(site, { label: c.order });
   return (
     <div
-      data-template="neondiner"
+      data-template="neondiner" {...logoRoot(ctx)} {...optionRoot(ctx, order)}
       className={cx("t-diner", fontVariables)}
       style={themeVars(site.settings, ctx.locale, {
         palettes: PALETTES,
@@ -118,11 +114,12 @@ export default function NeonDinerTemplate({
             </span>
           )}
         </div>
-        <h1 className="neon">{site.business.name}</h1>
+        <h1 className="neon kit-name">{site.business.name}</h1>
         {ctx.text("hero.title") && (
           <p className="sign-sub">{ctx.text("hero.title")}</p>
         )}
         {ctx.today && <p className="sign-today">{ctx.today}</p>}
+        <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} />
       </header>
       <Strip on={checks} />
 
@@ -155,19 +152,19 @@ export default function NeonDinerTemplate({
               <h2 id={`${section.anchor}-h`} className="ribbon">
                 <span>{section.name}</span>
               </h2>
-              <ul className="plain combos">
+              <ul className="plain combos kit-cards">
                 {section.products.map((item) => (
                   <li key={item.id}>
                     <button
                       type="button"
-                      className={cx("combo", !item.isAvailable && "out")}
+                      className={cx("combo kit-card", !item.isAvailable && "out")}
                       data-item-id={item.id}
                     >
                       <span className="combo-no" aria-hidden="true">
                         <small>{c.no}</small>
                         {numbers.get(item.id)}
                       </span>
-                      <span className="combo-photo">
+                      <span className="combo-photo kit-card-media">
                         <ProductPicture item={item} sizes="120px" />
                       </span>
                       <span className="combo-text">
@@ -250,8 +247,10 @@ export default function NeonDinerTemplate({
 
       <Strip on={checks} />
       <footer className="foot" data-section="footer">
+        <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
         <Credits ctx={ctx} />
       </footer>
+      <OrderFab order={order} />
       <ProductSheet ctx={ctx} />
     </div>
   );

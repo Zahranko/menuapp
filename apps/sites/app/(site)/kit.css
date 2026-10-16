@@ -220,3 +220,8 @@
   clip-path: inset(50%);
   white-space: nowrap;
 }
+/* Product badges: a custom label can be one long word (up to 24 letters); it wraps instead of leaving its card. */
+:where([data-template]) :where(.tag, .sticker, .sticker-tag, .flag, .a-badge, .stamp, .tape, .mx-tag) {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}

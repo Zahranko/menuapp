@@ -1,5 +1,10 @@
 /* Template 017 "Atelier": an editorial salon website. Full-bleed hero, price list with a Book link per service, gallery, reviews. */
 
+@import "../_kit/logo.css";
+@import "../_kit/options.css";
+@import "../_kit/cards.css";
+@import "../_kit/hero.css";
+
 .t-atelier {
   container: page / inline-size;
   font-size: 15.5px;
@@ -416,7 +421,16 @@
     font: var(--fw) calc(24px * var(--fs)) var(--fd);
     color: var(--ink);
   }
+  /* Social accounts the owner shows (_kit/options.css draws the round icon links). */
+  .foot-social {
+    justify-content: flex-start;
+    color: var(--acc-text);
+  }
+  .foot-social a {
+    border-color: color-mix(in srgb, currentColor 40%, transparent);
+  }
   .book-bar {
+    gap: 9px;
     position: fixed;
     z-index: 6;
     inset-inline: 14px;

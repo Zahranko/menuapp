@@ -1,7 +1,10 @@
 import type { TemplateProps } from "@/lib/types";
 import { choice, flag } from "@/lib/settings";
-import { ContactList, Credits, HoursList, Logo, ProductSheet, TopBars } from "../_kit/blocks";
+import { ContactList, Credits, HoursList, Logo, logoRoot, optionRoot, OrderFab, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
+import { heroPhotos } from "../_kit/hero";
+import { HeroBand } from "../_kit/HeroPhotos";
 import { fontVariables } from "../_kit/fonts";
 import { WhatsApp } from "../_kit/icons";
 import { hasHours } from "../_kit/site-data";
@@ -42,14 +45,15 @@ export default function LinenTemplate({ site, now }: TemplateProps & { now?: Dat
   const note = ctx.text("note");
   const links: [string, string][] = [["#menu", c.menu], ...(story ? [["#story", c.story] as [string, string]] : []), ...(ctx.on("visit") ? [["#visit", c.visit] as [string, string]] : [])];
 
+  const order = orderButton(site, { label: c.order });
   return (
-    <div data-template="linen" className={cx("t-linen", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["classic", "elegant", "soft"], defaultAccent: "#8C2F39" })}>
+    <div data-template="linen" {...logoRoot(ctx)} {...optionRoot(ctx, order)} className={cx("t-linen", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["classic", "elegant", "soft"], defaultAccent: "#8C2F39" })}>
       <TemplateStyles id="linen" />
       <TopBars ctx={ctx} />
       <div className="paper">
         <header className="masthead" data-section="header">
           <Logo ctx={ctx} />
-          <h1>{site.business.name}</h1>
+          <h1 className="kit-name">{site.business.name}</h1>
           {ctx.text("hero.title") && <p className="tagline">{ctx.text("hero.title")}</p>}
           {ornaments && <Flourish />}
           <nav aria-label={ctx.t.menu}>
@@ -62,6 +66,7 @@ export default function LinenTemplate({ site, now }: TemplateProps & { now?: Dat
         </header>
 
         <main>
+          <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} />
           {intro && (
             <p className="intro" data-section="intro">
               {intro}
@@ -85,10 +90,10 @@ export default function LinenTemplate({ site, now }: TemplateProps & { now?: Dat
               {ctx.sections.map((section) => (
                 <section key={section.id} id={section.anchor} className="course" aria-labelledby={`${section.anchor}-h`}>
                   <h3 id={`${section.anchor}-h`}>{section.name}</h3>
-                  <ul className="plain">
+                  <ul className="plain kit-cards kit-rows">
                     {section.products.map((item) => (
                       <li key={item.id}>
-                        <button type="button" className={cx("dish", !item.isAvailable && "out")} data-item-id={item.id}>
+                        <button type="button" className={cx("dish kit-card kit-card-pad", !item.isAvailable && "out")} data-item-id={item.id}>
                           <span className="dish-line">
                             <span className="dish-name">{item.name}</span>
                             <span className="leader" aria-hidden="true" />
@@ -152,9 +157,11 @@ export default function LinenTemplate({ site, now }: TemplateProps & { now?: Dat
 
         <footer className="foot" data-section="footer">
           {ornaments && <Flourish />}
+          <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
           <Credits ctx={ctx} />
         </footer>
       </div>
+      <OrderFab order={order} />
       <ProductSheet ctx={ctx} />
     </div>
   );

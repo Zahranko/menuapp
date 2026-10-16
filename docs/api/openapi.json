@@ -405,6 +405,201 @@
         }
       }
     },
+    "/api/v1/plans": {
+      "get": {
+        "tags": [
+          "Billing"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PlanDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/subscription": {
+      "get": {
+        "tags": [
+          "Billing"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubscriptionDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/subscription/change": {
+      "post": {
+        "tags": [
+          "Billing"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePlan"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePlan"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePlan"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChangePlanResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/domain-request": {
+      "get": {
+        "tags": [
+          "Billing"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DomainRequestDto"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Billing"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestDomain"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestDomain"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestDomain"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DomainRequestDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Billing"
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
     "/api/v1/categories": {
       "get": {
         "tags": [
@@ -527,6 +722,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/CategoryDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
                 }
               }
             }
@@ -1067,6 +1272,16 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
           }
         }
       }
@@ -1132,6 +1347,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SiteDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
                 }
               }
             }
@@ -1331,7 +1556,11 @@
           "instagram",
           "locale",
           "currencyCode",
-          "timeZone"
+          "timeZone",
+          "phone",
+          "facebook",
+          "tikTok",
+          "snapchat"
         ],
         "type": "object",
         "properties": {
@@ -1380,6 +1609,30 @@
           },
           "timeZone": {
             "type": "string"
+          },
+          "phone": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "facebook": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "tikTok": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "snapchat": {
+            "type": [
+              "null",
+              "string"
+            ]
           }
         }
       },
@@ -1387,6 +1640,7 @@
         "required": [
           "id",
           "name",
+          "parentId",
           "sortOrder",
           "productCount"
         ],
@@ -1398,6 +1652,13 @@
           },
           "name": {
             "type": "string"
+          },
+          "parentId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
           },
           "sortOrder": {
             "pattern": "^-?(?:0|[1-9]\\d*)$",
@@ -1417,6 +1678,35 @@
           }
         }
       },
+      "ChangePlan": {
+        "required": [
+          "planCode"
+        ],
+        "type": "object",
+        "properties": {
+          "planCode": {
+            "type": "string"
+          }
+        }
+      },
+      "ChangePlanResponse": {
+        "required": [
+          "checkoutUrl",
+          "subscription"
+        ],
+        "type": "object",
+        "properties": {
+          "checkoutUrl": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "subscription": {
+            "$ref": "#/components/schemas/SubscriptionDto"
+          }
+        }
+      },
       "ChangeTemplate": {
         "required": [
           "templateId"
@@ -1425,6 +1715,55 @@
         "properties": {
           "templateId": {
             "type": "string"
+          }
+        }
+      },
+      "DomainRequestDto": {
+        "required": [
+          "id",
+          "domain",
+          "status",
+          "staffNote",
+          "dnsTarget",
+          "createdAt",
+          "updatedAt",
+          "activatedAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "domain": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "staffNote": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "dnsTarget": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "activatedAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
           }
         }
       },
@@ -1532,6 +1871,34 @@
           }
         }
       },
+      "PlanDto": {
+        "required": [
+          "code",
+          "name",
+          "priceUsd",
+          "allowsCustomDomain"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "priceUsd": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
+          "allowsCustomDomain": {
+            "type": "boolean"
+          }
+        }
+      },
       "PreviewLink": {
         "required": [
           "token",
@@ -1602,7 +1969,9 @@
           "isAvailable",
           "isFeatured",
           "sortOrder",
-          "updatedAt"
+          "updatedAt",
+          "customLabel",
+          "customLabelAr"
         ],
         "type": "object",
         "properties": {
@@ -1660,6 +2029,18 @@
           "updatedAt": {
             "type": "string",
             "format": "date-time"
+          },
+          "customLabel": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "customLabelAr": {
+            "type": [
+              "null",
+              "string"
+            ]
           }
         }
       },
@@ -1674,7 +2055,11 @@
           "locale",
           "currencyCode",
           "timeZone",
-          "customDomains"
+          "customDomains",
+          "phone",
+          "facebook",
+          "tikTok",
+          "snapchat"
         ],
         "type": "object",
         "properties": {
@@ -1722,6 +2107,30 @@
             "items": {
               "type": "string"
             }
+          },
+          "phone": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "facebook": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "tikTok": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "snapchat": {
+            "type": [
+              "null",
+              "string"
+            ]
           }
         }
       },
@@ -1729,6 +2138,7 @@
         "required": [
           "id",
           "name",
+          "parentId",
           "products"
         ],
         "type": "object",
@@ -1739,6 +2149,13 @@
           },
           "name": {
             "type": "string"
+          },
+          "parentId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
           },
           "products": {
             "type": "array",
@@ -1757,7 +2174,9 @@
           "imageUrl",
           "label",
           "isAvailable",
-          "isFeatured"
+          "isFeatured",
+          "customLabel",
+          "customLabelAr"
         ],
         "type": "object",
         "properties": {
@@ -1799,6 +2218,18 @@
           },
           "isFeatured": {
             "type": "boolean"
+          },
+          "customLabel": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "customLabelAr": {
+            "type": [
+              "null",
+              "string"
+            ]
           }
         }
       },
@@ -1883,6 +2314,18 @@
               "null",
               "string"
             ]
+          },
+          "currencyCode": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "timeZone": {
+            "type": [
+              "null",
+              "string"
+            ]
           }
         }
       },
@@ -1903,6 +2346,17 @@
               "type": "string",
               "format": "uuid"
             }
+          }
+        }
+      },
+      "RequestDomain": {
+        "required": [
+          "domain"
+        ],
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string"
           }
         }
       },
@@ -1933,6 +2387,13 @@
         "properties": {
           "name": {
             "type": "string"
+          },
+          "parentId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
           }
         }
       },
@@ -1994,6 +2455,18 @@
             "default": false
           },
           "imageUrl": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "customLabel": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "customLabelAr": {
             "type": [
               "null",
               "string"
@@ -2090,6 +2563,56 @@
           }
         }
       },
+      "SubscriptionDto": {
+        "required": [
+          "planCode",
+          "status",
+          "currentPeriodEnd",
+          "allowsCustomDomain",
+          "testMode"
+        ],
+        "type": "object",
+        "properties": {
+          "planCode": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "currentPeriodEnd": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "allowsCustomDomain": {
+            "type": "boolean"
+          },
+          "testMode": {
+            "type": "boolean"
+          }
+        }
+      },
+      "TemplateArabicDto": {
+        "required": [
+          "name",
+          "category",
+          "description"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
       "TemplateDto": {
         "required": [
           "id",
@@ -2099,8 +2622,11 @@
           "description",
           "thumbnailUrl",
           "version",
+          "tier",
           "schema",
-          "defaults"
+          "defaults",
+          "ar",
+          "defaultsAr"
         ],
         "type": "object",
         "properties": {
@@ -2141,10 +2667,26 @@
             ],
             "format": "int32"
           },
+          "tier": {
+            "type": "string"
+          },
           "schema": {
             "$ref": "#/components/schemas/JsonElement"
           },
           "defaults": {
+            "$ref": "#/components/schemas/JsonElement"
+          },
+          "ar": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/TemplateArabicDto"
+              }
+            ]
+          },
+          "defaultsAr": {
             "$ref": "#/components/schemas/JsonElement"
           }
         }
@@ -2195,6 +2737,36 @@
             ]
           },
           "timeZone": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "currencyCode": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "phone": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "facebook": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "tikTok": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "snapchat": {
             "type": [
               "null",
               "string"
@@ -2257,6 +2829,9 @@
     },
     {
       "name": "Auth"
+    },
+    {
+      "name": "Billing"
     },
     {
       "name": "Categories"

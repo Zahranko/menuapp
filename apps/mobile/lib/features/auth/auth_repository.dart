@@ -27,6 +27,8 @@ class AuthRepository {
     required String phone,
     required String password,
     required String locale,
+    String? currencyCode,
+    String? timeZone,
   }) =>
       _signIn('/api/v1/auth/register', {
         'businessName': businessName,
@@ -35,6 +37,8 @@ class AuthRepository {
         'password': password,
         'deviceName': _device,
         'locale': locale,
+        'currencyCode': ?currencyCode,
+        'timeZone': ?timeZone,
       });
 
   Future<Business> logIn({required String login, required String password}) =>

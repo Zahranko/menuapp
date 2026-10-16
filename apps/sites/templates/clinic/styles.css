@@ -1,5 +1,10 @@
 /* Template 018 "Clinic": a calm, trustworthy practice website. Split hero with a floating info card, service cards, steps, FAQ, CTA band. */
 
+@import "../_kit/logo.css";
+@import "../_kit/options.css";
+@import "../_kit/cards.css";
+@import "../_kit/hero.css";
+
 .t-clinic {
   container: page / inline-size;
   font-size: 15.5px;
@@ -121,6 +126,11 @@
     align-items: center;
     justify-content: center;
     font-weight: 800;
+  }
+  /* The booking button keeps its one line; a very long business name gives way instead. */
+  .head > .btn {
+    flex-shrink: 0;
+    white-space: nowrap;
   }
   .head nav {
     display: none;
@@ -529,6 +539,15 @@
     margin-bottom: 10px;
   }
 
+  /* Social accounts the owner shows (_kit/options.css draws the round icon links). */
+  .foot-social {
+    justify-content: flex-start;
+    margin-bottom: 16px;
+    color: var(--acc-text);
+  }
+  .foot-social a {
+    border-color: color-mix(in srgb, currentColor 40%, transparent);
+  }
   .foot {
     padding: 20px 18px 30px;
     border-top: 1px solid var(--line);

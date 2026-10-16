@@ -1,5 +1,10 @@
 /* Template 021 "Handy": a friendly home-services site. Service picker in the hero, trust badges, cards with a Request button, areas, sticky request bar. */
 
+@import "../_kit/logo.css";
+@import "../_kit/options.css";
+@import "../_kit/cards.css";
+@import "../_kit/hero.css";
+
 .t-handy {
   container: page / inline-size;
   font-size: 15.5px;
@@ -557,6 +562,16 @@
     padding-bottom: 100px;
   }
 
+  /* Social accounts the owner shows (_kit/options.css draws the round icon links). */
+  .foot-social {
+    justify-content: flex-start;
+    margin-bottom: 14px;
+    color: var(--acc-text);
+  }
+  .foot-social a {
+    border-color: color-mix(in srgb, currentColor 40%, transparent);
+  }
+
   /* sticky request bar */
   .bar {
     position: fixed;
@@ -589,6 +604,14 @@
     flex: none;
     min-height: 46px;
     margin-inline-start: auto;
+  }
+  /* The owner's button shape: a rounded bar around a rounded button, or a slim bar around a round one. */
+  &[data-order-shape="rounded"] .bar {
+    border-radius: 22px;
+  }
+  &[data-order-shape="circle"] .bar .btn {
+    width: 48px !important;
+    height: 48px !important;
   }
 
   @media (prefers-reduced-motion: reduce) {

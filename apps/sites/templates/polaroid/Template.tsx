@@ -1,6 +1,9 @@
 import type { TemplateProps } from "@/lib/types";
-import { ContactList, Credits, HoursList, Logo, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { ContactList, Credits, HoursList, Logo, logoRoot, optionRoot, OrderFab, ProductPicture, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
+import { heroPhotos } from "../_kit/hero";
+import { HeroBand } from "../_kit/HeroPhotos";
 import { fontVariables } from "../_kit/fonts";
 import { WhatsApp } from "../_kit/icons";
 import { hasHours } from "../_kit/site-data";
@@ -25,15 +28,17 @@ export default function PolaroidTemplate({ site, now }: TemplateProps & { now?: 
   const c = copy[ctx.locale];
   const story = ctx.on("story") && ctx.text("story.text");
 
+  const order = orderButton(site, { label: c.order });
   return (
-    <div data-template="polaroid" className={cx("t-polaroid", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["hand", "round", "soft"], defaultAccent: "#E0457B" })}>
+    <div data-template="polaroid" {...logoRoot(ctx)} {...optionRoot(ctx, order)} className={cx("t-polaroid", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["hand", "round", "soft"], defaultAccent: "#E0457B" })}>
       <TemplateStyles id="polaroid" />
       <TopBars ctx={ctx} />
       <header className="head" data-section="header">
         <Logo ctx={ctx} />
-        <h1>{site.business.name}</h1>
+        <h1 className="kit-name">{site.business.name}</h1>
         {ctx.text("hero.title") && <p className="tagline">{ctx.text("hero.title")}</p>}
         {ctx.today && <p className="today">{ctx.today}</p>}
+        <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} />
       </header>
 
       <main>
@@ -69,12 +74,12 @@ export default function PolaroidTemplate({ site, now }: TemplateProps & { now?: 
               <h2 id={`${section.anchor}-h`}>
                 <span>{section.name}</span>
               </h2>
-              <ul className="plain wall">
+              <ul className="plain wall kit-cards">
                 {section.products.map((item) => (
                   <li key={item.id}>
-                    <button type="button" className={cx("photo", !item.isAvailable && "out")} data-item-id={item.id}>
+                    <button type="button" className={cx("photo kit-card", !item.isAvailable && "out")} data-item-id={item.id}>
                       <span className="tape" aria-hidden="true" />
-                      <span className="photo-img">
+                      <span className="photo-img kit-card-media">
                         <ProductPicture item={item} sizes="(min-width: 760px) 25vw, 50vw" />
                         {(item.labelText || !item.isAvailable) && (
                           <span className="stickers">
@@ -125,8 +130,10 @@ export default function PolaroidTemplate({ site, now }: TemplateProps & { now?: 
       </main>
 
       <footer className="foot" data-section="footer">
+        <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
         <Credits ctx={ctx} />
       </footer>
+      <OrderFab order={order} />
       <ProductSheet ctx={ctx} />
     </div>
   );

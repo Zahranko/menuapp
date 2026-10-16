@@ -57,7 +57,7 @@ public partial class AuthTests(StorefrontFactory factory) : IClassFixture<Storef
         var response = await _client.PostAsJsonAsync("/api/v1/auth/register", new { businessName = "Vanilla Menu", email = owner.Email, phone = owner.Phone, password = "Sunrise2026" });
         Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
         var errors = (await Api.ProblemAsync(response)).GetProperty("errors");
-        Assert.Equal("That link is taken. Try adding your city, like vanillamenuamman.", errors.GetProperty("businessName")[0].GetString());
+        Assert.Equal("That link is taken. Try adding your area, like vanillamenudowntown.", errors.GetProperty("businessName")[0].GetString());
     }
 
     [Fact]

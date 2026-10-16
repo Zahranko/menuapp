@@ -1,18 +1,28 @@
 import {
+  Almarai,
   Amiri,
   Baloo_2,
   Bebas_Neue,
   Bricolage_Grotesque,
+  Cairo,
   Caveat,
   Cormorant_Garamond,
   DM_Sans,
+  El_Messiri,
   Fraunces,
   IBM_Plex_Mono,
+  IBM_Plex_Sans,
   IBM_Plex_Sans_Arabic,
+  Lalezar,
   Manrope,
+  Noto_Kufi_Arabic,
+  Noto_Naskh_Arabic,
   Playfair_Display,
+  Readex_Pro,
+  Rubik,
   Space_Grotesk,
   Syne,
+  Tajawal,
 } from "next/font/google";
 
 /*
@@ -35,8 +45,48 @@ const plexMono = IBM_Plex_Mono({ display: "swap", preload: false, subsets: ["lat
 const baloo = Baloo_2({ display: "swap", preload: false, subsets: ["latin"], variable: "--f-baloo" });
 const amiri = Amiri({ display: "swap", preload: false, subsets: ["arabic", "latin"], weight: ["400", "700"], variable: "--f-amiri" });
 
+/*
+ * The owner's font choice (setting "font.family", see TYPEFACES below): pairs that cover Arabic and Latin, so a site
+ * reads well in both. A page only downloads the files of the fonts it uses, so these cost nothing until chosen.
+ */
+const cairo = Cairo({ display: "swap", preload: false, subsets: ["arabic", "latin"], variable: "--f-cairo" });
+const tajawal = Tajawal({ display: "swap", preload: false, subsets: ["arabic", "latin"], weight: ["400", "500", "700", "800"], variable: "--f-tajawal" });
+const almarai = Almarai({ display: "swap", preload: false, subsets: ["arabic", "latin"], weight: ["400", "700", "800"], variable: "--f-almarai" });
+const plexSans = IBM_Plex_Sans({ display: "swap", preload: false, subsets: ["latin"], weight: ["400", "600", "700"], variable: "--f-plexsans" });
+const kufi = Noto_Kufi_Arabic({ display: "swap", preload: false, subsets: ["arabic", "latin"], variable: "--f-kufi" });
+const readex = Readex_Pro({ display: "swap", preload: false, subsets: ["arabic", "latin"], variable: "--f-readex" });
+const messiri = El_Messiri({ display: "swap", preload: false, subsets: ["arabic", "latin"], variable: "--f-messiri" });
+const naskh = Noto_Naskh_Arabic({ display: "swap", preload: false, subsets: ["arabic", "latin"], variable: "--f-naskh" });
+const lalezar = Lalezar({ display: "swap", preload: false, subsets: ["arabic", "latin"], weight: "400", variable: "--f-lalezar" });
+const rubik = Rubik({ display: "swap", preload: false, subsets: ["arabic", "latin"], variable: "--f-rubik" });
+
 /** Put on the template's root element so the font variables exist. */
-export const fontVariables = [bricolage, dmSans, cormorant, manrope, syne, plexArabic, playfair, fraunces, spaceGrotesk, caveat, bebas, plexMono, baloo, amiri]
+export const fontVariables = [
+  bricolage,
+  dmSans,
+  cormorant,
+  manrope,
+  syne,
+  plexArabic,
+  playfair,
+  fraunces,
+  spaceGrotesk,
+  caveat,
+  bebas,
+  plexMono,
+  baloo,
+  amiri,
+  cairo,
+  tajawal,
+  almarai,
+  plexSans,
+  kufi,
+  readex,
+  messiri,
+  naskh,
+  lalezar,
+  rubik,
+]
   .map((f) => f.variable)
   .join(" ");
 
@@ -80,3 +130,23 @@ export function forLocale(pair: FontPair, locale: string): FontPair {
     scale: Math.min(pair.scale, 1.05),
   };
 }
+
+/**
+ * The owner's font choice, shared by every template ("font.family"; "default" keeps the template's own fonts).
+ * Every pair covers Arabic and Latin with the same fonts in both languages, so forLocale is not applied to it.
+ */
+export const TYPEFACES = {
+  cairo: { display: "var(--f-cairo), sans-serif", body: "var(--f-cairo), system-ui, sans-serif", weight: 800, tracking: "-.01em", scale: 1 },
+  tajawal: { display: "var(--f-tajawal), sans-serif", body: "var(--f-tajawal), system-ui, sans-serif", weight: 800, tracking: "-.01em", scale: 1.04 },
+  almarai: { display: "var(--f-almarai), sans-serif", body: "var(--f-almarai), system-ui, sans-serif", weight: 800, tracking: "-.01em", scale: 1 },
+  plex: { display: "var(--f-plexsans), var(--f-plexarabic), sans-serif", body: "var(--f-plexsans), var(--f-plexarabic), system-ui, sans-serif", weight: 700, tracking: "-.01em", scale: 1 },
+  kufi: { display: "var(--f-kufi), sans-serif", body: "var(--f-kufi), system-ui, sans-serif", weight: 700, tracking: "-.01em", scale: 0.94 },
+  readex: { display: "var(--f-readex), sans-serif", body: "var(--f-readex), system-ui, sans-serif", weight: 700, tracking: "-.02em", scale: 0.98 },
+  messiri: { display: "var(--f-messiri), Georgia, serif", body: "var(--f-cairo), system-ui, sans-serif", weight: 700, tracking: "0", scale: 1.04 },
+  amiri: { display: "var(--f-amiri), Georgia, serif", body: "var(--f-naskh), Georgia, serif", weight: 700, tracking: "0", scale: 1.1 },
+  lalezar: { display: "var(--f-lalezar), Impact, sans-serif", body: "var(--f-tajawal), system-ui, sans-serif", weight: 400, tracking: "0", scale: 1.08 },
+  rubik: { display: "var(--f-rubik), sans-serif", body: "var(--f-rubik), system-ui, sans-serif", weight: 700, tracking: "-.02em", scale: 1 },
+} satisfies Record<string, FontPair>;
+
+export type TypefaceName = keyof typeof TYPEFACES;
+export const TYPEFACE_NAMES = Object.keys(TYPEFACES) as TypefaceName[];

@@ -4,12 +4,14 @@ import 'package:dio/dio.dart';
 
 import '../auth/token_store.dart';
 
-/// Builds the app's HTTP client: JSON, the bearer token on every call, and one silent token refresh
-/// when the API answers 401. When the refresh fails too, the tokens are cleared and [onSignedOut] runs.
+/// Builds the app's HTTP client: JSON, the app's language in Accept-Language, the bearer token on every call,
+/// and one silent token refresh when the API answers 401. When the refresh fails too, the tokens are cleared
+/// and [onSignedOut] runs.
 Dio createApiClient({
   required String baseUrl,
   required TokenStore tokens,
   required void Function() onSignedOut,
+  String Function()? language,
   HttpClientAdapter? adapter,
 }) {
   BaseOptions options() => BaseOptions(
@@ -27,8 +29,26 @@ Dio createApiClient({
     dio.httpClientAdapter = adapter;
     bare.httpClientAdapter = adapter;
   }
+  if (language != null) {
+    dio.interceptors.add(LanguageInterceptor(language));
+    bare.interceptors.add(LanguageInterceptor(language));
+  }
   dio.interceptors.add(AuthInterceptor(refreshClient: bare, tokens: tokens, onSignedOut: onSignedOut));
   return dio;
+}
+
+/// Sends the language the app shows now ("ar" or "en"), read per request so a switch applies at once.
+/// The API answers its messages (errors, validation) in that language.
+class LanguageInterceptor extends Interceptor {
+  LanguageInterceptor(this.language);
+
+  final String Function() language;
+
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    options.headers['Accept-Language'] = language();
+    handler.next(options);
+  }
 }
 
 /// Queued, so parallel 401s wait for one refresh instead of each spending the refresh token

@@ -34,7 +34,18 @@ settings = {
     "Storage__Provider": "local",
     "Storage__LocalRoot": "App_Data/media",
     "Storage__PublicBaseUrl": f"{api_url}/media" if api_url else "/media",
+    # Test servers: every account is on an active Pro plan.
+    "Billing__TestMode": "true" if env.get("BILLING_TEST_MODE", "").lower() == "true" else "false",
 }
+
+# Where owners' websites (apps/sites) are hosted, when not yet at the brand domain.
+sites_url = env.get("SITES_URL", "").strip().rstrip("/")
+if sites_url:
+    settings["Storefront__SitesBaseUrl"] = sites_url
+    # Saves in the app refresh the cached website pages right away (the same secret is set on the websites host).
+    if env.get("REVALIDATE_SECRET", ""):
+        settings["Revalidation__Url"] = f"{sites_url}/api/revalidate"
+        settings["Revalidation__Secret"] = env["REVALIDATE_SECRET"]
 
 variables = "\n".join(
     f"          <environmentVariable name={quoteattr(k)} value={quoteattr(v)} />" for k, v in settings.items()
