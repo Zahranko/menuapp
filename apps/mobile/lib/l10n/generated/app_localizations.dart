@@ -1987,6 +1987,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add it in Business info first'**
   String get accountMissing;
+
+  /// No description provided for @labelCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom'**
+  String get labelCustom;
+
+  /// No description provided for @customLabelText.
+  ///
+  /// In en, this message translates to:
+  /// **'Label text'**
+  String get customLabelText;
+
+  /// No description provided for @customLabelHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Type it in one or both languages. Your website shows the one in its language.'**
+  String get customLabelHelp;
+
+  /// No description provided for @customLabelEnglish.
+  ///
+  /// In en, this message translates to:
+  /// **'In English'**
+  String get customLabelEnglish;
+
+  /// No description provided for @customLabelArabic.
+  ///
+  /// In en, this message translates to:
+  /// **'In Arabic'**
+  String get customLabelArabic;
+
+  /// No description provided for @customLabelHintEn.
+  ///
+  /// In en, this message translates to:
+  /// **'Chef\'s choice'**
+  String get customLabelHintEn;
+
+  /// No description provided for @customLabelHintAr.
+  ///
+  /// In en, this message translates to:
+  /// **'اختيار الشيف'**
+  String get customLabelHintAr;
+
+  /// No description provided for @errCustomLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Type the label text.'**
+  String get errCustomLabel;
+
+  /// No description provided for @qrCode.
+  ///
+  /// In en, this message translates to:
+  /// **'QR code'**
+  String get qrCode;
+
+  /// No description provided for @qrTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your QR code'**
+  String get qrTitle;
+
+  /// No description provided for @qrSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Customers scan it with their phone camera to open your website.'**
+  String get qrSub;
+
+  /// No description provided for @qrColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Code color'**
+  String get qrColor;
+
+  /// No description provided for @qrLogo.
+  ///
+  /// In en, this message translates to:
+  /// **'Logo in the middle'**
+  String get qrLogo;
+
+  /// No description provided for @qrLogoHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'It still scans: the code makes up for the covered part.'**
+  String get qrLogoHelp;
+
+  /// No description provided for @qrSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save to phone'**
+  String get qrSave;
+
+  /// No description provided for @qrShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get qrShare;
+
+  /// No description provided for @qrSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved to your photos'**
+  String get qrSaved;
+
+  /// No description provided for @qrSaveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t save. Allow access to your photos and try again.'**
+  String get qrSaveFailed;
+
+  /// No description provided for @qrPoster.
+  ///
+  /// In en, this message translates to:
+  /// **'Poster to print'**
+  String get qrPoster;
+
+  /// No description provided for @qrPosterSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Prints on A4 or A5. Put it on tables, the counter or the door.'**
+  String get qrPosterSub;
+
+  /// No description provided for @qrShareText.
+  ///
+  /// In en, this message translates to:
+  /// **'See our menu: {url}'**
+  String qrShareText(String url);
+
+  /// No description provided for @posterScan.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan for our menu'**
+  String get posterScan;
+
+  /// No description provided for @posterScanHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Point your phone camera at the code'**
+  String get posterScanHint;
 }
 
 class _AppLocalizationsDelegate

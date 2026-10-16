@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/api/api_error.dart';
@@ -46,6 +47,8 @@ class _ProductSheetState extends ConsumerState<ProductSheet> {
   late final _price = TextEditingController(text: widget.product == null ? '' : _currency.inputText(widget.product!.price));
   late String _categoryId = widget.product?.categoryId ?? widget.categories.inDisplayOrder.first.id;
   late String? _label = widget.product?.label;
+  late final _customLabel = TextEditingController(text: widget.product?.customLabel ?? '');
+  late final _customLabelAr = TextEditingController(text: widget.product?.customLabelAr ?? '');
   late bool _available = widget.product?.isAvailable ?? true;
   late bool _featured = widget.product?.isFeatured ?? false;
   late String? _imageUrl = widget.product?.imageUrl;
@@ -67,12 +70,18 @@ class _ProductSheetState extends ConsumerState<ProductSheet> {
     _name.dispose();
     _description.dispose();
     _price.dispose();
+    _customLabel.dispose();
+    _customLabelAr.dispose();
     super.dispose();
   }
 
-  /// Checks the name and price the same way the API does, so most mistakes show without a round trip.
-  static Map<String, String> validate(AppLocalizations t, String name, String price, Currency currency) {
+  /// Checks the name, price and custom label the same way the API does, so most mistakes show without a round trip.
+  static Map<String, String> validate(AppLocalizations t, String name, String price, Currency currency,
+      {String? label, String customLabel = '', String customLabelAr = ''}) {
     final errors = <String, String>{};
+    if (label == customLabelKey && normalizeCustomLabel(customLabel) == null && normalizeCustomLabel(customLabelAr) == null) {
+      errors['customLabel'] = t.errCustomLabel;
+    }
     if (name.trim().isEmpty) errors['name'] = t.errProductName;
     final p = price.trim().replaceAll(',', '.');
     if (p.isEmpty) {
@@ -100,7 +109,7 @@ class _ProductSheetState extends ConsumerState<ProductSheet> {
 
   Future<void> _save() async {
     final t = AppLocalizations.of(context);
-    final errors = validate(t, _name.text, _price.text, _currency);
+    final errors = validate(t, _name.text, _price.text, _currency, label: _label, customLabel: _customLabel.text, customLabelAr: _customLabelAr.text);
     setState(() => _errors = errors);
     if (errors.isNotEmpty) return;
     setState(() => _busy = true);
@@ -113,6 +122,8 @@ class _ProductSheetState extends ConsumerState<ProductSheet> {
               description: _description.text.trim().isEmpty ? null : _description.text.trim(),
               price: _price.text.trim().replaceAll(',', '.'),
               label: _label,
+              customLabel: _customLabel.text,
+              customLabelAr: _customLabelAr.text,
               isAvailable: _available,
               isFeatured: _featured,
               imageUrl: _imageUrl,
@@ -124,6 +135,8 @@ class _ProductSheetState extends ConsumerState<ProductSheet> {
       setState(() => _errors = {
             if (e.field('name') != null) 'name': e.field('name')!,
             if (e.field('price') != null) 'price': e.field('price')!,
+            if (e.field('customLabel') != null) 'customLabel': e.field('customLabel')!,
+            if (e.field('customLabelAr') != null) 'customLabelAr': e.field('customLabelAr')!,
           });
       if (_errors.isEmpty) showMessage(context, errorText(t, e));
     } finally {
@@ -235,14 +248,25 @@ class _ProductSheetState extends ConsumerState<ProductSheet> {
       const SizedBox(height: 12),
       Text(t.label, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13.5, color: BrandColors.ink)),
       const SizedBox(height: 8),
-      DropdownButtonFormField<String?>(
-        initialValue: _label,
-        items: [
-          DropdownMenuItem(value: null, child: Text(t.noLabel)),
-          for (final l in productLabels) DropdownMenuItem(value: l, child: Text(productLabelText(t, l))),
-        ],
-        onChanged: (v) => setState(() => _label = v),
-      ),
+      Wrap(spacing: 8, runSpacing: 8, children: [
+        for (final l in [null, ...productLabels])
+          ChoiceChip(
+            key: Key('label-${l ?? 'none'}'),
+            label: Text(l == null ? t.noLabel : productLabelText(t, l)),
+            avatar: l == customLabelKey ? const Icon(Icons.edit_outlined, size: 16) : null,
+            selected: _label == l,
+            showCheckmark: false,
+            onSelected: (_) => setState(() {
+              _label = l;
+              _errors.remove('customLabel');
+            }),
+          ),
+      ]),
+      if (_label == customLabelKey) ...[
+        const SizedBox(height: 12),
+        _CustomLabelFields(english: _customLabel, arabic: _customLabelAr, error: _errors['customLabel'], errorAr: _errors['customLabelAr'],
+            onChanged: () => setState(() => _errors..remove('customLabel')..remove('customLabelAr'))),
+      ],
       const SizedBox(height: 16),
       AppCard(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -280,6 +304,48 @@ class _ProductSheetState extends ConsumerState<ProductSheet> {
             ? LightButton(label: t.deleteProduct, danger: true, onPressed: () => setState(() => _confirmDelete = true))
             : LightButton(label: t.cancel, onPressed: () => Navigator.pop(context)),
       ],
+    ]);
+  }
+}
+
+/// The text of a custom label, in English and in Arabic (each typed in its own direction), up to 24 characters.
+class _CustomLabelFields extends StatelessWidget {
+  const _CustomLabelFields({required this.english, required this.arabic, required this.onChanged, this.error, this.errorAr});
+
+  final TextEditingController english;
+  final TextEditingController arabic;
+  final VoidCallback onChanged;
+  final String? error;
+  final String? errorAr;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
+    Widget field(Key key, String label, String hint, TextEditingController c, TextDirection dir, String? error) => Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(label, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: BrandColors.muted)),
+            const SizedBox(height: 6),
+            TextField(
+              key: key,
+              controller: c,
+              maxLength: customLabelMax,
+              textDirection: dir,
+              textInputAction: TextInputAction.next,
+              // One line: the badge never wraps a typed line break.
+              inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'[\n\r\t]'))],
+              decoration: InputDecoration(hintText: hint, hintTextDirection: dir, errorText: error),
+              onChanged: (_) => onChanged(),
+            ),
+          ],
+        );
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      Text(t.customLabelText, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13.5, color: BrandColors.ink)),
+      const SizedBox(height: 4),
+      Text(t.customLabelHelp, style: TextStyle(color: BrandColors.muted, fontSize: 13)),
+      const SizedBox(height: 10),
+      field(const Key('customLabel'), t.customLabelEnglish, t.customLabelHintEn, english, TextDirection.ltr, error),
+      field(const Key('customLabelAr'), t.customLabelArabic, t.customLabelHintAr, arabic, TextDirection.rtl, errorAr),
     ]);
   }
 }

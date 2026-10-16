@@ -619,5 +619,35 @@
   "colorHexInvalid": "Use a code like #D9542C",
   "colorReadableNote": "Your website keeps text readable on this color.",
   "useColor": "Use this color",
-  "accountMissing": "Add it in Business info first"
+  "accountMissing": "Add it in Business info first",
+  "labelCustom": "Custom",
+  "customLabelText": "Label text",
+  "customLabelHelp": "Type it in one or both languages. Your website shows the one in its language.",
+  "customLabelEnglish": "In English",
+  "customLabelArabic": "In Arabic",
+  "customLabelHintEn": "Chef's choice",
+  "customLabelHintAr": "اختيار الشيف",
+  "errCustomLabel": "Type the label text.",
+  "qrCode": "QR code",
+  "qrTitle": "Your QR code",
+  "qrSub": "Customers scan it with their phone camera to open your website.",
+  "qrColor": "Code color",
+  "qrLogo": "Logo in the middle",
+  "qrLogoHelp": "It still scans: the code makes up for the covered part.",
+  "qrSave": "Save to phone",
+  "qrShare": "Share",
+  "qrSaved": "Saved to your photos",
+  "qrSaveFailed": "Couldn't save. Allow access to your photos and try again.",
+  "qrPoster": "Poster to print",
+  "qrPosterSub": "Prints on A4 or A5. Put it on tables, the counter or the door.",
+  "qrShareText": "See our menu: {url}",
+  "@qrShareText": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "posterScan": "Scan for our menu",
+  "posterScanHint": "Point your phone camera at the code"
 }

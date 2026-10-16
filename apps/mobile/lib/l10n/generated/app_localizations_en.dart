@@ -1102,4 +1102,80 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get accountMissing => 'Add it in Business info first';
+
+  @override
+  String get labelCustom => 'Custom';
+
+  @override
+  String get customLabelText => 'Label text';
+
+  @override
+  String get customLabelHelp =>
+      'Type it in one or both languages. Your website shows the one in its language.';
+
+  @override
+  String get customLabelEnglish => 'In English';
+
+  @override
+  String get customLabelArabic => 'In Arabic';
+
+  @override
+  String get customLabelHintEn => 'Chef\'s choice';
+
+  @override
+  String get customLabelHintAr => 'اختيار الشيف';
+
+  @override
+  String get errCustomLabel => 'Type the label text.';
+
+  @override
+  String get qrCode => 'QR code';
+
+  @override
+  String get qrTitle => 'Your QR code';
+
+  @override
+  String get qrSub =>
+      'Customers scan it with their phone camera to open your website.';
+
+  @override
+  String get qrColor => 'Code color';
+
+  @override
+  String get qrLogo => 'Logo in the middle';
+
+  @override
+  String get qrLogoHelp =>
+      'It still scans: the code makes up for the covered part.';
+
+  @override
+  String get qrSave => 'Save to phone';
+
+  @override
+  String get qrShare => 'Share';
+
+  @override
+  String get qrSaved => 'Saved to your photos';
+
+  @override
+  String get qrSaveFailed =>
+      'Couldn\'t save. Allow access to your photos and try again.';
+
+  @override
+  String get qrPoster => 'Poster to print';
+
+  @override
+  String get qrPosterSub =>
+      'Prints on A4 or A5. Put it on tables, the counter or the door.';
+
+  @override
+  String qrShareText(String url) {
+    return 'See our menu: $url';
+  }
+
+  @override
+  String get posterScan => 'Scan for our menu';
+
+  @override
+  String get posterScanHint => 'Point your phone camera at the code';
 }

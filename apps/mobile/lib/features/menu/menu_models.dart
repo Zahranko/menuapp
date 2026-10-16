@@ -47,8 +47,20 @@ extension CategoryTree on List<Category> {
   }
 }
 
-/// The labels a product can show, as the API spells them.
-const productLabels = ['Signature', 'New', 'Best seller', 'Vegan', 'Spicy'];
+/// The labels a product can show, as the API spells them. [customLabelKey] is the one whose text the owner types.
+const productLabels = ['Signature', 'New', 'Best seller', 'Vegan', 'Spicy', customLabelKey];
+
+/// The label whose text the owner types ([Product.customLabel] and [Product.customLabelAr]).
+const customLabelKey = 'Custom';
+
+/// The longest custom label text, as the API allows it.
+const customLabelMax = 24;
+
+/// Custom label text as the API keeps it: trimmed, inner spaces collapsed, null when empty.
+String? normalizeCustomLabel(String? text) {
+  final t = text?.trim().replaceAll(RegExp(r'\s+'), ' ') ?? '';
+  return t.isEmpty ? null : t;
+}
 
 /// A product (`ProductDto`). Sold out means [isAvailable] is false; [isFeatured] shows it in Signature picks.
 class Product {
@@ -60,6 +72,8 @@ class Product {
     required this.price,
     this.imageUrl,
     this.label,
+    this.customLabel,
+    this.customLabelAr,
     this.isAvailable = true,
     this.isFeatured = false,
     this.sortOrder = 0,
@@ -73,6 +87,8 @@ class Product {
         price: (json['price'] as num).toDouble(),
         imageUrl: json['imageUrl'] as String?,
         label: json['label'] as String?,
+        customLabel: json['customLabel'] as String?,
+        customLabelAr: json['customLabelAr'] as String?,
         isAvailable: json['isAvailable'] as bool? ?? true,
         isFeatured: json['isFeatured'] as bool? ?? false,
         sortOrder: (json['sortOrder'] as num?)?.toInt() ?? 0,
@@ -85,6 +101,10 @@ class Product {
   final double price;
   final String? imageUrl;
   final String? label;
+
+  /// The text of a [customLabelKey] label, in English (or whatever the owner typed) and in Arabic; either may be null.
+  final String? customLabel;
+  final String? customLabelAr;
   final bool isAvailable;
   final bool isFeatured;
   final int sortOrder;
@@ -97,6 +117,8 @@ class Product {
         price: price,
         imageUrl: imageUrl,
         label: label,
+        customLabel: customLabel,
+        customLabelAr: customLabelAr,
         isAvailable: available,
         isFeatured: isFeatured,
         sortOrder: sortOrder,
@@ -111,6 +133,8 @@ class ProductInput {
     this.description,
     required this.price,
     this.label,
+    this.customLabel,
+    this.customLabelAr,
     this.isAvailable = true,
     this.isFeatured = false,
     this.imageUrl,
@@ -121,6 +145,8 @@ class ProductInput {
   final String? description;
   final String price;
   final String? label;
+  final String? customLabel;
+  final String? customLabelAr;
   final bool isAvailable;
   final bool isFeatured;
   final String? imageUrl;
@@ -131,6 +157,9 @@ class ProductInput {
         'description': description,
         'price': num.parse(price),
         'label': label,
+        // Only a custom label carries text; the API clears it for the others anyway.
+        'customLabel': label == customLabelKey ? normalizeCustomLabel(customLabel) : null,
+        'customLabelAr': label == customLabelKey ? normalizeCustomLabel(customLabelAr) : null,
         'isAvailable': isAvailable,
         'isFeatured': isFeatured,
         'imageUrl': imageUrl,

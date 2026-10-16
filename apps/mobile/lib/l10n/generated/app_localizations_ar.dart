@@ -1094,4 +1094,78 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get accountMissing => 'أضفه أولًا في معلومات النشاط';
+
+  @override
+  String get labelCustom => 'مخصصة';
+
+  @override
+  String get customLabelText => 'نص الشارة';
+
+  @override
+  String get customLabelHelp =>
+      'اكتبه بلغة واحدة أو باللغتين. يعرض موقعك النص المكتوب بلغته.';
+
+  @override
+  String get customLabelEnglish => 'بالإنجليزية';
+
+  @override
+  String get customLabelArabic => 'بالعربية';
+
+  @override
+  String get customLabelHintEn => 'Chef\'s choice';
+
+  @override
+  String get customLabelHintAr => 'اختيار الشيف';
+
+  @override
+  String get errCustomLabel => 'اكتب نص الشارة.';
+
+  @override
+  String get qrCode => 'رمز QR';
+
+  @override
+  String get qrTitle => 'رمز QR لموقعك';
+
+  @override
+  String get qrSub => 'يمسحه زبائنك بكاميرا الهاتف لفتح موقعك.';
+
+  @override
+  String get qrColor => 'لون الرمز';
+
+  @override
+  String get qrLogo => 'الشعار في المنتصف';
+
+  @override
+  String get qrLogoHelp => 'يبقى قابلًا للمسح: الرمز يعوّض الجزء المغطّى.';
+
+  @override
+  String get qrSave => 'حفظ في الهاتف';
+
+  @override
+  String get qrShare => 'مشاركة';
+
+  @override
+  String get qrSaved => 'تم الحفظ في الصور';
+
+  @override
+  String get qrSaveFailed =>
+      'تعذّر الحفظ. اسمح بالوصول إلى الصور وحاول مرة أخرى.';
+
+  @override
+  String get qrPoster => 'ملصق للطباعة';
+
+  @override
+  String get qrPosterSub =>
+      'يُطبع على ورق A4 أو A5. ضعه على الطاولات أو عند المحاسبة أو على الباب.';
+
+  @override
+  String qrShareText(String url) {
+    return 'تصفح قائمتنا: $url';
+  }
+
+  @override
+  String get posterScan => 'امسح الرمز لتصفح قائمتنا';
+
+  @override
+  String get posterScanHint => 'وجّه كاميرا هاتفك نحو الرمز';
 }

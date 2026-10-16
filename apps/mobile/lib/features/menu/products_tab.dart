@@ -181,7 +181,7 @@ class _ProductRow extends ConsumerWidget {
                 const SizedBox(height: 4),
                 Wrap(spacing: 6, runSpacing: 4, crossAxisAlignment: WrapCrossAlignment.center, children: [
                   Text(formatPrice(context, p.price, currency), style: TextStyle(color: BrandColors.muted, fontWeight: FontWeight.w500)),
-                  if (p.label != null) Pill(productLabelText(t, p.label!)),
+                  if (productBadgeText(t, p) case final badge?) Pill(badge),
                   if (!p.isAvailable) Pill(t.soldOut, color: BrandColors.highlight.withValues(alpha: 0.15), textColor: BrandColors.highlight),
                 ]),
               ]),
@@ -217,5 +217,17 @@ String productLabelText(AppLocalizations t, String label) => switch (label) {
       'Best seller' => t.labelBestSeller,
       'Vegan' => t.labelVegan,
       'Spicy' => t.labelSpicy,
+      customLabelKey => t.labelCustom,
       _ => label,
     };
+
+/// The badge a product shows, in the app's language: a fixed label translated, or the owner's custom text
+/// (Arabic text in Arabic, else the other one). Null when the product has no label.
+String? productBadgeText(AppLocalizations t, Product p) {
+  final label = p.label;
+  if (label == null) return null;
+  if (label != customLabelKey) return productLabelText(t, label);
+  final arabic = t.localeName.startsWith('ar');
+  final first = normalizeCustomLabel(arabic ? p.customLabelAr : p.customLabel);
+  return first ?? normalizeCustomLabel(arabic ? p.customLabel : p.customLabelAr) ?? t.labelCustom;
+}
