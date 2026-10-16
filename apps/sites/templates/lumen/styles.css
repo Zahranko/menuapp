@@ -8,6 +8,8 @@
 
 @import "../_kit/logo.css";
 @import "../_kit/options.css";
+@import "../_kit/cards.css";
+@import "../_kit/hero.css";
 
 .t-lumen {
   --wrap: 1240px;

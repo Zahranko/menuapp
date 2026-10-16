@@ -8,6 +8,7 @@ import { orderButton, socialAccounts, type OrderButton } from "../_kit/options";
 import { cx, siteContext, type SiteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Arrow, Instagram, Mail, Pin, WhatsApp } from "../_kit/icons";
+import { HeroPhotos } from "../_kit/HeroPhotos";
 import { Picture } from "../_kit/Picture";
 import { hasHours, type MenuItem } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
@@ -239,9 +240,9 @@ function Dish({ v, item }: { v: View; item: MenuItem }) {
   const pictures = v.carte === "pictures";
   return (
     <li className="mx-dish-li">
-      <button type="button" className={cx("mx-dish", !item.isAvailable && "is-out", pictures && item.imageUrl && "has-pic")} data-item-id={item.id}>
+      <button type="button" className={cx("mx-dish kit-card kit-card-pad", !item.isAvailable && "is-out", pictures && item.imageUrl && "has-pic")} data-item-id={item.id}>
         {pictures && item.imageUrl && (
-          <span className="mx-dish-pic">
+          <span className="mx-dish-pic kit-card-media">
             <ProductPicture item={item} sizes="72px" />
           </span>
         )}
@@ -266,7 +267,7 @@ function Dish({ v, item }: { v: View; item: MenuItem }) {
 
 function Dishes({ v, items }: { v: View; items: MenuItem[] }) {
   return (
-    <ul className="plain mx-dishes">
+    <ul className="plain mx-dishes kit-cards kit-rows">
       {items.map((item) => (
         <Dish key={item.id} v={v} item={item} />
       ))}
@@ -286,7 +287,7 @@ function Hero({ v, layout }: { v: View; layout: (typeof HERO)[number] }) {
   const images = list(s, "hero.images")
     .map((x) => image(x))
     .filter((x): x is string => !!x)
-    .slice(0, 4);
+    .slice(0, 6);
   const first = images[0] ?? v.tree.items.find((p) => p.imageUrl)?.imageUrl ?? null;
   const media = layout !== "text" && first ? (layout === "slides" && images.length > 1 ? images : [first]) : null;
   const kind = !media ? "text" : layout === "slides" && media.length === 1 ? "cover" : layout;
@@ -297,12 +298,15 @@ function Hero({ v, layout }: { v: View; layout: (typeof HERO)[number] }) {
   return (
     <section className={cx("mx-hero", `is-${kind}`)} data-section="hero" aria-labelledby="mx-name" style={{ "--shade": shade / 100 } as CSSProperties}>
       {media && (
-        <div className={cx("mx-hero-media", media.length > 1 && `is-slides n-${media.length}`)}>
-          {media.map((src, i) => (
-            <div key={src + i} className="mx-slide" style={{ "--i": i } as CSSProperties}>
-              <Picture src={src} sizes={kind === "split" ? "(min-width: 900px) 60vw, 100vw" : "100vw"} priority={i === 0} />
+        <div className={cx("mx-hero-media", media.length > 1 && "is-slider")}>
+          {media.length > 1 ? (
+            // The slideshow: the shared hero slider (transition, autoplay, speed and buttons from the owner's options).
+            <HeroPhotos ctx={ctx} photos={media} sizes="100vw" placement="corner" />
+          ) : (
+            <div className="mx-slide" style={{ "--i": 0 } as CSSProperties}>
+              <Picture src={media[0]} sizes={kind === "split" ? "(min-width: 900px) 60vw, 100vw" : "100vw"} priority />
             </div>
-          ))}
+          )}
         </div>
       )}
       <div className="mx-hero-copy">

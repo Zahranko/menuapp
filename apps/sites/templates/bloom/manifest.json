@@ -10,6 +10,7 @@
     "description": "موقع حالم بألوان الباستيل للمخابز والحلويات: كيك على مفارش دانتيل، وأقسام كفقاعات طائرة، وشريط لمخبوزات اليوم، ومعرض صور كدفتر ذكريات."
   },
   "version": 2,
+  "heroSlider": { "kind": "panel", "source": "hero.images" },
   "tier": "pro",
   "thumbnail": "/templates/bloom/thumbnail.png",
   "sample": "bloom",

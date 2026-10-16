@@ -10,6 +10,7 @@
     "description": "داينر بطابع قديم: لافتة نيون، وشرائط مربعات، وبطاقات وجبات مرقّمة."
   },
   "version": 1,
+  "heroSlider": { "kind": "band" },
   "thumbnail": "/templates/neondiner/thumbnail.png",
   "sample": "fastfood",
   "schema": [

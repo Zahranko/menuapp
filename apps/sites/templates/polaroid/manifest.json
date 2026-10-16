@@ -10,6 +10,7 @@
     "description": "جدار من الصور الفورية، مائلة قليلًا، ملصقة بشريط ومكتوب تحتها بخط اليد."
   },
   "version": 1,
+  "heroSlider": { "kind": "band" },
   "thumbnail": "/templates/polaroid/thumbnail.png",
   "sample": "sweets",
   "schema": [

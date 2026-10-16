@@ -10,6 +10,7 @@
     "description": "موقع ودود للخدمات المنزلية: شارات ثقة، والمناطق التي تخدمها، وزر طلب لكل خدمة، وخطوات، وشريط طلب ثابت."
   },
   "version": 1,
+  "heroSlider": { "kind": "panel", "source": "hero.image" },
   "thumbnail": "/templates/handy/thumbnail.png",
   "sample": "home",
   "schema": [

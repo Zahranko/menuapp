@@ -10,6 +10,7 @@
     "description": "موقع جريء وداكن لاستوديو أو مستقل: خدمات مرقّمة، وأعمال مختارة، ومراحل العمل، ودعوة كبيرة للتواصل."
   },
   "version": 1,
+  "heroSlider": { "kind": "panel", "source": "hero.image" },
   "thumbnail": "/templates/agency/thumbnail.png",
   "sample": "studio",
   "schema": [

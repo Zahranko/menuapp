@@ -2,6 +2,8 @@ import type { TemplateProps } from "@/lib/types";
 import { ContactList, Credits, HoursList, Logo, logoRoot, optionRoot, OrderFab, ProductPicture, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
 import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
+import { heroPhotos } from "../_kit/hero";
+import { HeroBand } from "../_kit/HeroPhotos";
 import { fontVariables } from "../_kit/fonts";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
@@ -41,6 +43,7 @@ export default function MonoGridTemplate({ site, now }: TemplateProps & { now?: 
         {ctx.image("logo") && <Logo ctx={ctx} className="logo" sizes="64px" />}
         <h1 className="name kit-name">{site.business.name}</h1>
         {ctx.text("hero.title") && <p className="lede">{ctx.text("hero.title")}</p>}
+        <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} />
       </header>
 
       <main>
@@ -67,16 +70,16 @@ export default function MonoGridTemplate({ site, now }: TemplateProps & { now?: 
                 <span className="num">{pad(si + 1, 2)}</span>
                 <span>{section.name}</span>
               </h2>
-              <ul className="plain grid">
+              <ul className="plain grid kit-cards">
                 {section.products.map((item) => (
                   <li key={item.id}>
-                    <button type="button" className={cx("cell", !item.isAvailable && "out")} data-item-id={item.id}>
+                    <button type="button" className={cx("cell kit-card", !item.isAvailable && "out")} data-item-id={item.id}>
                       <span className="cell-top">
                         <span className="num">{pad(numbers.get(item.id) ?? 0)}</span>
                         {item.labelText && <span className="flag">{item.labelText}</span>}
                         {!item.isAvailable && <span className="flag flag-out">{ctx.t.soldOut}</span>}
                       </span>
-                      <span className="cell-media">
+                      <span className="cell-media kit-card-media">
                         <ProductPicture item={item} sizes="(min-width: 760px) 25vw, 50vw" />
                       </span>
                       <span className="cell-bottom">

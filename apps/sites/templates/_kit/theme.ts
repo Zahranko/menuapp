@@ -3,6 +3,7 @@ import { choice, flag, text } from "@/lib/settings";
 import type { Settings } from "@/lib/types";
 import { accentTokens, isDark, readable } from "./color";
 import { fontPairs, forLocale, type FontName } from "./fonts";
+import { cardVars } from "./cards";
 import { typeface } from "./options";
 
 /** A color theme. Extra keys become CSS variables too (`stripe` → `--stripe`). */
@@ -42,6 +43,7 @@ export function themeVars<T extends string>(settings: Settings, locale: string, 
   };
   for (const [key, value] of Object.entries(palette)) vars[`--${key}`] = value;
   vars["--muted"] = readable(palette.muted, [palette.bg, palette.surf, ...panels(palette)], palette.ink);
+  Object.assign(vars, cardVars(settings, { surface: palette.card ?? palette.surf, accent: accent.fill, inks: [palette.ink, vars["--muted"] as string, accent.text] }));
   return vars as CSSProperties;
 }
 

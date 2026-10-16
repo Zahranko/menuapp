@@ -10,6 +10,7 @@
     "description": "مطعم بيتزا على الحطب: صور دائرية على شرائط ملوّنة، شريط لكل قسم."
   },
   "version": 1,
+  "heroSlider": { "kind": "band" },
   "thumbnail": "/templates/pizzeria/thumbnail.png",
   "sample": "pizza",
   "schema": [

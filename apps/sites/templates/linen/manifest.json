@@ -10,6 +10,7 @@
     "description": "منيو مطبوع على ورق كتّان: نص فقط، ونقاط تمتد إلى الأسعار، بعمود أو عمودين."
   },
   "version": 1,
+  "heroSlider": { "kind": "band" },
   "thumbnail": "/templates/linen/thumbnail.png",
   "sample": "restaurant",
   "schema": [

@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { accentTokens, isDark, readable } from "../_kit/color";
 import { fontPairs, forLocale } from "../_kit/fonts";
+import { cardVars } from "../_kit/cards";
 import { typeface } from "../_kit/options";
 import { accentColor } from "../_kit/theme";
 import { choice, flag } from "@/lib/settings";
@@ -23,11 +24,13 @@ export function souqVars(settings: Settings, locale: string): CSSProperties {
   const font = typeface(settings, locale) ?? forLocale(fontPairs[choice(settings, "font", ["modern", "elegant", "bold"] as const, "modern")], locale);
   const accent = accentTokens(accentColor(settings, "#D9542C"), theme.bg, theme.surf, theme.ink);
   const dark = isDark(theme.bg);
+  const muted = readable(theme.muted, [theme.bg, theme.surf], theme.ink);
   return {
+    ...cardVars(settings, { surface: theme.surf, accent: accent.fill, inks: [theme.ink, muted, accent.text] }),
     "--sbg": theme.bg,
     "--ssurf": theme.surf,
     "--sink": theme.ink,
-    "--smuted": readable(theme.muted, [theme.bg, theme.surf], theme.ink),
+    "--smuted": muted,
     "--sline": theme.line,
     "--sdot": theme.dot,
     "--sfoot": theme.foot,

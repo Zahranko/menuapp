@@ -3,6 +3,8 @@ import { flag } from "@/lib/settings";
 import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, optionRoot, OrderFab, ProductPicture, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
 import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
+import { heroPhotos } from "../_kit/hero";
+import { HeroBand } from "../_kit/HeroPhotos";
 import { fontVariables } from "../_kit/fonts";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
@@ -64,6 +66,7 @@ export default function ZenTemplate({ site, now }: TemplateProps & { now?: Date 
             {ctx.today && <p className="today">{ctx.today}</p>}
           </div>
         </section>
+        <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} className="zen-band" />
 
         <section id="menu" className="menu" data-section="menu" aria-label={c.menu}>
           {ctx.sections.map((section, si) => (
@@ -72,10 +75,10 @@ export default function ZenTemplate({ site, now }: TemplateProps & { now?: Date 
                 <span className="course-no">{pad(si + 1)}</span>
                 <span className="course-name">{section.name}</span>
               </h2>
-              <ol className="plain dishes">
+              <ol className="plain dishes kit-cards kit-rows">
                 {section.products.map((item, i) => (
                   <li key={item.id}>
-                    <button type="button" className={cx("dish", !item.isAvailable && "out")} data-item-id={item.id}>
+                    <button type="button" className={cx("dish kit-card kit-card-pad", !item.isAvailable && "out")} data-item-id={item.id}>
                       <span className="dish-no" aria-hidden="true">
                         {pad(i + 1)}
                       </span>
@@ -91,7 +94,7 @@ export default function ZenTemplate({ site, now }: TemplateProps & { now?: Date 
                       </span>
                       <span className="dish-price">{item.priceText}</span>
                       {photos && (
-                        <span className="dish-photo">
+                        <span className="dish-photo kit-card-media">
                           <ProductPicture item={item} sizes="72px" />
                         </span>
                       )}

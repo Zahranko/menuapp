@@ -10,6 +10,7 @@
     "description": "موقع صاخب بروح أكل الشارع للمشاوي ومحلات البرغر: خط ملصقات ضخم، وشريط عروض متحرك، وبطاقات وجبات بملصقات أسعار، وقاعة اللهب."
   },
   "version": 2,
+  "heroSlider": { "kind": "backdrop", "source": "hero.images", "skip": ["hero.overlay", "hero.height", "hero.textPosition"] },
   "tier": "pro",
   "thumbnail": "/templates/ember/thumbnail.png",
   "sample": "ember",

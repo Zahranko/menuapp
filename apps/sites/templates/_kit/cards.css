@@ -1,0 +1,164 @@
+/*
+ * The owner's card options, shared by every template (each styles.css imports this file after options.css).
+ * templates/_kit/cards.ts puts data attributes on the template's root only when an option differs from "Template
+ * default", so nothing here applies to a site that never changed them. Templates mark:
+ *   .kit-card        a product card (or row);   .kit-card-media  its photo box
+ *   .kit-cat         a category tile;           .kit-cat-media   its photo box
+ *   .kit-cards       the list (grid or flex) that holds the cards or tiles; .kit-rows when it is a plain list of rows
+ *   .kit-flush       a photo box flush with the card's top edge (it follows the card's corners)
+ *   .kit-card-pad    a card that has no padding of its own (a row in a list): it gets some once it has a box around it
+ * Colors come from the template's own tokens (--surf, --ink, --line, --acc; Souq's --s* twins), so every style keeps the
+ * text contrast the template already checks. The !important flags are owner overrides of each template's own styles,
+ * which are nested under the template's root class and so always more specific.
+ */
+
+[data-template] {
+  --kc-surf: var(--card, var(--surf, var(--ssurf, #fff)));
+  --kc-ink: var(--ink, var(--sink, #1f1f1f));
+  --kc-line: var(--line, var(--sline, rgb(0 0 0 / 0.14)));
+  --kc-acc: var(--acc, var(--sacc, currentColor));
+}
+
+/* ---------- border color and width ---------- */
+[data-card-bc="accent"] {
+  --kit-bc: var(--kc-acc);
+}
+[data-card-bc="ink"] {
+  --kit-bc: var(--kc-ink);
+}
+[data-card-bc="custom"] {
+  --kit-bc: var(--kit-bc-own);
+}
+[data-card-border="thin"] {
+  --kit-bw: 1px;
+}
+[data-card-border="medium"] {
+  --kit-bw: 2px;
+}
+[data-card-border="thick"] {
+  --kit-bw: 4px;
+}
+
+/* ---------- card styles ---------- */
+[data-card-style] :is(.kit-card, .kit-cat) {
+  color: var(--kc-ink);
+}
+[data-card-style="flat"] :is(.kit-card, .kit-cat) {
+  border-color: transparent !important;
+  background: var(--kc-surf) !important;
+  box-shadow: none !important;
+}
+[data-card-style="outlined"] :is(.kit-card, .kit-cat) {
+  border: var(--kit-bw, 1.5px) solid var(--kit-bc, color-mix(in srgb, var(--kc-ink) 24%, transparent)) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+[data-card-style="raised"] :is(.kit-card, .kit-cat) {
+  border-color: transparent !important;
+  background: var(--kc-surf) !important;
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.08),
+    0 12px 28px -8px rgb(0 0 0 / 0.26) !important;
+}
+[data-card-style="glass"] :is(.kit-card, .kit-cat) {
+  border: var(--kit-bw, 1px) solid var(--kit-bc, color-mix(in srgb, #fff 55%, transparent)) !important;
+  background: color-mix(in srgb, var(--kc-surf) 74%, transparent) !important;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.4),
+    0 10px 30px -12px rgb(0 0 0 / 0.3) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(1.5);
+  backdrop-filter: blur(14px) saturate(1.5);
+}
+/* A soft accent glow behind the cards gives the glass something to show through. */
+[data-card-style="glass"] .kit-cards {
+  background-image: radial-gradient(60% 70% at 15% 20%, color-mix(in srgb, var(--kc-acc) 12%, transparent), transparent 70%),
+    radial-gradient(50% 60% at 85% 85%, color-mix(in srgb, var(--kc-acc) 9%, transparent), transparent 70%);
+}
+[data-card-style="tinted"] :is(.kit-card, .kit-cat) {
+  border-color: transparent !important;
+  background: var(--kit-tint, var(--kc-surf)) !important;
+  box-shadow: none !important;
+}
+[data-card-style="minimal"] :is(.kit-card, .kit-cat) {
+  border: 0 !important;
+  border-bottom: var(--kit-bw, 1px) solid var(--kit-bc, var(--kc-line)) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Rows without padding of their own get some once they are boxes, so the text never touches the edge. */
+:is([data-card-style="flat"], [data-card-style="outlined"], [data-card-style="raised"], [data-card-style="glass"], [data-card-style="tinted"], [data-card-border="thin"], [data-card-border="medium"], [data-card-border="thick"]):not([data-card-style="minimal"]) .kit-card-pad {
+  padding: var(--kit-card-pad, 14px 16px) !important;
+}
+
+/* The owner's border, after the styles so it wins over them. A border color alone recolors the template's own border. */
+[data-card-bc] :is(.kit-card, .kit-cat) {
+  border-color: var(--kit-bc) !important;
+}
+:is([data-card-border="thin"], [data-card-border="medium"], [data-card-border="thick"]):not([data-card-style="minimal"]) :is(.kit-card, .kit-cat) {
+  border: var(--kit-bw) solid var(--kit-bc, var(--kc-line)) !important;
+}
+[data-card-border="none"] :is(.kit-card, .kit-cat) {
+  border: 0 !important;
+}
+
+/* ---------- corners ---------- */
+[data-card-corners="square"] {
+  --kit-cr: 0px;
+}
+[data-card-corners="small"] {
+  --kit-cr: 6px;
+}
+[data-card-corners="medium"] {
+  --kit-cr: 14px;
+}
+[data-card-corners="large"] {
+  --kit-cr: 26px;
+}
+[data-card-corners]:not([data-card-style="minimal"]) :is(.kit-card, .kit-cat) {
+  border-radius: var(--kit-cr) !important;
+}
+/* A photo flush with the card's edge follows the card's corners. */
+[data-card-corners]:not([data-card-photo]) :is(.kit-card, .kit-cat) > :is(.kit-card-media, .kit-cat-media).kit-flush {
+  border-radius: var(--kit-cr) var(--kit-cr) 0 0 !important;
+}
+
+/* ---------- photo shape ---------- */
+[data-card-photo] :is(.kit-card-media, .kit-cat-media) {
+  overflow: hidden !important;
+}
+[data-card-photo="square"] :is(.kit-card-media, .kit-cat-media) {
+  border-radius: 0 !important;
+}
+[data-card-photo="rounded"] :is(.kit-card-media, .kit-cat-media) {
+  border-radius: 14px !important;
+}
+/* A circle: as wide as the box allows up to --kit-circle (a wide top photo becomes a round plate in the middle). */
+[data-card-photo="circle"] :is(.kit-card-media, .kit-cat-media) {
+  flex: none !important;
+  width: min(100%, var(--kit-circle, 220px)) !important;
+  height: auto !important;
+  aspect-ratio: 1 / 1 !important;
+  margin-inline: auto !important;
+  border-radius: 50% !important;
+}
+[data-card-photo="circle"] :is(.kit-card, .kit-cat) > :is(.kit-card-media, .kit-cat-media).kit-flush {
+  margin-top: 14px !important;
+}
+
+/* ---------- spacing ---------- */
+/* A list of rows (.kit-rows) gets space between its rows once they are boxes, or once the owner picks a spacing. */
+:is([data-card-style="flat"], [data-card-style="outlined"], [data-card-style="raised"], [data-card-style="glass"], [data-card-style="tinted"], [data-card-border="thin"], [data-card-border="medium"], [data-card-border="thick"]):not([data-card-style="minimal"]) .kit-rows {
+  display: grid !important;
+  gap: 10px;
+}
+[data-card-spacing] .kit-rows {
+  display: grid !important;
+}
+[data-card-spacing="tight"] .kit-cards {
+  gap: 8px !important;
+}
+[data-card-spacing="airy"] .kit-cards {
+  gap: 28px !important;
+}

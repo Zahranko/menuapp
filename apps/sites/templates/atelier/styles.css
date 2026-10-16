@@ -2,6 +2,8 @@
 
 @import "../_kit/logo.css";
 @import "../_kit/options.css";
+@import "../_kit/cards.css";
+@import "../_kit/hero.css";
 
 .t-atelier {
   container: page / inline-size;

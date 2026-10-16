@@ -10,6 +10,7 @@
     "description": "أشكال طبيعية وأوراق شجر وبطاقات تُبرز الوسوم الغذائية أولًا."
   },
   "version": 1,
+  "heroSlider": { "kind": "panel", "source": "hero.image" },
   "thumbnail": "/templates/garden/thumbnail.png",
   "sample": "brunch",
   "schema": [

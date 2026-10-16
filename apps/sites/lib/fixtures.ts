@@ -539,6 +539,39 @@ export function applySiteOptions(site: PublicSite, options: string): void {
     else if (key === "font") site.settings = { ...site.settings, "font.family": value };
     else if (key === "accent") site.settings = { ...site.settings, accent: `#${value.toUpperCase()}` };
     else if (key === "labels") applyAllLabels(site);
+    else applyCardAndHeroOption(site, key, value);
+  }
+}
+
+/** Sample hero photos for slider previews ("slides"), at most six. */
+export const FIXTURE_SLIDES = ["/presets/loft.svg", "/presets/counter.svg", "/presets/marble.svg", "/presets/pour.svg", "/presets/arches.svg", "/presets/shelf.svg"];
+
+const CARD_KEYS: Record<string, string> = { card: "cards.style", border: "cards.border", corners: "cards.corners", photo: "cards.photo", spacing: "cards.spacing" };
+const HERO_KEYS: Record<string, string> = { trans: "hero.transition", speed: "hero.speed", height: "hero.height", overlay: "hero.overlay", text: "hero.textPosition" };
+
+/**
+ * Card and hero slider options for fixture previews (same token part as applySiteOptions): "card_<style>",
+ * "border_<width>", "bc_<accent|ink|rrggbb>" (border color), "corners_<size>", "photo_<shape>", "spacing_<tight|airy>";
+ * "slides" or "slides_<n>" (n hero photos in all, 2 to 6), "trans_<slide|fade|zoom>", "speed_<slow|normal|fast>",
+ * "auto_off" (no autoplay), "ctrl_<both|dots|arrows|none>", "height_<size>", "overlay_<amount>", "text_<position>".
+ */
+function applyCardAndHeroOption(site: PublicSite, key: string, value: string): void {
+  const set = (settings: Settings) => (site.settings = { ...site.settings, ...settings });
+  if (key in CARD_KEYS) set({ [CARD_KEYS[key]]: value });
+  else if (key === "bc") set({ "cards.borderColor": /^[0-9a-f]{6}$/i.test(value) ? `#${value.toUpperCase()}` : value });
+  else if (key in HERO_KEYS) set({ [HERO_KEYS[key]]: value });
+  else if (key === "auto") set({ "hero.autoplay": value !== "off" });
+  else if (key === "ctrl") set({ "hero.controls": value === "both" ? ["dots", "arrows"] : value === "none" ? [] : [value] });
+  else if (key === "slides") {
+    const count = Math.min(6, Math.max(2, Number(value) || 3));
+    const photos = FIXTURE_SLIDES.slice(0, count);
+    if ("hero.images" in site.settings) {
+      // Templates with several hero photos of their own: the slideshow layout where they have one.
+      const layout = site.settings["hero.layout"];
+      const slider = layout === "cover" || layout === "split" ? "slides" : layout === "poster" ? "full" : layout;
+      set({ "hero.images": photos, ...(typeof layout === "string" ? { "hero.layout": slider } : {}) });
+    } else if (typeof site.settings["hero.image"] === "string") set({ "hero.image": photos[0], "hero.slides": photos.slice(1) });
+    else set({ "hero.slides": photos });
   }
 }
 

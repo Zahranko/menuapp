@@ -10,6 +10,7 @@
     "description": "مظهر متجر إلكتروني عصري: قائمة أقسام، وشريط بحث، وواجهة تعرض منتجًا، ونظرة سريعة على المنتجات، والأكثر مبيعًا بالترتيب، ومعرض صور."
   },
   "version": 2,
+  "heroSlider": { "kind": "panel", "source": "hero.image" },
   "tier": "pro",
   "thumbnail": "/templates/atlas/thumbnail.png",
   "sample": "atlas",

@@ -10,6 +10,7 @@
     "description": "بطاقة منيو مطوية على مفرش طاولة: الغلاف لطبق اليوم، والأطباق في الداخل."
   },
   "version": 1,
+  "heroSlider": { "kind": "band" },
   "thumbnail": "/templates/bistro/thumbnail.png",
   "sample": "restaurant",
   "schema": [

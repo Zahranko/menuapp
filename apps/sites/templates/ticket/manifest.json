@@ -10,6 +10,7 @@
     "description": "منيو مطبوع كإيصال صندوق: سطور بخط الآلة الكاتبة، وحواف متعرجة، وباركود."
   },
   "version": 1,
+  "heroSlider": { "kind": "band" },
   "thumbnail": "/templates/ticket/thumbnail.png",
   "sample": "cafe",
   "schema": [

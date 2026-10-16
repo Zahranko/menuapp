@@ -5,7 +5,8 @@ import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Clock, Pin, WhatsApp } from "../_kit/icons";
-import { Picture } from "../_kit/Picture";
+import { heroPhotos } from "../_kit/hero";
+import { HeroPhotos } from "../_kit/HeroPhotos";
 import { bookLink, faqs, highlights, steps } from "../_kit/services";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
@@ -36,7 +37,8 @@ function Shield() {
 export default function HandyTemplate({ site, now }: TemplateProps & { now?: Date }) {
   const ctx = siteContext(site, now);
   const c = copy[ctx.locale];
-  const hero = ctx.image("hero.image");
+  const heroPics = heroPhotos(site.settings, "hero.image");
+  const hero = heroPics[0] ?? null;
   const book = bookLink(ctx);
   const order = orderButton(site, { label: c.request, whatsapp: book });
   const from = flag(site.settings, "prices.from", true);
@@ -95,7 +97,7 @@ export default function HandyTemplate({ site, now }: TemplateProps & { now?: Dat
           {hero && (
             <div className="hero-art">
               <div className="hero-image">
-                <Picture src={hero} sizes="(min-width: 760px) 45vw, 100vw" priority />
+                <HeroPhotos ctx={ctx} photos={heroPics} sizes="(min-width: 760px) 45vw, 100vw" />
               </div>
               {ctx.today && (
                 <p className="sticker">
@@ -127,11 +129,11 @@ export default function HandyTemplate({ site, now }: TemplateProps & { now?: Dat
           {ctx.sections.map((section) => (
             <section key={section.id} id={section.anchor} className="group" aria-labelledby={`${section.anchor}-h`}>
               <h3 id={`${section.anchor}-h`}>{section.name}</h3>
-              <ul className="plain cards">
+              <ul className="plain cards kit-cards">
                 {section.products.map((item) => (
-                  <li key={item.id} className={cx("card", !item.isAvailable && "out")}>
+                  <li key={item.id} className={cx("card kit-card", !item.isAvailable && "out")}>
                     <button type="button" className="card-main" data-item-id={item.id}>
-                      <span className="card-pic">
+                      <span className="card-pic kit-card-media kit-flush">
                         <ProductPicture item={item} sizes="(min-width: 760px) 30vw, 90vw" />
                         {item.labelText && <span className="tag">{item.labelText}</span>}
                       </span>

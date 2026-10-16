@@ -10,6 +10,7 @@
     "description": "كتالوج بالطراز السويسري: شبكة بخطوط رفيعة، وأرقام فهرسة، ولون تمييز واحد."
   },
   "version": 1,
+  "heroSlider": { "kind": "band" },
   "thumbnail": "/templates/monogrid/thumbnail.png",
   "sample": "shop",
   "schema": [

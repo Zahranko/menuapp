@@ -10,6 +10,7 @@
     "description": "منيو هادئ وبسيط بأرقام كبيرة وخطوط رفيعة وصور مربعة صغيرة."
   },
   "version": 1,
+  "heroSlider": { "kind": "band" },
   "thumbnail": "/templates/zen/thumbnail.png",
   "sample": "asian",
   "schema": [

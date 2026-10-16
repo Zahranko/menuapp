@@ -4,6 +4,8 @@ import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Arrow, Clock, WhatsApp } from "../_kit/icons";
+import { heroPhotos } from "../_kit/hero";
+import { HeroPhotos } from "../_kit/HeroPhotos";
 import { Picture } from "../_kit/Picture";
 import { bookLink, faqs, highlights, steps } from "../_kit/services";
 import { hasHours } from "../_kit/site-data";
@@ -26,7 +28,8 @@ const PALETTES = {
 export default function PulseTemplate({ site, now }: TemplateProps & { now?: Date }) {
   const ctx = siteContext(site, now);
   const c = copy[ctx.locale];
-  const hero = ctx.image("hero.image");
+  const heroPics = heroPhotos(site.settings, "hero.image");
+  const hero = heroPics[0] ?? null;
   const join = bookLink(ctx);
   const points = highlights(ctx);
   const week = steps(ctx);
@@ -58,13 +61,13 @@ export default function PulseTemplate({ site, now }: TemplateProps & { now?: Dat
       </header>
 
       <main id="top">
-        <section className="hero" data-section="hero" aria-labelledby="hero-title">
+        <section className="hero kit-hero" data-section="hero" aria-labelledby="hero-title">
           {hero && (
-            <div className="hero-image">
-              <Picture src={hero} sizes="100vw" priority />
+            <div className="hero-image kit-hero-media">
+              <HeroPhotos ctx={ctx} photos={heroPics} sizes="100vw" placement="corner" />
             </div>
           )}
-          <div className="hero-text">
+          <div className="hero-text kit-hero-text">
             {ctx.today && (
               <p className="live">
                 <Clock /> {ctx.today}
@@ -114,10 +117,10 @@ export default function PulseTemplate({ site, now }: TemplateProps & { now?: Dat
               <h3 id={`${plans.anchor}-h`} className="group-title">
                 {plans.name}
               </h3>
-              <ul className="plain price-cards">
+              <ul className="plain price-cards kit-cards">
                 {plans.products.map((item) => (
                   <li key={item.id}>
-                    <button type="button" className={cx("price-card", item.id === popular && "hot", !item.isAvailable && "out")} data-item-id={item.id}>
+                    <button type="button" className={cx("price-card kit-card", item.id === popular && "hot", !item.isAvailable && "out")} data-item-id={item.id}>
                       {item.id === popular && <span className="ribbon">{c.popular}</span>}
                       <span className="pc-name">{item.name}</span>
                       <span className="pc-price">{item.priceText}</span>
@@ -140,11 +143,11 @@ export default function PulseTemplate({ site, now }: TemplateProps & { now?: Dat
               <h3 id={`${section.anchor}-h`} className="group-title">
                 {section.name}
               </h3>
-              <ul className="plain classes">
+              <ul className="plain classes kit-cards">
                 {section.products.map((item) => (
                   <li key={item.id}>
-                    <button type="button" className={cx("class-row", !item.isAvailable && "out")} data-item-id={item.id}>
-                      <span className="class-pic">
+                    <button type="button" className={cx("class-row kit-card", !item.isAvailable && "out")} data-item-id={item.id}>
+                      <span className="class-pic kit-card-media">
                         <ProductPicture item={item} sizes="56px" />
                       </span>
                       <span className="class-text">

@@ -5,7 +5,8 @@ import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { WhatsApp } from "../_kit/icons";
-import { Picture } from "../_kit/Picture";
+import { heroPhotos } from "../_kit/hero";
+import { HeroPhotos } from "../_kit/HeroPhotos";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
@@ -44,7 +45,8 @@ export default function GardenTemplate({ site, now }: TemplateProps & { now?: Da
   const ctx = siteContext(site, now);
   const c = copy[ctx.locale];
   const leaves = flag(site.settings, "leaves", true);
-  const hero = ctx.image("hero.image");
+  const heroPics = heroPhotos(site.settings, "hero.image");
+  const hero = heroPics[0] ?? null;
   const story = ctx.on("story") && ctx.text("story.text");
 
   const order = orderButton(site, { label: c.order });
@@ -72,7 +74,7 @@ export default function GardenTemplate({ site, now }: TemplateProps & { now?: Da
           </div>
           {hero && (
             <div className="hero-blob">
-              <Picture src={hero} sizes="(min-width: 760px) 40vw, 90vw" priority />
+              <HeroPhotos ctx={ctx} photos={heroPics} sizes="(min-width: 760px) 40vw, 90vw" />
             </div>
           )}
         </section>
@@ -95,11 +97,11 @@ export default function GardenTemplate({ site, now }: TemplateProps & { now?: Da
                   {leaves && <Leaf className="leaf-icon" />}
                   {section.name}
                 </h2>
-                <ul className="plain cards">
+                <ul className="plain cards kit-cards">
                   {section.products.map((item, i) => (
                     <li key={item.id}>
-                      <button type="button" className={cx("card", !item.isAvailable && "out")} data-item-id={item.id}>
-                        <span className={cx("card-blob", `shape-${i % 3}`)}>
+                      <button type="button" className={cx("card kit-card", !item.isAvailable && "out")} data-item-id={item.id}>
+                        <span className={cx("card-blob", "kit-card-media", `shape-${i % 3}`)}>
                           <ProductPicture item={item} sizes="140px" />
                         </span>
                         <span className="card-text">

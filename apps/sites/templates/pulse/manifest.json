@@ -10,6 +10,7 @@
     "description": "موقع مليء بالحيوية لنادٍ رياضي أو استوديو: بطاقات اشتراكات مع الأكثر طلبًا، وقائمة حصص، وخطوات الأسبوع الأول، ودعوة كبيرة للاشتراك."
   },
   "version": 1,
+  "heroSlider": { "kind": "backdrop", "source": "hero.image" },
   "thumbnail": "/templates/pulse/thumbnail.png",
   "sample": "gym",
   "schema": [

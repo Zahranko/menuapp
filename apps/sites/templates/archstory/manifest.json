@@ -10,6 +10,7 @@
     "description": "مجلة لمحلات الحلويات: صور بأقواس، وفصول للمنيو، وبطاقات تمررها بإصبعك."
   },
   "version": 1,
+  "heroSlider": { "kind": "panel", "source": "hero.image" },
   "thumbnail": "/templates/archstory/thumbnail.png",
   "sample": "sweets",
   "schema": [

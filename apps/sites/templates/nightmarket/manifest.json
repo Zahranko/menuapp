@@ -10,6 +10,7 @@
     "description": "داكن وجريء: بطاقات صور كبيرة تمررها بإصبعك، صف لكل قسم."
   },
   "version": 1,
+  "heroSlider": { "kind": "backdrop", "source": "hero.image" },
   "thumbnail": "/templates/nightmarket/thumbnail.png",
   "sample": "fastfood",
   "schema": [

@@ -10,6 +10,7 @@
     "description": "علبة بينتو من مربعات بأحجام مختلفة، والمشروبات المميزة تأخذ المربعات الكبيرة."
   },
   "version": 1,
+  "heroSlider": { "kind": "panel", "source": "hero.image" },
   "thumbnail": "/templates/bento/thumbnail.png",
   "sample": "drinks",
   "schema": [

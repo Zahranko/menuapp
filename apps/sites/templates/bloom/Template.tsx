@@ -8,6 +8,7 @@ import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext, type SiteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Arrow, Pin, WhatsApp } from "../_kit/icons";
+import { HeroPhotos } from "../_kit/HeroPhotos";
 import { Picture } from "../_kit/Picture";
 import { hasHours, type MenuItem } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
@@ -216,7 +217,7 @@ function Header({ v }: { v: View }) {
 /** A product on a cake stand: round photo on a scalloped lace doily, stickers for labels, then name and price. */
 function CakeCard({ v, item, rank }: { v: View; item: MenuItem; rank?: number }) {
   return (
-    <button type="button" className={cx("cake", !item.isAvailable && "out")} data-item-id={item.id}>
+    <button type="button" className={cx("cake kit-card kit-card-pad", !item.isAvailable && "out")} data-item-id={item.id}>
       <span className="stand">
         <span className="doily" aria-hidden="true" />
         <span className="plate">
@@ -240,7 +241,7 @@ function CakeCard({ v, item, rank }: { v: View; item: MenuItem; rank?: number })
 
 function Cakes({ v, items, rank = false }: { v: View; items: MenuItem[]; rank?: boolean }) {
   return (
-    <ul className="plain cakes">
+    <ul className="plain cakes kit-cards">
       {items.map((item, i) => (
         <li key={item.id} className="reveal" style={{ "--i": i % 4 } as CSSProperties}>
           <CakeCard v={v} item={item} rank={rank ? i + 1 : undefined} />
@@ -253,11 +254,11 @@ function Cakes({ v, items, rank = false }: { v: View; items: MenuItem[]; rank?: 
 /** Categories as floating bubbles: a round photo, the name and how many treats are inside. */
 function Bubbles({ v, categories, current }: { v: View; categories: Category[]; current?: Category }) {
   return (
-    <ul className="plain bubbles">
+    <ul className="plain bubbles kit-cards">
       {categories.map((cat, i) => (
         <li key={cat.id} style={{ "--i": i } as CSSProperties}>
-          <a className="bubble" href={v.href(cat.path)} aria-current={cat === current ? "page" : undefined}>
-            <span className="bubble-pic">{cat.cover ? <Picture src={cat.cover} sizes="56px" /> : <Heart className="bubble-heart" />}</span>
+          <a className="bubble kit-cat" href={v.href(cat.path)} aria-current={cat === current ? "page" : undefined}>
+            <span className="bubble-pic kit-cat-media">{cat.cover ? <Picture src={cat.cover} sizes="56px" /> : <Heart className="bubble-heart" />}</span>
             <span className="bubble-txt">
               <b>{cat.name}</b>
               <small>{itemCount(cat.all.length, v.ctx.locale)}</small>
@@ -382,7 +383,7 @@ function Hero({ v }: { v: View }) {
           <div className="hero-art">
             {layout === "blob" ? (
               <div className="blob">
-                <Picture src={pics[0]} sizes="(min-width: 900px) 46vw, 92vw" priority />
+                <HeroPhotos ctx={ctx} photos={pics} sizes="(min-width: 900px) 46vw, 92vw" />
               </div>
             ) : (
               <div className={`orbs orbs-${pics.length}`}>

@@ -3,6 +3,8 @@ import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Arrow, WhatsApp } from "../_kit/icons";
+import { heroPhotos } from "../_kit/hero";
+import { HeroPhotos } from "../_kit/HeroPhotos";
 import { Picture } from "../_kit/Picture";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
@@ -27,7 +29,8 @@ const two = (n: number) => String(n).padStart(2, "0");
 export default function ArchStoryTemplate({ site, now }: TemplateProps & { now?: Date }) {
   const ctx = siteContext(site, now);
   const c = copy[ctx.locale];
-  const hero = ctx.image("hero.image");
+  const heroPics = heroPhotos(site.settings, "hero.image");
+  const hero = heroPics[0] ?? null;
   const storyText = ctx.on("story") && ctx.text("story.text");
   const storyImage = ctx.image("story.image");
   const reviews = ctx.on("reviews") ? ctx.reviews.slice(0, 3) : [];
@@ -64,7 +67,7 @@ export default function ArchStoryTemplate({ site, now }: TemplateProps & { now?:
           </div>
           {hero && (
             <div className="arch cover-arch">
-              <Picture src={hero} sizes="(min-width: 760px) 45vw, 90vw" priority />
+              <HeroPhotos ctx={ctx} photos={heroPics} sizes="(min-width: 760px) 45vw, 90vw" />
             </div>
           )}
         </section>
@@ -99,11 +102,11 @@ export default function ArchStoryTemplate({ site, now }: TemplateProps & { now?:
                 </span>
                 <h2 id={`${section.anchor}-h`}>{section.name}</h2>
               </div>
-              <ul className="plain treats">
+              <ul className="plain treats kit-cards">
                 {section.products.map((item) => (
                   <li key={item.id}>
-                    <button type="button" className={cx("treat", !item.isAvailable && "out")} data-item-id={item.id}>
-                      <span className="arch treat-arch">
+                    <button type="button" className={cx("treat kit-card kit-card-pad", !item.isAvailable && "out")} data-item-id={item.id}>
+                      <span className="arch treat-arch kit-card-media">
                         <ProductPicture item={item} sizes="(min-width: 760px) 20vw, 45vw" />
                       </span>
                       <span className="treat-tags">

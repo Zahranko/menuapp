@@ -10,6 +10,7 @@
     "description": "سبّورة مقهى: كتابة بخط اليد، وطبق اليوم، وأقسام منيو داخل إطارات."
   },
   "version": 1,
+  "heroSlider": { "kind": "band" },
   "thumbnail": "/templates/chalkboard/thumbnail.png",
   "sample": "cafe",
   "schema": [

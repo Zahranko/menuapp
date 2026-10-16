@@ -5,7 +5,8 @@ import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Arrow, Clock, Instagram, Pin } from "../_kit/icons";
-import { Picture } from "../_kit/Picture";
+import { heroPhotos } from "../_kit/hero";
+import { HeroPhotos } from "../_kit/HeroPhotos";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
@@ -26,7 +27,8 @@ const PALETTES = {
 export default function BentoTemplate({ site, now }: TemplateProps & { now?: Date }) {
   const ctx = siteContext(site, now);
   const c = copy[ctx.locale];
-  const hero = ctx.image("hero.image");
+  const heroPics = heroPhotos(site.settings, "hero.image");
+  const hero = heroPics[0] ?? null;
   const story = ctx.on("story") && ctx.text("story.text");
   const pick = ctx.picks[0];
 
@@ -59,7 +61,7 @@ export default function BentoTemplate({ site, now }: TemplateProps & { now?: Dat
             </div>
             {hero && (
               <div className="tile tile-photo">
-                <Picture src={hero} sizes="(min-width: 760px) 30vw, 100vw" priority />
+                <HeroPhotos ctx={ctx} photos={heroPics} sizes="(min-width: 760px) 30vw, 100vw" />
               </div>
             )}
             <div className="tile tile-small c2">
@@ -107,11 +109,11 @@ export default function BentoTemplate({ site, now }: TemplateProps & { now?: Dat
                 <h2 id={`${section.anchor}-h`}>{section.name}</h2>
                 <span>{itemCount(section.products.length, ctx.locale)}</span>
               </div>
-              <ul className="plain bento">
+              <ul className="plain bento kit-cards">
                 {section.products.map((item, i) => (
                   <li key={item.id} className={cx("cell", item.isFeatured && item.isAvailable && "big", `c${((si + i) % 4) + 1}`)}>
-                    <button type="button" className={cx("tile", "item", !item.isAvailable && "out")} data-item-id={item.id}>
-                      <span className="item-media">
+                    <button type="button" className={cx("tile", "item", "kit-card", !item.isAvailable && "out")} data-item-id={item.id}>
+                      <span className="item-media kit-card-media">
                         <ProductPicture item={item} sizes="(min-width: 760px) 25vw, 50vw" />
                       </span>
                       <span className="item-text">

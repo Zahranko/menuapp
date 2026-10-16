@@ -20,6 +20,19 @@
 //    and "Order button" (order.action, order.shape, order.label) at the end.
 // Their defaults keep every site as it was. A manifest may only set its own default for "social.show" (templates whose
 // footer already showed Instagram and WhatsApp icons list them, so those icons stay).
+//
+// Cards: every template gets the shared fields of templates/_kit/card-settings.json (card style, border, border color,
+// corners, photo shape, spacing) in a "Cards" group right after "Fonts & colors". templates/_kit/cards.ts reads them and
+// _kit/cards.css styles every product card (.kit-card) and category tile (.kit-cat). "auto" keeps the template's look.
+//
+// Hero slider: each manifest says what its opening looks like in "heroSlider" (left out of registry.json):
+//   { "kind": "backdrop" | "panel" | "band", "source": "hero.image" | "hero.images", "skip": ["hero.overlay", ...] }
+// backdrop: text on the photo; panel: the photo in its own frame; band: no photo before (a photo strip appears once the
+// owner adds photos). The fields of templates/_kit/hero-settings.json whose "kinds" include the template's kind go in a
+// "Hero slider" group right after the group of the template's hero photo (or headline). With "source": "hero.image" the
+// template also gets "hero.slides" (more photos after the main one); a band template gets "hero.slides" as its only
+// photos; "hero.images" templates (several photos already) use their own field. "skip" leaves out fields the template
+// already has its own version of (such as its own "Image darkness"). templates/_kit/hero.ts and HeroSlider.tsx render them.
 import { readdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -33,6 +46,10 @@ const TEXT_TYPES = new Set(["text", "textarea"]);
 const dictionary = JSON.parse(readFileSync(path.join(root, "_i18n", "ar.json"), "utf8"));
 const logoSettings = JSON.parse(readFileSync(path.join(root, "_kit", "logo-settings.json"), "utf8"));
 const siteOptions = JSON.parse(readFileSync(path.join(root, "_kit", "site-options.json"), "utf8"));
+const cardSettings = JSON.parse(readFileSync(path.join(root, "_kit", "card-settings.json"), "utf8"));
+const heroSettings = JSON.parse(readFileSync(path.join(root, "_kit", "hero-settings.json"), "utf8"));
+const HERO_KINDS = new Set(Object.keys(heroSettings.kinds));
+const HERO_SOURCES = new Set(["hero.image", "hero.images"]);
 /** Shared settings a manifest may give its own default (in "defaults"). */
 const OWN_DEFAULTS = new Set(["social.show"]);
 
@@ -53,6 +70,8 @@ const manifests = readdirSync(root, { withFileTypes: true })
     if (manifest.tier !== undefined && !TIERS.has(manifest.tier)) fail(`${d.name}: "tier" must be "basic" or "pro" (or left out for basic)`);
     withLogoOptions(d.name, manifest);
     withSiteOptions(d.name, manifest);
+    withCardOptions(d.name, manifest);
+    withHeroOptions(d.name, manifest);
     const keys = new Set();
     for (const field of manifest.schema) {
       if (!FIELD_TYPES.has(field.type)) fail(`${d.name}: field "${field.key}" has unknown type "${field.type}"`);
@@ -131,6 +150,54 @@ function withSiteOptions(id, manifest) {
   for (const value of own["social.show"] ?? []) {
     if (!siteOptions.fields.find((f) => f.key === "social.show").options.includes(value)) fail(`${id}: unknown account "${value}" in "social.show"`);
   }
+}
+
+/** Inserts `fields` after the last field of the group `after` (or at the end), with their defaults. */
+function insertGroup(manifest, fields, defaults, after) {
+  const last = after === undefined ? -1 : manifest.schema.findLastIndex((f) => f.group === after);
+  manifest.schema.splice(last < 0 ? manifest.schema.length : last + 1, 0, ...fields);
+  for (const field of fields) manifest.defaults[field.key] = structuredClone(defaults[field.key]);
+}
+
+/** Adds the shared card options (templates/_kit/card-settings.json) in a "Cards" group after "Fonts & colors". */
+function withCardOptions(id, manifest) {
+  for (const field of cardSettings.fields) {
+    if (manifest.schema.some((f) => f.key === field.key) || field.key in manifest.defaults) fail(`${id}: "${field.key}" comes from templates/_kit/card-settings.json; remove it from the manifest`);
+  }
+  const fields = cardSettings.fields.map((f) => ({ key: f.key, type: f.type, label: f.label, group: cardSettings.group, ...f }));
+  insertGroup(manifest, fields, cardSettings.defaults, siteOptions.fontsAndColors.group);
+}
+
+/** Adds the shared hero slider options (templates/_kit/hero-settings.json) for the template's kind of opening. */
+function withHeroOptions(id, manifest) {
+  const hero = manifest.heroSlider;
+  delete manifest.heroSlider;
+  if (!hero || !HERO_KINDS.has(hero.kind)) fail(`${id}: "heroSlider.kind" must be one of ${[...HERO_KINDS].join(", ")}`);
+  const skip = new Set(hero.skip ?? []);
+  for (const key of skip) if (!heroSettings.fields.some((f) => f.key === key)) fail(`${id}: "heroSlider.skip" has unknown field "${key}"`);
+  for (const key of ["hero.slides", ...heroSettings.fields.map((f) => f.key)]) {
+    if (manifest.schema.some((f) => f.key === key) || key in manifest.defaults) fail(`${id}: "${key}" comes from templates/_kit/hero-settings.json; remove it from the manifest`);
+  }
+  let anchor;
+  const fields = [];
+  if (hero.kind === "band") {
+    if (hero.source !== undefined) fail(`${id}: a "band" opening has no "heroSlider.source" (its photos are "hero.slides")`);
+    if (manifest.schema.some((f) => f.key === "hero.image" || f.key === "hero.images")) fail(`${id}: a template with a hero photo is "backdrop" or "panel", not "band"`);
+    anchor = manifest.schema.find((f) => f.key === "hero.title") ?? manifest.schema.find((f) => f.group === siteOptions.fontsAndColors.group);
+    fields.push({ ...heroSettings.bandSlides });
+  } else {
+    if (!HERO_SOURCES.has(hero.source)) fail(`${id}: "heroSlider.source" must be "hero.image" or "hero.images"`);
+    anchor = manifest.schema.find((f) => f.key === hero.source);
+    if (!anchor) fail(`${id}: "heroSlider.source" names "${hero.source}", which is not in the schema`);
+    const type = hero.source === "hero.image" ? "image" : "images";
+    if (anchor.type !== type) fail(`${id}: "${hero.source}" must be an ${type} field`);
+    if (hero.source === "hero.image") fields.push({ ...heroSettings.slides });
+  }
+  for (const { kinds, ...field } of heroSettings.fields) {
+    if (kinds.includes(hero.kind) && !skip.has(field.key)) fields.push(field);
+  }
+  const grouped = fields.map((f) => ({ key: f.key, type: f.type, label: f.label, group: heroSettings.group, ...f }));
+  insertGroup(manifest, grouped, heroSettings.defaults, anchor?.group);
 }
 
 /** The Arabic for an editor string: the manifest's own, else the dictionary's. */

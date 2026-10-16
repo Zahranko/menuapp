@@ -6,7 +6,8 @@ import { CatalogControls } from "../_kit/CatalogControls";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { WhatsApp } from "../_kit/icons";
-import { Picture } from "../_kit/Picture";
+import { heroPhotos } from "../_kit/hero";
+import { HeroPhotos } from "../_kit/HeroPhotos";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
@@ -27,7 +28,8 @@ const PALETTES = {
 export default function PocketCatalogTemplate({ site, now }: TemplateProps & { now?: Date }) {
   const ctx = siteContext(site, now);
   const c = copy[ctx.locale];
-  const banner = ctx.image("hero.image");
+  const heroPics = heroPhotos(site.settings, "hero.image");
+  const banner = heroPics[0] ?? null;
   const story = ctx.on("story") && ctx.text("story.text");
   const askStart = ctx.text("ask");
   const products = ctx.sections.flatMap((s) => s.products.map((p) => ({ ...p, category: s })));
@@ -64,7 +66,7 @@ export default function PocketCatalogTemplate({ site, now }: TemplateProps & { n
             </div>
             {banner && (
               <div className="banner-media">
-                <Picture src={banner} sizes="(min-width: 760px) 35vw, 100vw" priority />
+                <HeroPhotos ctx={ctx} photos={heroPics} sizes="(min-width: 760px) 35vw, 100vw" />
               </div>
             )}
           </section>
@@ -83,11 +85,11 @@ export default function PocketCatalogTemplate({ site, now }: TemplateProps & { n
             labels={{ all: c.all, search: ctx.t.search, sort: c.sort, featured: c.featured, priceLow: c.low, priceHigh: c.high, filter: c.filter }}
             locale={ctx.locale}
           />
-          <ul id="catalog-grid" className="plain grid">
+          <ul id="catalog-grid" className="plain grid kit-cards">
             {products.map((item) => (
               <li
                 key={item.id}
-                className={cx("product", !item.isAvailable && "out")}
+                className={cx("product kit-card", !item.isAvailable && "out")}
                 data-product
                 data-cat={item.category.anchor}
                 data-q={item.search}
@@ -96,7 +98,7 @@ export default function PocketCatalogTemplate({ site, now }: TemplateProps & { n
                 style={{ order: order.get(item.id) }}
               >
                 <button type="button" className="product-main" data-item-id={item.id}>
-                  <span className="product-media">
+                  <span className="product-media kit-card-media">
                     <ProductPicture item={item} sizes="(min-width: 760px) 25vw, 50vw" />
                     {(item.labelText || !item.isAvailable) && (
                       <span className="badges">

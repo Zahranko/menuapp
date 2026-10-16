@@ -10,6 +10,7 @@
     "description": "حواف نجمية هندسية، ونافذة مقوّسة، وأطباق في الوسط. يبدو في أجمل حالاته بالعربية."
   },
   "version": 1,
+  "heroSlider": { "kind": "panel", "source": "hero.image" },
   "thumbnail": "/templates/spiceroute/thumbnail.png",
   "sample": "restaurant",
   "schema": [

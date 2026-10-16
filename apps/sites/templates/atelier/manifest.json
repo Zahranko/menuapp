@@ -10,6 +10,7 @@
     "description": "موقع أنيق لصالون أو استوديو تجميل، مع قائمة أسعار يمكن الحجز منها."
   },
   "version": 1,
+  "heroSlider": { "kind": "backdrop", "source": "hero.image" },
   "thumbnail": "/templates/atelier/thumbnail.png",
   "sample": "salon",
   "schema": [

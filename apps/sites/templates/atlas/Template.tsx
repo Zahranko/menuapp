@@ -8,6 +8,8 @@ import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext, type SiteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Arrow, Pin, WhatsApp } from "../_kit/icons";
+import { heroPhotos } from "../_kit/hero";
+import { HeroPhotos } from "../_kit/HeroPhotos";
 import { Picture } from "../_kit/Picture";
 import { hasHours, tintFor, type MenuItem } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
@@ -320,8 +322,8 @@ function Head({ title, id, link, level = 2 }: { title: string; id: string; link?
 
 function Card({ v, item, sizes = "(min-width: 1100px) 24vw, (min-width: 700px) 32vw, 50vw" }: { v: View; item: MenuItem; sizes?: string }) {
   return (
-    <button type="button" className={cx("a-card", !item.isAvailable && "is-out")} data-item-id={item.id}>
-      <span className="a-card-media">
+    <button type="button" className={cx("a-card kit-card kit-card-pad", !item.isAvailable && "is-out")} data-item-id={item.id}>
+      <span className="a-card-media kit-card-media">
         <ProductPicture item={item} sizes={sizes} />
         {(item.labelText || !item.isAvailable) && (
           <span className="a-badges">
@@ -344,7 +346,7 @@ function Card({ v, item, sizes = "(min-width: 1100px) 24vw, (min-width: 700px) 3
 
 function Grid({ v, items }: { v: View; items: MenuItem[] }) {
   return (
-    <ul className="plain a-grid">
+    <ul className="plain a-grid kit-cards">
       {items.map((item) => (
         <li key={item.id} className="rv">
           <Card v={v} item={item} />
@@ -356,11 +358,11 @@ function Grid({ v, items }: { v: View; items: MenuItem[] }) {
 
 function Departments({ v, categories, id }: { v: View; categories: Category[]; id?: string }) {
   return (
-    <ul className="plain a-depts" id={id}>
+    <ul className="plain a-depts kit-cards" id={id}>
       {categories.map((cat) => (
         <li key={cat.id} className="rv">
-          <a className="a-dept" href={v.href(cat.path)}>
-            <span className="a-dept-media">{cat.cover ? <Picture src={cat.cover} sizes="(min-width: 900px) 22vw, 44vw" /> : <span className="a-blank" aria-hidden="true">{initial(cat.name)}</span>}</span>
+          <a className="a-dept kit-cat kit-card-pad" href={v.href(cat.path)}>
+            <span className="a-dept-media kit-cat-media">{cat.cover ? <Picture src={cat.cover} sizes="(min-width: 900px) 22vw, 44vw" /> : <span className="a-blank" aria-hidden="true">{initial(cat.name)}</span>}</span>
             <span className="a-dept-name">
               {cat.name} <Arrow className="flip" />
             </span>
@@ -480,7 +482,8 @@ function Hero({ v }: { v: View }) {
   const s = ctx.site.settings;
   const layout = choice(s, "hero.layout", HERO, "split");
   const pick = v.best.find((p) => p.imageUrl) ?? v.tree.items.find((p) => p.imageUrl && p.isAvailable) ?? v.tree.items.find((p) => p.imageUrl) ?? null;
-  const media = layout !== "text" ? (ctx.image("hero.image") ?? pick?.imageUrl ?? null) : null;
+  const photos = layout !== "text" ? heroPhotos(s, "hero.image", pick?.imageUrl ?? null) : [];
+  const media = photos[0] ?? null;
   const title = ctx.text("hero.title") || ctx.site.business.name;
   const eyebrow = ctx.text("hero.eyebrow");
   const subtitle = ctx.text("hero.subtitle");
@@ -507,7 +510,7 @@ function Hero({ v }: { v: View }) {
       {media && (
         <div className="a-hero-media">
           <div className="a-hero-img">
-            <Picture src={media} sizes="(min-width: 900px) 50vw, 100vw" priority />
+            <HeroPhotos ctx={ctx} photos={photos} sizes="(min-width: 900px) 50vw, 100vw" placement="corner" />
           </div>
           {pick && (
             <>

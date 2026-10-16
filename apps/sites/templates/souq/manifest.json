@@ -10,6 +10,7 @@
     "description": "موقع دافئ لمقهى بواجهة كبيرة واختيارات مميزة ومنيو بالصور يسهل البحث فيه."
   },
   "version": 1,
+  "heroSlider": { "kind": "backdrop", "source": "hero.image", "skip": ["hero.overlay"] },
   "thumbnail": "/templates/souq/thumbnail.png",
   "schema": [
     {

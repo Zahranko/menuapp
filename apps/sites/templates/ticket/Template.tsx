@@ -2,6 +2,8 @@ import type { TemplateProps } from "@/lib/types";
 import { ContactList, Credits, HoursList, Logo, logoRoot, optionRoot, OrderFab, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
 import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
+import { heroPhotos } from "../_kit/hero";
+import { HeroBand } from "../_kit/HeroPhotos";
 import { fontVariables } from "../_kit/fonts";
 import { WhatsApp } from "../_kit/icons";
 import { hasHours } from "../_kit/site-data";
@@ -142,6 +144,7 @@ export default function TicketTemplate({
             )}
             <p className="addr">{site.business.address}</p>
             {ctx.today && <p className="addr">{ctx.today}</p>}
+            <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} />
             {ctx.sections.length > 1 && (
               <nav className="jump" aria-label={c.jump}>
                 {ctx.sections.map((s) => (
@@ -170,12 +173,12 @@ export default function TicketTemplate({
                   <h2 id={`${section.anchor}-h`} className="rule">
                     <span>{section.name}</span>
                   </h2>
-                  <ul className="plain">
+                  <ul className="plain kit-cards kit-rows">
                     {section.products.map((item) => (
                       <li key={item.id}>
                         <button
                           type="button"
-                          className={cx("line", !item.isAvailable && "out")}
+                          className={cx("line kit-card kit-card-pad", !item.isAvailable && "out")}
                           data-item-id={item.id}
                         >
                           <span className="line-top">

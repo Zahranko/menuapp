@@ -4,6 +4,8 @@ import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Arrow, Clock, WhatsApp } from "../_kit/icons";
+import { heroPhotos } from "../_kit/hero";
+import { HeroPhotos } from "../_kit/HeroPhotos";
 import { Picture } from "../_kit/Picture";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
@@ -27,7 +29,8 @@ const PALETTES = {
 export default function NightMarketTemplate({ site, now }: TemplateProps & { now?: Date }) {
   const ctx = siteContext(site, now);
   const c = copy[ctx.locale];
-  const hero = ctx.image("hero.image");
+  const heroPics = heroPhotos(site.settings, "hero.image");
+  const hero = heroPics[0] ?? null;
   const sticker = ctx.text("hero.sticker");
   const [lead, ...rest] = ctx.picks;
   const order = orderButton(site, { label: c.order });
@@ -53,13 +56,13 @@ export default function NightMarketTemplate({ site, now }: TemplateProps & { now
       </header>
 
       <main>
-        <section className="hero" id="top" data-section="hero" aria-labelledby="hero-title">
+        <section className="hero kit-hero" id="top" data-section="hero" aria-labelledby="hero-title">
           {hero && (
-            <div className="hero-media">
-              <Picture src={hero} sizes="100vw" priority />
+            <div className="hero-media kit-hero-media">
+              <HeroPhotos ctx={ctx} photos={heroPics} sizes="100vw" placement="corner" />
             </div>
           )}
-          <div className="hero-in">
+          <div className="hero-in kit-hero-text">
             {sticker && <span className="sticker">{sticker}</span>}
             <h1 id="hero-title">{ctx.text("hero.title") || site.business.name}</h1>
             {ctx.text("hero.subtitle") && <p>{ctx.text("hero.subtitle")}</p>}
@@ -111,11 +114,11 @@ export default function NightMarketTemplate({ site, now }: TemplateProps & { now
                 <h3 id={`${section.anchor}-h`}>{section.name}</h3>
                 <span>{itemCount(section.products.length, ctx.locale)}</span>
               </div>
-              <ul className="plain cards" tabIndex={0} aria-label={`${section.name}. ${c.swipe}`}>
+              <ul className="plain cards kit-cards" tabIndex={0} aria-label={`${section.name}. ${c.swipe}`}>
                 {section.products.map((item) => (
                   <li key={item.id}>
-                    <button type="button" className={cx("card", !item.isAvailable && "out")} data-item-id={item.id}>
-                      <span className="card-media">
+                    <button type="button" className={cx("card kit-card", !item.isAvailable && "out")} data-item-id={item.id}>
+                      <span className="card-media kit-card-media kit-flush">
                         <ProductPicture item={item} sizes="(min-width: 760px) 25vw, 70vw" />
                       </span>
                       <span className="card-body">

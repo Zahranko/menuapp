@@ -9,6 +9,7 @@ import { cx, siteContext, type SiteContext } from "../_kit/context";
 import { Drawer } from "../_kit/Drawer";
 import { fontVariables } from "../_kit/fonts";
 import { Arrow, Close, Pin } from "../_kit/icons";
+import { HeroPhotos } from "../_kit/HeroPhotos";
 import { Picture } from "../_kit/Picture";
 import { hasHours, type MenuItem } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
@@ -248,8 +249,8 @@ function Head({ title, id, num, link, as = "h2" }: { title: string; id?: string;
 function Combo({ v, item }: { v: View; item: MenuItem }) {
   if (v.cards === "board") {
     return (
-      <button type="button" className={cx("row", !item.isAvailable && "out")} data-item-id={item.id}>
-        <span className="row-media">
+      <button type="button" className={cx("row kit-card kit-card-pad", !item.isAvailable && "out")} data-item-id={item.id}>
+        <span className="row-media kit-card-media">
           <ProductPicture item={item} sizes="64px" />
         </span>
         <span className="row-main">
@@ -265,8 +266,8 @@ function Combo({ v, item }: { v: View; item: MenuItem }) {
     );
   }
   return (
-    <button type="button" className={cx("combo", !item.isAvailable && "out")} data-item-id={item.id}>
-      <span className="combo-media">
+    <button type="button" className={cx("combo kit-card", !item.isAvailable && "out")} data-item-id={item.id}>
+      <span className="combo-media kit-card-media">
         <ProductPicture item={item} sizes="(min-width: 1100px) 25vw, (min-width: 700px) 33vw, 50vw" />
         {item.labelText && <span className="tape">{item.labelText}</span>}
         {!item.isAvailable && <span className="stamp">{v.ctx.t.soldOut}</span>}
@@ -282,7 +283,7 @@ function Combo({ v, item }: { v: View; item: MenuItem }) {
 
 function Products({ v, items }: { v: View; items: MenuItem[] }) {
   return (
-    <ul className={cx("plain", v.cards === "board" ? "board" : "combos")}>
+    <ul className={cx("plain kit-cards", v.cards === "board" ? "board kit-rows" : "combos")}>
       {items.map((item) => (
         <li key={item.id} className="rise">
           <Combo v={v} item={item} />
@@ -295,10 +296,10 @@ function Products({ v, items }: { v: View; items: MenuItem[] }) {
 /** Categories as big numbered rows: number, name, what is inside, a photo that pops out on hover. */
 function Index({ v, categories, prefix = "" }: { v: View; categories: Category[]; prefix?: string }) {
   return (
-    <ol className="plain idx">
+    <ol className="plain idx kit-cards kit-rows">
       {categories.map((cat, i) => (
         <li key={cat.id} className="rise">
-          <a className="idx-row" href={v.href(cat.path)}>
+          <a className="idx-row kit-cat kit-card-pad" href={v.href(cat.path)}>
             <span className="idx-n" aria-hidden="true">
               {prefix}
               {prefix ? i + 1 : two(i + 1)}
@@ -437,7 +438,7 @@ function Hero({ v }: { v: View }) {
     <section className={cx("hero", `hero-${kind}`)} data-section="hero" style={{ "--shade": shade / 100 } as CSSProperties}>
       {kind === "full" && (
         <div className="hero-bg">
-          <Picture src={pics[0]} sizes="100vw" priority />
+          <HeroPhotos ctx={ctx} photos={pics} sizes="100vw" placement="corner" />
         </div>
       )}
       <div className="hero-copy">

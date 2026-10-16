@@ -10,6 +10,7 @@
     "description": "كتالوج لمتجرك: تصفية حسب القسم، وترتيب حسب السعر، والسؤال عن أي منتج على واتساب."
   },
   "version": 1,
+  "heroSlider": { "kind": "panel", "source": "hero.image" },
   "thumbnail": "/templates/pocket/thumbnail.png",
   "sample": "shop",
   "schema": [

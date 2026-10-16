@@ -10,6 +10,7 @@
     "description": "موقع هادئ وموثوق لعيادة: خدمات بأسعارها، وكيف تتم الزيارة، وأسئلة شائعة، وحجز."
   },
   "version": 1,
+  "heroSlider": { "kind": "panel", "source": "hero.image" },
   "thumbnail": "/templates/clinic/thumbnail.png",
   "sample": "clinic",
   "schema": [

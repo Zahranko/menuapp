@@ -3,6 +3,8 @@ import type { TemplateProps } from "@/lib/types";
 import { ContactList, Credits, HoursList, Logo, logoRoot, optionRoot, OrderFab, ProductPicture, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
 import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
+import { heroPhotos } from "../_kit/hero";
+import { HeroBand } from "../_kit/HeroPhotos";
 import { fontVariables } from "../_kit/fonts";
 import { WhatsApp } from "../_kit/icons";
 import { hasHours } from "../_kit/site-data";
@@ -127,6 +129,7 @@ export default function BistroCardTemplate({
               <p className="tagline">{ctx.text("hero.title")}</p>
             )}
             {ctx.today && <p className="today">{ctx.today}</p>}
+            <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} />
             {special && (
               <section
                 className="note"
@@ -172,12 +175,12 @@ export default function BistroCardTemplate({
                   aria-labelledby={`${section.anchor}-h`}
                 >
                   <h3 id={`${section.anchor}-h`}>{section.name}</h3>
-                  <ul className="plain">
+                  <ul className="plain kit-cards kit-rows">
                     {section.products.map((item) => (
                       <li key={item.id}>
                         <button
                           type="button"
-                          className={cx("dish", !item.isAvailable && "out")}
+                          className={cx("dish kit-card kit-card-pad", !item.isAvailable && "out")}
                           data-item-id={item.id}
                         >
                           <span className="dish-name">

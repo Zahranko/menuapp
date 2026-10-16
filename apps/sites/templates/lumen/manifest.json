@@ -10,6 +10,7 @@
     "description": "موقع مقهى مرح وصاخب: خط ضخم، ومربعات ملوّنة، وملصقات مائلة، وشريط كلمات متحرك، وشريط تنقل سفلي على الهاتف."
   },
   "version": 2,
+  "heroSlider": { "kind": "panel", "source": "hero.image" },
   "tier": "pro",
   "thumbnail": "/templates/lumen/thumbnail.png",
   "sample": "lumen",

@@ -1,13 +1,15 @@
 import type { CSSProperties, ReactNode } from "react";
 import { initial, whatsappLink } from "@/lib/format";
 import { itemCount } from "@/lib/i18n";
-import { choice, flag, image, text } from "@/lib/settings";
+import { choice, flag, text } from "@/lib/settings";
 import type { TemplateProps } from "@/lib/types";
 import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, optionRoot, OrderIcon, orderLink, ProductPicture, ProductSheet, SocialIcons, TopBars } from "../_kit/blocks";
 import { orderButton, socialAccounts, type OrderButton } from "../_kit/options";
 import { cx, siteContext, type SiteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Arrow, Pin, WhatsApp } from "../_kit/icons";
+import { heroPhotos } from "../_kit/hero";
+import { HeroPhotos } from "../_kit/HeroPhotos";
 import { Picture } from "../_kit/Picture";
 import { hasHours, type MenuItem } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
@@ -234,8 +236,8 @@ function Stamps({ v, item }: { v: View; item: MenuItem }) {
 
 function ProductCard({ v, item, rank }: { v: View; item: MenuItem; rank?: number }) {
   return (
-    <button type="button" className={cx("card", !item.isAvailable && "out")} data-item-id={item.id}>
-      <span className="card-media">
+    <button type="button" className={cx("card kit-card", !item.isAvailable && "out")} data-item-id={item.id}>
+      <span className="card-media kit-card-media">
         <ProductPicture item={item} sizes="(min-width: 1100px) 22vw, (min-width: 700px) 33vw, 60vw" />
         {rank !== undefined && <span className="rank">{rank}</span>}
       </span>
@@ -251,7 +253,7 @@ function ProductCard({ v, item, rank }: { v: View; item: MenuItem; rank?: number
 
 function Products({ v, items, rank = false }: { v: View; items: MenuItem[]; rank?: boolean }) {
   return (
-    <ul className="plain grid">
+    <ul className="plain grid kit-cards">
       {items.map((item, i) => (
         <li key={item.id} className="reveal">
           <ProductCard v={v} item={item} rank={rank ? i + 1 : undefined} />
@@ -263,10 +265,10 @@ function Products({ v, items, rank = false }: { v: View; items: MenuItem[]; rank
 
 function Tiles({ v, categories }: { v: View; categories: Category[] }) {
   return (
-    <ul className="plain tiles">
+    <ul className="plain tiles kit-cards">
       {categories.map((cat, i) => (
         <li key={cat.id} className="reveal" style={tint(cat.parent ? `var(--c${((Math.max(0, v.tree.roots.indexOf(cat.parent)) + i + 1) % TILE_COLORS) + 1})` : tileOf(v, cat))}>
-          <a className="tile" href={v.href(cat.path)}>
+          <a className="tile kit-cat" href={v.href(cat.path)}>
             <span className="tile-name">{cat.name}</span>
             <span className="tile-meta">
               {(cat.children.length > 0 ? cat.children.map((s) => s.name) : cat.all.slice(0, 3).map((p) => p.name)).join(", ")}
@@ -276,7 +278,7 @@ function Tiles({ v, categories }: { v: View; categories: Category[] }) {
             </span>
             <span className="sr-only">{itemCount(cat.all.length, v.ctx.locale)}</span>
             {cat.cover && (
-              <span className="tile-photo">
+              <span className="tile-photo kit-cat-media">
                 <Picture src={cat.cover} sizes="140px" />
               </span>
             )}
@@ -378,7 +380,8 @@ function Hero({ v }: { v: View }) {
   const s = ctx.site.settings;
   const layout = choice(s, "hero.layout", HERO, "bento");
   const fallback = v.tree.items.find((p) => p.imageUrl)?.imageUrl ?? null;
-  const photo = layout === "bento" ? (image(s["hero.image"]) ?? fallback) : null;
+  const photos = layout === "bento" ? heroPhotos(s, "hero.image", fallback) : [];
+  const photo = photos[0] ?? null;
   const title = text(s, "hero.title") || ctx.site.business.name;
   const subtitle = text(s, "hero.subtitle");
   const sticker = text(s, "hero.sticker");
@@ -401,7 +404,7 @@ function Hero({ v }: { v: View }) {
       </div>
       {photo && (
         <div className="cell b-photo">
-          <Picture src={photo} sizes="(min-width: 900px) 30vw, 100vw" priority />
+          <HeroPhotos ctx={ctx} photos={photos} sizes="(min-width: 900px) 30vw, 100vw" />
           {sticker && <span className="sticker b-sticker">{sticker}</span>}
         </div>
       )}

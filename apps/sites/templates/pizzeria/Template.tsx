@@ -2,6 +2,8 @@ import type { TemplateProps } from "@/lib/types";
 import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, optionRoot, OrderFab, ProductPicture, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
 import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
+import { heroPhotos } from "../_kit/hero";
+import { HeroBand } from "../_kit/HeroPhotos";
 import { fontVariables } from "../_kit/fonts";
 import { WhatsApp } from "../_kit/icons";
 import { hasHours } from "../_kit/site-data";
@@ -75,6 +77,7 @@ export default function PizzeriaTemplate({ site, now }: TemplateProps & { now?: 
             </button>
           )}
         </section>
+        <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} className="pz-band" />
 
         <section id="menu" className="menu" data-section="menu" aria-label={c.menu}>
           {ctx.sections.length > 1 && (
@@ -89,11 +92,11 @@ export default function PizzeriaTemplate({ site, now }: TemplateProps & { now?: 
           {ctx.sections.map((section, si) => (
             <section key={section.id} id={section.anchor} className={cx("band", si % 2 === 0 && "tinted")} aria-labelledby={`${section.anchor}-h`}>
               <h2 id={`${section.anchor}-h`}>{section.name}</h2>
-              <ul className="plain pies">
+              <ul className="plain pies kit-cards">
                 {section.products.map((item) => (
                   <li key={item.id}>
-                    <button type="button" className={cx("slice", !item.isAvailable && "out")} data-item-id={item.id}>
-                      <span className="slice-photo">
+                    <button type="button" className={cx("slice kit-card", !item.isAvailable && "out")} data-item-id={item.id}>
+                      <span className="slice-photo kit-card-media">
                         <ProductPicture item={item} sizes="160px" />
                       </span>
                       <span className="slice-name">{item.name}</span>

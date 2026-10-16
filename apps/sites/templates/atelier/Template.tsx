@@ -4,6 +4,8 @@ import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Arrow } from "../_kit/icons";
+import { heroPhotos } from "../_kit/hero";
+import { HeroPhotos } from "../_kit/HeroPhotos";
 import { Picture } from "../_kit/Picture";
 import { bookLink, highlights } from "../_kit/services";
 import { hasHours } from "../_kit/site-data";
@@ -81,7 +83,8 @@ export default function AtelierTemplate({
 }: TemplateProps & { now?: Date }) {
   const ctx = siteContext(site, now);
   const c = copy[ctx.locale];
-  const hero = ctx.image("hero.image");
+  const heroPics = heroPhotos(site.settings, "hero.image");
+  const hero = heroPics[0] ?? null;
   const story = ctx.on("story") && ctx.text("story.text");
   const book = bookLink(ctx);
   const order = orderButton(site, { label: c.book, whatsapp: book });
@@ -119,16 +122,16 @@ export default function AtelierTemplate({
 
       <main id="top">
         <section
-          className={cx("hero", !hero && "no-image")}
+          className={cx("hero", "kit-hero", !hero && "no-image")}
           data-section="hero"
           aria-labelledby="hero-title"
         >
           {hero && (
-            <div className="hero-image">
-              <Picture src={hero} sizes="100vw" priority />
+            <div className="hero-image kit-hero-media">
+              <HeroPhotos ctx={ctx} photos={heroPics} sizes="100vw" placement="corner" />
             </div>
           )}
-          <div className="hero-text">
+          <div className="hero-text kit-hero-text">
             {ctx.text("hero.eyebrow") && (
               <p className="eyebrow">{ctx.text("hero.eyebrow")}</p>
             )}
@@ -183,7 +186,7 @@ export default function AtelierTemplate({
                 aria-labelledby={`${section.anchor}-h`}
               >
                 <h3 id={`${section.anchor}-h`}>{section.name}</h3>
-                <ul className="plain">
+                <ul className="plain kit-cards kit-rows">
                   {section.products.map((item) => {
                     const link = item.isAvailable
                       ? bookLink(ctx, item.name)
@@ -191,14 +194,14 @@ export default function AtelierTemplate({
                     return (
                       <li
                         key={item.id}
-                        className={cx("service", !item.isAvailable && "out")}
+                        className={cx("service kit-card kit-card-pad", !item.isAvailable && "out")}
                       >
                         <button
                           type="button"
                           className="service-main"
                           data-item-id={item.id}
                         >
-                          <span className="service-thumb">
+                          <span className="service-thumb kit-card-media">
                             <ProductPicture item={item} sizes="64px" />
                           </span>
                           <span className="service-text">
