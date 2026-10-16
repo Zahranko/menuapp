@@ -761,3 +761,8 @@
     }
   }
 }
+
+/* Card styles (_kit/cards.css) give every card the same surface, so the popular plan keeps the page's text color (its ribbon still marks it). */
+.t-pulse[data-card-style] .price-card.hot {
+  color: var(--ink);
+}

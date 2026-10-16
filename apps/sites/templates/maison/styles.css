@@ -1925,3 +1925,17 @@ html.mx-locked {
     opacity: 0;
   }
 }
+
+/* The hero slider's buttons (_kit/hero.css) sit just under the header, which lies over the top of the photo. The
+ * opening text covers the photo, so only its links and buttons take clicks while a slider is there. */
+.mx .mx-hero .kit-slider.is-corner .kit-slider-bar {
+  top: calc(var(--head-h) + 14px);
+  inset-inline-end: var(--pad);
+}
+.mx .mx-hero:has(.kit-slider)::before,
+.mx .mx-hero:has(.kit-slider) .mx-hero-copy {
+  pointer-events: none;
+}
+.mx .mx-hero:has(.kit-slider) .mx-hero-copy :is(a, button) {
+  pointer-events: auto;
+}

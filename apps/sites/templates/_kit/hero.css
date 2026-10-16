@@ -170,8 +170,9 @@
   position: relative;
   isolation: isolate;
   width: 100%;
+  max-width: 1040px;
   height: clamp(220px, 46vw, 440px);
-  margin-block: 22px 6px;
+  margin: 22px auto 6px;
   overflow: hidden;
   border-radius: var(--kit-band-r, 14px);
 }

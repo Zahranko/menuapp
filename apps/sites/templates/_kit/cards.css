@@ -137,8 +137,12 @@
 /* A circle: as wide as the box allows up to --kit-circle (a wide top photo becomes a round plate in the middle). */
 [data-card-photo="circle"] :is(.kit-card-media, .kit-cat-media) {
   flex: none !important;
+  align-self: center !important;
+  justify-self: center !important;
   width: min(100%, var(--kit-circle, 220px)) !important;
   height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
   aspect-ratio: 1 / 1 !important;
   margin-inline: auto !important;
   border-radius: 50% !important;

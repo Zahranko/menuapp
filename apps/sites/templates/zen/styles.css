@@ -375,3 +375,8 @@
     }
   }
 }
+
+/* The photo strip (_kit/hero.css) keeps the page's side margins. */
+.t-zen .zen-band {
+  max-width: min(calc(100% - 40px), 1040px);
+}

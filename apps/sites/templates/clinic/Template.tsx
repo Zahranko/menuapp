@@ -98,7 +98,7 @@ export default function ClinicTemplate({ site, now }: TemplateProps & { now?: Da
           <div className="hero-visual">
             {hero && (
               <div className="hero-image">
-                <HeroPhotos ctx={ctx} photos={heroPics} sizes="(min-width: 760px) 45vw, 100vw" />
+                <HeroPhotos ctx={ctx} photos={heroPics} sizes="(min-width: 760px) 45vw, 100vw" placement="corner" />
               </div>
             )}
             {(ctx.today || site.business.address) && (
