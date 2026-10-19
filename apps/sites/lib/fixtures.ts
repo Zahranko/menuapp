@@ -500,16 +500,24 @@ const fashionReviews: Settings = {
   "reviews.3.quote": "Beautiful pieces that last. The exchange was easy when I needed a smaller size.",
   "reviews.3.name": "Sara M.",
 };
+const fashionReviewsAr: Settings = {
+  "reviews.1.quote": "المقاس مثالي والقماش أجمل من الصور. حجزوا لي المقاس وأرسلوه في اليوم نفسه.",
+  "reviews.1.name": "لينا ح.",
+  "reviews.2.quote": "سألت عن المقاسات على واتساب وجاءني الرد خلال دقائق مع صور. صار متجري المفضل.",
+  "reviews.2.name": "عمر ك.",
+  "reviews.3.quote": "قطع جميلة تدوم طويلًا، والاستبدال كان سهلًا عندما احتجت مقاسًا أصغر.",
+  "reviews.3.name": "سارة م.",
+};
 const FASHION_SAMPLES = new Set<SampleName>(["folio", "drop", "couture"]);
 
-function sampleSettingsFor(templateId: string, sample: SampleName): Settings {
+function sampleSettingsFor(templateId: string, sample: SampleName, arabic = false): Settings {
   const defaults = defaultsFor(templateId);
   if (SERVICE_SAMPLES.has(sample)) {
     // Service templates bring their own hero copy; only reviews and photos come from the sample.
     const settings: Settings = { ...serviceReviews, gallery: galleryFor(sample) };
     return Object.fromEntries(Object.entries(settings).filter(([key]) => key in defaults));
   }
-  const reviews = sample === "cafe" ? {} : FASHION_SAMPLES.has(sample) ? fashionReviews : otherReviews;
+  const reviews = sample === "cafe" ? {} : FASHION_SAMPLES.has(sample) ? (arabic ? fashionReviewsAr : fashionReviews) : otherReviews;
   const settings: Settings = { ...sampleSettings, ...reviews, gallery: galleryFor(sample) };
   // Fashion templates keep their own line above the headline (a season, a drop number).
   if (FASHION_SAMPLES.has(sample)) delete settings["hero.eyebrow"];
@@ -560,7 +568,7 @@ export function fixtureFor(templateId: string, overrides: Partial<PublicSite> = 
       snapchat: sample.instagram,
     },
     templateId,
-    settings: { ...defaultsFor(templateId), ...sampleSettingsFor(templateId, sampleName) },
+    settings: { ...defaultsFor(templateId), ...sampleSettingsFor(templateId, sampleName, arabic) },
     categories: categoriesOf(names).map(({ name, parent }, ci, all) => ({
       id: id(100 + ci),
       name: name.split("/").pop()!,

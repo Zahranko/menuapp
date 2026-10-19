@@ -31,7 +31,7 @@ function expand(part: string): string[] {
   const y = to.match(/^(\d{1,3})([a-z]*)$/i);
   if (x && y && x[2].toLowerCase() === y[2].toLowerCase()) {
     const [start, end] = [Number(x[1]), Number(y[1])];
-    const step = start % 2 === 0 && end % 2 === 0 && end - start > 8 ? 2 : 1;
+    const step = start % 2 === 0 && end % 2 === 0 && end - start >= 8 ? 2 : 1;
     if (end > start && (end - start) / step < 12) {
       const out: string[] = [];
       for (let n = start; n <= end; n += step) out.push(`${n}${y[2]}`);

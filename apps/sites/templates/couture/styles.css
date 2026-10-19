@@ -498,6 +498,8 @@
     }
   }
   .cu-card {
+    /* Positioned, so the screen-reader text inside stays inside the sideways row. */
+    position: relative;
     display: grid;
     gap: 12px;
     width: 100%;
@@ -1092,13 +1094,13 @@
     .cu-sec-head {
       margin-bottom: 40px;
     }
+    /* Three across; the middle column steps down a little, like a hung collection. */
     .cu-tiles {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 16px;
       padding-bottom: 48px;
 
-      /* Every other tile steps down a little, like a hung collection. */
-      > li:nth-child(even) {
+      > li:nth-child(3n + 2) {
         translate: 0 48px;
       }
     }
@@ -1191,6 +1193,23 @@
   @container page (min-width: 1100px) {
     .cu-grid {
       grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    /* Four or five collections sit on one row; otherwise four across. Every other tile steps down. */
+    .cu-tiles {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+
+      > li:nth-child(3n + 2) {
+        translate: none;
+      }
+      > li:nth-child(even) {
+        translate: 0 48px;
+      }
+    }
+    .cu-tiles:has(> li:nth-child(5):last-child) {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+    .cu-tiles:not(:has(> li:nth-child(4))) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
     .cu-sec,
     .cu-story,
