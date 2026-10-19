@@ -787,6 +787,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get filterFood => 'طعام ومشروبات';
 
   @override
+  String get filterFashion => 'أزياء';
+
+  @override
   String get filterShops => 'متاجر';
 
   @override

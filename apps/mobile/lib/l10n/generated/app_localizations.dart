@@ -1442,6 +1442,12 @@ abstract class AppLocalizations {
   /// **'Food and drinks'**
   String get filterFood;
 
+  /// No description provided for @filterFashion.
+  ///
+  /// In en, this message translates to:
+  /// **'Fashion'**
+  String get filterFashion;
+
   /// No description provided for @filterShops.
   ///
   /// In en, this message translates to:

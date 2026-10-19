@@ -224,6 +224,7 @@
   "templatesSub": "{count} تصميمًا. كل تصميم يعرض منتجاتك بطريقته.",
   "filterAllCount": "الكل {count}",
   "filterFood": "طعام ومشروبات",
+  "filterFashion": "أزياء",
   "filterShops": "متاجر",
   "filterServices": "خدمات",
   "replaceDesignTitle": "استخدام {name}؟",

@@ -167,6 +167,9 @@ class TemplateInfo {
 
   /// Service websites (salons, clinics, studios, gyms, home services) rather than menus or shops.
   bool get isService => const ['Salon', 'Dental', 'clinic', 'studio', 'Gym', 'services'].any(category.contains);
+
+  /// Clothing and fashion stores (their own filter, ahead of the other shops).
+  bool get isFashion => const ['Clothing', 'Fashion', 'Streetwear'].any(category.contains);
 }
 
 /// The owner's site design (`SiteDto`). The draft is what the editor changes; publishing makes it live.

@@ -14,7 +14,7 @@ import '../plan/plan_controller.dart';
 import 'design_controller.dart';
 import 'design_models.dart';
 
-enum _Kind { all, food, shops, services, pro }
+enum _Kind { all, food, fashion, shops, services, pro }
 
 bool _inKind(TemplateInfo t, _Kind kind) => switch (kind) {
       _Kind.all => true,
@@ -24,6 +24,7 @@ bool _inKind(TemplateInfo t, _Kind kind) => switch (kind) {
 
 _Kind _kindOf(TemplateInfo t) {
   if (t.isService) return _Kind.services;
+  if (t.isFashion) return _Kind.fashion;
   if (t.category.contains('Shop') || t.category.contains('store')) return _Kind.shops;
   return _Kind.food;
 }
@@ -107,7 +108,7 @@ class _TemplatesScreenState extends ConsumerState<TemplatesScreen> {
             for (final x in all)
               if (_inKind(x, _kind)) x,
           ];
-          final labels = {_Kind.all: t.filterAllCount(all.length), _Kind.food: t.filterFood, _Kind.shops: t.filterShops, _Kind.services: t.filterServices, _Kind.pro: t.planPro};
+          final labels = {_Kind.all: t.filterAllCount(all.length), _Kind.food: t.filterFood, _Kind.fashion: t.filterFashion, _Kind.shops: t.filterShops, _Kind.services: t.filterServices, _Kind.pro: t.planPro};
           return CustomScrollView(
             slivers: [
               SliverPadding(

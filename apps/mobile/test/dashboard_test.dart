@@ -245,6 +245,47 @@ void main() {
     expect(backend.categories.map((c) => c['name']), ['Coffee', 'Iced drinks', 'Hot drinks', 'Bakery', 'Desserts']);
   });
 
+  test('clothing and fashion templates are their own kind, ahead of shops', () {
+    TemplateInfo info(String category) => TemplateInfo.fromJson({'id': 'x', 'number': 1, 'name': 'X', 'category': category});
+    expect(info('Clothing store').isFashion, isTrue);
+    expect(info('Streetwear store').isFashion, isTrue);
+    expect(info('Fashion boutique').isFashion, isTrue);
+    expect(info('Concept store').isFashion, isFalse);
+    expect(info('Café').isFashion, isFalse);
+  });
+
+  testWidgets('the template gallery has a Fashion filter when a clothing template exists', (tester) async {
+    final fashion = {
+      'id': 'folio',
+      'number': 27,
+      'name': 'Folio',
+      'category': 'Clothing store',
+      'description': 'Editorial lookbook',
+      'ar': {'name': 'فوليو', 'category': 'متجر ملابس', 'description': 'كتالوج تحريري'},
+      'thumbnailUrl': '/templates/folio/thumbnail.png',
+      'version': 1,
+      'schema': <Object?>[],
+      'defaults': {'hero.title': 'The new season'},
+    };
+    FakeBackend.templates.add(fashion);
+    addTearDown(() => FakeBackend.templates.remove(fashion));
+    await pumpSignedIn(tester, FakeBackend());
+    await openTab(tester, 'Settings');
+    await tester.tap(find.text('Change template'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const Key('templateFilter-fashion')));
+    await tester.pumpAndSettle();
+    expect(find.text('Fashion'), findsOneWidget);
+    expect(find.byKey(const Key('template-folio')), findsOneWidget);
+    expect(find.byKey(const Key('template-souq')), findsNothing);
+
+    await tester.tap(find.byKey(const Key('templateFilter-food')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('template-folio')), findsNothing);
+    expect(find.byKey(const Key('template-souq')), findsOneWidget);
+  });
+
   testWidgets('on Basic, a Pro template shows its badge and asks to upgrade instead of calling the API', (tester) async {
     final backend = FakeBackend(plan: 'basic', testMode: false);
     await pumpSignedIn(tester, backend);

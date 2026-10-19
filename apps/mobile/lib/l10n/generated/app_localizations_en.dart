@@ -795,6 +795,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get filterFood => 'Food and drinks';
 
   @override
+  String get filterFashion => 'Fashion';
+
+  @override
   String get filterShops => 'Shops';
 
   @override

@@ -460,6 +460,7 @@
     }
   },
   "filterFood": "Food and drinks",
+  "filterFashion": "Fashion",
   "filterShops": "Shops",
   "filterServices": "Services",
   "replaceDesignTitle": "Use {name}?",
