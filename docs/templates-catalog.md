@@ -33,9 +33,9 @@ The product is for service businesses too (salons, clinics, studios, gyms, home 
 | 024 | Market Stall | Grocery, butcher | Compact price table with units, sticky category sidebar on desktop | planned |
 | 025 | Split Screen | Lounge, mocktail bar | Fixed image panel beside a scrolling menu on desktop, dark luxe | planned |
 | 026 | Scoops | Ice cream | Playful round blobs and color-cycled cards, big prices | planned |
-| 027 | Takeaway | Takeaway | App-like: one category at a time with a bottom tab bar | planned |
-| 028 | Broadsheet | Deli | Newspaper columns, headlines and rules | planned |
-| 029 | Butcher Block | Butcher | Cuts listed by weight with a price-per-kilo column | planned |
+| 027 | Folio | Clothing store | Editorial monochrome lookbook: portrait cover, numbered chapters per collection, 3:4 product grid with sizes, photos-only lookbook | building (clothing templates) |
+| 028 | Drop | Streetwear store | Bold streetwear: ticker, full-screen poster, "hot" strip, filterable bordered grid with sticker labels, street wall gallery | building (clothing templates) |
+| 029 | Couture (Pro) | Fashion boutique | Luxury multi-page boutique: full-screen lookbook hero, tall collection tiles, mega menu, the edit, most loved, lookbook, WhatsApp appointments | building (clothing templates) |
 | 030 | Roastery | Coffee roaster | Origin cards with tasting notes and roast level bars | planned |
 | 031 | Shawarma Stand | Shawarma | Big combo board with add-ons as chips | planned |
 | 032 | Bookshelf | Bookshop café | Spines on shelves that open into item cards | planned |
@@ -77,9 +77,9 @@ The product is for service businesses too (salons, clinics, studios, gyms, home 
 | 068 | | | | open |
 | 069 | | | | open |
 | 070 | | | | open |
-| 071 | | | | open |
-| 072 | | | | open |
-| 073 | | | | open |
+| 071 | Takeaway | Takeaway | App-like: one category at a time with a bottom tab bar (was 027) | planned |
+| 072 | Broadsheet | Deli | Newspaper columns, headlines and rules (was 028) | planned |
+| 073 | Butcher Block | Butcher | Cuts listed by weight with a price-per-kilo column (was 029) | planned |
 | 074 | | | | open |
 | 075 | | | | open |
 | 076 | | | | open |

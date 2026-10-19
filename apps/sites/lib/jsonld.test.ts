@@ -42,6 +42,15 @@ describe("JSON-LD", () => {
     });
   });
 
+  it("marks clothing stores as such, with a product catalog", () => {
+    for (const id of ["folio", "drop", "couture"]) {
+      const store = JSON.parse(jsonLdScript(siteJsonLd(fixtureFor(id))));
+      expect(store["@type"], id).toBe("ClothingStore");
+      expect(store.hasMenu, id).toBeUndefined();
+      expect(store.hasOfferCatalog.itemListElement.length, id).toBeGreaterThan(0);
+    }
+  });
+
   it("cannot break out of the script tag", () => {
     const evil = fixtureFor("souq");
     evil.business.name = "</script><script>alert(1)</script>";

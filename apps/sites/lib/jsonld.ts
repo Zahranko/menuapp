@@ -23,6 +23,7 @@ const TYPES: [RegExp, string][] = [
   [/gym|fitness|yoga/i, "ExerciseGym"],
   [/agency|studio|design|freelanc|consult/i, "ProfessionalService"],
   [/home services|cleaning|repair|plumb/i, "HomeAndConstructionBusiness"],
+  [/clothing|fashion|streetwear/i, "ClothingStore"],
   [/shop|store|boutique/i, "Store"],
 ];
 const FOOD = new Set(["CafeOrCoffeeShop", "Restaurant"]);
