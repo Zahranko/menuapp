@@ -22280,6 +22280,2794 @@
         "story.text": "بدأت بلوم في مطبخ بيتي بفرن واحد وكثير من الرشّات الملوّنة. وما زلنا نخبز كل شيء بأنفسنا، على دفعات صغيرة، كل صباح.",
         "footer.text": "كيك حسب الطلب لأعياد الميلاد والأعراس وكل فرحة صغيرة."
       }
+    },
+    {
+      "id": "folio",
+      "number": 27,
+      "name": "Folio",
+      "category": "Clothing store",
+      "description": "An editorial lookbook for a clothing store: a magazine-cover opening, numbered collections, large portrait photos and quiet black-and-white type.",
+      "ar": {
+        "name": "فوليو",
+        "category": "متجر ملابس",
+        "description": "كتالوج بأسلوب المجلات لمتجر الملابس: افتتاحية كغلاف مجلة، ومجموعات مرقّمة، وصور طولية كبيرة، وخطوط هادئة بالأبيض والأسود."
+      },
+      "version": 1,
+      "thumbnail": "/templates/folio/thumbnail.png",
+      "sample": "folio",
+      "schema": [
+        {
+          "key": "logo",
+          "type": "image",
+          "label": "Logo",
+          "labelAr": "الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.frame",
+          "type": "toggle",
+          "label": "Logo frame",
+          "labelAr": "إطار الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.size",
+          "type": "range",
+          "label": "Logo size",
+          "labelAr": "حجم الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "min": 70,
+          "max": 180,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "key": "logo.position",
+          "type": "choice",
+          "label": "Logo position",
+          "labelAr": "مكان الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "options": [
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "start": "Template default",
+            "center": "Centered"
+          },
+          "optionLabelsAr": {
+            "start": "كما في القالب",
+            "center": "في المنتصف"
+          }
+        },
+        {
+          "key": "logo.name",
+          "type": "toggle",
+          "label": "Show business name",
+          "labelAr": "إظهار اسم النشاط",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "font",
+          "type": "choice",
+          "label": "Font style",
+          "labelAr": "نمط الخط",
+          "group": "Fonts & colors",
+          "groupAr": "الخطوط والألوان",
+          "options": [
+            "classic",
+            "grotesk",
+            "soft"
+          ],
+          "optionLabels": {
+            "classic": "Classic",
+            "grotesk": "Grotesk",
+            "soft": "Soft serif"
+          },
+          "optionLabelsAr": {
+            "classic": "كلاسيكي",
+            "grotesk": "غروتيسك",
+            "soft": "مذيّل ناعم"
+          }
+        },
+        {
+          "key": "font.family",
+          "type": "choice",
+          "label": "Font",
+          "labelAr": "الخط",
+          "options": [
+            "default",
+            "cairo",
+            "tajawal",
+            "almarai",
+            "plex",
+            "kufi",
+            "readex",
+            "messiri",
+            "amiri",
+            "lalezar",
+            "rubik"
+          ],
+          "optionLabels": {
+            "default": "Template default",
+            "cairo": "Cairo",
+            "tajawal": "Tajawal",
+            "almarai": "Almarai",
+            "plex": "IBM Plex",
+            "kufi": "Noto Kufi",
+            "readex": "Readex Pro",
+            "messiri": "El Messiri",
+            "amiri": "Amiri (classic)",
+            "lalezar": "Lalezar (poster)",
+            "rubik": "Rubik (rounded)"
+          },
+          "optionLabelsAr": {
+            "default": "كما في القالب",
+            "cairo": "القاهرة (Cairo)",
+            "tajawal": "تجوّل (Tajawal)",
+            "almarai": "المراعي (Almarai)",
+            "plex": "بلكس (IBM Plex)",
+            "kufi": "نوتو كوفي (Noto Kufi)",
+            "readex": "ريدكس (Readex Pro)",
+            "messiri": "المسيري (El Messiri)",
+            "amiri": "أميري، خط كلاسيكي (Amiri)",
+            "lalezar": "لاله‌زار، خط عريض (Lalezar)",
+            "rubik": "روبيك، خط دائري (Rubik)"
+          },
+          "group": "Fonts & colors",
+          "groupAr": "الخطوط والألوان"
+        },
+        {
+          "key": "theme",
+          "type": "palette",
+          "label": "Color theme",
+          "labelAr": "نمط الألوان",
+          "group": "Fonts & colors",
+          "groupAr": "الخطوط والألوان",
+          "options": [
+            "paper",
+            "white",
+            "stone",
+            "ink"
+          ],
+          "optionLabels": {
+            "paper": "Paper",
+            "white": "White",
+            "stone": "Stone",
+            "ink": "Ink"
+          },
+          "optionLabelsAr": {
+            "paper": "ورقي",
+            "white": "أبيض",
+            "stone": "حجري",
+            "ink": "حبر"
+          },
+          "swatches": {
+            "paper": "#F4F1EC",
+            "white": "#FFFFFF",
+            "stone": "#E7E4DE",
+            "ink": "#121212"
+          }
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "label": "Accent color",
+          "labelAr": "اللون المميز",
+          "group": "Fonts & colors",
+          "groupAr": "الخطوط والألوان",
+          "options": [
+            "#1A1A1A",
+            "#8C3B2E",
+            "#3E5C82",
+            "#6B7A5E",
+            "#C8102E",
+            "#E8590C",
+            "#D99A00",
+            "#2F8F4E",
+            "#0E7C86",
+            "#1F6FEB",
+            "#5B3FD0",
+            "#D6336C",
+            "#7A4E2D",
+            "#2B2B2B"
+          ],
+          "custom": true
+        },
+        {
+          "key": "cards.style",
+          "type": "choice",
+          "label": "Card style",
+          "labelAr": "شكل البطاقات",
+          "group": "Cards",
+          "groupAr": "البطاقات",
+          "options": [
+            "auto",
+            "flat",
+            "outlined",
+            "raised",
+            "glass",
+            "tinted",
+            "minimal"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "flat": "Flat",
+            "outlined": "Outlined",
+            "raised": "Shadow",
+            "glass": "Glass",
+            "tinted": "Soft color",
+            "minimal": "Lines only"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "flat": "مسطّحة",
+            "outlined": "بإطار",
+            "raised": "بظل",
+            "glass": "زجاجية",
+            "tinted": "بلون هادئ",
+            "minimal": "خطوط فقط"
+          }
+        },
+        {
+          "key": "cards.border",
+          "type": "choice",
+          "label": "Card border",
+          "labelAr": "إطار البطاقات",
+          "group": "Cards",
+          "groupAr": "البطاقات",
+          "options": [
+            "auto",
+            "none",
+            "thin",
+            "medium",
+            "thick"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "none": "No border",
+            "thin": "Thin",
+            "medium": "Medium",
+            "thick": "Thick"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "none": "بلا إطار",
+            "thin": "رفيع",
+            "medium": "متوسط",
+            "thick": "سميك"
+          }
+        },
+        {
+          "key": "cards.borderColor",
+          "type": "color",
+          "label": "Border color",
+          "labelAr": "لون الإطار",
+          "group": "Cards",
+          "groupAr": "البطاقات",
+          "options": [
+            "auto",
+            "accent",
+            "ink"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "accent": "Accent color",
+            "ink": "Text color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "accent": "اللون المميز",
+            "ink": "لون النص"
+          },
+          "custom": true
+        },
+        {
+          "key": "cards.corners",
+          "type": "choice",
+          "label": "Card corners",
+          "labelAr": "زوايا البطاقات",
+          "group": "Cards",
+          "groupAr": "البطاقات",
+          "options": [
+            "auto",
+            "square",
+            "small",
+            "medium",
+            "large"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "square": "Square",
+            "small": "Slightly rounded",
+            "medium": "Rounded",
+            "large": "Very rounded"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "square": "حادة",
+            "small": "مستديرة قليلًا",
+            "medium": "مستدير",
+            "large": "مستديرة جدًا"
+          }
+        },
+        {
+          "key": "cards.photo",
+          "type": "choice",
+          "label": "Photo shape",
+          "labelAr": "شكل الصور",
+          "group": "Cards",
+          "groupAr": "البطاقات",
+          "options": [
+            "auto",
+            "square",
+            "rounded",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "square": "Square corners",
+            "rounded": "Rounded corners",
+            "circle": "Circle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "square": "زوايا حادة",
+            "rounded": "زوايا مستديرة",
+            "circle": "دائرة"
+          }
+        },
+        {
+          "key": "cards.spacing",
+          "type": "choice",
+          "label": "Space between cards",
+          "labelAr": "المسافة بين البطاقات",
+          "group": "Cards",
+          "groupAr": "البطاقات",
+          "options": [
+            "auto",
+            "tight",
+            "airy"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Compact",
+            "airy": "Roomy"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "airy": "واسع"
+          }
+        },
+        {
+          "key": "announcement",
+          "type": "text",
+          "label": "Announcement",
+          "labelAr": "الإعلان",
+          "group": "Navigation",
+          "groupAr": "التنقل",
+          "max": 80
+        },
+        {
+          "key": "hero.image",
+          "type": "image",
+          "label": "Cover photo",
+          "labelAr": "صورة الغلاف",
+          "group": "Hero header",
+          "groupAr": "الواجهة الرئيسية",
+          "presets": [
+            "fitting",
+            "rail",
+            "drape",
+            "concrete",
+            "marble",
+            "arches",
+            "loft"
+          ]
+        },
+        {
+          "key": "hero.eyebrow",
+          "type": "text",
+          "label": "Small line above the headline",
+          "labelAr": "سطر صغير فوق العنوان",
+          "group": "Hero header",
+          "groupAr": "الواجهة الرئيسية",
+          "max": 40
+        },
+        {
+          "key": "hero.title",
+          "type": "text",
+          "label": "Headline",
+          "labelAr": "العنوان",
+          "group": "Hero header",
+          "groupAr": "الواجهة الرئيسية",
+          "max": 70
+        },
+        {
+          "key": "hero.subtitle",
+          "type": "textarea",
+          "label": "Subtext",
+          "labelAr": "النص الفرعي",
+          "group": "Hero header",
+          "groupAr": "الواجهة الرئيسية",
+          "max": 140
+        },
+        {
+          "key": "hero.slides",
+          "type": "images",
+          "label": "More photos for the top (they take turns)",
+          "labelAr": "صور إضافية لأعلى الصفحة (تتناوب في الظهور)",
+          "group": "Hero slider",
+          "groupAr": "صور الواجهة المتحركة",
+          "max": 5
+        },
+        {
+          "key": "hero.transition",
+          "type": "choice",
+          "label": "How the photos change",
+          "labelAr": "طريقة تبديل الصور",
+          "group": "Hero slider",
+          "groupAr": "صور الواجهة المتحركة",
+          "options": [
+            "slide",
+            "fade",
+            "zoom"
+          ],
+          "optionLabels": {
+            "slide": "Slide",
+            "fade": "Fade",
+            "zoom": "Fade with a slow zoom"
+          },
+          "optionLabelsAr": {
+            "slide": "انزلاق",
+            "fade": "تلاشٍ",
+            "zoom": "تلاشٍ مع تكبير بطيء"
+          }
+        },
+        {
+          "key": "hero.autoplay",
+          "type": "toggle",
+          "label": "Change photos automatically",
+          "labelAr": "تبديل الصور تلقائيًا",
+          "group": "Hero slider",
+          "groupAr": "صور الواجهة المتحركة"
+        },
+        {
+          "key": "hero.speed",
+          "type": "choice",
+          "label": "Time on each photo",
+          "labelAr": "مدة ظهور كل صورة",
+          "group": "Hero slider",
+          "groupAr": "صور الواجهة المتحركة",
+          "options": [
+            "slow",
+            "normal",
+            "fast"
+          ],
+          "optionLabels": {
+            "slow": "Long (8 seconds)",
+            "normal": "Normal (5 seconds)",
+            "fast": "Short (3 seconds)"
+          },
+          "optionLabelsAr": {
+            "slow": "طويلة (8 ثوانٍ)",
+            "normal": "عادية (5 ثوانٍ)",
+            "fast": "قصيرة (3 ثوانٍ)"
+          }
+        },
+        {
+          "key": "hero.controls",
+          "type": "toggles",
+          "label": "Buttons on the photos",
+          "labelAr": "أزرار على الصور",
+          "group": "Hero slider",
+          "groupAr": "صور الواجهة المتحركة",
+          "options": [
+            "dots",
+            "arrows"
+          ],
+          "optionLabels": {
+            "dots": "Dots",
+            "arrows": "Arrows"
+          },
+          "optionLabelsAr": {
+            "dots": "نقاط",
+            "arrows": "أسهم"
+          }
+        },
+        {
+          "key": "sections",
+          "type": "toggles",
+          "label": "Sections",
+          "labelAr": "الأقسام",
+          "group": "Sections",
+          "groupAr": "الأقسام",
+          "options": [
+            "announcement",
+            "edit",
+            "gallery",
+            "story",
+            "reviews",
+            "visit"
+          ],
+          "optionLabels": {
+            "announcement": "Announcement bar",
+            "edit": "The edit (featured pieces)",
+            "gallery": "Lookbook",
+            "story": "About us",
+            "reviews": "Reviews",
+            "visit": "Hours and contact"
+          },
+          "optionLabelsAr": {
+            "announcement": "شريط الإعلان",
+            "edit": "مختاراتنا (القطع المميزة)",
+            "gallery": "معرض الإطلالات",
+            "story": "من نحن",
+            "reviews": "آراء الزبائن",
+            "visit": "أوقات العمل والتواصل"
+          }
+        },
+        {
+          "key": "edit.title",
+          "type": "text",
+          "label": "Featured pieces headline",
+          "labelAr": "عنوان القطع المميزة",
+          "group": "Headlines",
+          "groupAr": "العناوين",
+          "max": 50
+        },
+        {
+          "key": "menu.title",
+          "type": "text",
+          "label": "Collection headline",
+          "labelAr": "عنوان المجموعة",
+          "group": "Headlines",
+          "groupAr": "العناوين",
+          "max": 50
+        },
+        {
+          "key": "gallery.title",
+          "type": "text",
+          "label": "Lookbook headline",
+          "labelAr": "عنوان معرض الإطلالات",
+          "group": "Headlines",
+          "groupAr": "العناوين",
+          "max": 50
+        },
+        {
+          "key": "gallery",
+          "type": "images",
+          "label": "Lookbook photos",
+          "labelAr": "صور معرض الإطلالات",
+          "group": "Lookbook",
+          "groupAr": "معرض الإطلالات",
+          "max": 12
+        },
+        {
+          "key": "story.title",
+          "type": "text",
+          "label": "About headline",
+          "labelAr": "عنوان قسم من نحن",
+          "group": "About us",
+          "groupAr": "من نحن",
+          "max": 70
+        },
+        {
+          "key": "story.text",
+          "type": "textarea",
+          "label": "About us",
+          "labelAr": "من نحن",
+          "group": "About us",
+          "groupAr": "من نحن",
+          "max": 400
+        },
+        {
+          "key": "reviews.1.quote",
+          "type": "textarea",
+          "label": "Review 1",
+          "labelAr": "التقييم 1",
+          "group": "Reviews",
+          "groupAr": "آراء الزبائن",
+          "max": 200
+        },
+        {
+          "key": "reviews.1.name",
+          "type": "text",
+          "label": "Review 1 by",
+          "labelAr": "صاحب التقييم 1",
+          "group": "Reviews",
+          "groupAr": "آراء الزبائن",
+          "max": 40
+        },
+        {
+          "key": "reviews.2.quote",
+          "type": "textarea",
+          "label": "Review 2",
+          "labelAr": "التقييم 2",
+          "group": "Reviews",
+          "groupAr": "آراء الزبائن",
+          "max": 200
+        },
+        {
+          "key": "reviews.2.name",
+          "type": "text",
+          "label": "Review 2 by",
+          "labelAr": "صاحب التقييم 2",
+          "group": "Reviews",
+          "groupAr": "آراء الزبائن",
+          "max": 40
+        },
+        {
+          "key": "reviews.3.quote",
+          "type": "textarea",
+          "label": "Review 3",
+          "labelAr": "التقييم 3",
+          "group": "Reviews",
+          "groupAr": "آراء الزبائن",
+          "max": 200
+        },
+        {
+          "key": "reviews.3.name",
+          "type": "text",
+          "label": "Review 3 by",
+          "labelAr": "صاحب التقييم 3",
+          "group": "Reviews",
+          "groupAr": "آراء الزبائن",
+          "max": 40
+        },
+        {
+          "key": "footer.text",
+          "type": "textarea",
+          "label": "Line in the footer",
+          "labelAr": "سطر التذييل",
+          "group": "Footer",
+          "groupAr": "التذييل",
+          "max": 140
+        },
+        {
+          "key": "footer.nameSize",
+          "type": "choice",
+          "label": "Business name size in the footer",
+          "labelAr": "حجم اسم النشاط في أسفل الصفحة",
+          "group": "Footer",
+          "groupAr": "التذييل",
+          "options": [
+            "large",
+            "medium",
+            "small"
+          ],
+          "optionLabels": {
+            "large": "Large (as designed)",
+            "medium": "Medium",
+            "small": "Small"
+          },
+          "optionLabelsAr": {
+            "large": "كبير (كما في التصميم)",
+            "medium": "متوسط",
+            "small": "صغير"
+          }
+        },
+        {
+          "key": "hours",
+          "type": "hours",
+          "label": "Opening hours",
+          "labelAr": "أوقات العمل",
+          "group": "Visit us",
+          "groupAr": "زورونا"
+        },
+        {
+          "key": "social.show",
+          "type": "toggles",
+          "label": "Accounts to show on your website",
+          "labelAr": "الحسابات التي تظهر في موقعك",
+          "group": "Social media",
+          "groupAr": "حسابات التواصل الاجتماعي",
+          "options": [
+            "instagram",
+            "whatsapp",
+            "facebook",
+            "tiktok",
+            "snapchat",
+            "phone"
+          ],
+          "optionLabels": {
+            "instagram": "Instagram",
+            "whatsapp": "WhatsApp",
+            "facebook": "Facebook",
+            "tiktok": "TikTok",
+            "snapchat": "Snapchat",
+            "phone": "Phone (call us)"
+          },
+          "optionLabelsAr": {
+            "instagram": "إنستغرام",
+            "whatsapp": "واتساب",
+            "facebook": "فيسبوك",
+            "tiktok": "تيك توك",
+            "snapchat": "سناب شات",
+            "phone": "الهاتف (اتصل بنا)"
+          }
+        },
+        {
+          "key": "order.action",
+          "type": "choice",
+          "label": "What the button does",
+          "labelAr": "ماذا يفعل الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "whatsapp",
+            "call",
+            "instagram",
+            "facebook",
+            "hide"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "whatsapp": "Order on WhatsApp",
+            "call": "Call us",
+            "instagram": "Open Instagram",
+            "facebook": "Open Facebook",
+            "hide": "Hide the button"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "whatsapp": "اطلب عبر واتساب",
+            "call": "اتصل بنا",
+            "instagram": "افتح إنستغرام",
+            "facebook": "افتح فيسبوك",
+            "hide": "إخفاء الزر"
+          }
+        },
+        {
+          "key": "order.shape",
+          "type": "choice",
+          "label": "Button shape",
+          "labelAr": "شكل الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "pill",
+            "rounded",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "pill": "Pill",
+            "rounded": "Rounded square",
+            "circle": "Round icon only"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "pill": "بيضاوي",
+            "rounded": "مربع بزوايا دائرية",
+            "circle": "دائرة بأيقونة فقط"
+          }
+        },
+        {
+          "key": "order.label",
+          "type": "text",
+          "label": "Button text (leave empty for the usual text)",
+          "labelAr": "نص الزر (اتركه فارغًا للنص المعتاد)",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "max": 28
+        }
+      ],
+      "defaults": {
+        "font": "classic",
+        "font.family": "default",
+        "logo": "",
+        "logo.frame": true,
+        "logo.size": 100,
+        "logo.position": "start",
+        "logo.name": true,
+        "theme": "paper",
+        "accent": "#1A1A1A",
+        "announcement": "Free exchanges within 14 days. Ask about sizes on WhatsApp.",
+        "hero.image": "preset:fitting",
+        "hero.eyebrow": "The new season",
+        "hero.title": "Quiet pieces, made to be worn for years.",
+        "hero.subtitle": "Linen, wool and cotton in easy shapes. New pieces arrive every month.",
+        "sections": [
+          "announcement",
+          "edit",
+          "gallery",
+          "story",
+          "reviews",
+          "visit"
+        ],
+        "edit.title": "The edit",
+        "menu.title": "The collection",
+        "gallery.title": "Lookbook",
+        "gallery": [],
+        "story.title": "A small studio for clothes that last",
+        "story.text": "We choose every fabric ourselves and keep our collections small, so each piece gets the care it deserves. Come in for a fitting, or message us and we will help you find your size.",
+        "reviews.1.quote": "",
+        "reviews.1.name": "",
+        "reviews.2.quote": "",
+        "reviews.2.name": "",
+        "reviews.3.quote": "",
+        "reviews.3.name": "",
+        "footer.text": "Sizes, fittings and exchanges: message us on WhatsApp.",
+        "hours": {
+          "sat": "11:00-21:00",
+          "sun": "11:00-21:00",
+          "mon": "11:00-21:00",
+          "tue": "11:00-21:00",
+          "wed": "11:00-21:00",
+          "thu": "11:00-22:00",
+          "fri": ""
+        },
+        "footer.nameSize": "large",
+        "social.show": [],
+        "order.action": "auto",
+        "order.shape": "auto",
+        "order.label": "",
+        "cards.style": "auto",
+        "cards.border": "auto",
+        "cards.borderColor": "auto",
+        "cards.corners": "auto",
+        "cards.photo": "auto",
+        "cards.spacing": "auto",
+        "hero.slides": [],
+        "hero.transition": "slide",
+        "hero.autoplay": true,
+        "hero.speed": "normal",
+        "hero.controls": [
+          "dots",
+          "arrows"
+        ]
+      },
+      "defaultsAr": {
+        "announcement": "استبدال مجاني خلال 14 يومًا. اسألنا عن المقاسات على واتساب.",
+        "hero.eyebrow": "الموسم الجديد",
+        "hero.title": "قطع هادئة، مصنوعة لتُلبس لسنوات.",
+        "hero.subtitle": "كتان وصوف وقطن بقصّات مريحة. تصل قطع جديدة كل شهر.",
+        "edit.title": "مختاراتنا",
+        "menu.title": "المجموعة",
+        "gallery.title": "معرض الإطلالات",
+        "story.title": "استوديو صغير لملابس تدوم",
+        "story.text": "نختار كل قماش بأنفسنا ونُبقي مجموعاتنا صغيرة، لتنال كل قطعة العناية التي تستحقها. زورونا للقياس، أو راسلونا وسنساعدكم في اختيار المقاس المناسب.",
+        "footer.text": "المقاسات والقياس والاستبدال: راسلونا على واتساب."
+      }
+    },
+    {
+      "id": "drop",
+      "number": 28,
+      "name": "Drop",
+      "category": "Streetwear store",
+      "description": "A loud streetwear store: a moving ticker, a full-screen drop poster, sticker labels, a filterable product grid with sizes and a street photo wall.",
+      "ar": {
+        "name": "دروب",
+        "category": "متجر ملابس شبابية",
+        "description": "متجر ملابس شبابية جريء: شريط متحرك، وملصق إصدار بملء الشاشة، وملصقات على المنتجات، وشبكة منتجات بفلاتر ومقاسات، وجدار صور من الشارع."
+      },
+      "version": 1,
+      "thumbnail": "/templates/drop/thumbnail.png",
+      "sample": "drop",
+      "schema": [
+        {
+          "key": "logo",
+          "type": "image",
+          "label": "Logo",
+          "labelAr": "الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.frame",
+          "type": "toggle",
+          "label": "Logo frame",
+          "labelAr": "إطار الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.size",
+          "type": "range",
+          "label": "Logo size",
+          "labelAr": "حجم الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "min": 70,
+          "max": 180,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "key": "logo.position",
+          "type": "choice",
+          "label": "Logo position",
+          "labelAr": "مكان الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "options": [
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "start": "Template default",
+            "center": "Centered"
+          },
+          "optionLabelsAr": {
+            "start": "كما في القالب",
+            "center": "في المنتصف"
+          }
+        },
+        {
+          "key": "logo.name",
+          "type": "toggle",
+          "label": "Show business name",
+          "labelAr": "إظهار اسم النشاط",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "font",
+          "type": "choice",
+          "label": "Font style",
+          "labelAr": "نمط الخط",
+          "group": "Fonts & colors",
+          "groupAr": "الخطوط والألوان",
+          "options": [
+            "condensed",
+            "bold",
+            "grotesk"
+          ],
+          "optionLabels": {
+            "condensed": "Poster",
+            "bold": "Bold",
+            "grotesk": "Grotesk"
+          },
+          "optionLabelsAr": {
+            "condensed": "ملصق",
+            "bold": "عريض",
+            "grotesk": "غروتيسك"
+          }
+        },
+        {
+          "key": "font.family",
+          "type": "choice",
+          "label": "Font",
+          "labelAr": "الخط",
+          "options": [
+            "default",
+            "cairo",
+            "tajawal",
+            "almarai",
+            "plex",
+            "kufi",
+            "readex",
+            "messiri",
+            "amiri",
+            "lalezar",
+            "rubik"
+          ],
+          "optionLabels": {
+            "default": "Template default",
+            "cairo": "Cairo",
+            "tajawal": "Tajawal",
+            "almarai": "Almarai",
+            "plex": "IBM Plex",
+            "kufi": "Noto Kufi",
+            "readex": "Readex Pro",
+            "messiri": "El Messiri",
+            "amiri": "Amiri (classic)",
+            "lalezar": "Lalezar (poster)",
+            "rubik": "Rubik (rounded)"
+          },
+          "optionLabelsAr": {
+            "default": "كما في القالب",
+            "cairo": "القاهرة (Cairo)",
+            "tajawal": "تجوّل (Tajawal)",
+            "almarai": "المراعي (Almarai)",
+            "plex": "بلكس (IBM Plex)",
+            "kufi": "نوتو كوفي (Noto Kufi)",
+            "readex": "ريدكس (Readex Pro)",
+            "messiri": "المسيري (El Messiri)",
+            "amiri": "أميري، خط كلاسيكي (Amiri)",
+            "lalezar": "لاله‌زار، خط عريض (Lalezar)",
+            "rubik": "روبيك، خط دائري (Rubik)"
+          },
+          "group": "Fonts & colors",
+          "groupAr": "الخطوط والألوان"
+        },
+        {
+          "key": "theme",
+          "type": "palette",
+          "label": "Color theme",
+          "labelAr": "نمط الألوان",
+          "group": "Fonts & colors",
+          "groupAr": "الخطوط والألوان",
+          "options": [
+            "black",
+            "white",
+            "concrete",
+            "cobalt"
+          ],
+          "optionLabels": {
+            "black": "Black",
+            "white": "White",
+            "concrete": "Concrete",
+            "cobalt": "Cobalt"
+          },
+          "optionLabelsAr": {
+            "black": "أسود",
+            "white": "أبيض",
+            "concrete": "إسمنتي",
+            "cobalt": "أزرق كوبالت"
+          },
+          "swatches": {
+            "black": "#0E0E0E",
+            "white": "#F4F4F0",
+            "concrete": "#CFCFCB",
+            "cobalt": "#1433C9"
+          }
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "label": "Accent color",
+          "labelAr": "اللون المميز",
+          "group": "Fonts & colors",
+          "groupAr": "الخطوط والألوان",
+          "options": [
+            "#C6FF00",
+            "#FF4D00",
+            "#FF3EA5",
+            "#2F5BFF",
+            "#C8102E",
+            "#E8590C",
+            "#D99A00",
+            "#2F8F4E",
+            "#0E7C86",
+            "#1F6FEB",
+            "#5B3FD0",
+            "#D6336C",
+            "#7A4E2D",
+            "#2B2B2B"
+          ],
+          "custom": true
+        },
+        {
+          "key": "cards.style",
+          "type": "choice",
+          "label": "Card style",
+          "labelAr": "شكل البطاقات",
+          "group": "Cards",
+          "groupAr": "البطاقات",
+          "options": [
+            "auto",
+            "flat",
+            "outlined",
+            "raised",
+            "glass",
+            "tinted",
+            "minimal"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "flat": "Flat",
+            "outlined": "Outlined",
+            "raised": "Shadow",
+            "glass": "Glass",
+            "tinted": "Soft color",
+            "minimal": "Lines only"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "flat": "مسطّحة",
+            "outlined": "بإطار",
+            "raised": "بظل",
+            "glass": "زجاجية",
+            "tinted": "بلون هادئ",
+            "minimal": "خطوط فقط"
+          }
+        },
+        {
+          "key": "cards.border",
+          "type": "choice",
+          "label": "Card border",
+          "labelAr": "إطار البطاقات",
+          "group": "Cards",
+          "groupAr": "البطاقات",
+          "options": [
+            "auto",
+            "none",
+            "thin",
+            "medium",
+            "thick"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "none": "No border",
+            "thin": "Thin",
+            "medium": "Medium",
+            "thick": "Thick"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "none": "بلا إطار",
+            "thin": "رفيع",
+            "medium": "متوسط",
+            "thick": "سميك"
+          }
+        },
+        {
+          "key": "cards.borderColor",
+          "type": "color",
+          "label": "Border color",
+          "labelAr": "لون الإطار",
+          "group": "Cards",
+          "groupAr": "البطاقات",
+          "options": [
+            "auto",
+            "accent",
+            "ink"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "accent": "Accent color",
+            "ink": "Text color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "accent": "اللون المميز",
+            "ink": "لون النص"
+          },
+          "custom": true
+        },
+        {
+          "key": "cards.corners",
+          "type": "choice",
+          "label": "Card corners",
+          "labelAr": "زوايا البطاقات",
+          "group": "Cards",
+          "groupAr": "البطاقات",
+          "options": [
+            "auto",
+            "square",
+            "small",
+            "medium",
+            "large"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "square": "Square",
+            "small": "Slightly rounded",
+            "medium": "Rounded",
+            "large": "Very rounded"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "square": "حادة",
+            "small": "مستديرة قليلًا",
+            "medium": "مستدير",
+            "large": "مستديرة جدًا"
+          }
+        },
+        {
+          "key": "cards.photo",
+          "type": "choice",
+          "label": "Photo shape",
+          "labelAr": "شكل الصور",
+          "group": "Cards",
+          "groupAr": "البطاقات",
+          "options": [
+            "auto",
+            "square",
+            "rounded",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "square": "Square corners",
+            "rounded": "Rounded corners",
+            "circle": "Circle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "square": "زوايا حادة",
+            "rounded": "زوايا مستديرة",
+            "circle": "دائرة"
+          }
+        },
+        {
+          "key": "cards.spacing",
+          "type": "choice",
+          "label": "Space between cards",
+          "labelAr": "المسافة بين البطاقات",
+          "group": "Cards",
+          "groupAr": "البطاقات",
+          "options": [
+            "auto",
+            "tight",
+            "airy"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Compact",
+            "airy": "Roomy"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "airy": "واسع"
+          }
+        },
+        {
+          "key": "announcement",
+          "type": "text",
+          "label": "Announcement",
+          "labelAr": "الإعلان",
+          "group": "Navigation",
+          "groupAr": "التنقل",
+          "max": 80
+        },
+        {
+          "key": "hero.image",
+          "type": "image",
+          "label": "Hero image",
+          "labelAr": "صورة الواجهة",
+          "group": "Hero header",
+          "groupAr": "الواجهة الرئيسية",
+          "presets": [
+            "concrete",
+            "rail",
+            "fitting",
+            "drape",
+            "neon",
+            "noir",
+            "loft"
+          ]
+        },
+        {
+          "key": "hero.eyebrow",
+          "type": "text",
+          "label": "Sticker text",
+          "labelAr": "نص الملصق",
+          "group": "Hero header",
+          "groupAr": "الواجهة الرئيسية",
+          "max": 24
+        },
+        {
+          "key": "hero.title",
+          "type": "text",
+          "label": "Headline",
+          "labelAr": "العنوان",
+          "group": "Hero header",
+          "groupAr": "الواجهة الرئيسية",
+          "max": 40
+        },
+        {
+          "key": "hero.subtitle",
+          "type": "textarea",
+          "label": "Subtext",
+          "labelAr": "النص الفرعي",
+          "group": "Hero header",
+          "groupAr": "الواجهة الرئيسية",
+          "max": 140
+        },
+        {
+          "key": "hero.slides",
+          "type": "images",
+          "label": "More photos for the top (they take turns)",
+          "labelAr": "صور إضافية لأعلى الصفحة (تتناوب في الظهور)",
+          "group": "Hero slider",
+          "groupAr": "صور الواجهة المتحركة",
+          "max": 5
+        },
+        {
+          "key": "hero.transition",
+          "type": "choice",
+          "label": "How the photos change",
+          "labelAr": "طريقة تبديل الصور",
+          "group": "Hero slider",
+          "groupAr": "صور الواجهة المتحركة",
+          "options": [
+            "slide",
+            "fade",
+            "zoom"
+          ],
+          "optionLabels": {
+            "slide": "Slide",
+            "fade": "Fade",
+            "zoom": "Fade with a slow zoom"
+          },
+          "optionLabelsAr": {
+            "slide": "انزلاق",
+            "fade": "تلاشٍ",
+            "zoom": "تلاشٍ مع تكبير بطيء"
+          }
+        },
+        {
+          "key": "hero.autoplay",
+          "type": "toggle",
+          "label": "Change photos automatically",
+          "labelAr": "تبديل الصور تلقائيًا",
+          "group": "Hero slider",
+          "groupAr": "صور الواجهة المتحركة"
+        },
+        {
+          "key": "hero.speed",
+          "type": "choice",
+          "label": "Time on each photo",
+          "labelAr": "مدة ظهور كل صورة",
+          "group": "Hero slider",
+          "groupAr": "صور الواجهة المتحركة",
+          "options": [
+            "slow",
+            "normal",
+            "fast"
+          ],
+          "optionLabels": {
+            "slow": "Long (8 seconds)",
+            "normal": "Normal (5 seconds)",
+            "fast": "Short (3 seconds)"
+          },
+          "optionLabelsAr": {
+            "slow": "طويلة (8 ثوانٍ)",
+            "normal": "عادية (5 ثوانٍ)",
+            "fast": "قصيرة (3 ثوانٍ)"
+          }
+        },
+        {
+          "key": "hero.controls",
+          "type": "toggles",
+          "label": "Buttons on the photos",
+          "labelAr": "أزرار على الصور",
+          "group": "Hero slider",
+          "groupAr": "صور الواجهة المتحركة",
+          "options": [
+            "dots",
+            "arrows"
+          ],
+          "optionLabels": {
+            "dots": "Dots",
+            "arrows": "Arrows"
+          },
+          "optionLabelsAr": {
+            "dots": "نقاط",
+            "arrows": "أسهم"
+          }
+        },
+        {
+          "key": "hero.height",
+          "type": "choice",
+          "label": "Height of the top",
+          "labelAr": "ارتفاع أعلى الصفحة",
+          "group": "Hero slider",
+          "groupAr": "صور الواجهة المتحركة",
+          "options": [
+            "auto",
+            "short",
+            "medium",
+            "full"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "short": "Short",
+            "medium": "Medium",
+            "full": "Full screen"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "short": "قصير",
+            "medium": "متوسط",
+            "full": "ملء الشاشة"
+          }
+        },
+        {
+          "key": "hero.overlay",
+          "type": "choice",
+          "label": "Darken the photos (easier to read the text)",
+          "labelAr": "تعتيم الصور (لتسهيل قراءة النص)",
+          "group": "Hero slider",
+          "groupAr": "صور الواجهة المتحركة",
+          "options": [
+            "auto",
+            "light",
+            "medium",
+            "strong"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "light": "A little",
+            "medium": "Medium",
+            "strong": "A lot"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "light": "قليلًا",
+            "medium": "متوسط",
+            "strong": "كثيرًا"
+          }
+        },
+        {
+          "key": "hero.textPosition",
+          "type": "choice",
+          "label": "Text position",
+          "labelAr": "مكان النص",
+          "group": "Hero slider",
+          "groupAr": "صور الواجهة المتحركة",
+          "options": [
+            "auto",
+            "start",
+            "center",
+            "bottom"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "start": "Side",
+            "center": "Center",
+            "bottom": "Bottom"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "start": "على الجانب",
+            "center": "في المنتصف",
+            "bottom": "في الأسفل"
+          }
+        },
+        {
+          "key": "sections",
+          "type": "toggles",
+          "label": "Sections",
+          "labelAr": "الأقسام",
+          "group": "Sections",
+          "groupAr": "الأقسام",
+          "options": [
+            "announcement",
+            "hot",
+            "gallery",
+            "story",
+            "reviews",
+            "visit"
+          ],
+          "optionLabels": {
+            "announcement": "Moving ticker",
+            "hot": "Hot right now (featured)",
+            "gallery": "Street photos",
+            "story": "About us",
+            "reviews": "Reviews",
+            "visit": "Hours and contact"
+          },
+          "optionLabelsAr": {
+            "announcement": "الشريط المتحرك",
+            "hot": "الأكثر رواجًا (المميز)",
+            "gallery": "صور من الشارع",
+            "story": "من نحن",
+            "reviews": "آراء الزبائن",
+            "visit": "أوقات العمل والتواصل"
+          }
+        },
+        {
+          "key": "hot.title",
+          "type": "text",
+          "label": "Featured headline",
+          "labelAr": "عنوان المنتجات المميزة",
+          "group": "Headlines",
+          "groupAr": "العناوين",
+          "max": 40
+        },
+        {
+          "key": "menu.title",
+          "type": "text",
+          "label": "Shop headline",
+          "labelAr": "عنوان المتجر",
+          "group": "Headlines",
+          "groupAr": "العناوين",
+          "max": 40
+        },
+        {
+          "key": "gallery.title",
+          "type": "text",
+          "label": "Gallery headline",
+          "labelAr": "عنوان معرض الصور",
+          "group": "Headlines",
+          "groupAr": "العناوين",
+          "max": 40
+        },
+        {
+          "key": "gallery",
+          "type": "images",
+          "label": "Gallery photos",
+          "labelAr": "صور المعرض",
+          "group": "Gallery",
+          "groupAr": "معرض الصور",
+          "max": 12
+        },
+        {
+          "key": "story.title",
+          "type": "text",
+          "label": "About headline",
+          "labelAr": "عنوان قسم من نحن",
+          "group": "About us",
+          "groupAr": "من نحن",
+          "max": 60
+        },
+        {
+          "key": "story.text",
+          "type": "textarea",
+          "label": "About us",
+          "labelAr": "من نحن",
+          "group": "About us",
+          "groupAr": "من نحن",
+          "max": 400
+        },
+        {
+          "key": "reviews.1.quote",
+          "type": "textarea",
+          "label": "Review 1",
+          "labelAr": "التقييم 1",
+          "group": "Reviews",
+          "groupAr": "آراء الزبائن",
+          "max": 200
+        },
+        {
+          "key": "reviews.1.name",
+          "type": "text",
+          "label": "Review 1 by",
+          "labelAr": "صاحب التقييم 1",
+          "group": "Reviews",
+          "groupAr": "آراء الزبائن",
+          "max": 40
+        },
+        {
+          "key": "reviews.2.quote",
+          "type": "textarea",
+          "label": "Review 2",
+          "labelAr": "التقييم 2",
+          "group": "Reviews",
+          "groupAr": "آراء الزبائن",
+          "max": 200
+        },
+        {
+          "key": "reviews.2.name",
+          "type": "text",
+          "label": "Review 2 by",
+          "labelAr": "صاحب التقييم 2",
+          "group": "Reviews",
+          "groupAr": "آراء الزبائن",
+          "max": 40
+        },
+        {
+          "key": "reviews.3.quote",
+          "type": "textarea",
+          "label": "Review 3",
+          "labelAr": "التقييم 3",
+          "group": "Reviews",
+          "groupAr": "آراء الزبائن",
+          "max": 200
+        },
+        {
+          "key": "reviews.3.name",
+          "type": "text",
+          "label": "Review 3 by",
+          "labelAr": "صاحب التقييم 3",
+          "group": "Reviews",
+          "groupAr": "آراء الزبائن",
+          "max": 40
+        },
+        {
+          "key": "hours",
+          "type": "hours",
+          "label": "Opening hours",
+          "labelAr": "أوقات العمل",
+          "group": "Visit us",
+          "groupAr": "زورونا"
+        },
+        {
+          "key": "footer.nameSize",
+          "type": "choice",
+          "label": "Business name size in the footer",
+          "labelAr": "حجم اسم النشاط في أسفل الصفحة",
+          "group": "Footer",
+          "groupAr": "التذييل",
+          "options": [
+            "large",
+            "medium",
+            "small"
+          ],
+          "optionLabels": {
+            "large": "Large (as designed)",
+            "medium": "Medium",
+            "small": "Small"
+          },
+          "optionLabelsAr": {
+            "large": "كبير (كما في التصميم)",
+            "medium": "متوسط",
+            "small": "صغير"
+          }
+        },
+        {
+          "key": "social.show",
+          "type": "toggles",
+          "label": "Accounts to show on your website",
+          "labelAr": "الحسابات التي تظهر في موقعك",
+          "group": "Social media",
+          "groupAr": "حسابات التواصل الاجتماعي",
+          "options": [
+            "instagram",
+            "whatsapp",
+            "facebook",
+            "tiktok",
+            "snapchat",
+            "phone"
+          ],
+          "optionLabels": {
+            "instagram": "Instagram",
+            "whatsapp": "WhatsApp",
+            "facebook": "Facebook",
+            "tiktok": "TikTok",
+            "snapchat": "Snapchat",
+            "phone": "Phone (call us)"
+          },
+          "optionLabelsAr": {
+            "instagram": "إنستغرام",
+            "whatsapp": "واتساب",
+            "facebook": "فيسبوك",
+            "tiktok": "تيك توك",
+            "snapchat": "سناب شات",
+            "phone": "الهاتف (اتصل بنا)"
+          }
+        },
+        {
+          "key": "order.action",
+          "type": "choice",
+          "label": "What the button does",
+          "labelAr": "ماذا يفعل الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "whatsapp",
+            "call",
+            "instagram",
+            "facebook",
+            "hide"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "whatsapp": "Order on WhatsApp",
+            "call": "Call us",
+            "instagram": "Open Instagram",
+            "facebook": "Open Facebook",
+            "hide": "Hide the button"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "whatsapp": "اطلب عبر واتساب",
+            "call": "اتصل بنا",
+            "instagram": "افتح إنستغرام",
+            "facebook": "افتح فيسبوك",
+            "hide": "إخفاء الزر"
+          }
+        },
+        {
+          "key": "order.shape",
+          "type": "choice",
+          "label": "Button shape",
+          "labelAr": "شكل الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "pill",
+            "rounded",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "pill": "Pill",
+            "rounded": "Rounded square",
+            "circle": "Round icon only"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "pill": "بيضاوي",
+            "rounded": "مربع بزوايا دائرية",
+            "circle": "دائرة بأيقونة فقط"
+          }
+        },
+        {
+          "key": "order.label",
+          "type": "text",
+          "label": "Button text (leave empty for the usual text)",
+          "labelAr": "نص الزر (اتركه فارغًا للنص المعتاد)",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "max": 28
+        }
+      ],
+      "defaults": {
+        "font": "condensed",
+        "font.family": "default",
+        "logo": "",
+        "logo.frame": true,
+        "logo.size": 100,
+        "logo.position": "start",
+        "logo.name": true,
+        "theme": "black",
+        "accent": "#C6FF00",
+        "announcement": "New drop every Friday. DM us on WhatsApp to hold your size.",
+        "hero.image": "preset:concrete",
+        "hero.eyebrow": "Drop 09",
+        "hero.title": "Out now. Limited run.",
+        "hero.subtitle": "Heavyweight basics, loud graphics and sneakers. When it's gone, it's gone.",
+        "sections": [
+          "announcement",
+          "hot",
+          "gallery",
+          "story",
+          "reviews",
+          "visit"
+        ],
+        "hot.title": "Hot right now",
+        "menu.title": "Shop the drop",
+        "gallery.title": "On the street",
+        "gallery": [],
+        "story.title": "Made in the city, for the city",
+        "story.text": "We started printing tees in a garage and never stopped. Every drop is small, every piece is checked by hand, and our crew answers on WhatsApp seven days a week.",
+        "reviews.1.quote": "",
+        "reviews.1.name": "",
+        "reviews.2.quote": "",
+        "reviews.2.name": "",
+        "reviews.3.quote": "",
+        "reviews.3.name": "",
+        "hours": {
+          "sat": "12:00-23:00",
+          "sun": "12:00-23:00",
+          "mon": "12:00-23:00",
+          "tue": "12:00-23:00",
+          "wed": "12:00-23:00",
+          "thu": "12:00-00:00",
+          "fri": "14:00-00:00"
+        },
+        "footer.nameSize": "large",
+        "social.show": [],
+        "order.action": "auto",
+        "order.shape": "auto",
+        "order.label": "",
+        "cards.style": "auto",
+        "cards.border": "auto",
+        "cards.borderColor": "auto",
+        "cards.corners": "auto",
+        "cards.photo": "auto",
+        "cards.spacing": "auto",
+        "hero.slides": [],
+        "hero.transition": "slide",
+        "hero.autoplay": true,
+        "hero.speed": "normal",
+        "hero.controls": [
+          "dots",
+          "arrows"
+        ],
+        "hero.height": "auto",
+        "hero.overlay": "auto",
+        "hero.textPosition": "auto"
+      },
+      "defaultsAr": {
+        "announcement": "إصدار جديد كل جمعة. راسلنا على واتساب لنحجز مقاسك.",
+        "hero.eyebrow": "الإصدار 09",
+        "hero.title": "متوفر الآن. كمية محدودة.",
+        "hero.subtitle": "أساسيات ثقيلة، وطبعات جريئة، وأحذية رياضية. عندما تنفد، تنفد.",
+        "hot.title": "الأكثر رواجًا الآن",
+        "menu.title": "تسوّق الإصدار",
+        "gallery.title": "من الشارع",
+        "story.title": "صُنع في المدينة، للمدينة",
+        "story.text": "بدأنا بطباعة التيشيرتات في كراج ولم نتوقف. كل إصدار صغير، وكل قطعة نفحصها باليد، وفريقنا يرد على واتساب طوال أيام الأسبوع."
+      }
+    },
+    {
+      "id": "couture",
+      "number": 29,
+      "name": "Couture",
+      "category": "Fashion boutique",
+      "description": "A luxury boutique with its own pages: a full-screen lookbook opening, tall collection tiles, the edit, most-loved pieces, a photo lookbook and private appointments on WhatsApp.",
+      "ar": {
+        "name": "كوتور",
+        "category": "بوتيك أزياء",
+        "description": "بوتيك فاخر بصفحات خاصة: افتتاحية بصورة بملء الشاشة، ومربعات طويلة للمجموعات، ومختاراتنا، والقطع الأكثر طلبًا، ومعرض إطلالات، ومواعيد خاصة عبر واتساب."
+      },
+      "version": 1,
+      "tier": "pro",
+      "thumbnail": "/templates/couture/thumbnail.png",
+      "sample": "couture",
+      "schema": [
+        {
+          "key": "logo",
+          "type": "image",
+          "label": "Logo",
+          "labelAr": "الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.frame",
+          "type": "toggle",
+          "label": "Logo frame",
+          "labelAr": "إطار الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "logo.size",
+          "type": "range",
+          "label": "Logo size",
+          "labelAr": "حجم الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "min": 70,
+          "max": 180,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "key": "logo.position",
+          "type": "choice",
+          "label": "Logo position",
+          "labelAr": "مكان الشعار",
+          "group": "Brand",
+          "groupAr": "الهوية",
+          "options": [
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "start": "Template default",
+            "center": "Centered"
+          },
+          "optionLabelsAr": {
+            "start": "كما في القالب",
+            "center": "في المنتصف"
+          }
+        },
+        {
+          "key": "logo.name",
+          "type": "toggle",
+          "label": "Show business name",
+          "labelAr": "إظهار اسم النشاط",
+          "group": "Brand",
+          "groupAr": "الهوية"
+        },
+        {
+          "key": "font",
+          "type": "choice",
+          "label": "Font style",
+          "labelAr": "نمط الخط",
+          "group": "Fonts & colors",
+          "groupAr": "الخطوط والألوان",
+          "options": [
+            "elegant",
+            "classic",
+            "naskh"
+          ],
+          "optionLabels": {
+            "elegant": "Elegant",
+            "classic": "Classic",
+            "naskh": "Naskh"
+          },
+          "optionLabelsAr": {
+            "elegant": "أنيق",
+            "classic": "كلاسيكي",
+            "naskh": "نسخ"
+          }
+        },
+        {
+          "key": "font.family",
+          "type": "choice",
+          "label": "Font",
+          "labelAr": "الخط",
+          "options": [
+            "default",
+            "cairo",
+            "tajawal",
+            "almarai",
+            "plex",
+            "kufi",
+            "readex",
+            "messiri",
+            "amiri",
+            "lalezar",
+            "rubik"
+          ],
+          "optionLabels": {
+            "default": "Template default",
+            "cairo": "Cairo",
+            "tajawal": "Tajawal",
+            "almarai": "Almarai",
+            "plex": "IBM Plex",
+            "kufi": "Noto Kufi",
+            "readex": "Readex Pro",
+            "messiri": "El Messiri",
+            "amiri": "Amiri (classic)",
+            "lalezar": "Lalezar (poster)",
+            "rubik": "Rubik (rounded)"
+          },
+          "optionLabelsAr": {
+            "default": "كما في القالب",
+            "cairo": "القاهرة (Cairo)",
+            "tajawal": "تجوّل (Tajawal)",
+            "almarai": "المراعي (Almarai)",
+            "plex": "بلكس (IBM Plex)",
+            "kufi": "نوتو كوفي (Noto Kufi)",
+            "readex": "ريدكس (Readex Pro)",
+            "messiri": "المسيري (El Messiri)",
+            "amiri": "أميري، خط كلاسيكي (Amiri)",
+            "lalezar": "لاله‌زار، خط عريض (Lalezar)",
+            "rubik": "روبيك، خط دائري (Rubik)"
+          },
+          "group": "Fonts & colors",
+          "groupAr": "الخطوط والألوان"
+        },
+        {
+          "key": "theme",
+          "type": "palette",
+          "label": "Color theme",
+          "labelAr": "نمط الألوان",
+          "group": "Fonts & colors",
+          "groupAr": "الخطوط والألوان",
+          "options": [
+            "ivory",
+            "noir",
+            "blush",
+            "sage"
+          ],
+          "optionLabels": {
+            "ivory": "Ivory",
+            "noir": "Noir",
+            "blush": "Blush",
+            "sage": "Sage"
+          },
+          "optionLabelsAr": {
+            "ivory": "عاجي",
+            "noir": "أسود",
+            "blush": "وردي فاتح",
+            "sage": "أخضر مريمي"
+          },
+          "swatches": {
+            "ivory": "#F7F3EC",
+            "noir": "#0F0E0C",
+            "blush": "#F4E9E4",
+            "sage": "#E8EAE2"
+          }
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "label": "Accent color",
+          "labelAr": "اللون المميز",
+          "group": "Fonts & colors",
+          "groupAr": "الخطوط والألوان",
+          "options": [
+            "#9A7445",
+            "#6E1F2B",
+            "#1B1712",
+            "#2F4A3A",
+            "#C8102E",
+            "#E8590C",
+            "#D99A00",
+            "#2F8F4E",
+            "#0E7C86",
+            "#1F6FEB",
+            "#5B3FD0",
+            "#D6336C",
+            "#7A4E2D",
+            "#2B2B2B"
+          ],
+          "custom": true
+        },
+        {
+          "key": "cards.style",
+          "type": "choice",
+          "label": "Card style",
+          "labelAr": "شكل البطاقات",
+          "group": "Cards",
+          "groupAr": "البطاقات",
+          "options": [
+            "auto",
+            "flat",
+            "outlined",
+            "raised",
+            "glass",
+            "tinted",
+            "minimal"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "flat": "Flat",
+            "outlined": "Outlined",
+            "raised": "Shadow",
+            "glass": "Glass",
+            "tinted": "Soft color",
+            "minimal": "Lines only"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "flat": "مسطّحة",
+            "outlined": "بإطار",
+            "raised": "بظل",
+            "glass": "زجاجية",
+            "tinted": "بلون هادئ",
+            "minimal": "خطوط فقط"
+          }
+        },
+        {
+          "key": "cards.border",
+          "type": "choice",
+          "label": "Card border",
+          "labelAr": "إطار البطاقات",
+          "group": "Cards",
+          "groupAr": "البطاقات",
+          "options": [
+            "auto",
+            "none",
+            "thin",
+            "medium",
+            "thick"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "none": "No border",
+            "thin": "Thin",
+            "medium": "Medium",
+            "thick": "Thick"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "none": "بلا إطار",
+            "thin": "رفيع",
+            "medium": "متوسط",
+            "thick": "سميك"
+          }
+        },
+        {
+          "key": "cards.borderColor",
+          "type": "color",
+          "label": "Border color",
+          "labelAr": "لون الإطار",
+          "group": "Cards",
+          "groupAr": "البطاقات",
+          "options": [
+            "auto",
+            "accent",
+            "ink"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "accent": "Accent color",
+            "ink": "Text color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "accent": "اللون المميز",
+            "ink": "لون النص"
+          },
+          "custom": true
+        },
+        {
+          "key": "cards.corners",
+          "type": "choice",
+          "label": "Card corners",
+          "labelAr": "زوايا البطاقات",
+          "group": "Cards",
+          "groupAr": "البطاقات",
+          "options": [
+            "auto",
+            "square",
+            "small",
+            "medium",
+            "large"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "square": "Square",
+            "small": "Slightly rounded",
+            "medium": "Rounded",
+            "large": "Very rounded"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "square": "حادة",
+            "small": "مستديرة قليلًا",
+            "medium": "مستدير",
+            "large": "مستديرة جدًا"
+          }
+        },
+        {
+          "key": "cards.photo",
+          "type": "choice",
+          "label": "Photo shape",
+          "labelAr": "شكل الصور",
+          "group": "Cards",
+          "groupAr": "البطاقات",
+          "options": [
+            "auto",
+            "square",
+            "rounded",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "square": "Square corners",
+            "rounded": "Rounded corners",
+            "circle": "Circle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "square": "زوايا حادة",
+            "rounded": "زوايا مستديرة",
+            "circle": "دائرة"
+          }
+        },
+        {
+          "key": "cards.spacing",
+          "type": "choice",
+          "label": "Space between cards",
+          "labelAr": "المسافة بين البطاقات",
+          "group": "Cards",
+          "groupAr": "البطاقات",
+          "options": [
+            "auto",
+            "tight",
+            "airy"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Compact",
+            "airy": "Roomy"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "airy": "واسع"
+          }
+        },
+        {
+          "key": "cta.label",
+          "type": "text",
+          "label": "Order button text",
+          "labelAr": "نص زر الطلب",
+          "group": "Navigation",
+          "groupAr": "التنقل",
+          "max": 30
+        },
+        {
+          "key": "announcement",
+          "type": "text",
+          "label": "Announcement",
+          "labelAr": "الإعلان",
+          "group": "Navigation",
+          "groupAr": "التنقل",
+          "max": 80
+        },
+        {
+          "key": "hero.image",
+          "type": "image",
+          "label": "Hero image",
+          "labelAr": "صورة الواجهة",
+          "group": "Hero header",
+          "groupAr": "الواجهة الرئيسية",
+          "presets": [
+            "drape",
+            "fitting",
+            "rail",
+            "marble",
+            "arches",
+            "noir",
+            "loft",
+            "concrete"
+          ]
+        },
+        {
+          "key": "hero.eyebrow",
+          "type": "text",
+          "label": "Small line above the headline",
+          "labelAr": "سطر صغير فوق العنوان",
+          "group": "Hero header",
+          "groupAr": "الواجهة الرئيسية",
+          "max": 40
+        },
+        {
+          "key": "hero.title",
+          "type": "text",
+          "label": "Headline",
+          "labelAr": "العنوان",
+          "group": "Hero header",
+          "groupAr": "الواجهة الرئيسية",
+          "max": 60
+        },
+        {
+          "key": "hero.subtitle",
+          "type": "textarea",
+          "label": "Subtext",
+          "labelAr": "النص الفرعي",
+          "group": "Hero header",
+          "groupAr": "الواجهة الرئيسية",
+          "max": 140
+        },
+        {
+          "key": "hero.slides",
+          "type": "images",
+          "label": "More photos for the top (they take turns)",
+          "labelAr": "صور إضافية لأعلى الصفحة (تتناوب في الظهور)",
+          "group": "Hero slider",
+          "groupAr": "صور الواجهة المتحركة",
+          "max": 5
+        },
+        {
+          "key": "hero.transition",
+          "type": "choice",
+          "label": "How the photos change",
+          "labelAr": "طريقة تبديل الصور",
+          "group": "Hero slider",
+          "groupAr": "صور الواجهة المتحركة",
+          "options": [
+            "slide",
+            "fade",
+            "zoom"
+          ],
+          "optionLabels": {
+            "slide": "Slide",
+            "fade": "Fade",
+            "zoom": "Fade with a slow zoom"
+          },
+          "optionLabelsAr": {
+            "slide": "انزلاق",
+            "fade": "تلاشٍ",
+            "zoom": "تلاشٍ مع تكبير بطيء"
+          }
+        },
+        {
+          "key": "hero.autoplay",
+          "type": "toggle",
+          "label": "Change photos automatically",
+          "labelAr": "تبديل الصور تلقائيًا",
+          "group": "Hero slider",
+          "groupAr": "صور الواجهة المتحركة"
+        },
+        {
+          "key": "hero.speed",
+          "type": "choice",
+          "label": "Time on each photo",
+          "labelAr": "مدة ظهور كل صورة",
+          "group": "Hero slider",
+          "groupAr": "صور الواجهة المتحركة",
+          "options": [
+            "slow",
+            "normal",
+            "fast"
+          ],
+          "optionLabels": {
+            "slow": "Long (8 seconds)",
+            "normal": "Normal (5 seconds)",
+            "fast": "Short (3 seconds)"
+          },
+          "optionLabelsAr": {
+            "slow": "طويلة (8 ثوانٍ)",
+            "normal": "عادية (5 ثوانٍ)",
+            "fast": "قصيرة (3 ثوانٍ)"
+          }
+        },
+        {
+          "key": "hero.controls",
+          "type": "toggles",
+          "label": "Buttons on the photos",
+          "labelAr": "أزرار على الصور",
+          "group": "Hero slider",
+          "groupAr": "صور الواجهة المتحركة",
+          "options": [
+            "dots",
+            "arrows"
+          ],
+          "optionLabels": {
+            "dots": "Dots",
+            "arrows": "Arrows"
+          },
+          "optionLabelsAr": {
+            "dots": "نقاط",
+            "arrows": "أسهم"
+          }
+        },
+        {
+          "key": "hero.height",
+          "type": "choice",
+          "label": "Height of the top",
+          "labelAr": "ارتفاع أعلى الصفحة",
+          "group": "Hero slider",
+          "groupAr": "صور الواجهة المتحركة",
+          "options": [
+            "auto",
+            "short",
+            "medium",
+            "full"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "short": "Short",
+            "medium": "Medium",
+            "full": "Full screen"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "short": "قصير",
+            "medium": "متوسط",
+            "full": "ملء الشاشة"
+          }
+        },
+        {
+          "key": "hero.overlay",
+          "type": "choice",
+          "label": "Darken the photos (easier to read the text)",
+          "labelAr": "تعتيم الصور (لتسهيل قراءة النص)",
+          "group": "Hero slider",
+          "groupAr": "صور الواجهة المتحركة",
+          "options": [
+            "auto",
+            "light",
+            "medium",
+            "strong"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "light": "A little",
+            "medium": "Medium",
+            "strong": "A lot"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "light": "قليلًا",
+            "medium": "متوسط",
+            "strong": "كثيرًا"
+          }
+        },
+        {
+          "key": "hero.textPosition",
+          "type": "choice",
+          "label": "Text position",
+          "labelAr": "مكان النص",
+          "group": "Hero slider",
+          "groupAr": "صور الواجهة المتحركة",
+          "options": [
+            "auto",
+            "start",
+            "center",
+            "bottom"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "start": "Side",
+            "center": "Center",
+            "bottom": "Bottom"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "start": "على الجانب",
+            "center": "في المنتصف",
+            "bottom": "في الأسفل"
+          }
+        },
+        {
+          "key": "motion",
+          "type": "toggle",
+          "label": "Animations",
+          "labelAr": "الحركات",
+          "group": "Layout",
+          "groupAr": "التخطيط"
+        },
+        {
+          "key": "sections",
+          "type": "toggles",
+          "label": "Home page sections",
+          "labelAr": "أقسام الصفحة الرئيسية",
+          "group": "Sections",
+          "groupAr": "الأقسام",
+          "options": [
+            "announcement",
+            "edit",
+            "story",
+            "best",
+            "gallery",
+            "reviews",
+            "visit"
+          ],
+          "optionLabels": {
+            "announcement": "Announcement bar",
+            "edit": "The edit (new and featured)",
+            "story": "About us",
+            "best": "Most loved",
+            "gallery": "Lookbook",
+            "reviews": "Reviews",
+            "visit": "Appointments, hours and contact"
+          },
+          "optionLabelsAr": {
+            "announcement": "شريط الإعلان",
+            "edit": "مختاراتنا (الجديد والمميز)",
+            "story": "من نحن",
+            "best": "الأكثر طلبًا",
+            "gallery": "معرض الإطلالات",
+            "reviews": "آراء الزبائن",
+            "visit": "المواعيد والأوقات والتواصل"
+          }
+        },
+        {
+          "key": "categories.title",
+          "type": "text",
+          "label": "Collections headline",
+          "labelAr": "عنوان المجموعات",
+          "group": "Headlines",
+          "groupAr": "العناوين",
+          "max": 50
+        },
+        {
+          "key": "edit.title",
+          "type": "text",
+          "label": "Featured pieces headline",
+          "labelAr": "عنوان القطع المميزة",
+          "group": "Headlines",
+          "groupAr": "العناوين",
+          "max": 50
+        },
+        {
+          "key": "best.title",
+          "type": "text",
+          "label": "Best sellers headline",
+          "labelAr": "عنوان الأكثر مبيعًا",
+          "group": "Headlines",
+          "groupAr": "العناوين",
+          "max": 50
+        },
+        {
+          "key": "gallery.title",
+          "type": "text",
+          "label": "Lookbook headline",
+          "labelAr": "عنوان معرض الإطلالات",
+          "group": "Headlines",
+          "groupAr": "العناوين",
+          "max": 50
+        },
+        {
+          "key": "story.title",
+          "type": "text",
+          "label": "About headline",
+          "labelAr": "عنوان قسم من نحن",
+          "group": "About us",
+          "groupAr": "من نحن",
+          "max": 70
+        },
+        {
+          "key": "story.text",
+          "type": "textarea",
+          "label": "About us",
+          "labelAr": "من نحن",
+          "group": "About us",
+          "groupAr": "من نحن",
+          "max": 400
+        },
+        {
+          "key": "story.image",
+          "type": "image",
+          "label": "About photo",
+          "labelAr": "صورة قسم من نحن",
+          "group": "About us",
+          "groupAr": "من نحن",
+          "presets": [
+            "fitting",
+            "drape",
+            "rail",
+            "marble",
+            "arches",
+            "loft"
+          ]
+        },
+        {
+          "key": "gallery",
+          "type": "images",
+          "label": "Lookbook photos",
+          "labelAr": "صور معرض الإطلالات",
+          "group": "Lookbook",
+          "groupAr": "معرض الإطلالات",
+          "max": 12
+        },
+        {
+          "key": "gallery.products",
+          "type": "toggle",
+          "label": "Add product photos to the gallery",
+          "labelAr": "أضف صور المنتجات إلى المعرض",
+          "group": "Lookbook",
+          "groupAr": "معرض الإطلالات"
+        },
+        {
+          "key": "reviews.1.quote",
+          "type": "textarea",
+          "label": "Review 1",
+          "labelAr": "التقييم 1",
+          "group": "Reviews",
+          "groupAr": "آراء الزبائن",
+          "max": 200
+        },
+        {
+          "key": "reviews.1.name",
+          "type": "text",
+          "label": "Review 1 by",
+          "labelAr": "صاحب التقييم 1",
+          "group": "Reviews",
+          "groupAr": "آراء الزبائن",
+          "max": 40
+        },
+        {
+          "key": "reviews.2.quote",
+          "type": "textarea",
+          "label": "Review 2",
+          "labelAr": "التقييم 2",
+          "group": "Reviews",
+          "groupAr": "آراء الزبائن",
+          "max": 200
+        },
+        {
+          "key": "reviews.2.name",
+          "type": "text",
+          "label": "Review 2 by",
+          "labelAr": "صاحب التقييم 2",
+          "group": "Reviews",
+          "groupAr": "آراء الزبائن",
+          "max": 40
+        },
+        {
+          "key": "reviews.3.quote",
+          "type": "textarea",
+          "label": "Review 3",
+          "labelAr": "التقييم 3",
+          "group": "Reviews",
+          "groupAr": "آراء الزبائن",
+          "max": 200
+        },
+        {
+          "key": "reviews.3.name",
+          "type": "text",
+          "label": "Review 3 by",
+          "labelAr": "صاحب التقييم 3",
+          "group": "Reviews",
+          "groupAr": "آراء الزبائن",
+          "max": 40
+        },
+        {
+          "key": "footer.text",
+          "type": "textarea",
+          "label": "Line in the footer",
+          "labelAr": "سطر التذييل",
+          "group": "Footer",
+          "groupAr": "التذييل",
+          "max": 140
+        },
+        {
+          "key": "footer.nameSize",
+          "type": "choice",
+          "label": "Business name size in the footer",
+          "labelAr": "حجم اسم النشاط في أسفل الصفحة",
+          "group": "Footer",
+          "groupAr": "التذييل",
+          "options": [
+            "large",
+            "medium",
+            "small"
+          ],
+          "optionLabels": {
+            "large": "Large (as designed)",
+            "medium": "Medium",
+            "small": "Small"
+          },
+          "optionLabelsAr": {
+            "large": "كبير (كما في التصميم)",
+            "medium": "متوسط",
+            "small": "صغير"
+          }
+        },
+        {
+          "key": "hours",
+          "type": "hours",
+          "label": "Opening hours",
+          "labelAr": "أوقات العمل",
+          "group": "Visit us",
+          "groupAr": "زورونا"
+        },
+        {
+          "key": "social.show",
+          "type": "toggles",
+          "label": "Accounts to show on your website",
+          "labelAr": "الحسابات التي تظهر في موقعك",
+          "group": "Social media",
+          "groupAr": "حسابات التواصل الاجتماعي",
+          "options": [
+            "instagram",
+            "whatsapp",
+            "facebook",
+            "tiktok",
+            "snapchat",
+            "phone"
+          ],
+          "optionLabels": {
+            "instagram": "Instagram",
+            "whatsapp": "WhatsApp",
+            "facebook": "Facebook",
+            "tiktok": "TikTok",
+            "snapchat": "Snapchat",
+            "phone": "Phone (call us)"
+          },
+          "optionLabelsAr": {
+            "instagram": "إنستغرام",
+            "whatsapp": "واتساب",
+            "facebook": "فيسبوك",
+            "tiktok": "تيك توك",
+            "snapchat": "سناب شات",
+            "phone": "الهاتف (اتصل بنا)"
+          }
+        },
+        {
+          "key": "order.action",
+          "type": "choice",
+          "label": "What the button does",
+          "labelAr": "ماذا يفعل الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "whatsapp",
+            "call",
+            "instagram",
+            "facebook",
+            "hide"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "whatsapp": "Order on WhatsApp",
+            "call": "Call us",
+            "instagram": "Open Instagram",
+            "facebook": "Open Facebook",
+            "hide": "Hide the button"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "whatsapp": "اطلب عبر واتساب",
+            "call": "اتصل بنا",
+            "instagram": "افتح إنستغرام",
+            "facebook": "افتح فيسبوك",
+            "hide": "إخفاء الزر"
+          }
+        },
+        {
+          "key": "order.shape",
+          "type": "choice",
+          "label": "Button shape",
+          "labelAr": "شكل الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "pill",
+            "rounded",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "pill": "Pill",
+            "rounded": "Rounded square",
+            "circle": "Round icon only"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "pill": "بيضاوي",
+            "rounded": "مربع بزوايا دائرية",
+            "circle": "دائرة بأيقونة فقط"
+          }
+        },
+        {
+          "key": "order.label",
+          "type": "text",
+          "label": "Button text (leave empty for the usual text)",
+          "labelAr": "نص الزر (اتركه فارغًا للنص المعتاد)",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "max": 28
+        }
+      ],
+      "defaults": {
+        "font": "elegant",
+        "font.family": "default",
+        "logo": "",
+        "logo.frame": true,
+        "logo.size": 100,
+        "logo.position": "start",
+        "logo.name": true,
+        "theme": "ivory",
+        "accent": "#9A7445",
+        "cta.label": "",
+        "announcement": "Complimentary alterations and gift wrapping on every piece",
+        "hero.image": "preset:drape",
+        "hero.eyebrow": "Autumn · Winter",
+        "hero.title": "The art of dressing slowly",
+        "hero.subtitle": "Silk, cashmere and hand-finished tailoring, chosen piece by piece for our boutique.",
+        "motion": true,
+        "sections": [
+          "announcement",
+          "edit",
+          "story",
+          "best",
+          "gallery",
+          "reviews",
+          "visit"
+        ],
+        "categories.title": "The collections",
+        "edit.title": "The edit",
+        "best.title": "",
+        "gallery.title": "",
+        "story.title": "A house of quiet luxury",
+        "story.text": "Every piece in our boutique is chosen by hand, from small ateliers we know by name. We alter, wrap and deliver each one ourselves, and we are always happy to help you find the right size.",
+        "story.image": "preset:fitting",
+        "gallery": [],
+        "gallery.products": true,
+        "reviews.1.quote": "",
+        "reviews.1.name": "",
+        "reviews.2.quote": "",
+        "reviews.2.name": "",
+        "reviews.3.quote": "",
+        "reviews.3.name": "",
+        "footer.text": "Private appointments, alterations and delivery. Write to us on WhatsApp.",
+        "hours": {
+          "sat": "10:00-22:00",
+          "sun": "10:00-22:00",
+          "mon": "10:00-22:00",
+          "tue": "10:00-22:00",
+          "wed": "10:00-22:00",
+          "thu": "10:00-23:00",
+          "fri": "16:00-22:00"
+        },
+        "footer.nameSize": "large",
+        "social.show": [
+          "instagram",
+          "whatsapp"
+        ],
+        "order.action": "auto",
+        "order.shape": "auto",
+        "order.label": "",
+        "cards.style": "auto",
+        "cards.border": "auto",
+        "cards.borderColor": "auto",
+        "cards.corners": "auto",
+        "cards.photo": "auto",
+        "cards.spacing": "auto",
+        "hero.slides": [],
+        "hero.transition": "slide",
+        "hero.autoplay": true,
+        "hero.speed": "normal",
+        "hero.controls": [
+          "dots",
+          "arrows"
+        ],
+        "hero.height": "auto",
+        "hero.overlay": "auto",
+        "hero.textPosition": "auto"
+      },
+      "defaultsAr": {
+        "announcement": "تعديلات مجانية وتغليف هدايا مع كل قطعة",
+        "hero.eyebrow": "خريف · شتاء",
+        "hero.title": "فن الأناقة الهادئة",
+        "hero.subtitle": "حرير وكشمير وخياطة مشغولة باليد، نختارها قطعة قطعة لبوتيكنا.",
+        "categories.title": "المجموعات",
+        "edit.title": "مختاراتنا",
+        "story.title": "دار للفخامة الهادئة",
+        "story.text": "كل قطعة في بوتيكنا مختارة باليد من مشاغل صغيرة نعرفها بالاسم. نعدّل كل قطعة ونغلّفها ونوصلها بأنفسنا، ويسعدنا دائمًا أن نساعدكم في اختيار المقاس المناسب.",
+        "footer.text": "مواعيد خاصة وتعديلات وتوصيل. راسلونا على واتساب."
+      }
     }
   ]
 }

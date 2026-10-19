@@ -12,7 +12,7 @@ import registry from "../templates/registry.json";
 type Field = { key: string };
 const fields = (t: (typeof registry.templates)[number]) => new Set((t.schema as Field[]).map((f) => f.key));
 /** Templates with several pages show their products on the menu page. */
-const MULTI_PAGE = new Set(["maison", "lumen", "atlas", "ember", "bloom"]);
+const MULTI_PAGE = new Set(["maison", "lumen", "atlas", "ember", "bloom", "couture"]);
 const STYLES = ["flat", "outlined", "raised", "glass", "tinted", "minimal"];
 
 async function open(page: Page, id: string, locale: string, options: string, suffix = "") {

@@ -1,0 +1,275 @@
+{
+  "id": "folio",
+  "number": 27,
+  "name": "Folio",
+  "category": "Clothing store",
+  "description": "An editorial lookbook for a clothing store: a magazine-cover opening, numbered collections, large portrait photos and quiet black-and-white type.",
+  "ar": {
+    "name": "فوليو",
+    "category": "متجر ملابس",
+    "description": "كتالوج بأسلوب المجلات لمتجر الملابس: افتتاحية كغلاف مجلة، ومجموعات مرقّمة، وصور طولية كبيرة، وخطوط هادئة بالأبيض والأسود."
+  },
+  "version": 1,
+  "heroSlider": { "kind": "panel", "source": "hero.image" },
+  "thumbnail": "/templates/folio/thumbnail.png",
+  "sample": "folio",
+  "schema": [
+    {
+      "key": "font",
+      "type": "choice",
+      "label": "Font style",
+      "group": "Brand",
+      "options": ["classic", "grotesk", "soft"],
+      "optionLabels": {
+        "classic": "Classic",
+        "grotesk": "Grotesk",
+        "soft": "Soft serif"
+      }
+    },
+    {
+      "key": "logo",
+      "type": "image",
+      "label": "Logo",
+      "group": "Brand"
+    },
+    {
+      "key": "theme",
+      "type": "palette",
+      "label": "Color theme",
+      "group": "Brand",
+      "options": ["paper", "white", "stone", "ink"],
+      "optionLabels": {
+        "paper": "Paper",
+        "white": "White",
+        "stone": "Stone",
+        "ink": "Ink"
+      },
+      "optionLabelsAr": {
+        "paper": "ورقي",
+        "white": "أبيض",
+        "stone": "حجري",
+        "ink": "حبر"
+      },
+      "swatches": {
+        "paper": "#F4F1EC",
+        "white": "#FFFFFF",
+        "stone": "#E7E4DE",
+        "ink": "#121212"
+      }
+    },
+    {
+      "key": "accent",
+      "type": "color",
+      "label": "Accent color",
+      "group": "Brand",
+      "options": ["#1A1A1A", "#8C3B2E", "#3E5C82", "#6B7A5E"]
+    },
+    {
+      "key": "announcement",
+      "type": "text",
+      "label": "Announcement",
+      "group": "Navigation",
+      "max": 80
+    },
+    {
+      "key": "hero.image",
+      "type": "image",
+      "label": "Cover photo",
+      "labelAr": "صورة الغلاف",
+      "group": "Hero header",
+      "presets": ["fitting", "rail", "drape", "concrete", "marble", "arches", "loft"]
+    },
+    {
+      "key": "hero.eyebrow",
+      "type": "text",
+      "label": "Small line above the headline",
+      "group": "Hero header",
+      "max": 40
+    },
+    {
+      "key": "hero.title",
+      "type": "text",
+      "label": "Headline",
+      "group": "Hero header",
+      "max": 70
+    },
+    {
+      "key": "hero.subtitle",
+      "type": "textarea",
+      "label": "Subtext",
+      "group": "Hero header",
+      "max": 140
+    },
+    {
+      "key": "sections",
+      "type": "toggles",
+      "label": "Sections",
+      "group": "Sections",
+      "options": ["announcement", "edit", "gallery", "story", "reviews", "visit"],
+      "optionLabels": {
+        "announcement": "Announcement bar",
+        "edit": "The edit (featured pieces)",
+        "gallery": "Lookbook",
+        "story": "About us",
+        "reviews": "Reviews",
+        "visit": "Hours and contact"
+      },
+      "optionLabelsAr": {
+        "announcement": "شريط الإعلان",
+        "edit": "مختاراتنا (القطع المميزة)",
+        "gallery": "معرض الإطلالات",
+        "story": "من نحن",
+        "reviews": "آراء الزبائن",
+        "visit": "أوقات العمل والتواصل"
+      }
+    },
+    {
+      "key": "edit.title",
+      "type": "text",
+      "label": "Featured pieces headline",
+      "labelAr": "عنوان القطع المميزة",
+      "group": "Headlines",
+      "max": 50
+    },
+    {
+      "key": "menu.title",
+      "type": "text",
+      "label": "Collection headline",
+      "labelAr": "عنوان المجموعة",
+      "group": "Headlines",
+      "max": 50
+    },
+    {
+      "key": "gallery.title",
+      "type": "text",
+      "label": "Lookbook headline",
+      "labelAr": "عنوان معرض الإطلالات",
+      "group": "Headlines",
+      "max": 50
+    },
+    {
+      "key": "gallery",
+      "type": "images",
+      "label": "Lookbook photos",
+      "labelAr": "صور معرض الإطلالات",
+      "group": "Lookbook",
+      "groupAr": "معرض الإطلالات",
+      "max": 12
+    },
+    {
+      "key": "story.title",
+      "type": "text",
+      "label": "About headline",
+      "group": "About us",
+      "max": 70
+    },
+    {
+      "key": "story.text",
+      "type": "textarea",
+      "label": "About us",
+      "group": "About us",
+      "max": 400
+    },
+    {
+      "key": "reviews.1.quote",
+      "type": "textarea",
+      "label": "Review 1",
+      "group": "Reviews",
+      "max": 200
+    },
+    {
+      "key": "reviews.1.name",
+      "type": "text",
+      "label": "Review 1 by",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "reviews.2.quote",
+      "type": "textarea",
+      "label": "Review 2",
+      "group": "Reviews",
+      "max": 200
+    },
+    {
+      "key": "reviews.2.name",
+      "type": "text",
+      "label": "Review 2 by",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "reviews.3.quote",
+      "type": "textarea",
+      "label": "Review 3",
+      "group": "Reviews",
+      "max": 200
+    },
+    {
+      "key": "reviews.3.name",
+      "type": "text",
+      "label": "Review 3 by",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "footer.text",
+      "type": "textarea",
+      "label": "Line in the footer",
+      "group": "Footer",
+      "max": 140
+    },
+    {
+      "key": "hours",
+      "type": "hours",
+      "label": "Opening hours",
+      "group": "Visit us"
+    }
+  ],
+  "defaults": {
+    "font": "classic",
+    "logo": "",
+    "theme": "paper",
+    "accent": "#1A1A1A",
+    "announcement": "Free exchanges within 14 days. Ask about sizes on WhatsApp.",
+    "hero.image": "preset:fitting",
+    "hero.eyebrow": "The new season",
+    "hero.title": "Quiet pieces, made to be worn for years.",
+    "hero.subtitle": "Linen, wool and cotton in easy shapes. New pieces arrive every month.",
+    "sections": ["announcement", "edit", "gallery", "story", "reviews", "visit"],
+    "edit.title": "The edit",
+    "menu.title": "The collection",
+    "gallery.title": "Lookbook",
+    "gallery": [],
+    "story.title": "A small studio for clothes that last",
+    "story.text": "We choose every fabric ourselves and keep our collections small, so each piece gets the care it deserves. Come in for a fitting, or message us and we will help you find your size.",
+    "reviews.1.quote": "",
+    "reviews.1.name": "",
+    "reviews.2.quote": "",
+    "reviews.2.name": "",
+    "reviews.3.quote": "",
+    "reviews.3.name": "",
+    "footer.text": "Sizes, fittings and exchanges: message us on WhatsApp.",
+    "hours": {
+      "sat": "11:00-21:00",
+      "sun": "11:00-21:00",
+      "mon": "11:00-21:00",
+      "tue": "11:00-21:00",
+      "wed": "11:00-21:00",
+      "thu": "11:00-22:00",
+      "fri": ""
+    }
+  },
+  "defaultsAr": {
+    "announcement": "استبدال مجاني خلال 14 يومًا. اسألنا عن المقاسات على واتساب.",
+    "hero.eyebrow": "الموسم الجديد",
+    "hero.title": "قطع هادئة، مصنوعة لتُلبس لسنوات.",
+    "hero.subtitle": "كتان وصوف وقطن بقصّات مريحة. تصل قطع جديدة كل شهر.",
+    "edit.title": "مختاراتنا",
+    "menu.title": "المجموعة",
+    "gallery.title": "معرض الإطلالات",
+    "story.title": "استوديو صغير لملابس تدوم",
+    "story.text": "نختار كل قماش بأنفسنا ونُبقي مجموعاتنا صغيرة، لتنال كل قطعة العناية التي تستحقها. زورونا للقياس، أو راسلونا وسنساعدكم في اختيار المقاس المناسب.",
+    "footer.text": "المقاسات والقياس والاستبدال: راسلونا على واتساب."
+  }
+}

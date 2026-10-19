@@ -11,7 +11,10 @@ import BistroCardTemplate from "./bistro/Template";
 import BloomTemplate from "./bloom/Template";
 import ChalkBoardTemplate from "./chalkboard/Template";
 import ClinicTemplate from "./clinic/Template";
+import DropTemplate from "./drop/Template";
+import CoutureTemplate from "./couture/Template";
 import EmberTemplate from "./ember/Template";
+import FolioTemplate from "./folio/Template";
 import GardenTemplate from "./garden/Template";
 import HandyTemplate from "./handy/Template";
 import LinenListTemplate from "./linen/Template";
@@ -60,10 +63,13 @@ export const templates: Record<string, ComponentType<TemplateProps>> = {
   atlas: AtlasTemplate,
   ember: EmberTemplate,
   bloom: BloomTemplate,
+  folio: FolioTemplate,
+  drop: DropTemplate,
+  couture: CoutureTemplate,
 };
 
 /** Pro templates with more than one page (category, best sellers, gallery, visit). Every other template is one page. */
-export const multiPage = new Set<string>(["maison", "lumen", "atlas", "ember", "bloom"]);
+export const multiPage = new Set<string>(["maison", "lumen", "atlas", "ember", "bloom", "couture"]);
 
 /** The page at `path` for this site, or null when there is none (the route answers 404). */
 export function pageOf(site: PublicSite, path: string[]): Page | null {

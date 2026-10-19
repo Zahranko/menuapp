@@ -18,7 +18,7 @@ const defaultsOf = (id: string) => registry.templates.find((t) => t.id === id)!.
 const SHARED_KEYS = [...cardSettings.fields.map((f) => f.key), "hero.slides", ...heroSettings.fields.map((f) => f.key)];
 
 /** Multi-page templates show their products on the menu page; the others on their one page. */
-const MULTI_PAGE = new Set(["maison", "lumen", "atlas", "ember", "bloom"]);
+const MULTI_PAGE = new Set(["maison", "lumen", "atlas", "ember", "bloom", "couture"]);
 
 function html(site: PublicSite, page: string[] = []): string {
   const Template = templates[site.templateId];
