@@ -307,6 +307,8 @@
   }
   .fo-catalog-head {
     display: grid;
+    /* Never wider than the screen, whatever the font makes the search box's natural width. */
+    grid-template-columns: minmax(0, 1fr);
     gap: 16px;
     padding: 0 16px 18px;
   }
@@ -771,7 +773,7 @@
     }
 
     .fo-catalog-head {
-      grid-template-columns: 1fr auto;
+      grid-template-columns: minmax(0, 1fr) auto;
       align-items: end;
       padding-inline: 32px;
     }

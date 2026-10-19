@@ -926,7 +926,7 @@
     text-transform: uppercase;
   }
   .fs-sheet[open] {
-    animation: couture-rise 0.5s var(--ease) both;
+    animation: couture-sheet 0.5s var(--ease) both;
   }
 
   /* ---------- motion ---------- */
@@ -1224,13 +1224,14 @@
   }
 }
 
+/* Text rises out of a mask instead of fading in, so it keeps its full contrast at every moment. */
 @keyframes couture-rise {
   from {
-    opacity: 0;
+    clip-path: inset(-50% -50% 100% -50%);
     translate: 0 24px;
   }
   to {
-    opacity: 1;
+    clip-path: inset(-50% -50% -50% -50%);
     translate: 0 0;
   }
 }
@@ -1244,11 +1245,11 @@
 }
 @keyframes couture-reveal {
   from {
-    opacity: 0;
+    clip-path: inset(-50% -50% 30% -50%);
     translate: 0 40px;
   }
   to {
-    opacity: 1;
+    clip-path: inset(-50% -50% -50% -50%);
     translate: 0 0;
   }
 }
@@ -1259,6 +1260,14 @@
   }
   to {
     opacity: 1;
+    translate: 0 0;
+  }
+}
+@keyframes couture-sheet {
+  from {
+    translate: 0 32px;
+  }
+  to {
     translate: 0 0;
   }
 }
