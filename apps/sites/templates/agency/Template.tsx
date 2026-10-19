@@ -148,7 +148,7 @@ export default function AgencyTemplate({ site, now }: TemplateProps & { now?: Da
         {ctx.on("work") && ctx.gallery.length > 0 && (
           <section id="work" className="work" data-section="gallery" aria-labelledby="work-title">
             <h2 id="work-title">{ctx.text("work.title") || c.work}</h2>
-            <ul className="plain work-grid">
+            <ul className="plain work-grid" data-gallery>
               {ctx.gallery.slice(0, 6).map((src, i) => (
                 <li key={src + i}>
                   <Picture src={src} sizes="(min-width: 760px) 50vw, 100vw" alt={ctx.t.photoOf.replace("{n}", String(i + 1)).replace("{name}", site.business.name)} />

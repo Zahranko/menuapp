@@ -1208,8 +1208,12 @@
     gap: 26px 20px;
     padding: 14px 6px 6px;
   }
+  .collage > li {
+    aspect-ratio: 1;
+  }
   .collage > li:first-child {
     grid-column: span 2;
+    aspect-ratio: 16 / 10;
   }
   .collage > li:nth-child(5n + 1) {
     --rot: -2deg;
@@ -1228,9 +1232,11 @@
   }
   .collage-all > li:nth-child(7n + 1) {
     grid-column: span 2;
+    aspect-ratio: 2 / 1;
   }
   .collage-all > li:first-child {
     grid-column: span 2;
+    aspect-ratio: 16 / 10;
   }
   @media (min-width: 900px) {
     .collage {
@@ -1239,6 +1245,7 @@
     }
     .collage > li:first-child {
       grid-row: span 2;
+      aspect-ratio: auto;
     }
   }
   .snap {
@@ -1276,36 +1283,11 @@
     z-index: 3;
   }
   .snap-pic {
-    position: relative;
+    position: absolute;
+    inset: 0;
     display: block;
-    height: 100%;
-    min-height: 100%;
-    aspect-ratio: 1;
     overflow: hidden;
-    border-radius: calc(var(--r) - 4px);
-  }
-  .collage > li:first-child .snap-pic {
-    aspect-ratio: 16 / 10;
-  }
-  @media (min-width: 900px) {
-    .collage > li:first-child .snap-pic {
-      aspect-ratio: auto;
-    }
-  }
-  .snap:has(.snap-cap) .snap-pic {
-    height: auto;
-    border-end-start-radius: 0;
-    border-end-end-radius: 0;
-  }
-  .snap-cap {
-    display: block;
-    padding: 8px 12px 6px;
-    border-top: 4px solid var(--ink);
-    font-family: var(--fd);
-    font-weight: var(--fw);
-    font-size: calc(18px * var(--fs));
-    letter-spacing: var(--ft);
-    text-transform: uppercase;
+    border-radius: max(calc(var(--r) - 4px), 0px);
   }
 
   /* ---------- reviews ---------- */

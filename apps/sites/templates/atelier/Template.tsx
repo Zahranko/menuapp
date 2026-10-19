@@ -276,7 +276,7 @@ export default function AtelierTemplate({
             <h2 id="gallery-title" className="sr-only">
               {c.gallery}
             </h2>
-            <ul className="plain">
+            <ul className="plain" data-gallery>
               {ctx.gallery.slice(0, 6).map((src, i) => (
                 <li key={src + i}>
                   <Picture

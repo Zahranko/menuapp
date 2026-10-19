@@ -656,7 +656,6 @@ function GalleryPage({ v }: { v: View }) {
               <button type="button" className="shot" data-photo={i} aria-label={p.caption ?? fill(c.photo, { n: i + 1 })}>
                 {/* eslint-disable-next-line @next/next/no-img-element -- natural height for the masonry layout */}
                 <img src={p.src} alt="" loading={i < 6 ? "eager" : "lazy"} />
-                {p.caption && <span className="shot-cap">{p.caption}</span>}
               </button>
             </li>
           ))}

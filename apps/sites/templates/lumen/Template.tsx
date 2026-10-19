@@ -505,14 +505,13 @@ function Statement({ v, story, link = false }: { v: View; story: string; link?: 
 /** Photos pinned to the wall: slightly turned, they straighten up under the pointer. Each opens the lightbox. */
 function Wall({ v, photos, full = false }: { v: View; photos: { src: string; caption: string | null }[]; full?: boolean }) {
   return (
-    <ul className={cx("plain wall", full && "wall-full")}>
+    <ul className={cx("plain wall", full && "wall-full")} data-gallery>
       {photos.map((p, i) => (
         <li key={p.src} className="reveal">
           <button type="button" className="shot" data-photo={i} aria-label={p.caption ?? fill(v.c.photo, { n: i + 1 })}>
             <span className="shot-img">
               <Picture src={p.src} sizes={full ? "(min-width: 900px) 33vw, 50vw" : "(min-width: 900px) 30vw, 50vw"} />
             </span>
-            {p.caption && <span className="shot-cap">{p.caption}</span>}
           </button>
         </li>
       ))}

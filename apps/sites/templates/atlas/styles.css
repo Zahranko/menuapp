@@ -1056,12 +1056,6 @@
   .a-shot:hover img {
     transform: scale(1.05);
   }
-  .a-shot-cap {
-    display: block;
-    padding: 6px 2px 4px;
-    font-size: 13px;
-    color: var(--muted);
-  }
 
   /* ---------- reviews ---------- */
   .a-quotes {

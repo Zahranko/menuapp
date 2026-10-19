@@ -428,13 +428,12 @@ function Ranked({ v, items, big = false }: { v: View; items: MenuItem[]; big?: b
 /** The lookbook: photos in a masonry of mixed heights; each opens the lightbox. */
 function Lookbook({ v, photos }: { v: View; photos: { src: string; caption: string | null }[] }) {
   return (
-    <ul className="plain a-masonry">
+    <ul className="plain a-masonry" data-gallery>
       {photos.map((p, i) => (
         <li key={p.src} style={{ "--ar": ["3 / 4", "1 / 1", "4 / 5", "2 / 3", "5 / 4", "3 / 4", "1 / 1"][i % 7] } as CSSProperties}>
           <button type="button" className="a-shot" data-photo={i} aria-label={p.caption ?? fill(v.c.photo, { n: i + 1 })}>
             <Picture src={p.src} sizes="(min-width: 900px) 33vw, 50vw" />
           </button>
-          {p.caption && <span className="a-shot-cap">{p.caption}</span>}
         </li>
       ))}
     </ul>

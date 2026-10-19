@@ -193,7 +193,7 @@ export default function PulseTemplate({ site, now }: TemplateProps & { now?: Dat
             <h2 id="photos-title" className="sr-only">
               {c.photos}
             </h2>
-            <ul className="plain strip" tabIndex={0} aria-label={c.photos}>
+            <ul className="plain strip" data-gallery tabIndex={0} aria-label={c.photos}>
               {ctx.gallery.slice(0, 6).map((src, i) => (
                 <li key={src + i}>
                   <Picture src={src} sizes="(min-width: 760px) 30vw, 70vw" alt={ctx.t.photoOf.replace("{n}", String(i + 1)).replace("{name}", site.business.name)} />

@@ -143,7 +143,7 @@ export default function NightMarketTemplate({ site, now }: TemplateProps & { now
             <h2 id="strip-title" className="kicker">
               {c.photos}
             </h2>
-            <ul className="plain strip-row" tabIndex={0} aria-labelledby="strip-title">
+            <ul className="plain strip-row" data-gallery tabIndex={0} aria-labelledby="strip-title">
               {ctx.gallery.map((src, i) => (
                 <li key={src + i}>
                   <Picture src={src} alt={ctx.t.photoOf.replace("{n}", String(i + 1)).replace("{name}", site.business.name)} sizes="(min-width: 760px) 22vw, 60vw" />

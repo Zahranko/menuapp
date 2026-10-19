@@ -22,7 +22,7 @@ export function Gallery({ ctx }: { ctx: SouqContext }) {
             </a>
           )}
         </div>
-        <ul className="gal">
+        <ul className="gal" data-gallery>
           {ctx.gallery.map((src, i) => (
             <li key={src + i} className={SHAPE[i] || undefined}>
               <Picture src={src} alt={ctx.c.photo.replace("{n}", String(i + 1)).replace("{name}", name)} sizes="(min-width: 760px) 25vw, 50vw" />

@@ -404,7 +404,7 @@ function Home({ v, layout }: { v: View; layout: (typeof HERO)[number] }) {
       {showGallery && (
         <section id="gallery" className="mx-chap mx-film" data-section="gallery" aria-labelledby="gallery-title">
           <Chapter n={next()} title={ctx.text("gallery.title") || c.gallery} id="gallery-title" locale={ctx.locale} />
-          <ul className="plain mx-film-strip">
+          <ul className="plain mx-film-strip" data-gallery>
             {v.photos.slice(0, 8).map((p, i) => (
               <li key={p.src} className={`mx-film-${i % 3}`}>
                 <button type="button" className="mx-shot" data-photo={i} aria-label={p.caption ?? fill(c.photo, { n: i + 1 })}>
@@ -766,20 +766,21 @@ function BestPage({ v }: { v: View }) {
   );
 }
 
+/** Frame shapes the gallery wall cycles through; every photo is cropped to its frame, whatever its own shape. */
+const WALL_SHAPES = ["3 / 4", "4 / 5", "1 / 1", "2 / 3", "4 / 3"];
+
 function GalleryPage({ v }: { v: View }) {
   const { c, ctx } = v;
   return (
     <>
       <PageHead v={v} trail={[{ label: c.gallery }]} title={ctx.text("gallery.title") || c.gallery} lead={c.galleryLead} />
       <section className="mx-wall-wrap" aria-label={c.gallery}>
-        <ul className="plain mx-wall">
+        <ul className="plain mx-wall" data-gallery>
           {v.photos.map((p, i) => (
-            <li key={p.src}>
+            <li key={p.src} style={{ "--ar": WALL_SHAPES[i % WALL_SHAPES.length] } as CSSProperties}>
               <button type="button" className="mx-wall-shot" data-photo={i} aria-label={p.caption ?? fill(c.photo, { n: i + 1 })}>
-                {/* eslint-disable-next-line @next/next/no-img-element -- natural height for the column layout */}
-                <img src={p.src} alt="" loading={i < 6 ? "eager" : "lazy"} />
+                <Picture src={p.src} sizes="(min-width: 900px) 33vw, 50vw" />
               </button>
-              {p.caption && <p className="mx-wall-cap">{p.caption}</p>}
             </li>
           ))}
         </ul>

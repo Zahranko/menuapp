@@ -1412,15 +1412,9 @@ html.mx-locked {
       margin-bottom: 20px;
     }
   }
-  .mx-wall-shot img {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-  .mx-wall-cap {
-    margin-top: 8px;
-    color: var(--muted);
-    font-size: 13px;
+  /* Each frame has its own shape (--ar); the photo is cropped to it, so very tall or wide photos keep the wall even. */
+  .mx-wall-shot {
+    aspect-ratio: var(--ar, 3 / 4);
   }
 
   .mx-page > .mx-chap:last-child,

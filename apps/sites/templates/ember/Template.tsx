@@ -399,14 +399,13 @@ function Leaderboard({ v, items, podium = 1 }: { v: View; items: MenuItem[]; pod
 /** Photos pinned up at angles, with tape. */
 function Collage({ v, photos, big = false }: { v: View; photos: { src: string; caption: string | null }[]; big?: boolean }) {
   return (
-    <ul className={cx("plain collage", big && "collage-all")}>
+    <ul className={cx("plain collage", big && "collage-all")} data-gallery>
       {photos.map((p, i) => (
         <li key={p.src} className="rise">
           <button type="button" className="snap" data-photo={i} aria-label={p.caption ?? fill(v.c.photo, { n: i + 1 })}>
             <span className="snap-pic">
               <Picture src={p.src} sizes={big ? "(min-width: 900px) 25vw, 50vw" : i === 0 ? "(min-width: 900px) 45vw, 90vw" : "(min-width: 900px) 25vw, 50vw"} />
             </span>
-            {p.caption && <span className="snap-cap">{p.caption}</span>}
           </button>
         </li>
       ))}

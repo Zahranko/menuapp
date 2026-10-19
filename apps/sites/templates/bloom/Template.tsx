@@ -318,18 +318,13 @@ function Heading({ id, title, link }: { id: string; title: string; link?: { href
 /** Taped polaroids. Each one opens the lightbox at its photo. */
 function Scrapbook({ v, photos, offset = 0 }: { v: View; photos: { src: string; caption: string | null }[]; offset?: number }) {
   return (
-    <ul className="plain scrapbook">
+    <ul className="plain scrapbook" data-gallery>
       {photos.map((p, i) => (
         <li key={p.src} className="reveal" style={{ "--i": i } as CSSProperties}>
           <button type="button" className="polaroid" data-photo={i + offset} aria-label={p.caption ?? fill(v.c.photo, { n: i + offset + 1 })}>
             <span className="pol-pic">
               <Picture src={p.src} sizes="(min-width: 900px) 280px, 45vw" />
             </span>
-            {p.caption && (
-              <span className="pol-cap" aria-hidden="true">
-                {p.caption}
-              </span>
-            )}
           </button>
         </li>
       ))}

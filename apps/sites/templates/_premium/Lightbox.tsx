@@ -59,9 +59,9 @@ export function Lightbox({ photos, labels }: Props) {
       {photo && (
         <figure>
           {/* eslint-disable-next-line @next/next/no-img-element -- owner photos come from any storage host */}
-          <img src={photo.src} alt={photo.caption ?? ""} />
+          <img src={photo.src} alt={photo.caption ?? labels.photo.replace("{n}", String(index + 1))} />
+          {/* Only the photo and where it is in the set: no names or captions over the gallery. */}
           <figcaption>
-            {photo.caption && <span>{photo.caption}</span>}
             <span className="lightbox-count">
               {index + 1} / {photos.length}
             </span>

@@ -1110,13 +1110,6 @@
     border-radius: max(calc(var(--r) * 0.35), 1px);
     background: var(--c3);
   }
-  .shot-cap {
-    display: block;
-    padding: 9px 2px 1px;
-    font-size: 13px;
-    font-weight: 700;
-    line-height: 1.25;
-  }
 
   /* reviews as speech bubbles */
   .bubbles {
