@@ -66,7 +66,7 @@ export default function DropTemplate({ site, now }: TemplateProps & { now?: Date
       <Footer ctx={ctx} c={c} />
       <OrderFab order={order} />
       <ProductSheet items={sheetItems(ctx, all)} phone={site.business.whatsApp} labels={sheetLabels(ctx)} />
-      {photos.length > 0 && <PhotoViewer photos={photos} labels={viewerLabels(ctx)} />}
+      {photos.length > 0 && <PhotoViewer photos={photos.map((src) => ({ src, alt: null }))} labels={viewerLabels(ctx)} />}
     </div>
   );
 }
@@ -247,7 +247,7 @@ function Wall({ ctx, f, photos }: { ctx: SiteContext; f: F; photos: string[] }) 
       <h2 id="dr-wall-title" className="dr-h2">
         {ctx.text("gallery.title") || f.lookbook}
       </h2>
-      <ul className="plain dr-wall-grid">
+      <ul className="plain dr-wall-grid" data-gallery>
         {photos.map((src, i) => (
           <li key={src + i} className={i % 5 === 0 ? "is-big" : undefined}>
             <button type="button" className="fs-tile" data-photo={i} aria-label={fill(f.openPhoto, { n: i + 1 })}>

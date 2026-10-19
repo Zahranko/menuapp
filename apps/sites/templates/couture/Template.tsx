@@ -17,7 +17,7 @@ import { themeVars, type Palette } from "../_kit/theme";
 import { fashionCopy, fill } from "../_fashion/copy";
 import { details, sizeRange } from "../_fashion/details";
 import { sheetItems, sheetLabels, viewerLabels } from "../_fashion/items";
-import { PhotoViewer } from "../_fashion/PhotoViewer";
+import { PhotoViewer, type ViewerPhoto } from "../_fashion/PhotoViewer";
 import { ProductSheet } from "../_fashion/ProductSheet";
 import { copyFor } from "../_premium/copy";
 import { bestSellers, categoryTree, galleryPhotos, PAGE_PATHS, resolvePage, type Category, type Page, type Tree } from "../_premium/pages";
@@ -52,7 +52,8 @@ type View = {
   page: Page;
   href: (path: string) => string;
   best: MenuItem[];
-  photos: string[];
+  /** The lookbook: the owner's photos, then product photos (named for screen readers). */
+  photos: ViewerPhoto[];
   /** Product id → its collection's name. */
   collectionOf: Map<string, string>;
   /** WhatsApp link for appointments, or null without WhatsApp. */
@@ -77,7 +78,7 @@ export default function CoutureTemplate({ site, path = [], base, now }: Template
     page,
     href: (p: string) => (p ? `${root}${p}` : root || "/"),
     best: bestSellers(tree),
-    photos: galleryPhotos(site, tree).map((p) => p.src),
+    photos: galleryPhotos(site, tree).map((p) => ({ src: p.src, alt: p.caption })),
     collectionOf,
     appointment: site.business.whatsApp ? whatsappLink(site.business.whatsApp, k.appointmentMessage) : null,
   };
@@ -324,8 +325,8 @@ function Tiles({ v, categories }: { v: View; categories: Category[] }) {
 function Lookbook({ v, max }: { v: View; max?: number }) {
   const photos = max ? v.photos.slice(0, max) : v.photos;
   return (
-    <ul className="plain cu-look">
-      {photos.map((src, i) => (
+    <ul className="plain cu-look" data-gallery>
+      {photos.map(({ src }, i) => (
         <li key={src} className="rv" style={{ "--cu-ar": ["3 / 4", "4 / 5", "2 / 3", "4 / 5", "3 / 4", "1 / 1"][i % 6] } as CSSProperties}>
           <button type="button" className="fs-tile" data-photo={i} aria-label={fill(v.f.openPhoto, { n: i + 1 })}>
             <Picture src={src} sizes="(min-width: 760px) 33vw, 50vw" />

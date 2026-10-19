@@ -67,7 +67,7 @@ export default function FolioTemplate({ site, now }: TemplateProps & { now?: Dat
       <Footer ctx={ctx} c={c} />
       <OrderFab order={order} />
       <ProductSheet items={sheetItems(ctx, all)} phone={site.business.whatsApp} labels={sheetLabels(ctx)} />
-      {photos.length > 0 && <PhotoViewer photos={photos} labels={viewerLabels(ctx)} />}
+      {photos.length > 0 && <PhotoViewer photos={photos.map((src) => ({ src, alt: null }))} labels={viewerLabels(ctx)} />}
     </div>
   );
 }
@@ -264,7 +264,7 @@ function Lookbook({ ctx, f, photos }: { ctx: SiteContext; f: F; photos: string[]
       <h2 id="fo-look-title" className="fo-h2">
         {ctx.text("gallery.title") || f.lookbook}
       </h2>
-      <ul className="plain fo-look-grid">
+      <ul className="plain fo-look-grid" data-gallery>
         {photos.map((src, i) => (
           <li key={src + i} style={{ "--fo-ar": ["3 / 4", "4 / 5", "3 / 4", "1 / 1", "4 / 5", "3 / 4"][i % 6] } as CSSProperties}>
             <button type="button" className="fs-tile" data-photo={i} aria-label={fill(f.openPhoto, { n: i + 1 })}>

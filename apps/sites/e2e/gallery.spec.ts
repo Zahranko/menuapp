@@ -10,7 +10,7 @@ import { galleryProblems } from "./gallery-measure";
  * photos) or "galp_<n>" (plus product photos, which carry the product names); the photo host is answered here.
  */
 
-const MULTI_PAGE = new Set(["maison", "lumen", "atlas", "ember", "bloom"]);
+const MULTI_PAGE = new Set(["maison", "lumen", "atlas", "ember", "bloom", "couture"]);
 const withGallery = registry.templates.filter((t) => "gallery" in (t.defaults as Record<string, unknown>));
 
 /** A flat picture of the size in its address (".../3-300x1500.svg"), with a frame so a crop that cuts it shows. */

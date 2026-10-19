@@ -2,8 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 
+/** A gallery photo; `alt` names it for screen readers (a product photo carries the product's name). */
+export type ViewerPhoto = { src: string; alt: string | null };
+
 type Props = {
-  photos: string[];
+  photos: ViewerPhoto[];
   labels: { close: string; prev: string; next: string; photo: string };
 };
 
@@ -38,7 +41,7 @@ export function PhotoViewer({ photos, labels }: Props) {
   return (
     <dialog
       ref={dialog}
-      className="fs-viewer"
+      className="fs-viewer lightbox"
       aria-label={labels.photo.replace("{n}", String(index + 1))}
       onClick={(e) => {
         if (e.target === dialog.current) dialog.current.close();
@@ -58,7 +61,8 @@ export function PhotoViewer({ photos, labels }: Props) {
       {photo && (
         <figure className="fs-viewer-photo">
           {/* eslint-disable-next-line @next/next/no-img-element -- owner photos come from any storage host */}
-          <img src={photo} alt="" />
+          <img src={photo.src} alt={photo.alt ?? labels.photo.replace("{n}", String(index + 1))} />
+          {/* Only where it is in the set: no names or captions over the gallery. */}
           <figcaption className="fs-viewer-count" aria-hidden="true">
             {index + 1} / {photos.length}
           </figcaption>
