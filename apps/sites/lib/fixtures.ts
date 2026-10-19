@@ -5,8 +5,14 @@ import type { PublicProduct, PublicSite, Settings } from "./types";
  * Sample businesses, used when APP_FIXTURES=1, by tests and for template thumbnails.
  * A template's manifest picks one with "sample" (default "cafe").
  */
-type Row = [category: string, name: string, description: string, price: number, label: string | null, featured: boolean, photo: string | null];
-type Sample = { name: string; address: string; instagram: string; menu: Row[]; settings?: Settings };
+type Row = [category: string, name: string, description: string, price: number, label: string | null, featured: boolean, photo: string | null, custom?: [en: string, ar: string]];
+/** The Arabic of a row: category ("Parent/Child" like the row), name and description. */
+type RowAr = [category: string, name: string, description: string];
+/**
+ * A sample business. Samples with `menuAr` (one row per `menu` row, in the same order) show their products, categories,
+ * name and address in Arabic in Arabic previews (fixture.<id>.<theme>.ar); the others keep their English menu there.
+ */
+type Sample = { name: string; address: string; instagram: string; menu: Row[]; settings?: Settings; nameAr?: string; addressAr?: string; menuAr?: RowAr[] };
 
 export const SAMPLES = {
   cafe: {
@@ -315,6 +321,108 @@ export const SAMPLES = {
       ["Drinks", "Iced rose latte", "Rose syrup, espresso, milk", 3.5, null, false, "iced"],
     ],
   },
+  /* Clothing stores: sizes and colors are part of the description ("Sizes: S–XL. Colors: Sand, Black"), sale prices a custom label. */
+  folio: {
+    name: "Linea Studio",
+    address: "21 Gallery Row, Old Town",
+    instagram: "lineastudio",
+    nameAr: "لينيا ستوديو",
+    addressAr: "21 شارع الغاليري، البلدة القديمة",
+    menu: [
+      ["New in", "Linen wrap dress", "Washed linen, midi length, tie waist. Sizes: XS–L. Colors: Terracotta, Sand", 89, "New", true, "fashion/dress"],
+      ["New in", "Oversized poplin shirt", "Crisp cotton poplin, dropped shoulder. Sizes: S–XL. Colors: White, Sky", 54, null, false, "fashion/shirt"],
+      ["Women", "Wide-leg trousers", "High rise, pressed crease, wool blend. Sizes: XS–XL", 72, "Best seller", true, "fashion/trousers"],
+      ["Women", "Ribbed merino top", "Fine merino rib, slim fit. Sizes: XS–L", 46, null, false, "fashion/knit"],
+      ["Women", "Pleated midi skirt", "Satin finish, elastic waist. Sizes: S–L. Colors: Sage, Black", 64, null, false, "fashion/skirt"],
+      ["Men", "Relaxed cotton tee", "Heavyweight jersey, boxy fit. Sizes: S–XXL", 28, null, false, "fashion/tee"],
+      ["Men", "Unstructured blazer", "Linen and cotton, half lined. Sizes: S–XL", 140, "Signature", true, "fashion/blazer"],
+      ["Men", "Straight denim", "Rigid indigo denim, straight leg. Sizes: 28, 30, 32, 34, 36", 68, null, false, "fashion/jeans"],
+      ["Accessories", "Leather tote", "Full-grain leather, inner zip pocket", 120, null, false, "fashion/bag"],
+      ["Accessories", "Silk square scarf", "Hand-rolled edges, 70 × 70 cm", 38, null, false, "fashion/scarf"],
+      ["Sale", "Wool overcoat", "Double-faced wool, knee length. Was 260. Sizes: S, M", 182, "Custom", false, "fashion/coat", ["Sale −30%", "تخفيض 30%"]],
+      ["Sale", "Canvas sneakers", "Organic canvas, natural rubber sole. Sizes: 38–45", 39, "Custom", false, "fashion/sneakers", ["−40%", "−40%"]],
+    ],
+    menuAr: [
+      ["وصل حديثًا", "فستان كتان ملفوف", "كتان مغسول، طول متوسط، ربطة عند الخصر. المقاسات: XS–L. الألوان: تيراكوتا، رملي"],
+      ["وصل حديثًا", "قميص بوبلين واسع", "قطن بوبلين ناعم، كتف منسدل. المقاسات: S–XL. الألوان: أبيض، سماوي"],
+      ["نساء", "بنطال واسع الساقين", "خصر عالٍ، كسرة مكوية، مزيج صوف. المقاسات: XS–XL"],
+      ["نساء", "بلوزة ميرينو مضلعة", "صوف ميرينو ناعم، قصة ضيقة. المقاسات: XS–L"],
+      ["نساء", "تنورة ميدي بكسرات", "لمسة ساتان، خصر مطاطي. المقاسات: S–L. الألوان: أخضر مريمي، أسود"],
+      ["رجال", "تيشيرت قطني مريح", "قطن ثقيل، قصة مربعة. المقاسات: S–XXL"],
+      ["رجال", "بليزر بلا بطانة كاملة", "كتان وقطن، نصف مبطن. المقاسات: S–XL"],
+      ["رجال", "جينز مستقيم", "دنيم نيلي متين، قصة مستقيمة. المقاسات: 28، 30، 32، 34، 36"],
+      ["إكسسوارات", "حقيبة جلد كبيرة", "جلد طبيعي كامل، جيب داخلي بسحاب"],
+      ["إكسسوارات", "إيشارب حرير مربع", "حواف ملفوفة يدويًا، 70 × 70 سم"],
+      ["تخفيضات", "معطف صوف", "صوف بوجهين، بطول الركبة. كان 260. المقاسات: S، M"],
+      ["تخفيضات", "حذاء قماشي", "قماش عضوي، نعل مطاط طبيعي. المقاسات: 38–45"],
+    ],
+  },
+  drop: {
+    name: "Block Nine",
+    address: "9 Warehouse Lane, Downtown",
+    instagram: "blocknine",
+    nameAr: "بلوك ناين",
+    addressAr: "9 شارع المستودعات، وسط البلد",
+    menu: [
+      ["New drop", "Heavyweight hoodie", "450 g brushed fleece, oversized. Sizes: S–XXL. Colors: Charcoal, Bone", 65, "New", true, "fashion/hoodie"],
+      ["New drop", "Varsity jacket", "Wool body, faux leather sleeves, snap front. Sizes: S–XL", 129, "Best seller", true, "fashion/jacket"],
+      ["Tees", "Boxy graphic tee", "Screen printed, 240 g cotton. Sizes: XS–XXL", 32, null, true, "fashion/tee"],
+      ["Tees", "Kids logo tee", "Soft cotton for ages 4 to 12. Sizes: 4Y, 6Y, 8Y, 10Y, 12Y", 22, null, false, "fashion/kids"],
+      ["Bottoms", "Utility cargo pants", "Ripstop cotton, six pockets, drawcord hem. Sizes: S–XL", 74, null, false, "fashion/cargo"],
+      ["Bottoms", "Loose fit jeans", "Washed denim, wide leg. Sizes: 28–36", 69, null, false, "fashion/jeans"],
+      ["Sneakers", "Court low sneakers", "Leather upper, gum sole. Sizes: 39–46", 95, "Signature", true, "fashion/sneakers"],
+      ["Accessories", "Crossbody bag", "Water-repellent nylon, adjustable strap", 35, null, false, "fashion/crossbody"],
+      ["Accessories", "Bucket hat", "Washed cotton twill. One size", 24, null, false, "fashion/hat"],
+      ["Sale", "Track shades", "UV400 lenses, matte frame", 18, "Custom", false, "fashion/sunglasses", ["Sale −50%", "تخفيض 50%"]],
+    ],
+    menuAr: [
+      ["الإصدار الجديد", "هودي ثقيل", "فليس 450 غرام، قصة واسعة. المقاسات: S–XXL. الألوان: فحمي، عظمي"],
+      ["الإصدار الجديد", "جاكيت فارسيتي", "جسم صوف، أكمام جلد صناعي، أزرار كبس. المقاسات: S–XL"],
+      ["تيشيرتات", "تيشيرت مربع بطبعة", "طباعة شاشة، قطن 240 غرام. المقاسات: XS–XXL"],
+      ["تيشيرتات", "تيشيرت أطفال", "قطن ناعم من عمر 4 إلى 12 سنة. المقاسات: 4Y، 6Y، 8Y، 10Y، 12Y"],
+      ["بناطيل", "بنطال كارغو", "قطن ريبستوب، ستة جيوب، حافة برباط. المقاسات: S–XL"],
+      ["بناطيل", "جينز واسع", "دنيم مغسول، ساق واسعة. المقاسات: 28–36"],
+      ["أحذية رياضية", "سنيكرز منخفض", "جلد علوي، نعل مطاطي. المقاسات: 39–46"],
+      ["إكسسوارات", "حقيبة كتف", "نايلون مقاوم للماء، حزام قابل للتعديل"],
+      ["إكسسوارات", "قبعة باكيت", "قطن تويل مغسول. مقاس واحد"],
+      ["تخفيضات", "نظارة شمسية", "عدسات UV400، إطار مطفي"],
+    ],
+  },
+  couture: {
+    name: "Dar Layla",
+    address: "4 Jasmine Avenue, Hill District",
+    instagram: "darlayla",
+    nameAr: "دار ليلى",
+    addressAr: "4 جادة الياسمين، حي التلال",
+    menu: [
+      ["Women/Dresses", "Silk slip dress", "Bias-cut silk satin, adjustable straps. Sizes: XS–L. Colors: Garnet, Champagne", 240, "New", true, "fashion/dress"],
+      ["Women/Dresses", "Pleated evening skirt", "Sunray pleats, satin waistband. Sizes: XS–L", 165, null, false, "fashion/skirt"],
+      ["Women/Abayas", "Embroidered abaya", "Crepe with hand-stitched gold trim. Sizes: 52, 54, 56, 58", 320, "Signature", true, "fashion/abaya"],
+      ["Women/Knitwear", "Cashmere crewneck", "Pure cashmere, relaxed fit. Sizes: XS–L", 210, null, false, "fashion/knit"],
+      ["Men/Tailoring", "Midnight blazer", "Wool and mohair, soft shoulder. Sizes: 46–54", 380, "Best seller", true, "fashion/blazer"],
+      ["Men/Tailoring", "Camel overcoat", "Double-faced wool and cashmere. Sizes: S–XL", 520, null, false, "fashion/coat"],
+      ["Men/Shirts", "Poplin dress shirt", "Two-ply cotton, mother-of-pearl buttons. Sizes: 38–44", 120, null, false, "fashion/shirt"],
+      ["Kids", "Linen party set", "Shirt and shorts in washed linen. Sizes: 2Y–8Y", 85, null, false, "fashion/kids"],
+      ["Accessories/Bags", "Leather tote", "Vegetable-tanned leather, hand painted edges", 290, "Best seller", true, "fashion/bag"],
+      ["Accessories/Scarves", "Printed silk carré", "Hand-rolled edges, 90 × 90 cm", 140, null, false, "fashion/scarf"],
+      ["Sale", "Wide-leg trousers", "Wool crepe, pressed crease. Was 210. Sizes: XS, S", 147, "Custom", false, "fashion/trousers", ["Sale −30%", "تخفيض 30%"]],
+      ["Sale", "Tortoise sunglasses", "Acetate frame, gradient lenses", 96, "Custom", false, "fashion/sunglasses", ["Last pieces", "آخر القطع"]],
+    ],
+    menuAr: [
+      ["نساء/فساتين", "فستان حرير ناعم", "ساتان حريري بقصة مائلة، حمالات قابلة للتعديل. المقاسات: XS–L. الألوان: عنابي، شامبانيا"],
+      ["نساء/فساتين", "تنورة سهرة بكسرات", "كسرات شعاعية، حزام ساتان. المقاسات: XS–L"],
+      ["نساء/عبايات", "عباية مطرزة", "كريب بتطريز ذهبي يدوي. المقاسات: 52، 54، 56، 58"],
+      ["نساء/تريكو", "كنزة كشمير", "كشمير خالص، قصة مريحة. المقاسات: XS–L"],
+      ["رجال/بدلات", "بليزر كحلي داكن", "صوف وموهير، كتف ناعم. المقاسات: 46–54"],
+      ["رجال/بدلات", "معطف جملي", "صوف وكشمير بوجهين. المقاسات: S–XL"],
+      ["رجال/قمصان", "قميص بوبلين رسمي", "قطن مزدوج، أزرار صدف. المقاسات: 38–44"],
+      ["أطفال", "طقم كتان للمناسبات", "قميص وشورت من الكتان المغسول. المقاسات: 2Y–8Y"],
+      ["إكسسوارات/حقائب", "حقيبة جلد كبيرة", "جلد مدبوغ نباتيًا، حواف مطلية يدويًا"],
+      ["إكسسوارات/أوشحة", "وشاح حرير مطبوع", "حواف ملفوفة يدويًا، 90 × 90 سم"],
+      ["تخفيضات", "بنطال واسع الساقين", "كريب صوفي، كسرة مكوية. كان 210. المقاسات: XS، S"],
+      ["تخفيضات", "نظارة شمسية بإطار صدفي", "إطار أسيتات، عدسات متدرجة"],
+    ],
+  },
 } satisfies Record<string, Sample>;
 
 export type SampleName = keyof typeof SAMPLES;
@@ -383,6 +491,17 @@ const serviceReviews: Settings = {
 };
 const SERVICE_SAMPLES = new Set<SampleName>(["salon", "clinic", "studio", "gym", "home"]);
 
+/** Reviews that fit a clothing store. */
+const fashionReviews: Settings = {
+  "reviews.1.quote": "The fit is perfect and the fabric feels even better than in the photos. They held my size and sent it the same day.",
+  "reviews.1.name": "Lina H.",
+  "reviews.2.quote": "I asked about sizes on WhatsApp and got an answer in minutes, with photos. My new favorite shop.",
+  "reviews.2.name": "Omar K.",
+  "reviews.3.quote": "Beautiful pieces that last. The exchange was easy when I needed a smaller size.",
+  "reviews.3.name": "Sara M.",
+};
+const FASHION_SAMPLES = new Set<SampleName>(["folio", "drop", "couture"]);
+
 function sampleSettingsFor(templateId: string, sample: SampleName): Settings {
   const defaults = defaultsFor(templateId);
   if (SERVICE_SAMPLES.has(sample)) {
@@ -390,8 +509,10 @@ function sampleSettingsFor(templateId: string, sample: SampleName): Settings {
     const settings: Settings = { ...serviceReviews, gallery: galleryFor(sample) };
     return Object.fromEntries(Object.entries(settings).filter(([key]) => key in defaults));
   }
-  const reviews = sample === "cafe" ? {} : otherReviews;
+  const reviews = sample === "cafe" ? {} : FASHION_SAMPLES.has(sample) ? fashionReviews : otherReviews;
   const settings: Settings = { ...sampleSettings, ...reviews, gallery: galleryFor(sample) };
+  // Fashion templates keep their own line above the headline (a season, a drop number).
+  if (FASHION_SAMPLES.has(sample)) delete settings["hero.eyebrow"];
   return Object.fromEntries(Object.entries(settings).filter(([key]) => key in defaults));
 }
 
@@ -406,17 +527,28 @@ function categoriesOf(names: string[]): { name: string; parent: string | null }[
   return out;
 }
 
-export function fixtureFor(templateId: string, overrides: Partial<PublicSite> = {}, sampleName: SampleName = sampleFor(templateId)): PublicSite {
+/** The sample's menu, with its Arabic category names, product names and descriptions when `arabic` and it has them. */
+function menuOf(sample: Sample, arabic: boolean): Row[] {
+  if (!arabic || !sample.menuAr) return sample.menu;
+  return sample.menu.map((row, i) => {
+    const [category, name, description] = sample.menuAr![i] ?? row;
+    return [category, name, description, ...row.slice(3)] as Row;
+  });
+}
+
+/** `arabic`: the sample's Arabic menu, name and address where it has them (Arabic previews). */
+export function fixtureFor(templateId: string, overrides: Partial<PublicSite> = {}, sampleName: SampleName = sampleFor(templateId), arabic = false): PublicSite {
   const sample: Sample = SAMPLES[sampleName];
-  const names = [...new Set(sample.menu.map((s) => s[0]))];
+  const menu = menuOf(sample, arabic);
+  const names = [...new Set(menu.map((s) => s[0]))];
   const slug = sample.name.toLowerCase().replace(/[^a-z0-9]/g, "").slice(0, 30);
   return {
     business: {
-      name: sample.name,
+      name: (arabic && sample.nameAr) || sample.name,
       slug: sampleName === "cafe" ? "vanillamenu" : slug,
       whatsApp: "+15555550123",
       email: "hello@example.com",
-      address: sample.address,
+      address: (arabic && sample.addressAr) || sample.address,
       instagram: sample.instagram,
       locale: "en",
       currencyCode: "USD",
@@ -433,7 +565,7 @@ export function fixtureFor(templateId: string, overrides: Partial<PublicSite> = 
       id: id(100 + ci),
       name: name.split("/").pop()!,
       ...(parent !== null && { parentId: id(100 + all.findIndex((c) => c.name === parent)) }),
-      products: sample.menu
+      products: menu
         .map((s, i) => ({ s, i }))
         .filter(({ s }) => s[0] === name)
         .map<PublicProduct>(({ s, i }) => ({
@@ -443,6 +575,7 @@ export function fixtureFor(templateId: string, overrides: Partial<PublicSite> = 
           price: s[3],
           imageUrl: s[6] ? photoUrl(s[6]) : null,
           label: s[4],
+          ...(s[7] && { customLabel: s[7][0], customLabelAr: s[7][1] }),
           // The fourth product is sold out in every sample, to show how that looks.
           isAvailable: i !== 3,
           isFeatured: s[5],
@@ -498,7 +631,7 @@ export function fixturePreview(token: string): PublicSite | null {
   if (token === "fixture") return { ...fixtureSite, isPreview: true };
   const [prefix, templateId, theme, locale, logo] = token.split(".");
   if (prefix !== "fixture" || !registry.templates.some((t) => t.id === templateId)) return null;
-  const site = fixtureFor(templateId, { isPreview: true });
+  const site = fixtureFor(templateId, { isPreview: true }, sampleFor(templateId), locale === "ar");
   if (theme && theme !== "default") site.settings = { ...site.settings, theme };
   if (locale === "ar") {
     site.business = { ...site.business, locale: "ar" };
