@@ -539,8 +539,25 @@ export function applySiteOptions(site: PublicSite, options: string): void {
     else if (key === "font") site.settings = { ...site.settings, "font.family": value };
     else if (key === "accent") site.settings = { ...site.settings, accent: `#${value.toUpperCase()}` };
     else if (key === "labels") applyAllLabels(site);
+    else if (key === "gal" || key === "galp") applyGalleryOption(site, Number(value), key === "galp");
     else applyCardAndHeroOption(site, key, value);
   }
+}
+
+/** Host of the sample gallery photos in fixture previews; it does not exist, so tests and screenshots answer it themselves. */
+export const FIXTURE_PHOTO_HOST = "fixture-photo.invalid";
+/** Gallery photo sizes the fixture cycles through: very tall, very wide, tiny, landscape, portrait, square. */
+export const FIXTURE_PHOTO_SIZES = ["300x1500", "1800x240", "16x12", "1200x800", "800x1200", "900x900"];
+
+/**
+ * Gallery options for fixture previews (same token part as applySiteOptions): "gal_<n>" gives the owner n gallery photos
+ * (1 to 12) of odd sizes at https://fixture-photo.invalid/<n>-<w>x<h>.svg and leaves product photos out of Pro
+ * galleries; "galp_<n>" keeps the product photos (which carry the product names) after them.
+ */
+function applyGalleryOption(site: PublicSite, count: number, products: boolean): void {
+  const n = Math.min(12, Math.max(1, Math.round(count) || 1));
+  const gallery = Array.from({ length: n }, (_, i) => `https://${FIXTURE_PHOTO_HOST}/${i + 1}-${FIXTURE_PHOTO_SIZES[i % FIXTURE_PHOTO_SIZES.length]}.svg`);
+  site.settings = { ...site.settings, gallery, "gallery.products": products };
 }
 
 /** Sample hero photos for slider previews ("slides"), at most six. */
