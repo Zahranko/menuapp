@@ -263,6 +263,7 @@ internal sealed class FakeIdentity : IIdentityService
     public Task<UserAccount?> FindByLoginAsync(string login, CancellationToken ct) => throw new NotSupportedException();
     public Task<UserAccount?> FindByIdAsync(Guid userId, CancellationToken ct) => throw new NotSupportedException();
     public Task<PasswordCheck> CheckPasswordAsync(Guid userId, string password, CancellationToken ct) => throw new NotSupportedException();
+    public void CheckPasswordOfNoOne(string password) => throw new NotSupportedException();
     public Task<string> CreatePasswordResetTokenAsync(Guid userId, CancellationToken ct) => throw new NotSupportedException();
     public Task<Result> ResetPasswordAsync(string email, string token, string newPassword, CancellationToken ct) => throw new NotSupportedException();
 }
@@ -312,6 +313,7 @@ internal sealed class FakeTokens : ITokenService
 internal sealed class FakeRefreshTokens : IRefreshTokenRepository
 {
     public Task<RefreshToken?> FindByHashAsync(string hash, CancellationToken ct) => throw new NotSupportedException();
+    public Task<bool> TryRevokeAsync(Guid tokenId, DateTimeOffset now, CancellationToken ct) => throw new NotSupportedException();
     public Task<IReadOnlyList<RefreshToken>> ListForUserAsync(Guid userId, CancellationToken ct) => throw new NotSupportedException();
     public void Add(RefreshToken token)
     {

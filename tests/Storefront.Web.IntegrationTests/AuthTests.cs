@@ -160,6 +160,18 @@ public partial class AuthTests(StorefrontFactory factory) : IClassFixture<Storef
     }
 
     [Fact]
+    public async Task Racing_refreshes_with_one_token_get_one_session()
+    {
+        var auth = await Api.RegisterAsync(_client);
+
+        var responses = await Task.WhenAll(Enumerable.Range(0, 5).Select(_ =>
+            factory.CreateClient().PostAsJsonAsync("/api/v1/auth/refresh", new { refreshToken = auth.RefreshToken })));
+
+        Assert.Single(responses, r => r.StatusCode == HttpStatusCode.OK);
+        Assert.All(responses.Where(r => r.StatusCode != HttpStatusCode.OK), r => Assert.Equal(HttpStatusCode.Unauthorized, r.StatusCode));
+    }
+
+    [Fact]
     public async Task Refresh_rejects_unknown_tokens()
     {
         var response = await _client.PostAsJsonAsync("/api/v1/auth/refresh", new { refreshToken = "not-a-token" });

@@ -14,7 +14,23 @@ internal sealed class SkiaImageOptimizer : IImageOptimizer
 {
     private static readonly int[] Qualities = [80, 70, 60];
 
+    /// <summary>Decoded photos take tens of megabytes each, so only a couple are worked on at once; the rest wait their turn.</summary>
+    private static readonly SemaphoreSlim Slots = new(2, 2);
+
     public Result<OptimizedImage> Optimize(ReadOnlyMemory<byte> image, int maxSide, long maxBytes)
+    {
+        Slots.Wait();
+        try
+        {
+            return OptimizeCore(image, maxSide, maxBytes);
+        }
+        finally
+        {
+            Slots.Release();
+        }
+    }
+
+    private static Result<OptimizedImage> OptimizeCore(ReadOnlyMemory<byte> image, int maxSide, long maxBytes)
     {
         using var data = SKData.CreateCopy(image.Span);
         using var codec = SKCodec.Create(data);
@@ -32,11 +48,12 @@ internal sealed class SkiaImageOptimizer : IImageOptimizer
         // Checked before decoding, so a small file that claims huge dimensions can't exhaust memory.
         if ((long)info.Width * info.Height > MediaAsset.MaxPixels)
         {
-            return Error.Validation("media.dimensions", "This photo has too many pixels. Use one under 40 megapixels.", "file");
+            return Error.Validation("media.dimensions", "This photo has too many pixels. Use one under 24 megapixels.", "file");
         }
 
         var alpha = info.AlphaType == SKAlphaType.Opaque ? SKAlphaType.Opaque : SKAlphaType.Premul;
-        using var decoded = SKBitmap.Decode(codec, new SKImageInfo(info.Width, info.Height, SKColorType.Rgba8888, alpha));
+        var size = DecodeSize(codec, maxSide);
+        using var decoded = SKBitmap.Decode(codec, new SKImageInfo(size.Width, size.Height, SKColorType.Rgba8888, alpha));
         if (decoded is null)
         {
             return Unreadable();
@@ -69,6 +86,33 @@ internal sealed class SkiaImageOptimizer : IImageOptimizer
                 return Error.Validation("media.size", "This photo is too detailed to compress. Try another one.", "file");
             }
         }
+    }
+
+    /// <summary>
+    /// The smallest size the codec can decode to directly that still covers <paramref name="maxSide"/>
+    /// (JPEG decodes at any eighth of its size for almost free), so large photos never sit in memory at full size.
+    /// Formats that can't scale while decoding return the full size.
+    /// </summary>
+    internal static SKSizeI DecodeSize(SKCodec codec, int maxSide)
+    {
+        var full = codec.Info.Size;
+        var longest = Math.Max(full.Width, full.Height);
+        if (longest <= maxSide)
+        {
+            return full;
+        }
+
+        // Codecs round to the scales they support (JPEG: eighths, rounding down), so step up until the result is big enough.
+        for (var eighths = (int)Math.Ceiling(8.0 * maxSide / longest); eighths < 8; eighths++)
+        {
+            var scaled = codec.GetScaledDimensions(eighths / 8f);
+            if (Math.Max(scaled.Width, scaled.Height) >= maxSide && scaled.Width < full.Width && scaled.Height < full.Height)
+            {
+                return scaled;
+            }
+        }
+
+        return full;
     }
 
     private static Error Unreadable() => Error.Validation("media.type", "We couldn't read that photo. Upload a JPEG, PNG or WebP image.", "file");

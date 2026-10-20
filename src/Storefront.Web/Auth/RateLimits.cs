@@ -11,9 +11,10 @@ public static class RateLimits
     public const string Auth = "auth";
     public const string SlugCheck = "slug-check";
     public const string Public = "public";
+    public const string Upload = "upload";
 
     /// <summary>
-    /// Named policies are per client IP. On top, every request counts against a global per-IP limit and,
+    /// Named policies are per client IP, except uploads, which are per owner. On top, every request counts against a global per-IP limit and,
     /// when signed in, a per-owner limit, so one leaked token or one busy client cannot flood the API.
     /// Limits come from "RateLimits:*PerMinute" so tests and load checks can raise them.
     /// </summary>
@@ -27,6 +28,9 @@ public static class RateLimits
             Add(o, Auth, section.GetValue("AuthPerMinute", 10));
             Add(o, SlugCheck, section.GetValue("SlugCheckPerMinute", 60));
             Add(o, Public, section.GetValue("PublicPerMinute", 600));
+            // Photo processing is the heaviest work an owner can trigger, so uploads get their own, smaller budget per owner.
+            var uploads = section.GetValue("UploadPerMinute", 20);
+            o.AddPolicy(Upload, context => PerMinute($"{Upload}:{context.User.FindFirst("sub")?.Value ?? ClientIp(context)}", uploads));
 
             var perIp = section.GetValue("GlobalPerMinute", 1200);
             var perOwner = section.GetValue("OwnerPerMinute", 300);

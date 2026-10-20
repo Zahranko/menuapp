@@ -44,7 +44,7 @@ In GitHub, open **Settings**, then **Secrets and variables**, then **Actions**.
    `Storefront__MigrateOnStartup=true` (the database schema is created or updated when the app starts) and storage under `App_Data/media`.
    IIS never serves `web.config`.
 4. Uploads `app_offline.htm` so IIS stops the app, uploads only the changed files, then removes `app_offline.htm`.
-   `App_Data/` (uploaded photos) and `logs/` on the server are never touched.
+   `App_Data/` (uploaded photos, and the keys that sign password reset links in `App_Data/keys`) and `logs/` on the server are never touched.
 5. When `API_URL` is set, waits for `/health` to answer.
 
 ## When something goes wrong

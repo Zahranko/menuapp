@@ -112,7 +112,7 @@ public static partial class Messages
         ["media.empty"] = "اختر صورة لرفعها.",
         ["media.size"] = "الصورة كبيرة جدًا. جرّب صورة أخرى.",
         ["media.type"] = "ارفع صورة بصيغة JPEG أو PNG أو WebP.",
-        ["media.dimensions"] = "دقة هذه الصورة عالية جدًا. استخدم صورة أقل من 40 ميغابكسل.",
+        ["media.dimensions"] = "دقة هذه الصورة عالية جدًا. استخدم صورة أقل من 24 ميغابكسل.",
 
         ["site.notFound"] = "لم نعثر على الموقع.",
         ["site.settings"] = "الإعدادات غير صالحة.",
@@ -238,7 +238,7 @@ public static partial class Messages
         ["Images can be up to 1 MB after compression."] = "يمكن أن يصل حجم الصورة إلى 1 ميغابايت بعد الضغط.",
         ["Upload a JPEG, PNG or WebP image."] = "ارفع صورة بصيغة JPEG أو PNG أو WebP.",
         ["We couldn't read that photo. Upload a JPEG, PNG or WebP image."] = "تعذّرت قراءة هذه الصورة. ارفع صورة بصيغة JPEG أو PNG أو WebP.",
-        ["This photo has too many pixels. Use one under 40 megapixels."] = "دقة هذه الصورة عالية جدًا. استخدم صورة أقل من 40 ميغابكسل.",
+        ["This photo has too many pixels. Use one under 24 megapixels."] = "دقة هذه الصورة عالية جدًا. استخدم صورة أقل من 24 ميغابكسل.",
         ["This photo is too detailed to compress. Try another one."] = "تفاصيل هذه الصورة كثيرة ولا يمكن ضغطها. جرّب صورة أخرى.",
 
         // Site design and templates

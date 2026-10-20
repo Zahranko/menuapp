@@ -45,6 +45,16 @@ public class ImageOptimizerTests
     }
 
     [Fact]
+    public void Large_jpegs_are_decoded_at_a_reduced_scale_that_still_covers_the_max_side()
+    {
+        using var codec = SKCodec.Create(new MemoryStream(Photo(4000, 3000)));
+        var size = SkiaImageOptimizer.DecodeSize(codec, MediaAsset.MaxSide);
+
+        Assert.True(size.Width < 4000 && size.Height < 3000);
+        Assert.True(Math.Max(size.Width, size.Height) >= MediaAsset.MaxSide);
+    }
+
+    [Fact]
     public void Small_photos_keep_their_size_and_logos_keep_transparency()
     {
         var result = _optimizer.Optimize(Photo(400, 300, SKEncodedImageFormat.Png, transparent: true), MediaAsset.MaxSide, MediaAsset.MaxBytes);

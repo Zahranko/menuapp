@@ -1,12 +1,15 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Storefront.Application.Media;
 using Storefront.Domain.Media;
+using Storefront.Web.Auth;
 
 namespace Storefront.Web.Controllers.Api.V1;
 
 [Route("api/v1/media")]
 [Authorize]
+[EnableRateLimiting(RateLimits.Upload)]
 public sealed class MediaController : ApiController
 {
     /// <summary>Upload one image (form field "file"): JPEG, PNG or WebP, up to 5 MB. It is stored shrunk to 1600 px and compressed to WebP.</summary>

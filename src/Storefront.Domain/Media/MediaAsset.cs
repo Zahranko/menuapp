@@ -14,7 +14,7 @@ public sealed class MediaAsset : Entity, ITenantOwned
     public const int MaxSide = 1600;
 
     /// <summary>Uploads with more pixels than this are refused before they are decoded.</summary>
-    public const long MaxPixels = 40_000_000;
+    public const long MaxPixels = 24_000_000;
     public static readonly IReadOnlySet<string> ContentTypes = new HashSet<string> { "image/jpeg", "image/png", "image/webp" };
 
     private MediaAsset()

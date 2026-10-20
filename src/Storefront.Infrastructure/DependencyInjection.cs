@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -68,6 +69,15 @@ public static class DependencyInjection
             .AddErrorDescriber<FriendlyIdentityErrors>()
             .AddDefaultTokenProviders();
         services.Configure<DataProtectionTokenProviderOptions>(o => o.TokenLifespan = TimeSpan.FromHours(24));
+        // Reset links are signed with Data Protection keys. Kept on disk (not in memory) so links survive app pool recycles
+        // and restarts. "DataProtection:KeysPath" overrides the folder; the default sits under App_Data, which is gitignored,
+        // never served (only wwwroot and the media folder are) and left alone by the deploy.
+        var keysPath = configuration["DataProtection:KeysPath"] is { Length: > 0 } configured
+            ? configured
+            : Path.Combine(configuration["contentRoot"] ?? AppContext.BaseDirectory, "App_Data", "keys");
+        services.AddDataProtection()
+            .SetApplicationName("Storefront")
+            .PersistKeysToFileSystem(new DirectoryInfo(Path.GetFullPath(keysPath)));
         services.AddScoped<IIdentityService, IdentityService>();
         services.AddSingleton<ITokenService, TokenService>();
         services.AddSingleton<IPreviewTokens, PreviewTokens>();
@@ -80,6 +90,7 @@ public static class DependencyInjection
             string.IsNullOrWhiteSpace(sp.GetRequiredService<IConfiguration>()[$"{SmtpOptions.SectionName}:Host"])
                 ? sp.GetRequiredService<LogEmailSender>()
                 : sp.GetRequiredService<SmtpEmailSender>());
+        services.AddHostedService<EmailConfigurationCheck>();
 
         services.AddScoped<IAuditLog, EfAuditLog>();
 
