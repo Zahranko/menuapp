@@ -15,7 +15,8 @@
 // templates/_kit/options.ts and styled by _kit/options.css:
 //  - "Fonts & colors": the template's own "font", "theme" and "accent" move into this group (right after the logo's
 //    group), with the shared font choice ("font.family") after "font". The accent gets more color presets and
-//    "custom": true (any #RRGGBB color; the sites keep its text readable with _kit/color.ts).
+//    "custom": true (any #RRGGBB color; the sites keep its text readable with _kit/color.ts). The shared background
+//    color ("colors.background", in "afterTheme") comes right after "theme"; _kit/background.ts recolors the theme with it.
 //  - "Footer" (footer.nameSize, after the template's own footer fields if it has some), "Social media" (social.show)
 //    and "Order button" (order.action, order.shape, order.label) at the end.
 // Their defaults keep every site as it was. A manifest may only set its own default for "social.show" (templates whose
@@ -109,7 +110,7 @@ function withLogoOptions(id, manifest) {
 
 /** Adds the shared site options (fonts and colors, footer, social media, order button); see the header comment. */
 function withSiteOptions(id, manifest) {
-  const shared = [...siteOptions.fontsAndColors.fields, ...siteOptions.fields];
+  const shared = [...siteOptions.fontsAndColors.fields, ...siteOptions.fontsAndColors.afterTheme, ...siteOptions.fields];
   for (const field of shared) {
     if (manifest.schema.some((f) => f.key === field.key)) fail(`${id}: "${field.key}" comes from templates/_kit/site-options.json; remove it from the manifest`);
     if (field.key in manifest.defaults && !OWN_DEFAULTS.has(field.key)) fail(`${id}: "${field.key}" comes from templates/_kit/site-options.json; remove its default`);
@@ -118,7 +119,7 @@ function withSiteOptions(id, manifest) {
   for (const key of Object.keys(own)) delete manifest.defaults[key];
 
   // Fonts and colors: the template's own fields move after the logo's group, with the shared font choice.
-  const { group, moves, accentExtras } = siteOptions.fontsAndColors;
+  const { group, moves, accentExtras, afterTheme } = siteOptions.fontsAndColors;
   const moved = moves.map((key) => {
     const at = manifest.schema.findIndex((f) => f.key === key);
     if (at < 0) fail(`${id}: every template needs a "${key}" field (the shared font and color options attach to it)`);
@@ -131,7 +132,8 @@ function withSiteOptions(id, manifest) {
   accent.custom = true;
   const logoGroup = manifest.schema.find((f) => f.key === "logo").group;
   const afterLogo = manifest.schema.findLastIndex((f) => f.group === logoGroup) + 1;
-  manifest.schema.splice(afterLogo, 0, font, ...siteOptions.fontsAndColors.fields.map((f) => ({ ...f, group })), theme, accent);
+  const inGroup = (fields) => fields.map((f) => ({ ...f, group }));
+  manifest.schema.splice(afterLogo, 0, font, ...inGroup(siteOptions.fontsAndColors.fields), theme, ...inGroup(afterTheme), accent);
 
   // Footer, social media and order button.
   for (const field of siteOptions.fields) {
@@ -143,6 +145,7 @@ function withSiteOptions(id, manifest) {
   for (const [key, value] of Object.entries(manifest.defaults)) {
     defaults[key] = value;
     if (key === "font") defaults["font.family"] = siteOptions.defaults["font.family"];
+    if (key === "theme") for (const f of afterTheme) defaults[f.key] = siteOptions.defaults[f.key];
   }
   for (const [key, value] of Object.entries(siteOptions.defaults)) {
     if (!(key in defaults)) defaults[key] = key in own ? own[key] : value;

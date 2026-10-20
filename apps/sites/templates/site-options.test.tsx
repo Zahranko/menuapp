@@ -4,7 +4,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { applySiteOptions, fixtureFor, LONG_NAMES } from "@/lib/fixtures";
 import type { PublicSite } from "@/lib/types";
-import { contrast } from "./_kit/color";
+import { contrast, isDark } from "./_kit/color";
 import siteOptions from "./_kit/site-options.json";
 import registry from "./registry.json";
 import { templates } from "./registry";
@@ -12,7 +12,8 @@ import { templates } from "./registry";
 /** The owner's shared site options on every template: footer name size, social accounts, order button, font and colors. */
 
 const ids = Object.keys(templates);
-const SHARED_KEYS = [...siteOptions.fontsAndColors.fields, ...siteOptions.fields].map((f) => f.key);
+const SHARED_KEYS = [...siteOptions.fontsAndColors.fields, ...siteOptions.fontsAndColors.afterTheme, ...siteOptions.fields].map((f) => f.key);
+const BACKGROUNDS = siteOptions.fontsAndColors.afterTheme[0].options.filter((o) => o.startsWith("#"));
 
 function html(site: PublicSite): string {
   const Template = templates[site.templateId];
@@ -42,7 +43,7 @@ describe.each(ids)("site options in template %s", (id) => {
     for (const key of SHARED_KEYS) delete old.settings[key];
     expect(html(saved)).toBe(html(old));
     const el = root(render(saved), id);
-    for (const attr of ["data-foot-name", "data-order-shape", "data-order-fab", "data-font"]) expect(el.hasAttribute(attr), attr).toBe(false);
+    for (const attr of ["data-foot-name", "data-order-shape", "data-order-fab", "data-font", "data-page-bg"]) expect(el.hasAttribute(attr), attr).toBe(false);
   });
 
   it.each(["en", "ar"] as const)("keeps a long business name in the footer (%s)", (locale) => {
@@ -145,6 +146,27 @@ describe.each(ids)("site options in template %s", (id) => {
       expect(contrast(fill!, ink!), color).toBeGreaterThanOrEqual(4.5);
     }
   });
+
+  it("puts every background color on the page and keeps text, muted text and accent readable on it", () => {
+    // Every preset, plus custom colors: middle tones (which move lighter or darker) and strong ones, with odd accents.
+    for (const bg of [...BACKGROUNDS, "#C8102E", "#9A9A9A", "#7CC4A4", "#3B2A5C"]) {
+      for (const accent of ["", "FFE600", "1E3A8A"]) {
+        const site = siteWith(id, accent ? `bg:${bg.slice(1)}-accent:${accent}` : `bg:${bg.slice(1)}`);
+        const el = root(render(site), id);
+        const style = el.getAttribute("style")!;
+        const v = (...names: string[]) => names.map((n) => style.match(new RegExp(`(?:^|;)\\s*--${n}:\\s*(#[0-9A-F]{6})`, "i"))?.[1]).find(Boolean)!;
+        const [page, ink, muted, accentText, fill, onFill] = [v("bg", "sbg"), v("ink", "sink"), v("muted", "smuted"), v("acc-text", "sacctext"), v("acc", "sacc"), v("acc-ink", "saccink")];
+        const label = `${bg} ${accent}`;
+        expect(page && ink && muted && accentText && fill && onFill, `${label}: ${style}`).toBeTruthy();
+        if (/^#(FFFFFF|FBF7EE|1E2B22|14213D|0E0E0E|E4EFF8)$/.test(bg)) expect(page.toUpperCase(), label).toBe(bg);
+        expect(el.getAttribute("data-page-bg"), label).toBe(isDark(page) ? "dark" : "light");
+        expect(contrast(ink, page), `${label} text`).toBeGreaterThanOrEqual(7);
+        expect(contrast(muted, page), `${label} muted text`).toBeGreaterThanOrEqual(4.5);
+        expect(contrast(accentText, page), `${label} accent text`).toBeGreaterThanOrEqual(4.5);
+        expect(contrast(fill, onFill), `${label} button text`).toBeGreaterThanOrEqual(4.5);
+      }
+    }
+  });
 });
 
 describe("shared site options in the registry", () => {
@@ -160,7 +182,7 @@ describe("shared site options in the registry", () => {
         expect(field!.groupAr, `${t.id} ${key}`).toBeTruthy();
         expect(key in t.defaults, `${t.id} ${key}`).toBe(true);
       }
-      for (const key of ["font", "font.family", "theme", "accent"]) expect(t.schema.find((f) => f.key === key)!.group, `${t.id} ${key}`).toBe("Fonts & colors");
+      for (const key of ["font", "font.family", "theme", "colors.background", "accent"]) expect(t.schema.find((f) => f.key === key)!.group, `${t.id} ${key}`).toBe("Fonts & colors");
       expect(t.defaults["order.action"]).toBe("auto");
       expect(t.defaults["font.family"]).toBe("default");
     }
@@ -170,9 +192,25 @@ describe("shared site options in the registry", () => {
     for (const t of all) {
       const accent = t.schema.find((f) => f.key === "accent")!;
       expect(accent.custom, t.id).toBe(true);
-      expect(accent.options!.length, t.id).toBeGreaterThanOrEqual(12);
+      expect(accent.options!.length, t.id).toBeGreaterThanOrEqual(24);
       expect(new Set(accent.options!.map((o) => o.toUpperCase())).size, t.id).toBe(accent.options!.length);
     }
+  });
+
+  it("offers background colors, light and dark, named in English and Arabic, right after the theme", () => {
+    type ColorField = Field & { optionLabels: Record<string, string>; optionLabelsAr: Record<string, string> };
+    for (const t of all) {
+      const at = t.schema.findIndex((f) => f.key === "colors.background");
+      const field = t.schema[at] as ColorField;
+      expect(t.schema[at - 1].key, t.id).toBe("theme");
+      expect(field.type, t.id).toBe("color");
+      expect(field.custom, t.id).toBe(true);
+      expect(field.options![0], t.id).toBe("default");
+      expect(field.options!.length, t.id).toBeGreaterThanOrEqual(11);
+      for (const option of field.options!) expect(field.optionLabels[option] && field.optionLabelsAr[option], `${t.id} ${option}`).toBeTruthy();
+      expect(t.defaults["colors.background"], t.id).toBe("default");
+    }
+    expect(BACKGROUNDS.some(isDark) && BACKGROUNDS.some((b) => !isDark(b))).toBe(true);
   });
 
   it("is imported by every template stylesheet", () => {

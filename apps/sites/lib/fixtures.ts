@@ -662,7 +662,8 @@ export const LONG_NAMES = {
  * Site options for a fixture preview, from the same token part as the logo options ("-" between options):
  * "longname" / "longword" (a long business name), "foot_medium" / "foot_small" (footer name size), "social" (every
  * account shown), "order_<action>" (whatsapp, call, instagram, facebook, hide), "shape_<shape>" (pill, rounded, circle),
- * "font_<name>" (a shared font, see _kit/fonts.ts), "accent_<rrggbb>" (a custom accent color), "nowa" (no WhatsApp) and
+ * "font_<name>" (a shared font, see _kit/fonts.ts), "accent_<rrggbb>" (a custom accent color), "bg_<rrggbb>" (a background
+ * color, see _kit/background.ts), "nowa" (no WhatsApp) and
  * "labels" (every product label, including long custom ones).
  * ":" works in place of "_" in tests; page addresses escape it, so links use "_".
  */
@@ -679,6 +680,7 @@ export function applySiteOptions(site: PublicSite, options: string): void {
     else if (key === "shape") site.settings = { ...site.settings, "order.shape": value };
     else if (key === "font") site.settings = { ...site.settings, "font.family": value };
     else if (key === "accent") site.settings = { ...site.settings, accent: `#${value.toUpperCase()}` };
+    else if (key === "bg") site.settings = { ...site.settings, "colors.background": `#${value.toUpperCase()}` };
     else if (key === "labels") applyAllLabels(site);
     else if (key === "gal" || key === "galp") applyGalleryOption(site, Number(value), key === "galp");
     else applyCardAndHeroOption(site, key, value);

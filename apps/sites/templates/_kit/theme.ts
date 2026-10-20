@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { choice, flag, text } from "@/lib/settings";
 import type { Settings } from "@/lib/types";
+import { onBackground, pageBackground } from "./background";
 import { accentTokens, isDark, readable } from "./color";
 import { fontPairs, forLocale, type FontName } from "./fonts";
 import { cardVars } from "./cards";
@@ -24,9 +25,12 @@ type Options<T extends string> = {
  */
 export function themeVars<T extends string>(settings: Settings, locale: string, o: Options<T>): CSSProperties {
   const names = Object.keys(o.palettes) as T[];
-  const palette = o.palettes[choice(settings, "theme", names, names[0])];
+  const chosen = o.palettes[choice(settings, "theme", names, names[0])];
+  // The owner's background color recolors the theme (_kit/background.ts); "Template default" keeps it as designed.
+  const background = pageBackground(settings);
+  const { palette, panels: onPanels } = background ? onBackground(chosen, Object.values<Palette>(o.palettes), background) : { palette: chosen, panels: panels(chosen) };
   const font = typeface(settings, locale) ?? forLocale(fontPairs[choice(settings, "font", o.fonts, o.fonts[0])], locale);
-  const accent = accentTokens(accentColor(settings, o.defaultAccent ?? "#D9542C"), palette.bg, palette.surf, palette.ink, panels(palette));
+  const accent = accentTokens(accentColor(settings, o.defaultAccent ?? "#D9542C"), palette.bg, palette.surf, palette.ink, onPanels);
   const radius = o.radius ?? { rounded: "18px", sharp: "2px" };
   const vars: Record<string, string | number> = {
     "--acc": accent.fill,
@@ -42,7 +46,7 @@ export function themeVars<T extends string>(settings: Settings, locale: string, 
     colorScheme: isDark(palette.bg) ? "dark" : "light",
   };
   for (const [key, value] of Object.entries(palette)) vars[`--${key}`] = value;
-  vars["--muted"] = readable(palette.muted, [palette.bg, palette.surf, ...panels(palette)], palette.ink);
+  vars["--muted"] = readable(palette.muted, [palette.bg, palette.surf, ...onPanels], palette.ink);
   Object.assign(vars, cardVars(settings, { surface: palette.card ?? palette.surf, accent: accent.fill, inks: [palette.ink, vars["--muted"] as string, accent.text] }));
   return vars as CSSProperties;
 }

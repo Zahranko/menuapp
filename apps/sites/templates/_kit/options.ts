@@ -1,7 +1,9 @@
 import { facebookLink, phoneLink, snapchatLink, tiktokLink } from "@/lib/format";
 import { choice, list, text } from "@/lib/settings";
 import type { PublicSite, Settings } from "@/lib/types";
+import { pageBackground } from "./background";
 import { cardAttributes } from "./cards";
+import { isDark } from "./color";
 import { heroAttributes } from "./hero";
 import { TYPEFACE_NAMES, TYPEFACES, type FontPair, type TypefaceName } from "./fonts";
 import { contact as contactLinks } from "./site-data";
@@ -152,6 +154,9 @@ export function optionAttributes(site: PublicSite, order: OrderButton | null = n
   if (shown && order.shape !== "auto") attrs["data-order-shape"] = order.shape;
   const font = choice(site.settings, "font.family", ["default", ...TYPEFACE_NAMES], "default");
   if (font !== "default") attrs["data-font"] = font;
+  // The owner's background color (_kit/background.ts): templates restyle the few parts drawn in fixed colors.
+  const background = pageBackground(site.settings);
+  if (background) attrs["data-page-bg"] = isDark(background) ? "dark" : "light";
   // Card options (_kit/cards.ts, cards.css) and hero options (_kit/hero.ts, hero.css).
   return { ...attrs, ...cardAttributes(site.settings), ...heroAttributes(site.settings) };
 }

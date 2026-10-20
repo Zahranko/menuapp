@@ -23,7 +23,33 @@
         }
       }
     ],
-    "accentExtras": ["#C8102E", "#E8590C", "#D99A00", "#2F8F4E", "#0E7C86", "#1F6FEB", "#5B3FD0", "#D6336C", "#7A4E2D", "#2B2B2B"]
+    "afterTheme": [
+      {
+        "key": "colors.background",
+        "type": "color",
+        "label": "Background color",
+        "options": ["default", "#FFFFFF", "#FBF7EE", "#F1E6D2", "#E9E7E2", "#FFF4D6", "#FBE9E7", "#EEE8F7", "#E4EFF8", "#E3F2EA", "#E6ECDF", "#1E2B22", "#14213D", "#26292E", "#0E0E0E"],
+        "optionLabels": {
+          "default": "Template default",
+          "#FFFFFF": "White",
+          "#FBF7EE": "Cream",
+          "#F1E6D2": "Sand",
+          "#E9E7E2": "Stone",
+          "#FFF4D6": "Butter",
+          "#FBE9E7": "Blush",
+          "#EEE8F7": "Lavender",
+          "#E4EFF8": "Sky",
+          "#E3F2EA": "Mint",
+          "#E6ECDF": "Sage",
+          "#1E2B22": "Forest",
+          "#14213D": "Navy",
+          "#26292E": "Charcoal",
+          "#0E0E0E": "Black"
+        },
+        "custom": true
+      }
+    ],
+    "accentExtras": ["#8E1B2C", "#C8102E", "#F0644A", "#E8590C", "#D99A00", "#F2C14E", "#7A9A2E", "#2F8F4E", "#1B4D3E", "#7CC4A4", "#0E7C86", "#5BB5D6", "#1F6FEB", "#1E3A8A", "#9C8CE0", "#5B3FD0", "#7B2D6E", "#D6336C", "#F2A0B8", "#A3B18A", "#B08D57", "#7A4E2D", "#6B7280", "#2B2B2B"]
   },
   "fields": [
     {
@@ -91,6 +117,7 @@
   ],
   "defaults": {
     "font.family": "default",
+    "colors.background": "default",
     "footer.nameSize": "large",
     "social.show": [],
     "order.action": "auto",
