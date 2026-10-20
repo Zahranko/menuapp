@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart' show DateFormat;
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/api/api_error.dart';
+import '../../core/links.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/form_widgets.dart';
 import '../../core/widgets/ui.dart';
@@ -127,7 +127,7 @@ class _PlanSheetState extends ConsumerState<_PlanSheet> {
     try {
       final checkout = await ref.read(planProvider.notifier).changePlan(widget.plan.code);
       if (checkout != null) {
-        await launchUrl(Uri.parse(checkout), mode: LaunchMode.externalApplication);
+        await openWebPage(checkout);
         if (mounted) Navigator.pop(context, t.finishPayment);
         return;
       }

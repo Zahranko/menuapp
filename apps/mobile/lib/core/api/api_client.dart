@@ -95,9 +95,14 @@ class AuthInterceptor extends QueuedInterceptor {
       await tokens.save(access: access, refresh: body['refreshToken'] as String);
       await _retry(request, access, handler, err);
       return;
-    } on DioException {
-      await tokens.clear();
-      onSignedOut();
+    } on DioException catch (e) {
+      // Only a refused refresh ends the session. A timeout, no network or a server error
+      // (for example while the server wakes up) keeps the tokens for the next try.
+      final status = e.response?.statusCode;
+      if (status == 400 || status == 401 || status == 403) {
+        await tokens.clear();
+        onSignedOut();
+      }
       return handler.next(err);
     }
   }

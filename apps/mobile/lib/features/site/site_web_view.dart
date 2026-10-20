@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../core/theme.dart';
@@ -34,6 +35,18 @@ class _SiteWebViewState extends State<SiteWebView> {
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(NavigationDelegate(
+        // The view only shows the owner's own site. Links to other places (social pages,
+        // phone, WhatsApp) open in their own app instead of inside ours.
+        onNavigationRequest: (request) {
+          final uri = Uri.tryParse(request.url);
+          if (!request.isMainFrame || uri == null || uri.host == Uri.parse(widget.url).host) {
+            return NavigationDecision.navigate;
+          }
+          if (const {'https', 'http', 'tel', 'mailto', 'sms', 'whatsapp'}.contains(uri.scheme)) {
+            launchUrl(uri, mode: LaunchMode.externalApplication);
+          }
+          return NavigationDecision.prevent;
+        },
         onPageStarted: (_) => _set(loading: true),
         onPageFinished: (_) => _set(loading: false),
         onWebResourceError: (e) {

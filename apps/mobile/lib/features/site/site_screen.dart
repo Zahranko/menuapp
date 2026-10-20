@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/links.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/form_widgets.dart';
 import '../../l10n/generated/app_localizations.dart';
@@ -57,7 +57,7 @@ class SiteScreen extends ConsumerWidget {
                 RoundIconButton(
                   tooltip: t.openInBrowser,
                   icon: Icons.open_in_new_rounded,
-                  onPressed: () => launchUrl(Uri.parse(business.siteUrl), mode: LaunchMode.externalApplication),
+                  onPressed: () => openWebPage(business.siteUrl),
                 ),
               ]),
             ),
