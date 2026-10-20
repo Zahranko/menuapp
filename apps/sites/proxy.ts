@@ -2,10 +2,13 @@ import { NextResponse, type NextRequest } from "next/server";
 import { apiBaseUrl, route, SITE_BASE_HEADER, sitePath } from "./lib/routing";
 
 const HOST_TTL_MS = 60_000;
+const HOST_CACHE_MAX = 2_000;
 const hostCache = new Map<string, { slug: string | null; until: number }>();
+const HOSTNAME = /^(?=.{1,253}$)([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/;
 
-/** Custom domain → slug, cached for 60 seconds per server process. */
+/** Custom domain → slug, cached for 60 seconds per server process. Made-up Host headers are never looked up. */
 async function slugForHost(host: string): Promise<string | null> {
+  if (!HOSTNAME.test(host)) return null;
   const cached = hostCache.get(host);
   if (cached && cached.until > Date.now()) return cached.slug;
 
@@ -19,6 +22,8 @@ async function slugForHost(host: string): Promise<string | null> {
     else if (response.status !== 404) throw new Error(`by-host lookup failed with ${response.status}`);
   }
 
+  // Bounded, so a flood of different Host headers can't grow memory: the oldest entry goes first.
+  if (hostCache.size >= HOST_CACHE_MAX) hostCache.delete(hostCache.keys().next().value!);
   hostCache.set(host, { slug, until: Date.now() + HOST_TTL_MS });
   return slug;
 }
