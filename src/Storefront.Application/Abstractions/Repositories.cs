@@ -1,3 +1,4 @@
+using Storefront.Domain.Ai;
 using Storefront.Domain.Billing;
 using Storefront.Domain.Businesses;
 using Storefront.Domain.Catalog;
@@ -113,4 +114,13 @@ public interface IMediaRepository
     Task<bool> UrlBelongsToBusinessAsync(Guid businessId, string url, CancellationToken ct);
 
     void Add(MediaAsset asset);
+}
+
+/// <summary>Monthly AI helper use per business (<see cref="AiUsage"/>).</summary>
+public interface IAiUsageRepository
+{
+    Task<int> CountAsync(Guid businessId, string period, CancellationToken ct);
+
+    /// <summary>Adds one use to the month at once, outside the unit of work, so two answers finishing together both count.</summary>
+    Task IncrementAsync(Guid businessId, string period, DateTimeOffset now, CancellationToken ct);
 }

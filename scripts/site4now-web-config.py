@@ -47,6 +47,12 @@ if sites_url:
         settings["Revalidation__Url"] = f"{sites_url}/api/revalidate"
         settings["Revalidation__Secret"] = env["REVALIDATE_SECRET"]
 
+# The AI helper (Google Gemini). Without a key it stays switched off and the app hides its buttons.
+if env.get("GEMINI_API_KEY", "").strip():
+    settings["Ai__Gemini__ApiKey"] = env["GEMINI_API_KEY"].strip()
+    if env.get("GEMINI_MODEL", "").strip():
+        settings["Ai__Gemini__Model"] = env["GEMINI_MODEL"].strip()
+
 variables = "\n".join(
     f"          <environmentVariable name={quoteattr(k)} value={quoteattr(v)} />" for k, v in settings.items()
 )

@@ -1181,4 +1181,202 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get posterScanHint => 'Point your phone camera at the code';
+
+  @override
+  String get aiHelper => 'AI helper';
+
+  @override
+  String get aiHelperSub =>
+      'Let AI suggest colors and words that fit your business. You check everything before it goes live.';
+
+  @override
+  String get aiFromPhoto => 'Colors and text from a photo';
+
+  @override
+  String get aiFromPhotoSub => 'Your shop front, logo, food or packaging';
+
+  @override
+  String get aiWriteText => 'Write my text';
+
+  @override
+  String get aiWriteTextSub => 'Headlines, your story and product descriptions';
+
+  @override
+  String aiRemaining(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count AI uses left this month',
+      one: '1 AI use left this month',
+      zero: 'No AI uses left this month',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aiOff =>
+      'The AI helper isn\'t switched on yet. You can still change everything yourself.';
+
+  @override
+  String get aiUsedUp =>
+      'You\'ve used all your AI helper requests for this month. More arrive on the 1st.';
+
+  @override
+  String get aiTakePhoto => 'Take a photo';
+
+  @override
+  String get aiChoosePhoto => 'Choose from photos';
+
+  @override
+  String get aiNoteLabel => 'Anything to know about your business? (optional)';
+
+  @override
+  String get aiNoteHint => 'Cosy family café, known for knafeh';
+
+  @override
+  String get aiSuggest => 'Suggest';
+
+  @override
+  String get aiLookingAtPhoto => 'Looking at your photo…';
+
+  @override
+  String get aiWriting => 'Writing your texts…';
+
+  @override
+  String get aiReadingMenu => 'Reading your menu…';
+
+  @override
+  String get aiTakesAMoment => 'This can take up to a minute.';
+
+  @override
+  String get aiSuggestions => 'Suggestions';
+
+  @override
+  String get aiColors => 'Colors and style';
+
+  @override
+  String get aiTexts => 'Texts';
+
+  @override
+  String get aiProductDescriptions => 'Product descriptions';
+
+  @override
+  String get aiApply => 'Apply';
+
+  @override
+  String aiApplyCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Apply $count suggestions',
+      one: 'Apply 1 suggestion',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aiAppliedToDraft =>
+      'Added to your design. Check the preview, then publish.';
+
+  @override
+  String get aiDraftNote =>
+      'Design changes go to your draft. Your site changes when you publish.';
+
+  @override
+  String get aiDescriptionsNote =>
+      'Descriptions are saved to your products and show on your site right away.';
+
+  @override
+  String aiDescriptionsSaved(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count product descriptions saved.',
+      one: '1 product description saved.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aiNothingSuggested =>
+      'No suggestions this time. Try another photo or add a note.';
+
+  @override
+  String get aiCheckBeforeUsing =>
+      'AI can make mistakes. Check before you use it.';
+
+  @override
+  String get aiMenuFromPhoto => 'Add from a menu photo';
+
+  @override
+  String get aiMenuFromPhotoSub =>
+      'Up to 3 photos of your menu, price list or shelf';
+
+  @override
+  String aiMenuPhotos(int count) {
+    return '$count of 3 photos';
+  }
+
+  @override
+  String get aiAddPhoto => 'Add a photo';
+
+  @override
+  String get aiRemovePhoto => 'Remove photo';
+
+  @override
+  String get aiReadMenu => 'Read my menu';
+
+  @override
+  String get aiReviewTitle => 'Check your menu';
+
+  @override
+  String get aiReviewSub =>
+      'Fix names and prices, untick anything you don\'t want, then add them.';
+
+  @override
+  String aiAddItems(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Add $count items',
+      one: 'Add 1 item',
+      zero: 'Choose items to add',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aiAdding => 'Adding…';
+
+  @override
+  String aiItemsAdded(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items added to your menu.',
+      one: '1 item added to your menu.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aiNewCategory => 'New category';
+
+  @override
+  String get aiExistingCategory => 'Adds to your category';
+
+  @override
+  String aiCurrencyDiffers(String menu, String yours) {
+    return 'The menu shows prices in $menu. Your prices are in $yours, so check them: they were not converted.';
+  }
+
+  @override
+  String get aiFixHighlighted =>
+      'Some items need a fix. Check the highlighted fields.';
+
+  @override
+  String get aiSelectItem => 'Add this item';
+
+  @override
+  String get aiSelectCategory => 'Add this category';
 }

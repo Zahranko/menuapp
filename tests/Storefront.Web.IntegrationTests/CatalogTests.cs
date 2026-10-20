@@ -43,8 +43,8 @@ public class CatalogTests(StorefrontFactory factory) : IClassFixture<StorefrontF
         var renamed = await client.PutAsJsonAsync($"/api/v1/categories/{tea.Id}", new { name = "Teas" });
         await Api.EnsureSuccess(renamed);
 
-        var list = await client.GetFromJsonAsync<List<CategoryDto>>("/api/v1/categories", Api.Json);
-        Assert.Equal(["Coffee", "Teas"], list!.Select(c => c.Name));
+        var list = await client.GetFromJsonAsync<List<CategoryDto>>("/api/v1/categories", Api.Json) ?? [];
+        Assert.Equal(["Coffee", "Teas"], list.Select(c => c.Name));
         Assert.Equal([2, 0], list.Select(c => c.ProductCount));
     }
 
@@ -78,8 +78,8 @@ public class CatalogTests(StorefrontFactory factory) : IClassFixture<StorefrontF
         var moved = await client.DeleteAsync($"/api/v1/categories/{coffee.Id}?moveTo={drinks.Id}");
         Assert.Equal(HttpStatusCode.NoContent, moved.StatusCode);
 
-        var products = await client.GetFromJsonAsync<List<ProductDto>>($"/api/v1/products?categoryId={drinks.Id}", Api.Json);
-        Assert.Equal(["Water", "Latte", "Mocha"], products!.Select(p => p.Name));
+        var products = await client.GetFromJsonAsync<List<ProductDto>>($"/api/v1/products?categoryId={drinks.Id}", Api.Json) ?? [];
+        Assert.Equal(["Water", "Latte", "Mocha"], products.Select(p => p.Name));
         Assert.Equal([0, 1, 2], products.Select(p => p.SortOrder));
         Assert.Contains(products, p => p.Id == latte.Id);
     }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:storefront_app/core/auth/token_store.dart';
 import 'package:storefront_app/core/l10n/app_language.dart';
@@ -13,7 +14,7 @@ import 'fake_api.dart';
 import 'fake_backend.dart';
 
 /// Starts the app with a saved session against [backend]; web views show their address as text.
-Future<MemoryTokenStore> pumpSignedIn(WidgetTester tester, FakeBackend backend, {Locale? locale, LanguageStore? language}) async {
+Future<MemoryTokenStore> pumpSignedIn(WidgetTester tester, FakeBackend backend, {Locale? locale, LanguageStore? language, List<Override> overrides = const []}) async {
   final tokens = MemoryTokenStore();
   await tokens.save(access: 'a', refresh: 'r');
   if (locale != null) {
@@ -29,6 +30,7 @@ Future<MemoryTokenStore> pumpSignedIn(WidgetTester tester, FakeBackend backend, 
       languageStoreProvider.overrideWithValue(language ?? MemoryLanguageStore()),
       httpAdapterProvider.overrideWithValue(FakeApi(backend.handle)),
       webViewBuilderProvider.overrideWithValue((url, reload) => Center(child: Text('web $url #$reload'))),
+      ...overrides,
     ],
     child: const StorefrontApp(),
   ));

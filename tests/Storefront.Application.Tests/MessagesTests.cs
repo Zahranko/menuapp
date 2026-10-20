@@ -223,7 +223,7 @@ public partial class MessagesCoverageTests
 
     private static Regex[] CodePatterns() =>
     [
-        new(@"Error\.(?:Validation|NotFound|Conflict|Unauthorized|Forbidden)\(\s*""(?<code>[^""]+)"""),
+        new(@"Error\.(?:Validation|NotFound|Conflict|Unauthorized|Forbidden|LimitReached|Unavailable|Upstream)\(\s*""(?<code>[^""]+)"""),
         new(@"new Error\(\s*""(?<code>[^""]+)"""),
         new(@"new DomainException\(\s*""(?<code>[^""]+)"""),
         new(@"Guard\.(?:Optional)?Text\([^;]*,\s*""(?<code>[a-z]+\.[A-Za-z]+)""\)"),

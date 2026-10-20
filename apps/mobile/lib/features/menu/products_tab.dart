@@ -6,6 +6,7 @@ import '../../core/theme.dart';
 import '../../core/widgets/form_widgets.dart';
 import '../../core/widgets/ui.dart';
 import '../../l10n/generated/app_localizations.dart';
+import '../ai/ai_menu_import.dart';
 import '../auth/auth_controller.dart';
 import 'catalog_controller.dart';
 import 'dashboard_screen.dart';
@@ -43,6 +44,7 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
               const SizedBox(width: 10),
               _Stat(value: c.categories.length, label: t.statCategories, icon: Icons.grid_view_outlined),
             ]),
+            const AiMenuEntry(),
             const SizedBox(height: 14),
             DecoratedBox(
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(Ui.radiusSmall), boxShadow: Ui.shadow),

@@ -42,6 +42,17 @@ class FakeBackend {
   final requests = <String>[];
   final drafts = <Map<String, Object?>>[];
 
+  /// The AI helper's `GET /ai/status`; null answers 404, like a server without the helper.
+  Map<String, Object?>? aiStatus;
+
+  /// Answers of `POST /ai/design`, `/ai/text` and `/ai/menu`.
+  Map<String, Object?>? aiDesign;
+  Map<String, Object?>? aiText;
+  Map<String, Object?>? aiMenu;
+
+  /// Bodies sent to `POST /catalog/import`.
+  final imports = <Map<String, Object?>>[];
+
   /// Paths (like "PATCH /api/v1/products/p1/availability") that answer with a server error.
   final failing = <String>{};
   int _ids = 100;
@@ -399,6 +410,27 @@ class FakeBackend {
       case 'DELETE /api/v1/domain-request':
         domainRequest = null;
         return (status: 204, body: null);
+      case 'GET /api/v1/ai/status':
+        return aiStatus == null ? (status: 404, body: {'title': 'Not found'}) : (status: 200, body: aiStatus);
+      case 'POST /api/v1/ai/design':
+        return (status: 200, body: aiDesign);
+      case 'POST /api/v1/ai/text':
+        return (status: 200, body: aiText);
+      case 'POST /api/v1/ai/menu':
+        return (status: 200, body: aiMenu);
+      case 'POST /api/v1/catalog/import':
+        imports.add(body!);
+        var added = 0;
+        for (final c in (body['categories'] as List).cast<Map>()) {
+          final existing = categories.where((x) => (x['name'] as String).toLowerCase() == (c['name'] as String).toLowerCase()).firstOrNull;
+          final category = existing ?? {'id': 'c${_ids++}', 'name': c['name'], 'parentId': null, 'sortOrder': categories.length};
+          if (existing == null) categories.add(category);
+          for (final p in (c['products'] as List).cast<Map>()) {
+            products.add({..._product('p${_ids++}', category['id'] as String, p['name'] as String, (p['price'] as num).toDouble()), 'description': p['description']});
+            added++;
+          }
+        }
+        return (status: 200, body: {'categoriesCreated': 0, 'productsCreated': added});
     }
 
     final productMatch = RegExp(r'^/api/v1/products/([^/]+)(/availability)?$').firstMatch(path);

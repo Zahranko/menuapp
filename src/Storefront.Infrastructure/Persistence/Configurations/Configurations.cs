@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Storefront.Domain.Accounts;
+using Storefront.Domain.Ai;
 using Storefront.Domain.Billing;
 using Storefront.Domain.Businesses;
 using Storefront.Domain.Catalog;
@@ -188,6 +189,17 @@ internal sealed class OutboxMessageConfiguration : IEntityTypeConfiguration<Outb
         b.Property(x => x.Type).HasMaxLength(100);
         b.Property(x => x.LastError).HasMaxLength(2000);
         b.HasIndex(x => new { x.NextAttemptAt, x.OccurredAt }).HasFilter("[ProcessedAt] IS NULL");
+    }
+}
+
+internal sealed class AiUsageConfiguration : IEntityTypeConfiguration<AiUsage>
+{
+    public void Configure(EntityTypeBuilder<AiUsage> b)
+    {
+        b.ToTable("AiUsage");
+        b.Property(x => x.Period).HasMaxLength(7).IsRequired();
+        b.HasIndex(x => new { x.BusinessId, x.Period }).IsUnique();
+        b.HasOne<Business>().WithMany().HasForeignKey(x => x.BusinessId).OnDelete(DeleteBehavior.Cascade);
     }
 }
 

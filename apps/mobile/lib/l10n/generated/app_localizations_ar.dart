@@ -1171,4 +1171,211 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get posterScanHint => 'وجّه كاميرا هاتفك نحو الرمز';
+
+  @override
+  String get aiHelper => 'المساعد الذكي';
+
+  @override
+  String get aiHelperSub =>
+      'دع الذكاء الاصطناعي يقترح ألوانًا ونصوصًا تناسب نشاطك. تراجع كل شيء قبل أن يظهر في موقعك.';
+
+  @override
+  String get aiFromPhoto => 'ألوان ونصوص من صورة';
+
+  @override
+  String get aiFromPhotoSub => 'واجهة محلك أو شعارك أو طعامك أو تغليفك';
+
+  @override
+  String get aiWriteText => 'اكتب نصوصي';
+
+  @override
+  String get aiWriteTextSub => 'العناوين وقصتك وأوصاف المنتجات';
+
+  @override
+  String aiRemaining(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'بقي $count استخدامًا للمساعد هذا الشهر',
+      few: 'بقيت $count استخدامات للمساعد هذا الشهر',
+      two: 'بقي استخدامان للمساعد هذا الشهر',
+      one: 'بقي استخدام واحد للمساعد هذا الشهر',
+      zero: 'لم يبقَ أي استخدام للمساعد هذا الشهر',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aiOff =>
+      'المساعد الذكي غير مفعّل بعد. ما زال بإمكانك تعديل كل شيء بنفسك.';
+
+  @override
+  String get aiUsedUp =>
+      'استخدمت كل طلبات المساعد الذكي لهذا الشهر. تتجدد في أول الشهر.';
+
+  @override
+  String get aiTakePhoto => 'التقط صورة';
+
+  @override
+  String get aiChoosePhoto => 'اختر من الصور';
+
+  @override
+  String get aiNoteLabel => 'هل هناك ما يجب أن نعرفه عن نشاطك؟ (اختياري)';
+
+  @override
+  String get aiNoteHint => 'مقهى عائلي دافئ، مشهور بالكنافة';
+
+  @override
+  String get aiSuggest => 'اقترح';
+
+  @override
+  String get aiLookingAtPhoto => 'نتأمل صورتك…';
+
+  @override
+  String get aiWriting => 'نكتب نصوصك…';
+
+  @override
+  String get aiReadingMenu => 'نقرأ قائمتك…';
+
+  @override
+  String get aiTakesAMoment => 'قد يستغرق هذا حتى دقيقة.';
+
+  @override
+  String get aiSuggestions => 'الاقتراحات';
+
+  @override
+  String get aiColors => 'الألوان والطابع';
+
+  @override
+  String get aiTexts => 'النصوص';
+
+  @override
+  String get aiProductDescriptions => 'أوصاف المنتجات';
+
+  @override
+  String get aiApply => 'تطبيق';
+
+  @override
+  String aiApplyCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'تطبيق $count اقتراحًا',
+      few: 'تطبيق $count اقتراحات',
+      two: 'تطبيق اقتراحين',
+      one: 'تطبيق اقتراح واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aiAppliedToDraft => 'أُضيفت إلى تصميمك. راجع المعاينة ثم انشر.';
+
+  @override
+  String get aiDraftNote =>
+      'تغييرات التصميم تُحفظ كمسودة. يتغير موقعك عند النشر.';
+
+  @override
+  String get aiDescriptionsNote =>
+      'تُحفظ الأوصاف في منتجاتك وتظهر في موقعك فورًا.';
+
+  @override
+  String aiDescriptionsSaved(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'حُفظت أوصاف $count منتجًا.',
+      few: 'حُفظت أوصاف $count منتجات.',
+      two: 'حُفظ وصفا منتجين.',
+      one: 'حُفظ وصف منتج واحد.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aiNothingSuggested =>
+      'لا اقتراحات هذه المرة. جرّب صورة أخرى أو أضف ملاحظة.';
+
+  @override
+  String get aiCheckBeforeUsing =>
+      'قد يخطئ الذكاء الاصطناعي. راجع قبل الاستخدام.';
+
+  @override
+  String get aiMenuFromPhoto => 'أضف من صورة القائمة';
+
+  @override
+  String get aiMenuFromPhotoSub =>
+      'حتى 3 صور لقائمتك أو قائمة الأسعار أو الرفوف';
+
+  @override
+  String aiMenuPhotos(int count) {
+    return '$count من 3 صور';
+  }
+
+  @override
+  String get aiAddPhoto => 'أضف صورة';
+
+  @override
+  String get aiRemovePhoto => 'احذف الصورة';
+
+  @override
+  String get aiReadMenu => 'اقرأ قائمتي';
+
+  @override
+  String get aiReviewTitle => 'راجع قائمتك';
+
+  @override
+  String get aiReviewSub =>
+      'صحّح الأسماء والأسعار، وألغِ تحديد ما لا تريده، ثم أضفها.';
+
+  @override
+  String aiAddItems(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'أضف $count عنصرًا',
+      few: 'أضف $count عناصر',
+      two: 'أضف عنصرين',
+      one: 'أضف عنصرًا واحدًا',
+      zero: 'اختر عناصر لإضافتها',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aiAdding => 'جارٍ الإضافة…';
+
+  @override
+  String aiItemsAdded(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'أُضيف $count عنصرًا إلى قائمتك.',
+      few: 'أُضيفت $count عناصر إلى قائمتك.',
+      two: 'أُضيف عنصران إلى قائمتك.',
+      one: 'أُضيف عنصر واحد إلى قائمتك.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aiNewCategory => 'صنف جديد';
+
+  @override
+  String get aiExistingCategory => 'يُضاف إلى صنفك';
+
+  @override
+  String aiCurrencyDiffers(String menu, String yours) {
+    return 'الأسعار في القائمة بعملة $menu، وأسعارك بعملة $yours. راجعها لأنها لم تُحوَّل.';
+  }
+
+  @override
+  String get aiFixHighlighted =>
+      'بعض العناصر تحتاج إلى تصحيح. راجع الحقول المحددة.';
+
+  @override
+  String get aiSelectItem => 'أضف هذا العنصر';
+
+  @override
+  String get aiSelectCategory => 'أضف هذا الصنف';
 }

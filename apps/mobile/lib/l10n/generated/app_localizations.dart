@@ -2131,6 +2131,288 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Point your phone camera at the code'**
   String get posterScanHint;
+
+  /// No description provided for @aiHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'AI helper'**
+  String get aiHelper;
+
+  /// No description provided for @aiHelperSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Let AI suggest colors and words that fit your business. You check everything before it goes live.'**
+  String get aiHelperSub;
+
+  /// No description provided for @aiFromPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Colors and text from a photo'**
+  String get aiFromPhoto;
+
+  /// No description provided for @aiFromPhotoSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Your shop front, logo, food or packaging'**
+  String get aiFromPhotoSub;
+
+  /// No description provided for @aiWriteText.
+  ///
+  /// In en, this message translates to:
+  /// **'Write my text'**
+  String get aiWriteText;
+
+  /// No description provided for @aiWriteTextSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Headlines, your story and product descriptions'**
+  String get aiWriteTextSub;
+
+  /// No description provided for @aiRemaining.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No AI uses left this month} =1{1 AI use left this month} other{{count} AI uses left this month}}'**
+  String aiRemaining(int count);
+
+  /// No description provided for @aiOff.
+  ///
+  /// In en, this message translates to:
+  /// **'The AI helper isn\'t switched on yet. You can still change everything yourself.'**
+  String get aiOff;
+
+  /// No description provided for @aiUsedUp.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve used all your AI helper requests for this month. More arrive on the 1st.'**
+  String get aiUsedUp;
+
+  /// No description provided for @aiTakePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a photo'**
+  String get aiTakePhoto;
+
+  /// No description provided for @aiChoosePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from photos'**
+  String get aiChoosePhoto;
+
+  /// No description provided for @aiNoteLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Anything to know about your business? (optional)'**
+  String get aiNoteLabel;
+
+  /// No description provided for @aiNoteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Cosy family café, known for knafeh'**
+  String get aiNoteHint;
+
+  /// No description provided for @aiSuggest.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggest'**
+  String get aiSuggest;
+
+  /// No description provided for @aiLookingAtPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Looking at your photo…'**
+  String get aiLookingAtPhoto;
+
+  /// No description provided for @aiWriting.
+  ///
+  /// In en, this message translates to:
+  /// **'Writing your texts…'**
+  String get aiWriting;
+
+  /// No description provided for @aiReadingMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading your menu…'**
+  String get aiReadingMenu;
+
+  /// No description provided for @aiTakesAMoment.
+  ///
+  /// In en, this message translates to:
+  /// **'This can take up to a minute.'**
+  String get aiTakesAMoment;
+
+  /// No description provided for @aiSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggestions'**
+  String get aiSuggestions;
+
+  /// No description provided for @aiColors.
+  ///
+  /// In en, this message translates to:
+  /// **'Colors and style'**
+  String get aiColors;
+
+  /// No description provided for @aiTexts.
+  ///
+  /// In en, this message translates to:
+  /// **'Texts'**
+  String get aiTexts;
+
+  /// No description provided for @aiProductDescriptions.
+  ///
+  /// In en, this message translates to:
+  /// **'Product descriptions'**
+  String get aiProductDescriptions;
+
+  /// No description provided for @aiApply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get aiApply;
+
+  /// No description provided for @aiApplyCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Apply 1 suggestion} other{Apply {count} suggestions}}'**
+  String aiApplyCount(int count);
+
+  /// No description provided for @aiAppliedToDraft.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to your design. Check the preview, then publish.'**
+  String get aiAppliedToDraft;
+
+  /// No description provided for @aiDraftNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Design changes go to your draft. Your site changes when you publish.'**
+  String get aiDraftNote;
+
+  /// No description provided for @aiDescriptionsNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Descriptions are saved to your products and show on your site right away.'**
+  String get aiDescriptionsNote;
+
+  /// No description provided for @aiDescriptionsSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 product description saved.} other{{count} product descriptions saved.}}'**
+  String aiDescriptionsSaved(int count);
+
+  /// No description provided for @aiNothingSuggested.
+  ///
+  /// In en, this message translates to:
+  /// **'No suggestions this time. Try another photo or add a note.'**
+  String get aiNothingSuggested;
+
+  /// No description provided for @aiCheckBeforeUsing.
+  ///
+  /// In en, this message translates to:
+  /// **'AI can make mistakes. Check before you use it.'**
+  String get aiCheckBeforeUsing;
+
+  /// No description provided for @aiMenuFromPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Add from a menu photo'**
+  String get aiMenuFromPhoto;
+
+  /// No description provided for @aiMenuFromPhotoSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Up to 3 photos of your menu, price list or shelf'**
+  String get aiMenuFromPhotoSub;
+
+  /// No description provided for @aiMenuPhotos.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} of 3 photos'**
+  String aiMenuPhotos(int count);
+
+  /// No description provided for @aiAddPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a photo'**
+  String get aiAddPhoto;
+
+  /// No description provided for @aiRemovePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove photo'**
+  String get aiRemovePhoto;
+
+  /// No description provided for @aiReadMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Read my menu'**
+  String get aiReadMenu;
+
+  /// No description provided for @aiReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your menu'**
+  String get aiReviewTitle;
+
+  /// No description provided for @aiReviewSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Fix names and prices, untick anything you don\'t want, then add them.'**
+  String get aiReviewSub;
+
+  /// No description provided for @aiAddItems.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Choose items to add} =1{Add 1 item} other{Add {count} items}}'**
+  String aiAddItems(int count);
+
+  /// No description provided for @aiAdding.
+  ///
+  /// In en, this message translates to:
+  /// **'Adding…'**
+  String get aiAdding;
+
+  /// No description provided for @aiItemsAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 item added to your menu.} other{{count} items added to your menu.}}'**
+  String aiItemsAdded(int count);
+
+  /// No description provided for @aiNewCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'New category'**
+  String get aiNewCategory;
+
+  /// No description provided for @aiExistingCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Adds to your category'**
+  String get aiExistingCategory;
+
+  /// No description provided for @aiCurrencyDiffers.
+  ///
+  /// In en, this message translates to:
+  /// **'The menu shows prices in {menu}. Your prices are in {yours}, so check them: they were not converted.'**
+  String aiCurrencyDiffers(String menu, String yours);
+
+  /// No description provided for @aiFixHighlighted.
+  ///
+  /// In en, this message translates to:
+  /// **'Some items need a fix. Check the highlighted fields.'**
+  String get aiFixHighlighted;
+
+  /// No description provided for @aiSelectItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Add this item'**
+  String get aiSelectItem;
+
+  /// No description provided for @aiSelectCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Add this category'**
+  String get aiSelectCategory;
 }
 
 class _AppLocalizationsDelegate

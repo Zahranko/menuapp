@@ -5,7 +5,11 @@ using System.Text.RegularExpressions;
 
 namespace Storefront.Application.Templates;
 
-/// <summary>One editable setting of a template. The editor renders a control per field; the validator checks values against it.</summary>
+/// <summary>
+/// One editable setting of a template. The editor renders a control per field; the validator checks values against it.
+/// <see cref="OptionLabels"/> (English option names) and <see cref="Swatches"/> (a palette option's main color) only describe options;
+/// the AI helper reads them to pick fitting values.
+/// </summary>
 public sealed record TemplateField(
     string Key,
     string Type,
@@ -17,7 +21,9 @@ public sealed record TemplateField(
     double? Min,
     double? RangeMax,
     double? Step,
-    bool Custom = false);
+    bool Custom = false,
+    IReadOnlyDictionary<string, string>? OptionLabels = null,
+    IReadOnlyDictionary<string, string>? Swatches = null);
 
 public sealed partial class TemplateSchema
 {
@@ -45,11 +51,18 @@ public sealed partial class TemplateSchema
                 f["min"]?.GetValue<double>(),
                 type is "range" ? f["max"]?.GetValue<double>() : null,
                 f["step"]?.GetValue<double>(),
-                type is "color" && f["custom"]?.GetValue<bool>() == true));
+                type is "color" && f["custom"]?.GetValue<bool>() == true,
+                Strings(f["optionLabels"]),
+                Strings(f["swatches"])));
         }
 
         return new TemplateSchema(fields);
     }
+
+    private static Dictionary<string, string>? Strings(JsonNode? node) =>
+        node is JsonObject map
+            ? map.Where(e => e.Value is JsonValue v && v.TryGetValue<string>(out _)).ToDictionary(e => e.Key, e => e.Value!.GetValue<string>())
+            : null;
 
     /// <summary>
     /// Checks <paramref name="settings"/> against the schema and returns the complete settings (defaults filled in for missing keys),

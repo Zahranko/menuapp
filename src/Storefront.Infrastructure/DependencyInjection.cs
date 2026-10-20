@@ -3,9 +3,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Storefront.Application.Abstractions;
+using Storefront.Application.Ai;
 using Storefront.Application.Common;
 using Storefront.Application.PublicSites;
+using Storefront.Infrastructure.Ai;
 using Storefront.Infrastructure.Email;
 using Storefront.Infrastructure.Identity;
 using Storefront.Infrastructure.Outbox;
@@ -48,6 +51,7 @@ public static class DependencyInjection
         services.AddScoped<IBillingRepository, BillingRepository>();
         services.AddScoped<IDomainRepository, DomainRepository>();
         services.AddScoped<IMediaRepository, MediaRepository>();
+        services.AddScoped<IAiUsageRepository, AiUsageRepository>();
 
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
@@ -108,6 +112,18 @@ public static class DependencyInjection
         services.Configure<OutboxOptions>(configuration.GetSection(OutboxOptions.SectionName));
         services.AddScoped<OutboxProcessor>();
         services.AddHostedService<OutboxDispatcher>();
+
+        // The AI helper: Gemini when "Ai:Gemini:ApiKey" is set (read when resolved, so test hosts can override it), otherwise switched off.
+        services.Configure<AiOptions>(configuration.GetSection(AiOptions.SectionName));
+        services.Configure<GeminiOptions>(configuration.GetSection(GeminiOptions.SectionName));
+        services.AddHttpClient<GeminiAssistant>((sp, c) =>
+                c.Timeout = TimeSpan.FromSeconds(Math.Clamp(sp.GetRequiredService<IOptions<GeminiOptions>>().Value.TimeoutSeconds, 5, 120)))
+            .RedactLoggedHeaders([GeminiAssistant.KeyHeader]);
+        services.AddSingleton<DisabledAiAssistant>();
+        services.AddScoped<IAiAssistant>(sp =>
+            string.IsNullOrWhiteSpace(sp.GetRequiredService<IOptions<GeminiOptions>>().Value.ApiKey)
+                ? sp.GetRequiredService<DisabledAiAssistant>()
+                : sp.GetRequiredService<GeminiAssistant>());
 
         services.AddScoped<TemplateRegistryImporter>();
         services.AddScoped<ReferenceDataSeeder>();

@@ -134,6 +134,16 @@ public static partial class Messages
         ["domainRequest.notFound"] = "لا يوجد طلب نطاق.",
         ["domainRequest.open"] = "لديك طلب نطاق قائم. ألغِه لتطلب نطاقًا آخر.",
         ["domainRequest.transition"] = "لا يمكن تغيير حالة هذا الطلب بهذه الطريقة.",
+
+        ["import.empty"] = "اختر منتجًا واحدًا على الأقل لإضافته.",
+        ["import.tooMany"] = "يمكنك إضافة 30 صنفًا و300 منتج كحد أقصى في المرة الواحدة.",
+
+        ["ai.unavailable"] = "المساعد الذكي غير مفعّل بعد.",
+        ["ai.busy"] = "المساعد الذكي مشغول الآن. حاول بعد دقيقة.",
+        ["ai.failed"] = "لم يتمكن المساعد الذكي من الإجابة هذه المرة. حاول مرة أخرى.",
+        ["ai.limit"] = "استخدمت كل طلبات المساعد الذكي لهذا الشهر.",
+        ["ai.nothingFound"] = "لم نجد أي منتجات في هذه الصور. جرّب صورة أوضح.",
+        ["ai.photos"] = "أضف من صورة إلى 3 صور.",
     };
 
     /// <summary>Exact English sentences.</summary>
@@ -269,6 +279,19 @@ public static partial class Messages
         ["Another business already uses this domain."] = "نشاط آخر يستخدم هذا النطاق بالفعل.",
         ["Use a domain you own, like vanillamenu.com."] = "استخدم نطاقًا تملكه، مثل vanillamenu.com.",
         ["Enter a domain like vanillamenu.com, without spaces."] = "أدخل نطاقًا مثل vanillamenu.com بدون مسافات.",
+
+        // Adding many products at once
+        ["Choose at least one product to add."] = "اختر منتجًا واحدًا على الأقل لإضافته.",
+        ["Add up to 30 categories and 300 products at a time."] = "يمكنك إضافة 30 صنفًا و300 منتج كحد أقصى في المرة الواحدة.",
+
+        // AI helper
+        ["The AI helper isn't switched on yet."] = "المساعد الذكي غير مفعّل بعد.",
+        ["The AI helper is busy. Try again in a minute."] = "المساعد الذكي مشغول الآن. حاول بعد دقيقة.",
+        ["The AI helper couldn't answer this time. Try again."] = "لم يتمكن المساعد الذكي من الإجابة هذه المرة. حاول مرة أخرى.",
+        ["You've used all your AI helper requests for this month."] = "استخدمت كل طلبات المساعد الذكي لهذا الشهر.",
+        ["We couldn't find any products in these photos. Try a sharper photo."] = "لم نجد أي منتجات في هذه الصور. جرّب صورة أوضح.",
+        ["Add 1 to 3 photos."] = "أضف من صورة إلى 3 صور.",
+        ["Keep the note under 300 characters."] = "اجعل الملاحظة أقل من 300 حرف.",
     };
 
     /// <summary>English sentences with placeholders {0}, {1}... and their Arabic, which may use any of them.</summary>

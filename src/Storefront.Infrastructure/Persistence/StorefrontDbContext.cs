@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Storefront.Application.Abstractions;
 using Storefront.Domain.Accounts;
+using Storefront.Domain.Ai;
 using Storefront.Domain.Billing;
 using Storefront.Domain.Businesses;
 using Storefront.Domain.Catalog;
@@ -35,6 +36,7 @@ public sealed class StorefrontDbContext(DbContextOptions<StorefrontDbContext> op
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
     public DbSet<OutboxMessage> OutboxMessages => Set<OutboxMessage>();
     public DbSet<AuditEntry> AuditLog => Set<AuditEntry>();
+    public DbSet<AiUsage> AiUsage => Set<AiUsage>();
 
     Task IUnitOfWork.SaveChangesAsync(CancellationToken ct) => SaveChangesAsync(ct);
 
@@ -78,6 +80,7 @@ public sealed class StorefrontDbContext(DbContextOptions<StorefrontDbContext> op
         builder.Entity<MediaAsset>().HasQueryFilter(e => e.BusinessId == CurrentBusinessId);
         builder.Entity<Subscription>().HasQueryFilter(e => e.BusinessId == CurrentBusinessId);
         builder.Entity<DomainRequest>().HasQueryFilter(e => e.BusinessId == CurrentBusinessId);
+        builder.Entity<AiUsage>().HasQueryFilter(e => e.BusinessId == CurrentBusinessId);
     }
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configuration)

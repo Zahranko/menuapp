@@ -21,33 +21,13 @@ public sealed class UploadImageHandler(
             return Error.Unauthorized("auth.required", "Log in to continue.");
         }
 
-        if (length <= 0)
+        var read = await PhotoUpload.ReadAsync(content, length, ct);
+        if (!read.IsSuccess)
         {
-            return Error.Validation("media.empty", "Choose a photo to upload.", "file");
+            return read.Error!;
         }
 
-        if (length > MediaAsset.MaxUploadBytes)
-        {
-            return Error.Validation("media.size", "Images can be up to 5 MB.", "file");
-        }
-
-        var header = new byte[12];
-        var read = await content.ReadAtLeastAsync(header, header.Length, throwOnEndOfStream: false, ct);
-        var contentType = ImageSignature.Detect(header.AsSpan(0, read));
-        if (contentType is null)
-        {
-            return Error.Validation("media.type", "Upload a JPEG, PNG or WebP image.", "file");
-        }
-
-        var buffer = new MemoryStream();
-        buffer.Write(header, 0, read);
-        await content.CopyToAsync(buffer, ct);
-        if (buffer.Length > MediaAsset.MaxUploadBytes)
-        {
-            return Error.Validation("media.size", "Images can be up to 5 MB.", "file");
-        }
-
-        var optimized = optimizer.Optimize(buffer.GetBuffer().AsMemory(0, (int)buffer.Length), MediaAsset.MaxSide, MediaAsset.MaxBytes);
+        var optimized = optimizer.Optimize(read.Value, MediaAsset.MaxSide, MediaAsset.MaxBytes);
         if (!optimized.IsSuccess)
         {
             return optimized.Error!;
@@ -64,6 +44,40 @@ public sealed class UploadImageHandler(
         audit.Record("upload", nameof(MediaAsset), asset.Id.ToString());
         await uow.SaveChangesAsync(ct);
         return new MediaDto(asset.Id, asset.Url, asset.ContentType, asset.SizeBytes);
+    }
+}
+
+/// <summary>Reads an uploaded photo for any feature that takes one: JPEG, PNG or WebP (by its first bytes, not the client's word), up to 5 MB.</summary>
+public static class PhotoUpload
+{
+    public static async Task<Result<ReadOnlyMemory<byte>>> ReadAsync(Stream content, long length, CancellationToken ct)
+    {
+        if (length <= 0)
+        {
+            return Error.Validation("media.empty", "Choose a photo to upload.", "file");
+        }
+
+        if (length > MediaAsset.MaxUploadBytes)
+        {
+            return Error.Validation("media.size", "Images can be up to 5 MB.", "file");
+        }
+
+        var header = new byte[12];
+        var read = await content.ReadAtLeastAsync(header, header.Length, throwOnEndOfStream: false, ct);
+        if (ImageSignature.Detect(header.AsSpan(0, read)) is null)
+        {
+            return Error.Validation("media.type", "Upload a JPEG, PNG or WebP image.", "file");
+        }
+
+        var buffer = new MemoryStream();
+        buffer.Write(header, 0, read);
+        await content.CopyToAsync(buffer, ct);
+        if (buffer.Length > MediaAsset.MaxUploadBytes)
+        {
+            return Error.Validation("media.size", "Images can be up to 5 MB.", "file");
+        }
+
+        return (ReadOnlyMemory<byte>)buffer.GetBuffer().AsMemory(0, (int)buffer.Length);
     }
 }
 

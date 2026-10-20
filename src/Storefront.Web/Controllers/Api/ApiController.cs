@@ -21,6 +21,9 @@ public abstract class ApiController : ControllerBase
             ErrorType.Conflict => StatusCodes.Status409Conflict,
             ErrorType.Unauthorized => StatusCodes.Status401Unauthorized,
             ErrorType.Forbidden => StatusCodes.Status403Forbidden,
+            ErrorType.LimitReached => StatusCodes.Status429TooManyRequests,
+            ErrorType.Unavailable => StatusCodes.Status503ServiceUnavailable,
+            ErrorType.Upstream => StatusCodes.Status502BadGateway,
             _ => StatusCodes.Status400BadRequest,
         };
 

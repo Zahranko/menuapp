@@ -650,5 +650,104 @@
     }
   },
   "posterScan": "Scan for our menu",
-  "posterScanHint": "Point your phone camera at the code"
+  "posterScanHint": "Point your phone camera at the code",
+  "aiHelper": "AI helper",
+  "aiHelperSub": "Let AI suggest colors and words that fit your business. You check everything before it goes live.",
+  "aiFromPhoto": "Colors and text from a photo",
+  "aiFromPhotoSub": "Your shop front, logo, food or packaging",
+  "aiWriteText": "Write my text",
+  "aiWriteTextSub": "Headlines, your story and product descriptions",
+  "aiRemaining": "{count, plural, =0{No AI uses left this month} =1{1 AI use left this month} other{{count} AI uses left this month}}",
+  "@aiRemaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "aiOff": "The AI helper isn't switched on yet. You can still change everything yourself.",
+  "aiUsedUp": "You've used all your AI helper requests for this month. More arrive on the 1st.",
+  "aiTakePhoto": "Take a photo",
+  "aiChoosePhoto": "Choose from photos",
+  "aiNoteLabel": "Anything to know about your business? (optional)",
+  "aiNoteHint": "Cosy family café, known for knafeh",
+  "aiSuggest": "Suggest",
+  "aiLookingAtPhoto": "Looking at your photo…",
+  "aiWriting": "Writing your texts…",
+  "aiReadingMenu": "Reading your menu…",
+  "aiTakesAMoment": "This can take up to a minute.",
+  "aiSuggestions": "Suggestions",
+  "aiColors": "Colors and style",
+  "aiTexts": "Texts",
+  "aiProductDescriptions": "Product descriptions",
+  "aiApply": "Apply",
+  "aiApplyCount": "{count, plural, =1{Apply 1 suggestion} other{Apply {count} suggestions}}",
+  "@aiApplyCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "aiAppliedToDraft": "Added to your design. Check the preview, then publish.",
+  "aiDraftNote": "Design changes go to your draft. Your site changes when you publish.",
+  "aiDescriptionsNote": "Descriptions are saved to your products and show on your site right away.",
+  "aiDescriptionsSaved": "{count, plural, =1{1 product description saved.} other{{count} product descriptions saved.}}",
+  "@aiDescriptionsSaved": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "aiNothingSuggested": "No suggestions this time. Try another photo or add a note.",
+  "aiCheckBeforeUsing": "AI can make mistakes. Check before you use it.",
+  "aiMenuFromPhoto": "Add from a menu photo",
+  "aiMenuFromPhotoSub": "Up to 3 photos of your menu, price list or shelf",
+  "aiMenuPhotos": "{count} of 3 photos",
+  "@aiMenuPhotos": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "aiAddPhoto": "Add a photo",
+  "aiRemovePhoto": "Remove photo",
+  "aiReadMenu": "Read my menu",
+  "aiReviewTitle": "Check your menu",
+  "aiReviewSub": "Fix names and prices, untick anything you don't want, then add them.",
+  "aiAddItems": "{count, plural, =0{Choose items to add} =1{Add 1 item} other{Add {count} items}}",
+  "@aiAddItems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "aiAdding": "Adding…",
+  "aiItemsAdded": "{count, plural, =1{1 item added to your menu.} other{{count} items added to your menu.}}",
+  "@aiItemsAdded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "aiNewCategory": "New category",
+  "aiExistingCategory": "Adds to your category",
+  "aiCurrencyDiffers": "The menu shows prices in {menu}. Your prices are in {yours}, so check them: they were not converted.",
+  "@aiCurrencyDiffers": {
+    "placeholders": {
+      "menu": {
+        "type": "String"
+      },
+      "yours": {
+        "type": "String"
+      }
+    }
+  },
+  "aiFixHighlighted": "Some items need a fix. Check the highlighted fields.",
+  "aiSelectItem": "Add this item",
+  "aiSelectCategory": "Add this category"
 }

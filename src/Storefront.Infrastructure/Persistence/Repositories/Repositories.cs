@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Storefront.Application.Abstractions;
+using Storefront.Domain.Ai;
 using Storefront.Domain.Billing;
 using Storefront.Domain.Businesses;
 using Storefront.Domain.Catalog;
@@ -166,4 +167,37 @@ internal sealed class MediaRepository(StorefrontDbContext db) : IMediaRepository
         db.MediaAssets.IgnoreQueryFilters().AnyAsync(m => m.BusinessId == businessId && m.Url == url, ct);
 
     public void Add(MediaAsset asset) => db.MediaAssets.Add(asset);
+}
+
+internal sealed class AiUsageRepository(StorefrontDbContext db) : IAiUsageRepository
+{
+    public Task<int> CountAsync(Guid businessId, string period, CancellationToken ct) =>
+        db.AiUsage.IgnoreQueryFilters().Where(u => u.BusinessId == businessId && u.Period == period).Select(u => u.Count).FirstOrDefaultAsync(ct);
+
+    public async Task IncrementAsync(Guid businessId, string period, DateTimeOffset now, CancellationToken ct)
+    {
+        for (var attempt = 0; ; attempt++)
+        {
+            var updated = await db.AiUsage.IgnoreQueryFilters()
+                .Where(u => u.BusinessId == businessId && u.Period == period)
+                .ExecuteUpdateAsync(s => s.SetProperty(u => u.Count, u => u.Count + 1).SetProperty(u => u.UpdatedAt, now), ct);
+            if (updated > 0)
+            {
+                return;
+            }
+
+            var usage = AiUsage.Start(businessId, period, now);
+            db.AiUsage.Add(usage);
+            try
+            {
+                await db.SaveChangesAsync(ct);
+                return;
+            }
+            catch (DbUpdateException) when (attempt == 0)
+            {
+                // Another answer started this month's row at the same moment (unique index): count on that row instead.
+                db.Entry(usage).State = EntityState.Detached;
+            }
+        }
+    }
 }
