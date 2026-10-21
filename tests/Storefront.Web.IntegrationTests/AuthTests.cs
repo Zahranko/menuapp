@@ -54,10 +54,10 @@ public partial class AuthTests(StorefrontFactory factory) : IClassFixture<Storef
     public async Task Register_rejects_a_taken_link_with_the_prototype_message()
     {
         var owner = Api.NewOwner();
-        var response = await _client.PostAsJsonAsync("/api/v1/auth/register", new { businessName = "Vanilla Menu", email = owner.Email, phone = owner.Phone, password = "Sunrise2026" });
+        var response = await _client.PostAsJsonAsync("/api/v1/auth/register", new { businessName = "Demo Menu", email = owner.Email, phone = owner.Phone, password = "Sunrise2026" });
         Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
         var errors = (await Api.ProblemAsync(response)).GetProperty("errors");
-        Assert.Equal("That link is taken. Try adding your area, like vanillamenudowntown.", errors.GetProperty("businessName")[0].GetString());
+        Assert.Equal("That link is taken. Try adding your area, like demomenudowntown.", errors.GetProperty("businessName")[0].GetString());
     }
 
     [Fact]
@@ -115,7 +115,7 @@ public partial class AuthTests(StorefrontFactory factory) : IClassFixture<Storef
     }
 
     [Theory]
-    [InlineData("Vanilla Menu", "vanillamenu", false)]
+    [InlineData("Demo Menu", "demomenu", false)]
     [InlineData("Brand New Bakery 77", "brandnewbakery77", true)]
     [InlineData("Login", "login", false)]
     [InlineData("مقهى", "", false)]
