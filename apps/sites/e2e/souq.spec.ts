@@ -1,12 +1,13 @@
 import { expect, test } from "@playwright/test";
+import { brand, demoSlug } from "../lib/brand";
 
 test("the sample site shows every section and works on this screen size", async ({ page }, info) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
 
-  await page.goto("/vanillamenu");
-  await expect(page).toHaveTitle(/Vanilla Menu/);
+  await page.goto(`/${demoSlug}`);
+  await expect(page).toHaveTitle(new RegExp(brand.brandName));
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Coffee worth crossing the city for.");
   for (const id of ["signature", "menu", "story", "gallery", "reviews", "visit"]) {
     await expect(page.locator(`#${id}`)).toBeVisible();

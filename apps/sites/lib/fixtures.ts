@@ -1,4 +1,5 @@
 import registry from "../templates/registry.json";
+import { brand, demoSlug } from "./brand";
 import type { PublicProduct, PublicSite, Settings } from "./types";
 
 /**
@@ -15,10 +16,12 @@ type RowAr = [category: string, name: string, description: string];
 type Sample = { name: string; address: string; instagram: string; menu: Row[]; settings?: Settings; nameAr?: string; addressAr?: string; menuAr?: RowAr[] };
 
 export const SAMPLES = {
+  // The demo business every template preview, thumbnail and test uses: named after the brand (brand.json).
   cafe: {
-    name: "Vanilla Menu",
+    name: brand.brandName,
+    nameAr: brand.brandNameAr || brand.brandName,
     address: "12 Market Street, Old Town",
-    instagram: "vanillamenu",
+    instagram: demoSlug,
     menu: [
       ["Coffee", "Vanilla latte", "Double shot, Madagascar vanilla, oat or full milk", 3.5, "Signature", true, "latte"],
       ["Coffee", "Spanish latte", "Condensed milk, velvety and sweet", 3.75, null, false, "spanish"],
@@ -423,6 +426,46 @@ export const SAMPLES = {
       ["تخفيضات", "نظارة شمسية بإطار صدفي", "إطار أسيتات، عدسات متدرجة"],
     ],
   },
+  // The onboarding "your website" picture (showcaseSite): the brand-named café, filled like a real owner would.
+  showcase: {
+    name: brand.brandName,
+    nameAr: brand.brandNameAr || brand.brandName,
+    address: "21 Rainbow Street, Jabal Amman",
+    addressAr: "21 شارع الرينبو، جبل عمّان",
+    instagram: demoSlug,
+    menu: [
+      ["Coffee", "Flat white", "Double ristretto, silky milk", 3.25, "Best seller", true, "latte"],
+      ["Coffee", "Spanish latte", "Condensed milk, double shot, a little cinnamon", 3.75, "Signature", true, "spanish"],
+      ["Coffee", "Cardamom cortado", "Espresso and warm milk, a pinch of cardamom", 2.75, "New", false, "cortado"],
+      ["Coffee", "Iced caramel latte", "House caramel, oat milk, lots of ice", 3.95, null, true, "iced"],
+      ["Coffee", "V60 of the day", "Ask us which single origin is brewing", 3.95, null, false, "mug"],
+      ["Coffee", "Cold brew tonic", "18-hour cold brew over tonic and orange", 4.0, "New", false, "mocktail"],
+      ["Tea", "Karak chai", "Black tea slow cooked with milk and spices", 2.5, null, false, "karak"],
+      ["Tea", "Sage and mint", "Fresh maramiya and mint in a glass pot", 2.25, null, false, "tea"],
+      ["Bakery", "Pistachio croissant", "Butter croissant filled with pistachio cream", 2.25, "Best seller", true, "croissant"],
+      ["Bakery", "Za'atar croissant", "Olive oil, za'atar and sesame", 1.95, "Vegan", false, "zaatar"],
+      ["Bakery", "Date and tahini cookie", "Chewy, salted, baked every morning", 1.5, null, false, "cookie"],
+      ["Desserts", "Kunafa cheesecake", "Baked cheesecake on a crisp kunafa base", 4.5, "Signature", true, "kunafa"],
+      ["Desserts", "Saffron cake", "Saffron sponge with cardamom cream", 4.0, null, false, "cake"],
+      ["Desserts", "Honey waffle", "Belgian waffle, berries and local honey", 3.75, null, false, "waffle"],
+    ],
+    menuAr: [
+      ["قهوة", "فلات وايت", "ريستريتو مزدوج وحليب مخملي"],
+      ["قهوة", "سبانش لاتيه", "حليب مكثف وشوت مزدوج ورشة قرفة"],
+      ["قهوة", "كورتادو بالهيل", "إسبريسو وحليب دافئ مع رشة هيل"],
+      ["قهوة", "آيس لاتيه بالكراميل", "كراميل من صنعنا، حليب الشوفان، وثلج كثير"],
+      ["قهوة", "V60 اليوم", "اسألنا عن المحصول المختص الذي نحضّره اليوم"],
+      ["قهوة", "كولد برو تونك", "كولد برو 18 ساعة مع التونك والبرتقال"],
+      ["شاي", "شاي كرك", "شاي أسود مطبوخ على مهل مع الحليب والبهارات"],
+      ["شاي", "ميرمية ونعناع", "ميرمية ونعناع طازج في إبريق زجاجي"],
+      ["مخبوزات", "كرواسون بالفستق", "كرواسون بالزبدة محشو بكريمة الفستق"],
+      ["مخبوزات", "كرواسون بالزعتر", "زيت زيتون وزعتر وسمسم"],
+      ["مخبوزات", "كوكيز التمر والطحينة", "طرية ومملحة، تُخبز كل صباح"],
+      ["حلويات", "تشيز كيك بالكنافة", "تشيز كيك مخبوز على قاعدة كنافة مقرمشة"],
+      ["حلويات", "كيكة الزعفران", "إسفنج بالزعفران مع كريمة الهيل"],
+      ["حلويات", "وافل بالعسل", "وافل بلجيكي مع التوت والعسل البلدي"],
+    ],
+  },
 } satisfies Record<string, Sample>;
 
 export type SampleName = keyof typeof SAMPLES;
@@ -553,7 +596,7 @@ export function fixtureFor(templateId: string, overrides: Partial<PublicSite> = 
   return {
     business: {
       name: (arabic && sample.nameAr) || sample.name,
-      slug: sampleName === "cafe" ? "vanillamenu" : slug,
+      slug: sampleName === "cafe" ? demoSlug : slug,
       whatsApp: "+15555550123",
       email: "hello@example.com",
       address: (arabic && sample.addressAr) || sample.address,
@@ -561,7 +604,7 @@ export function fixtureFor(templateId: string, overrides: Partial<PublicSite> = 
       locale: "en",
       currencyCode: "USD",
       timeZone: "UTC",
-      customDomains: sampleName === "cafe" ? ["vanillamenu.example.com"] : [],
+      customDomains: sampleName === "cafe" ? [`${demoSlug}.example.com`] : [],
       phone: "+15555550100",
       facebook: sample.instagram,
       tikTok: sample.instagram,
@@ -595,6 +638,68 @@ export function fixtureFor(templateId: string, overrides: Partial<PublicSite> = 
   };
 }
 
+/** Settings of the showcase site, in English and Arabic: every section filled, warm colors, real-feeling copy. */
+const SHOWCASE_SETTINGS: Record<"en" | "ar", Settings> = {
+  en: {
+    "hero.sticker": "Roasted this week",
+    "hero.title": "Good coffee, slow mornings.",
+    "hero.subtitle": "Specialty coffee roasted in-house, croissants out of the oven at 7 and a sunny corner to stay a while.",
+    ticker: "Fresh roast, Pistachio croissants, Oat milk, Kunafa cheesecake, Iced everything",
+    "story.title": "A small bar with a big espresso machine.",
+    "story.text": "We roast twice a week, bake before sunrise and know most of our guests by name. Come for a flat white, stay for the light.",
+    "footer.text": "Roasted in small batches. Baked every morning.",
+    "reviews.1.quote": "The pistachio croissant is dangerous and the flat white is the best in town. I work from here every Sunday.",
+    "reviews.1.name": "Lina H.",
+    "reviews.2.quote": "Bright, friendly and the staff remember your order. The kunafa cheesecake is a must.",
+    "reviews.2.name": "Omar K.",
+    "reviews.3.quote": "I check the menu on my phone on the way and it is ready when I arrive.",
+    "reviews.3.name": "Sara M.",
+  },
+  ar: {
+    "hero.sticker": "محمّصة هذا الأسبوع",
+    "hero.title": "قهوة طيبة وصباحات هادئة.",
+    "hero.subtitle": "قهوة مختصة نحمّصها بأنفسنا، وكرواسون يخرج من الفرن في السابعة، وركن مشمس تجلس فيه على راحتك.",
+    ticker: "تحميص طازج، كرواسون بالفستق، حليب الشوفان، تشيز كيك بالكنافة، كل شيء مثلّج",
+    "story.title": "بار صغير وآلة إسبريسو كبيرة.",
+    "story.text": "نحمّص مرتين في الأسبوع، ونخبز قبل الشروق، ونعرف معظم ضيوفنا بأسمائهم. تعال من أجل فلات وايت، وابقَ من أجل الضوء.",
+    "footer.text": "محمّصة على دفعات صغيرة. مخبوزة كل صباح.",
+    "reviews.1.quote": "كرواسون الفستق خطير والفلات وايت الأفضل في المدينة. أعمل من هنا كل يوم أحد.",
+    "reviews.1.name": "لينا ح.",
+    "reviews.2.quote": "مكان مشرق ولطيف، والفريق يتذكر طلبك. التشيز كيك بالكنافة لا بد منه.",
+    "reviews.2.name": "عمر ك.",
+    "reviews.3.quote": "أتصفح المنيو على هاتفي في الطريق، فيكون طلبي جاهزًا حين أصل.",
+    "reviews.3.name": "سارة م.",
+  },
+};
+
+/** Template of the showcase site: Lumen, the bold specialty-café design. */
+export const SHOWCASE_TEMPLATE = "lumen";
+
+/**
+ * The brand-named café at its best, for the app's onboarding pictures (e2e/onboarding-shots.spec.ts):
+ * fixture mode serves it at /showcase (English) and /showcasear (Arabic).
+ */
+export function showcaseSite(arabic = false): PublicSite {
+  const site = fixtureFor(SHOWCASE_TEMPLATE, {}, "showcase", arabic);
+  site.business = { ...site.business, locale: arabic ? "ar" : "en", currencyCode: "USD", customDomains: [] };
+  site.settings = {
+    ...site.settings,
+    ...(arabic ? arabicDefaultsFor(SHOWCASE_TEMPLATE) : {}),
+    ...SHOWCASE_SETTINGS[arabic ? "ar" : "en"],
+    theme: "cream",
+    accent: "#FF5A1F",
+    "hero.image": "preset:pour",
+    "story.image": "preset:beans",
+    gallery: ["/samples/latte-art.svg", "/presets/counter.svg", "/samples/food/croissant.svg", "/presets/beans.svg", "/samples/food/kunafa.svg", "/presets/pour.svg"],
+    "gallery.products": false,
+    // Arabic in the brand's Arabic face (brand.json fontArabic is Cairo).
+    ...(arabic ? { "font.family": "cairo" } : {}),
+  };
+  // Everything is in stock on the showcase.
+  site.categories = site.categories.map((c) => ({ ...c, products: c.products.map((p) => ({ ...p, isAvailable: true })) }));
+  return site;
+}
+
 /** A menu of `count` products in `categories` categories, with long names and no photos (for stress tests). */
 export function bigMenu(site: PublicSite, count: number, categories = 8): PublicSite {
   const long = "with a deliberately long name that has to wrap onto several lines without breaking the layout";
@@ -622,11 +727,13 @@ export function bigMenu(site: PublicSite, count: number, categories = 8): Public
 export const fixtureSite: PublicSite = fixtureFor(process.env.APP_FIXTURE_TEMPLATE ?? "souq", {}, "cafe");
 
 /**
- * Fixture mode: /vanillamenu shows the sample café with APP_FIXTURE_TEMPLATE,
+ * Fixture mode: /<demoSlug> shows the sample café with APP_FIXTURE_TEMPLATE,
+ * /showcase and /showcasear show the onboarding showcase (showcaseSite),
  * and /<template id> shows the template's own sample business (used for thumbnails and template work).
  */
 export function fixtureBySlug(slug: string): PublicSite | null {
   if (slug === fixtureSite.business.slug) return fixtureSite;
+  if (slug === "showcase" || slug === "showcasear") return showcaseSite(slug === "showcasear");
   return registry.templates.some((t) => t.id === slug) ? fixtureFor(slug) : null;
 }
 

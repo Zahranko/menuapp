@@ -13,3 +13,9 @@ export const brand: Brand = {
 export function withBrand(text: string): string {
   return text.replaceAll("{brandName}", brand.brandName);
 }
+
+/**
+ * Slug of the demo business named after the brand (fixtures, template previews, thumbnails): "<short name>menu",
+ * because the short name on its own is a reserved slug.
+ */
+export const demoSlug = `${brand.brandShortName.toLowerCase().replace(/[^a-z0-9]/g, "")}menu`.slice(0, 30);

@@ -35,7 +35,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get businessName => 'Business name';
 
   @override
-  String get businessNameHint => 'Vanilla Menu';
+  String get businessNameHint => 'Your Shop';
 
   @override
   String get linkAvailable => 'Available';
@@ -724,7 +724,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errDomainFormat =>
-      'Enter a domain like vanillamenu.com, without spaces.';
+      'Enter a domain like yourshop.com, without spaces.';
 
   @override
   String get sendToSupport => 'Send request to support';
@@ -907,7 +907,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Put the link on your Instagram, WhatsApp or a table QR code. Customers see your menu instantly.';
 
   @override
-  String get sampleCafe => 'Vanilla Café';
+  String sampleCafe(String brandName) {
+    return '$brandName';
+  }
 
   @override
   String get sampleDrinks => 'Drinks';
@@ -1054,19 +1056,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get facebook => 'Facebook';
 
   @override
-  String get facebookHint => 'facebook.com/vanillamenu';
+  String get facebookHint => 'facebook.com/yourshop';
 
   @override
   String get tikTok => 'TikTok';
 
   @override
-  String get tikTokHint => '@vanillamenu';
+  String get tikTokHint => '@yourshop';
 
   @override
   String get snapchat => 'Snapchat';
 
   @override
-  String get snapchatHint => 'vanillamenu';
+  String get snapchatHint => 'yourshop';
 
   @override
   String get socialAccounts => 'Social media and calls';

@@ -8,7 +8,7 @@
   "signupTitle": "Set up your business",
   "signupSubtitle": "One account, one menu site. Takes about a minute.",
   "businessName": "Business name",
-  "businessNameHint": "Vanilla Menu",
+  "businessNameHint": "Your Shop",
   "linkAvailable": "Available",
   "linkTaken": "Taken",
   "email": "Email",
@@ -402,7 +402,7 @@
   "domainEnterBody": "Enter the domain you own. Our support team sets it up and emails you the DNS steps.",
   "yourDomain": "Your domain",
   "errDomainEmpty": "Enter your domain.",
-  "errDomainFormat": "Enter a domain like vanillamenu.com, without spaces.",
+  "errDomainFormat": "Enter a domain like yourshop.com, without spaces.",
   "sendToSupport": "Send request to support",
   "sending": "Sending",
   "domainRequestSent": "Request sent to support",
@@ -517,7 +517,14 @@
   "onbTemplatesBody": "Each template shows your products its own way. Choose the hero image, colors and add your logo.",
   "onbShareTitle": "Share one link. Go custom on Pro.",
   "onbShareBody": "Put the link on your Instagram, WhatsApp or a table QR code. Customers see your menu instantly.",
-  "sampleCafe": "Vanilla Café",
+  "sampleCafe": "{brandName}",
+  "@sampleCafe": {
+    "placeholders": {
+      "brandName": {
+        "type": "String"
+      }
+    }
+  },
   "sampleDrinks": "Drinks",
   "sampleItem1": "Vanilla latte",
   "sampleItem1Note": "Double shot, oat milk",
@@ -604,11 +611,11 @@
   "phoneForCalls": "Phone for calls",
   "phoneForCallsHint": "Leave empty to use your WhatsApp number",
   "facebook": "Facebook",
-  "facebookHint": "facebook.com/vanillamenu",
+  "facebookHint": "facebook.com/yourshop",
   "tikTok": "TikTok",
-  "tikTokHint": "@vanillamenu",
+  "tikTokHint": "@yourshop",
   "snapchat": "Snapchat",
-  "snapchatHint": "vanillamenu",
+  "snapchatHint": "yourshop",
   "socialAccounts": "Social media and calls",
   "socialAccountsSub": "Type your username or paste the link to your page. Choose which ones show on your website in Edit design, under Social media.",
   "customColor": "Your own color",

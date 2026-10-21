@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { brand, demoSlug } from "./brand";
 import { fixtureFor } from "./fixtures";
 import { jsonLdScript, siteJsonLd } from "./jsonld";
 
@@ -9,8 +10,8 @@ describe("JSON-LD", () => {
   it("describes the café, its hours and its menu with prices", () => {
     expect(data["@context"]).toBe("https://schema.org");
     expect(data["@type"]).toBe("CafeOrCoffeeShop");
-    expect(data.name).toBe("Vanilla Menu");
-    expect(data.url).toBe("https://vanillamenu.example.com");
+    expect(data.name).toBe(brand.brandName);
+    expect(data.url).toBe(`https://${demoSlug}.example.com`);
     expect(data.openingHoursSpecification).toHaveLength(7);
     expect(data.openingHoursSpecification[5]).toMatchObject({
       dayOfWeek: "https://schema.org/Thursday",

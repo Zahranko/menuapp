@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Storefront.Application.Abstractions;
+using Storefront.Application.Common;
 using Storefront.Domain.Billing;
 using Storefront.Domain.Businesses;
 using Storefront.Domain.Catalog;
@@ -12,14 +14,16 @@ using Storefront.Infrastructure.Identity;
 namespace Storefront.Infrastructure.Persistence.Seeding;
 
 /// <summary>
-/// Development data: the two plans, templates from the registry, and the sample business "Vanilla Menu"
-/// with the prototype's categories and products. Safe to run any number of times.
+/// Development data: the two plans, templates from the registry, and a sample business named after the brand
+/// (BrandOptions) with the prototype's categories and products. Safe to run any number of times.
 /// </summary>
-public sealed class DevelopmentSeeder(StorefrontDbContext db, ReferenceDataSeeder referenceData, TemplateRegistryImporter templates, IClock clock, ILogger<DevelopmentSeeder> logger)
+public sealed class DevelopmentSeeder(StorefrontDbContext db, ReferenceDataSeeder referenceData, TemplateRegistryImporter templates, IClock clock, IOptions<BrandOptions> brand, ILogger<DevelopmentSeeder> logger)
 {
     public const string SampleOwnerEmail = "owner@example.com";
     public const string SampleOwnerPassword = "Sample-pass-123";
-    public const string SampleSlug = "vanillamenu";
+
+    /// <summary>A neutral, unreserved slug: the brand's own short name is reserved, so the sample cannot live there.</summary>
+    public const string SampleSlug = "demomenu";
 
     private static readonly (string Category, string Name, string Description, decimal Price, string? Label, bool Featured)[] SampleProducts =
     [
@@ -72,8 +76,9 @@ public sealed class DevelopmentSeeder(StorefrontDbContext db, ReferenceDataSeede
         owner.PasswordHash = new PasswordHasher<AppUser>().HashPassword(owner, SampleOwnerPassword);
         db.Users.Add(owner);
 
-        var business = Business.Create(owner.Id, "Vanilla Menu", slug, now, currencyCode: "JOD", timeZone: "Asia/Amman");
-        business.UpdateProfile("Vanilla Menu", PhoneNumber.Create("+962 79 000 0000"), "hello@example.com", "Rainbow Street 21, Jabal Amman", "vanillamenu", now);
+        var sampleName = string.IsNullOrWhiteSpace(brand.Value.BrandName) ? "Sample Café" : brand.Value.BrandName;
+        var business = Business.Create(owner.Id, sampleName, slug, now, currencyCode: "JOD", timeZone: "Asia/Amman");
+        business.UpdateProfile(sampleName, PhoneNumber.Create("+962 79 000 0000"), "hello@example.com", "Rainbow Street 21, Jabal Amman", SampleSlug, now);
         db.Businesses.Add(business);
 
         var categories = SampleProducts.Select(p => p.Category).Distinct()

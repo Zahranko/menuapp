@@ -239,7 +239,7 @@ class _BusinessCardState extends ConsumerState<_BusinessCard> {
       const SizedBox(height: 4),
       Text(t.socialAccountsSub, style: TextStyle(color: BrandColors.muted, fontSize: 13, height: 1.4)),
       const SizedBox(height: 14),
-      LabeledField(label: t.instagram, hint: '@vanillamenu', controller: _instagram, error: _errors['instagram'], keyboardType: TextInputType.url, icon: Icons.camera_alt_outlined),
+      LabeledField(label: t.instagram, hint: '@yourshop', controller: _instagram, error: _errors['instagram'], keyboardType: TextInputType.url, icon: Icons.camera_alt_outlined),
       const SizedBox(height: 14),
       LabeledField(label: t.facebook, hint: t.facebookHint, controller: _facebook, error: _errors['facebook'], keyboardType: TextInputType.url, icon: Icons.facebook_rounded),
       const SizedBox(height: 14),

@@ -35,7 +35,7 @@ internal static class DomainErrors
     public static readonly Error NeedsPro = Error.Forbidden("plan.proRequired", "Your own domain is part of the Pro plan. Upgrade to Pro first.");
     public static readonly Error AlreadyOpen = Error.Conflict("domainRequest.open", "You already have a domain request. Cancel it to ask for another domain.", "domain");
     public static readonly Error Taken = Error.Conflict("domain.taken", "Another business already uses this domain.", "domain");
-    public static readonly Error Ours = Error.Validation("domain.reserved", "Use a domain you own, like vanillamenu.com.", "domain");
+    public static readonly Error Ours = Error.Validation("domain.reserved", "Use a domain you own, like yourshop.com.", "domain");
 }
 
 public sealed class GetDomainRequestHandler(IDomainRepository domains, ICurrentUser user, IOptions<BrandOptions> brand)

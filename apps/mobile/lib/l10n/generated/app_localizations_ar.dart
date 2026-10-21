@@ -35,7 +35,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get businessName => 'اسم النشاط';
 
   @override
-  String get businessNameHint => 'فانيلا منيو';
+  String get businessNameHint => 'متجرك';
 
   @override
   String get linkAvailable => 'متاح';
@@ -716,7 +716,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get errDomainEmpty => 'أدخل نطاقك.';
 
   @override
-  String get errDomainFormat => 'أدخل نطاقًا مثل vanillamenu.com بدون مسافات.';
+  String get errDomainFormat => 'أدخل نطاقًا مثل yourshop.com بدون مسافات.';
 
   @override
   String get sendToSupport => 'إرسال الطلب للدعم';
@@ -898,7 +898,9 @@ class AppLocalizationsAr extends AppLocalizations {
       'ضع الرابط على إنستغرام أو واتساب أو رمز QR على الطاولة. يرى زبائنك المنيو فوراً.';
 
   @override
-  String get sampleCafe => 'مقهى فانيلا';
+  String sampleCafe(String brandName) {
+    return '$brandName';
+  }
 
   @override
   String get sampleDrinks => 'مشروبات';
@@ -1047,19 +1049,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get facebook => 'فيسبوك';
 
   @override
-  String get facebookHint => 'facebook.com/vanillamenu';
+  String get facebookHint => 'facebook.com/yourshop';
 
   @override
   String get tikTok => 'تيك توك';
 
   @override
-  String get tikTokHint => '@vanillamenu';
+  String get tikTokHint => '@yourshop';
 
   @override
   String get snapchat => 'سناب شات';
 
   @override
-  String get snapchatHint => 'vanillamenu';
+  String get snapchatHint => 'yourshop';
 
   @override
   String get socialAccounts => 'حسابات التواصل والاتصال';

@@ -342,7 +342,7 @@ void main() {
     await scrollTo(tester, find.byKey(const Key('domainField')));
     await tester.enterText(find.byKey(const Key('domainField')), 'not a domain');
     await tapIn(tester, find.text('Send request to support'));
-    expect(find.text('Enter a domain like vanillamenu.com, without spaces.'), findsOneWidget);
+    expect(find.text('Enter a domain like yourshop.com, without spaces.'), findsOneWidget);
 
     await tester.enterText(find.byKey(const Key('domainField')), 'https://VanillaMenu.com/');
     await tapIn(tester, find.text('Send request to support'));
@@ -747,7 +747,7 @@ void main() {
       await type('Snapchat', 'vanillasnap');
       await type('Phone for calls', '+15555550199');
       await tapIn(tester, find.text('Save changes'));
-      expect(find.text('Enter your Facebook page name or link, like facebook.com/vanillamenu.'), findsOneWidget);
+      expect(find.text('Enter your Facebook page name or link, like facebook.com/yourshop.'), findsOneWidget);
       expect(backend.businessData['tikTok'], isNull, reason: 'nothing is saved while a field is wrong');
 
       await type('Facebook', 'facebook.com/vanillamenu');
@@ -756,7 +756,7 @@ void main() {
       expect(backend.businessData['tikTok'], '@vanillamenu');
       expect(backend.businessData['snapchat'], 'vanillasnap');
       expect(backend.businessData['phone'], '+15555550199');
-      expect(find.text('Enter your Facebook page name or link, like facebook.com/vanillamenu.'), findsNothing);
+      expect(find.text('Enter your Facebook page name or link, like facebook.com/yourshop.'), findsNothing);
     });
   });
 

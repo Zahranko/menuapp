@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { demoSlug } from "./lib/brand";
 import { apiBaseUrl, route, SITE_BASE_HEADER, sitePath } from "./lib/routing";
 
 const HOST_TTL_MS = 60_000;
@@ -14,7 +15,7 @@ async function slugForHost(host: string): Promise<string | null> {
 
   let slug: string | null = null;
   if (process.env.APP_FIXTURES === "1") {
-    slug = host === "vanillamenu.example.com" ? "vanillamenu" : null;
+    slug = host === `${demoSlug}.example.com` ? demoSlug : null;
   } else {
     const api = apiBaseUrl();
     const response = await fetch(`${api}/api/public/v1/sites/by-host/${encodeURIComponent(host)}`, { cache: "no-store" });

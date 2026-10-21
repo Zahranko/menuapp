@@ -149,7 +149,7 @@ abstract class AppLocalizations {
   /// No description provided for @businessNameHint.
   ///
   /// In en, this message translates to:
-  /// **'Vanilla Menu'**
+  /// **'Your Shop'**
   String get businessNameHint;
 
   /// No description provided for @linkAvailable.
@@ -1325,7 +1325,7 @@ abstract class AppLocalizations {
   /// No description provided for @errDomainFormat.
   ///
   /// In en, this message translates to:
-  /// **'Enter a domain like vanillamenu.com, without spaces.'**
+  /// **'Enter a domain like yourshop.com, without spaces.'**
   String get errDomainFormat;
 
   /// No description provided for @sendToSupport.
@@ -1643,8 +1643,8 @@ abstract class AppLocalizations {
   /// No description provided for @sampleCafe.
   ///
   /// In en, this message translates to:
-  /// **'Vanilla Café'**
-  String get sampleCafe;
+  /// **'{brandName}'**
+  String sampleCafe(String brandName);
 
   /// No description provided for @sampleDrinks.
   ///
@@ -1895,7 +1895,7 @@ abstract class AppLocalizations {
   /// No description provided for @facebookHint.
   ///
   /// In en, this message translates to:
-  /// **'facebook.com/vanillamenu'**
+  /// **'facebook.com/yourshop'**
   String get facebookHint;
 
   /// No description provided for @tikTok.
@@ -1907,7 +1907,7 @@ abstract class AppLocalizations {
   /// No description provided for @tikTokHint.
   ///
   /// In en, this message translates to:
-  /// **'@vanillamenu'**
+  /// **'@yourshop'**
   String get tikTokHint;
 
   /// No description provided for @snapchat.
@@ -1919,7 +1919,7 @@ abstract class AppLocalizations {
   /// No description provided for @snapchatHint.
   ///
   /// In en, this message translates to:
-  /// **'vanillamenu'**
+  /// **'yourshop'**
   String get snapchatHint;
 
   /// No description provided for @socialAccounts.

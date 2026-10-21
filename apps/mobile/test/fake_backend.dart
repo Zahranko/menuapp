@@ -326,7 +326,7 @@ class FakeBackend {
           return (status: 400, body: {'title': 'Check the highlighted fields.', 'status': 400, 'code': 'business.currency', 'errors': {'currencyCode': ['Choose a currency from the list.']}});
         }
         if ((body['facebook'] as String?)?.contains(' ') ?? false) {
-          return (status: 400, body: {'title': 'Check the highlighted fields.', 'status': 400, 'code': 'business.facebook', 'errors': {'facebook': ['Enter your Facebook page name or link, like facebook.com/vanillamenu.']}});
+          return (status: 400, body: {'title': 'Check the highlighted fields.', 'status': 400, 'code': 'business.facebook', 'errors': {'facebook': ['Enter your Facebook page name or link, like facebook.com/yourshop.']}});
         }
         for (final k in ['name', 'whatsApp', 'address', 'instagram', 'phone', 'facebook', 'tikTok', 'snapchat', 'email', 'timeZone']) {
           if (body.containsKey(k)) businessData[k] = body[k];

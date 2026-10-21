@@ -15,10 +15,10 @@ public static partial class SocialAccounts
     public const int TikTokMax = 24;
     public const int SnapchatMax = 15;
 
-    public const string InstagramMessage = "Enter your Instagram username, like vanillamenu.";
-    public const string FacebookMessage = "Enter your Facebook page name or link, like facebook.com/vanillamenu.";
-    public const string TikTokMessage = "Enter your TikTok username, like @vanillamenu.";
-    public const string SnapchatMessage = "Enter your Snapchat username, like vanillamenu.";
+    public const string InstagramMessage = "Enter your Instagram username, like yourshop.";
+    public const string FacebookMessage = "Enter your Facebook page name or link, like facebook.com/yourshop.";
+    public const string TikTokMessage = "Enter your TikTok username, like @yourshop.";
+    public const string SnapchatMessage = "Enter your Snapchat username, like yourshop.";
 
     /// <summary>The Instagram username, or null when empty. Throws when it is not a valid username or profile link.</summary>
     public static string? Instagram(string? input) =>

@@ -40,9 +40,9 @@ void main() {
       await tester.pumpAndSettle();
     }
     expect(_shownShots(tester), contains('assets/onboarding/site_en.webp'));
-    expect(find.text('${Brand.domain}/vanillamenu', findRichText: true), findsOneWidget);
+    expect(find.text('${Brand.domain}/${Brand.brandShortName.toLowerCase()}menu', findRichText: true), findsOneWidget);
     await tester.pump(const Duration(seconds: 5));
     // Still the plain link: it does not switch to the custom domain on its own.
-    expect(find.text('${Brand.domain}/vanillamenu', findRichText: true), findsOneWidget);
+    expect(find.text('${Brand.domain}/${Brand.brandShortName.toLowerCase()}menu', findRichText: true), findsOneWidget);
   });
 }

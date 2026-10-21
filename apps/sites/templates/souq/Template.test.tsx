@@ -1,5 +1,6 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
+import { brand } from "@/lib/brand";
 import { fixtureFor } from "@/lib/fixtures";
 import type { PublicSite } from "@/lib/types";
 import { contrast } from "../_kit/color";
@@ -23,7 +24,7 @@ describe("Souq", () => {
     "renders the sample site in %s / %s / %s",
     (theme, font, layout) => {
       const html = render({ theme, font, "hero.layout": layout });
-      expect(html).toContain("Vanilla Menu");
+      expect(html).toContain(brand.brandName);
       expect(html).toContain("Kunafa cheesecake");
     },
   );

@@ -266,7 +266,7 @@ const _shotStatusBar = 50.0;
 /// A real screenshot of the product inside a phone that rises into view, cut off by a soft fade at the bottom.
 /// [overlays] are positioned in the slide's picture area, on top of the phone.
 class _PhoneScene extends StatelessWidget {
-  const _PhoneScene({required this.shot, required this.rise, this.lightStatusBar = false, this.overlays = const []});
+  const _PhoneScene({required this.shot, required this.rise, this.overlays = const []});
 
   /// The picture's base name in assets/onboarding (an English and an Arabic version exist).
   final String shot;
@@ -274,8 +274,6 @@ class _PhoneScene extends StatelessWidget {
   /// The entrance, from 0 (below and transparent) to 1 (in place).
   final double rise;
 
-  /// White status bar text, for screenshots with a dark top.
-  final bool lightStatusBar;
   final List<Widget> overlays;
 
   @override
@@ -288,7 +286,8 @@ class _PhoneScene extends StatelessWidget {
         final screenWidth = phoneWidth - bezel * 2;
         final scale = screenWidth / _shotSize.width;
         final radius = phoneWidth * 0.15;
-        final statusColor = lightStatusBar ? Colors.white : BrandColors.ink;
+        // Every screenshot has a light top (scripts/onboarding-shots.sh), so the status bar is dark.
+        final statusColor = BrandColors.ink;
         final phone = Container(
           width: phoneWidth,
           height: _shotSize.height * scale + bezel * 2,
@@ -537,7 +536,8 @@ class _LinkArt extends StatefulWidget {
 }
 
 class _LinkArtState extends State<_LinkArt> with SingleTickerProviderStateMixin, _PlayOnActive {
-  static const _name = 'vanillamenu';
+  /// The demo business's link, named after the brand like the sample site (apps/sites/lib/brand.ts demoSlug).
+  static final _name = '${Brand.brandShortName.toLowerCase().replaceAll(RegExp('[^a-z0-9]'), '')}menu';
   Timer? _typing;
   int _typed = 0;
   bool _custom = false;
@@ -638,7 +638,6 @@ class _LinkArtState extends State<_LinkArt> with SingleTickerProviderStateMixin,
         builder: (context, area) => _PhoneScene(
           shot: 'site',
           rise: at(0, 650),
-          lightStatusBar: true,
           overlays: [
             PositionedDirectional(
               start: 0,
