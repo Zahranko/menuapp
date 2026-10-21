@@ -74,6 +74,39 @@ public partial class AuthTests(StorefrontFactory factory) : IClassFixture<Storef
     }
 
     [Fact]
+    public async Task Account_availability_flags_a_used_email_and_phone()
+    {
+        var first = Api.NewOwner();
+        await Api.EnsureSuccess(await _client.PostAsJsonAsync("/api/v1/auth/register", new { businessName = first.Name, email = first.Email, phone = first.Phone, password = "Sunrise2026" }));
+
+        var taken = await _client.GetFromJsonAsync<AccountAvailabilityResponse>(
+            $"/api/v1/auth/account-availability?email={Uri.EscapeDataString(first.Email.ToUpperInvariant())}&phone={Uri.EscapeDataString(first.Phone)}", Api.Json);
+        Assert.NotNull(taken!.Email);
+        Assert.NotNull(taken.Phone);
+
+        var other = Api.NewOwner();
+        var free = await _client.GetFromJsonAsync<AccountAvailabilityResponse>(
+            $"/api/v1/auth/account-availability?email={Uri.EscapeDataString(other.Email)}&phone={Uri.EscapeDataString(other.Phone)}", Api.Json);
+        Assert.Null(free!.Email);
+        Assert.Null(free.Phone);
+    }
+
+    [Fact]
+    public async Task Register_reports_a_used_email_together_with_a_taken_link()
+    {
+        var first = Api.NewOwner();
+        await Api.EnsureSuccess(await _client.PostAsJsonAsync("/api/v1/auth/register", new { businessName = first.Name, email = first.Email, phone = first.Phone, password = "Sunrise2026" }));
+
+        var other = Api.NewOwner();
+        var response = await _client.PostAsJsonAsync("/api/v1/auth/register", new { businessName = first.Name, email = first.Email, phone = other.Phone, password = "Sunrise2026" });
+        Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
+        var errors = (await Api.ProblemAsync(response)).GetProperty("errors");
+        Assert.True(errors.TryGetProperty("email", out _));
+        Assert.True(errors.TryGetProperty("businessName", out _));
+        Assert.False(errors.TryGetProperty("phone", out _));
+    }
+
+    [Fact]
     public async Task Register_rejects_reserved_links()
     {
         var owner = Api.NewOwner();

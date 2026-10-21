@@ -49,6 +49,16 @@ class AuthRepository {
         return SlugAvailability.fromJson(response.data!);
       });
 
+  /// For each field, null when it can be used for a new account, otherwise the message to show under it.
+  Future<({String? email, String? phone})> accountAvailability({String? email, String? phone}) => _call(() async {
+        final response = await _dio.get<Map<String, dynamic>>('/api/v1/auth/account-availability', queryParameters: {
+          'email': ?email,
+          'phone': ?phone,
+        });
+        final body = response.data!;
+        return (email: body['email'] as String?, phone: body['phone'] as String?);
+      });
+
   Future<void> forgotPassword(String email) => _call(() => _dio.post<void>('/api/v1/auth/forgot-password', data: {'email': email}));
 
   /// The signed-in owner's business, or null when there is no saved session.

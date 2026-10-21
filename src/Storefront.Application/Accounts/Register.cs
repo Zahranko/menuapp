@@ -64,6 +64,7 @@ public sealed class RegisterHandler(
     IBillingRepository billing,
     IReservedSlugs reserved,
     SlugAvailabilityHandler slugs,
+    AccountAvailabilityHandler accounts,
     SessionIssuer sessions,
     IUnitOfWork uow,
     IClock clock,
@@ -79,7 +80,19 @@ public sealed class RegisterHandler(
             return invalid;
         }
 
+        // A used email or phone and a taken link are reported together, so the owner fixes everything in one go.
         var slugValue = Slug.FromBusinessName(cmd.BusinessName);
+        var taken = await accounts.ProblemsAsync(cmd.Email, cmd.Phone, ct);
+        if (taken is not null)
+        {
+            if (await slugs.ProblemAsync(slugValue, ct) is { } linkProblem)
+            {
+                taken["businessName"] = [linkProblem];
+            }
+
+            return new Error("account.exists", "An account already exists.", ErrorType.Conflict, taken);
+        }
+
         if (await slugs.ProblemAsync(slugValue, ct) is { } slugProblem)
         {
             return Error.Conflict("slug.unavailable", slugProblem, "businessName");

@@ -123,5 +123,6 @@ class AuthInterceptor extends QueuedInterceptor {
       path.contains('/auth/register') ||
       path.contains('/auth/refresh') ||
       path.contains('/auth/forgot-password') ||
-      path.contains('/auth/slug-availability');
+      path.contains('/auth/slug-availability') ||
+      path.contains('/auth/account-availability');
 }

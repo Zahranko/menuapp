@@ -29,6 +29,18 @@ public sealed class AuthController : ApiController
         return Ok(result.Message is null ? result : result with { Message = ApiLocalization.Text(result.Message, "slug.unavailable") });
     }
 
+    /// <summary>Whether an email or phone number (with country code) already has an account, for the sign-up form.</summary>
+    [HttpGet("account-availability")]
+    [AllowAnonymous]
+    [EnableRateLimiting(RateLimits.SlugCheck)]
+    public async Task<ActionResult<AccountAvailabilityResponse>> AccountAvailability([FromQuery] string? email, [FromQuery] string? phone, [FromServices] AccountAvailabilityHandler handler, CancellationToken ct)
+    {
+        var result = await handler.Handle(email, phone, ct);
+        return Ok(new AccountAvailabilityResponse(
+            result.Email is null ? null : ApiLocalization.Text(result.Email),
+            result.Phone is null ? null : ApiLocalization.Text(result.Phone)));
+    }
+
     /// <summary>Log in with an email or a phone number (with country code) and a password.</summary>
     [HttpPost("login")]
     [AllowAnonymous]

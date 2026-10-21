@@ -29,7 +29,17 @@ internal sealed class IdentityService(UserManager<AppUser> users, IClock clock) 
         }
 
         var user = new AppUser { UserName = email, Email = email, PhoneNumber = phone, CreatedAt = clock.UtcNow };
-        var result = await users.CreateAsync(user, password);
+        IdentityResult result;
+        try
+        {
+            result = await users.CreateAsync(user, password);
+        }
+        catch (DbUpdateException)
+        {
+            // Two sign-ups with the same email or phone at the same moment: the unique index stops the second one.
+            return new Error("account.exists", "An account already exists.", ErrorType.Conflict);
+        }
+
         if (!result.Succeeded)
         {
             var messages = result.Errors.Select(e => e.Description).ToArray();

@@ -52,10 +52,16 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
   SlugAvailability? _slug;
   Timer? _debounce;
   int _slugRequest = 0;
+  Timer? _accountDebounce;
+  int _accountRequest = 0;
+
+  /// The "already has an account" messages the live check put under the email and phone, so it can take them back.
+  final Map<String, String> _taken = {};
 
   @override
   void dispose() {
     _debounce?.cancel();
+    _accountDebounce?.cancel();
     for (final c in [_name, _email, _phone, _password]) {
       c.dispose();
     }
@@ -64,6 +70,41 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
 
   void _clear(String field) {
     if (_errors[field] != null) setState(() => _errors = {..._errors, field: null});
+  }
+
+  /// Checks 600 ms after typing stops whether the email or phone already has an account, so the owner can log in
+  /// instead of filling in the rest of the form. Only the latest answer is shown; the server checks again on sign-up.
+  void _onAccountField(String field) {
+    _clear(field);
+    _accountDebounce?.cancel();
+    final email = _email.text.trim();
+    final digits = _phone.text.replaceAll(RegExp(r'\D'), '');
+    final checkEmail = _emailPattern.hasMatch(email);
+    final checkPhone = digits.length >= 7 && digits.length <= 12;
+    if (!checkEmail && !checkPhone) return;
+    _accountDebounce = Timer(const Duration(milliseconds: 600), () async {
+      final request = ++_accountRequest;
+      try {
+        final result = await ref.read(authRepositoryProvider).accountAvailability(
+              email: checkEmail ? email : null,
+              phone: checkPhone ? PhoneField.e164(_code, _phone.text) : null,
+            );
+        if (!mounted || request != _accountRequest) return;
+        setState(() {
+          final errors = {..._errors};
+          for (final (key, message, checked) in [('email', result.email, checkEmail), ('phone', result.phone, checkPhone)]) {
+            if (message != null) {
+              errors[key] = _taken[key] = message;
+            } else if (checked && _taken.containsKey(key) && errors[key] == _taken.remove(key)) {
+              errors[key] = null;
+            }
+          }
+          _errors = errors;
+        });
+      } on ApiError {
+        // The check is only a help: sign-up still refuses a used email or phone.
+      }
+    });
   }
 
   /// Checks the link 400 ms after typing stops; only the latest answer is shown.
@@ -199,16 +240,19 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 keyboardType: TextInputType.emailAddress,
                 autofillHints: const [AutofillHints.email],
                 icon: Icons.mail_outline_rounded,
-                onChanged: (_) => _clear('email'),
+                onChanged: (_) => _onAccountField('email'),
               ),
               const SizedBox(height: 16),
               PhoneField(
                 label: t.phone,
                 controller: _phone,
                 code: _code,
-                onCode: (c) => setState(() => _code = c),
+                onCode: (c) {
+                  setState(() => _code = c);
+                  _onAccountField('phone');
+                },
                 error: _errors['phone'],
-                onChanged: (_) => _clear('phone'),
+                onChanged: (_) => _onAccountField('phone'),
               ),
               const SizedBox(height: 16),
               CurrencyRow(

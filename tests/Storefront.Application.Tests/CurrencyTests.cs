@@ -169,15 +169,17 @@ internal sealed class World
     {
         Businesses.Existing = null;
         var reserved = new FakeReserved();
+        var identity = new FakeIdentity();
         var handler = new RegisterHandler(
             new RegisterValidator(),
-            new FakeIdentity(),
+            identity,
             Businesses,
             new FakeTemplates(),
             new FakeSites(),
             new FakeBilling(),
             reserved,
             new SlugAvailabilityHandler(Businesses, reserved),
+            new AccountAvailabilityHandler(identity),
             new SessionIssuer(new FakeTokens(), new FakeRefreshTokens(), Uow, Clock, Links),
             Uow,
             Clock,
@@ -260,7 +262,7 @@ internal sealed class FakeIdentity : IIdentityService
     public Task<Result<UserAccount>> CreateUserAsync(string email, string phone, string password, CancellationToken ct) =>
         Task.FromResult(Result<UserAccount>.Success(new UserAccount(Guid.CreateVersion7(), email, phone)));
 
-    public Task<UserAccount?> FindByLoginAsync(string login, CancellationToken ct) => throw new NotSupportedException();
+    public Task<UserAccount?> FindByLoginAsync(string login, CancellationToken ct) => Task.FromResult<UserAccount?>(null);
     public Task<UserAccount?> FindByIdAsync(Guid userId, CancellationToken ct) => throw new NotSupportedException();
     public Task<PasswordCheck> CheckPasswordAsync(Guid userId, string password, CancellationToken ct) => throw new NotSupportedException();
     public void CheckPasswordOfNoOne(string password) => throw new NotSupportedException();
