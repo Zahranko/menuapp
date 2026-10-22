@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { apiBaseUrl, mainHosts, route, siteBase } from "./routing";
+import { apiBaseUrl, isReserved, mainHosts, route, siteBase } from "./routing";
 
 const main = new Set(["example.test", "www.example.test", "localhost"]);
 
@@ -13,6 +13,24 @@ describe("route", () => {
     for (const path of ["/", "/pricing", "/api/revalidate", "/_next/static/x.js", "/robots.txt", "/s/abc", "/s-preview/t"]) {
       expect(route("example.test", path, main)).toEqual({ kind: "pass" });
     }
+  });
+
+  it("serves the marketing pages in both languages on the main host", () => {
+    for (const path of ["/", "/privacy", "/contact", "/ar", "/ar/privacy", "/ar/contact", "/AR/Privacy", "/opengraph-image-ewxc0q", "/ar/opengraph-image-1jmdnb"]) {
+      expect(route("example.test", path, main), path).toEqual({ kind: "pass" });
+    }
+    expect(isReserved("privacy")).toBe(true);
+    expect(isReserved("contact")).toBe(true);
+  });
+
+  it("still serves business sites next to the marketing pages", () => {
+    expect(route("example.test", "/arabica", main)).toEqual({ kind: "rewrite", path: "/s/arabica", base: "/arabica" });
+    expect(route("example.test", "/privacycafe/menu", main)).toEqual({ kind: "rewrite", path: "/s/privacycafe/menu", base: "/privacycafe" });
+  });
+
+  it("leaves /privacy and /ar to the business on its custom domain", () => {
+    expect(route("shop.example.com", "/privacy", main)).toEqual({ kind: "lookup-host", host: "shop.example.com", path: "/privacy" });
+    expect(route("shop.example.com", "/ar", main)).toEqual({ kind: "lookup-host", host: "shop.example.com", path: "/ar" });
   });
 
   it("serves files on custom domains too", () => {
