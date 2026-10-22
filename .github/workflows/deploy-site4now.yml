@@ -25,7 +25,7 @@ env:
   API_URL: ${{ vars.API_URL || 'https://alamalhosp-001-site7.itempurl.com' }}
   # Where owners' websites are hosted (apps/sites). Empty means the brand domain.
   # The test branch defaults to its Vercel branch address (project "menuapp").
-  SITES_URL: ${{ vars.SITES_URL || (github.ref_name == 'test' && 'https://menuapp-alpha-eight.vercel.app') || '' }}
+  SITES_URL: ${{ vars.SITES_URL || (github.ref_name == 'test' && 'https://katlio.com') || '' }}
   BILLING_TEST_MODE: ${{ vars.BILLING_TEST_MODE || (github.ref_name == 'test' && 'true') || 'false' }}
   DOTNET_CLI_TELEMETRY_OPTOUT: "1"
   DOTNET_NOLOGO: "1"

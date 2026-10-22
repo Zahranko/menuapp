@@ -33,7 +33,7 @@ In GitHub, open **Settings**, then **Secrets and variables**, then **Actions**.
 | `FTP_SERVER` / `FTP_USERNAME` | the current site4now account | Change these when the hosting account changes |
 | `FTP_DIR` | `/TestMobileApp` | The site's own folder as the FTP login sees it. The login's top folder holds other sites, so the deploy refuses `/` |
 | `DB_SERVER` / `DB_NAME` / `DB_USER` | the current site4now database | Same |
-| `SITES_URL` | empty (the brand domain); on `test`, `https://menuapp-alpha-eight.vercel.app` | Where the owners' websites (`apps/sites`) are hosted, like `https://sites.example.vercel.app`. Used for each site's link and the editor preview |
+| `SITES_URL` | empty (the brand domain); on `test`, `https://katlio.com` | Where the owners' websites (`apps/sites`) are hosted, like `https://sites.example.vercel.app`. Used for each site's link and the editor preview |
 | `BILLING_TEST_MODE` | `true` on the `test` branch, otherwise `false` | Puts every account on an active Pro plan. Only for test servers |
 | `GEMINI_MODEL` | `gemini-3.6-flash` | The Gemini model id the AI helper uses (`Ai__Gemini__Model`). Only used when `GEMINI_API_KEY` is set |
 
