@@ -4,7 +4,13 @@
   "name": "Garden",
   "category": "Brunch, healthy",
   "description": "Organic shapes, leaves and cards that put diet tags first.",
+  "ar": {
+    "name": "حديقة",
+    "category": "برانش وأكل صحي",
+    "description": "أشكال طبيعية وأوراق شجر وبطاقات تُبرز الوسوم الغذائية أولًا."
+  },
   "version": 1,
+  "heroSlider": { "kind": "panel", "source": "hero.image" },
   "thumbnail": "/templates/garden/thumbnail.png",
   "sample": "brunch",
   "schema": [
@@ -152,7 +158,7 @@
     ],
     "announcement": "Weekend brunch from 9, no booking needed",
     "story.title": "Grown with love",
-    "story.text": "Our vegetables come from two family farms in the Jordan Valley. We cook what is in season and bake our bread every morning.",
+    "story.text": "Our vegetables come from two family farms just outside the city. We cook what is in season and bake our bread every morning.",
     "hours": {
       "sat": "08:00-17:00",
       "sun": "08:00-17:00",
@@ -162,5 +168,12 @@
       "thu": "08:00-17:00",
       "fri": "09:00-15:00"
     }
+  },
+  "defaultsAr": {
+    "hero.title": "صباحات هادئة وأكل طيّب",
+    "hero.subtitle": "برانش طوال اليوم، وأطباق كبيرة، وعصير طازج. معظم المنيو نباتي وكل طبق عليه علامته.",
+    "announcement": "برانش نهاية الأسبوع من 9، بلا حجز مسبق",
+    "story.title": "مزروع بحب",
+    "story.text": "تأتي خضارنا من مزرعتين عائليتين قرب المدينة. نطبخ ما يجود به الموسم ونخبز خبزنا كل صباح."
   }
 }

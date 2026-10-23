@@ -1,0 +1,833 @@
+/* Template 027 "Folio": an editorial lookbook for a clothing store. Paper, ink, thin rules and large portrait photos. */
+
+@import "../_kit/logo.css";
+@import "../_kit/options.css";
+@import "../_kit/cards.css";
+@import "../_kit/hero.css";
+@import "../_fashion/base.css";
+
+.t-folio {
+  container: page / inline-size;
+  --caps: 0.16em;
+  --head-h: 64px;
+  font-size: 15px;
+  line-height: 1.55;
+
+  [dir="rtl"] & {
+    --caps: 0;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--fd);
+    font-weight: 500;
+    letter-spacing: var(--ft);
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+
+  :is(a, button):focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
+
+  .announcement {
+    background: var(--ink);
+    color: var(--bg);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: var(--caps);
+    text-transform: uppercase;
+    padding: 9px 16px;
+  }
+
+  .tag {
+    display: inline-block;
+    max-width: 100%;
+    padding: 5px 8px;
+    background: var(--bg);
+    color: var(--ink);
+    font: 600 10.5px/1.25 var(--fb);
+    letter-spacing: var(--caps);
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+  }
+  .tag-out {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  .fo-num {
+    font: 500 12px var(--fb);
+    letter-spacing: 0.08em;
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+  }
+
+  .fo-h2 {
+    font-size: calc(34px * var(--fs));
+    font-style: italic;
+  }
+
+  .fo-kicker {
+    font: 600 11.5px var(--fb);
+    letter-spacing: var(--caps);
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ---------- header ---------- */
+  .fo-head {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: var(--head-h);
+    padding: 8px 12px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+  .fo-head-side {
+    display: flex;
+    flex: 1 1 0;
+    align-items: center;
+    min-width: 0;
+  }
+  .fo-head-end {
+    justify-content: flex-end;
+  }
+  .fo-lockup {
+    display: flex;
+    flex: 0 1 auto;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    color: inherit;
+    text-decoration: none;
+  }
+  .fo-logo {
+    position: relative;
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+    font: 500 20px var(--fd);
+  }
+  .fo-name {
+    font: 500 calc(17px * var(--fs)) / 1.15 var(--fd);
+    letter-spacing: var(--caps);
+    text-transform: uppercase;
+    text-align: center;
+  }
+  .fo-burger,
+  .fo-order {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+  }
+  .fo-burger svg,
+  .fo-order svg {
+    width: 22px;
+    height: 22px;
+  }
+  .fo-order-text {
+    display: none;
+  }
+  .fo-nav {
+    display: none;
+  }
+  .fo-drawer:not([hidden]) {
+    position: absolute;
+    top: 100%;
+    inset-inline: 0;
+    display: block;
+    max-height: calc(100svh - var(--head-h));
+    overflow: auto;
+    padding: 12px 20px 28px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--ink);
+  }
+  .fo-drawer-nav {
+    display: grid;
+    gap: 2px;
+
+    > a {
+      padding: 10px 0;
+      font: italic 500 calc(28px * var(--fs)) / 1.15 var(--fd);
+      text-decoration: none;
+    }
+  }
+  .fo-drawer-cats {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+
+    a {
+      display: flex;
+      gap: 12px;
+      align-items: baseline;
+      padding: 10px 0;
+      font-size: 14px;
+      letter-spacing: var(--caps);
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+  }
+
+  /* ---------- cover ---------- */
+  .fo-cover {
+    display: grid;
+    gap: 26px;
+    padding: 16px 16px 48px;
+  }
+  .fo-cover-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    max-height: 74svh;
+    overflow: hidden;
+    background: var(--surf);
+  }
+  .fo-cover-media {
+    position: absolute;
+    inset: 0;
+  }
+  .fo-cover-text {
+    display: grid;
+    gap: 18px;
+    align-content: center;
+  }
+  .fo-issue {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font: 600 11.5px var(--fb);
+    letter-spacing: var(--caps);
+    text-transform: uppercase;
+  }
+  .fo-issue-rule {
+    flex: 1;
+    max-width: 120px;
+    height: 1px;
+    background: var(--ink);
+  }
+  .fo-title {
+    font-size: calc(clamp(40px, 11cqi, 104px) * var(--fs));
+    line-height: 0.98;
+    overflow-wrap: anywhere;
+  }
+  .fo-sub {
+    max-width: 44ch;
+    font-size: 16px;
+    color: var(--muted);
+  }
+  .fo-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    justify-self: start;
+    min-height: 44px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid var(--ink);
+    font: 600 12.5px var(--fb);
+    letter-spacing: var(--caps);
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  /* ---------- the edit ---------- */
+  .fo-edit {
+    padding: 40px 16px 24px;
+    border-top: 1px solid var(--line);
+  }
+  .fo-spread {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 26px 12px;
+    margin-top: 24px;
+
+    .is-lead {
+      grid-column: 1 / -1;
+    }
+  }
+  .fo-pick {
+    display: grid;
+    gap: 10px;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+  }
+  .fo-pick-media {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: var(--surf);
+  }
+  .is-lead .fo-pick-media {
+    aspect-ratio: 4 / 5;
+  }
+  .fo-pick-cap {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2px 10px;
+  }
+  .fo-pick-name {
+    min-width: 0;
+    font: italic 500 calc(19px * var(--fs)) / 1.2 var(--fd);
+    overflow-wrap: anywhere;
+  }
+  .fo-pick-price {
+    grid-column: 2;
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---------- catalog ---------- */
+  .fo-catalog {
+    padding: 40px 0 24px;
+    border-top: 1px solid var(--line);
+  }
+  .fo-catalog-head {
+    display: grid;
+    /* Never wider than the screen, whatever the font makes the search box's natural width. */
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    padding: 0 16px 18px;
+  }
+  .fo-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 420px;
+    border-bottom: 1px solid var(--ink);
+
+    svg {
+      flex: none;
+      width: 18px;
+      height: 18px;
+    }
+  }
+  .fo-search-input {
+    flex: 1;
+    min-width: 0;
+    min-height: 44px;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: 15px var(--fb);
+
+    &::placeholder {
+      color: var(--muted);
+      opacity: 1;
+    }
+    &:focus-visible {
+      outline: none;
+    }
+  }
+  .fo-search:focus-within {
+    outline: 2px solid var(--ink);
+    outline-offset: 4px;
+  }
+  .fo-tabs {
+    position: sticky;
+    top: var(--head-h);
+    z-index: 20;
+    display: flex;
+    gap: 22px;
+    padding: 0 16px;
+    overflow-x: auto;
+    background: var(--bg);
+    border-block: 1px solid var(--line);
+    scrollbar-width: none;
+  }
+  .fo-tab {
+    flex: none;
+    padding: 14px 0 12px;
+    border-bottom: 2px solid transparent;
+    font: 600 12px var(--fb);
+    letter-spacing: var(--caps);
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--muted);
+
+    &.is-active {
+      border-color: var(--ink);
+      color: var(--ink);
+    }
+  }
+  .fo-chapter {
+    padding: 36px 16px 8px;
+    scroll-margin-top: calc(var(--head-h) + 48px);
+  }
+  .fo-chapter-head {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 14px;
+    padding-top: 14px;
+    margin-bottom: 22px;
+    border-top: 1px solid var(--ink);
+  }
+  .fo-chapter-num {
+    font: 400 calc(54px * var(--fs)) / 0.8 var(--fd);
+    color: var(--muted);
+    font-variant-numeric: lining-nums;
+  }
+  .fo-chapter-title {
+    font-size: calc(30px * var(--fs));
+    font-style: italic;
+    overflow-wrap: anywhere;
+  }
+  .fo-chapter-count {
+    padding-bottom: 4px;
+    font: 600 11px var(--fb);
+    letter-spacing: var(--caps);
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .fo-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-flow: dense;
+    gap: 28px 12px;
+
+    > li {
+      min-width: 0;
+    }
+    > .is-wide {
+      grid-column: 1 / -1;
+    }
+  }
+  .fo-card {
+    display: grid;
+    gap: 9px;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+  }
+  .fo-card-media {
+    position: relative;
+    display: block;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: var(--surf);
+
+    img {
+      transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+  }
+  .is-wide .fo-card-media {
+    aspect-ratio: 4 / 5;
+  }
+  .fo-card:hover .fo-card-media img {
+    transform: scale(1.03);
+  }
+  .fo-badges {
+    position: absolute;
+    top: 10px;
+    inset-inline: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    pointer-events: none;
+  }
+  .fo-card-text {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    min-width: 0;
+  }
+  .fo-card-name {
+    min-width: 0;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: calc(var(--caps) / 3);
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+  }
+  .fo-card-price {
+    flex: none;
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+  }
+  .fo-card-sizes {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .fo-card.is-out {
+    .fo-card-media img {
+      filter: grayscale(1);
+    }
+    .fo-card-price {
+      color: var(--muted);
+      text-decoration: line-through;
+    }
+  }
+  .fo-empty {
+    padding: 24px 16px;
+    color: var(--muted);
+  }
+
+  /* ---------- lookbook ---------- */
+  .fo-look {
+    padding: 48px 16px 24px;
+    border-top: 1px solid var(--line);
+  }
+  .fo-look-grid {
+    columns: 2;
+    column-gap: 12px;
+    margin-top: 24px;
+
+    > li {
+      position: relative;
+      aspect-ratio: var(--fo-ar, 3 / 4);
+      margin-bottom: 12px;
+      overflow: hidden;
+      break-inside: avoid;
+    }
+  }
+
+  /* ---------- letter ---------- */
+  .fo-letter {
+    display: grid;
+    justify-items: center;
+    gap: 18px;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 64px 20px;
+    text-align: center;
+  }
+  .fo-letter-title {
+    font-size: calc(36px * var(--fs));
+    font-style: italic;
+  }
+  .fo-letter-text {
+    font: 400 calc(18px * var(--fs)) / 1.7 var(--fd);
+  }
+  .fo-sign {
+    font: italic 400 16px var(--fd);
+    color: var(--muted);
+  }
+
+  /* ---------- notes ---------- */
+  .fo-notes {
+    padding: 48px 16px;
+    border-top: 1px solid var(--line);
+  }
+  .fo-notes-list {
+    display: grid;
+    gap: 28px;
+    margin-top: 24px;
+
+    figure {
+      display: grid;
+      gap: 12px;
+      padding-top: 16px;
+      border-top: 1px solid var(--ink);
+    }
+    blockquote {
+      margin: 0;
+      font: italic 400 calc(19px * var(--fs)) / 1.45 var(--fd);
+    }
+    figcaption {
+      font: 600 11.5px var(--fb);
+      letter-spacing: var(--caps);
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+  }
+
+  /* ---------- store ---------- */
+  .fo-store {
+    padding: 48px 16px;
+    background: var(--surf);
+  }
+  .fo-store-grid {
+    display: grid;
+    gap: 32px;
+    margin-top: 24px;
+  }
+  .fo-store-col {
+    display: grid;
+    align-content: start;
+    gap: 14px;
+    min-width: 0;
+  }
+  .fo-contact svg {
+    color: var(--ink);
+  }
+  .fo-store-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 6px;
+  }
+  .fo-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 0 20px;
+    border: 1px solid var(--acc);
+    background: var(--acc);
+    color: var(--acc-ink);
+    font: 600 12.5px var(--fb);
+    letter-spacing: var(--caps);
+    text-transform: uppercase;
+    text-decoration: none;
+
+    svg {
+      flex: none;
+      width: 18px;
+      height: 18px;
+    }
+  }
+  .fo-btn-line {
+    border-color: var(--ink);
+    background: transparent;
+    color: var(--ink);
+  }
+  .fo-today {
+    font: italic 400 18px var(--fd);
+  }
+  .fo-hours div {
+    border-bottom: 1px solid var(--line);
+  }
+  .fo-hours .today-tag {
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 0;
+  }
+
+  /* ---------- footer ---------- */
+  .fo-foot {
+    display: grid;
+    gap: 24px;
+    padding: 40px 16px 28px;
+    border-top: 1px solid var(--ink);
+  }
+  .fo-wordmark {
+    font: 500 calc(clamp(44px, 15cqi, 190px) * var(--fs)) / 0.92 var(--fd);
+    letter-spacing: calc(var(--caps) / 4);
+    text-align: center;
+    text-transform: uppercase;
+  }
+  .fo-foot-row {
+    display: grid;
+    gap: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+  .fo-foot-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 20px;
+
+    a {
+      min-height: 32px;
+      font: 600 12px var(--fb);
+      letter-spacing: var(--caps);
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+  }
+  .fo-foot-line {
+    max-width: 48ch;
+    color: var(--muted);
+  }
+  .fo-social-link {
+    border-color: var(--line) !important;
+  }
+  .fo-credits {
+    color: var(--muted);
+    font-size: 12px;
+
+    a {
+      color: var(--ink);
+    }
+  }
+
+  /* ---------- product sheet ---------- */
+  .fs-sheet {
+    border-radius: 0;
+  }
+  .fs-title {
+    font-weight: 500;
+    font-style: italic;
+  }
+  .fs-price {
+    font-weight: 500;
+  }
+  .fs-size {
+    border-radius: 0;
+  }
+  .fs-order {
+    font-size: 12.5px;
+    letter-spacing: var(--caps);
+    text-transform: uppercase;
+  }
+
+  /* ---------- wider screens ---------- */
+  @container page (min-width: 760px) {
+    .fo-head {
+      padding-inline: 32px;
+    }
+    .fo-burger,
+    .fo-drawer:not([hidden]) {
+      display: none;
+    }
+    .fo-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 26px;
+
+      a {
+        padding: 10px 0;
+        font: 600 11.5px var(--fb);
+        letter-spacing: var(--caps);
+        text-transform: uppercase;
+        text-decoration: none;
+      }
+    }
+    .fo-order {
+      display: inline-flex;
+      gap: 10px;
+      width: auto;
+      padding: 0 16px;
+      border: 1px solid var(--ink);
+    }
+    .fo-order svg {
+      width: 18px;
+      height: 18px;
+    }
+    .fo-order-text {
+      display: inline;
+      font: 600 11.5px var(--fb);
+      letter-spacing: var(--caps);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .fo-name {
+      font-size: calc(22px * var(--fs));
+    }
+
+    .fo-cover {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 48px;
+      align-items: center;
+      padding: 32px;
+    }
+    .fo-cover-text {
+      order: -1;
+      padding-inline-end: 16px;
+    }
+    .fo-cover.is-text {
+      grid-template-columns: 1fr;
+      padding-block: 96px;
+    }
+    .fo-cover-frame {
+      max-height: calc(100svh - var(--head-h) - 64px);
+    }
+
+    .fo-h2 {
+      font-size: calc(52px * var(--fs));
+    }
+    .fo-edit,
+    .fo-look,
+    .fo-notes,
+    .fo-store {
+      padding-inline: 32px;
+    }
+    .fo-spread {
+      grid-template-columns: 2fr 1fr 1fr;
+      align-items: end;
+      gap: 24px;
+
+      .is-lead {
+        grid-column: auto;
+      }
+    }
+
+    .fo-catalog-head {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      padding-inline: 32px;
+    }
+    .fo-search {
+      width: 320px;
+    }
+    .fo-tabs {
+      padding-inline: 32px;
+      gap: 32px;
+    }
+    .fo-chapter {
+      padding-inline: 32px;
+    }
+    .fo-chapter-num {
+      font-size: calc(88px * var(--fs));
+    }
+    .fo-chapter-title {
+      font-size: calc(44px * var(--fs));
+    }
+    .fo-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 40px 20px;
+
+      > .is-wide {
+        grid-column: span 2;
+      }
+    }
+    .fo-look-grid {
+      columns: 3;
+      column-gap: 20px;
+
+      > li {
+        margin-bottom: 20px;
+      }
+    }
+    .fo-notes-list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .fo-store-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+    }
+    .fo-foot {
+      padding-inline: 32px;
+    }
+    .fo-foot-row {
+      grid-template-columns: 1fr auto auto;
+      align-items: center;
+    }
+  }
+
+  @container page (min-width: 1100px) {
+    .fo-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+}

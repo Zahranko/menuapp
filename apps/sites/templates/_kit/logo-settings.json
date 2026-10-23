@@ -1,0 +1,42 @@
+{
+  "fields": [
+    {
+      "key": "logo.frame",
+      "type": "toggle",
+      "label": "Logo frame"
+    },
+    {
+      "key": "logo.size",
+      "type": "range",
+      "label": "Logo size",
+      "min": 70,
+      "max": 180,
+      "step": 10,
+      "unit": "%"
+    },
+    {
+      "key": "logo.position",
+      "type": "choice",
+      "label": "Logo position",
+      "options": [
+        "start",
+        "center"
+      ],
+      "optionLabels": {
+        "start": "Template default",
+        "center": "Centered"
+      }
+    },
+    {
+      "key": "logo.name",
+      "type": "toggle",
+      "label": "Show business name"
+    }
+  ],
+  "defaults": {
+    "logo.frame": true,
+    "logo.size": 100,
+    "logo.position": "start",
+    "logo.name": true
+  }
+}

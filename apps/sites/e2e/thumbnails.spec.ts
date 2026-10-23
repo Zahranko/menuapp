@@ -9,7 +9,8 @@ test.skip(!process.env.THUMBNAILS, "set THUMBNAILS=1 to regenerate thumbnails");
 
 for (const template of registry.templates) {
   test(`thumbnail for ${template.id}`, async ({ browser }) => {
-    const page = await browser.newPage({ viewport: { width: 390, height: 780 }, deviceScaleFactor: 1 });
+    // Reduced motion: the thumbnail shows the settled page, not an opening animation halfway through.
+    const page = await browser.newPage({ viewport: { width: 390, height: 780 }, deviceScaleFactor: 1, reducedMotion: "reduce" });
     await page.goto(`/${template.id}`);
     await page.evaluate(() => document.fonts.ready);
     await page.waitForLoadState("networkidle");

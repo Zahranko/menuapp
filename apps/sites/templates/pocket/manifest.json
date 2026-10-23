@@ -4,7 +4,13 @@
   "name": "Pocket Catalog",
   "category": "Shop",
   "description": "A shop catalog: filter by category, sort by price and ask about any item on WhatsApp.",
+  "ar": {
+    "name": "كتالوج الجيب",
+    "category": "متجر",
+    "description": "كتالوج لمتجرك: تصفية حسب القسم، وترتيب حسب السعر، والسؤال عن أي منتج على واتساب."
+  },
   "version": 1,
+  "heroSlider": { "kind": "panel", "source": "hero.image" },
   "thumbnail": "/templates/pocket/thumbnail.png",
   "sample": "shop",
   "schema": [
@@ -160,7 +166,7 @@
     "accent": "#1F3A5F",
     "corners": "rounded",
     "hero.title": "Things for slow mornings at home",
-    "hero.subtitle": "Handmade candles, mugs, soaps and plants from small makers in Amman. Ask about any item on WhatsApp.",
+    "hero.subtitle": "Handmade candles, mugs, soaps and plants from small local makers. Ask about any item on WhatsApp.",
     "hero.image": "preset:leaves",
     "ask": "Hello! I would like to order:",
     "sections": [
@@ -169,7 +175,7 @@
       "story",
       "visit"
     ],
-    "announcement": "Free delivery in Amman over 25 JD",
+    "announcement": "Free delivery on larger orders",
     "story.title": "Made by people we know",
     "story.text": "Every product in our shop comes from a maker we have met in person. We keep the list small and change it with the seasons.",
     "hours": {
@@ -181,5 +187,13 @@
       "thu": "10:00-22:00",
       "fri": ""
     }
+  },
+  "defaultsAr": {
+    "hero.title": "أشياء لصباحات هادئة في البيت",
+    "hero.subtitle": "شموع وأكواب وصابون ونباتات مصنوعة يدويًا من حرفيين محليين صغار. اسألنا عن أي منتج على واتساب.",
+    "ask": "مرحبًا! أود أن أطلب:",
+    "announcement": "توصيل مجاني للطلبات الكبيرة",
+    "story.title": "من صنع أناس نعرفهم",
+    "story.text": "كل منتج في متجرنا يأتي من حرفي التقينا به شخصيًا. نُبقي القائمة صغيرة ونغيّرها مع المواسم."
   }
 }

@@ -1,5 +1,10 @@
 /* Template 015 "Spice Route": eight-point star borders, a star medallion, an arched window and centered courses. */
 
+@import "../_kit/logo.css";
+@import "../_kit/options.css";
+@import "../_kit/cards.css";
+@import "../_kit/hero.css";
+
 .t-spice {
   container: page / inline-size;
   --octagram: polygon(50% 0, 64.7% 14.4%, 85.4% 14.6%, 85.6% 35.3%, 100% 50%, 85.6% 64.7%, 85.4% 85.4%, 64.7% 85.6%, 50% 100%, 35.3% 85.6%, 14.6% 85.4%, 14.4% 64.7%, 0 50%, 14.4% 35.3%, 14.6% 14.6%, 35.3% 14.4%);
@@ -297,6 +302,15 @@
     font-weight: 700;
   }
 
+  /* Social accounts the owner shows (_kit/options.css draws the round icon links). */
+  .foot-social {
+    justify-content: center;
+    margin-bottom: 16px;
+    color: var(--acc-text);
+  }
+  .foot-social a {
+    border-color: color-mix(in srgb, currentColor 40%, transparent);
+  }
   .foot {
     padding: 18px 18px 26px;
     color: var(--muted);

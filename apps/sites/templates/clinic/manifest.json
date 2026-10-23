@@ -4,7 +4,13 @@
   "name": "Clinic",
   "category": "Dental, medical clinic",
   "description": "A calm, trustworthy website for a clinic: services with prices, how a visit works, questions and booking.",
+  "ar": {
+    "name": "عيادة",
+    "category": "عيادة أسنان أو عيادة طبية",
+    "description": "موقع هادئ وموثوق لعيادة: خدمات بأسعارها، وكيف تتم الزيارة، وأسئلة شائعة، وحجز."
+  },
   "version": 1,
+  "heroSlider": { "kind": "panel", "source": "hero.image" },
   "thumbnail": "/templates/clinic/thumbnail.png",
   "sample": "clinic",
   "schema": [
@@ -393,7 +399,7 @@
     "reviews.3.quote": "",
     "reviews.3.name": "",
     "faq.1.q": "Do you accept insurance?",
-    "faq.1.a": "Yes, we work with most insurance companies in Jordan. Send us a photo of your card and we will check it for you.",
+    "faq.1.a": "Yes, we work with most major insurance companies. Send us a photo of your card and we will check it for you.",
     "faq.2.q": "Can I bring my children?",
     "faq.2.a": "Of course. We see children from age three and keep the first visit short and fun.",
     "faq.3.q": "Do you offer payment plans?",
@@ -409,5 +415,29 @@
       "thu": "09:00-16:00",
       "fri": ""
     }
+  },
+  "defaultsAr": {
+    "hero.eyebrow": "رعاية أسنان للعائلة في الشميساني",
+    "hero.title": "ابتسامات صحية، ورعاية لطيفة",
+    "hero.subtitle": "طب أسنان حديث للكبار والأطفال، بأسعار واضحة ومواعيد في وقتها.",
+    "book.message": "مرحبًا! أود أن أحجز موعدًا من أجل:",
+    "services.title": "كيف يمكننا مساعدتك",
+    "announcement": "فحص مجاني للأطفال دون سن 6 سنوات هذا الشهر",
+    "highlights.1.title": "زيارات طارئة في اليوم نفسه",
+    "highlights.2.title": "أطباء أسنان يحبهم الأطفال",
+    "highlights.3.title": "أسعار واضحة قبل العلاج",
+    "steps.title": "كيف تتم الزيارة",
+    "steps.1.title": "راسلنا",
+    "steps.1.text": "أخبرنا بما تحتاجه على واتساب واختر الوقت المناسب.",
+    "steps.2.title": "الفحص",
+    "steps.2.text": "نفحصك ونشرح لك ما نراه ونتفق معك على خطة العلاج وسعرها.",
+    "steps.3.title": "العلاج",
+    "steps.3.text": "معظم العلاجات تتم في زيارة أو زيارتين قصيرتين.",
+    "faq.1.q": "هل تقبلون التأمين؟",
+    "faq.1.a": "نعم، نتعامل مع معظم شركات التأمين الكبرى. أرسل لنا صورة بطاقتك وسنتحقق منها لك.",
+    "faq.2.q": "هل يمكنني إحضار أطفالي؟",
+    "faq.2.a": "بالتأكيد. نستقبل الأطفال من عمر ثلاث سنوات ونجعل الزيارة الأولى قصيرة وممتعة.",
+    "faq.3.q": "هل يمكن الدفع بالتقسيط؟",
+    "faq.3.a": "في العلاجات الكبيرة يمكننا تقسيط التكلفة على عدة أشهر دون أي رسوم إضافية."
   }
 }

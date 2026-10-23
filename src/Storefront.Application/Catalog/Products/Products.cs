@@ -28,7 +28,9 @@ public sealed record SaveProduct(
     string? Label,
     bool IsAvailable = true,
     bool IsFeatured = false,
-    string? ImageUrl = null);
+    string? ImageUrl = null,
+    string? CustomLabel = null,
+    string? CustomLabelAr = null);
 
 public sealed class SaveProductValidator : AbstractValidator<SaveProduct>
 {
@@ -43,6 +45,18 @@ public sealed class SaveProductValidator : AbstractValidator<SaveProduct>
             .GreaterThanOrEqualTo(0).WithMessage("Use numbers only, like 3.50.")
             .LessThanOrEqualTo(Product.PriceMax).WithMessage("That price is too high.");
         RuleFor(x => x.Label).Must(ProductLabel.IsValid).WithMessage($"Choose a label: {string.Join(", ", ProductLabel.All)}.");
+        When(x => x.Label == ProductLabel.Custom, () =>
+        {
+            RuleFor(x => x.CustomLabel).Cascade(CascadeMode.Stop)
+                .Must(t => !ProductLabel.HasControlCharacters(t)).WithMessage("Keep the label on one line.")
+                .Must(ProductLabel.IsValidCustomText).WithMessage("Labels can be up to 24 characters.");
+            RuleFor(x => x.CustomLabelAr).Cascade(CascadeMode.Stop)
+                .Must(t => !ProductLabel.HasControlCharacters(t)).WithMessage("Keep the label on one line.")
+                .Must(ProductLabel.IsValidCustomText).WithMessage("Labels can be up to 24 characters.");
+            RuleFor(x => x.CustomLabel).Cascade(CascadeMode.Stop)
+                .Must((cmd, t) => ProductLabel.NormalizeCustomText(t) is not null || ProductLabel.NormalizeCustomText(cmd.CustomLabelAr) is not null)
+                .WithMessage("Type the label text.");
+        });
         RuleFor(x => x.CategoryId).NotEmpty().WithMessage("Choose a category.");
         RuleFor(x => x.ImageUrl).MaximumLength(2048);
     }
@@ -109,7 +123,8 @@ public sealed class CreateProductHandler(IValidator<SaveProduct> validator, Prod
     }
 
     internal static ProductDetails Details(SaveProduct cmd) =>
-        new(cmd.Name, cmd.Description, cmd.Price!.Value, cmd.Label, cmd.IsAvailable, cmd.IsFeatured, string.IsNullOrWhiteSpace(cmd.ImageUrl) ? null : cmd.ImageUrl);
+        new(cmd.Name, cmd.Description, cmd.Price!.Value, cmd.Label, cmd.IsAvailable, cmd.IsFeatured, string.IsNullOrWhiteSpace(cmd.ImageUrl) ? null : cmd.ImageUrl,
+            cmd.CustomLabel, cmd.CustomLabelAr);
 }
 
 public sealed class UpdateProductHandler(IValidator<SaveProduct> validator, ProductInputChecker checker, ICatalogRepository catalog, IUnitOfWork uow, IAuditLog audit, IClock clock)

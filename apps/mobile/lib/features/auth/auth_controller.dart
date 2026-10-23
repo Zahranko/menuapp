@@ -49,6 +49,8 @@ class AuthController extends Notifier<AuthState> {
     required String phone,
     required String password,
     required String locale,
+    String? currencyCode,
+    String? timeZone,
   }) async {
     final business = await ref.read(authRepositoryProvider).register(
           businessName: businessName,
@@ -56,6 +58,8 @@ class AuthController extends Notifier<AuthState> {
           phone: phone,
           password: password,
           locale: locale,
+          currencyCode: currencyCode,
+          timeZone: timeZone,
         );
     state = SignedIn(business, justSignedUp: true);
   }
@@ -71,4 +75,9 @@ class AuthController extends Notifier<AuthState> {
   }
 
   void sessionExpired() => state = const SignedOut();
+
+  /// Business info was saved elsewhere in the app.
+  void businessChanged(Business business) {
+    if (state is SignedIn) state = SignedIn(business);
+  }
 }

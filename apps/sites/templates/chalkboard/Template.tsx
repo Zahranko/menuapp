@@ -1,7 +1,10 @@
 import { flag } from "@/lib/settings";
 import type { TemplateProps } from "@/lib/types";
-import { ContactList, Credits, HoursList, Logo, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { ContactList, Credits, HoursList, Logo, logoRoot, optionRoot, OrderFab, ProductPicture, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
+import { heroPhotos } from "../_kit/hero";
+import { HeroBand } from "../_kit/HeroPhotos";
 import { fontVariables } from "../_kit/fonts";
 import { WhatsApp } from "../_kit/icons";
 import { hasHours } from "../_kit/site-data";
@@ -61,9 +64,10 @@ export default function ChalkBoardTemplate({ site, now }: TemplateProps & { now?
   const special = ctx.on("special") ? ctx.picks[0] : undefined;
   const story = ctx.on("story") && ctx.text("story.text");
 
+  const order = orderButton(site, { label: c.order });
   return (
     <div
-      data-template="chalkboard"
+      data-template="chalkboard" {...logoRoot(ctx)} {...optionRoot(ctx, order)}
       className={cx("t-chalk", dust && "dust", fontVariables)}
       style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["hand", "round", "condensed"], defaultAccent: "#F2C14E" })}
     >
@@ -72,10 +76,11 @@ export default function ChalkBoardTemplate({ site, now }: TemplateProps & { now?
       <div className="board">
         <header className="head" data-section="header">
           <Logo ctx={ctx} />
-          <h1>{site.business.name}</h1>
+          <h1 className="kit-name">{site.business.name}</h1>
           <Squiggle />
           {ctx.text("hero.title") && <p className="tagline">{ctx.text("hero.title")}</p>}
           {ctx.today && <p className="today">{ctx.today}</p>}
+          <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} />
         </header>
 
         <main>
@@ -121,10 +126,10 @@ export default function ChalkBoardTemplate({ site, now }: TemplateProps & { now?
                     {doodles && <Doodle kind={DOODLES[i % DOODLES.length]} />}
                     <span>{section.name}</span>
                   </h3>
-                  <ul className="plain">
+                  <ul className="plain kit-cards kit-rows">
                     {section.products.map((item) => (
                       <li key={item.id}>
-                        <button type="button" className={cx("line", !item.isAvailable && "out")} data-item-id={item.id}>
+                        <button type="button" className={cx("line kit-card kit-card-pad", !item.isAvailable && "out")} data-item-id={item.id}>
                           <span className="line-top">
                             <span className="line-name">{item.name}</span>
                             <span className="line-price">{item.priceText}</span>
@@ -185,9 +190,11 @@ export default function ChalkBoardTemplate({ site, now }: TemplateProps & { now?
         </main>
 
         <footer className="foot" data-section="footer">
+          <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
           <Credits ctx={ctx} />
         </footer>
       </div>
+      <OrderFab order={order} />
       <ProductSheet ctx={ctx} />
     </div>
   );

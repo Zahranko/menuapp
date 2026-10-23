@@ -5,7 +5,11 @@ using System.Text.RegularExpressions;
 
 namespace Storefront.Application.Templates;
 
-/// <summary>One editable setting of a template. The editor renders a control per field; the validator checks values against it.</summary>
+/// <summary>
+/// One editable setting of a template. The editor renders a control per field; the validator checks values against it.
+/// <see cref="OptionLabels"/> (English option names) and <see cref="Swatches"/> (a palette option's main color) only describe options;
+/// the AI helper reads them to pick fitting values.
+/// </summary>
 public sealed record TemplateField(
     string Key,
     string Type,
@@ -16,7 +20,10 @@ public sealed record TemplateField(
     int? Max,
     double? Min,
     double? RangeMax,
-    double? Step);
+    double? Step,
+    bool Custom = false,
+    IReadOnlyDictionary<string, string>? OptionLabels = null,
+    IReadOnlyDictionary<string, string>? Swatches = null);
 
 public sealed partial class TemplateSchema
 {
@@ -43,11 +50,19 @@ public sealed partial class TemplateSchema
                 type is "range" ? null : f["max"]?.GetValue<int>(),
                 f["min"]?.GetValue<double>(),
                 type is "range" ? f["max"]?.GetValue<double>() : null,
-                f["step"]?.GetValue<double>()));
+                f["step"]?.GetValue<double>(),
+                type is "color" && f["custom"]?.GetValue<bool>() == true,
+                Strings(f["optionLabels"]),
+                Strings(f["swatches"])));
         }
 
         return new TemplateSchema(fields);
     }
+
+    private static Dictionary<string, string>? Strings(JsonNode? node) =>
+        node is JsonObject map
+            ? map.Where(e => e.Value is JsonValue v && v.TryGetValue<string>(out _)).ToDictionary(e => e.Key, e => e.Value!.GetValue<string>())
+            : null;
 
     /// <summary>
     /// Checks <paramref name="settings"/> against the schema and returns the complete settings (defaults filled in for missing keys),
@@ -88,6 +103,12 @@ public sealed partial class TemplateSchema
     {
         switch (field.Type)
         {
+            case "color" when field.Custom:
+                // A color field with "custom": true also takes any color the owner mixes, as #RRGGBB.
+                return value is JsonValue colorValue && colorValue.TryGetValue<string>(out var hex) && (field.Options!.Contains(hex) || HexColor().IsMatch(hex))
+                    ? null
+                    : "Choose a color, like #D9542C.";
+
             case "choice" or "palette" or "color":
                 return value is JsonValue cv && cv.TryGetValue<string>(out var choice) && field.Options!.Contains(choice)
                     ? null
@@ -214,6 +235,9 @@ public sealed partial class TemplateSchema
 
         return await isOwnImage(image) ? null : "Upload the photo again.";
     }
+
+    [GeneratedRegex("^#[0-9A-Fa-f]{6}$")]
+    private static partial Regex HexColor();
 
     [GeneratedRegex("^([01][0-9]|2[0-3]):[0-5][0-9]-([01][0-9]|2[0-4]):[0-5][0-9]$")]
     private static partial Regex HoursRange();

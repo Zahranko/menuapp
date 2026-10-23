@@ -4,7 +4,7 @@ using Storefront.Application.Common;
 
 namespace Storefront.Application.Accounts;
 
-public sealed class GetMeHandler(ICurrentUser currentUser, IIdentityService identity, IBusinessRepository businesses, IOptions<BrandOptions> brand)
+public sealed class GetMeHandler(ICurrentUser currentUser, IIdentityService identity, IBusinessRepository businesses, SiteLinks links)
 {
     public async Task<Result<MeResponse>> Handle(CancellationToken ct)
     {
@@ -20,6 +20,6 @@ public sealed class GetMeHandler(ICurrentUser currentUser, IIdentityService iden
             return Error.Unauthorized("auth.required", "Log in to continue.");
         }
 
-        return new MeResponse(user.Id, user.Email, user.Phone, BusinessDto.From(business, brand.Value.Domain));
+        return new MeResponse(user.Id, user.Email, user.Phone, BusinessDto.From(business, links));
     }
 }

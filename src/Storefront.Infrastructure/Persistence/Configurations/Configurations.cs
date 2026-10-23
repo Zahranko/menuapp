@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Storefront.Domain.Accounts;
+using Storefront.Domain.Ai;
 using Storefront.Domain.Billing;
 using Storefront.Domain.Businesses;
 using Storefront.Domain.Catalog;
@@ -24,7 +25,10 @@ internal sealed class BusinessConfiguration : IEntityTypeConfiguration<Business>
         b.HasIndex(x => x.OwnerUserId).IsUnique();
         b.Property(x => x.Email).HasMaxLength(254);
         b.Property(x => x.Address).HasMaxLength(200);
-        b.Property(x => x.Instagram).HasMaxLength(30);
+        b.Property(x => x.Instagram).HasMaxLength(SocialAccounts.InstagramMax);
+        b.Property(x => x.Facebook).HasMaxLength(SocialAccounts.FacebookMax);
+        b.Property(x => x.TikTok).HasMaxLength(SocialAccounts.TikTokMax);
+        b.Property(x => x.Snapchat).HasMaxLength(SocialAccounts.SnapchatMax);
         b.Property(x => x.CurrencyCode).HasMaxLength(3);
         b.Property(x => x.Locale).HasMaxLength(5);
         b.Property(x => x.TimeZone).HasMaxLength(64);
@@ -42,7 +46,10 @@ internal sealed class CategoryConfiguration : IEntityTypeConfiguration<Category>
         b.Property<string>("NameKey").IsRequired().HasMaxLength(Category.NameMax).HasComputedColumnSql("LOWER([Name])", stored: true);
         b.HasIndex("BusinessId", "NameKey").IsUnique();
         b.HasIndex(x => new { x.BusinessId, x.SortOrder });
+        b.HasIndex(x => x.ParentId);
         b.HasOne<Business>().WithMany().HasForeignKey(x => x.BusinessId).OnDelete(DeleteBehavior.Cascade);
+        // Sub-categories, one level deep. Deleting a main category moves its sub-categories to the top level first (DeleteCategoryHandler).
+        b.HasOne<Category>().WithMany().HasForeignKey(x => x.ParentId).OnDelete(DeleteBehavior.NoAction);
     }
 }
 
@@ -54,6 +61,8 @@ internal sealed class ProductConfiguration : IEntityTypeConfiguration<Product>
         b.Property(x => x.Name).HasMaxLength(Product.NameMax);
         b.Property(x => x.Description).HasMaxLength(Product.DescriptionMax);
         b.Property(x => x.Label).HasMaxLength(20);
+        b.Property(x => x.CustomLabel).HasMaxLength(ProductLabel.CustomTextMax);
+        b.Property(x => x.CustomLabelAr).HasMaxLength(ProductLabel.CustomTextMax);
         b.Property(x => x.ImageUrl).HasMaxLength(2048);
         b.HasIndex(x => new { x.BusinessId, x.CategoryId, x.SortOrder });
         b.HasOne<Business>().WithMany().HasForeignKey(x => x.BusinessId).OnDelete(DeleteBehavior.Cascade);
@@ -71,6 +80,12 @@ internal sealed class TemplateConfiguration : IEntityTypeConfiguration<Template>
         b.Property(x => x.Category).HasMaxLength(40);
         b.Property(x => x.ThumbnailUrl).HasMaxLength(2048);
         b.Property(x => x.Description).HasMaxLength(300);
+        b.Property(x => x.NameAr).HasMaxLength(60);
+        b.Property(x => x.CategoryAr).HasMaxLength(40);
+        b.Property(x => x.DescriptionAr).HasMaxLength(300);
+        b.Property(x => x.DefaultSettingsAr).IsRequired().HasDefaultValue("{}");
+        b.Property(x => x.Tier).IsRequired().HasMaxLength(TemplateTier.MaxLength).HasDefaultValue(TemplateTier.Basic);
+        b.Ignore(x => x.IsPro);
         b.HasIndex(x => x.Number).IsUnique();
     }
 }
@@ -174,6 +189,17 @@ internal sealed class OutboxMessageConfiguration : IEntityTypeConfiguration<Outb
         b.Property(x => x.Type).HasMaxLength(100);
         b.Property(x => x.LastError).HasMaxLength(2000);
         b.HasIndex(x => new { x.NextAttemptAt, x.OccurredAt }).HasFilter("[ProcessedAt] IS NULL");
+    }
+}
+
+internal sealed class AiUsageConfiguration : IEntityTypeConfiguration<AiUsage>
+{
+    public void Configure(EntityTypeBuilder<AiUsage> b)
+    {
+        b.ToTable("AiUsage");
+        b.Property(x => x.Period).HasMaxLength(7).IsRequired();
+        b.HasIndex(x => new { x.BusinessId, x.Period }).IsUnique();
+        b.HasOne<Business>().WithMany().HasForeignKey(x => x.BusinessId).OnDelete(DeleteBehavior.Cascade);
     }
 }
 

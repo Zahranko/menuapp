@@ -1,0 +1,276 @@
+/*
+ * Shared structure of the fashion templates (Folio, Drop, Couture): the product sheet (.fs-sheet, _fashion/ProductSheet),
+ * the gallery viewer (.fs-viewer, _fashion/PhotoViewer) and gallery tiles (.fs-tile). Only these three stylesheets
+ * import this file. Everything is wrapped in :where() so each template's own rules win; they set the look.
+ */
+
+/* ---------- product sheet ---------- */
+:where(.fs-sheet) {
+  width: min(100%, 980px);
+  max-width: 100%;
+  max-height: 94dvh;
+  margin: auto auto 0;
+  padding: 0;
+  border: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--fb, system-ui, sans-serif);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+:where(.fs-sheet)::backdrop {
+  background: rgb(10 10 10 / 0.62);
+}
+:where(.fs-sheet) :where(.fs-in) {
+  position: relative;
+  display: grid;
+}
+:where(.fs-sheet) :where(.fs-media) {
+  position: relative;
+  /* Portrait photo, cropped to its box; never taller than about half the phone screen. */
+  aspect-ratio: 4 / 5;
+  max-height: 56dvh;
+  width: 100%;
+  overflow: hidden;
+}
+:where(.fs-sheet) :where(.fs-media img) {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+:where(.fs-sheet) :where(.fs-initial) {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font: 700 64px var(--fd, serif);
+  color: rgb(30 26 20 / 0.7);
+}
+:where(.fs-sheet) :where(.fs-body) {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  padding: 22px 20px 28px;
+}
+:where(.fs-sheet) :where(.fs-title) {
+  font: var(--fw, 700) calc(26px * var(--fs, 1)) / 1.15 var(--fd, serif);
+  letter-spacing: var(--ft, 0);
+  overflow-wrap: anywhere;
+}
+:where(.fs-sheet) :where(.fs-cat, .fs-colors span, .fs-sizes-title) {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+:where(.fs-sheet) :where(.fs-price) {
+  font-size: 18px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+:where(.fs-sheet) :where(.fs-tags) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+:where(.fs-sheet) :where(.fs-text) {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+:where(.fs-sheet) :where(.fs-sizes) {
+  display: grid;
+  gap: 8px;
+}
+:where(.fs-sheet) :where(.fs-size-row) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+:where(.fs-sheet) :where(.fs-size) {
+  min-width: 48px;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  font: 600 14px var(--fb, sans-serif);
+  cursor: pointer;
+}
+:where(.fs-sheet) :where(.fs-size[aria-pressed="true"]) {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--bg);
+}
+:where(.fs-sheet) :where(.fs-size:disabled) {
+  cursor: not-allowed;
+  color: var(--muted);
+  text-decoration: line-through;
+}
+:where(.fs-sheet) :where(.fs-stock) {
+  font-size: 13px;
+  color: var(--muted);
+}
+:where(.fs-sheet) :where(.fs-actions) {
+  display: grid;
+  gap: 10px;
+  margin-top: 6px;
+}
+:where(.fs-sheet) :where(.fs-actions:empty) {
+  display: none;
+}
+:where(.fs-sheet) :where(.fs-order) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 22px;
+  background: var(--acc);
+  color: var(--acc-ink);
+  font: 700 15px var(--fb, sans-serif);
+  text-decoration: none;
+}
+:where(.fs-sheet) :where(.fs-order svg) {
+  width: 20px;
+  height: 20px;
+  flex: none;
+}
+:where(.fs-sheet) :where(.fs-close) {
+  position: absolute;
+  top: 12px;
+  inset-inline-end: 12px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--bg);
+  color: var(--ink);
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.18);
+  cursor: pointer;
+}
+:where(.fs-sheet) :where(.fs-close svg) {
+  width: 22px;
+  height: 22px;
+}
+:where(.fs-sheet) :where(.fs-size, .fs-order, .fs-close):focus-visible {
+  outline: 2px solid var(--acc-text, currentColor);
+  outline-offset: 3px;
+}
+@media (min-width: 760px) {
+  :where(.fs-sheet) {
+    margin: auto;
+    max-height: 88vh;
+  }
+  :where(.fs-sheet) :where(.fs-in) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+  }
+  :where(.fs-sheet) :where(.fs-media) {
+    max-height: 88vh;
+  }
+  :where(.fs-sheet) :where(.fs-body) {
+    padding: 56px 40px 40px;
+  }
+}
+
+/* ---------- gallery tiles: photos only, cropped inside their tile ---------- */
+:where(.fs-tile) {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  background: var(--surf);
+  cursor: zoom-in;
+}
+:where(.fs-tile) :where(img) {
+  transition: transform 0.6s ease;
+}
+:where(.fs-tile):hover :where(img) {
+  transform: scale(1.04);
+}
+:where(.fs-tile):focus-visible {
+  outline: 2px solid var(--acc-text, currentColor);
+  outline-offset: 3px;
+}
+
+/* ---------- gallery viewer ---------- */
+:where(.fs-viewer) {
+  width: 100vw;
+  max-width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: rgb(8 8 8 / 0.94);
+  color: #fff;
+}
+:where(.fs-viewer)::backdrop {
+  background: rgb(8 8 8 / 0.94);
+}
+:where(.fs-viewer) :where(.fs-viewer-photo) {
+  position: absolute;
+  inset: 64px 16px 56px;
+  display: grid;
+  place-items: center;
+  margin: 0;
+}
+:where(.fs-viewer) :where(.fs-viewer-photo img) {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+:where(.fs-viewer) :where(.fs-viewer-count) {
+  position: absolute;
+  bottom: -40px;
+  inset-inline: 0;
+  text-align: center;
+  font: 600 13px var(--fb, sans-serif);
+  letter-spacing: 0.1em;
+}
+:where(.fs-viewer) :where(.fs-viewer-btn) {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid rgb(255 255 255 / 0.5);
+  border-radius: 50%;
+  background: rgb(0 0 0 / 0.45);
+  color: #fff;
+  cursor: pointer;
+}
+:where(.fs-viewer) :where(.fs-viewer-btn svg) {
+  width: 22px;
+  height: 22px;
+}
+:where(.fs-viewer) :where(.fs-viewer-close) {
+  top: 12px;
+  inset-inline-end: 12px;
+}
+:where(.fs-viewer) :where(.fs-viewer-prev, .fs-viewer-next) {
+  top: 50%;
+  translate: 0 -50%;
+}
+:where(.fs-viewer) :where(.fs-viewer-prev) {
+  inset-inline-start: 12px;
+}
+:where(.fs-viewer) :where(.fs-viewer-next) {
+  inset-inline-end: 12px;
+}
+:where(.fs-viewer) :where(.fs-viewer-btn):focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}

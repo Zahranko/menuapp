@@ -4,7 +4,13 @@
   "name": "Bistro Card",
   "category": "Restaurant",
   "description": "A folded menu card on a tablecloth: cover with today's dish, courses inside.",
+  "ar": {
+    "name": "بطاقة بيسترو",
+    "category": "مطعم",
+    "description": "بطاقة منيو مطوية على مفرش طاولة: الغلاف لطبق اليوم، والأطباق في الداخل."
+  },
   "version": 1,
+  "heroSlider": { "kind": "band" },
   "thumbnail": "/templates/bistro/thumbnail.png",
   "sample": "restaurant",
   "schema": [
@@ -129,5 +135,13 @@
       "thu": "12:00-00:30",
       "fri": "13:00-00:30"
     }
+  },
+  "defaultsAr": {
+    "hero.eyebrow": "منذ 2019",
+    "hero.title": "طبخ بيتي، مثلما كانت تطبخ جدّتنا",
+    "announcement": "غداء العائلة يوم الجمعة من 1 ظهرًا",
+    "special.title": "طبق اليوم",
+    "story.title": "البيت",
+    "story.text": "بيت ستّي يعني بيت الجدّة. الوصفات وصفاتها، والصحون كبيرة، وعلى الطاولة دائمًا مكان لضيف إضافي."
   }
 }

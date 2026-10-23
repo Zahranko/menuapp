@@ -1,4 +1,6 @@
 import type { TemplateProps } from "@/lib/types";
+import { logoRoot, OrderFab, optionRoot } from "../_kit/blocks";
+import { orderButton } from "../_kit/options";
 import { fontVariables } from "../_kit/fonts";
 import { ItemSheet, type SheetItem } from "../_kit/ItemSheet";
 import { tintFor } from "../_kit/site-data";
@@ -20,6 +22,7 @@ import { dotted, souqVars } from "./theme";
 export default function SouqTemplate({ site, preview, now }: TemplateProps & { now?: Date }) {
   const ctx = souqContext(site, now);
   const announcement = ctx.text("announcement");
+  const order = orderButton(site);
   const sheetItems: SheetItem[] = ctx.sections.flatMap((section) =>
     section.products.map((p) => ({
       id: p.id,
@@ -34,7 +37,7 @@ export default function SouqTemplate({ site, preview, now }: TemplateProps & { n
   );
 
   return (
-    <div data-template="souq" className={`t-souq ${fontVariables} ${dotted(site.settings) ? "pat" : ""}`} style={souqVars(site.settings, site.business.locale)}>
+    <div data-template="souq" {...logoRoot(ctx)} {...optionRoot(ctx, order)} className={`t-souq ${fontVariables} ${dotted(site.settings) ? "pat" : ""}`} style={souqVars(site.settings, site.business.locale)}>
       <TemplateStyles id="souq" />
       <a className="skip" href="#menu">
         {ctx.c.viewMenu}
@@ -57,6 +60,7 @@ export default function SouqTemplate({ site, preview, now }: TemplateProps & { n
         {ctx.on("visit") && <Visit ctx={ctx} />}
       </main>
       <Footer ctx={ctx} />
+      <OrderFab order={order} />
       <ItemSheet
         items={sheetItems}
         closeLabel={ctx.t.close}

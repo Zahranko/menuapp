@@ -4,7 +4,13 @@
   "name": "Atelier",
   "category": "Salon, beauty",
   "description": "An editorial website for a salon or beauty studio, with a price list people can book from.",
+  "ar": {
+    "name": "أتيليه",
+    "category": "صالون وتجميل",
+    "description": "موقع أنيق لصالون أو استوديو تجميل، مع قائمة أسعار يمكن الحجز منها."
+  },
   "version": 1,
+  "heroSlider": { "kind": "backdrop", "source": "hero.image" },
   "thumbnail": "/templates/atelier/thumbnail.png",
   "sample": "salon",
   "schema": [
@@ -243,7 +249,7 @@
     "accent": "#B76E79",
     "hero.eyebrow": "Hair, nails and skin",
     "hero.title": "Look good, feel even better",
-    "hero.subtitle": "A calm salon in Abdoun with experienced stylists, quality products and time set aside just for you.",
+    "hero.subtitle": "A calm neighborhood salon with experienced stylists, quality products and time set aside just for you.",
     "hero.image": "preset:marble",
     "book.message": "Hello! I would like to book:",
     "sections": ["highlights", "story", "gallery", "reviews", "visit"],
@@ -274,5 +280,21 @@
       "thu": "10:00-21:00",
       "fri": ""
     }
+  },
+  "defaultsAr": {
+    "hero.eyebrow": "شعر وأظافر وبشرة",
+    "hero.title": "إطلالة جميلة، وإحساس أجمل",
+    "hero.subtitle": "صالون هادئ في قلب الحي، مع مصففين ذوي خبرة ومنتجات عالية الجودة ووقت مخصص لك وحدك.",
+    "book.message": "مرحبًا! أود أن أحجز:",
+    "announcement": "خصم 15 بالمئة للزبائن الجدد على أول زيارة",
+    "highlights.1.title": "فريق ذو خبرة",
+    "highlights.1.text": "لكل مصفف خمس سنوات خبرة على الأقل.",
+    "highlights.2.title": "منتجات عالية الجودة",
+    "highlights.2.text": "علامات احترافية فقط، لا تُختبر على الحيوانات.",
+    "highlights.3.title": "حجز سهل",
+    "highlights.3.text": "راسلنا على واتساب واختر الوقت المناسب لك.",
+    "services.title": "الخدمات والأسعار",
+    "story.title": "صالون تشعر فيه كأنك في بيتك",
+    "story.text": "افتتحت لينا الصالون عام 2015 بكرسي واحد وفكرة بسيطة: أن نستمع أولًا ثم نقص. واليوم ما زال فريقنا المكوّن من ستة أشخاص يعمل بالطريقة نفسها."
   }
 }

@@ -1,7 +1,10 @@
-import { ContactList, Credits, HoursList, Logo, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, FootName, Credits, HoursList, Logo, logoRoot, optionRoot, OrderFab, ProductPicture, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Arrow, WhatsApp } from "../_kit/icons";
+import { heroPhotos } from "../_kit/hero";
+import { HeroPhotos } from "../_kit/HeroPhotos";
 import { Picture } from "../_kit/Picture";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
@@ -26,20 +29,22 @@ const two = (n: number) => String(n).padStart(2, "0");
 export default function ArchStoryTemplate({ site, now }: TemplateProps & { now?: Date }) {
   const ctx = siteContext(site, now);
   const c = copy[ctx.locale];
-  const hero = ctx.image("hero.image");
+  const heroPics = heroPhotos(site.settings, "hero.image");
+  const hero = heroPics[0] ?? null;
   const storyText = ctx.on("story") && ctx.text("story.text");
   const storyImage = ctx.image("story.image");
   const reviews = ctx.on("reviews") ? ctx.reviews.slice(0, 3) : [];
   const links: [string, string][] = [["#menu", ctx.t.menu], ...(storyText ? [["#story", c.story] as [string, string]] : []), ...(ctx.on("visit") ? [["#visit", ctx.t.visit] as [string, string]] : [])];
 
+  const order = orderButton(site, { label: c.order });
   return (
-    <div data-template="archstory" className={cx("t-arch", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["soft", "elegant", "classic"], defaultAccent: "#C2577A", radius: { rounded: "24px", sharp: "6px" } })}>
+    <div data-template="archstory" {...logoRoot(ctx)} {...optionRoot(ctx, order)} className={cx("t-arch", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["soft", "elegant", "classic"], defaultAccent: "#C2577A", radius: { rounded: "24px", sharp: "6px" } })}>
       <TemplateStyles id="archstory" />
       <TopBars ctx={ctx} />
-      <header className="top" data-section="header">
-        <a className="brand" href="#top">
+      <header className="top kit-head" data-section="header">
+        <a className="brand kit-lockup" href="#top">
           <Logo ctx={ctx} />
-          <span>{site.business.name}</span>
+          <BrandName ctx={ctx} />
         </a>
         <nav aria-label={c.nav}>
           {links.map(([href, label]) => (
@@ -62,7 +67,7 @@ export default function ArchStoryTemplate({ site, now }: TemplateProps & { now?:
           </div>
           {hero && (
             <div className="arch cover-arch">
-              <Picture src={hero} sizes="(min-width: 760px) 45vw, 90vw" priority />
+              <HeroPhotos ctx={ctx} photos={heroPics} sizes="(min-width: 760px) 45vw, 90vw" />
             </div>
           )}
         </section>
@@ -97,11 +102,11 @@ export default function ArchStoryTemplate({ site, now }: TemplateProps & { now?:
                 </span>
                 <h2 id={`${section.anchor}-h`}>{section.name}</h2>
               </div>
-              <ul className="plain treats">
+              <ul className="plain treats kit-cards">
                 {section.products.map((item) => (
                   <li key={item.id}>
-                    <button type="button" className={cx("treat", !item.isAvailable && "out")} data-item-id={item.id}>
-                      <span className="arch treat-arch">
+                    <button type="button" className={cx("treat kit-card kit-card-pad", !item.isAvailable && "out")} data-item-id={item.id}>
+                      <span className="arch treat-arch kit-card-media">
                         <ProductPicture item={item} sizes="(min-width: 760px) 20vw, 45vw" />
                       </span>
                       <span className="treat-tags">
@@ -182,9 +187,11 @@ export default function ArchStoryTemplate({ site, now }: TemplateProps & { now?:
       </main>
 
       <footer className="foot" data-section="footer">
-        <p className="wordmark">{site.business.name}</p>
+        <FootName ctx={ctx} className="wordmark" />
+        <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
         <Credits ctx={ctx} />
       </footer>
+      <OrderFab order={order} />
       <ProductSheet ctx={ctx} />
     </div>
   );

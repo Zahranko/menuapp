@@ -1,5 +1,10 @@
 /* Template 008 "Neon Diner": a neon sign, checkered strips, jukebox buttons and numbered combo cards with offset shadows. */
 
+@import "../_kit/logo.css";
+@import "../_kit/options.css";
+@import "../_kit/cards.css";
+@import "../_kit/hero.css";
+
 .t-diner {
   container: page / inline-size;
   font-size: 15px;
@@ -64,6 +69,10 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
+  }
+  &[data-logo-pos="center"] .sign-top {
+    flex-direction: column;
+    gap: 12px;
   }
   .logo {
     position: relative;
@@ -361,6 +370,15 @@
     box-shadow: 4px 4px 0 var(--ink);
   }
 
+  /* Social accounts the owner shows (_kit/options.css draws the round icon links). */
+  .foot-social {
+    justify-content: center;
+    margin-bottom: 16px;
+    color: var(--acc-text);
+  }
+  .foot-social a {
+    border-color: color-mix(in srgb, currentColor 40%, transparent);
+  }
   .foot {
     padding: 18px 16px 28px;
     color: var(--muted);

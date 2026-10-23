@@ -22,6 +22,8 @@ public static class LocalMedia
             FileProvider = new PhysicalFileProvider(root),
             RequestPath = "/media",
             ServeUnknownFileTypes = false,
+            // Every upload gets a new file name, so browsers and CDNs can keep a photo for good.
+            OnPrepareResponse = ctx => ctx.Context.Response.Headers.CacheControl = "public, max-age=31536000, immutable",
         });
         return app;
     }

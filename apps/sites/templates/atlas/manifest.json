@@ -1,0 +1,423 @@
+{
+  "id": "atlas",
+  "number": 24,
+  "name": "Atlas",
+  "category": "Boutique shop",
+  "description": "A modern online-store look: a department menu, a search bar, a shoppable hero, product quick view, ranked best sellers and a lookbook.",
+  "ar": {
+    "name": "أطلس",
+    "category": "متجر بوتيك",
+    "description": "مظهر متجر إلكتروني عصري: قائمة أقسام، وشريط بحث، وواجهة تعرض منتجًا، ونظرة سريعة على المنتجات، والأكثر مبيعًا بالترتيب، ومعرض صور."
+  },
+  "version": 2,
+  "heroSlider": { "kind": "panel", "source": "hero.image" },
+  "tier": "pro",
+  "thumbnail": "/templates/atlas/thumbnail.png",
+  "sample": "atlas",
+  "schema": [
+    {
+      "key": "font",
+      "type": "choice",
+      "label": "Font style",
+      "group": "Brand",
+      "options": [
+        "grotesk",
+        "modern",
+        "mono"
+      ],
+      "optionLabels": {
+        "grotesk": "Grotesk",
+        "modern": "Modern",
+        "mono": "Mono"
+      }
+    },
+    {
+      "key": "logo",
+      "type": "image",
+      "label": "Logo",
+      "group": "Brand"
+    },
+    {
+      "key": "theme",
+      "type": "palette",
+      "label": "Color theme",
+      "group": "Brand",
+      "options": [
+        "white",
+        "stone",
+        "sand",
+        "black"
+      ],
+      "optionLabels": {
+        "white": "White",
+        "stone": "Stone",
+        "sand": "Sand",
+        "black": "Black"
+      },
+      "optionLabelsAr": {
+        "white": "أبيض",
+        "stone": "حجري",
+        "sand": "رملي",
+        "black": "أسود"
+      },
+      "swatches": {
+        "white": "#FFFFFF",
+        "stone": "#ECEBE7",
+        "sand": "#E6DCCB",
+        "black": "#0D0D0D"
+      }
+    },
+    {
+      "key": "accent",
+      "type": "color",
+      "label": "Accent color",
+      "group": "Brand",
+      "options": [
+        "#2447D9",
+        "#C2410C",
+        "#1F7A4D",
+        "#121212"
+      ]
+    },
+    {
+      "key": "corners",
+      "type": "choice",
+      "label": "Corners",
+      "group": "Brand",
+      "options": [
+        "rounded",
+        "sharp"
+      ],
+      "optionLabels": {
+        "rounded": "Rounded",
+        "sharp": "Sharp"
+      }
+    },
+    {
+      "key": "cta.label",
+      "type": "text",
+      "label": "Order button text",
+      "group": "Navigation",
+      "max": 30
+    },
+    {
+      "key": "announcement",
+      "type": "text",
+      "label": "Announcement",
+      "group": "Navigation",
+      "max": 80
+    },
+    {
+      "key": "hero.layout",
+      "type": "choice",
+      "label": "Layout",
+      "group": "Hero header",
+      "options": [
+        "split",
+        "flip",
+        "text"
+      ],
+      "optionLabels": {
+        "split": "Photo at the end",
+        "flip": "Photo at the start",
+        "text": "Text only"
+      },
+      "optionLabelsAr": {
+        "split": "الصورة في جهة النهاية",
+        "flip": "الصورة في جهة البداية",
+        "text": "نص فقط"
+      }
+    },
+    {
+      "key": "hero.image",
+      "type": "image",
+      "label": "Hero image",
+      "group": "Hero header",
+      "presets": [
+        "shelf",
+        "tiles",
+        "leaves",
+        "marble",
+        "loft",
+        "noir",
+        "arches",
+        "dunes",
+        "counter",
+        "blossom"
+      ]
+    },
+    {
+      "key": "hero.eyebrow",
+      "type": "text",
+      "label": "Small line above the headline",
+      "group": "Hero header",
+      "max": 40
+    },
+    {
+      "key": "hero.title",
+      "type": "text",
+      "label": "Headline",
+      "group": "Hero header",
+      "max": 70
+    },
+    {
+      "key": "hero.subtitle",
+      "type": "textarea",
+      "label": "Subtext",
+      "group": "Hero header",
+      "max": 140
+    },
+    {
+      "key": "density",
+      "type": "choice",
+      "label": "Product grid",
+      "labelAr": "شبكة المنتجات",
+      "group": "Layout",
+      "options": [
+        "comfy",
+        "dense"
+      ],
+      "optionLabels": {
+        "comfy": "Roomy",
+        "dense": "More per row"
+      }
+    },
+    {
+      "key": "motion",
+      "type": "toggle",
+      "label": "Animations",
+      "group": "Layout"
+    },
+    {
+      "key": "sections",
+      "type": "toggles",
+      "label": "Home page sections",
+      "group": "Sections",
+      "options": [
+        "announcement",
+        "arrivals",
+        "best",
+        "story",
+        "gallery",
+        "reviews",
+        "visit"
+      ],
+      "optionLabels": {
+        "announcement": "Announcement bar",
+        "arrivals": "Product picks",
+        "best": "Best sellers",
+        "story": "About us",
+        "gallery": "Lookbook",
+        "reviews": "Reviews",
+        "visit": "Hours and contact"
+      },
+      "optionLabelsAr": {
+        "announcement": "شريط الإعلان",
+        "arrivals": "منتجات مختارة",
+        "best": "الأكثر مبيعًا",
+        "story": "من نحن",
+        "gallery": "معرض الصور",
+        "reviews": "آراء الزبائن",
+        "visit": "أوقات العمل والتواصل"
+      }
+    },
+    {
+      "key": "categories.title",
+      "type": "text",
+      "label": "Departments headline",
+      "labelAr": "عنوان الأقسام",
+      "group": "Headlines",
+      "max": 50
+    },
+    {
+      "key": "arrivals.title",
+      "type": "text",
+      "label": "Product picks headline",
+      "labelAr": "عنوان المنتجات المختارة",
+      "group": "Headlines",
+      "max": 50
+    },
+    {
+      "key": "best.title",
+      "type": "text",
+      "label": "Best sellers headline",
+      "group": "Headlines",
+      "max": 50
+    },
+    {
+      "key": "gallery.title",
+      "type": "text",
+      "label": "Lookbook headline",
+      "labelAr": "عنوان معرض الصور",
+      "group": "Headlines",
+      "max": 50
+    },
+    {
+      "key": "story.title",
+      "type": "text",
+      "label": "About headline",
+      "group": "About us",
+      "max": 70
+    },
+    {
+      "key": "story.text",
+      "type": "textarea",
+      "label": "About us",
+      "group": "About us",
+      "max": 400
+    },
+    {
+      "key": "story.image",
+      "type": "image",
+      "label": "About photo",
+      "group": "About us",
+      "presets": [
+        "shelf",
+        "tiles",
+        "leaves",
+        "marble",
+        "loft",
+        "noir",
+        "arches",
+        "dunes",
+        "counter",
+        "blossom"
+      ]
+    },
+    {
+      "key": "gallery",
+      "type": "images",
+      "label": "Gallery photos",
+      "group": "Lookbook",
+      "groupAr": "معرض الصور",
+      "max": 12
+    },
+    {
+      "key": "gallery.products",
+      "type": "toggle",
+      "label": "Add product photos to the gallery",
+      "group": "Lookbook",
+      "groupAr": "معرض الصور"
+    },
+    {
+      "key": "reviews.1.quote",
+      "type": "textarea",
+      "label": "Review 1",
+      "group": "Reviews",
+      "max": 200
+    },
+    {
+      "key": "reviews.1.name",
+      "type": "text",
+      "label": "Review 1 by",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "reviews.2.quote",
+      "type": "textarea",
+      "label": "Review 2",
+      "group": "Reviews",
+      "max": 200
+    },
+    {
+      "key": "reviews.2.name",
+      "type": "text",
+      "label": "Review 2 by",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "reviews.3.quote",
+      "type": "textarea",
+      "label": "Review 3",
+      "group": "Reviews",
+      "max": 200
+    },
+    {
+      "key": "reviews.3.name",
+      "type": "text",
+      "label": "Review 3 by",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "footer.text",
+      "type": "textarea",
+      "label": "Line in the footer",
+      "group": "Footer",
+      "max": 140
+    },
+    {
+      "key": "hours",
+      "type": "hours",
+      "label": "Opening hours",
+      "group": "Visit us"
+    }
+  ],
+  "defaults": {
+    "font": "grotesk",
+    "logo": "",
+    "theme": "white",
+    "accent": "#2447D9",
+    "corners": "rounded",
+    "cta.label": "",
+    "announcement": "Free delivery on larger orders. Exchanges within 14 days.",
+    "hero.layout": "split",
+    "hero.image": "preset:shelf",
+    "hero.eyebrow": "New season",
+    "hero.title": "Everyday objects, made by hand.",
+    "hero.subtitle": "Ceramics, candles, soaps and plants from small independent makers.",
+    "density": "comfy",
+    "motion": true,
+    "sections": [
+      "announcement",
+      "arrivals",
+      "best",
+      "story",
+      "gallery",
+      "reviews",
+      "visit"
+    ],
+    "categories.title": "Shop by department",
+    "arrivals.title": "Picked for you",
+    "best.title": "",
+    "gallery.title": "",
+    "story.title": "A small shop for useful, beautiful things",
+    "story.text": "Atlas works directly with potters, soap makers and weavers. Every piece is made in small batches, and we visit every workshop we sell from.",
+    "story.image": "preset:tiles",
+    "gallery": [],
+    "gallery.products": true,
+    "reviews.1.quote": "",
+    "reviews.1.name": "",
+    "reviews.2.quote": "",
+    "reviews.2.name": "",
+    "reviews.3.quote": "",
+    "reviews.3.name": "",
+    "footer.text": "Gift wrapping on every order. Questions? Message us on WhatsApp.",
+    "hours": {
+      "sat": "10:00-21:00",
+      "sun": "10:00-21:00",
+      "mon": "10:00-21:00",
+      "tue": "10:00-21:00",
+      "wed": "10:00-21:00",
+      "thu": "10:00-22:00",
+      "fri": ""
+    },
+    "social.show": [
+      "instagram",
+      "whatsapp"
+    ]
+  },
+  "defaultsAr": {
+    "announcement": "توصيل مجاني للطلبات الكبيرة. الاستبدال خلال 14 يومًا.",
+    "hero.eyebrow": "موسم جديد",
+    "hero.title": "أغراض يومية مصنوعة باليد.",
+    "hero.subtitle": "خزف وشموع وصابون ونباتات من حرفيين صغار مستقلين.",
+    "categories.title": "تسوّق حسب القسم",
+    "arrivals.title": "اخترناها لك",
+    "story.title": "متجر صغير للأشياء المفيدة والجميلة",
+    "story.text": "يعمل أطلس مباشرة مع صانعي الفخار والصابون والنسّاجين. كل قطعة تُصنع بكميات صغيرة، ونزور كل ورشة نبيع منتجاتها.",
+    "footer.text": "تغليف هدايا لكل طلب. لديك سؤال؟ راسلنا على واتساب."
+  }
+}

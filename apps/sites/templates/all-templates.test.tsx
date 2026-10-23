@@ -1,15 +1,22 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { bigMenu, fixtureFor } from "@/lib/fixtures";
+import { arabicDefaultsFor, bigMenu, fixtureFor, fixturePreview } from "@/lib/fixtures";
 import type { PublicSite } from "@/lib/types";
+import { allPaths } from "./_premium/pages";
 import registry from "./registry.json";
-import { templates } from "./registry";
+import { multiPage, templates } from "./registry";
 
 /** Checks every template against the cases S16 asks for: all themes, Arabic, 1 to 200 products, long names, no photos. */
 
+/** Every page of the site: the home page, plus the inner pages of Pro templates. */
 const render = (site: PublicSite) => {
   const Template = templates[site.templateId];
-  return renderToStaticMarkup(<Template site={site} preview={false} />);
+  const paths = multiPage.has(site.templateId) ? allPaths(site) : [[]];
+  return paths.map((path) => renderToStaticMarkup(<Template site={site} preview={false} path={path} base="/x" />)).join("\n");
+};
+const SiteOf = ({ site, path }: { site: PublicSite; path: string[] }) => {
+  const Template = templates[site.templateId];
+  return <Template site={site} preview={false} path={path} base="/x" />;
 };
 const themes = (id: string) => (registry.templates.find((t) => t.id === id)!.schema.find((f) => f.key === "theme") as { options?: string[] } | undefined)?.options ?? [];
 const ids = Object.keys(templates);
@@ -40,9 +47,20 @@ describe.each(ids)("template %s", (id) => {
     expect(html).not.toMatch(/Sold out|Not available/);
   });
 
+  it("shows its Arabic starter text in an Arabic preview", () => {
+    const site = fixturePreview(`fixture.${id}.default.ar`)!;
+    const title = arabicDefaultsFor(id)["hero.title"] as string;
+    expect(title).toMatch(/[\u0600-\u06FF]/);
+    const html = render(site);
+    expect(html).toContain(title);
+    expect(html).not.toContain(fixtureFor(id).settings["hero.title"] as string);
+  });
+
   it("handles one product, and 200 products with long names and no photos", () => {
     const one = fixtureFor(id);
-    one.categories = [{ ...one.categories[0], products: one.categories[0].products.slice(0, 1) }];
+    // The first category with products (in Pro samples the first category is a main category holding sub-categories).
+    const first = { ...one.categories.find((c) => c.products.length > 0)!, parentId: null };
+    one.categories = [{ ...first, products: first.products.slice(0, 1) }];
     expect(render(one)).toContain(one.categories[0].products[0].name.replace("'", "&#x27;"));
 
     const many = bigMenu(fixtureFor(id), 200);
@@ -59,7 +77,36 @@ describe.each(ids)("template %s", (id) => {
     site.business = { ...site.business, address: null, whatsApp: null, email: null, instagram: null };
     const html = render(site);
     expect(html).toContain('id="menu"');
-    expect(html).toContain(site.categories[0].products[0].name.replace("'", "&#x27;"));
+    expect(html).toContain(site.categories.find((c) => c.products.length > 0)!.products[0].name.replace("'", "&#x27;"));
+  });
+
+  it.runIf(multiPage.has(id))("links its pages and nests sub-categories", () => {
+    const site = fixtureFor(id);
+    const home = renderToStaticMarkup(<SiteOf site={site} path={[]} />);
+    expect(home).toContain('href="/x/menu"');
+    expect(home).toContain('href="/x/best-sellers"');
+    expect(home).toContain('href="/x/gallery"');
+    const parent = site.categories.find((c) => site.categories.some((x) => x.parentId === c.id))!;
+    const child = site.categories.find((c) => c.parentId === parent.id)!;
+    const path = allPaths(site).find((p) => p[0] === "c" && p[1].endsWith(parent.id.replace(/-/g, "").slice(-8)))!;
+    const page = renderToStaticMarkup(<SiteOf site={site} path={path} />);
+    expect(page).toContain(child.name);
+    expect(page).toContain('aria-label="You are here"');
+  });
+
+  it.each([
+    ["USD", "en", "$4.25"],
+    ["USD", "ar", "$4.25"],
+    ["KWD", "en", "1.375 KD"],
+    ["KWD", "ar", "1.375 د.ك"],
+  ])("shows prices in the business currency %s (%s), with nothing assuming JOD", (currencyCode, locale, expected) => {
+    const site = fixtureFor(id);
+    site.business = { ...site.business, currencyCode, locale, timeZone: currencyCode === "USD" ? "America/New_York" : "Asia/Kuwait" };
+    const price = expected.startsWith("$") ? 4.25 : 1.375;
+    site.categories = site.categories.map((c) => ({ ...c, products: c.products.map((p) => ({ ...p, price })) }));
+    const html = render(site);
+    expect(html).toContain(expected);
+    expect(html).not.toMatch(/\bJOD\b|\bJD\b|د\.أ|دينار/);
   });
 
   it("has no empty menu when there are no products", () => {

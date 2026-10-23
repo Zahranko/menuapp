@@ -4,7 +4,13 @@
   "name": "Souq",
   "category": "Café",
   "description": "Warm café site with a big hero, signature picks and a searchable menu with photos.",
+  "ar": {
+    "name": "سوق",
+    "category": "مقهى",
+    "description": "موقع دافئ لمقهى بواجهة كبيرة واختيارات مميزة ومنيو بالصور يسهل البحث فيه."
+  },
   "version": 1,
+  "heroSlider": { "kind": "backdrop", "source": "hero.image", "skip": ["hero.overlay"] },
   "thumbnail": "/templates/souq/thumbnail.png",
   "schema": [
     {
@@ -345,6 +351,23 @@
       "wed": "08:00-23:00",
       "thu": "08:00-24:00",
       "fri": "13:00-24:00"
-    }
+    },
+    "social.show": [
+      "instagram",
+      "whatsapp"
+    ]
+  },
+  "defaultsAr": {
+    "hero.title": "قهوة تستحق أن تعبر المدينة من أجلها.",
+    "hero.subtitle": "قهوة مختصة نحمّصها بأنفسنا، ومخبوزات طازجة كل صباح، وركن هادئ تجلس فيه على راحتك.",
+    "announcement": "نفتح الآن حتى منتصف الليل يومي الخميس والجمعة",
+    "highlights.1.title": "نحمّصها بأنفسنا",
+    "highlights.1.text": "دفعات صغيرة كل أسبوع، من محصول واحد أو بخلطة البيت.",
+    "highlights.2.title": "نخبز قبل الشروق",
+    "highlights.2.text": "كرواسون وكوكيز وكيك نحضّرها يوميًا من الصفر.",
+    "highlights.3.title": "نسهر معك",
+    "highlights.3.text": "ابقَ لفنجان آخر. أوقات عملنا في الأسفل.",
+    "story.title": "كاونتر صغير صار ملتقى الحي",
+    "story.text": "بدأنا بماكينة واحدة وكاونتر صغير. اليوم نحمّص حبوبنا كل أسبوع، ونخبز من الصفر قبل الشروق، وما زلنا نعرف معظم زبائننا بأسمائهم."
   }
 }

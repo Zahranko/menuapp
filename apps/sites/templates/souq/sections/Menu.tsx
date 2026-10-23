@@ -27,11 +27,11 @@ export function Menu({ ctx }: { ctx: SouqContext }) {
                 {section.name}
                 <small>{itemCount(section.products.length, ctx.locale)}</small>
               </h3>
-              <ul className="items">
+              <ul className="items kit-cards">
                 {section.products.map((item) => (
                   <li key={item.id} data-q={item.search}>
-                    <button type="button" className={`item ${item.isAvailable ? "" : "itemOut"}`} data-item-id={item.id}>
-                      <span className="th" style={thumbStyle(item)}>
+                    <button type="button" className={`item kit-card ${item.isAvailable ? "" : "itemOut"}`} data-item-id={item.id}>
+                      <span className="th kit-card-media" style={thumbStyle(item)}>
                         <Thumb item={item} sizes="78px" />
                       </span>
                       <span>

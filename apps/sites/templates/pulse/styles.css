@@ -1,5 +1,10 @@
 /* Template 020 "Pulse": tall athletic type, a slanted hero, pricing cards with a "most popular" ribbon, a class list and a join band. */
 
+@import "../_kit/logo.css";
+@import "../_kit/options.css";
+@import "../_kit/cards.css";
+@import "../_kit/hero.css";
+
 .t-pulse {
   container: page / inline-size;
   --slant: 5cqi;
@@ -623,6 +628,15 @@
     margin-bottom: 12px;
   }
 
+  /* Social accounts the owner shows (_kit/options.css draws the round icon links). */
+  .foot-social {
+    justify-content: flex-start;
+    margin-bottom: 16px;
+    color: var(--acc-text);
+  }
+  .foot-social a {
+    border-color: color-mix(in srgb, currentColor 40%, transparent);
+  }
   .foot {
     padding: 22px 18px 30px;
     border-top: 1px solid var(--line);
@@ -746,4 +760,9 @@
       padding-top: 70px;
     }
   }
+}
+
+/* Card styles (_kit/cards.css) give every card the same surface, so the popular plan keeps the page's text color (its ribbon still marks it). */
+.t-pulse[data-card-style] .price-card.hot {
+  color: var(--ink);
 }

@@ -1,9 +1,12 @@
 import { flag } from "@/lib/settings";
 import type { TemplateProps } from "@/lib/types";
-import { ContactList, Credits, HoursList, Logo, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, HoursList, Logo, logoRoot, optionRoot, OrderFab, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Arrow, Mail, WhatsApp } from "../_kit/icons";
+import { heroPhotos } from "../_kit/hero";
+import { HeroPhotos } from "../_kit/HeroPhotos";
 import { Picture } from "../_kit/Picture";
 import { bookLink, faqs, highlights, steps } from "../_kit/services";
 import { hasHours } from "../_kit/site-data";
@@ -28,7 +31,8 @@ const pad = (n: number) => String(n).padStart(2, "0");
 export default function AgencyTemplate({ site, now }: TemplateProps & { now?: Date }) {
   const ctx = siteContext(site, now);
   const c = copy[ctx.locale];
-  const hero = ctx.image("hero.image");
+  const heroPics = heroPhotos(site.settings, "hero.image");
+  const hero = heroPics[0] ?? null;
   const book = bookLink(ctx);
   const from = flag(site.settings, "prices.from", true);
   const stats = highlights(ctx);
@@ -38,14 +42,15 @@ export default function AgencyTemplate({ site, now }: TemplateProps & { now?: Da
   // Numbering runs across groups: 01, 02 in the first group, 03 in the next, and so on.
   const offsets = ctx.sections.map((_, i) => ctx.sections.slice(0, i).reduce((n, s) => n + s.products.length, 0));
 
+  const order = orderButton(site, { label: c.start, whatsapp: book });
   return (
-    <div data-template="agency" className={cx("t-agency", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["bold", "grotesk", "modern", "condensed"], defaultAccent: "#D7FF3A", radius: { rounded: "22px", sharp: "0px" } })}>
+    <div data-template="agency" {...logoRoot(ctx)} {...optionRoot(ctx, order)} className={cx("t-agency", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["bold", "grotesk", "modern", "condensed"], defaultAccent: "#D7FF3A", radius: { rounded: "22px", sharp: "0px" } })}>
       <TemplateStyles id="agency" />
       <TopBars ctx={ctx} />
-      <header className="head" data-section="header">
-        <a className="brand" href="#top">
+      <header className="head kit-head" data-section="header">
+        <a className="brand kit-lockup" href="#top">
           <Logo ctx={ctx} />
-          <span>{site.business.name}</span>
+          <BrandName ctx={ctx} />
         </a>
         <nav aria-label={c.menu}>
           <a href="#menu">{c.services}</a>
@@ -70,7 +75,7 @@ export default function AgencyTemplate({ site, now }: TemplateProps & { now?: Da
           </div>
           {hero && (
             <div className="hero-image">
-              <Picture src={hero} sizes="100vw" priority />
+              <HeroPhotos ctx={ctx} photos={heroPics} sizes="100vw" />
             </div>
           )}
         </section>
@@ -112,10 +117,10 @@ export default function AgencyTemplate({ site, now }: TemplateProps & { now?: Da
           {ctx.sections.map((section, si) => (
             <section key={section.id} id={section.anchor} className="group" aria-labelledby={`${section.anchor}-h`}>
               <h3 id={`${section.anchor}-h`}>{section.name}</h3>
-              <ul className="plain rows">
+              <ul className="plain rows kit-cards kit-rows">
                 {section.products.map((item, i) => (
                   <li key={item.id}>
-                    <button type="button" className={cx("row", !item.isAvailable && "out")} data-item-id={item.id}>
+                    <button type="button" className={cx("row kit-card kit-card-pad", !item.isAvailable && "out")} data-item-id={item.id}>
                       <span className="row-no">{pad(offsets[si] + i + 1)}</span>
                       <span className="row-main">
                         <span className="row-name">{item.name}</span>
@@ -143,7 +148,7 @@ export default function AgencyTemplate({ site, now }: TemplateProps & { now?: Da
         {ctx.on("work") && ctx.gallery.length > 0 && (
           <section id="work" className="work" data-section="gallery" aria-labelledby="work-title">
             <h2 id="work-title">{ctx.text("work.title") || c.work}</h2>
-            <ul className="plain work-grid">
+            <ul className="plain work-grid" data-gallery>
               {ctx.gallery.slice(0, 6).map((src, i) => (
                 <li key={src + i}>
                   <Picture src={src} sizes="(min-width: 760px) 50vw, 100vw" alt={ctx.t.photoOf.replace("{n}", String(i + 1)).replace("{name}", site.business.name)} />
@@ -244,8 +249,10 @@ export default function AgencyTemplate({ site, now }: TemplateProps & { now?: Da
 
       <footer className="foot" data-section="footer">
         <p className="foot-name" data-name={site.business.name} aria-hidden="true" />
+        <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
         <Credits ctx={ctx} />
       </footer>
+      <OrderFab order={order} />
       <ProductSheet ctx={ctx} services />
     </div>
   );

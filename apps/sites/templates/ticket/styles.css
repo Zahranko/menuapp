@@ -1,5 +1,10 @@
 /* Template 012 "Ticket": a till receipt on a counter. Monospace lines, dashed rules, punched edges, a stamp and a barcode. */
 
+@import "../_kit/logo.css";
+@import "../_kit/options.css";
+@import "../_kit/cards.css";
+@import "../_kit/hero.css";
+
 .t-ticket {
   container: page / inline-size;
   font-family: var(--fb);
@@ -55,6 +60,17 @@
     letter-spacing: 2px;
     color: var(--muted);
   }
+  /* The owner's logo, only when one is uploaded: a small round stamp above the name. */
+  .logo {
+    position: relative;
+    display: block;
+    width: 52px;
+    height: 52px;
+    margin: 10px auto 2px;
+    overflow: hidden;
+    border: 1.5px dashed var(--muted);
+    border-radius: 50%;
+  }
   .head h1 {
     margin: 6px 0;
     font-size: calc(30px * var(--fs));
@@ -80,7 +96,6 @@
     letter-spacing: 2px;
     text-transform: uppercase;
     rotate: 12deg;
-    opacity: 0.9;
   }
   .jump {
     display: flex;
@@ -225,6 +240,15 @@
   }
 
   /* footer */
+  /* Social accounts the owner shows (_kit/options.css draws the round icon links). */
+  .foot-social {
+    justify-content: center;
+    margin-bottom: 16px;
+    color: var(--acc-text);
+  }
+  .foot-social a {
+    border-color: color-mix(in srgb, currentColor 40%, transparent);
+  }
   .foot {
     margin-top: 26px;
     padding-top: 16px;

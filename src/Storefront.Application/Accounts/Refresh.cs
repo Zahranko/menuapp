@@ -50,6 +50,13 @@ public sealed class RefreshHandler(
             return Invalid;
         }
 
+        // Claim the token in the database before issuing: when two requests race with the same token, only the first
+        // gets a new session. The loser is refused; any later use of this token is caught as reuse above.
+        if (!await refreshTokens.TryRevokeAsync(token.Id, now, ct))
+        {
+            return Invalid;
+        }
+
         return await sessions.IssueAsync(user, business, null, ct, replacing: token);
     }
 

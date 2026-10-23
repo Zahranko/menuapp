@@ -345,6 +345,41 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/auth/logout-all": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description No Content */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": unknown;
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/auth/forgot-password": {
         parameters: {
             query?: never;
@@ -431,6 +466,241 @@ export interface paths {
             };
         };
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/plans": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["PlanDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/subscription": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SubscriptionDto"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/subscription/change": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["ChangePlan"];
+                    "text/json": components["schemas"]["ChangePlan"];
+                    "application/*+json": components["schemas"]["ChangePlan"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ChangePlanResponse"];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ValidationProblemDetails"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/domain-request": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["DomainRequestDto"];
+                    };
+                };
+                /** @description No Content */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": unknown;
+                    };
+                };
+            };
+        };
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["RequestDomain"];
+                    "text/json": components["schemas"]["RequestDomain"];
+                    "application/*+json": components["schemas"]["RequestDomain"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["DomainRequestDto"];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ValidationProblemDetails"];
+                    };
+                };
+                /** @description Forbidden */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ValidationProblemDetails"];
+                    };
+                };
+                /** @description Conflict */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ValidationProblemDetails"];
+                    };
+                };
+            };
+        };
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description No Content */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": unknown;
+                    };
+                };
+            };
+        };
         options?: never;
         head?: never;
         patch?: never;
@@ -546,6 +816,15 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["CategoryDto"];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ValidationProblemDetails"];
                     };
                 };
                 /** @description Conflict */
@@ -1051,6 +1330,15 @@ export interface paths {
                         "application/json": components["schemas"]["ValidationProblemDetails"];
                     };
                 };
+                /** @description Forbidden */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ValidationProblemDetails"];
+                    };
+                };
             };
         };
         post?: never;
@@ -1135,6 +1423,15 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["SiteDto"];
+                    };
+                };
+                /** @description Forbidden */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ValidationProblemDetails"];
                     };
                 };
             };
@@ -1362,18 +1659,45 @@ export interface components {
             locale: string;
             currencyCode: string;
             timeZone: string;
+            phone: null | string;
+            facebook: null | string;
+            tikTok: null | string;
+            snapchat: null | string;
         };
         CategoryDto: {
             /** Format: uuid */
             id: string;
             name: string;
+            /** Format: uuid */
+            parentId: null | string;
             /** Format: int32 */
             sortOrder: number | string;
             /** Format: int32 */
             productCount: number | string;
         };
+        ChangePlan: {
+            planCode: string;
+        };
+        ChangePlanResponse: {
+            checkoutUrl: null | string;
+            subscription: components["schemas"]["SubscriptionDto"];
+        };
         ChangeTemplate: {
             templateId: string;
+        };
+        DomainRequestDto: {
+            /** Format: uuid */
+            id: string;
+            domain: string;
+            status: string;
+            staffNote: null | string;
+            dnsTarget: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+            /** Format: date-time */
+            activatedAt: null | string;
         };
         ForgotPassword: {
             email: string;
@@ -1403,6 +1727,13 @@ export interface components {
             email: string;
             phone: null | string;
             business: components["schemas"]["BusinessDto"];
+        };
+        PlanDto: {
+            code: string;
+            name: string;
+            /** Format: double */
+            priceUsd: number | string;
+            allowsCustomDomain: boolean;
         };
         PreviewLink: {
             token: string;
@@ -1435,6 +1766,8 @@ export interface components {
             sortOrder: number | string;
             /** Format: date-time */
             updatedAt: string;
+            customLabel: null | string;
+            customLabelAr: null | string;
         };
         PublicBusinessDto: {
             name: string;
@@ -1447,11 +1780,17 @@ export interface components {
             currencyCode: string;
             timeZone: string;
             customDomains: string[];
+            phone: null | string;
+            facebook: null | string;
+            tikTok: null | string;
+            snapchat: null | string;
         };
         PublicCategoryDto: {
             /** Format: uuid */
             id: string;
             name: string;
+            /** Format: uuid */
+            parentId: null | string;
             products: components["schemas"]["PublicProductDto"][];
         };
         PublicProductDto: {
@@ -1465,6 +1804,8 @@ export interface components {
             label: null | string;
             isAvailable: boolean;
             isFeatured: boolean;
+            customLabel: null | string;
+            customLabelAr: null | string;
         };
         PublicSiteDto: {
             business: components["schemas"]["PublicBusinessDto"];
@@ -1485,11 +1826,16 @@ export interface components {
             password: string;
             deviceName?: null | string;
             locale?: null | string;
+            currencyCode?: null | string;
+            timeZone?: null | string;
         };
         ReorderProducts: {
             /** Format: uuid */
             categoryId: string;
             ids: string[];
+        };
+        RequestDomain: {
+            domain: string;
         };
         ResetPassword: {
             email: string;
@@ -1498,6 +1844,8 @@ export interface components {
         };
         SaveCategory: {
             name: string;
+            /** Format: uuid */
+            parentId?: null | string;
         };
         SaveDraft: {
             settings: components["schemas"]["JsonElement"];
@@ -1515,6 +1863,8 @@ export interface components {
             /** @default false */
             isFeatured: boolean;
             imageUrl?: null | string;
+            customLabel?: null | string;
+            customLabelAr?: null | string;
         };
         SetAvailability: {
             isAvailable: boolean;
@@ -1535,6 +1885,19 @@ export interface components {
             suggestion: null | string;
             message: null | string;
         };
+        SubscriptionDto: {
+            planCode: string;
+            status: string;
+            /** Format: date-time */
+            currentPeriodEnd: null | string;
+            allowsCustomDomain: boolean;
+            testMode: boolean;
+        };
+        TemplateArabicDto: {
+            name: string;
+            category: string;
+            description: string;
+        };
         TemplateDto: {
             id: string;
             /** Format: int32 */
@@ -1545,8 +1908,11 @@ export interface components {
             thumbnailUrl: null | string;
             /** Format: int32 */
             version: number | string;
+            tier: string;
             schema: components["schemas"]["JsonElement"];
             defaults: components["schemas"]["JsonElement"];
+            ar: null | components["schemas"]["TemplateArabicDto"];
+            defaultsAr: components["schemas"]["JsonElement"];
         };
         UpdateBusiness: {
             name: string;
@@ -1556,6 +1922,11 @@ export interface components {
             instagram: null | string;
             locale: null | string;
             timeZone: null | string;
+            currencyCode?: null | string;
+            phone?: null | string;
+            facebook?: null | string;
+            tikTok?: null | string;
+            snapchat?: null | string;
         };
         ValidationProblemDetails: {
             type?: null | string;

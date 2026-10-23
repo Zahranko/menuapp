@@ -1,5 +1,10 @@
 /* Template 005 "Pocket Catalog": a shop catalog. Search, category chips and price sorting over a product grid. */
 
+@import "../_kit/logo.css";
+@import "../_kit/options.css";
+@import "../_kit/cards.css";
+@import "../_kit/hero.css";
+
 .t-pocket {
   container: page / inline-size;
   font-size: 15px;
@@ -341,6 +346,15 @@
     gap: 22px;
   }
 
+  /* Social accounts the owner shows (_kit/options.css draws the round icon links). */
+  .foot-social {
+    justify-content: flex-start;
+    margin-bottom: 16px;
+    color: var(--acc-text);
+  }
+  .foot-social a {
+    border-color: color-mix(in srgb, currentColor 40%, transparent);
+  }
   .foot {
     padding: 20px 16px 30px;
     color: var(--muted);

@@ -67,6 +67,8 @@ Use these instead of writing your own, so every template behaves the same where 
 | `icons.tsx` | Line icons |
 | `services.ts` | For service websites: `bookLink(ctx, service?)` (WhatsApp link that starts with the `book.message` setting), `highlights()`, `steps()`, `faqs()` from numbered settings (`steps.1.title`, `faq.1.q`...) |
 
+Clothing stores (Folio, Drop, Couture) also use `templates/_fashion/`: `details()` turns "Sizes: XS–L. Colors: Sand, Black" in a description (Arabic "المقاسات:" and "الألوان:") into sizes and colors, `ProductSheet` is a product dialog with size buttons whose WhatsApp message carries the chosen size, `PhotoViewer` is a photos-only gallery viewer (`data-photo="<index>"` opens it), `items.ts` builds their props and `base.css` holds their structure (import it after the kit files). Sale prices are a Custom label such as "Sale −30%".
+
 ## Rules every template follows
 
 - Settings are read with the helpers in `lib/settings.ts`; never assume a key exists.
