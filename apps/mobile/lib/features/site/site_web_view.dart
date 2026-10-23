@@ -11,6 +11,13 @@ final webViewBuilderProvider = Provider<Widget Function(String url, int reloadKe
   (ref) => (url, reloadKey) => SiteWebView(url: url, reloadKey: reloadKey),
 );
 
+/// True when [uri] is on the same site as [page]. A leading `www.` is ignored, since the
+/// host may redirect between the two (example.com sending visitors to www.example.com).
+bool isSameSite(Uri uri, Uri page) {
+  String bare(String host) => host.toLowerCase().replaceFirst(RegExp(r'^www\.'), '');
+  return bare(uri.host) == bare(page.host);
+}
+
 /// Shows a web page, with a friendly note when the page can't load (for example before the websites are hosted).
 class SiteWebView extends StatefulWidget {
   const SiteWebView({super.key, required this.url, this.reloadKey = 0});
@@ -39,7 +46,7 @@ class _SiteWebViewState extends State<SiteWebView> {
         // phone, WhatsApp) open in their own app instead of inside ours.
         onNavigationRequest: (request) {
           final uri = Uri.tryParse(request.url);
-          if (!request.isMainFrame || uri == null || uri.host == Uri.parse(widget.url).host) {
+          if (!request.isMainFrame || uri == null || isSameSite(uri, Uri.parse(widget.url))) {
             return NavigationDecision.navigate;
           }
           if (const {'https', 'http', 'tel', 'mailto', 'sms', 'whatsapp'}.contains(uri.scheme)) {
