@@ -149,15 +149,7 @@ internal sealed class GeminiAssistant(HttpClient http, IOptions<GeminiOptions> o
             }
         }
 
-        var json = text.ToString().Trim();
-        // Models sometimes wrap JSON in a Markdown code fence even when asked for JSON only.
-        if (json.StartsWith("```", StringComparison.Ordinal))
-        {
-            json = json[(json.IndexOf('\n') + 1)..];
-            json = json.EndsWith("```", StringComparison.Ordinal) ? json[..^3] : json;
-        }
-
-        return json.Length == 0 ? null : JsonNode.Parse(json);
+        return AiJson.Parse(text.ToString());
     }
 
     /// <summary>The first item of an array, or null (indexing a JSON array past its end throws).</summary>
@@ -187,7 +179,7 @@ internal sealed class GeminiAssistant(HttpClient http, IOptions<GeminiOptions> o
     }
 }
 
-/// <summary>Used when no Gemini key is configured: the helper is off and every call answers ai.unavailable (503).</summary>
+/// <summary>Used when no AI key is configured: the helper is off and every call answers ai.unavailable (503).</summary>
 internal sealed class DisabledAiAssistant : IAiAssistant
 {
     public bool IsAvailable => false;

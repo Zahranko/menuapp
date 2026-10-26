@@ -153,8 +153,8 @@ const en = {
       {
         title: "The AI helper",
         body: [
-          "The AI helper is optional. When a business owner uses it, the photos and text they choose are sent to Google's Gemini service to suggest products, colors and wording. Before a photo is sent we shrink it and remove its camera details, such as location.",
-          "Nothing is sent to Gemini unless the owner starts the AI helper. The owner reviews every suggestion before it appears on their site.",
+          "The AI helper is optional. When a business owner uses it, the photos and text they choose are sent to DeepSeek, an AI service that processes them on servers in China, to suggest products, colors and wording. Before a photo is sent we shrink it and remove its camera details, such as location.",
+          "Nothing is sent to DeepSeek unless the owner starts the AI helper. The owner reviews every suggestion before it appears on their site.",
         ],
       },
       {
@@ -170,7 +170,7 @@ const en = {
       {
         title: "Who we share it with",
         body: [
-          "We do not sell personal information. We share it only with providers that help us run {brandName}: hosting and file storage, email delivery, Google Gemini for the AI helper and, once paid plans open, a payment provider or the app stores. They may use it only to provide their service to us.",
+          "We do not sell personal information. We share it only with providers that help us run {brandName}: hosting and file storage, email delivery, DeepSeek for the AI helper and, once paid plans open, a payment provider or the app stores. They may use it only to provide their service to us.",
           "Content you publish on your website, such as products, photos and contact details, is public by design. We may also disclose information when the law requires it.",
         ],
       },
@@ -341,8 +341,8 @@ const ar: Copy = {
       {
         title: "المساعد الذكي",
         body: [
-          "المساعد الذكي اختياري. عندما يستخدمه صاحب النشاط تُرسل الصور والنصوص التي يختارها إلى خدمة Gemini من Google لاقتراح المنتجات والألوان والصياغة. قبل إرسال أي صورة نصغّرها ونزيل بيانات الكاميرا منها مثل الموقع الجغرافي.",
-          "لا يُرسل شيء إلى Gemini ما لم يبدأ صاحب النشاط المساعد الذكي. ويراجع صاحب النشاط كل اقتراح قبل أن يظهر في موقعه.",
+          "المساعد الذكي اختياري. عندما يستخدمه صاحب النشاط تُرسل الصور والنصوص التي يختارها إلى DeepSeek، وهي خدمة ذكاء اصطناعي تعالجها على خوادم في الصين، لاقتراح المنتجات والألوان والصياغة. قبل إرسال أي صورة نصغّرها ونزيل بيانات الكاميرا منها مثل الموقع الجغرافي.",
+          "لا يُرسل شيء إلى DeepSeek ما لم يبدأ صاحب النشاط المساعد الذكي. ويراجع صاحب النشاط كل اقتراح قبل أن يظهر في موقعه.",
         ],
       },
       {
@@ -358,7 +358,7 @@ const ar: Copy = {
       {
         title: "مع من نشاركها",
         body: [
-          "لا نبيع المعلومات الشخصية. نشاركها فقط مع مزوّدين يساعدوننا في تشغيل {brandName}: الاستضافة وتخزين الملفات وإرسال البريد وGoogle Gemini للمساعد الذكي، وعند بدء الباقات المدفوعة مزوّد دفع أو متاجر التطبيقات. ولا يجوز لهم استخدامها إلا لتقديم خدمتهم لنا.",
+          "لا نبيع المعلومات الشخصية. نشاركها فقط مع مزوّدين يساعدوننا في تشغيل {brandName}: الاستضافة وتخزين الملفات وإرسال البريد وDeepSeek للمساعد الذكي، وعند بدء الباقات المدفوعة مزوّد دفع أو متاجر التطبيقات. ولا يجوز لهم استخدامها إلا لتقديم خدمتهم لنا.",
           "المحتوى الذي تنشره في موقعك، مثل المنتجات والصور وبيانات التواصل، عام بطبيعته. وقد نفصح عن معلومات إذا طلب القانون ذلك.",
         ],
       },
@@ -404,7 +404,7 @@ export function copy(lang: Lang): Copy {
 }
 
 /** The date the privacy policy last changed (ISO), shown at its top. Update it with every change to the policy text. */
-export const PRIVACY_UPDATED = "2026-10-22";
+export const PRIVACY_UPDATED = "2026-10-26";
 
 export function formatDate(iso: string, lang: Lang): string {
   return new Intl.DateTimeFormat(lang === "ar" ? "ar-u-nu-latn" : "en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(`${iso}T00:00:00Z`));

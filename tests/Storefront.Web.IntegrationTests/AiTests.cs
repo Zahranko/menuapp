@@ -16,7 +16,7 @@ using Storefront.Infrastructure.Ai;
 
 namespace Storefront.Web.IntegrationTests;
 
-/// <summary>No Gemini key configured: the helper is off everywhere.</summary>
+/// <summary>No AI key configured: the helper is off everywhere.</summary>
 public class AiDisabledTests(StorefrontFactory factory) : IClassFixture<StorefrontFactory>
 {
     [Fact]

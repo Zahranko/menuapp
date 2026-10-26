@@ -23,7 +23,8 @@ In GitHub, open **Settings**, then **Secrets and variables**, then **Actions**.
 | `DB_PASSWORD` | The SQL Server database user's password |
 | `JWT_SIGNING_KEY` | Any random text of 32 or more characters. Keep it stable: changing it signs everyone out |
 | `REVALIDATE_SECRET` | Optional. The same value as on the websites host (`docs/deploy-vercel.md`), so saves refresh the websites at once |
-| `GEMINI_API_KEY` | Optional. A Google AI Studio (Gemini API) key. Switches the AI helper on (colors and texts from a photo, menu from a photo, write my text). Without it the helper stays off: its endpoints answer 503 and the app hides its buttons. Written to `web.config` as `Ai__Gemini__ApiKey` only when set |
+| `DEEPSEEK_API_KEY` | Optional. A DeepSeek platform key (platform.deepseek.com, with balance on the account). Switches the AI helper on (colors and texts from a photo, menu from a photo, write my text) and takes priority over `GEMINI_API_KEY`. Written to `web.config` as `Ai__DeepSeek__ApiKey` only when set |
+| `GEMINI_API_KEY` | Optional, the fallback when `DEEPSEEK_API_KEY` is not set. A Google AI Studio (Gemini API) key. Switches the AI helper on (colors and texts from a photo, menu from a photo, write my text). Without it the helper stays off: its endpoints answer 503 and the app hides its buttons. Written to `web.config` as `Ai__Gemini__ApiKey` only when set |
 
 **Variables** (tab *Variables*, all optional):
 
@@ -35,6 +36,7 @@ In GitHub, open **Settings**, then **Secrets and variables**, then **Actions**.
 | `DB_SERVER` / `DB_NAME` / `DB_USER` | the current site4now database | Same |
 | `SITES_URL` | empty (the brand domain); on `test`, `https://www.katlio.com` (the www address, since katlio.com redirects there) | Where the owners' websites (`apps/sites`) are hosted, like `https://sites.example.vercel.app`. Used for each site's link and the editor preview |
 | `BILLING_TEST_MODE` | `true` on the `test` branch, otherwise `false` | Puts every account on an active Pro plan. Only for test servers |
+| `DEEPSEEK_MODEL` | `deepseek-flash` | The DeepSeek model id (`Ai__DeepSeek__Model`). It must accept photos. Only used when `DEEPSEEK_API_KEY` is set |
 | `GEMINI_MODEL` | `gemini-3.6-flash` | The Gemini model id the AI helper uses (`Ai__Gemini__Model`). Only used when `GEMINI_API_KEY` is set |
 
 ## What a deploy does

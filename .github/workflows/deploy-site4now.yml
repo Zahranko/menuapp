@@ -82,7 +82,10 @@ jobs:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
           REVALIDATE_SECRET: ${{ secrets.REVALIDATE_SECRET }}
-          # Optional: switches the AI helper on. GEMINI_MODEL (a variable) overrides the default model id.
+          # Optional: switches the AI helper on. DeepSeek is used when its key is set, else Gemini.
+          # DEEPSEEK_MODEL and GEMINI_MODEL (variables) override the default model ids.
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          DEEPSEEK_MODEL: ${{ vars.DEEPSEEK_MODEL }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_MODEL: ${{ vars.GEMINI_MODEL }}
         run: python3 scripts/site4now-web-config.py > out/web.config

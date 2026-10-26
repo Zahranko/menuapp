@@ -113,17 +113,22 @@ public static class DependencyInjection
         services.AddScoped<OutboxProcessor>();
         services.AddHostedService<OutboxDispatcher>();
 
-        // The AI helper: Gemini when "Ai:Gemini:ApiKey" is set (read when resolved, so test hosts can override it), otherwise switched off.
+        // The AI helper: DeepSeek when "Ai:DeepSeek:ApiKey" is set, else Gemini when "Ai:Gemini:ApiKey" is set, otherwise
+        // switched off. Keys are read when resolved, so test hosts can override them.
         services.Configure<AiOptions>(configuration.GetSection(AiOptions.SectionName));
+        services.Configure<DeepSeekOptions>(configuration.GetSection(DeepSeekOptions.SectionName));
+        services.AddHttpClient<DeepSeekAssistant>((sp, c) =>
+                c.Timeout = TimeSpan.FromSeconds(Math.Clamp(sp.GetRequiredService<IOptions<DeepSeekOptions>>().Value.TimeoutSeconds, 5, 120)))
+            .RedactLoggedHeaders(["Authorization"]);
         services.Configure<GeminiOptions>(configuration.GetSection(GeminiOptions.SectionName));
         services.AddHttpClient<GeminiAssistant>((sp, c) =>
                 c.Timeout = TimeSpan.FromSeconds(Math.Clamp(sp.GetRequiredService<IOptions<GeminiOptions>>().Value.TimeoutSeconds, 5, 120)))
             .RedactLoggedHeaders([GeminiAssistant.KeyHeader]);
         services.AddSingleton<DisabledAiAssistant>();
         services.AddScoped<IAiAssistant>(sp =>
-            string.IsNullOrWhiteSpace(sp.GetRequiredService<IOptions<GeminiOptions>>().Value.ApiKey)
-                ? sp.GetRequiredService<DisabledAiAssistant>()
-                : sp.GetRequiredService<GeminiAssistant>());
+            !string.IsNullOrWhiteSpace(sp.GetRequiredService<IOptions<DeepSeekOptions>>().Value.ApiKey) ? sp.GetRequiredService<DeepSeekAssistant>()
+            : !string.IsNullOrWhiteSpace(sp.GetRequiredService<IOptions<GeminiOptions>>().Value.ApiKey) ? sp.GetRequiredService<GeminiAssistant>()
+            : sp.GetRequiredService<DisabledAiAssistant>());
 
         services.AddScoped<TemplateRegistryImporter>();
         services.AddScoped<ReferenceDataSeeder>();

@@ -27,7 +27,7 @@ public sealed record AiRequest(
     double Temperature);
 
 /// <summary>
-/// A generative model that answers with JSON (Gemini in production). When no API key is configured the app uses a
+/// A generative model that answers with JSON (DeepSeek in production, Gemini as the fallback). When no API key is configured the app uses a
 /// disabled assistant: <see cref="IsAvailable"/> is false and the AI endpoints answer 503. The answer is untrusted:
 /// callers validate and clamp every value before showing it.
 /// </summary>

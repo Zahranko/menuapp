@@ -76,11 +76,11 @@ describe.each(LANGS)("home page (%s)", (lang) => {
 });
 
 describe.each(LANGS)("privacy page (%s)", (lang) => {
-  it("names the support email, Gemini and the last update", () => {
+  it("names the support email, DeepSeek and the last update", () => {
     render(page(lang, "privacy"));
     const main = screen.getByRole("main");
     expect(within(main).getAllByRole("link", { name: brand.supportEmail })[0].getAttribute("href")).toBe(`mailto:${brand.supportEmail}`);
-    expect(main.textContent).toContain("Gemini");
+    expect(main.textContent).toContain("DeepSeek");
     expect(main.querySelector("time")?.getAttribute("datetime")).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     expect(main.textContent).not.toMatch(/\{(brandName|domain|email|date)\}/);
   });
