@@ -1185,25 +1185,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get posterScanHint => 'Point your phone camera at the code';
 
   @override
-  String get aiHelper => 'AI helper';
-
-  @override
-  String get aiHelperSub =>
-      'Let AI suggest colors and words that fit your business. You check everything before it goes live.';
-
-  @override
-  String get aiFromPhoto => 'Colors and text from a photo';
-
-  @override
-  String get aiFromPhotoSub => 'Your shop front, logo, food or packaging';
-
-  @override
-  String get aiWriteText => 'Write my text';
-
-  @override
-  String get aiWriteTextSub => 'Headlines, your story and product descriptions';
-
-  @override
   String aiRemaining(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -1230,78 +1211,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aiChoosePhoto => 'Choose from photos';
 
   @override
-  String get aiNoteLabel => 'Anything to know about your business? (optional)';
-
-  @override
-  String get aiNoteHint => 'Cosy family café, known for knafeh';
-
-  @override
-  String get aiSuggest => 'Suggest';
-
-  @override
-  String get aiLookingAtPhoto => 'Looking at your photo…';
-
-  @override
-  String get aiWriting => 'Writing your texts…';
-
-  @override
   String get aiReadingMenu => 'Reading your menu…';
 
   @override
   String get aiTakesAMoment => 'This can take up to a minute.';
-
-  @override
-  String get aiSuggestions => 'Suggestions';
-
-  @override
-  String get aiColors => 'Colors and style';
-
-  @override
-  String get aiTexts => 'Texts';
-
-  @override
-  String get aiProductDescriptions => 'Product descriptions';
-
-  @override
-  String get aiApply => 'Apply';
-
-  @override
-  String aiApplyCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'Apply $count suggestions',
-      one: 'Apply 1 suggestion',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get aiAppliedToDraft =>
-      'Added to your design. Check the preview, then publish.';
-
-  @override
-  String get aiDraftNote =>
-      'Design changes go to your draft. Your site changes when you publish.';
-
-  @override
-  String get aiDescriptionsNote =>
-      'Descriptions are saved to your products and show on your site right away.';
-
-  @override
-  String aiDescriptionsSaved(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count product descriptions saved.',
-      one: '1 product description saved.',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get aiNothingSuggested =>
-      'No suggestions this time. Try another photo or add a note.';
 
   @override
   String get aiCheckBeforeUsing =>
@@ -1384,6 +1297,71 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aiWriteIn => 'Write in';
+
+  @override
+  String get aiAssistant => 'AI design assistant';
+
+  @override
+  String get aiAssistantSub =>
+      'Tell it what you\'d like: colors, sizes, layout or texts. It changes your draft and you see it in the preview right away.';
+
+  @override
+  String get aiChatOpen => 'Chat with the assistant';
+
+  @override
+  String get aiChatContinue => 'Continue the chat';
+
+  @override
+  String get aiChatOpenSub =>
+      'Like “Match my logo colors” or “Make the logo bigger”';
+
+  @override
+  String get aiChatWelcome =>
+      'Hi! Tell me what to change on your website and I\'ll do it in your draft. You can also send a photo of your logo or shop.';
+
+  @override
+  String get aiChatHint => 'Write a message…';
+
+  @override
+  String get aiChatSend => 'Send';
+
+  @override
+  String get aiChatWorking => 'Working on it…';
+
+  @override
+  String aiChatChanged(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Changed $count settings',
+      one: 'Changed 1 setting',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aiChatUndo => 'Undo';
+
+  @override
+  String get aiChatUndone => 'Changes undone';
+
+  @override
+  String get aiChatStartOver => 'Start over';
+
+  @override
+  String get aiChatPhotoMessage => 'Use this photo for my design.';
+
+  @override
+  String get aiChatSuggestLogo => 'Match my logo colors';
+
+  @override
+  String get aiChatSuggestTexts => 'Write my texts';
+
+  @override
+  String get aiChatSuggestLogoSize => 'Make the logo bigger';
+
+  @override
+  String get aiChatSuggestElegant => 'Darker, more elegant look';
 
   @override
   String get languageEnglish => 'English';

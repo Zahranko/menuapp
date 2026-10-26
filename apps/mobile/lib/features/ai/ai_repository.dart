@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
@@ -11,6 +12,9 @@ import 'ai_models.dart';
 /// A photo picked for the AI helper.
 typedef AiPhoto = ({Uint8List bytes, String name});
 
+/// One message of the editor chat as the server reads it: [role] is "owner" or "assistant".
+typedef AiChatTurn = ({String role, String text});
+
 /// The AI helper's calls. Every method throws [ApiError] on failure (503 ai.unavailable, 429 ai.limit, 502 ai.failed...).
 class AiRepository {
   AiRepository(this._dio);
@@ -22,20 +26,19 @@ class AiRepository {
 
   Future<AiStatus> status() => _call(() async => AiStatus.fromJson((await _dio.get<Map<String, dynamic>>('/api/v1/ai/status')).data!));
 
-  /// Colors and texts for the current template from one photo.
-  Future<DesignSuggestion> design(AiPhoto photo, {String? note, String? language}) => _call(() async {
-        final form = FormData.fromMap({
-          'file': _file(photo),
-          if (note != null && note.trim().isNotEmpty) 'note': note.trim(),
-          'language': ?language,
-        });
-        return DesignSuggestion.fromJson((await _dio.post<Map<String, dynamic>>('/api/v1/ai/design', data: form, options: _slow)).data!);
-      });
+  /// The most messages the server takes in one request; older ones are left out.
+  static const chatHistory = 20;
 
-  /// Texts for the template's text settings, plus descriptions for products without one.
-  Future<TextSuggestion> text({String? note, String? language}) => _call(() async {
-        final body = {'note': (note ?? '').trim().isEmpty ? null : note!.trim(), 'language': language, 'includeProducts': true};
-        return TextSuggestion.fromJson((await _dio.post<Map<String, dynamic>>('/api/v1/ai/text', data: body, options: _slow)).data!);
+  /// The editor's chat assistant: the conversation so far ending with the owner's new message (only the latest [chatHistory]
+  /// are sent), an optional [photo] for that message and the language to write in.
+  Future<DesignChatAnswer> chat(List<AiChatTurn> messages, {String? language, AiPhoto? photo}) => _call(() async {
+        final recent = messages.length > chatHistory ? messages.sublist(messages.length - chatHistory) : messages;
+        final form = FormData.fromMap({
+          'messages': jsonEncode([for (final m in recent) {'role': m.role, 'text': m.text}]),
+          'language': ?language,
+          if (photo != null) 'file': _file(photo),
+        });
+        return DesignChatAnswer.fromJson((await _dio.post<Map<String, dynamic>>('/api/v1/ai/chat', data: form, options: _slow)).data!);
       });
 
   /// Categories and products read from 1 to 3 menu photos. [arabic] picks Arabic names for an Arabic website.

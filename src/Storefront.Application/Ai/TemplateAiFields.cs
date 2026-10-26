@@ -7,7 +7,7 @@ namespace Storefront.Application.Ai;
 
 /// <summary>
 /// Turns a template's settings schema into what the model may fill, and its answer back into a safe settings patch.
-/// Works from the field types (text, textarea, color, palette, choice), so fields added to templates later are covered
+/// Works from the field types (text, textarea, color, palette, choice, range, toggle, toggles), so fields added to templates later are covered
 /// without code changes. The patch is checked with the same rules a saved draft follows; anything that fails is dropped.
 /// </summary>
 public static partial class TemplateAiFields
@@ -25,6 +25,22 @@ public static partial class TemplateAiFields
     /// </summary>
     public static bool IsCopy(TemplateField field) =>
         field.Type is "text" or "textarea" && field.Max is null or > 0 && !FactKeys().IsMatch(field.Key);
+
+    /// <summary>
+    /// Everything the chat assistant may set from a value: texts (<see cref="IsCopy"/>), colors, themes and choices, sizes and
+    /// other ranges, switches and lists of switches (like which sections show). Left out: images and photo lists (the owner
+    /// uploads those), opening hours, and facts only the owner knows: reviews, years, contact details, places, links, the
+    /// order button's text and action, and which social accounts show.
+    /// </summary>
+    public static bool IsEditable(TemplateField field) => field.Type switch
+    {
+        "text" or "textarea" => IsCopy(field),
+        _ when FactKeys().IsMatch(field.Key) => false,
+        "color" or "palette" or "choice" or "toggles" => field.Options is { Count: > 0 },
+        "range" => field.Min is not null && field.RangeMax is not null && field.RangeMax >= field.Min,
+        "toggle" => true,
+        _ => false,
+    };
 
     /// <summary>A text field for the Arabic version of another field (like "hero.titleAr"); the helper writes it in Arabic.</summary>
     public static bool IsArabicTwin(TemplateField field, IReadOnlyCollection<TemplateField> all) =>
@@ -56,8 +72,36 @@ public static partial class TemplateAiFields
             };
         }
 
+        if (field.Type == "range")
+        {
+            var step = field.Step is > 0 ? $" in steps of {Number(field.Step.Value)}" : "";
+            return new JsonObject
+            {
+                ["type"] = "number",
+                ["minimum"] = field.Min,
+                ["maximum"] = field.RangeMax,
+                ["description"] = $"{field.Label}: a number from {Number(field.Min ?? 0)} to {Number(field.RangeMax ?? 0)}{step}",
+            };
+        }
+
+        if (field.Type == "toggle")
+        {
+            return new JsonObject { ["type"] = "boolean", ["description"] = $"{field.Label}: true for on, false for off" };
+        }
+
         var options = field.Options ?? [];
         var described = string.Join(", ", options.Select(o => Describe(field, o)));
+        if (field.Type == "toggles")
+        {
+            return new JsonObject
+            {
+                ["type"] = "array",
+                ["items"] = new JsonObject { ["type"] = "string", ["enum"] = new JsonArray(options.Select(o => (JsonNode)o).ToArray()) },
+                ["uniqueItems"] = true,
+                ["description"] = $"{field.Label}: the complete list of the ones that are on (any left out are off); options: {described}",
+            };
+        }
+
         if (field.Type == "color" && field.Custom)
         {
             return new JsonObject
@@ -74,6 +118,8 @@ public static partial class TemplateAiFields
             ["description"] = $"{field.Label}; options: {described}",
         };
     }
+
+    private static string Number(double value) => value.ToString(CultureInfo.InvariantCulture);
 
     private static string Describe(TemplateField field, string option)
     {
@@ -98,31 +144,9 @@ public static partial class TemplateAiFields
         var allowed = fields.ToDictionary(f => f.Key);
         foreach (var (key, node) in values)
         {
-            if (!allowed.TryGetValue(key, out var field) || node is not JsonValue value || !value.TryGetValue<string>(out var text))
+            if (allowed.TryGetValue(key, out var field) && Value(field, node) is { } value)
             {
-                continue;
-            }
-
-            if (field.Type is "text" or "textarea")
-            {
-                if (AiText.Clean(text, field.Max ?? 400, multiline: field.Type == "textarea") is { } clean)
-                {
-                    patch[key] = clean;
-                }
-            }
-            else if (field is { Type: "color", Custom: true } && HexColor().IsMatch(text.Trim()))
-            {
-                patch[key] = text.Trim().ToUpper(CultureInfo.InvariantCulture);
-            }
-            else
-            {
-                // Options are matched exactly first, then ignoring case ("Night" for "night").
-                var option = field.Options?.FirstOrDefault(o => o == text.Trim())
-                    ?? field.Options?.FirstOrDefault(o => string.Equals(o, text.Trim(), StringComparison.OrdinalIgnoreCase));
-                if (option is not null)
-                {
-                    patch[key] = option;
-                }
+                patch[key] = value;
             }
         }
 
@@ -136,10 +160,120 @@ public static partial class TemplateAiFields
         return patch;
     }
 
+    /// <summary>One proposed value in the form the draft stores it, or null when it can't be used.</summary>
+    private static JsonNode? Value(TemplateField field, JsonNode? node)
+    {
+        switch (field.Type)
+        {
+            case "range":
+                return Range(field, node);
+            case "toggle":
+                return Switch(node) is { } on ? JsonValue.Create(on) : null;
+            case "toggles":
+                return Toggles(field, node);
+        }
+
+        if (node is not JsonValue value || !value.TryGetValue<string>(out var text))
+        {
+            return null;
+        }
+
+        if (field.Type is "text" or "textarea")
+        {
+            return AiText.Clean(text, field.Max ?? 400, multiline: field.Type == "textarea") is { } clean ? JsonValue.Create(clean) : null;
+        }
+
+        if (field is { Type: "color", Custom: true } && HexColor().IsMatch(text.Trim()))
+        {
+            return JsonValue.Create(text.Trim().ToUpper(CultureInfo.InvariantCulture));
+        }
+
+        return Option(field, text) is { } option ? JsonValue.Create(option) : null;
+    }
+
+    /// <summary>Options are matched exactly first, then ignoring case ("Night" for "night").</summary>
+    private static string? Option(TemplateField field, string text) =>
+        field.Options?.FirstOrDefault(o => o == text.Trim())
+        ?? field.Options?.FirstOrDefault(o => string.Equals(o, text.Trim(), StringComparison.OrdinalIgnoreCase));
+
+    /// <summary>A number (or a number written as text), kept inside the range and moved to the nearest step.</summary>
+    private static JsonValue? Range(TemplateField field, JsonNode? node)
+    {
+        if (node is not JsonValue value)
+        {
+            return null;
+        }
+
+        double number;
+        if (value.TryGetValue<double>(out var d))
+        {
+            number = d;
+        }
+        else if (value.TryGetValue<string>(out var s) && double.TryParse(s.Trim().TrimEnd('%'), NumberStyles.Float, CultureInfo.InvariantCulture, out var parsed))
+        {
+            number = parsed;
+        }
+        else
+        {
+            return null;
+        }
+
+        if (!double.IsFinite(number) || field.Min is not { } min || field.RangeMax is not { } max)
+        {
+            return null;
+        }
+
+        number = Math.Clamp(number, min, max);
+        if (field.Step is { } step and > 0)
+        {
+            number = Math.Min(max, min + (Math.Round((number - min) / step, MidpointRounding.AwayFromZero) * step));
+            number = Math.Round(number, 6);
+        }
+
+        return JsonValue.Create(number);
+    }
+
+    private static bool? Switch(JsonNode? node)
+    {
+        if (node is not JsonValue value)
+        {
+            return null;
+        }
+
+        if (value.TryGetValue<bool>(out var on))
+        {
+            return on;
+        }
+
+        return value.TryGetValue<string>(out var text) ? text.Trim().ToLowerInvariant() switch { "true" or "on" => true, "false" or "off" => false, _ => null } : null;
+    }
+
+    /// <summary>The options that are on, in the template's order. One unknown option drops the whole list, so nothing turns off by mistake.</summary>
+    private static JsonArray? Toggles(TemplateField field, JsonNode? node)
+    {
+        if (node is not JsonArray items || field.Options is not { } options)
+        {
+            return null;
+        }
+
+        var on = new HashSet<string>();
+        foreach (var item in items)
+        {
+            if (item is not JsonValue value || !value.TryGetValue<string>(out var text) || Option(field, text) is not { } option)
+            {
+                return null;
+            }
+
+            on.Add(option);
+        }
+
+        return new JsonArray(options.Where(on.Contains).Select(o => (JsonNode)JsonValue.Create(o)).ToArray());
+    }
+
     [GeneratedRegex("colou?r|theme|background|palette|tone|tint|font", RegexOptions.IgnoreCase)]
     private static partial Regex LookWords();
 
-    [GeneratedRegex(@"^reviews?\.|\.since$|^order\.label$|^(location|areas)$|phone|email|address|whatsapp|instagram|url|link", RegexOptions.IgnoreCase)]
+    [GeneratedRegex(@"^reviews?\.|\.since$|^order\.(label|action)$|^social\.|^(location|areas)$|phone|email|address|whatsapp|instagram|url|link", RegexOptions.IgnoreCase)]
     private static partial Regex FactKeys();
 
     [GeneratedRegex("^#[0-9A-Fa-f]{6}$")]

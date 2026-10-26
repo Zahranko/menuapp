@@ -9,6 +9,7 @@ public enum AiTask
     DesignFromPhoto,
     MenuFromPhotos,
     WriteText,
+    ChatAboutDesign,
 }
 
 /// <summary>A photo for the model, already shrunk and stripped of camera metadata.</summary>

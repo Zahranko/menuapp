@@ -45,6 +45,23 @@ internal sealed class FakeAiAssistant : IAiAssistant
               "products": [ { "ref": "p1", "description": "Our house blend with steamed milk" }, { "ref": "p99", "description": "Not one of yours" } ]
             }
             """,
+        AiTask.ChatAboutDesign => """
+            {
+              "reply": "I made the logo bigger, switched to the dark theme and wrote a new headline",
+              "settings": {
+                "logo.size": 135,
+                "theme": "night",
+                "texture": true,
+                "font": "comic-sans",
+                "hero.title": "Knafeh worth the trip",
+                "reviews.1.quote": "Best in town",
+                "order.action": "hide",
+                "hero.image": "https://elsewhere.example/x.png",
+                "hours": { "sat": "closed" },
+                "no.such.setting": "x"
+              }
+            }
+            """,
         _ => """
             {
               "currency": "JOD",

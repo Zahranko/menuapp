@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:math' as math;
+
 import 'package:dio/dio.dart';
 
 import 'fake_api.dart';
@@ -41,16 +44,15 @@ class FakeBackend {
   DateTime? publishedAt;
   final requests = <String>[];
 
-  /// Bodies sent to `POST /ai/text`.
-  final aiTextRequests = <Map>[];
+  /// What `POST /ai/chat` was sent: the decoded messages, the language and whether a photo came along.
+  final aiChatRequests = <({List<Map> messages, String? language, bool photo})>[];
   final drafts = <Map<String, Object?>>[];
 
   /// The AI helper's `GET /ai/status`; null answers 404, like a server without the helper.
   Map<String, Object?>? aiStatus;
 
-  /// Answers of `POST /ai/design`, `/ai/text` and `/ai/menu`.
-  Map<String, Object?>? aiDesign;
-  Map<String, Object?>? aiText;
+  /// Answers of `POST /ai/chat` (one per message, the last one repeats) and `/ai/menu`.
+  final aiChat = <Map<String, Object?>>[];
   Map<String, Object?>? aiMenu;
 
   /// Bodies sent to `POST /catalog/import`.
@@ -415,11 +417,16 @@ class FakeBackend {
         return (status: 204, body: null);
       case 'GET /api/v1/ai/status':
         return aiStatus == null ? (status: 404, body: {'title': 'Not found'}) : (status: 200, body: aiStatus);
-      case 'POST /api/v1/ai/design':
-        return (status: 200, body: aiDesign);
-      case 'POST /api/v1/ai/text':
-        aiTextRequests.add(body!);
-        return (status: 200, body: aiText);
+      case 'POST /api/v1/ai/chat':
+        final form = r.data as FormData;
+        String? field(String name) => form.fields.where((f) => f.key == name).firstOrNull?.value;
+        aiChatRequests.add((
+          messages: (jsonDecode(field('messages') ?? '[]') as List).cast<Map>(),
+          language: field('language'),
+          photo: form.files.any((f) => f.key == 'file'),
+        ));
+        if (aiChat.isEmpty) return (status: 404, body: {'title': 'Not found'});
+        return (status: 200, body: aiChat[math.min(aiChatRequests.length, aiChat.length) - 1]);
       case 'POST /api/v1/ai/menu':
         return (status: 200, body: aiMenu);
       case 'POST /api/v1/catalog/import':

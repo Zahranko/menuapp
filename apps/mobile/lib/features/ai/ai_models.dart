@@ -16,38 +16,19 @@ class AiStatus {
   bool get usable => available && remaining > 0;
 }
 
-/// Suggested design settings, keyed like the draft (`DesignSuggestionDto`). Nothing is saved until the owner applies them.
-class DesignSuggestion {
-  const DesignSuggestion({required this.settings, this.summary, required this.remaining});
+/// One answer of the editor's chat assistant (`DesignChatAnswerDto`): a short reply, and the settings it changed (empty when it
+/// only answered or asked something). Nothing is saved until the editor merges [settings] into its draft.
+class DesignChatAnswer {
+  const DesignChatAnswer({required this.reply, required this.settings, required this.remaining});
 
-  factory DesignSuggestion.fromJson(Map<String, dynamic> json) => DesignSuggestion(
+  factory DesignChatAnswer.fromJson(Map<String, dynamic> json) => DesignChatAnswer(
+        reply: json['reply'] as String? ?? '',
         settings: Map<String, dynamic>.from((json['settings'] as Map?) ?? const {}),
-        summary: json['summary'] as String?,
         remaining: (json['remainingThisMonth'] as num?)?.toInt() ?? 0,
       );
 
+  final String reply;
   final Map<String, dynamic> settings;
-  final String? summary;
-  final int remaining;
-}
-
-/// Suggested texts for the template and descriptions for products that have none (`TextSuggestionDto`).
-class TextSuggestion {
-  const TextSuggestion({required this.settings, required this.descriptions, required this.remaining});
-
-  factory TextSuggestion.fromJson(Map<String, dynamic> json) => TextSuggestion(
-        settings: Map<String, dynamic>.from((json['settings'] as Map?) ?? const {}),
-        descriptions: {
-          for (final d in (json['productDescriptions'] as List?) ?? const [])
-            (d as Map)['productId'].toString(): d['description'].toString(),
-        },
-        remaining: (json['remainingThisMonth'] as num?)?.toInt() ?? 0,
-      );
-
-  final Map<String, dynamic> settings;
-
-  /// Product id to suggested description.
-  final Map<String, String> descriptions;
   final int remaining;
 }
 

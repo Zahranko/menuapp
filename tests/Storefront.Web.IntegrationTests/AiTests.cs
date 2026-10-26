@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using SkiaSharp;
 using Storefront.Application.Ai;
+using Storefront.Application.Ai.Chat;
 using Storefront.Application.Ai.Design;
 using Storefront.Application.Ai.Menu;
 using Storefront.Application.Ai.Text;
@@ -39,6 +40,8 @@ public class AiDisabledTests(StorefrontFactory factory) : IClassFixture<Storefro
         Assert.Equal(HttpStatusCode.ServiceUnavailable, design.StatusCode);
         var menu = await client.PostAsync("/api/v1/ai/menu", AiFactory.Photos("files", 2));
         Assert.Equal(HttpStatusCode.ServiceUnavailable, menu.StatusCode);
+        var chat = await client.PostAsync("/api/v1/ai/chat", AiFactory.Chat("Make it darker"));
+        Assert.Equal(HttpStatusCode.ServiceUnavailable, chat.StatusCode);
     }
 
     [Fact]
@@ -88,6 +91,27 @@ public class AiFactory : StorefrontFactory
         if (note is not null)
         {
             form.Add(new StringContent(note), "note");
+        }
+
+        return form;
+    }
+
+    /// <summary>A chat form: an earlier exchange when <paramref name="history"/> is set, then the owner's <paramref name="message"/>.</summary>
+    public static MultipartFormDataContent Chat(string message, string? language = null, bool photo = false, bool history = false)
+    {
+        var form = photo ? Photos("file", 1) : new MultipartFormDataContent();
+        var messages = new List<object>();
+        if (history)
+        {
+            messages.Add(new { role = "owner", text = "Hi, can you help with my site?" });
+            messages.Add(new { role = "assistant", text = "Of course. What would you like to change?" });
+        }
+
+        messages.Add(new { role = "owner", text = message });
+        form.Add(new StringContent(System.Text.Json.JsonSerializer.Serialize(messages)), "messages");
+        if (language is not null)
+        {
+            form.Add(new StringContent(language), "language");
         }
 
         return form;
@@ -263,6 +287,107 @@ public class AiTests(AiFactory factory) : IClassFixture<AiFactory>
         // Another business has its own allowance.
         var other = await OwnerAsync();
         Assert.Equal(2, (await other.GetFromJsonAsync<AiStatusDto>("/api/v1/ai/status", Api.Json))!.RemainingThisMonth);
+    }
+
+    [Fact]
+    public async Task Chat_changes_any_editable_setting_and_drops_the_rest()
+    {
+        var client = await OwnerAsync();
+        var before = await client.GetStringAsync("/api/v1/site");
+
+        var answer = await ReadAsync<DesignChatAnswerDto>(await client.PostAsync("/api/v1/ai/chat", AiFactory.Chat("Bigger logo, darker look and a new headline", history: true)));
+
+        Assert.Equal("I made the logo bigger, switched to the dark theme and wrote a new headline", answer.Reply);
+        var settings = answer.Settings;
+        // A size moves to the nearest step of its range, and switches and themes are set like the editor sets them.
+        Assert.Equal(140, settings.GetProperty("logo.size").GetDouble());
+        Assert.Equal("night", settings.GetProperty("theme").GetString());
+        Assert.True(settings.GetProperty("texture").GetBoolean());
+        Assert.Equal("Knafeh worth the trip", settings.GetProperty("hero.title").GetString());
+        // An option the template doesn't have, a made-up review, the order button's action, a photo, opening hours
+        // and an unknown setting are dropped.
+        foreach (var dropped in new[] { "font", "reviews.1.quote", "order.action", "hero.image", "hours", "no.such.setting" })
+        {
+            Assert.False(settings.TryGetProperty(dropped, out _), dropped);
+        }
+
+        Assert.Equal(1, answer.RemainingThisMonth);
+        Assert.Equal(before, await client.GetStringAsync("/api/v1/site"));
+
+        // The model saw the current values, the conversation and the new message, with no photo.
+        var request = factory.Fake.Requests.Last(r => r.Task == AiTask.ChatAboutDesign);
+        Assert.Contains("- logo.size (Brand / Logo size): 100", request.Input);
+        Assert.Contains("Owner: Hi, can you help with my site?", request.Input);
+        Assert.Contains("You: Of course. What would you like to change?", request.Input);
+        Assert.Contains("The owner's new message: Bigger logo, darker look and a new headline", request.Input);
+        Assert.Empty(request.Images);
+        var properties = request.ResponseSchema["properties"]!["settings"]!["properties"]!.AsObject();
+        Assert.Equal("number", properties["logo.size"]!["type"]!.GetValue<string>());
+        Assert.Equal("array", properties["sections"]!["type"]!.GetValue<string>());
+        Assert.False(properties.ContainsKey("order.action"));
+        Assert.False(properties.ContainsKey("hours"));
+    }
+
+    [Fact]
+    public async Task Chat_takes_a_photo_and_the_chosen_language()
+    {
+        var client = await OwnerAsync();
+
+        await Api.EnsureSuccess(await client.PostAsync("/api/v1/ai/chat", AiFactory.Chat("Match my logo colors", language: "ar", photo: true)));
+
+        var request = factory.Fake.Requests.Last(r => r.Task == AiTask.ChatAboutDesign);
+        Assert.Equal("image/webp", Assert.Single(request.Images).ContentType);
+        Assert.Contains("The owner attached a photo", request.Input);
+        Assert.Contains("in Arabic", request.Instructions);
+        Assert.Contains("Website language: Arabic", request.Input);
+    }
+
+    [Fact]
+    public async Task Chat_answers_a_question_without_changes_and_counts_it()
+    {
+        var client = await OwnerAsync();
+        factory.Fake.Answer = r => r.Task == AiTask.ChatAboutDesign
+            ? JsonNode.Parse("""{ "reply": "Do you prefer warm or cool colors?", "settings": { "theme": "cream" } }""")!
+            : JsonNode.Parse("{}")!;
+        try
+        {
+            var answer = await ReadAsync<DesignChatAnswerDto>(await client.PostAsync("/api/v1/ai/chat", AiFactory.Chat("Make it nicer")));
+
+            Assert.Equal("Do you prefer warm or cool colors?", answer.Reply);
+            // The theme is already cream: nothing changes, so nothing is reported.
+            Assert.Empty(answer.Settings.EnumerateObject());
+            Assert.Equal(1, answer.RemainingThisMonth);
+        }
+        finally
+        {
+            factory.Fake.Answer = null;
+        }
+    }
+
+    [Fact]
+    public async Task Chat_checks_the_conversation_and_language()
+    {
+        var client = await OwnerAsync();
+
+        async Task<string> FirstError(MultipartFormDataContent form, string field)
+        {
+            var response = await client.PostAsync("/api/v1/ai/chat", form);
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            return (await Api.ProblemAsync(response)).GetProperty("errors").GetProperty(field)[0].GetString()!;
+        }
+
+        Assert.Equal("Write a message.", await FirstError(AiFactory.Chat("   "), "messages"));
+        Assert.Equal("Keep each message under 1000 characters.", await FirstError(AiFactory.Chat(new string('a', 1001)), "messages"));
+        Assert.Equal("Language must be en or ar.", await FirstError(AiFactory.Chat("Darker", language: "fr"), "language"));
+        Assert.Equal("Write a message.", await FirstError(new MultipartFormDataContent { { new StringContent("en"), "language" } }, "messages"));
+        Assert.Equal("We couldn't read the conversation. Try again.", await FirstError(new MultipartFormDataContent { { new StringContent("not json"), "messages" } }, "messages"));
+        var fromAssistant = new MultipartFormDataContent { { new StringContent("""[{ "role": "assistant", "text": "Hi" }]"""), "messages" } };
+        Assert.Equal("Write a message.", await FirstError(fromAssistant, "messages"));
+        var tooMany = System.Text.Json.JsonSerializer.Serialize(Enumerable.Range(0, 21).Select(_ => new { role = "owner", text = "Hi" }));
+        Assert.Equal("Send up to 20 messages.", await FirstError(new MultipartFormDataContent { { new StringContent(tooMany), "messages" } }, "messages"));
+
+        // Nothing was asked and nothing was counted.
+        Assert.Equal(2, (await client.GetFromJsonAsync<AiStatusDto>("/api/v1/ai/status", Api.Json))!.RemainingThisMonth);
     }
 
     [Fact]

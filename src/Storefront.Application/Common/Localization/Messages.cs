@@ -144,6 +144,8 @@ public static partial class Messages
         ["ai.limit"] = "استخدمت كل طلبات المساعد الذكي لهذا الشهر.",
         ["ai.nothingFound"] = "لم نجد أي منتجات في هذه الصور. جرّب صورة أوضح.",
         ["ai.photos"] = "أضف من صورة إلى 3 صور.",
+        ["ai.message"] = "اكتب رسالة.",
+        ["ai.messages"] = "لم نتمكن من قراءة المحادثة. حاول مرة أخرى.",
     };
 
     /// <summary>Exact English sentences.</summary>
@@ -292,6 +294,11 @@ public static partial class Messages
         ["We couldn't find any products in these photos. Try a sharper photo."] = "لم نجد أي منتجات في هذه الصور. جرّب صورة أوضح.",
         ["Add 1 to 3 photos."] = "أضف من صورة إلى 3 صور.",
         ["Keep the note under 300 characters."] = "اجعل الملاحظة أقل من 300 حرف.",
+        ["Write a message."] = "اكتب رسالة.",
+        ["We couldn't read the conversation. Try again."] = "لم نتمكن من قراءة المحادثة. حاول مرة أخرى.",
+        ["Send up to 20 messages."] = "أرسل 20 رسالة كحد أقصى.",
+        ["Keep each message under 1000 characters."] = "اجعل كل رسالة أقل من 1000 حرف.",
+        ["Done. Have a look at the preview."] = "تم. ألقِ نظرة على المعاينة.",
     };
 
     /// <summary>English sentences with placeholders {0}, {1}... and their Arabic, which may use any of them.</summary>

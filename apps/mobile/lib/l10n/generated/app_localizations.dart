@@ -2132,42 +2132,6 @@ abstract class AppLocalizations {
   /// **'Point your phone camera at the code'**
   String get posterScanHint;
 
-  /// No description provided for @aiHelper.
-  ///
-  /// In en, this message translates to:
-  /// **'AI helper'**
-  String get aiHelper;
-
-  /// No description provided for @aiHelperSub.
-  ///
-  /// In en, this message translates to:
-  /// **'Let AI suggest colors and words that fit your business. You check everything before it goes live.'**
-  String get aiHelperSub;
-
-  /// No description provided for @aiFromPhoto.
-  ///
-  /// In en, this message translates to:
-  /// **'Colors and text from a photo'**
-  String get aiFromPhoto;
-
-  /// No description provided for @aiFromPhotoSub.
-  ///
-  /// In en, this message translates to:
-  /// **'Your shop front, logo, food or packaging'**
-  String get aiFromPhotoSub;
-
-  /// No description provided for @aiWriteText.
-  ///
-  /// In en, this message translates to:
-  /// **'Write my text'**
-  String get aiWriteText;
-
-  /// No description provided for @aiWriteTextSub.
-  ///
-  /// In en, this message translates to:
-  /// **'Headlines, your story and product descriptions'**
-  String get aiWriteTextSub;
-
   /// No description provided for @aiRemaining.
   ///
   /// In en, this message translates to:
@@ -2198,36 +2162,6 @@ abstract class AppLocalizations {
   /// **'Choose from photos'**
   String get aiChoosePhoto;
 
-  /// No description provided for @aiNoteLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Anything to know about your business? (optional)'**
-  String get aiNoteLabel;
-
-  /// No description provided for @aiNoteHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Cosy family café, known for knafeh'**
-  String get aiNoteHint;
-
-  /// No description provided for @aiSuggest.
-  ///
-  /// In en, this message translates to:
-  /// **'Suggest'**
-  String get aiSuggest;
-
-  /// No description provided for @aiLookingAtPhoto.
-  ///
-  /// In en, this message translates to:
-  /// **'Looking at your photo…'**
-  String get aiLookingAtPhoto;
-
-  /// No description provided for @aiWriting.
-  ///
-  /// In en, this message translates to:
-  /// **'Writing your texts…'**
-  String get aiWriting;
-
   /// No description provided for @aiReadingMenu.
   ///
   /// In en, this message translates to:
@@ -2239,72 +2173,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This can take up to a minute.'**
   String get aiTakesAMoment;
-
-  /// No description provided for @aiSuggestions.
-  ///
-  /// In en, this message translates to:
-  /// **'Suggestions'**
-  String get aiSuggestions;
-
-  /// No description provided for @aiColors.
-  ///
-  /// In en, this message translates to:
-  /// **'Colors and style'**
-  String get aiColors;
-
-  /// No description provided for @aiTexts.
-  ///
-  /// In en, this message translates to:
-  /// **'Texts'**
-  String get aiTexts;
-
-  /// No description provided for @aiProductDescriptions.
-  ///
-  /// In en, this message translates to:
-  /// **'Product descriptions'**
-  String get aiProductDescriptions;
-
-  /// No description provided for @aiApply.
-  ///
-  /// In en, this message translates to:
-  /// **'Apply'**
-  String get aiApply;
-
-  /// No description provided for @aiApplyCount.
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, =1{Apply 1 suggestion} other{Apply {count} suggestions}}'**
-  String aiApplyCount(int count);
-
-  /// No description provided for @aiAppliedToDraft.
-  ///
-  /// In en, this message translates to:
-  /// **'Added to your design. Check the preview, then publish.'**
-  String get aiAppliedToDraft;
-
-  /// No description provided for @aiDraftNote.
-  ///
-  /// In en, this message translates to:
-  /// **'Design changes go to your draft. Your site changes when you publish.'**
-  String get aiDraftNote;
-
-  /// No description provided for @aiDescriptionsNote.
-  ///
-  /// In en, this message translates to:
-  /// **'Descriptions are saved to your products and show on your site right away.'**
-  String get aiDescriptionsNote;
-
-  /// No description provided for @aiDescriptionsSaved.
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, =1{1 product description saved.} other{{count} product descriptions saved.}}'**
-  String aiDescriptionsSaved(int count);
-
-  /// No description provided for @aiNothingSuggested.
-  ///
-  /// In en, this message translates to:
-  /// **'No suggestions this time. Try another photo or add a note.'**
-  String get aiNothingSuggested;
 
   /// No description provided for @aiCheckBeforeUsing.
   ///
@@ -2419,6 +2287,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Write in'**
   String get aiWriteIn;
+
+  /// No description provided for @aiAssistant.
+  ///
+  /// In en, this message translates to:
+  /// **'AI design assistant'**
+  String get aiAssistant;
+
+  /// No description provided for @aiAssistantSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell it what you\'d like: colors, sizes, layout or texts. It changes your draft and you see it in the preview right away.'**
+  String get aiAssistantSub;
+
+  /// No description provided for @aiChatOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat with the assistant'**
+  String get aiChatOpen;
+
+  /// No description provided for @aiChatContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue the chat'**
+  String get aiChatContinue;
+
+  /// No description provided for @aiChatOpenSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Like “Match my logo colors” or “Make the logo bigger”'**
+  String get aiChatOpenSub;
+
+  /// No description provided for @aiChatWelcome.
+  ///
+  /// In en, this message translates to:
+  /// **'Hi! Tell me what to change on your website and I\'ll do it in your draft. You can also send a photo of your logo or shop.'**
+  String get aiChatWelcome;
+
+  /// No description provided for @aiChatHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a message…'**
+  String get aiChatHint;
+
+  /// No description provided for @aiChatSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get aiChatSend;
+
+  /// No description provided for @aiChatWorking.
+  ///
+  /// In en, this message translates to:
+  /// **'Working on it…'**
+  String get aiChatWorking;
+
+  /// No description provided for @aiChatChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Changed 1 setting} other{Changed {count} settings}}'**
+  String aiChatChanged(int count);
+
+  /// No description provided for @aiChatUndo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get aiChatUndo;
+
+  /// No description provided for @aiChatUndone.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes undone'**
+  String get aiChatUndone;
+
+  /// No description provided for @aiChatStartOver.
+  ///
+  /// In en, this message translates to:
+  /// **'Start over'**
+  String get aiChatStartOver;
+
+  /// No description provided for @aiChatPhotoMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Use this photo for my design.'**
+  String get aiChatPhotoMessage;
+
+  /// No description provided for @aiChatSuggestLogo.
+  ///
+  /// In en, this message translates to:
+  /// **'Match my logo colors'**
+  String get aiChatSuggestLogo;
+
+  /// No description provided for @aiChatSuggestTexts.
+  ///
+  /// In en, this message translates to:
+  /// **'Write my texts'**
+  String get aiChatSuggestTexts;
+
+  /// No description provided for @aiChatSuggestLogoSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Make the logo bigger'**
+  String get aiChatSuggestLogoSize;
+
+  /// No description provided for @aiChatSuggestElegant.
+  ///
+  /// In en, this message translates to:
+  /// **'Darker, more elegant look'**
+  String get aiChatSuggestElegant;
 
   /// No description provided for @languageEnglish.
   ///

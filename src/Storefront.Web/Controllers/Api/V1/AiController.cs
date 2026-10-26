@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Storefront.Application.Ai;
+using Storefront.Application.Ai.Chat;
 using Storefront.Application.Ai.Design;
 using Storefront.Application.Ai.Menu;
 using Storefront.Application.Ai.Text;
@@ -20,6 +21,8 @@ namespace Storefront.Web.Controllers.Api.V1;
 public sealed class AiController : ApiController
 {
     private const long OnePhoto = MediaAsset.MaxUploadBytes + 64 * 1024;
+    /// <summary>Room for the conversation: 20 messages of up to 1000 characters, encoded.</summary>
+    private const long ChatText = 128 * 1024;
     private const long ThreePhotos = ReadMenuHandler.MaxPhotos * MediaAsset.MaxUploadBytes + 64 * 1024;
 
     /// <summary>Whether the helper is switched on, and how many answers are left this month.</summary>
@@ -96,4 +99,38 @@ public sealed class AiController : ApiController
     [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status503ServiceUnavailable)]
     public async Task<ActionResult<TextSuggestionDto>> Text(WriteText request, [FromServices] WriteTextHandler handler, CancellationToken ct) =>
         From(await handler.Handle(request, ct));
+
+    /// <summary>
+    /// The editor's chat assistant. Form fields: "messages", a JSON array of { "role": "owner" | "assistant", "text" } with the
+    /// conversation so far, oldest first, ending with the owner's new message (up to 20 messages, each up to 1000 characters);
+    /// optional "language" (en or ar, the site's language when empty) for the reply and the texts; optional "file", a photo
+    /// (JPEG, PNG or WebP up to 5 MB) sent with the new message. Returns a short reply and a settings patch (colors, themes,
+    /// fonts, sizes, layouts, switches, sections and texts; empty when nothing changed) to merge into the editor's draft.
+    /// </summary>
+    [HttpPost("chat")]
+    [EnableRateLimiting(RateLimits.Ai)]
+    [Consumes("multipart/form-data")]
+    [RequestSizeLimit(OnePhoto + ChatText)]
+    [RequestFormLimits(MultipartBodyLengthLimit = OnePhoto + ChatText)]
+    [ProducesResponseType<DesignChatAnswerDto>(StatusCodes.Status200OK)]
+    [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status429TooManyRequests)]
+    [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status502BadGateway)]
+    [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status503ServiceUnavailable)]
+    public async Task<ActionResult<DesignChatAnswerDto>> Chat(IFormFile? file, [FromForm] string? messages, [FromForm] string? language, [FromServices] ChatAboutDesignHandler handler, CancellationToken ct)
+    {
+        var parsed = ChatAboutDesign.ParseMessages(messages);
+        if (!parsed.IsSuccess)
+        {
+            return Problem(parsed.Error!);
+        }
+
+        if (file is null)
+        {
+            return From(await handler.Handle(new ChatAboutDesign(parsed.Value, language), ct));
+        }
+
+        await using var stream = file.OpenReadStream();
+        return From(await handler.Handle(new ChatAboutDesign(parsed.Value, language, new AiPhoto(stream, file.Length)), ct));
+    }
 }

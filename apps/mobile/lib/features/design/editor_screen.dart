@@ -11,7 +11,7 @@ import '../../core/theme.dart';
 import '../../core/widgets/form_widgets.dart';
 import '../../core/widgets/ui.dart';
 import '../../l10n/generated/app_localizations.dart';
-import '../ai/ai_design_helper.dart';
+import '../ai/ai_design_chat.dart';
 import '../auth/auth_controller.dart';
 import '../menu/dashboard_screen.dart';
 import '../plan/plan_cards.dart';
@@ -44,9 +44,14 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
   int _generation = 0;
   bool _publishing = false;
 
+  /// The AI assistant's conversation, kept while the editor is open.
+  AiChatController? _chatState;
+  AiChatController get _chat => _chatState ??= AiChatController(_siteLocale);
+
   @override
   void dispose() {
     _debounce?.cancel();
+    _chatState?.dispose();
     super.dispose();
   }
 
@@ -61,10 +66,17 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
     _debounce = Timer(EditorScreen.saveDelay, _save);
   }
 
-  /// Merges the AI helper's suggestions into the draft and saves it, so the preview shows them. Publishing stays the owner's step.
+  /// Merges the AI assistant's changes (or its Undo) into the draft and saves it, so the preview shows them. A null value
+  /// goes back to the template's default. Publishing stays the owner's step.
   Future<void> _applySuggestions(Map<String, dynamic> settings) async {
     setState(() {
-      _settings!.addAll(settings);
+      for (final e in settings.entries) {
+        if (e.value == null) {
+          _settings!.remove(e.key);
+        } else {
+          _settings![e.key] = e.value;
+        }
+      }
       _errors.removeWhere((key, _) => settings.containsKey(key));
       _generation++;
     });
@@ -228,6 +240,8 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
       _settings = {...?template?.defaultsFor(_siteLocale), ...info.draft};
       _generation++;
       _previewUrl = null;
+      // The conversation was about the other template's settings.
+      if (_chatState?.messages.isNotEmpty ?? false) Future.microtask(_chat.clear);
       Future.microtask(_refreshPreview);
     }
     final fields = [
@@ -345,7 +359,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
                 child: ListView(
                   padding: const EdgeInsets.fromLTRB(Ui.gutter, 20, Ui.gutter, 24),
                   children: [
-                    AiDesignHelper(fields: fields, onApply: _applySuggestions),
+                    AiDesignAssistant(chat: _chat, fields: fields, values: () => _settings ?? const {}, onApply: _applySuggestions),
                     for (final entry in groups.entries)
                       SectionCard(
                         title: entry.key,
