@@ -756,5 +756,8 @@
   },
   "aiFixHighlighted": "Some items need a fix. Check the highlighted fields.",
   "aiSelectItem": "Add this item",
-  "aiSelectCategory": "Add this category"
+  "aiSelectCategory": "Add this category",
+  "aiWriteIn": "Write in",
+  "languageEnglish": "English",
+  "languageArabic": "العربية"
 }

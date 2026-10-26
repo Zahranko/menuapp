@@ -1381,4 +1381,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aiSelectCategory => 'Add this category';
+
+  @override
+  String get aiWriteIn => 'Write in';
+
+  @override
+  String get languageEnglish => 'English';
+
+  @override
+  String get languageArabic => 'العربية';
 }

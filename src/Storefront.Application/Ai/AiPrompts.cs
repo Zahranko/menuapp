@@ -27,6 +27,8 @@ internal static class AiPrompts
         Also write short, warm website texts that fit what you see and the business, in {{language}}:
         headlines, short introductions, highlights and a short story told in general terms.
         Add a summary: one short sentence for the owner, in {{language}}, saying what you picked and why.
+        - Write every text value in {{language}}, even when the current texts, the photo or these instructions use another
+          language. Translate the idea, never copy text in the wrong language.
 
         {{Shared}}
         """;
@@ -38,6 +40,8 @@ internal static class AiPrompts
         Mention real dishes or products from the list when it helps. Do not repeat the same idea in two places.
         When products are listed without a description, you may add one short, appetising description for each,
         in {{language}}, saying what it is (ingredients or style), without prices.
+        - Write every text value in {{language}}, even when the current texts, the photo or these instructions use another
+          language. Translate the idea, never copy text in the wrong language.
 
         {{Shared}}
         """;

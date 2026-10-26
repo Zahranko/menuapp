@@ -82,6 +82,7 @@ class _DesignHelperSheet extends ConsumerStatefulWidget {
 
 class _DesignHelperSheetState extends ConsumerState<_DesignHelperSheet> {
   final _note = TextEditingController();
+  late String _language = switch (ref.read(authControllerProvider)) { SignedIn(:final business) => business.locale, _ => 'en' };
   bool _busy = false;
   bool _applying = false;
   String? _error;
@@ -113,10 +114,10 @@ class _DesignHelperSheetState extends ConsumerState<_DesignHelperSheet> {
     });
     try {
       if (photo != null) {
-        final result = await repo.design(photo, note: _note.text);
+        final result = await repo.design(photo, note: _note.text, language: _language);
         _show(result.settings, const {}, result.summary);
       } else {
-        final result = await repo.text(note: _note.text);
+        final result = await repo.text(note: _note.text, language: _language);
         _show(result.settings, result.descriptions, null);
       }
     } catch (e) {
@@ -213,6 +214,8 @@ class _DesignHelperSheetState extends ConsumerState<_DesignHelperSheet> {
           controller: _note,
           textInputAction: TextInputAction.done,
         ),
+        const SizedBox(height: 16),
+        AiLanguageChoice(value: _language, onChanged: (l) => setState(() => _language = l)),
         if (_error != null) ...[const SizedBox(height: 12), AiNote(_error!, icon: Icons.error_outline_rounded)],
         const SizedBox(height: 18),
         if (photo) ...[

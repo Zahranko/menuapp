@@ -40,6 +40,9 @@ class FakeBackend {
   Map<String, Object?> draft = Map.of(souqDefaults);
   DateTime? publishedAt;
   final requests = <String>[];
+
+  /// Bodies sent to `POST /ai/text`.
+  final aiTextRequests = <Map>[];
   final drafts = <Map<String, Object?>>[];
 
   /// The AI helper's `GET /ai/status`; null answers 404, like a server without the helper.
@@ -415,6 +418,7 @@ class FakeBackend {
       case 'POST /api/v1/ai/design':
         return (status: 200, body: aiDesign);
       case 'POST /api/v1/ai/text':
+        aiTextRequests.add(body!);
         return (status: 200, body: aiText);
       case 'POST /api/v1/ai/menu':
         return (status: 200, body: aiMenu);

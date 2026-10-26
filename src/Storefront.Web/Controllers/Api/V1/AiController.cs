@@ -29,7 +29,7 @@ public sealed class AiController : ApiController
 
     /// <summary>
     /// Colors and texts for the current template from one photo (form field "file": JPEG, PNG or WebP up to 5 MB) and an optional "note".
-    /// Returns a settings patch to merge into the editor's draft.
+    /// Returns a settings patch to merge into the editor's draft. "language" is en or ar (the site's language when empty).
     /// </summary>
     [HttpPost("design")]
     [EnableRateLimiting(RateLimits.Ai)]
@@ -41,7 +41,7 @@ public sealed class AiController : ApiController
     [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status429TooManyRequests)]
     [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status502BadGateway)]
     [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status503ServiceUnavailable)]
-    public async Task<ActionResult<DesignSuggestionDto>> Design(IFormFile? file, [FromForm] string? note, [FromServices] SuggestDesignHandler handler, CancellationToken ct)
+    public async Task<ActionResult<DesignSuggestionDto>> Design(IFormFile? file, [FromForm] string? note, [FromForm] string? language, [FromServices] SuggestDesignHandler handler, CancellationToken ct)
     {
         if (file is null)
         {
@@ -49,7 +49,7 @@ public sealed class AiController : ApiController
         }
 
         await using var stream = file.OpenReadStream();
-        return From(await handler.Handle(new SuggestDesign(new AiPhoto(stream, file.Length), note), ct));
+        return From(await handler.Handle(new SuggestDesign(new AiPhoto(stream, file.Length), note, language), ct));
     }
 
     /// <summary>

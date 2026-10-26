@@ -2413,6 +2413,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add this category'**
   String get aiSelectCategory;
+
+  /// No description provided for @aiWriteIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Write in'**
+  String get aiWriteIn;
+
+  /// No description provided for @languageEnglish.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get languageEnglish;
+
+  /// No description provided for @languageArabic.
+  ///
+  /// In en, this message translates to:
+  /// **'العربية'**
+  String get languageArabic;
 }
 
 class _AppLocalizationsDelegate

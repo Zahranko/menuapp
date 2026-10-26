@@ -25,7 +25,7 @@ public sealed record AiSite(Business Business, Template Template, TemplateSchema
     {
         input.AppendLine($"Business name: {Business.Name}");
         input.AppendLine($"Kind of business (from the chosen template): {Template.Category}");
-        input.AppendLine($"Website language: {LanguageName(language)}");
+        input.AppendLine($"Website language: {LanguageName(language)} (write every text in {LanguageName(language)})");
     }
 
     public static async Task<Result<AiSite>> LoadAsync(

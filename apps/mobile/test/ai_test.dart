@@ -189,9 +189,14 @@ void main() {
 
     await tapIn(tester, find.byKey(const Key('aiWriteText')));
     await tester.enterText(find.byKey(const Key('aiNote')), 'Known for knafeh');
+    // Starts on the site's language; the owner can ask for Arabic texts instead.
+    expect(tester.widget<SegmentedButton<String>>(find.byKey(const Key('aiLanguage'))).selected, {'en'});
+    await tester.tap(find.text('العربية'));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('aiSuggest')));
     await tester.pumpAndSettle();
 
+    expect(backend.aiTextRequests.single['language'], 'ar');
     expect(find.text('Knafeh worth the trip'), findsOneWidget);
     expect(find.text('Apply 1 suggestion'), findsOneWidget);
     await tester.tap(find.byKey(const Key('aiApply')));

@@ -60,6 +60,7 @@ class _MenuPhotosSheet extends ConsumerStatefulWidget {
 class _MenuPhotosSheetState extends ConsumerState<_MenuPhotosSheet> {
   static const _max = 3;
   final _photos = <AiPhoto>[];
+  late bool _arabic = switch (ref.read(authControllerProvider)) { SignedIn(:final business) => business.locale == 'ar', _ => false };
   bool _busy = false;
   String? _error;
 
@@ -71,13 +72,12 @@ class _MenuPhotosSheetState extends ConsumerState<_MenuPhotosSheet> {
   }
 
   Future<void> _read() async {
-    final arabic = switch (ref.read(authControllerProvider)) { SignedIn(:final business) => business.locale == 'ar', _ => false };
     setState(() {
       _busy = true;
       _error = null;
     });
     try {
-      final draft = await ref.read(aiRepositoryProvider).menu(_photos, arabic: arabic);
+      final draft = await ref.read(aiRepositoryProvider).menu(_photos, arabic: _arabic);
       if (mounted) Navigator.pop(context, draft);
     } catch (e) {
       if (mounted) setState(() => _error = errorText(AppLocalizations.of(context), e));
@@ -126,6 +126,8 @@ class _MenuPhotosSheetState extends ConsumerState<_MenuPhotosSheet> {
           Expanded(child: LightButton(icon: Icons.photo_library_outlined, label: t.aiChoosePhoto, onPressed: () => _add(camera: false))),
         ]),
       ],
+      const SizedBox(height: 16),
+      AiLanguageChoice(value: _arabic ? 'ar' : 'en', onChanged: (l) => setState(() => _arabic = l == 'ar')),
       if (_error != null) ...[const SizedBox(height: 12), AiNote(_error!, icon: Icons.error_outline_rounded)],
       const SizedBox(height: 18),
       FilledButton.icon(

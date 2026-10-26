@@ -1380,4 +1380,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get aiSelectCategory => 'أضف هذا الصنف';
+
+  @override
+  String get aiWriteIn => 'لغة الكتابة';
+
+  @override
+  String get languageEnglish => 'English';
+
+  @override
+  String get languageArabic => 'العربية';
 }

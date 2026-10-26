@@ -23,14 +23,18 @@ class AiRepository {
   Future<AiStatus> status() => _call(() async => AiStatus.fromJson((await _dio.get<Map<String, dynamic>>('/api/v1/ai/status')).data!));
 
   /// Colors and texts for the current template from one photo.
-  Future<DesignSuggestion> design(AiPhoto photo, {String? note}) => _call(() async {
-        final form = FormData.fromMap({'file': _file(photo), if (note != null && note.trim().isNotEmpty) 'note': note.trim()});
+  Future<DesignSuggestion> design(AiPhoto photo, {String? note, String? language}) => _call(() async {
+        final form = FormData.fromMap({
+          'file': _file(photo),
+          if (note != null && note.trim().isNotEmpty) 'note': note.trim(),
+          'language': ?language,
+        });
         return DesignSuggestion.fromJson((await _dio.post<Map<String, dynamic>>('/api/v1/ai/design', data: form, options: _slow)).data!);
       });
 
   /// Texts for the template's text settings, plus descriptions for products without one.
-  Future<TextSuggestion> text({String? note}) => _call(() async {
-        final body = {'note': (note ?? '').trim().isEmpty ? null : note!.trim(), 'includeProducts': true};
+  Future<TextSuggestion> text({String? note, String? language}) => _call(() async {
+        final body = {'note': (note ?? '').trim().isEmpty ? null : note!.trim(), 'language': language, 'includeProducts': true};
         return TextSuggestion.fromJson((await _dio.post<Map<String, dynamic>>('/api/v1/ai/text', data: body, options: _slow)).data!);
       });
 

@@ -4,11 +4,15 @@ using System.Text.Json.Nodes;
 using FluentValidation;
 using Storefront.Application.Abstractions;
 using Storefront.Application.Common;
+using Storefront.Domain.Businesses;
 
 namespace Storefront.Application.Ai.Design;
 
-/// <summary>One photo (shop front, logo, food, packaging or the inside of the shop) and an optional note.</summary>
-public sealed record SuggestDesign(AiPhoto Photo, string? Note);
+/// <summary>
+/// One photo (shop front, logo, food, packaging or the inside of the shop), an optional note and the language to write the
+/// texts in ("en" or "ar"; the site's language when empty).
+/// </summary>
+public sealed record SuggestDesign(AiPhoto Photo, string? Note, string? Language = null);
 
 /// <summary>
 /// Settings for the current template, keyed like the draft: colors, theme and font choices, and texts in the site's language.
@@ -18,7 +22,11 @@ public sealed record DesignSuggestionDto(JsonElement Settings, string? Summary, 
 
 public sealed class SuggestDesignValidator : AbstractValidator<SuggestDesign>
 {
-    public SuggestDesignValidator() => RuleFor(x => x.Note).ValidNote();
+    public SuggestDesignValidator()
+    {
+        RuleFor(x => x.Note).ValidNote();
+        RuleFor(x => x.Language).Must(l => string.IsNullOrEmpty(l) || Business.Locales.Contains(l)).WithMessage("Language must be en or ar.");
+    }
 }
 
 public sealed class SuggestDesignHandler(
@@ -65,7 +73,7 @@ public sealed class SuggestDesignHandler(
             return AiErrors.Failed;
         }
 
-        var answer = await assistant.GenerateAsync(Request(site, fields, cmd.Note, photo.Value), ct);
+        var answer = await assistant.GenerateAsync(Request(site, fields, cmd.Note, string.IsNullOrEmpty(cmd.Language) ? site.Locale : cmd.Language, photo.Value), ct);
         if (!answer.IsSuccess)
         {
             return answer.Error!;
@@ -84,10 +92,10 @@ public sealed class SuggestDesignHandler(
             remaining);
     }
 
-    private static AiRequest Request(AiSite site, IReadOnlyList<Templates.TemplateField> fields, string? note, AiImage photo)
+    private static AiRequest Request(AiSite site, IReadOnlyList<Templates.TemplateField> fields, string? note, string language, AiImage photo)
     {
         var input = new StringBuilder();
-        site.Describe(input, site.Locale);
+        site.Describe(input, language);
         if (!string.IsNullOrWhiteSpace(note))
         {
             input.AppendLine($"Owner's note: {note.Trim()}");
@@ -110,6 +118,6 @@ public sealed class SuggestDesignHandler(
             ["required"] = new JsonArray("settings"),
         };
 
-        return new AiRequest(AiTask.DesignFromPhoto, AiPrompts.Design(AiSite.LanguageName(site.Locale)), input.ToString(), [photo], schema, Temperature: 0.4);
+        return new AiRequest(AiTask.DesignFromPhoto, AiPrompts.Design(AiSite.LanguageName(language)), input.ToString(), [photo], schema, Temperature: 0.4);
     }
 }

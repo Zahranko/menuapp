@@ -385,5 +385,8 @@
   "aiCurrencyDiffers": "الأسعار في القائمة بعملة {menu}، وأسعارك بعملة {yours}. راجعها لأنها لم تُحوَّل.",
   "aiFixHighlighted": "بعض العناصر تحتاج إلى تصحيح. راجع الحقول المحددة.",
   "aiSelectItem": "أضف هذا العنصر",
-  "aiSelectCategory": "أضف هذا الصنف"
+  "aiSelectCategory": "أضف هذا الصنف",
+  "aiWriteIn": "لغة الكتابة",
+  "languageEnglish": "English",
+  "languageArabic": "العربية"
 }

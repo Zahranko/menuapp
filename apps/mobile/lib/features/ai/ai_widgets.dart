@@ -107,3 +107,31 @@ class AiNote extends StatelessWidget {
         ]),
       );
 }
+
+/// "Write in: English | العربية". The helper writes its texts in the chosen language; it starts on the site's language.
+class AiLanguageChoice extends StatelessWidget {
+  const AiLanguageChoice({super.key, required this.value, required this.onChanged});
+
+  /// "en" or "ar".
+  final String value;
+  final ValueChanged<String> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      Text(t.aiWriteIn, style: Ui.eyebrow(context)),
+      const SizedBox(height: 8),
+      SegmentedButton<String>(
+        key: const Key('aiLanguage'),
+        segments: [
+          ButtonSegment(value: 'en', label: Text(t.languageEnglish)),
+          ButtonSegment(value: 'ar', label: Text(t.languageArabic)),
+        ],
+        selected: {value},
+        showSelectedIcon: false,
+        onSelectionChanged: (s) => onChanged(s.first),
+      ),
+    ]);
+  }
+}

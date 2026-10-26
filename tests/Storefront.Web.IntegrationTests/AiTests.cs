@@ -136,6 +136,30 @@ public class AiTests(AiFactory factory) : IClassFixture<AiFactory>
     }
 
     [Fact]
+    public async Task Design_writes_in_the_chosen_language()
+    {
+        var client = await OwnerAsync();
+        using var form = AiFactory.Photos("file", 1);
+        form.Add(new StringContent("ar"), "language");
+
+        Assert.Equal(HttpStatusCode.OK, (await client.PostAsync("/api/v1/ai/design", form)).StatusCode);
+
+        var request = factory.Fake.Requests.Last(r => r.Task == AiTask.DesignFromPhoto);
+        Assert.Contains("in Arabic", request.Instructions);
+        Assert.Contains("Website language: Arabic", request.Input);
+    }
+
+    [Fact]
+    public async Task Design_refuses_an_unknown_language()
+    {
+        var client = await OwnerAsync();
+        using var form = AiFactory.Photos("file", 1);
+        form.Add(new StringContent("fr"), "language");
+        var response = await client.PostAsync("/api/v1/ai/design", form);
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
     public async Task Design_refuses_files_that_are_not_photos()
     {
         var client = await OwnerAsync();
