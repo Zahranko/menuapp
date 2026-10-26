@@ -52,7 +52,9 @@ internal static class AiPrompts
         make a few simple ones.
         For each category and product give the English name and the Arabic name: copy the name exactly as printed in its language,
         and write a short natural translation for the other language. Keep brand names as they are.
-        Description: only what the menu itself says about the product (ingredients, size); leave it out otherwise.
+        Always give both names, the English and the Arabic one, for every category and product.
+        Description: only what the menu itself says about the product (ingredients, size), written in {{language}}
+        (translate it when the menu is in another language); leave it out otherwise.
         Price: the number printed for the product, in the menu's own currency, without converting it. When a product shows
         several sizes, use the smallest size's price and mention the sizes in the description. Leave the price out when none is shown.
         Currency: the ISO code of the currency printed on the menu, when one is shown.

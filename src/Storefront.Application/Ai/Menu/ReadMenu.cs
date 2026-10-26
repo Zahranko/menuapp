@@ -5,13 +5,17 @@ using System.Text.Json.Nodes;
 using FluentValidation;
 using Storefront.Application.Abstractions;
 using Storefront.Application.Common;
+using Storefront.Domain.Businesses;
 using Storefront.Domain.Catalog;
 using Storefront.Domain.Common;
 
 namespace Storefront.Application.Ai.Menu;
 
-/// <summary>1 to 3 photos of a printed menu, price list or product shelf, and an optional note.</summary>
-public sealed record ReadMenu(IReadOnlyList<AiPhoto> Photos, string? Note);
+/// <summary>
+/// 1 to 3 photos of a printed menu, price list or product shelf, an optional note and the language for descriptions
+/// ("en" or "ar"; the site's language when empty). Names always come in both languages.
+/// </summary>
+public sealed record ReadMenu(IReadOnlyList<AiPhoto> Photos, string? Note, string? Language = null);
 
 /// <summary>
 /// A draft the owner reviews before anything is saved (then <c>POST /api/v1/catalog/import</c>). Names come in English and
@@ -32,6 +36,7 @@ public sealed class ReadMenuValidator : AbstractValidator<ReadMenu>
     {
         RuleFor(x => x.Photos).Must(p => p is { Count: >= 1 and <= ReadMenuHandler.MaxPhotos }).WithMessage("Add 1 to 3 photos.").OverridePropertyName("files");
         RuleFor(x => x.Note).ValidNote();
+        RuleFor(x => x.Language).Must(l => string.IsNullOrEmpty(l) || Business.Locales.Contains(l)).WithMessage("Language must be en or ar.");
     }
 }
 
@@ -80,7 +85,7 @@ public sealed class ReadMenuHandler(IValidator<ReadMenu> validator, AiQuotaCheck
             input.AppendLine($"Owner's note: {cmd.Note.Trim()}");
         }
 
-        var request = new AiRequest(AiTask.MenuFromPhotos, AiPrompts.Menu(AiSite.LanguageName(business.Locale)), input.ToString(), images, Schema(), Temperature: 0.1);
+        var request = new AiRequest(AiTask.MenuFromPhotos, AiPrompts.Menu(AiSite.LanguageName(string.IsNullOrEmpty(cmd.Language) ? business.Locale : cmd.Language)), input.ToString(), images, Schema(), Temperature: 0.1);
         var answer = await assistant.GenerateAsync(request, ct);
         if (!answer.IsSuccess)
         {
@@ -186,10 +191,10 @@ public sealed class ReadMenuHandler(IValidator<ReadMenu> validator, AiQuotaCheck
             {
                 ["name"] = Text(Product.NameMax, "English name"),
                 ["nameAr"] = Text(Product.NameMax, "Arabic name"),
-                ["description"] = Text(Product.DescriptionMax, "Only what the menu says about it"),
+                ["description"] = Text(Product.DescriptionMax, "Only what the menu says about it, in the website's language"),
                 ["price"] = new JsonObject { ["type"] = "number", ["minimum"] = 0, ["description"] = "Printed price, as a number" },
             },
-            ["required"] = new JsonArray("name"),
+            ["required"] = new JsonArray("name", "nameAr"),
         };
         var category = new JsonObject
         {
@@ -200,7 +205,7 @@ public sealed class ReadMenuHandler(IValidator<ReadMenu> validator, AiQuotaCheck
                 ["nameAr"] = Text(Category.NameMax, "Arabic name"),
                 ["products"] = new JsonObject { ["type"] = "array", ["items"] = product, ["maxItems"] = MaxProducts },
             },
-            ["required"] = new JsonArray("name", "products"),
+            ["required"] = new JsonArray("name", "nameAr", "products"),
         };
         return new JsonObject
         {

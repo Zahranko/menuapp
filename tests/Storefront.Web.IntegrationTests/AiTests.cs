@@ -170,6 +170,21 @@ public class AiTests(AiFactory factory) : IClassFixture<AiFactory>
     }
 
     [Fact]
+    public async Task Menu_descriptions_use_the_chosen_language_and_names_come_in_both()
+    {
+        var client = await OwnerAsync();
+        using var form = AiFactory.Photos("files", 1);
+        form.Add(new StringContent("ar"), "language");
+
+        Assert.Equal(HttpStatusCode.OK, (await client.PostAsync("/api/v1/ai/menu", form)).StatusCode);
+
+        var request = factory.Fake.Requests.Last(r => r.Task == AiTask.MenuFromPhotos);
+        Assert.Contains("written in Arabic", request.Instructions);
+        var product = request.ResponseSchema["properties"]!["categories"]!["items"]!["properties"]!["products"]!["items"]!;
+        Assert.Contains("nameAr", product["required"]!.AsArray().Select(n => n!.GetValue<string>()));
+    }
+
+    [Fact]
     public async Task Menu_from_photos_returns_a_clean_draft()
     {
         var client = await OwnerAsync();

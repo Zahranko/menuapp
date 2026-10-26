@@ -40,7 +40,7 @@ class AiRepository {
 
   /// Categories and products read from 1 to 3 menu photos. [arabic] picks Arabic names for an Arabic website.
   Future<MenuDraft> menu(List<AiPhoto> photos, {required bool arabic}) => _call(() async {
-        final form = FormData();
+        final form = FormData()..fields.add(MapEntry('language', arabic ? 'ar' : 'en'));
         for (final p in photos) {
           form.files.add(MapEntry('files', _file(p)));
         }

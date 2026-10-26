@@ -54,7 +54,8 @@ public sealed class AiController : ApiController
 
     /// <summary>
     /// Categories and products read from 1 to 3 photos of a printed menu, price list or shelf (form field "files", each up to 5 MB)
-    /// and an optional "note". Returns a draft to review; add the chosen items with POST /api/v1/catalog/import.
+    /// and an optional "note". "language" (en or ar, the site's language when empty) is for descriptions; names come in both.
+    /// Returns a draft to review; add the chosen items with POST /api/v1/catalog/import.
     /// </summary>
     [HttpPost("menu")]
     [EnableRateLimiting(RateLimits.Ai)]
@@ -66,12 +67,12 @@ public sealed class AiController : ApiController
     [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status429TooManyRequests)]
     [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status502BadGateway)]
     [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status503ServiceUnavailable)]
-    public async Task<ActionResult<MenuDraftDto>> Menu(List<IFormFile>? files, [FromForm] string? note, [FromServices] ReadMenuHandler handler, CancellationToken ct)
+    public async Task<ActionResult<MenuDraftDto>> Menu(List<IFormFile>? files, [FromForm] string? note, [FromForm] string? language, [FromServices] ReadMenuHandler handler, CancellationToken ct)
     {
         var streams = (files ?? []).Select(f => (Stream: f.OpenReadStream(), f.Length)).ToList();
         try
         {
-            return From(await handler.Handle(new ReadMenu(streams.Select(s => new AiPhoto(s.Stream, s.Length)).ToList(), note), ct));
+            return From(await handler.Handle(new ReadMenu(streams.Select(s => new AiPhoto(s.Stream, s.Length)).ToList(), note, language), ct));
         }
         finally
         {
