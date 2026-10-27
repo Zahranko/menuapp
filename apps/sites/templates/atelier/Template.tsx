@@ -12,6 +12,7 @@ import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
 import { basicLinks, pageTop, SiteHeader, SiteHero } from "../_kit/Top";
+import { SiteMenu } from "../_kit/Menu";
 
 const copy = {
   en: {
@@ -183,6 +184,7 @@ export default function AtelierTemplate({
               {ctx.text("services.title") || c.services}
             </h2>
           </div>
+          <SiteMenu ctx={ctx} like="list" services>
           <div className="lists">
             {ctx.sections.map((section) => (
               <section
@@ -248,6 +250,7 @@ export default function AtelierTemplate({
               </section>
             ))}
           </div>
+          </SiteMenu>
         </section>
 
         {story && (

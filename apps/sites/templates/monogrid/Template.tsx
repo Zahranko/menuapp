@@ -9,6 +9,7 @@ import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
 import { basicLinks, orderCta, pageTop, SiteHero, SiteMasthead } from "../_kit/Top";
+import { SiteMenu } from "../_kit/Menu";
 
 const copy = {
   en: { index: "Index", items: "Items", info: "Information", hours: "Hours", contact: "Contact", about: "About", menu: "Catalog" },
@@ -53,6 +54,7 @@ export default function MonoGridTemplate({ site, now }: TemplateProps & { now?: 
 
       <main>
         <section id="menu" className="catalog" data-section="menu" aria-label={c.menu}>
+          <SiteMenu ctx={ctx} like="grid" level={2}>
           {ctx.sections.length > 1 && (
             <nav className="index" aria-label={c.index}>
               <h2 data-k="label" className="label">{c.index}</h2>
@@ -97,6 +99,7 @@ export default function MonoGridTemplate({ site, now }: TemplateProps & { now?: 
               </ul>
             </section>
           ))}
+          </SiteMenu>
         </section>
 
         {(story || ctx.on("visit")) && (

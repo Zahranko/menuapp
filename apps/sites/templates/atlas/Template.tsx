@@ -15,9 +15,10 @@ import { hasHours, tintFor, type MenuItem } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { orderCta, pageTop, SiteHeader, SiteHero, type Top } from "../_kit/Top";
 import { themeVars, type Palette } from "../_kit/theme";
+import { SiteMenu } from "../_kit/Menu";
 import { copyFor, fill } from "../_premium/copy";
 import { Lightbox } from "../_premium/Lightbox";
-import { bestSellers, categoryTree, galleryPhotos, PAGE_PATHS, pageLinks, resolvePage, type Category, type Page, type Tree } from "../_premium/pages";
+import { bestSellers, categorySections, categoryTree, menuSections, galleryPhotos, PAGE_PATHS, pageLinks, resolvePage, type Category, type Page, type Tree } from "../_premium/pages";
 import { atlasCopy } from "./copy";
 import { Finder } from "./Finder";
 import { QuickView, type QuickItem } from "./QuickView";
@@ -561,7 +562,9 @@ function Home({ v }: { v: View }) {
         {ctx.on("arrivals") && edit.length > 0 && (
           <div className="a-edit">
             <Head level={3} title={ctx.text("arrivals.title") || a.newIn} id="edit-title" />
+            <SiteMenu ctx={ctx} like="grid" id="kit-picks" sections={[{ id: "edit", anchor: "edit", name: ctx.text("arrivals.title") || a.newIn, products: edit }]} flat={{ label: ctx.text("arrivals.title") || a.newIn }}>
             <Grid v={v} items={edit} />
+</SiteMenu>
           </div>
         )}
       </section>
@@ -668,6 +671,7 @@ function MenuPage({ v }: { v: View }) {
   return (
     <>
       <PageHead v={v} trail={[{ label: a.shopAll }]} title={a.shopAll} lead={itemCount(tree.items.length, ctx.locale)} />
+      <SiteMenu ctx={ctx} like="grid" level={2} page sections={menuSections(tree.roots, href, (cat) => fill(a.shopName, { name: cat.name }))}>
       {tree.roots.length > 1 && (
         <Chips label={a.departments}>
           {tree.roots.map((cat) => (
@@ -692,6 +696,7 @@ function MenuPage({ v }: { v: View }) {
           ))}
         </section>
       ))}
+</SiteMenu>
     </>
   );
 }
@@ -718,6 +723,7 @@ function CategoryPage({ v, category }: { v: View; category: Category }) {
         </Chips>
       )}
 
+      <SiteMenu ctx={ctx} like="grid" level={2} page sections={categorySections(category, href, fill(c.inThis, { name: category.name }), (sub) => fill(a.shopName, { name: sub.name }))} flat={category.children.length === 0 ? { label: category.name } : undefined}>
       {category.products.length > 0 && (
         <section className="a-sec a-block" aria-labelledby="own-title">
           {category.children.length > 0 ? <Head title={fill(c.inThis, { name: category.name })} id="own-title" /> : <h2 id="own-title" className="sr-only">{category.name}</h2>}
@@ -731,6 +737,7 @@ function CategoryPage({ v, category }: { v: View; category: Category }) {
           <Grid v={v} items={sub.products} />
         </section>
       ))}
+</SiteMenu>
 
       {others.length > 0 && (
         <section className="a-sec a-more" aria-labelledby="more-title">

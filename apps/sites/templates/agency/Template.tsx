@@ -13,6 +13,7 @@ import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
 import { pageTop, SiteHeader, SiteHero, type NavLink } from "../_kit/Top";
+import { SiteMenu } from "../_kit/Menu";
 
 const copy = {
   en: { services: "Services", work: "Selected work", process: "Process", faq: "Questions", contact: "Contact", start: "Start a project", from: "From", reviews: "Clients on working with us", talk: "Let's talk", email: "Email us", hours: "Studio hours", reach: "Reach us", menu: "Main menu", count: "services" },
@@ -126,6 +127,7 @@ export default function AgencyTemplate({ site, now }: TemplateProps & { now?: Da
               ({pad(names.length)}) {c.count}
             </p>
           </div>
+          <SiteMenu ctx={ctx} like="list" services pricePrefix={from ? c.from : undefined}>
           {ctx.sections.map((section, si) => (
             <section key={section.id} id={section.anchor} className="group" aria-labelledby={`${section.anchor}-h`}>
               <h3 id={`${section.anchor}-h`}>{section.name}</h3>
@@ -155,6 +157,7 @@ export default function AgencyTemplate({ site, now }: TemplateProps & { now?: Da
               </ul>
             </section>
           ))}
+          </SiteMenu>
         </section>
 
         {ctx.on("work") && ctx.gallery.length > 0 && (

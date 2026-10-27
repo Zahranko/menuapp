@@ -11,6 +11,7 @@ import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
 import type { TemplateProps } from "@/lib/types";
 import { navOf, orderCta, pageTop, SiteHeader, SiteHero } from "../_kit/Top";
+import { SiteMenu } from "../_kit/Menu";
 
 const copy = {
   en: { picks: "Favorites", picksTitle: "Start with these", chapter: "Chapter", story: "Our story", reviews: "Kind words", visit: "Come say hello", hours: "Opening hours", contact: "Where to find us", order: "Order on WhatsApp", nav: "Main" },
@@ -100,6 +101,7 @@ export default function ArchStoryTemplate({ site, now }: TemplateProps & { now?:
         )}
 
         <section id="menu" className="chapters" data-section="menu" aria-label={ctx.t.menu}>
+          <SiteMenu ctx={ctx} like="grid" level={2}>
           {ctx.sections.map((section, i) => (
             <section key={section.id} id={section.anchor} className="chapter" aria-labelledby={`${section.anchor}-h`}>
               <div className="chapter-head">
@@ -128,6 +130,7 @@ export default function ArchStoryTemplate({ site, now }: TemplateProps & { now?:
               </ul>
             </section>
           ))}
+          </SiteMenu>
         </section>
 
         {storyText && (

@@ -15,13 +15,14 @@ import { hasHours, type MenuItem } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { orderCta, pageTop, SiteHeader, SiteHero, type Top } from "../_kit/Top";
 import { themeVars, type Palette } from "../_kit/theme";
+import { SiteMenu } from "../_kit/Menu";
 import { fashionCopy, fill } from "../_fashion/copy";
 import { details, sizeRange } from "../_fashion/details";
 import { sheetItems, sheetLabels, viewerLabels } from "../_fashion/items";
 import { PhotoViewer, type ViewerPhoto } from "../_fashion/PhotoViewer";
 import { ProductSheet } from "../_fashion/ProductSheet";
 import { copyFor } from "../_premium/copy";
-import { bestSellers, categoryTree, galleryPhotos, PAGE_PATHS, pageLinks, resolvePage, type Category, type Page, type Tree } from "../_premium/pages";
+import { bestSellers, categorySections, categoryTree, menuSections, galleryPhotos, PAGE_PATHS, pageLinks, resolvePage, type Category, type Page, type Tree } from "../_premium/pages";
 import { coutureCopy, pieceCount } from "./copy";
 
 /*
@@ -426,6 +427,7 @@ function Home({ v }: { v: View }) {
         {ctx.on("edit") && edit.length > 0 && (
           <div className="cu-edit" data-section="highlights">
             <Head title={ctx.text("edit.title") || k.edit} id="cu-edit-title" />
+            <SiteMenu ctx={ctx} like="carousel" id="kit-edit" sections={[{ id: "edit", anchor: "edit", name: ctx.text("edit.title") || k.edit, products: edit }]} flat={{ label: ctx.text("edit.title") || k.edit }}>
             <ul className="plain cu-row kit-cards" tabIndex={0} aria-labelledby="cu-edit-title">
               {edit.map((item) => (
                 <li key={item.id}>
@@ -433,6 +435,7 @@ function Home({ v }: { v: View }) {
                 </li>
               ))}
             </ul>
+</SiteMenu>
           </div>
         )}
       </section>
@@ -548,6 +551,7 @@ function AllPage({ v }: { v: View }) {
   return (
     <>
       <PageHead v={v} trail={[{ label: k.allCollections }]} title={k.allCollections} lead={pieceCount(tree.items.length, ctx.locale)} />
+      <SiteMenu ctx={ctx} like="grid" level={2} page sections={menuSections(tree.roots, href, (cat) => fill(k.shopName, { name: cat.name }))}>
       {tree.roots.length > 1 && (
         <Chips label={k.collections}>
           {tree.roots.map((cat) => (
@@ -572,6 +576,7 @@ function AllPage({ v }: { v: View }) {
           ))}
         </section>
       ))}
+</SiteMenu>
     </>
   );
 }
@@ -597,6 +602,7 @@ function CollectionPage({ v, category }: { v: View; category: Category }) {
           ))}
         </Chips>
       )}
+      <SiteMenu ctx={ctx} like="grid" level={2} page sections={categorySections(category, href, fill(c.inThis, { name: category.name }), (sub) => fill(k.shopName, { name: sub.name }))} flat={category.children.length === 0 ? { label: category.name } : undefined}>
       {category.products.length > 0 && (
         <section className="cu-sec cu-block" aria-labelledby="cu-own-title">
           {category.children.length > 0 ? <Head title={fill(c.inThis, { name: category.name })} id="cu-own-title" /> : <h2 id="cu-own-title" className="sr-only">{category.name}</h2>}
@@ -609,6 +615,7 @@ function CollectionPage({ v, category }: { v: View; category: Category }) {
           <Grid v={v} items={sub.products} />
         </section>
       ))}
+</SiteMenu>
       {others.length > 0 && (
         <section className="cu-sec" aria-labelledby="cu-more-title">
           <Head title={k.more} id="cu-more-title" link={{ href: href(PAGE_PATHS.menu), label: k.allCollections }} />

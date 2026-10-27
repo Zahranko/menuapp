@@ -15,6 +15,7 @@
   "tier": "pro",
   "thumbnail": "/templates/maison/thumbnail.png",
   "sample": "maison",
+  "menu": { "own": ["carte.style"] },
   "schema": [
     {
       "key": "font",

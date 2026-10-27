@@ -10,6 +10,7 @@ import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
 import { basicLinks, orderCta, pageTop, SiteHero, SiteMasthead } from "../_kit/Top";
+import { SiteMenu } from "../_kit/Menu";
 
 const copy = {
   en: {
@@ -149,7 +150,7 @@ export default function TicketTemplate({
               {ctx.today && <p className="addr">{ctx.today}</p>}
               <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} />
               {ctx.sections.length > 1 && (
-                <nav className="jump" aria-label={c.jump}>
+                <nav className="jump" data-k="catnav" aria-label={c.jump}>
                   {ctx.sections.map((s) => (
                     <a key={s.id} href={`#${s.anchor}`}>
                       [{s.name}]
@@ -168,6 +169,7 @@ export default function TicketTemplate({
               data-section="menu"
               aria-label={c.menu}
             >
+              <SiteMenu ctx={ctx} like="compact" level={2}>
               {ctx.sections.map((section) => (
                 <section
                   key={section.id}
@@ -215,6 +217,7 @@ export default function TicketTemplate({
                   </ul>
                 </section>
               ))}
+              </SiteMenu>
               <p className="total">
                 <span>{c.total}</span>
                 <span className="dots" aria-hidden="true" />

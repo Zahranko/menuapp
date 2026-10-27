@@ -11,6 +11,7 @@ import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
 import { basicLinks, orderCta, pageTop, SiteHeader, SiteHero } from "../_kit/Top";
+import { SiteMenu } from "../_kit/Menu";
 
 const copy = {
   en: { see: "Browse the menu", jump: "Menu sections", story: "Grown with love", visit: "Visit us", hours: "Hours", order: "Order on WhatsApp", menu: "Menu" },
@@ -88,6 +89,7 @@ export default function GardenTemplate({ site, now }: TemplateProps & { now?: Da
         <section id="menu" className="menu" data-section="menu" aria-label={c.menu}>
           <Wave />
           <div className="menu-inner">
+            <SiteMenu ctx={ctx} like="grid" level={2}>
             {ctx.sections.length > 1 && (
               <nav className="chips" aria-label={c.jump}>
                 {ctx.sections.map((s) => (
@@ -127,6 +129,7 @@ export default function GardenTemplate({ site, now }: TemplateProps & { now?: Da
                 </ul>
               </section>
             ))}
+            </SiteMenu>
           </div>
         </section>
 

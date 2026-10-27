@@ -5,6 +5,7 @@
 @import "../_kit/cards.css";
 @import "../_kit/hero.css";
 @import "../_kit/layout.css";
+@import "../_kit/menu.css";
 @import "../_kit/style.css";
 
 .t-pizza {
@@ -153,6 +154,7 @@
 
   /* menu */
   .menu {
+    --kit-mn-pad: calc(32px * var(--kit-space, 1)) 18px calc(40px * var(--kit-space, 1));
     scroll-margin-top: 10px;
   }
   .tabs {
@@ -348,6 +350,9 @@
     .head,
     .foot {
       padding-inline: max(36px, calc((100cqi - 1160px) / 2));
+    }
+    .menu {
+      --kit-mn-pad: calc(40px * var(--kit-space, 1)) max(36px, calc((100cqi - 1160px) / 2)) calc(54px * var(--kit-space, 1));
     }
     .hero {
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);

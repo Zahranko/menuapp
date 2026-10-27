@@ -11,6 +11,7 @@ import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
 import { basicLinks, orderCta, pageTop, SiteHeader, SiteHero } from "../_kit/Top";
+import { SiteMenu } from "../_kit/Menu";
 
 const copy = {
   en: { see: "See the menu", today: "Today", where: "Where", about: "About us", hours: "Opening hours", contact: "Say hello", jump: "Menu sections", closed: "Closed today" },
@@ -100,6 +101,7 @@ export default function BentoTemplate({ site, now }: TemplateProps & { now?: Dat
         )}
 
         <section id="menu" className="menu" data-section="menu" aria-label={ctx.t.menu}>
+          <SiteMenu ctx={ctx} like="tiles" level={2}>
           {ctx.sections.length > 1 && (
             <nav className="cats" aria-label={c.jump}>
               {ctx.sections.map((s) => (
@@ -139,6 +141,7 @@ export default function BentoTemplate({ site, now }: TemplateProps & { now?: Dat
               </ul>
             </section>
           ))}
+          </SiteMenu>
         </section>
 
         {(story || ctx.on("visit")) && (

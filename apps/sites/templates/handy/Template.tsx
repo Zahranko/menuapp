@@ -12,6 +12,7 @@ import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
 import { pageTop, SiteHeader, SiteHero, type NavLink } from "../_kit/Top";
+import { SiteMenu } from "../_kit/Menu";
 
 const copy = {
   en: { services: "Services", request: "Request a visit", ask: "Request", from: "From", areas: "Areas we cover", how: "How it works", reviews: "Happy homes", faq: "Questions", hours: "Working hours", contact: "Contact", menu: "Main menu", jump: "Service types", need: "What do you need?" },
@@ -138,6 +139,7 @@ export default function HandyTemplate({ site, now }: TemplateProps & { now?: Dat
           <h2 id="services-title" className="title">
             {ctx.text("services.title") || c.services}
           </h2>
+          <SiteMenu ctx={ctx} like="grid" services pricePrefix={from ? c.from : undefined}>
           {ctx.sections.map((section) => (
             <section key={section.id} id={section.anchor} className="group" aria-labelledby={`${section.anchor}-h`}>
               <h3 id={`${section.anchor}-h`}>{section.name}</h3>
@@ -172,6 +174,7 @@ export default function HandyTemplate({ site, now }: TemplateProps & { now?: Dat
               </ul>
             </section>
           ))}
+          </SiteMenu>
         </section>
 
         {ctx.on("areas") && areas.length > 0 && (

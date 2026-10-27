@@ -15,6 +15,7 @@
   "tier": "pro",
   "thumbnail": "/templates/atlas/thumbnail.png",
   "sample": "atlas",
+  "menu": { "own": ["density"] },
   "schema": [
     {
       "key": "font",

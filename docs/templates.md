@@ -175,6 +175,58 @@ template, English and Arabic). In fixture mode the tokens are `hl` (header layou
 while scrolling) and `hv` (opening), for example `/_preview/fixture.souq.default.ar.hl_split-hst_glass-hv_collage`.
 Preview pictures: `public/kit/previews/header-*.svg`, `headerstyle-*.svg`, `sticky-*.svg` and `hero-*.svg`.
 
+## Menu layout (`_kit/menu-settings.json`, `menu.ts`, `Menu.tsx`, `MenuNav.tsx`, `menu.css`)
+
+Every template gets a shared "Menu layout" group (تخطيط القائمة), added by `scripts/build-registry.mjs` right after
+"Page layout". Each option starts on `auto` ("Template default"). With every option on `auto` the template's own menu
+renders untouched. Changing any of them swaps in the shared menu of `_kit/Menu.tsx`, drawn by `_kit/menu.css` (imported
+by every `styles.css` after `layout.css`) with the template's own `--k-*` variables, fonts and corners. An option left on
+`auto` then takes what fits the layout (`resolveMenu()` in `menu.ts`), and the layout itself, when left on `auto`, is
+the shared layout closest to the template's own menu (the `like` prop).
+
+| Key | Options |
+|---|---|
+| `menu.layout` | auto, grid (cards in a grid), list (list with prices), compact (printed menu, dotted leaders), large (big photos), magazine (photo and text side by side, alternating), masonry (mosaic), carousel (each category a row that scrolls sideways), tiles (photo tiles with the name on the photo) |
+| `menu.columns` | auto, one, two, three, four (columns on big screens; phones show one or two) |
+| `menu.photos` | auto, top, side, none |
+| `menu.photoShape` | auto, square, wide, tall |
+| `menu.price` | auto, inline (next to the name), badge (a pill), corner (on the photo's corner), under (under the name), large |
+| `menu.categoryNav` | auto, chips (scrolling buttons), tabs, sidebar (a side list from 860px wide, buttons below), dropdown, none |
+| `menu.categoryTitle` | auto, simple, line, number, banner (over the category's first photo), ornament (centered with ornaments) |
+
+- Card style, borders, corners, the circle photo and the space between cards come from the "Cards" group
+  (`cards.*`): the shared products are `.kit-card`, their photos `.kit-card-media`, their lists `.kit-cards`.
+- Mends: tiles never put photos beside the text, the magazine never above it, a corner price without photos is a pill,
+  and the category links hide with fewer than two categories. `auto` links are buttons, except on catalog templates
+  (Pocket, Drop, which keep their own filters) and on Pro menu pages that have their own links (`ownNav`).
+- Once the owner picks shared category links, the template's own ones marked `data-k="catnav"` hide.
+- A template whose own menu choices fit here lists them in its manifest, `"menu": { "own": ["density"] }` (Atlas
+  `density`, Ember and Lumen `cards`, Linen `columns`, Maison `carte.style`, Zen `photos`): they move into the group
+  right after `menu.layout` and only apply while it is `auto`. `"skip"` and `"skipOptions"` work as for the page layout
+  (none uses them).
+- A menu section with no side space of its own sets `--kit-mn-pad` for the shared menu (Pizzeria, Night Market,
+  Monogrid, Folio).
+
+How a template wires it (its own menu stays the children):
+
+```tsx
+<SiteMenu ctx={ctx} like="list" level={2} id="menu-list" empty={t.noResults}>{its own menu}</SiteMenu>
+```
+
+Props: `like` (required), `level` (category headings h2 or h3, default 3 under the section's own h2), `sections`
+(default `ctx.sections`; Pro pages pass `menuSections()` or `categorySections()` from `_premium/pages.ts`), `id` (keep
+the id `MenuSearch` filters), `empty` (no-results text), `catalog` (adds the `data-product`, `data-cat`, `data-price`
+and `data-order` that `CatalogControls` reads), `services` and `pricePrefix` (service templates: "Not available",
+"From"), `page` (a whole menu or category page), `ownNav` and `flat` (one list without category titles).
+
+`templates/menu-layout.test.tsx` renders every template with every layout (defaults unchanged, every product shown,
+English and Arabic, unique ids, one h1, Pro menu and category pages), and `e2e/menu-layout.spec.ts` checks every layout on
+every template on a phone (other options picked from a seed per template, English and Arabic), plus the drop-down, the
+search, the filters and the side list. In fixture mode the tokens are `ml` (layout), `mcol` (columns), `mph` (photos),
+`mrat` (photo proportions), `mpr` (prices), `mnav` (category links) and `mtit` (category titles), for example
+`/_preview/fixture.souq.default.ar.ml_tiles-mnav_tabs-mtit_number`. Preview pictures: `public/kit/previews/menu-*.svg`,
+`menucols-*.svg`, `menuphotos-*.svg`, `menushape-*.svg`, `menuprice-*.svg`, `menunav-*.svg` and `menutitle-*.svg`.
+
 ## Rules every template follows
 
 - Settings are read with the helpers in `lib/settings.ts`; never assume a key exists.

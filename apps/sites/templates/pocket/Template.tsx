@@ -12,6 +12,7 @@ import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
 import { basicLinks, orderCta, pageTop, SiteHeader, SiteHero } from "../_kit/Top";
+import { SiteMenu } from "../_kit/Menu";
 
 const copy = {
   en: { shop: "Shop", all: "All", sort: "Sort", featured: "Featured", low: "Price: low to high", high: "Price: high to low", filter: "Filter by category", ask: "Ask on WhatsApp", about: "About us", visit: "Visit the shop", hours: "Opening hours", contact: "Contact", empty: "Nothing matches. Try another word or category." },
@@ -91,6 +92,7 @@ export default function PocketCatalogTemplate({ site, now }: TemplateProps & { n
             labels={{ all: c.all, search: ctx.t.search, sort: c.sort, featured: c.featured, priceLow: c.low, priceHigh: c.high, filter: c.filter }}
             locale={ctx.locale}
           />
+          <SiteMenu ctx={ctx} like="grid" id="catalog-grid" catalog>
           <ul id="catalog-grid" className="plain grid kit-cards">
             {products.map((item) => (
               <li
@@ -125,6 +127,7 @@ export default function PocketCatalogTemplate({ site, now }: TemplateProps & { n
               </li>
             ))}
           </ul>
+          </SiteMenu>
           <p className="empty" data-catalog-empty hidden={products.length > 0}>
             {c.empty}
           </p>

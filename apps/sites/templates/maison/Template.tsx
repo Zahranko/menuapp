@@ -15,9 +15,10 @@ import { heroPhotos } from "../_kit/hero";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { orderCta, pageTop, SiteHeader, SiteHero, type Top } from "../_kit/Top";
 import { themeVars, type Palette } from "../_kit/theme";
+import { SiteMenu } from "../_kit/Menu";
 import { copyFor, fill } from "../_premium/copy";
 import { Lightbox } from "../_premium/Lightbox";
-import { bestSellers, categoryTree, galleryPhotos, PAGE_PATHS, pageLinks, resolvePage, type Category, type Page, type Tree } from "../_premium/pages";
+import { bestSellers, categorySections, categoryTree, menuSections, galleryPhotos, PAGE_PATHS, pageLinks, resolvePage, type Category, type Page, type Tree } from "../_premium/pages";
 import { HeroWatch, Overlay } from "./Overlay";
 
 /*
@@ -372,6 +373,7 @@ function Home({ v, layout }: { v: View; layout: (typeof HERO)[number] }) {
 
       <section id="menu" className="mx-chap mx-carte" data-section="menu" aria-labelledby="carte-title">
         <Chapter n={next()} title={ctx.text("categories.title") || v.menuWord} id="carte-title" locale={ctx.locale} />
+        <SiteMenu ctx={ctx} like={v.carte === "pictures" ? "list" : "compact"} id="kit-carte" sections={tree.roots.slice(0, 6).map((cat) => ({ id: cat.id, anchor: `h-${cat.id}`, name: cat.name, products: cat.all.slice(0, 3), link: { href: href(cat.path), label: fill(c.seeAll, { name: cat.name }) } }))}>
         {tree.roots.length > 0 && (
           <div className="mx-courses">
             {tree.roots.slice(0, 6).map((cat) => (
@@ -386,6 +388,7 @@ function Home({ v, layout }: { v: View; layout: (typeof HERO)[number] }) {
             ))}
           </div>
         )}
+</SiteMenu>
         <div className="mx-center">
           <a data-k="btn" className="mx-btn is-quiet" href={href(PAGE_PATHS.menu)}>
             {c.viewAll}
@@ -645,12 +648,12 @@ function Course({ v, cat, n, link = true }: { v: View; cat: Category; n: number;
 }
 
 function MenuPage({ v }: { v: View }) {
-  const { tree, c, ctx } = v;
+  const { tree, c, ctx, href } = v;
   return (
     <>
       <PageHead v={v} trail={[{ label: v.menuWord }]} title={ctx.text("categories.title") || v.menuWord} lead={itemCount(tree.items.length, ctx.locale)}>
         {tree.roots.length > 1 && (
-          <nav className="mx-tabs" aria-label={c.categories}>
+          <nav className="mx-tabs" data-k="catnav" aria-label={c.categories}>
             {tree.roots.map((cat) => (
               <a key={cat.id} href={`#m-${cat.id}`}>
                 {cat.name}
@@ -659,11 +662,13 @@ function MenuPage({ v }: { v: View }) {
           </nav>
         )}
       </PageHead>
+      <SiteMenu ctx={ctx} like={v.carte === "pictures" ? "list" : "compact"} level={2} page ownNav sections={menuSections(tree.roots, href, (cat) => fill(c.seeAll, { name: cat.name }))}>
       <div className="mx-carte-page">
         {tree.roots.map((cat, i) => (
           <Course key={cat.id} v={v} cat={cat} n={i + 1} />
         ))}
       </div>
+</SiteMenu>
     </>
   );
 }
@@ -719,6 +724,7 @@ function CategoryPage({ v, category }: { v: View; category: Category }) {
         </section>
       )}
 
+      <SiteMenu ctx={ctx} like={v.carte === "pictures" ? "list" : "compact"} level={2} page sections={categorySections(category, href, fill(c.inThis, { name: category.name }), (sub) => fill(c.seeAll, { name: sub.name }))} flat={category.children.length === 0 ? { label: category.name } : undefined}>
       <div className="mx-carte-page">
         <section className="mx-course-full" aria-label={category.name}>
           {category.products.length > 0 && (
@@ -737,6 +743,7 @@ function CategoryPage({ v, category }: { v: View; category: Category }) {
           ))}
         </section>
       </div>
+</SiteMenu>
     </>
   );
 }

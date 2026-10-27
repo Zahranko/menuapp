@@ -15,6 +15,7 @@
   "tier": "pro",
   "thumbnail": "/templates/ember/thumbnail.png",
   "sample": "ember",
+  "menu": { "own": ["cards"] },
   "schema": [
     {
       "key": "font",

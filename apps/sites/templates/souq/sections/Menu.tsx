@@ -2,6 +2,7 @@ import { itemCount } from "@/lib/i18n";
 import { CategoryTabs } from "../../_kit/CategoryTabs";
 import { Search } from "../../_kit/icons";
 import { MenuSearch } from "../../_kit/MenuSearch";
+import { SiteMenu } from "../../_kit/Menu";
 import type { SouqContext } from "../context";
 import { Thumb, thumbStyle } from "./Thumb";
 
@@ -17,6 +18,7 @@ export function Menu({ ctx }: { ctx: SouqContext }) {
           </div>
           {sections.length > 0 && <MenuSearch menuId="menu-list" placeholder={t.search} className="search" icon={<Search />} />}
         </div>
+        <SiteMenu ctx={ctx} like="list" id="menu-list" empty={t.noResults}>
         {sections.length > 1 && (
           <CategoryTabs categories={sections.map(({ anchor, name }) => ({ anchor, name }))} label={c.categories} className="tabs" tabClassName="tab" activeClassName="tabOn" />
         )}
@@ -53,6 +55,7 @@ export function Menu({ ctx }: { ctx: SouqContext }) {
             {t.noResults}
           </p>
         </div>
+        </SiteMenu>
       </div>
     </section>
   );

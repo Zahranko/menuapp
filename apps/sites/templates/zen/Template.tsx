@@ -10,6 +10,7 @@ import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
 import { basicLinks, orderCta, pageTop, SiteHeader, SiteHero } from "../_kit/Top";
+import { SiteMenu } from "../_kit/Menu";
 
 const copy = {
   en: { menu: "Menu", story: "Our way", visit: "Visit", hours: "Hours", jump: "Menu sections" },
@@ -75,6 +76,7 @@ export default function ZenTemplate({ site, now }: TemplateProps & { now?: Date 
         {top.layout.hero === "auto" && <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} className="zen-band" />}
 
         <section id="menu" className="menu" data-section="menu" aria-label={c.menu}>
+          <SiteMenu ctx={ctx} like="list" level={2}>
           {ctx.sections.map((section, si) => (
             <section key={section.id} id={section.anchor} className="course" aria-labelledby={`${section.anchor}-h`}>
               <h2 data-k="label" id={`${section.anchor}-h`}>
@@ -110,6 +112,7 @@ export default function ZenTemplate({ site, now }: TemplateProps & { now?: Date 
               </ol>
             </section>
           ))}
+          </SiteMenu>
         </section>
 
         {story && (

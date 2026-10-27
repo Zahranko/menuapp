@@ -237,6 +237,18 @@ public class ChatAboutDesignTests
     }
 
     [Fact]
+    public async Task The_instructions_explain_the_menu_layout_group()
+    {
+        var (handler, assistant, _) = Create();
+        await handler.Handle(Ask("Make it look like a printed menu"), CancellationToken.None);
+        var instructions = assistant.Requests.Single().Instructions;
+        Assert.Contains("\"Menu layout\"", instructions);
+        Assert.Contains("\"make it look like a printed menu\" (layout \"compact\")", instructions);
+        Assert.Contains("\"bigger photos\" (layout \"large\"", instructions);
+        Assert.Contains("\"tabs for categories\" (category links \"tabs\")", instructions);
+    }
+
+    [Fact]
     public async Task A_missing_reply_gets_a_short_one_in_the_chosen_language()
     {
         var (handler, assistant, _) = Create();

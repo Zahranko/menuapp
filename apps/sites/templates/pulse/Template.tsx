@@ -12,6 +12,7 @@ import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
 import { pageTop, SiteHeader, SiteHero, type NavLink } from "../_kit/Top";
+import { SiteMenu } from "../_kit/Menu";
 
 const copy = {
   en: { plans: "Plans and classes", join: "Join now", popular: "Most popular", choose: "Choose", first: "Your first week", faq: "Questions", reviews: "Members say", hours: "Opening hours", contact: "Find us", ready: "Your first class is on us", menu: "Main menu", jump: "Plans and classes", photos: "Inside the gym", visit: "Visit" },
@@ -114,6 +115,7 @@ export default function PulseTemplate({ site, now }: TemplateProps & { now?: Dat
           <h2 id="plans-title" className="big-title">
             {ctx.text("services.title") || c.plans}
           </h2>
+          <SiteMenu ctx={ctx} like="grid" services>
           {ctx.sections.length > 1 && (
             <nav className="jump" aria-label={c.jump}>
               {ctx.sections.map((s) => (
@@ -176,6 +178,7 @@ export default function PulseTemplate({ site, now }: TemplateProps & { now?: Dat
               </ul>
             </section>
           ))}
+          </SiteMenu>
         </section>
 
         {ctx.on("steps") && week.length > 0 && (

@@ -13,6 +13,7 @@
   "heroSlider": { "kind": "band" },
   "thumbnail": "/templates/zen/thumbnail.png",
   "sample": "asian",
+  "menu": { "own": ["photos"] },
   "schema": [
     {
       "key": "font",

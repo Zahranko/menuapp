@@ -11,6 +11,7 @@ import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
 import { navOf, orderCta, pageTop, SiteHero, SiteMasthead } from "../_kit/Top";
+import { SiteMenu } from "../_kit/Menu";
 
 const copy = {
   en: { menu: "The menu", story: "Our kitchen", visit: "Visit us", hours: "Hours", contact: "Find us", order: "Order on WhatsApp", contents: "Menu sections" },
@@ -82,6 +83,7 @@ export default function LinenTemplate({ site, now }: TemplateProps & { now?: Dat
             <h2 data-k="label" id="menu-title" className="menu-title">
               {c.menu}
             </h2>
+            <SiteMenu ctx={ctx} like="compact">
             {ctx.sections.length > 1 && (
               <nav className="contents" aria-label={c.contents}>
                 {ctx.sections.map((s) => (
@@ -118,6 +120,7 @@ export default function LinenTemplate({ site, now }: TemplateProps & { now?: Dat
                 </section>
               ))}
             </div>
+            </SiteMenu>
             {note && <p className="note">{note}</p>}
           </section>
 

@@ -830,12 +830,24 @@ const STYLE_KEYS: Record<string, string> = {
 /** Page layout options for fixture previews (_kit/layout.ts): "hl_<header layout>", "hst_<header look>",
  * "stk_<auto|on|off>" (header while scrolling) and "hv_<opening layout>". */
 const LAYOUT_KEYS: Record<string, string> = { hl: "header.layout", hst: "header.style", stk: "header.sticky", hv: "hero.variant" };
+/** Menu layout options for fixture previews (_kit/menu.ts): "ml_<layout>", "mcol_<one|two|three|four>" (columns on big screens),
+ * "mph_<top|side|none>" (product photos), "mrat_<square|wide|tall>" (photo proportions), "mpr_<price>",
+ * "mnav_<category links>" and "mtit_<category titles>". */
+const MENU_KEYS: Record<string, string> = {
+  ml: "menu.layout",
+  mcol: "menu.columns",
+  mph: "menu.photos",
+  mrat: "menu.photoShape",
+  mpr: "menu.price",
+  mnav: "menu.categoryNav",
+  mtit: "menu.categoryTitle",
+};
 const HERO_KEYS: Record<string, string> = { trans: "hero.transition", speed: "hero.speed", height: "hero.height", overlay: "hero.overlay", text: "hero.textPosition" };
 
 /**
  * Card and hero slider options for fixture previews (same token part as applySiteOptions): "card_<style>",
  * "border_<width>", "bc_<accent|ink|rrggbb>" (border color), "corners_<size>", "photo_<shape>", "spacing_<tight|airy>";
- * the page style and page layout tokens above (STYLE_KEYS, LAYOUT_KEYS);
+ * the page style, page layout and menu layout tokens above (STYLE_KEYS, LAYOUT_KEYS, MENU_KEYS);
  * "slides" or "slides_<n>" (n hero photos in all, 2 to 6), "trans_<slide|fade|zoom>", "speed_<slow|normal|fast>",
  * "auto_off" (no autoplay), "ctrl_<both|dots|arrows|none>", "height_<size>", "overlay_<amount>", "text_<position>".
  */
@@ -844,6 +856,7 @@ function applyCardAndHeroOption(site: PublicSite, key: string, value: string): v
   if (key in CARD_KEYS) set({ [CARD_KEYS[key]]: value });
   else if (key in STYLE_KEYS) set({ [STYLE_KEYS[key]]: value });
   else if (key in LAYOUT_KEYS) set({ [LAYOUT_KEYS[key]]: value });
+  else if (key in MENU_KEYS) set({ [MENU_KEYS[key]]: value });
   else if (key === "bc") set({ "cards.borderColor": /^[0-9a-f]{6}$/i.test(value) ? `#${value.toUpperCase()}` : value });
   else if (key in HERO_KEYS) set({ [HERO_KEYS[key]]: value });
   else if (key === "auto") set({ "hero.autoplay": value !== "off" });

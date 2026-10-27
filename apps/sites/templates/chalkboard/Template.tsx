@@ -11,6 +11,7 @@ import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
 import { basicLinks, orderCta, pageTop, SiteHero, SiteMasthead } from "../_kit/Top";
+import { SiteMenu } from "../_kit/Menu";
 
 const copy = {
   en: { special: "Today's special", menu: "On the board", story: "Hello!", visit: "Come say hi", hours: "Hours", order: "Order on WhatsApp", jump: "Jump to" },
@@ -115,6 +116,7 @@ export default function ChalkBoardTemplate({ site, now }: TemplateProps & { now?
             <h2 id="menu-title" className="menu-title">
               {c.menu}
             </h2>
+            <SiteMenu ctx={ctx} like="compact">
             {ctx.sections.length > 1 && (
               <nav className="jump" aria-label={c.jump}>
                 {ctx.sections.map((s) => (
@@ -153,6 +155,7 @@ export default function ChalkBoardTemplate({ site, now }: TemplateProps & { now?
                 </section>
               ))}
             </div>
+            </SiteMenu>
           </section>
 
           {story && (

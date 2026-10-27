@@ -16,9 +16,10 @@ import { heroPhotos } from "../_kit/hero";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { orderCta, pageTop, SiteHeader, SiteHero, type Top } from "../_kit/Top";
 import { themeVars, type Palette } from "../_kit/theme";
+import { SiteMenu } from "../_kit/Menu";
 import { copyFor, fill } from "../_premium/copy";
 import { Lightbox } from "../_premium/Lightbox";
-import { bestSellers, categoryTree, galleryPhotos, PAGE_PATHS, pageLinks, resolvePage, type Category, type Page, type Tree } from "../_premium/pages";
+import { bestSellers, categorySections, categoryTree, menuSections, galleryPhotos, PAGE_PATHS, pageLinks, resolvePage, type Category, type Page, type Tree } from "../_premium/pages";
 import { emberCopy } from "./copy";
 
 /*
@@ -615,7 +616,7 @@ function MenuPage({ v }: { v: View }) {
     <>
       <PageHead v={v} trail={[{ label: c.menu }]} title={c.menu} lead={itemCount(tree.items.length, ctx.locale)}>
         {tree.roots.length > 1 && (
-          <nav className="jump" aria-label={c.categories}>
+          <nav className="jump" data-k="catnav" aria-label={c.categories}>
             {tree.roots.map((cat, i) => (
               <a key={cat.id} className="jump-a" href={`#m-${cat.id}`}>
                 <span aria-hidden="true">{two(i + 1)}</span> {cat.name}
@@ -624,6 +625,7 @@ function MenuPage({ v }: { v: View }) {
           </nav>
         )}
       </PageHead>
+      <SiteMenu ctx={ctx} like={v.cards === "board" ? "compact" : "grid"} level={2} page ownNav sections={menuSections(tree.roots, href, () => c.viewAll)}>
       {tree.roots.map((cat, i) => (
         <section key={cat.id} id={`m-${cat.id}`} className="sec chapter" aria-labelledby={`m-${cat.id}-h`}>
           <Head title={cat.name} num={two(i + 1)} id={`m-${cat.id}-h`} link={{ href: href(cat.path), label: c.viewAll }} />
@@ -641,6 +643,7 @@ function MenuPage({ v }: { v: View }) {
           ))}
         </section>
       ))}
+</SiteMenu>
     </>
   );
 }
@@ -676,6 +679,7 @@ function CategoryPage({ v, category }: { v: View; category: Category }) {
         </section>
       )}
 
+      <SiteMenu ctx={ctx} like={v.cards === "board" ? "compact" : "grid"} level={2} page sections={categorySections(category, href, fill(c.inThis, { name: category.name }), () => c.viewAll)} flat={category.children.length === 0 ? { label: category.name } : undefined}>
       {category.products.length > 0 && (
         <section className="sec" aria-labelledby="own-title">
           {category.children.length > 0 ? (
@@ -695,6 +699,7 @@ function CategoryPage({ v, category }: { v: View; category: Category }) {
           <Products v={v} items={sub.products.slice(0, 8)} />
         </section>
       ))}
+</SiteMenu>
     </>
   );
 }

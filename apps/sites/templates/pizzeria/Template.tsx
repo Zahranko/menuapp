@@ -10,6 +10,7 @@ import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
 import { basicLinks, orderCta, pageTop, SiteHeader, SiteHero } from "../_kit/Top";
+import { SiteMenu } from "../_kit/Menu";
 
 const copy = {
   en: { menu: "Menu", jump: "Menu sections", story: "From our oven", visit: "Come hungry", hours: "Hours", order: "Order on WhatsApp", see: "See the menu" },
@@ -86,6 +87,7 @@ export default function PizzeriaTemplate({ site, now }: TemplateProps & { now?: 
         {top.layout.hero === "auto" && <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} className="pz-band" />}
 
         <section id="menu" className="menu" data-section="menu" aria-label={c.menu}>
+          <SiteMenu ctx={ctx} like="grid" level={2}>
           {ctx.sections.length > 1 && (
             <nav className="tabs" aria-label={c.jump}>
               {ctx.sections.map((s) => (
@@ -120,6 +122,7 @@ export default function PizzeriaTemplate({ site, now }: TemplateProps & { now?: 
               </ul>
             </section>
           ))}
+          </SiteMenu>
         </section>
 
         {story && (

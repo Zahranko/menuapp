@@ -40,6 +40,13 @@
 // shows. A manifest may leave fields or options out with
 // "layout": { "skip": ["header.sticky"], "skipOptions": { "hero.variant": ["menu"] } } (left out of registry.json).
 //
+// Menu layout: every template gets the shared fields of templates/_kit/menu-settings.json (menu layout, columns on big
+// screens, product photos and their proportions, prices, category links and category titles) in a "Menu layout" group
+// right after "Page layout". templates/_kit/menu.ts reads them, _kit/Menu.tsx renders the shared menu and _kit/menu.css
+// styles it; "auto" everywhere keeps the template's own menu. A template's own menu choices move into this group right
+// after "menu.layout" with "menu": { "own": ["carte.style"] } (they are what "Template default" shows). A manifest may
+// leave fields or options out with "menu": { "skip": [...], "skipOptions": { "menu.layout": [...] } } (left out of registry.json).
+//
 // Previews: a "choice" field may carry "previews", a small picture per option ({ "pill": "/kit/previews/buttons-pill.svg" }),
 // which the app's editor shows as picture tiles. Every key must be one of the field's options and every picture must exist
 // in public/.
@@ -70,6 +77,7 @@ const cardSettings = JSON.parse(readFileSync(path.join(root, "_kit", "card-setti
 const heroSettings = JSON.parse(readFileSync(path.join(root, "_kit", "hero-settings.json"), "utf8"));
 const styleSettings = JSON.parse(readFileSync(path.join(root, "_kit", "style-settings.json"), "utf8"));
 const layoutSettings = JSON.parse(readFileSync(path.join(root, "_kit", "layout-settings.json"), "utf8"));
+const menuSettings = JSON.parse(readFileSync(path.join(root, "_kit", "menu-settings.json"), "utf8"));
 const publicDir = path.join(root, "..", "public");
 const HERO_KINDS = new Set(Object.keys(heroSettings.kinds));
 const HERO_SOURCES = new Set(["hero.image", "hero.images"]);
@@ -96,6 +104,7 @@ const manifests = readdirSync(root, { withFileTypes: true })
     withCardOptions(d.name, manifest);
     withStyleOptions(d.name, manifest);
     withLayoutOptions(d.name, manifest);
+    withMenuOptions(d.name, manifest);
     withHeroOptions(d.name, manifest);
     const keys = new Set();
     for (const field of manifest.schema) {
@@ -248,6 +257,52 @@ function withLayoutOptions(id, manifest) {
     delete manifest.defaults["hero.layout"];
   }
   insertGroup(manifest, fields, defaults, styleSettings.group);
+}
+
+/** Leaves out the fields in `skip` and the options in `skipOptions` of shared fields (labels and pictures with them). */
+function pruned(id, what, fields, skipped, skipOptions) {
+  const skip = new Set(skipped);
+  const known = (key) => fields.find((f) => f.key === key);
+  for (const key of skip) if (!known(key)) fail(`${id}: "${what}.skip" has unknown field "${key}"`);
+  for (const [key, options] of Object.entries(skipOptions)) {
+    const field = known(key);
+    if (!field) fail(`${id}: "${what}.skipOptions" has unknown field "${key}"`);
+    for (const o of options) if (o === "auto" || !field.options.includes(o)) fail(`${id}: "${what}.skipOptions.${key}" cannot leave out "${o}"`);
+  }
+  return fields
+    .filter((f) => !skip.has(f.key))
+    .map((f) => {
+      const left = new Set(skipOptions[f.key] ?? []);
+      if (left.size === 0) return f;
+      const keep = (o) => !left.has(o);
+      const pick = (map) => map && Object.fromEntries(Object.entries(map).filter(([o]) => keep(o)));
+      return { ...f, options: f.options.filter(keep), optionLabels: pick(f.optionLabels), optionLabelsAr: pick(f.optionLabelsAr), previews: pick(f.previews) };
+    });
+}
+
+/** Adds the shared menu layout options (templates/_kit/menu-settings.json) in a "Menu layout" group after "Page layout". */
+function withMenuOptions(id, manifest) {
+  const { skip = [], skipOptions = {}, own = [], ...rest } = manifest.menu ?? {};
+  delete manifest.menu;
+  if (Object.keys(rest).length) fail(`${id}: "menu" takes only "own", "skip" and "skipOptions"`);
+  for (const field of menuSettings.fields) {
+    if (manifest.schema.some((f) => f.key === field.key) || field.key in manifest.defaults) fail(`${id}: "${field.key}" comes from templates/_kit/menu-settings.json; remove it from the manifest`);
+  }
+  const { group, groupAr } = menuSettings;
+  const fields = pruned(id, "menu", menuSettings.fields, skip, skipOptions).map((f) => ({ key: f.key, type: f.type, label: f.label, group, groupAr, ...f }));
+  // The template's own menu choices go right after "menu.layout": they are what "Template default" shows.
+  const defaults = { ...menuSettings.defaults };
+  const moved = own.map((key) => {
+    const at = manifest.schema.findIndex((f) => f.key === key);
+    if (at < 0) fail(`${id}: "menu.own" names "${key}", which is not in the schema`);
+    const [field] = manifest.schema.splice(at, 1);
+    defaults[key] = manifest.defaults[key];
+    delete manifest.defaults[key];
+    return { ...field, group, groupAr };
+  });
+  const at = fields.findIndex((f) => f.key === "menu.layout") + 1;
+  fields.splice(at > 0 ? at : 0, 0, ...moved);
+  insertGroup(manifest, fields, defaults, layoutSettings.group);
 }
 
 /** Checks a field's option pictures: a choice field, known options and pictures that exist in public/. */

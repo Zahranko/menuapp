@@ -21,6 +21,7 @@ import { PhotoViewer } from "../_fashion/PhotoViewer";
 import { ProductSheet } from "../_fashion/ProductSheet";
 import { orderButton, socialAccounts } from "../_kit/options";
 import { orderCta, pageTop, SiteHeader, SiteHero, type NavLink } from "../_kit/Top";
+import { SiteMenu } from "../_kit/Menu";
 
 /*
  * Template 027 "Folio": an editorial lookbook for a clothing store. A magazine-cover opening with an issue line, the
@@ -219,6 +220,7 @@ function Catalog({ ctx, c, f }: { ctx: SiteContext; c: C; f: F }) {
         </h2>
         <MenuSearch menuId="fo-chapters" placeholder={c.search} className="fo-search" inputClassName="fo-search-input" icon={<Search aria-hidden="true" />} />
       </div>
+      <SiteMenu ctx={ctx} like="masonry" id="fo-chapters" empty={f.empty}>
       {ctx.sections.length > 1 && (
         <CategoryTabs categories={ctx.sections.map((s) => ({ anchor: s.anchor, name: s.name }))} label={c.collections} className="fo-tabs" tabClassName="fo-tab" activeClassName="is-active" />
       )}
@@ -265,6 +267,7 @@ function Catalog({ ctx, c, f }: { ctx: SiteContext; c: C; f: F }) {
           {f.empty}
         </p>
       </div>
+      </SiteMenu>
     </section>
   );
 }

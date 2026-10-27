@@ -11,6 +11,7 @@ import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
 import { basicLinks, orderCta, pageTop, SiteHero, SiteMasthead } from "../_kit/Top";
+import { SiteMenu } from "../_kit/Menu";
 
 const copy = {
   en: {
@@ -179,6 +180,7 @@ export default function BistroCardTemplate({
               <h2 id="menu-title" className="sr-only">
                 {c.menu}
               </h2>
+              <SiteMenu ctx={ctx} like="compact">
               {ctx.sections.map((section) => (
                 <section
                   key={section.id}
@@ -218,6 +220,7 @@ export default function BistroCardTemplate({
                   </ul>
                 </section>
               ))}
+              </SiteMenu>
             </section>
 
             {(story || ctx.on("visit")) && (

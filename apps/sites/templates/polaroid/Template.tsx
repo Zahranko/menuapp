@@ -10,6 +10,7 @@ import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
 import { basicLinks, orderCta, pageTop, SiteHero, SiteMasthead } from "../_kit/Top";
+import { SiteMenu } from "../_kit/Menu";
 
 const copy = {
   en: { menu: "The wall", jump: "Menu sections", story: "Hello from us", visit: "Drop by", hours: "Hours", order: "Order on WhatsApp", picks: "Our favorites" },
@@ -66,6 +67,7 @@ export default function PolaroidTemplate({ site, now }: TemplateProps & { now?: 
         </SiteHero>
 
         <section id="menu" className="menu" data-section="menu" aria-label={c.menu}>
+          <SiteMenu ctx={ctx} like="masonry" level={2}>
           {ctx.sections.length > 1 && (
             <nav className="jump" aria-label={c.jump}>
               {ctx.sections.map((s) => (
@@ -102,6 +104,7 @@ export default function PolaroidTemplate({ site, now }: TemplateProps & { now?: 
               </ul>
             </section>
           ))}
+          </SiteMenu>
         </section>
 
         {story && (

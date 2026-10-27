@@ -19,6 +19,7 @@ import { sheetItems, sheetLabels, viewerLabels } from "../_fashion/items";
 import { PhotoViewer } from "../_fashion/PhotoViewer";
 import { ProductSheet } from "../_fashion/ProductSheet";
 import { orderCta, pageTop, SiteHeader, SiteHero, type NavLink } from "../_kit/Top";
+import { SiteMenu } from "../_kit/Menu";
 
 /*
  * Template 028 "Drop": a loud streetwear store. A moving ticker, a full-screen poster for the latest drop with a
@@ -216,6 +217,7 @@ function Shop({ ctx, c, f }: { ctx: SiteContext; c: C; f: F }) {
         labels={{ all: ctx.t.all, search: f.find, sort: c.sort, featured: c.featured, priceLow: c.low, priceHigh: c.high, filter: c.filter }}
         locale={ctx.locale}
       />
+      <SiteMenu ctx={ctx} like="grid" id="dr-grid" catalog>
       <ul id="dr-grid" className="plain dr-grid kit-cards">
         {products.map((item) => {
           const sizes = sizeRange(details(item.description).sizes);
@@ -245,6 +247,7 @@ function Shop({ ctx, c, f }: { ctx: SiteContext; c: C; f: F }) {
           );
         })}
       </ul>
+      </SiteMenu>
       <p className="dr-empty" data-catalog-empty hidden={products.length > 0}>
         {f.empty}
       </p>

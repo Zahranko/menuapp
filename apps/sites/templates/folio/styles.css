@@ -5,6 +5,7 @@
 @import "../_kit/cards.css";
 @import "../_kit/hero.css";
 @import "../_kit/layout.css";
+@import "../_kit/menu.css";
 @import "../_kit/style.css";
 @import "../_fashion/base.css";
 
@@ -304,6 +305,8 @@
 
   /* ---------- catalog ---------- */
   .fo-catalog {
+    /* The shared menu (_kit/menu.css) keeps the side space of the chapters. */
+    --kit-mn-pad: 0 16px;
     padding: calc(40px * var(--kit-space, 1)) 0 calc(24px * var(--kit-space, 1));
     border-top: 1px solid var(--line);
   }
@@ -788,6 +791,9 @@
     }
     .fo-chapter {
       padding-inline: 32px;
+    }
+    .fo-catalog {
+      --kit-mn-pad: 0 32px;
     }
     .fo-chapter-num {
       font-size: calc(88px * var(--fs));

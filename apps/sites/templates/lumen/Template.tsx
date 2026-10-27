@@ -15,9 +15,10 @@ import { hasHours, type MenuItem } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { orderCta, pageTop, SiteHeader, SiteHero, type Top } from "../_kit/Top";
 import { themeVars, type Palette } from "../_kit/theme";
+import { SiteMenu } from "../_kit/Menu";
 import { copyFor, fill } from "../_premium/copy";
 import { Lightbox } from "../_premium/Lightbox";
-import { bestSellers, categoryTree, galleryPhotos, PAGE_PATHS, pageLinks, resolvePage, type Category, type Page, type Tree } from "../_premium/pages";
+import { bestSellers, categorySections, categoryTree, menuSections, galleryPhotos, PAGE_PATHS, pageLinks, resolvePage, type Category, type Page, type Tree } from "../_premium/pages";
 import { HomeIcon, MenuIcon, PhotoIcon, PinIcon, StarIcon } from "./icons";
 
 /*
@@ -593,7 +594,7 @@ function MenuPage({ v }: { v: View }) {
     <>
       <PageHead v={v} trail={[{ label: c.menu }]} title={c.menu} lead={itemCount(tree.items.length, ctx.locale)} color="var(--acc)" photo={tree.items.find((p) => p.imageUrl)?.imageUrl}>
         {tree.roots.length > 1 && (
-          <nav className="chipbar" aria-label={c.categories}>
+          <nav className="chipbar" data-k="catnav" aria-label={c.categories}>
             <ul className="plain">
               {tree.roots.map((cat) => (
                 <li key={cat.id} style={tint(tileOf(v, cat))}>
@@ -606,6 +607,7 @@ function MenuPage({ v }: { v: View }) {
           </nav>
         )}
       </PageHead>
+      <SiteMenu ctx={ctx} like={v.cards === "list" ? "list" : "grid"} level={2} page ownNav sections={menuSections(tree.roots, href, () => c.viewAll)}>
       {tree.roots.map((cat) => (
         <section key={cat.id} id={`m-${cat.id}`} className="sec menu-block" aria-labelledby={`m-${cat.id}-h`} style={tint(tileOf(v, cat))}>
           <div className="band">
@@ -623,6 +625,7 @@ function MenuPage({ v }: { v: View }) {
           ))}
         </section>
       ))}
+</SiteMenu>
     </>
   );
 }
@@ -662,6 +665,7 @@ function CategoryPage({ v, category }: { v: View; category: Category }) {
         </section>
       )}
 
+      <SiteMenu ctx={ctx} like={v.cards === "list" ? "list" : "grid"} level={2} page ownNav sections={categorySections(category, href, fill(c.inThis, { name: category.name }), () => c.viewAll)} flat={category.children.length === 0 ? { label: category.name } : undefined}>
       {category.products.length > 0 && (
         <section className="sec" aria-labelledby="own-title">
           {category.children.length > 0 ? (
@@ -687,6 +691,7 @@ function CategoryPage({ v, category }: { v: View; category: Category }) {
           </ul>
         </section>
       ))}
+</SiteMenu>
     </>
   );
 }

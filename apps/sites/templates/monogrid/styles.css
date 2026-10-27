@@ -5,6 +5,7 @@
 @import "../_kit/cards.css";
 @import "../_kit/hero.css";
 @import "../_kit/layout.css";
+@import "../_kit/menu.css";
 @import "../_kit/style.css";
 
 .t-mono {
@@ -89,6 +90,8 @@
 
   /* index */
   .catalog {
+    /* The shared menu (_kit/menu.css) keeps the side space of the index above it. */
+    --kit-mn-pad: calc(18px * var(--kit-space, 1)) 14px calc(30px * var(--kit-space, 1));
     scroll-margin-top: 10px;
   }
   .index {
@@ -267,6 +270,9 @@
     .info-cell,
     .foot {
       padding-inline: 28px;
+    }
+    .catalog {
+      --kit-mn-pad: calc(24px * var(--kit-space, 1)) 28px calc(40px * var(--kit-space, 1));
     }
     .head {
       padding-top: 18px;

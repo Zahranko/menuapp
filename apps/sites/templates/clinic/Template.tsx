@@ -12,6 +12,7 @@ import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
 import { pageTop, SiteHeader, SiteHero, type NavLink } from "../_kit/Top";
+import { SiteMenu } from "../_kit/Menu";
 
 const copy = {
   en: { services: "Services", how: "How it works", faq: "Questions", visit: "Contact", book: "Book a visit", from: "From", reviews: "What patients say", hours: "Opening hours", contact: "Find us", ready: "Ready when you are", readyText: "Send us a message and we will find a time that suits you.", directions: "Directions", menu: "Main menu", jump: "Service groups" },
@@ -135,6 +136,7 @@ export default function ClinicTemplate({ site, now }: TemplateProps & { now?: Da
             <p className="eyebrow">{c.services}</p>
             <h2 id="services-title">{ctx.text("services.title") || c.services}</h2>
           </div>
+          <SiteMenu ctx={ctx} like="grid" services pricePrefix={from ? c.from : undefined}>
           {ctx.sections.length > 1 && (
             <nav className="segments" aria-label={c.jump}>
               {ctx.sections.map((s) => (
@@ -170,6 +172,7 @@ export default function ClinicTemplate({ site, now }: TemplateProps & { now?: Da
               </ul>
             </section>
           ))}
+          </SiteMenu>
         </section>
 
         {ctx.on("steps") && how.length > 0 && (

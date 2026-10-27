@@ -13,6 +13,7 @@ import { themeVars } from "../_kit/theme";
 import { itemCount } from "@/lib/i18n";
 import type { TemplateProps } from "@/lib/types";
 import { basicLinks, orderCta, pageTop, SiteHeader, SiteHero } from "../_kit/Top";
+import { SiteMenu } from "../_kit/Menu";
 
 const copy = {
   en: { picks: "Tonight's favorites", menu: "The menu", findUs: "Find us", order: "Order on WhatsApp", photos: "From the grill", swipe: "Swipe for more", hours: "Hours" },
@@ -111,6 +112,7 @@ export default function NightMarketTemplate({ site, now }: TemplateProps & { now
           <h2 id="menu-title" className="kicker">
             {c.menu}
           </h2>
+          <SiteMenu ctx={ctx} like="carousel">
           {ctx.sections.length > 1 && (
             <CategoryTabs categories={ctx.sections.map(({ anchor, name }) => ({ anchor, name }))} label={ctx.t.categories} className="chips" tabClassName="chip" activeClassName="on" />
           )}
@@ -142,6 +144,7 @@ export default function NightMarketTemplate({ site, now }: TemplateProps & { now
               </ul>
             </section>
           ))}
+          </SiteMenu>
         </section>
 
         {ctx.on("gallery") && ctx.gallery.length > 0 && (

@@ -2,6 +2,7 @@ import { image, list } from "@/lib/settings";
 import type { PublicSite } from "@/lib/types";
 import { menuItem, type MenuItem } from "../_kit/site-data";
 import { copyFor } from "./copy";
+import type { KitSection } from "../_kit/Menu";
 import type { NavLink } from "../_kit/Top";
 
 /*
@@ -178,4 +179,31 @@ export function pageLinks(
     ...(v.photos.length > 0 ? [{ href: href(PAGE_PATHS.gallery), label: words.gallery, current: page.kind === "gallery" }] : []),
     { href: href(PAGE_PATHS.visit), label: words.visit, current: page.kind === "visit" },
   ];
+}
+
+/**
+ * The shared menu's categories (_kit/Menu.tsx) for a menu page: each top-level category with its own products and its
+ * sub-categories, each linking to its own page (`label` names the link, as in "See everything in Coffee"). The anchors
+ * are the ones the templates' own category links point at (#m-<id>).
+ */
+export function menuSections(roots: Category[], href: (path: string) => string, label: (c: Category) => string): KitSection[] {
+  const section = (c: Category): KitSection => ({
+    id: c.id,
+    anchor: `m-${c.id}`,
+    name: c.name,
+    products: c.products,
+    link: { href: href(c.path), label: label(c) },
+    children: c.children.map(section),
+  });
+  return roots.map(section);
+}
+
+/**
+ * The shared menu's categories for a category page: its own products (under `own`, the "In <name>" title, when it also
+ * has sub-categories), then each sub-category with a link to its own page.
+ */
+export function categorySections(category: Category, href: (path: string) => string, own: string, label: (c: Category) => string): KitSection[] {
+  const subs = category.children.map((c) => ({ id: c.id, anchor: `s-${shortId(c.id)}`, name: c.name, products: c.products, link: { href: href(c.path), label: label(c) } }));
+  const mine = category.products.length > 0 ? [{ id: category.id, anchor: `s-${shortId(category.id)}`, name: subs.length > 0 ? own : category.name, products: category.products }] : [];
+  return [...mine, ...subs];
 }

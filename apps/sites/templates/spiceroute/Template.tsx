@@ -11,6 +11,7 @@ import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
 import { basicLinks, orderCta, pageTop, SiteHero, SiteMasthead } from "../_kit/Top";
+import { SiteMenu } from "../_kit/Menu";
 
 const copy = {
   en: { welcome: "Ahlan wa sahlan", menu: "Our table", jump: "Menu sections", story: "Our story", visit: "Visit us", hours: "Hours", reserve: "Reserve on WhatsApp" },
@@ -92,6 +93,7 @@ export default function SpiceRouteTemplate({ site, now }: TemplateProps & { now?
             <span>{c.menu}</span>
             <Star className="star" />
           </h2>
+          <SiteMenu ctx={ctx} like="list">
           {ctx.sections.length > 1 && (
             <nav className="jump" aria-label={c.jump}>
               {ctx.sections.map((s) => (
@@ -128,6 +130,7 @@ export default function SpiceRouteTemplate({ site, now }: TemplateProps & { now?
               </ul>
             </section>
           ))}
+          </SiteMenu>
         </section>
 
         {story && (

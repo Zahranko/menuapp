@@ -11,6 +11,7 @@ import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
 import { basicLinks, orderCta, pageTop, SiteHero, SiteMasthead } from "../_kit/Top";
+import { SiteMenu } from "../_kit/Menu";
 
 const copy = {
   en: {
@@ -135,6 +136,7 @@ export default function NeonDinerTemplate({
           data-section="menu"
           aria-label={c.menu}
         >
+          <SiteMenu ctx={ctx} like="list" level={2}>
           {ctx.sections.length > 1 && (
             <nav className="jukebox" aria-label={c.jump}>
               {ctx.sections.map((s, i) => (
@@ -197,6 +199,7 @@ export default function NeonDinerTemplate({
               </ul>
             </section>
           ))}
+          </SiteMenu>
         </section>
 
         {story && (

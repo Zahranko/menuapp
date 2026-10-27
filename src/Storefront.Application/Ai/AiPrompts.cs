@@ -68,6 +68,13 @@ internal static class AiPrompts
           (header "big"), "make the top feel like a poster" (opening "poster", or "type" for words only), "show the menu
           first" (opening "menu"), "a big photo at the top" (opening "full", with a "transparent" or "glass" header over it)
           or "a simpler header" (header "minimal").
+        - The "Menu layout" group changes how the products show: the layout ("menu.layout"), columns on big screens, where the
+          photos go and their proportions, where the prices go, the category links and the category titles. "auto" keeps the
+          template's own menu; the template's own menu choices in that group only show while "menu.layout" is "auto". Use it
+          for requests like "make it look like a printed menu" (layout "compact"), "bigger photos" (layout "large", or "tiles"
+          for photos with the names on them), "tabs for categories" (category links "tabs"), "like a magazine" (layout
+          "magazine"), "no photos" (photos "none") or "a list with prices" (layout "list"). Leave an option on "auto" unless the
+          owner asks about it.
         - Keep the look readable: enough contrast between text, background and accent color.
         - When a photo is attached it shows the owner's logo, shop, food or packaging. Use its colors and mood when the owner
           asks, or when they ask for a design without saying more.

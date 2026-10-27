@@ -5,6 +5,7 @@
 @import "../_kit/cards.css";
 @import "../_kit/hero.css";
 @import "../_kit/layout.css";
+@import "../_kit/menu.css";
 @import "../_kit/style.css";
 
 .t-night {
@@ -266,6 +267,10 @@
   .menu > .kicker {
     padding: 0 16px;
   }
+  /* The shared menu (_kit/menu.css) keeps the side space of the template's own rows. */
+  .menu {
+    --kit-mn-pad: 0 16px;
+  }
   .chips {
     position: sticky;
     top: 61px;
@@ -518,6 +523,9 @@
   @container page (min-width: 760px) {
     .bar {
       padding: 12px 40px;
+    }
+    .menu {
+      --kit-mn-pad: 0 max(40px, calc((100cqi - 1200px) / 2));
     }
     .open {
       display: inline-flex;
