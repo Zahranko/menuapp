@@ -64,7 +64,7 @@ export default function PizzeriaTemplate({ site, now }: TemplateProps & { now?: 
           <div className="hero-text">
             <h1 id="hero-title">{ctx.text("hero.title") || site.business.name}</h1>
             {ctx.text("hero.subtitle") && <p>{ctx.text("hero.subtitle")}</p>}
-            <a className="cta" href="#menu">
+            <a data-k="btn" className="cta" href="#menu">
               {c.see}
             </a>
           </div>
@@ -137,7 +137,7 @@ export default function PizzeriaTemplate({ site, now }: TemplateProps & { now?: 
                 <h3>{ctx.t.findUs}</h3>
                 <ContactList ctx={ctx} />
                 {ctx.contact.whatsapp && (
-                  <a className="cta" href={ctx.contact.whatsapp} rel="noopener" target="_blank">
+                  <a data-k="btn" className="cta" href={ctx.contact.whatsapp} rel="noopener" target="_blank">
                     <WhatsApp /> {c.order}
                   </a>
                 )}

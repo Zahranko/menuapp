@@ -814,17 +814,32 @@ function applyGalleryOption(site: PublicSite, count: number, products: boolean):
 export const FIXTURE_SLIDES = ["/presets/loft.svg", "/presets/counter.svg", "/presets/marble.svg", "/presets/pour.svg", "/presets/arches.svg", "/presets/shelf.svg"];
 
 const CARD_KEYS: Record<string, string> = { card: "cards.style", border: "cards.border", corners: "cards.corners", photo: "cards.photo", spacing: "cards.spacing" };
+/** Page style options for fixture previews (_kit/style.ts): "ts_<text size>", "hs_<heading style>", "tr_<letter spacing>",
+ * "sp_<space between sections>", "btn_<button style>", "pic_<photo shape>", "div_<divider>", "tex_<texture>", "mo_<motion>". */
+const STYLE_KEYS: Record<string, string> = {
+  ts: "style.textSize",
+  hs: "style.headings",
+  tr: "style.tracking",
+  sp: "style.spacing",
+  btn: "style.buttons",
+  pic: "style.photos",
+  div: "style.dividers",
+  tex: "style.texture",
+  mo: "style.motion",
+};
 const HERO_KEYS: Record<string, string> = { trans: "hero.transition", speed: "hero.speed", height: "hero.height", overlay: "hero.overlay", text: "hero.textPosition" };
 
 /**
  * Card and hero slider options for fixture previews (same token part as applySiteOptions): "card_<style>",
  * "border_<width>", "bc_<accent|ink|rrggbb>" (border color), "corners_<size>", "photo_<shape>", "spacing_<tight|airy>";
+ * the page style tokens above (STYLE_KEYS);
  * "slides" or "slides_<n>" (n hero photos in all, 2 to 6), "trans_<slide|fade|zoom>", "speed_<slow|normal|fast>",
  * "auto_off" (no autoplay), "ctrl_<both|dots|arrows|none>", "height_<size>", "overlay_<amount>", "text_<position>".
  */
 function applyCardAndHeroOption(site: PublicSite, key: string, value: string): void {
   const set = (settings: Settings) => (site.settings = { ...site.settings, ...settings });
   if (key in CARD_KEYS) set({ [CARD_KEYS[key]]: value });
+  else if (key in STYLE_KEYS) set({ [STYLE_KEYS[key]]: value });
   else if (key === "bc") set({ "cards.borderColor": /^[0-9a-f]{6}$/i.test(value) ? `#${value.toUpperCase()}` : value });
   else if (key in HERO_KEYS) set({ [HERO_KEYS[key]]: value });
   else if (key === "auto") set({ "hero.autoplay": value !== "off" });

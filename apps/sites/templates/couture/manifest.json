@@ -11,6 +11,7 @@
   },
   "version": 1,
   "heroSlider": { "kind": "backdrop", "source": "hero.image" },
+  "pageStyle": { "skip": ["style.motion"] },
   "tier": "pro",
   "thumbnail": "/templates/couture/thumbnail.png",
   "sample": "couture",

@@ -112,7 +112,7 @@ export default function PocketCatalogTemplate({ site, now }: TemplateProps & { n
                   <span className="product-price">{item.priceText}</span>
                 </button>
                 {ctx.site.business.whatsApp && item.isAvailable && (
-                  <a className="ask" href={whatsappLink(ctx.site.business.whatsApp, `${askStart} ${item.name}`.trim())} rel="noopener" target="_blank" aria-label={`${c.ask}: ${item.name}`}>
+                  <a data-k="btn" className="ask" href={whatsappLink(ctx.site.business.whatsApp, `${askStart} ${item.name}`.trim())} rel="noopener" target="_blank" aria-label={`${c.ask}: ${item.name}`}>
                     <WhatsApp /> {c.ask}
                   </a>
                 )}
@@ -127,13 +127,13 @@ export default function PocketCatalogTemplate({ site, now }: TemplateProps & { n
         {(story || ctx.on("visit")) && (
           <div className="info">
             {story && (
-              <section className="card" id="story" data-section="story" aria-labelledby="story-title">
+              <section className="card" id="story" data-section="story" data-k="boxed" aria-labelledby="story-title">
                 <h2 id="story-title">{ctx.text("story.title") || c.about}</h2>
                 <p>{story}</p>
               </section>
             )}
             {ctx.on("visit") && (
-              <section className="card" id="visit" data-section="visit" aria-labelledby="visit-title">
+              <section className="card" id="visit" data-section="visit" data-k="boxed" aria-labelledby="visit-title">
                 <h2 id="visit-title">{c.visit}</h2>
                 <div className="visit-cols">
                   <ContactList ctx={ctx} />

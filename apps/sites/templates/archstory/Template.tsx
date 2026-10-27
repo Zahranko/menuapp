@@ -61,7 +61,7 @@ export default function ArchStoryTemplate({ site, now }: TemplateProps & { now?:
             {ctx.text("hero.eyebrow") && <p className="eyebrow">{ctx.text("hero.eyebrow")}</p>}
             <h1 id="cover-title">{ctx.text("hero.title") || site.business.name}</h1>
             {ctx.text("hero.subtitle") && <p className="lede">{ctx.text("hero.subtitle")}</p>}
-            <a className="pill" href="#menu">
+            <a data-k="btn" className="pill" href="#menu">
               {ctx.t.viewMenu} <Arrow className="flip" />
             </a>
           </div>
@@ -80,7 +80,7 @@ export default function ArchStoryTemplate({ site, now }: TemplateProps & { now?:
               {ctx.picks.map((item, i) => (
                 <li key={item.id}>
                   <button type="button" className="story-card" data-item-id={item.id}>
-                    <span className="arch card-arch">
+                    <span data-k="photo" className="arch card-arch">
                       <ProductPicture item={item} sizes="(min-width: 760px) 30vw, 75vw" />
                     </span>
                     <span className="card-no">{two(i + 1)}</span>
@@ -127,7 +127,7 @@ export default function ArchStoryTemplate({ site, now }: TemplateProps & { now?:
         {storyText && (
           <section id="story" className="story" data-section="story" aria-labelledby="story-title">
             {storyImage && (
-              <div className="arch story-arch">
+              <div data-k="photo" className="arch story-arch">
                 <Picture src={storyImage} sizes="(min-width: 760px) 40vw, 80vw" />
               </div>
             )}
@@ -170,12 +170,12 @@ export default function ArchStoryTemplate({ site, now }: TemplateProps & { now?:
                 <ContactList ctx={ctx} />
                 <div className="visit-actions">
                   {ctx.contact.whatsapp && (
-                    <a className="pill" href={ctx.contact.whatsapp} rel="noopener" target="_blank">
+                    <a data-k="btn" className="pill" href={ctx.contact.whatsapp} rel="noopener" target="_blank">
                       <WhatsApp /> {c.order}
                     </a>
                   )}
                   {ctx.contact.maps && (
-                    <a className="pill ghost" href={ctx.contact.maps} rel="noopener" target="_blank">
+                    <a data-k="btn" className="pill ghost" href={ctx.contact.maps} rel="noopener" target="_blank">
                       {ctx.t.directions}
                     </a>
                   )}

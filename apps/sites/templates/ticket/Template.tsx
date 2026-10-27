@@ -237,7 +237,7 @@ export default function TicketTemplate({
                 <h3>{c.contact}</h3>
                 <ContactList ctx={ctx} />
                 {ctx.contact.whatsapp && (
-                  <a
+                  <a data-k="btn"
                     className="order"
                     href={ctx.contact.whatsapp}
                     rel="noopener"

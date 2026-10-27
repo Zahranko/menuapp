@@ -68,7 +68,7 @@ export default function GardenTemplate({ site, now }: TemplateProps & { now?: Da
           <div className="hero-text">
             <h1 id="hero-title">{ctx.text("hero.title") || site.business.name}</h1>
             {ctx.text("hero.subtitle") && <p>{ctx.text("hero.subtitle")}</p>}
-            <a className="button" href="#menu">
+            <a data-k="btn" className="button" href="#menu">
               {c.see}
             </a>
           </div>
@@ -146,7 +146,7 @@ export default function GardenTemplate({ site, now }: TemplateProps & { now?: Da
                 <h3>{ctx.t.findUs}</h3>
                 <ContactList ctx={ctx} />
                 {ctx.contact.whatsapp && (
-                  <a className="button" href={ctx.contact.whatsapp} rel="noopener" target="_blank">
+                  <a data-k="btn" className="button" href={ctx.contact.whatsapp} rel="noopener" target="_blank">
                     <WhatsApp /> {c.order}
                   </a>
                 )}

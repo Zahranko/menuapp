@@ -58,7 +58,7 @@ export default function AgencyTemplate({ site, now }: TemplateProps & { now?: Da
           {ctx.on("steps") && process.length > 0 && <a href="#process">{c.process}</a>}
           <a href="#contact">{c.contact}</a>
         </nav>
-        <a className="pill" href="#contact">
+        <a data-k="btn" className="pill" href="#contact">
           {c.start}
         </a>
       </header>
@@ -150,7 +150,7 @@ export default function AgencyTemplate({ site, now }: TemplateProps & { now?: Da
             <h2 id="work-title">{ctx.text("work.title") || c.work}</h2>
             <ul className="plain work-grid" data-gallery>
               {ctx.gallery.slice(0, 6).map((src, i) => (
-                <li key={src + i}>
+                <li key={src + i} data-k="photo fill">
                   <Picture src={src} sizes="(min-width: 760px) 50vw, 100vw" alt={ctx.t.photoOf.replace("{n}", String(i + 1)).replace("{name}", site.business.name)} />
                 </li>
               ))}
@@ -220,12 +220,12 @@ export default function AgencyTemplate({ site, now }: TemplateProps & { now?: Da
           </h2>
           <div className="contact-actions">
             {book && (
-              <a className="pill big" href={book} rel="noopener" target="_blank">
+              <a data-k="btn" className="pill big" href={book} rel="noopener" target="_blank">
                 <WhatsApp /> {c.start}
               </a>
             )}
             {ctx.contact.email && (
-              <a className="pill big ghost" href={ctx.contact.email}>
+              <a data-k="btn" className="pill big ghost" href={ctx.contact.email}>
                 <Mail /> {c.email}
               </a>
             )}

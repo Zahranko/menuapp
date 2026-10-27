@@ -22,6 +22,7 @@ class TemplateField {
     this.optionLabels = const {},
     this.optionLabelsAr = const {},
     this.swatches = const {},
+    this.previews = const {},
     this.presets = const [],
     this.max,
     this.min,
@@ -43,6 +44,7 @@ class TemplateField {
       optionLabels: _strings(json['optionLabels']),
       optionLabelsAr: _strings(json['optionLabelsAr']),
       swatches: {for (final e in ((json['swatches'] as Map?) ?? const {}).entries) e.key.toString(): e.value.toString()},
+      previews: _strings(json['previews']),
       presets: [for (final o in (json['presets'] as List?) ?? const []) o.toString()],
       max: (json['max'] as num?)?.toDouble(),
       min: (json['min'] as num?)?.toDouble(),
@@ -68,6 +70,10 @@ class TemplateField {
   /// Arabic option labels, keyed like [optionLabels].
   final Map<String, String> optionLabelsAr;
   final Map<String, String> swatches;
+
+  /// A choice's options as small pictures (paths like /kit/previews/buttons-pill.svg, resolved with AppConfig.asset).
+  /// A choice with previews shows picture tiles instead of chips.
+  final Map<String, String> previews;
   final List<String> presets;
 
   /// Text length for text fields, item count for images, upper end for range.

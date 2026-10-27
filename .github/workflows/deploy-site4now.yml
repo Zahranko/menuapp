@@ -69,12 +69,14 @@ jobs:
           mkdir -p out/docs out/apps/sites/templates
           cp docs/reserved-slugs.txt out/docs/
           cp apps/sites/templates/registry.json out/apps/sites/templates/
-          # Template thumbnails and preset pictures, served by the API for the app's gallery and editor.
+          # Template thumbnails, preset pictures and option previews, served by the API for the app's gallery and editor.
           mkdir -p out/wwwroot/templates
           for dir in apps/sites/public/templates/*/; do
             id=$(basename "$dir"); mkdir -p "out/wwwroot/templates/$id"; cp "$dir/thumbnail.png" "out/wwwroot/templates/$id/"
           done
           cp -r apps/sites/public/presets out/wwwroot/presets
+          # Picture tiles of the shared "Page style" options (/kit/previews/*.svg).
+          cp -r apps/sites/public/kit out/wwwroot/kit
           mkdir -p out/logs
 
       - name: Write web.config

@@ -182,7 +182,7 @@ function Edit({ ctx, f }: { ctx: SiteContext; f: F }) {
         {picks.map((item, i) => (
           <li key={item.id} className={i === 0 ? "is-lead" : undefined}>
             <button type="button" className="fo-pick" data-item-id={item.id}>
-              <span className="fo-pick-media">
+              <span data-k="photo" className="fo-pick-media">
                 <ProductPicture item={item} sizes={i === 0 ? "(min-width: 760px) 50vw, 100vw" : "(min-width: 760px) 25vw, 50vw"} />
               </span>
               <span className="fo-pick-cap">
@@ -267,7 +267,7 @@ function Lookbook({ ctx, f, photos }: { ctx: SiteContext; f: F; photos: string[]
       <ul className="plain fo-look-grid" data-gallery>
         {photos.map((src, i) => (
           <li key={src + i} style={{ "--fo-ar": ["3 / 4", "4 / 5", "3 / 4", "1 / 1", "4 / 5", "3 / 4"][i % 6] } as CSSProperties}>
-            <button type="button" className="fs-tile" data-photo={i} aria-label={fill(f.openPhoto, { n: i + 1 })}>
+            <button data-k="photo fill" type="button" className="fs-tile" data-photo={i} aria-label={fill(f.openPhoto, { n: i + 1 })}>
               <Picture src={src} sizes="(min-width: 760px) 33vw, 50vw" />
             </button>
           </li>
@@ -324,12 +324,12 @@ function Store({ ctx, c, f }: { ctx: SiteContext; c: C; f: F }) {
           <ContactList ctx={ctx} className="contact fo-contact" />
           <div className="fo-store-actions">
             {contact.whatsapp && (
-              <a className="fo-btn" href={contact.whatsapp} target="_blank" rel="noopener noreferrer">
+              <a data-k="btn" className="fo-btn" href={contact.whatsapp} target="_blank" rel="noopener noreferrer">
                 <WhatsApp /> {f.askSize}
               </a>
             )}
             {contact.maps && (
-              <a className="fo-btn fo-btn-line" href={contact.maps} target="_blank" rel="noopener noreferrer">
+              <a data-k="btn" className="fo-btn fo-btn-line" href={contact.maps} target="_blank" rel="noopener noreferrer">
                 <Pin /> {ctx.t.directions}
               </a>
             )}

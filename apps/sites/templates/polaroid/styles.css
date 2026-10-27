@@ -4,6 +4,7 @@
 @import "../_kit/options.css";
 @import "../_kit/cards.css";
 @import "../_kit/hero.css";
+@import "../_kit/style.css";
 
 .t-polaroid {
   container: page / inline-size;
@@ -195,7 +196,7 @@
 
   /* albums */
   .menu {
-    padding: 34px 18px 10px;
+    padding: calc(34px * var(--kit-space, 1)) 18px calc(10px * var(--kit-space, 1));
     scroll-margin-top: 10px;
   }
   .jump {
@@ -221,7 +222,7 @@
     rotate: -2deg;
   }
   .album {
-    padding-top: 40px;
+    padding-top: calc(40px * var(--kit-space, 1));
     scroll-margin-top: 10px;
   }
   .album h2 {
@@ -256,8 +257,8 @@
   /* note and visit */
   .note {
     width: min(100% - 36px, 560px);
-    margin: 56px auto 0;
-    padding: 30px 26px;
+    margin: calc(56px * var(--kit-space, 1)) auto 0;
+    padding: calc(30px * var(--kit-space, 1)) 26px;
     background: var(--paper);
     color: var(--pen);
     box-shadow: 0 16px 28px -18px #0008;
@@ -275,7 +276,7 @@
     white-space: pre-line;
   }
   .visit {
-    padding: 56px 18px 30px;
+    padding: calc(56px * var(--kit-space, 1)) 18px calc(30px * var(--kit-space, 1));
     scroll-margin-top: 10px;
   }
   .visit > h2 {
@@ -320,7 +321,7 @@
     border-color: color-mix(in srgb, currentColor 40%, transparent);
   }
   .foot {
-    padding: 18px 18px 30px;
+    padding: calc(18px * var(--kit-space, 1)) 18px calc(30px * var(--kit-space, 1));
     color: var(--muted);
   }
   .credits {

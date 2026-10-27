@@ -139,12 +139,12 @@ export default function LinenTemplate({ site, now }: TemplateProps & { now?: Dat
                   <ContactList ctx={ctx} />
                   <div className="actions">
                     {ctx.contact.whatsapp && (
-                      <a className="button" href={ctx.contact.whatsapp} rel="noopener" target="_blank">
+                      <a data-k="btn" className="button" href={ctx.contact.whatsapp} rel="noopener" target="_blank">
                         <WhatsApp /> {c.order}
                       </a>
                     )}
                     {ctx.contact.maps && (
-                      <a className="button ghost" href={ctx.contact.maps} rel="noopener" target="_blank">
+                      <a data-k="btn" className="button ghost" href={ctx.contact.maps} rel="noopener" target="_blank">
                         {ctx.t.directions}
                       </a>
                     )}

@@ -5,6 +5,7 @@
 @import "../_kit/options.css";
 @import "../_kit/cards.css";
 @import "../_kit/hero.css";
+@import "../_kit/style.css";
 
 .t-souq {
   container: site / inline-size;
@@ -406,7 +407,7 @@
 
   /* sections */
   .block {
-    padding: 64px 20px;
+    padding: calc(64px * var(--kit-space, 1)) 20px;
     scroll-margin-top: 70px;
   }
   .alt {
@@ -919,7 +920,7 @@
   .foot {
     background: var(--sfoot);
     color: var(--sfootink);
-    padding: 56px 20px 28px;
+    padding: calc(56px * var(--kit-space, 1)) 20px calc(28px * var(--kit-space, 1));
   }
   .footTop {
     display: grid;
@@ -1154,8 +1155,8 @@
       border-inline-start: 1px solid var(--sline);
     }
     .block {
-      padding-top: 110px;
-      padding-bottom: 110px;
+      padding-top: calc(110px * var(--kit-space, 1));
+      padding-bottom: calc(110px * var(--kit-space, 1));
     }
     .head {
       margin-bottom: 40px;

@@ -18,7 +18,7 @@ export function Logo({ ctx }: { ctx: SouqContext }) {
 export function Header({ ctx }: { ctx: SouqContext }) {
   const links = navLinks(ctx);
   const order = ctx.contact.whatsapp && (
-    <a className={`btn pri navCta`} href={ctx.contact.whatsapp} rel="noopener" target="_blank">
+    <a data-k="btn" className={`btn pri navCta`} href={ctx.contact.whatsapp} rel="noopener" target="_blank">
       <WhatsApp />
       {ctx.t.whatsapp}
     </a>
@@ -45,7 +45,7 @@ export function Header({ ctx }: { ctx: SouqContext }) {
             </a>
           ))}
           {ctx.contact.whatsapp && (
-            <a className={`btn pri`} href={ctx.contact.whatsapp} rel="noopener" target="_blank">
+            <a data-k="btn" className={`btn pri`} href={ctx.contact.whatsapp} rel="noopener" target="_blank">
               <WhatsApp />
               {ctx.t.whatsapp}
             </a>

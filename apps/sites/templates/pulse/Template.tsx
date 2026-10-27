@@ -54,7 +54,7 @@ export default function PulseTemplate({ site, now }: TemplateProps & { now?: Dat
           {ctx.on("visit") && <a href="#visit">{c.visit}</a>}
         </nav>
         {join && (
-          <a className="btn small" href={join} rel="noopener" target="_blank">
+          <a data-k="btn" className="btn small" href={join} rel="noopener" target="_blank">
             {c.join}
           </a>
         )}
@@ -77,11 +77,11 @@ export default function PulseTemplate({ site, now }: TemplateProps & { now?: Dat
             {ctx.text("hero.subtitle") && <p className="lede">{ctx.text("hero.subtitle")}</p>}
             <div className="actions">
               {join && (
-                <a className="btn" href={join} rel="noopener" target="_blank">
+                <a data-k="btn" className="btn" href={join} rel="noopener" target="_blank">
                   <WhatsApp /> {c.join}
                 </a>
               )}
-              <a className="btn outline" href="#menu">
+              <a data-k="btn" className="btn outline" href="#menu">
                 {c.plans}
               </a>
             </div>
@@ -195,7 +195,7 @@ export default function PulseTemplate({ site, now }: TemplateProps & { now?: Dat
             </h2>
             <ul className="plain strip" data-gallery tabIndex={0} aria-label={c.photos}>
               {ctx.gallery.slice(0, 6).map((src, i) => (
-                <li key={src + i}>
+                <li key={src + i} data-k="photo fill">
                   <Picture src={src} sizes="(min-width: 760px) 30vw, 70vw" alt={ctx.t.photoOf.replace("{n}", String(i + 1)).replace("{name}", site.business.name)} />
                 </li>
               ))}
@@ -238,7 +238,7 @@ export default function PulseTemplate({ site, now }: TemplateProps & { now?: Dat
         <section className="join" data-section="join" aria-labelledby="join-title">
           <h2 id="join-title">{ctx.text("cta.title") || c.ready}</h2>
           {join && (
-            <a className="btn dark" href={join} rel="noopener" target="_blank">
+            <a data-k="btn" className="btn dark" href={join} rel="noopener" target="_blank">
               <WhatsApp /> {c.join}
             </a>
           )}

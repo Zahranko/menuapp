@@ -213,6 +213,18 @@ public class ChatAboutDesignTests
     }
 
     [Fact]
+    public async Task The_instructions_explain_the_page_style_group()
+    {
+        var (handler, assistant, _) = Create();
+        await handler.Handle(Ask("Make it more playful"), CancellationToken.None);
+        var instructions = assistant.Requests.Single().Instructions;
+        Assert.Contains("\"Page style\"", instructions);
+        Assert.Contains("\"more playful\"", instructions);
+        Assert.Contains("\"more elegant\"", instructions);
+        Assert.Contains("\"more space\"", instructions);
+    }
+
+    [Fact]
     public async Task A_missing_reply_gets_a_short_one_in_the_chosen_language()
     {
         var (handler, assistant, _) = Create();

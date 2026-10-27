@@ -55,7 +55,7 @@ export function Footer({ ctx }: { ctx: SouqContext }) {
                 <form className="news" action={`mailto:${business.email}`} method="get">
                   <input type="hidden" name="subject" value={c.newsletter} />
                   <input type="email" name="body" required placeholder={t.yourEmail} aria-label={t.yourEmail} />
-                  <button type="submit" className={`btn pri`}>
+                  <button data-k="btn" type="submit" className={`btn pri`}>
                     {c.join}
                   </button>
                 </form>

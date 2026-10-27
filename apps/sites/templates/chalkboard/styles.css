@@ -4,6 +4,7 @@
 @import "../_kit/options.css";
 @import "../_kit/cards.css";
 @import "../_kit/hero.css";
+@import "../_kit/style.css";
 
 .t-chalk {
   container: page / inline-size;
@@ -106,7 +107,7 @@
   /* today's special */
   .special {
     position: relative;
-    margin: 30px 0 10px;
+    margin: calc(30px * var(--kit-space, 1)) 0 calc(10px * var(--kit-space, 1));
     text-align: center;
   }
   .special h2 {
@@ -200,7 +201,7 @@
 
   /* menu */
   .menu {
-    padding-top: 30px;
+    padding-top: calc(30px * var(--kit-space, 1));
     scroll-margin-top: 10px;
   }
   .menu-title {
@@ -308,7 +309,7 @@
     flex-direction: column;
     align-items: center;
     max-width: 52ch;
-    margin: 44px auto 0;
+    margin: calc(44px * var(--kit-space, 1)) auto 0;
     text-align: center;
     scroll-margin-top: 10px;
   }
@@ -323,7 +324,7 @@
 
   /* visit */
   .visit {
-    margin-top: 44px;
+    margin-top: calc(44px * var(--kit-space, 1));
     scroll-margin-top: 10px;
   }
   .visit > h2 {
@@ -370,8 +371,8 @@
     border-color: color-mix(in srgb, currentColor 40%, transparent);
   }
   .foot {
-    margin-top: 40px;
-    padding: 18px 0 20px;
+    margin-top: calc(40px * var(--kit-space, 1));
+    padding: calc(18px * var(--kit-space, 1)) 0 calc(20px * var(--kit-space, 1));
     border-top: 1.5px dashed var(--chalk);
     color: var(--muted);
     text-align: center;

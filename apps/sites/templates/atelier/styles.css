@@ -4,6 +4,7 @@
 @import "../_kit/options.css";
 @import "../_kit/cards.css";
 @import "../_kit/hero.css";
+@import "../_kit/style.css";
 
 .t-atelier {
   container: page / inline-size;
@@ -211,7 +212,7 @@
 
   /* services */
   .services {
-    padding: 64px 18px 40px;
+    padding: calc(64px * var(--kit-space, 1)) 18px calc(40px * var(--kit-space, 1));
     scroll-margin-top: 64px;
   }
   .section-head {
@@ -321,7 +322,7 @@
   .story {
     display: grid;
     gap: 28px;
-    padding: 40px 18px 60px;
+    padding: calc(40px * var(--kit-space, 1)) 18px calc(60px * var(--kit-space, 1));
     scroll-margin-top: 64px;
   }
   .story-image {
@@ -360,7 +361,7 @@
 
   /* reviews */
   .reviews {
-    padding: 70px 18px;
+    padding: calc(70px * var(--kit-space, 1)) 18px;
     text-align: center;
     background: var(--deep);
     color: #f6f1ee;
@@ -387,7 +388,7 @@
 
   /* visit */
   .visit {
-    padding: 64px 18px 40px;
+    padding: calc(64px * var(--kit-space, 1)) 18px calc(40px * var(--kit-space, 1));
     scroll-margin-top: 64px;
   }
   .visit > h2 {
@@ -413,7 +414,7 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
-    padding: 28px 18px 30px;
+    padding: calc(28px * var(--kit-space, 1)) 18px calc(30px * var(--kit-space, 1));
     border-top: 1px solid var(--line);
     color: var(--muted);
   }
@@ -475,7 +476,7 @@
       padding: 32px max(28px, calc((100cqi - 1200px) / 6));
     }
     .services {
-      padding: 100px max(36px, calc((100cqi - 1200px) / 2)) 60px;
+      padding: calc(100px * var(--kit-space, 1)) max(36px, calc((100cqi - 1200px) / 2)) calc(60px * var(--kit-space, 1));
       scroll-margin-top: 76px;
     }
     .section-head h2 {
@@ -499,7 +500,7 @@
       grid-template-columns: 0.9fr 1fr;
       align-items: center;
       gap: 80px;
-      padding: 60px max(36px, calc((100cqi - 1200px) / 2)) 100px;
+      padding: calc(60px * var(--kit-space, 1)) max(36px, calc((100cqi - 1200px) / 2)) calc(100px * var(--kit-space, 1));
     }
     .story-text h2 {
       font-size: calc(52px * var(--fs));
@@ -516,14 +517,14 @@
       aspect-ratio: auto;
     }
     .reviews {
-      padding: 100px max(36px, calc((100cqi - 1200px) / 2));
+      padding: calc(100px * var(--kit-space, 1)) max(36px, calc((100cqi - 1200px) / 2));
     }
     .quotes {
       grid-template-columns: repeat(3, 1fr);
       gap: 48px;
     }
     .visit {
-      padding: 100px max(36px, calc((100cqi - 1200px) / 2)) 60px;
+      padding: calc(100px * var(--kit-space, 1)) max(36px, calc((100cqi - 1200px) / 2)) calc(60px * var(--kit-space, 1));
     }
     .visit-grid {
       grid-template-columns: 1fr 1fr;

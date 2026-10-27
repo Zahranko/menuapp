@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
+import '../../core/config.dart';
 import '../../core/providers.dart';
 import '../../core/theme.dart';
 import '../../core/widgets/form_widgets.dart';
@@ -29,6 +30,7 @@ class SettingField extends StatelessWidget {
   Widget build(BuildContext context) {
     final control = switch (field.type) {
       'text' || 'textarea' => _TextSetting(field: field, value: value as String? ?? '', onChanged: onChanged),
+      'choice' when field.previews.isNotEmpty => _PictureChoiceSetting(field: field, value: value?.toString(), onChanged: onChanged),
       'choice' => _ChoiceSetting(field: field, value: value?.toString(), onChanged: onChanged),
       'palette' || 'color' => _SwatchSetting(field: field, value: value?.toString(), onChanged: onChanged),
       'image' => _ImageSetting(field: field, value: value as String? ?? '', onChanged: onChanged),
@@ -117,6 +119,99 @@ class _ChoiceSetting extends StatelessWidget {
             onSelected: (_) => onChanged(o),
           ),
       ]);
+}
+
+/// Draws one option's preview picture (a site-relative SVG path from the template schema). Tests and screenshots replace it
+/// to draw the pictures without a network.
+@visibleForTesting
+Widget Function(String path) previewPicture = (path) => SvgPicture.network(
+      AppConfig.asset(path),
+      fit: BoxFit.cover,
+      placeholderBuilder: (_) => const SizedBox.shrink(),
+      errorBuilder: (_, _, _) => Icon(Icons.image_outlined, color: BrandColors.muted),
+    );
+
+/// A choice whose options come with pictures (like the "Page style" group): a row of picture tiles, each with its name
+/// under it and the chosen one outlined. The row scrolls sideways when it is wider than the screen; options without a
+/// picture show their name in the tile.
+class _PictureChoiceSetting extends StatelessWidget {
+  const _PictureChoiceSetting({required this.field, required this.value, required this.onChanged});
+
+  final TemplateField field;
+  final String? value;
+  final ValueChanged<Object?> onChanged;
+
+  @override
+  Widget build(BuildContext context) => SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          for (final o in field.options)
+            Padding(
+              padding: const EdgeInsetsDirectional.only(end: 10),
+              child: _PictureTile(
+                key: Key('setting-${field.key}-$o'),
+                label: field.optionLabelFor(context, o),
+                picture: field.previews[o],
+                selected: value == o,
+                onTap: () => onChanged(o),
+              ),
+            ),
+        ]),
+      );
+}
+
+class _PictureTile extends StatelessWidget {
+  const _PictureTile({super.key, required this.label, required this.picture, required this.selected, required this.onTap});
+
+  final String label;
+  final String? picture;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) => Semantics(
+        button: true,
+        selected: selected,
+        label: label,
+        // One node per tile: the name is read once (not again from the text under the picture) and the tile stays tappable.
+        excludeSemantics: true,
+        onTap: onTap,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(14),
+          child: SizedBox(
+            width: 76,
+            child: Column(children: [
+              Container(
+                width: 72,
+                height: 72,
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: selected ? BrandColors.primary : BrandColors.line, width: selected ? 3 : 1),
+                ),
+                child: picture == null
+                    ? Center(child: Padding(padding: const EdgeInsets.all(6), child: Text(label, textAlign: TextAlign.center, style: const TextStyle(fontSize: 11))))
+                    : previewPicture(picture!),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                label,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 12,
+                  height: 1.25,
+                  fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+                  color: selected ? BrandColors.primary : BrandColors.ink,
+                ),
+              ),
+            ]),
+          ),
+        ),
+      );
 }
 
 Color? _hex(String? hex) => colorFromHex(hex);

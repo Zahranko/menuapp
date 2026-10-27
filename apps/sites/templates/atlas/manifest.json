@@ -11,6 +11,7 @@
   },
   "version": 2,
   "heroSlider": { "kind": "panel", "source": "hero.image" },
+  "pageStyle": { "skip": ["style.motion"] },
   "tier": "pro",
   "thumbnail": "/templates/atlas/thumbnail.png",
   "sample": "atlas",

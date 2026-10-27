@@ -267,7 +267,7 @@ function Combo({ v, item }: { v: View; item: MenuItem }) {
   }
   return (
     <button type="button" className={cx("combo kit-card", !item.isAvailable && "out")} data-item-id={item.id}>
-      <span className="combo-media kit-card-media">
+      <span data-k="overlay" className="combo-media kit-card-media">
         <ProductPicture item={item} sizes="(min-width: 1100px) 25vw, (min-width: 700px) 33vw, 50vw" />
         {item.labelText && <span className="tape">{item.labelText}</span>}
         {!item.isAvailable && <span className="stamp">{v.ctx.t.soldOut}</span>}
@@ -356,7 +356,7 @@ function Leaderboard({ v, items, podium = 1 }: { v: View; items: MenuItem[]; pod
         {top.map((item, i) => (
           <li key={item.id} className={cx("rise", `hall-${i + 1}`)}>
             <button type="button" className={cx("champ", !item.isAvailable && "out")} data-item-id={item.id}>
-              <span className="champ-media">
+              <span data-k="photo overlay" className="champ-media">
                 <ProductPicture item={item} sizes={i === 0 ? "(min-width: 900px) 40vw, 100vw" : "(min-width: 900px) 25vw, 50vw"} />
                 {!item.isAvailable && <span className="stamp">{v.ctx.t.soldOut}</span>}
               </span>
@@ -376,7 +376,7 @@ function Leaderboard({ v, items, podium = 1 }: { v: View; items: MenuItem[]; pod
                 <span className="lb-n" aria-hidden="true">
                   {podium + i + 1}
                 </span>
-                <span className="lb-pic">
+                <span data-k="photo" className="lb-pic">
                   <ProductPicture item={item} sizes="72px" />
                 </span>
                 <span className="lb-main">
@@ -403,7 +403,7 @@ function Collage({ v, photos, big = false }: { v: View; photos: { src: string; c
       {photos.map((p, i) => (
         <li key={p.src} className="rise">
           <button type="button" className="snap" data-photo={i} aria-label={p.caption ?? fill(v.c.photo, { n: i + 1 })}>
-            <span className="snap-pic">
+            <span data-k="photo fill" className="snap-pic">
               <Picture src={p.src} sizes={big ? "(min-width: 900px) 25vw, 50vw" : i === 0 ? "(min-width: 900px) 45vw, 90vw" : "(min-width: 900px) 25vw, 50vw"} />
             </span>
           </button>
@@ -456,7 +456,7 @@ function Hero({ v }: { v: View }) {
         </h1>
         {subtitle && <p className="hero-sub">{subtitle}</p>}
         <div className="hero-do">
-          <a className="btn" href={href(PAGE_PATHS.menu)}>
+          <a data-k="btn" className="btn" href={href(PAGE_PATHS.menu)}>
             {c.browse} <Arrow className="flip" />
           </a>
           {ctx.today && <span className="hero-open">{ctx.today}</span>}
@@ -522,7 +522,7 @@ function Home({ v }: { v: View }) {
               </a>
             </div>
             {storyImage && (
-              <div className="band-pic-frame">
+              <div data-k="photo" className="band-pic-frame">
                 <Picture src={storyImage} sizes="(min-width: 900px) 40vw, 90vw" />
               </div>
             )}
@@ -577,7 +577,7 @@ function VisitBlock({ v, heading = true }: { v: View; heading?: boolean }) {
             <p className="visit-addr">{site.business.address}</p>
             {ctx.today && <p className="visit-today">{ctx.today}</p>}
             {contact.maps && (
-              <a className="btn btn-line" href={contact.maps} target="_blank" rel="noopener noreferrer">
+              <a data-k="btn" className="btn btn-line" href={contact.maps} target="_blank" rel="noopener noreferrer">
                 <Pin /> {ctx.t.directions}
               </a>
             )}
@@ -731,7 +731,7 @@ function VisitPage({ v }: { v: View }) {
               <p className="band-text">{story}</p>
             </div>
             {storyImage && (
-              <div className="band-pic-frame">
+              <div data-k="photo" className="band-pic-frame">
                 <Picture src={storyImage} sizes="(min-width: 900px) 40vw, 90vw" />
               </div>
             )}

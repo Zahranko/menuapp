@@ -78,12 +78,12 @@ export function QuickView({ items, labels }: Props) {
             <p className={item.soldOut ? "qv-stock out" : "qv-stock"}>{item.soldOut ? labels.soldOut : labels.inStock}</p>
             <div className="qv-actions">
               {item.order && !item.soldOut && (
-                <a className="a-btn a-btn-solid qv-order" href={item.order} target="_blank" rel="noopener noreferrer">
+                <a data-k="btn" className="a-btn a-btn-solid qv-order" href={item.order} target="_blank" rel="noopener noreferrer">
                   <WhatsApp />
                   {labels.order}
                 </a>
               )}
-              <button type="button" className="a-btn a-btn-line" onClick={close} autoFocus>
+              <button data-k="btn" type="button" className="a-btn a-btn-line" onClick={close} autoFocus>
                 {labels.close}
               </button>
             </div>

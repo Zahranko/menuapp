@@ -4,6 +4,7 @@
 @import "../_kit/options.css";
 @import "../_kit/cards.css";
 @import "../_kit/hero.css";
+@import "../_kit/style.css";
 
 .t-agency {
   container: page / inline-size;
@@ -249,7 +250,7 @@
 
   /* services */
   .services {
-    padding: 70px 18px 40px;
+    padding: calc(70px * var(--kit-space, 1)) 18px calc(40px * var(--kit-space, 1));
     scroll-margin-top: 64px;
   }
   .section-head {
@@ -394,7 +395,7 @@
 
   /* work */
   .work {
-    padding: 60px 18px 30px;
+    padding: calc(60px * var(--kit-space, 1)) 18px calc(30px * var(--kit-space, 1));
     scroll-margin-top: 64px;
   }
   .work h2 {
@@ -420,7 +421,7 @@
 
   /* process */
   .process {
-    padding: 70px 18px 30px;
+    padding: calc(70px * var(--kit-space, 1)) 18px calc(30px * var(--kit-space, 1));
     scroll-margin-top: 64px;
   }
   .process h2 {
@@ -453,7 +454,7 @@
 
   /* reviews */
   .reviews {
-    padding: 70px 18px 30px;
+    padding: calc(70px * var(--kit-space, 1)) 18px calc(30px * var(--kit-space, 1));
   }
   .quotes {
     display: grid;
@@ -490,7 +491,7 @@
 
   /* faq */
   .faq {
-    padding: 60px 18px 20px;
+    padding: calc(60px * var(--kit-space, 1)) 18px calc(20px * var(--kit-space, 1));
   }
   .faq-list {
     margin-top: 14px;
@@ -538,8 +539,8 @@
     display: flex;
     flex-direction: column;
     gap: 22px;
-    margin-top: 50px;
-    padding: 60px 18px 50px;
+    margin-top: calc(50px * var(--kit-space, 1));
+    padding: calc(60px * var(--kit-space, 1)) 18px calc(50px * var(--kit-space, 1));
     border-top: 1px solid var(--line);
     scroll-margin-top: 64px;
   }
@@ -590,7 +591,7 @@
     border-color: color-mix(in srgb, currentColor 40%, transparent);
   }
   .foot {
-    padding: 0 18px 28px;
+    padding: 0 18px calc(28px * var(--kit-space, 1));
     color: var(--muted);
     font-size: 14px;
   }
@@ -692,7 +693,7 @@
       font-size: calc(72px * var(--fs));
     }
     .services {
-      padding-top: 110px;
+      padding-top: calc(110px * var(--kit-space, 1));
       scroll-margin-top: 76px;
     }
     .section-head h2,
@@ -735,7 +736,7 @@
       height: 28px;
     }
     .work {
-      padding-top: 100px;
+      padding-top: calc(100px * var(--kit-space, 1));
     }
     .work-grid {
       grid-template-columns: repeat(6, 1fr);
@@ -749,14 +750,14 @@
       grid-column: span 3;
     }
     .process {
-      padding-top: 110px;
+      padding-top: calc(110px * var(--kit-space, 1));
     }
     .steps {
       grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
       gap: 18px;
     }
     .reviews {
-      padding-top: 110px;
+      padding-top: calc(110px * var(--kit-space, 1));
     }
     .quotes {
       grid-template-columns: 1.4fr 1fr 1fr;
@@ -769,15 +770,15 @@
       display: grid;
       grid-template-columns: 1fr 2fr;
       gap: 40px;
-      padding-top: 100px;
+      padding-top: calc(100px * var(--kit-space, 1));
     }
     .faq-list {
       margin-top: 0;
     }
     .contact-band {
-      margin-top: 90px;
-      padding-top: 100px;
-      padding-bottom: 80px;
+      margin-top: calc(90px * var(--kit-space, 1));
+      padding-top: calc(100px * var(--kit-space, 1));
+      padding-bottom: calc(80px * var(--kit-space, 1));
     }
     .contact-band h2 {
       font-size: calc(170px * var(--fs));

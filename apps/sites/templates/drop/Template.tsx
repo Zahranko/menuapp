@@ -136,7 +136,7 @@ function Poster({ ctx, f }: { ctx: SiteContext; f: F }) {
         </h1>
         {subtitle && <p className="dr-sub">{subtitle}</p>}
         <div className="dr-poster-actions">
-          <a className="dr-btn" href="#menu">
+          <a data-k="btn" className="dr-btn" href="#menu">
             {f.shopAll} <Arrow className="flip" />
           </a>
         </div>
@@ -171,7 +171,7 @@ function Hot({ ctx }: { ctx: SiteContext }) {
               <span className="dr-hot-num" aria-hidden="true">
                 {pad(i + 1)}
               </span>
-              <span className="dr-hot-media">
+              <span data-k="photo" className="dr-hot-media">
                 <ProductPicture item={item} sizes="(min-width: 760px) 26vw, 64vw" />
               </span>
               <span className="dr-hot-name">{item.name}</span>
@@ -250,7 +250,7 @@ function Wall({ ctx, f, photos }: { ctx: SiteContext; f: F; photos: string[] }) 
       <ul className="plain dr-wall-grid" data-gallery>
         {photos.map((src, i) => (
           <li key={src + i} className={i % 5 === 0 ? "is-big" : undefined}>
-            <button type="button" className="fs-tile" data-photo={i} aria-label={fill(f.openPhoto, { n: i + 1 })}>
+            <button data-k="photo fill" type="button" className="fs-tile" data-photo={i} aria-label={fill(f.openPhoto, { n: i + 1 })}>
               <Picture src={src} sizes={i % 5 === 0 ? "(min-width: 760px) 50vw, 100vw" : "(min-width: 760px) 25vw, 50vw"} />
             </button>
           </li>
@@ -305,12 +305,12 @@ function Store({ ctx, c, f }: { ctx: SiteContext; c: C; f: F }) {
           <ContactList ctx={ctx} className="contact dr-contact" />
           <div className="dr-store-actions">
             {contact.whatsapp && (
-              <a className="dr-btn" href={contact.whatsapp} target="_blank" rel="noopener noreferrer">
+              <a data-k="btn" className="dr-btn" href={contact.whatsapp} target="_blank" rel="noopener noreferrer">
                 <WhatsApp /> {c.hold}
               </a>
             )}
             {contact.maps && (
-              <a className="dr-btn dr-btn-line" href={contact.maps} target="_blank" rel="noopener noreferrer">
+              <a data-k="btn" className="dr-btn dr-btn-line" href={contact.maps} target="_blank" rel="noopener noreferrer">
                 <Pin /> {ctx.t.directions}
               </a>
             )}

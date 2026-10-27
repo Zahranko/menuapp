@@ -216,7 +216,7 @@ function Header({ v }: { v: View }) {
             </a>
           </nav>
           {v.order && (
-            <a className="a-btn a-btn-solid side-cta" href={v.order} target="_blank" rel="noopener noreferrer">
+            <a data-k="btn" className="a-btn a-btn-solid side-cta" href={v.order} target="_blank" rel="noopener noreferrer">
               <WhatsApp /> {v.cta}
             </a>
           )}
@@ -381,7 +381,7 @@ function Ranked({ v, items, big = false }: { v: View; items: MenuItem[]; big?: b
   return (
     <div className={cx("a-ranked", big && "is-big")}>
       <button type="button" className={cx("a-rank-hero rv", !first.isAvailable && "is-out")} data-item-id={first.id}>
-        <span className="a-rank-media">
+        <span data-k="photo" className="a-rank-media">
           <ProductPicture item={first} sizes="(min-width: 900px) 46vw, 100vw" />
           {!first.isAvailable && (
             <span className="a-badges">
@@ -406,7 +406,7 @@ function Ranked({ v, items, big = false }: { v: View; items: MenuItem[]; big?: b
                 <span className="a-rank-num" aria-hidden="true">
                   {i + 2}
                 </span>
-                <span className="a-rank-thumb">
+                <span data-k="photo" className="a-rank-thumb">
                   <ProductPicture item={item} sizes="96px" />
                 </span>
                 <span className="a-rank-text">
@@ -431,7 +431,7 @@ function Lookbook({ v, photos }: { v: View; photos: { src: string; caption: stri
     <ul className="plain a-masonry" data-gallery>
       {photos.map((p, i) => (
         <li key={p.src} style={{ "--ar": ["3 / 4", "1 / 1", "4 / 5", "2 / 3", "5 / 4", "3 / 4", "1 / 1"][i % 7] } as CSSProperties}>
-          <button type="button" className="a-shot" data-photo={i} aria-label={p.caption ?? fill(v.c.photo, { n: i + 1 })}>
+          <button data-k="photo fill" type="button" className="a-shot" data-photo={i} aria-label={p.caption ?? fill(v.c.photo, { n: i + 1 })}>
             <Picture src={p.src} sizes="(min-width: 900px) 33vw, 50vw" />
           </button>
         </li>
@@ -496,11 +496,11 @@ function Hero({ v }: { v: View }) {
         </h1>
         {subtitle && <p className="a-hero-sub">{subtitle}</p>}
         <div className="a-hero-actions">
-          <a className="a-btn a-btn-solid" href={href(PAGE_PATHS.menu)}>
+          <a data-k="btn" className="a-btn a-btn-solid" href={href(PAGE_PATHS.menu)}>
             {a.shopAll} <Arrow className="flip" />
           </a>
           {v.best.length > 0 && (
-            <a className="a-btn a-btn-line" href={href(PAGE_PATHS.best)}>
+            <a data-k="btn" className="a-btn a-btn-line" href={href(PAGE_PATHS.best)}>
               {c.best}
             </a>
           )}
@@ -568,7 +568,7 @@ function Home({ v }: { v: View }) {
       {story && (
         <section id="story" className={cx("a-story", storyImage && "has-image")} data-section="story" aria-labelledby="story-title">
           {storyImage && (
-            <div className="a-story-img">
+            <div data-k="photo overlay" className="a-story-img">
               <Picture src={storyImage} sizes="100vw" />
             </div>
           )}
@@ -637,12 +637,12 @@ function VisitStrip({ v, heading = true }: { v: View; heading?: boolean }) {
           <ContactList ctx={ctx} className="plain a-contact" />
           <div className="a-cell-actions">
             {contact.whatsapp && (
-              <a className="a-btn a-btn-solid" href={contact.whatsapp} target="_blank" rel="noopener noreferrer">
+              <a data-k="btn" className="a-btn a-btn-solid" href={contact.whatsapp} target="_blank" rel="noopener noreferrer">
                 <WhatsApp /> {v.cta}
               </a>
             )}
             {contact.maps && (
-              <a className="a-btn a-btn-line" href={contact.maps} target="_blank" rel="noopener noreferrer">
+              <a data-k="btn" className="a-btn a-btn-line" href={contact.maps} target="_blank" rel="noopener noreferrer">
                 <Pin /> {ctx.t.directions}
               </a>
             )}
@@ -767,7 +767,7 @@ function VisitPage({ v }: { v: View }) {
       {story && (
         <section className={cx("a-story", storyImage && "has-image")} data-section="story" aria-labelledby="story-title">
           {storyImage && (
-            <div className="a-story-img">
+            <div data-k="photo overlay" className="a-story-img">
               <Picture src={storyImage} sizes="100vw" />
             </div>
           )}

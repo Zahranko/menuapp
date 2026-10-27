@@ -8,6 +8,7 @@ import { heroAttributes } from "./hero";
 import { TYPEFACE_NAMES, TYPEFACES, type FontPair, type TypefaceName } from "./fonts";
 import { contact as contactLinks } from "./site-data";
 import siteOptions from "./site-options.json";
+import { styleAttributes } from "./style";
 
 /*
  * The owner's site options shared by every template (fields in site-options.json, added to every template by
@@ -157,6 +158,6 @@ export function optionAttributes(site: PublicSite, order: OrderButton | null = n
   // The owner's background color (_kit/background.ts): templates restyle the few parts drawn in fixed colors.
   const background = pageBackground(site.settings);
   if (background) attrs["data-page-bg"] = isDark(background) ? "dark" : "light";
-  // Card options (_kit/cards.ts, cards.css) and hero options (_kit/hero.ts, hero.css).
-  return { ...attrs, ...cardAttributes(site.settings), ...heroAttributes(site.settings) };
+  // Card options (_kit/cards.ts, cards.css), hero options (_kit/hero.ts, hero.css) and page style (_kit/style.ts, style.css).
+  return { ...attrs, ...cardAttributes(site.settings), ...heroAttributes(site.settings), ...styleAttributes(site.settings) };
 }

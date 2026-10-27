@@ -62,7 +62,7 @@ export default function ClinicTemplate({ site, now }: TemplateProps & { now?: Da
           {ctx.on("visit") && <a href="#visit">{c.visit}</a>}
         </nav>
         {book && (
-          <a className="btn small" href={book} rel="noopener" target="_blank">
+          <a data-k="btn" className="btn small" href={book} rel="noopener" target="_blank">
             {c.book}
           </a>
         )}
@@ -76,11 +76,11 @@ export default function ClinicTemplate({ site, now }: TemplateProps & { now?: Da
             {ctx.text("hero.subtitle") && <p className="lede">{ctx.text("hero.subtitle")}</p>}
             <div className="actions">
               {book && (
-                <a className="btn" href={book} rel="noopener" target="_blank">
+                <a data-k="btn" className="btn" href={book} rel="noopener" target="_blank">
                   <WhatsApp /> {c.book}
                 </a>
               )}
-              <a className="btn ghost" href="#menu">
+              <a data-k="btn" className="btn ghost" href="#menu">
                 {c.services}
               </a>
             </div>
@@ -212,12 +212,12 @@ export default function ClinicTemplate({ site, now }: TemplateProps & { now?: Da
               <p>{c.readyText}</p>
               <div className="actions">
                 {book && (
-                  <a className="btn light" href={book} rel="noopener" target="_blank">
+                  <a data-k="btn" className="btn light" href={book} rel="noopener" target="_blank">
                     <WhatsApp /> {c.book}
                   </a>
                 )}
                 {ctx.contact.maps && (
-                  <a className="btn ghost light-ghost" href={ctx.contact.maps} rel="noopener" target="_blank">
+                  <a data-k="btn" className="btn ghost light-ghost" href={ctx.contact.maps} rel="noopener" target="_blank">
                     {c.directions}
                   </a>
                 )}

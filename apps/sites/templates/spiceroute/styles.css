@@ -4,6 +4,7 @@
 @import "../_kit/options.css";
 @import "../_kit/cards.css";
 @import "../_kit/hero.css";
+@import "../_kit/style.css";
 
 .t-spice {
   container: page / inline-size;
@@ -103,7 +104,7 @@
 
   /* menu */
   .menu {
-    padding: 44px 18px 10px;
+    padding: calc(44px * var(--kit-space, 1)) 18px calc(10px * var(--kit-space, 1));
     scroll-margin-top: 10px;
   }
   .menu-title {
@@ -142,7 +143,7 @@
     color: var(--acc-text);
   }
   .course {
-    padding-top: 38px;
+    padding-top: calc(38px * var(--kit-space, 1));
     scroll-margin-top: 10px;
   }
   .course-title {
@@ -240,8 +241,8 @@
 
   /* story */
   .story {
-    margin: 50px 18px 0;
-    padding: 40px 22px;
+    margin: calc(50px * var(--kit-space, 1)) 18px 0;
+    padding: calc(40px * var(--kit-space, 1)) 22px;
     background: var(--tile);
     border-radius: 999px 999px 24px 24px;
     scroll-margin-top: 10px;
@@ -264,7 +265,7 @@
 
   /* visit */
   .visit {
-    padding: 46px 18px 30px;
+    padding: calc(46px * var(--kit-space, 1)) 18px calc(30px * var(--kit-space, 1));
     scroll-margin-top: 10px;
   }
   .frame {
@@ -312,7 +313,7 @@
     border-color: color-mix(in srgb, currentColor 40%, transparent);
   }
   .foot {
-    padding: 18px 18px 26px;
+    padding: calc(18px * var(--kit-space, 1)) 18px calc(26px * var(--kit-space, 1));
     color: var(--muted);
   }
   .credits {
@@ -343,13 +344,13 @@
     }
     .story {
       max-width: 820px;
-      margin: 70px auto 0;
-      padding: 60px 70px 50px;
+      margin: calc(70px * var(--kit-space, 1)) auto 0;
+      padding: calc(60px * var(--kit-space, 1)) 70px calc(50px * var(--kit-space, 1));
     }
     .visit {
       max-width: 980px;
       margin: 0 auto;
-      padding: 70px 40px 40px;
+      padding: calc(70px * var(--kit-space, 1)) 40px calc(40px * var(--kit-space, 1));
     }
     .frame {
       padding: 44px 48px;

@@ -147,7 +147,7 @@ export default function SpiceRouteTemplate({ site, now }: TemplateProps & { now?
                   <h3>{ctx.t.findUs}</h3>
                   <ContactList ctx={ctx} />
                   {ctx.contact.whatsapp && (
-                    <a className="reserve" href={ctx.contact.whatsapp} rel="noopener" target="_blank">
+                    <a data-k="btn" className="reserve" href={ctx.contact.whatsapp} rel="noopener" target="_blank">
                       <WhatsApp /> {c.reserve}
                     </a>
                   )}

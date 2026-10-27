@@ -17,14 +17,14 @@ export function Gallery({ ctx }: { ctx: SouqContext }) {
             <h2 id="gallery-title">{ctx.c.galleryTitle.replace("{name}", name)}</h2>
           </div>
           {instagram && ctx.contact.instagram && (
-            <a className={`btn sec`} href={ctx.contact.instagram} rel="noopener" target="_blank">
+            <a data-k="btn" className={`btn sec`} href={ctx.contact.instagram} rel="noopener" target="_blank">
               <Instagram />@{instagram.replace(/^@/, "")}
             </a>
           )}
         </div>
         <ul className="gal" data-gallery>
           {ctx.gallery.map((src, i) => (
-            <li key={src + i} className={SHAPE[i] || undefined}>
+            <li key={src + i} className={SHAPE[i] || undefined} data-k="photo fill">
               <Picture src={src} alt={ctx.c.photo.replace("{n}", String(i + 1)).replace("{name}", name)} sizes="(min-width: 760px) 25vw, 50vw" />
             </li>
           ))}

@@ -11,6 +11,7 @@
   },
   "version": 2,
   "heroSlider": { "kind": "panel", "source": "hero.images" },
+  "pageStyle": { "skip": ["style.motion"] },
   "tier": "pro",
   "thumbnail": "/templates/bloom/thumbnail.png",
   "sample": "bloom",

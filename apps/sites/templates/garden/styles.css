@@ -4,6 +4,7 @@
 @import "../_kit/options.css";
 @import "../_kit/cards.css";
 @import "../_kit/hero.css";
+@import "../_kit/style.css";
 
 .t-garden {
   container: page / inline-size;
@@ -151,7 +152,7 @@
     margin-bottom: -1px;
   }
   .menu-inner {
-    padding: 14px 18px 40px;
+    padding: calc(14px * var(--kit-space, 1)) 18px calc(40px * var(--kit-space, 1));
     background: var(--blob);
   }
   .chips {
@@ -273,7 +274,7 @@
   /* story */
   .story {
     position: relative;
-    padding: 60px 24px;
+    padding: calc(60px * var(--kit-space, 1)) 24px;
     text-align: center;
     scroll-margin-top: 10px;
   }
@@ -291,7 +292,7 @@
 
   /* visit */
   .visit {
-    padding: 10px 18px 40px;
+    padding: calc(10px * var(--kit-space, 1)) 18px calc(40px * var(--kit-space, 1));
     scroll-margin-top: 10px;
   }
   .visit > h2 {
@@ -326,7 +327,7 @@
     border-color: color-mix(in srgb, currentColor 40%, transparent);
   }
   .foot {
-    padding: 20px 18px 30px;
+    padding: calc(20px * var(--kit-space, 1)) 18px calc(30px * var(--kit-space, 1));
     color: var(--muted);
   }
 
@@ -356,7 +357,7 @@
       height: 60px;
     }
     .menu-inner {
-      padding: 20px max(36px, calc((100cqi - 1160px) / 2)) 64px;
+      padding: calc(20px * var(--kit-space, 1)) max(36px, calc((100cqi - 1160px) / 2)) calc(64px * var(--kit-space, 1));
     }
     .chips {
       justify-content: center;

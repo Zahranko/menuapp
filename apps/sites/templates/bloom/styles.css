@@ -10,6 +10,7 @@
 @import "../_kit/options.css";
 @import "../_kit/cards.css";
 @import "../_kit/hero.css";
+@import "../_kit/style.css";
 
 .bl {
   --wrap: 1160px;
@@ -663,15 +664,15 @@
     background: var(--band);
   }
   .band > .wrap {
-    padding-top: 18px;
-    padding-bottom: 26px;
+    padding-top: calc(18px * var(--kit-space, 1));
+    padding-bottom: calc(26px * var(--kit-space, 1));
   }
   .band > .wave {
     color: var(--bg);
   }
   .sec {
     position: relative;
-    padding: clamp(36px, 6vw, 72px) 0;
+    padding: calc(clamp(36px, 6vw, 72px) * var(--kit-space, 1)) 0;
   }
   .heading {
     display: flex;
@@ -1076,7 +1077,7 @@
 
   /* ---------- scrapbook gallery ---------- */
   .sec-gallery > .wrap {
-    padding-top: clamp(30px, 5vw, 56px);
+    padding-top: calc(clamp(30px, 5vw, 56px) * var(--kit-space, 1));
   }
   .scrapbook {
     display: grid;
@@ -1482,7 +1483,7 @@
   /* ---------- footer ---------- */
   .foot {
     position: relative;
-    margin-top: 40px;
+    margin-top: calc(40px * var(--kit-space, 1));
     background: var(--foot);
     text-align: center;
   }

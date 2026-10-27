@@ -21,11 +21,11 @@ export function Hero({ ctx }: { ctx: SouqContext }) {
         <h1 id="hero-title">{ctx.text("hero.title") || ctx.site.business.name}</h1>
         {subtitle && <p>{subtitle}</p>}
         <div className="btns">
-          <a className={`btn pri`} href="#menu">
+          <a data-k="btn" className={`btn pri`} href="#menu">
             {ctx.c.viewMenu} <Arrow className="flip" />
           </a>
           {ctx.on("visit") && (
-            <a className={`btn sec`} href="#visit">
+            <a data-k="btn" className={`btn sec`} href="#visit">
               {ctx.c.findUs}
             </a>
           )}

@@ -4,6 +4,7 @@
 @import "../_kit/options.css";
 @import "../_kit/cards.css";
 @import "../_kit/hero.css";
+@import "../_kit/style.css";
 
 .t-diner {
   container: page / inline-size;
@@ -125,7 +126,7 @@
 
   /* jukebox nav */
   .menu {
-    padding: 0 16px 20px;
+    padding: 0 16px calc(20px * var(--kit-space, 1));
     scroll-margin-top: 10px;
   }
   .jukebox {
@@ -177,7 +178,7 @@
 
   /* groups and combo cards */
   .group {
-    padding-top: 34px;
+    padding-top: calc(34px * var(--kit-space, 1));
     scroll-margin-top: 66px;
   }
   .ribbon {
@@ -312,7 +313,7 @@
 
   /* story */
   .story {
-    padding: 40px 22px;
+    padding: calc(40px * var(--kit-space, 1)) 22px;
     text-align: center;
     scroll-margin-top: 10px;
   }
@@ -329,7 +330,7 @@
 
   /* visit */
   .visit {
-    padding: 40px 16px 44px;
+    padding: calc(40px * var(--kit-space, 1)) 16px calc(44px * var(--kit-space, 1));
     background: var(--sign);
     scroll-margin-top: 10px;
   }
@@ -380,7 +381,7 @@
     border-color: color-mix(in srgb, currentColor 40%, transparent);
   }
   .foot {
-    padding: 18px 16px 28px;
+    padding: calc(18px * var(--kit-space, 1)) 16px calc(28px * var(--kit-space, 1));
     color: var(--muted);
     text-align: center;
   }

@@ -69,6 +69,56 @@ Use these instead of writing your own, so every template behaves the same where 
 
 Clothing stores (Folio, Drop, Couture) also use `templates/_fashion/`: `details()` turns "Sizes: XS–L. Colors: Sand, Black" in a description (Arabic "المقاسات:" and "الألوان:") into sizes and colors, `ProductSheet` is a product dialog with size buttons whose WhatsApp message carries the chosen size, `PhotoViewer` is a photos-only gallery viewer (`data-photo="<index>"` opens it), `items.ts` builds their props and `base.css` holds their structure (import it after the kit files). Sale prices are a Custom label such as "Sale −30%".
 
+## Page style (`_kit/style-settings.json`, `style.ts`, `style.css`)
+
+Every template gets a shared "Page style" group (شكل الصفحة), added by `scripts/build-registry.mjs` right after the
+"Cards" group. Each option is a choice whose first value, `auto` ("Template default"), keeps the template exactly as
+designed:
+
+| Key | Options |
+|---|---|
+| `style.textSize` | auto, smaller, larger, big |
+| `style.headings` | auto, normal, uppercase, italic, condensed, outlined |
+| `style.tracking` | auto, tight, normal, wide (letter spacing in headings) |
+| `style.spacing` | auto, compact, airy (space between sections) |
+| `style.buttons` | auto, pill, rounded, square, outline, underline, shadow |
+| `style.photos` | auto, rounded, square, soft, arch, circle, blob |
+| `style.dividers` | auto, none, line, wave, slant, zigzag, dots |
+| `style.texture` | auto, none, dots, grain, paper, grid, stripes |
+| `style.motion` | auto, none, fade, rise, playful (on scroll) |
+
+`optionRoot(ctx)` puts one `data-ps-*` attribute on the root for each option that is not `auto` (`styleAttributes()`),
+and `_kit/style.css`, imported by every `styles.css` after `hero.css`, styles them. Its rules use `!important` under
+those attributes, so they win over the template only when the owner picked something. Arabic headings never get
+italic, condensed letters or letter spacing. Motion uses CSS scroll-driven animations inside
+`@media (prefers-reduced-motion: no-preference)`, with no JavaScript, and changes nothing in browsers without them.
+
+What a template marks so the options can reach it:
+
+- `data-k="btn"` on call-to-action links and buttons (not the floating order button, which has its own shape option).
+- `data-k="photo"` on photo boxes in sections (story, gallery, about). Product photos use `.kit-card-media` and
+  `.kit-cat-media`. Add `fill` for a gallery tile that must keep its grid cell, and `overlay` for a photo with text laid
+  over it: those keep a rounded box instead of a circle, arch or blob.
+- `data-k="boxed"` on a section drawn as a card of its own: it gets no divider band.
+- `calc(<n>px * var(--kit-space, 1))` in the vertical padding and margins of the sections.
+- Sections are found by `data-section`. The header, hero, announcement, ticker, order bar and footer never get
+  dividers or motion.
+
+A template leaves an option out with `"pageStyle": { "skip": ["style.motion"] }` in its manifest. Today Atlas, Bloom,
+Couture, Ember, Lumen and Maison skip `style.motion`, because they have their own motion switch.
+`templates/page-style.test.tsx` checks every template, and `_kit/style.test.ts` checks the options.
+In fixture mode, `/_preview/fixture.<id>.<theme>.<en|ar>.ts_big-hs_condensed-btn_pill-pic_arch-div_wave-tex_grain-mo_rise`
+tries them (tokens: `ts hs tr sp btn pic div tex mo`).
+
+### Option pictures (`"previews"`)
+
+Any `choice` field may carry `"previews": { "<option>": "/kit/previews/<name>.svg" }`, and the app's editor then shows
+picture tiles with the option's name under each, instead of chips. Paths are site-relative SVGs in `public/`. The
+registry build fails if a preview names an unknown option or a missing file. The API passes previews through in
+`GET /api/v1/templates` (`TemplateSchema` reads them and the importer drops any that are not a site-relative SVG). The
+app loads them from `AppConfig.asset()`, like thumbnails, and the deploy copies `public/kit` to the API's `wwwroot/kit`.
+Page style pictures are 80×80 tiles in `public/kit/previews/` (`auto.svg` is shared by every "Template default").
+
 ## Rules every template follows
 
 - Settings are read with the helpers in `lib/settings.ts`; never assume a key exists.

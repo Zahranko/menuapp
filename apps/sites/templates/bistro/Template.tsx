@@ -242,7 +242,7 @@ export default function BistroCardTemplate({
                         <h3>{ctx.t.findUs}</h3>
                         <ContactList ctx={ctx} />
                         {ctx.contact.whatsapp && (
-                          <a
+                          <a data-k="btn"
                             className="book"
                             href={ctx.contact.whatsapp}
                             rel="noopener"

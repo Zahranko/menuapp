@@ -67,11 +67,11 @@ export default function NightMarketTemplate({ site, now }: TemplateProps & { now
             <h1 id="hero-title">{ctx.text("hero.title") || site.business.name}</h1>
             {ctx.text("hero.subtitle") && <p>{ctx.text("hero.subtitle")}</p>}
             <div className="hero-actions">
-              <a className="btn" href="#menu">
+              <a data-k="btn" className="btn" href="#menu">
                 {ctx.t.viewMenu} <Arrow className="flip" />
               </a>
               {ctx.contact.whatsapp && (
-                <a className="btn ghost" href={ctx.contact.whatsapp} rel="noopener" target="_blank">
+                <a data-k="btn" className="btn ghost" href={ctx.contact.whatsapp} rel="noopener" target="_blank">
                   <WhatsApp /> {c.order}
                 </a>
               )}
@@ -87,7 +87,7 @@ export default function NightMarketTemplate({ site, now }: TemplateProps & { now
             <div className={cx("picks-grid", rest.length === 0 && "single")}>
               {[lead, ...rest].map((item, i) => (
                 <button key={item.id} type="button" className={cx("pick", i === 0 && "lead")} data-item-id={item.id}>
-                  <span className="pick-media">
+                  <span data-k="photo overlay" className="pick-media">
                     <ProductPicture item={item} sizes={i === 0 ? "(min-width: 760px) 60vw, 100vw" : "(min-width: 760px) 30vw, 50vw"} />
                   </span>
                   <span className="pick-info">
@@ -145,7 +145,7 @@ export default function NightMarketTemplate({ site, now }: TemplateProps & { now
             </h2>
             <ul className="plain strip-row" data-gallery tabIndex={0} aria-labelledby="strip-title">
               {ctx.gallery.map((src, i) => (
-                <li key={src + i}>
+                <li key={src + i} data-k="photo fill">
                   <Picture src={src} alt={ctx.t.photoOf.replace("{n}", String(i + 1)).replace("{name}", site.business.name)} sizes="(min-width: 760px) 22vw, 60vw" />
                 </li>
               ))}
@@ -162,7 +162,7 @@ export default function NightMarketTemplate({ site, now }: TemplateProps & { now
               <div className="panel">
                 <ContactList ctx={ctx} />
                 {ctx.contact.maps && (
-                  <a className="btn" href={ctx.contact.maps} rel="noopener" target="_blank">
+                  <a data-k="btn" className="btn" href={ctx.contact.maps} rel="noopener" target="_blank">
                     {ctx.t.directions} <Arrow className="flip" />
                   </a>
                 )}

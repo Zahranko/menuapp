@@ -4,6 +4,7 @@
 @import "../_kit/options.css";
 @import "../_kit/cards.css";
 @import "../_kit/hero.css";
+@import "../_kit/style.css";
 
 .t-pizza {
   container: page / inline-size;
@@ -183,7 +184,7 @@
     background: var(--band);
   }
   .band {
-    padding: 40px 18px 34px;
+    padding: calc(40px * var(--kit-space, 1)) 18px calc(34px * var(--kit-space, 1));
     scroll-margin-top: 62px;
   }
   .band.tinted {
@@ -283,7 +284,7 @@
 
   /* story */
   .story {
-    padding: 56px 24px;
+    padding: calc(56px * var(--kit-space, 1)) 24px;
     text-align: center;
     scroll-margin-top: 10px;
   }
@@ -301,7 +302,7 @@
 
   /* visit */
   .visit {
-    padding: 44px 18px;
+    padding: calc(44px * var(--kit-space, 1)) 18px;
     background: var(--band);
     scroll-margin-top: 10px;
   }
@@ -338,7 +339,7 @@
     border-color: color-mix(in srgb, currentColor 40%, transparent);
   }
   .foot {
-    padding: 22px 18px 30px;
+    padding: calc(22px * var(--kit-space, 1)) 18px calc(30px * var(--kit-space, 1));
     color: var(--muted);
   }
 
@@ -369,7 +370,7 @@
       justify-content: center;
     }
     .band {
-      padding: 60px max(36px, calc((100cqi - 1160px) / 2)) 54px;
+      padding: calc(60px * var(--kit-space, 1)) max(36px, calc((100cqi - 1160px) / 2)) calc(54px * var(--kit-space, 1));
     }
     .band h2 {
       font-size: calc(54px * var(--fs));

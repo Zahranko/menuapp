@@ -50,7 +50,12 @@ public sealed class TemplateRegistryImporter(StorefrontDbContext db, IOptions<St
             var description = manifest.TryGetProperty("description", out var d) ? d.GetString() : null;
             var tier = manifest.TryGetProperty("tier", out var tr) && tr.ValueKind == JsonValueKind.String ? tr.GetString() : null;
             var version = manifest.GetProperty("version").GetInt32();
-            var schema = manifest.GetProperty("schema").GetRawText();
+            var schema = TemplateSchema.WithValidPreviews(manifest.GetProperty("schema").GetRawText(), out var previewProblems);
+            foreach (var problem in previewProblems)
+            {
+                logger.LogWarning("Template {Template}: preview {Problem} was ignored", id, problem);
+            }
+
             var defaults = manifest.GetProperty("defaults").GetRawText();
             var ar = manifest.TryGetProperty("ar", out var a) && a.ValueKind == JsonValueKind.Object ? a : (JsonElement?)null;
             var defaultsAr = await ArabicDefaultsAsync(id, manifest, schema, defaults);

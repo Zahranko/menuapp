@@ -1,14 +1,17 @@
 using System.Globalization;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
+using System.Text.Unicode;
 
 namespace Storefront.Application.Templates;
 
 /// <summary>
 /// One editable setting of a template. The editor renders a control per field; the validator checks values against it.
 /// <see cref="OptionLabels"/> (English option names) and <see cref="Swatches"/> (a palette option's main color) only describe options;
-/// the AI helper reads them to pick fitting values.
+/// the AI helper reads them to pick fitting values. <see cref="Previews"/> maps a choice's options to small pictures of them
+/// (site-relative SVG paths like "/kit/previews/buttons-pill.svg") that the editor shows as picture tiles.
 /// </summary>
 public sealed record TemplateField(
     string Key,
@@ -23,7 +26,8 @@ public sealed record TemplateField(
     double? Step,
     bool Custom = false,
     IReadOnlyDictionary<string, string>? OptionLabels = null,
-    IReadOnlyDictionary<string, string>? Swatches = null);
+    IReadOnlyDictionary<string, string>? Swatches = null,
+    IReadOnlyDictionary<string, string>? Previews = null);
 
 public sealed partial class TemplateSchema
 {
@@ -53,10 +57,84 @@ public sealed partial class TemplateSchema
                 f["step"]?.GetValue<double>(),
                 type is "color" && f["custom"]?.GetValue<bool>() == true,
                 Strings(f["optionLabels"]),
-                Strings(f["swatches"])));
+                Strings(f["swatches"]),
+                type is "choice" ? ValidPreviews(f, out _) : null));
         }
 
         return new TemplateSchema(fields);
+    }
+
+    /// <summary>
+    /// The schema with every preview picture that can't be shown left out: previews on a field that is not a choice,
+    /// for an option the field doesn't have, or that is not a site-relative SVG path. <paramref name="problems"/> names each one.
+    /// The registry is checked when it is built (scripts/build-registry.mjs); this keeps a bad entry from reaching the editor.
+    /// </summary>
+    public static string WithValidPreviews(string json, out List<string> problems)
+    {
+        problems = [];
+        var fields = JsonNode.Parse(json)!.AsArray();
+        foreach (var f in fields.OfType<JsonObject>())
+        {
+            if (f["previews"] is null)
+            {
+                continue;
+            }
+
+            var key = f["key"]?.GetValue<string>() ?? "?";
+            if (f["type"]?.GetValue<string>() != "choice")
+            {
+                problems.Add($"{key}: previews are only for choices");
+                f.Remove("previews");
+                continue;
+            }
+
+            var valid = ValidPreviews(f, out var bad);
+            problems.AddRange(bad.Select(b => $"{key}.previews.{b}"));
+            if (valid is null)
+            {
+                f.Remove("previews");
+            }
+            else if (bad.Count > 0)
+            {
+                f["previews"] = new JsonObject(valid.Select(p => KeyValuePair.Create(p.Key, (JsonNode?)p.Value)));
+            }
+        }
+
+        // Unchanged schemas keep their exact text (and their Arabic letters unescaped).
+        return problems.Count == 0 ? json : fields.ToJsonString(Readable);
+    }
+
+    private static readonly JsonSerializerOptions Readable = new() { Encoder = JavaScriptEncoder.Create(UnicodeRanges.All) };
+
+    /// <summary>A choice's previews whose option exists and whose picture is a site-relative SVG path; null when none.</summary>
+    private static Dictionary<string, string>? ValidPreviews(JsonNode field, out List<string> bad)
+    {
+        bad = [];
+        if (field["previews"] is not JsonObject map)
+        {
+            if (field["previews"] is not null)
+            {
+                bad.Add("(not an object)");
+            }
+
+            return null;
+        }
+
+        var options = field["options"] is JsonArray o ? o.Select(x => x?.GetValue<string>()).ToHashSet() : [];
+        var valid = new Dictionary<string, string>();
+        foreach (var (option, value) in map)
+        {
+            if (options.Contains(option) && value is JsonValue v && v.TryGetValue<string>(out var path) && PreviewPath().IsMatch(path) && !path.Contains("..", StringComparison.Ordinal))
+            {
+                valid[option] = path;
+            }
+            else
+            {
+                bad.Add(option);
+            }
+        }
+
+        return valid.Count > 0 ? valid : null;
     }
 
     private static Dictionary<string, string>? Strings(JsonNode? node) =>
@@ -235,6 +313,9 @@ public sealed partial class TemplateSchema
 
         return await isOwnImage(image) ? null : "Upload the photo again.";
     }
+
+    [GeneratedRegex("^/[A-Za-z0-9][A-Za-z0-9/_.-]*\\.svg$")]
+    private static partial Regex PreviewPath();
 
     [GeneratedRegex("^#[0-9A-Fa-f]{6}$")]
     private static partial Regex HexColor();

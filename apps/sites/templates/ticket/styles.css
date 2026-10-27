@@ -4,6 +4,7 @@
 @import "../_kit/options.css";
 @import "../_kit/cards.css";
 @import "../_kit/hero.css";
+@import "../_kit/style.css";
 
 .t-ticket {
   container: page / inline-size;
@@ -119,7 +120,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    margin: 22px 0 10px;
+    margin: calc(22px * var(--kit-space, 1)) 0 calc(10px * var(--kit-space, 1));
     font-size: calc(15px * var(--fs));
     letter-spacing: 2px;
   }
@@ -250,8 +251,8 @@
     border-color: color-mix(in srgb, currentColor 40%, transparent);
   }
   .foot {
-    margin-top: 26px;
-    padding-top: 16px;
+    margin-top: calc(26px * var(--kit-space, 1));
+    padding-top: calc(16px * var(--kit-space, 1));
     border-top: 1.5px dashed var(--ink);
     text-align: center;
     color: var(--muted);

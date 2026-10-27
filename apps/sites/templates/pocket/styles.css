@@ -4,6 +4,7 @@
 @import "../_kit/options.css";
 @import "../_kit/cards.css";
 @import "../_kit/hero.css";
+@import "../_kit/style.css";
 
 .t-pocket {
   container: page / inline-size;
@@ -124,7 +125,7 @@
 
   /* catalog */
   .catalog {
-    padding: 10px 16px 30px;
+    padding: calc(10px * var(--kit-space, 1)) 16px calc(30px * var(--kit-space, 1));
     scroll-margin-top: 60px;
   }
   .controls {
@@ -316,8 +317,8 @@
   .info {
     display: grid;
     align-items: start;
-    gap: 14px;
-    padding: 10px 16px 20px;
+    gap: calc(14px * var(--kit-space, 1));
+    padding: calc(10px * var(--kit-space, 1)) 16px calc(20px * var(--kit-space, 1));
   }
   .card {
     padding: 24px 20px;
@@ -356,7 +357,7 @@
     border-color: color-mix(in srgb, currentColor 40%, transparent);
   }
   .foot {
-    padding: 20px 16px 30px;
+    padding: calc(20px * var(--kit-space, 1)) 16px calc(30px * var(--kit-space, 1));
     color: var(--muted);
     border-top: 1px solid var(--line);
   }
@@ -385,7 +386,7 @@
       min-height: 260px;
     }
     .catalog {
-      padding: 16px max(32px, calc((100cqi - 1200px) / 2)) 40px;
+      padding: calc(16px * var(--kit-space, 1)) max(32px, calc((100cqi - 1200px) / 2)) calc(40px * var(--kit-space, 1));
       scroll-margin-top: 68px;
     }
     .controls {
@@ -407,7 +408,7 @@
     .info {
       grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
       gap: 20px;
-      padding: 10px max(32px, calc((100cqi - 1200px) / 2)) 30px;
+      padding: calc(10px * var(--kit-space, 1)) max(32px, calc((100cqi - 1200px) / 2)) calc(30px * var(--kit-space, 1));
     }
     .card {
       padding: 32px;

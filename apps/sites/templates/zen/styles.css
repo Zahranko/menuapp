@@ -4,6 +4,7 @@
 @import "../_kit/options.css";
 @import "../_kit/cards.css";
 @import "../_kit/hero.css";
+@import "../_kit/style.css";
 
 .t-zen {
   container: page / inline-size;
@@ -118,7 +119,7 @@
     scroll-margin-top: 10px;
   }
   .course {
-    padding: 34px 0 20px;
+    padding: calc(34px * var(--kit-space, 1)) 0 calc(20px * var(--kit-space, 1));
     border-top: 1px solid var(--line);
     scroll-margin-top: 10px;
   }
@@ -225,8 +226,8 @@
   /* story */
   .story {
     max-width: 560px;
-    margin: 40px auto 0;
-    padding: 56px 24px;
+    margin: calc(40px * var(--kit-space, 1)) auto 0;
+    padding: calc(56px * var(--kit-space, 1)) 24px;
     text-align: center;
     scroll-margin-top: 10px;
   }
@@ -258,7 +259,7 @@
   /* visit */
   .visit {
     margin: 0 20px;
-    padding: 40px 0;
+    padding: calc(40px * var(--kit-space, 1)) 0;
     border-top: 1px solid var(--line);
     scroll-margin-top: 10px;
   }
@@ -288,7 +289,7 @@
     border-color: color-mix(in srgb, currentColor 40%, transparent);
   }
   .foot {
-    padding: 24px 20px 32px;
+    padding: calc(24px * var(--kit-space, 1)) 20px calc(32px * var(--kit-space, 1));
     color: var(--muted);
     font-size: 13px;
   }
@@ -326,7 +327,7 @@
       display: grid;
       grid-template-columns: 200px minmax(0, 1fr);
       gap: 48px;
-      padding: 56px 0 40px;
+      padding: calc(56px * var(--kit-space, 1)) 0 calc(40px * var(--kit-space, 1));
     }
     .course h2 {
       position: sticky;

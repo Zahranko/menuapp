@@ -154,7 +154,7 @@ function Header({ v }: { v: View }) {
           </ul>
         </nav>
         {v.fab && (
-          <a className="btn btn-acc top-order" {...orderLink(v.fab)}>
+          <a data-k="btn" className="btn btn-acc top-order" {...orderLink(v.fab)}>
             <OrderIcon action={v.fab.action} />
             <span>{v.fab.label}</span>
           </a>
@@ -278,7 +278,7 @@ function Tiles({ v, categories }: { v: View; categories: Category[] }) {
             </span>
             <span className="sr-only">{itemCount(cat.all.length, v.ctx.locale)}</span>
             {cat.cover && (
-              <span className="tile-photo kit-cat-media">
+              <span data-k="overlay" className="tile-photo kit-cat-media">
                 <Picture src={cat.cover} sizes="140px" />
               </span>
             )}
@@ -397,7 +397,7 @@ function Hero({ v }: { v: View }) {
         </h1>
         {subtitle && <p className="hero-sub">{subtitle}</p>}
         <div className="hero-actions">
-          <a className="btn btn-ink" href={href(PAGE_PATHS.menu)}>
+          <a data-k="btn" className="btn btn-ink" href={href(PAGE_PATHS.menu)}>
             <span>{c.browse}</span> <Arrow className="flip" />
           </a>
         </div>
@@ -488,13 +488,13 @@ function Statement({ v, story, link = false }: { v: View; story: string; link?: 
         </h2>
         <p className="statement-text">{story}</p>
         {link && (
-          <a className="btn btn-ink" href={href(PAGE_PATHS.visit)}>
+          <a data-k="btn" className="btn btn-ink" href={href(PAGE_PATHS.visit)}>
             <span>{c.visit}</span> <Arrow className="flip" />
           </a>
         )}
       </div>
       {photo && (
-        <span className="statement-photo">
+        <span data-k="photo" className="statement-photo">
           <Picture src={photo} sizes="(min-width: 900px) 360px, 70vw" />
         </span>
       )}
@@ -509,7 +509,7 @@ function Wall({ v, photos, full = false }: { v: View; photos: { src: string; cap
       {photos.map((p, i) => (
         <li key={p.src} className="reveal">
           <button type="button" className="shot" data-photo={i} aria-label={p.caption ?? fill(v.c.photo, { n: i + 1 })}>
-            <span className="shot-img">
+            <span data-k="photo fill" className="shot-img">
               <Picture src={p.src} sizes={full ? "(min-width: 900px) 33vw, 50vw" : "(min-width: 900px) 30vw, 50vw"} />
             </span>
           </button>
@@ -551,7 +551,7 @@ function VisitBlock({ v, heading = true }: { v: View; heading?: boolean }) {
               <bdi>{site.business.address}</bdi>
             </p>
             {contact.maps && (
-              <a className="btn btn-ink" href={contact.maps} target="_blank" rel="noopener noreferrer">
+              <a data-k="btn" className="btn btn-ink" href={contact.maps} target="_blank" rel="noopener noreferrer">
                 <span>{ctx.t.directions}</span> <Arrow className="flip" />
               </a>
             )}
@@ -567,7 +567,7 @@ function VisitBlock({ v, heading = true }: { v: View; heading?: boolean }) {
           <h3 className="ticket-title">{ctx.t.contact}</h3>
           <ContactList ctx={ctx} />
           {contact.whatsapp && (
-            <a className="btn btn-acc" href={contact.whatsapp} target="_blank" rel="noopener noreferrer">
+            <a data-k="btn" className="btn btn-acc" href={contact.whatsapp} target="_blank" rel="noopener noreferrer">
               <WhatsApp /> <span>{v.cta}</span>
             </a>
           )}

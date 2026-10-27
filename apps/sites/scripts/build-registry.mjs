@@ -26,6 +26,16 @@
 // corners, photo shape, spacing) in a "Cards" group right after "Fonts & colors". templates/_kit/cards.ts reads them and
 // _kit/cards.css styles every product card (.kit-card) and category tile (.kit-cat). "auto" keeps the template's look.
 //
+// Page style: every template gets the shared fields of templates/_kit/style-settings.json (text size, heading style and
+// letter spacing, space between sections, buttons, photo shapes, section dividers, background texture and motion) in a
+// "Page style" group right after "Cards". templates/_kit/style.ts turns them into data attributes on the template's root
+// and _kit/style.css styles them; "auto" keeps the template's look. A manifest may leave some out with
+// "pageStyle": { "skip": ["style.motion"] } (left out of registry.json), for a template with its own version of a setting.
+//
+// Previews: a "choice" field may carry "previews", a small picture per option ({ "pill": "/kit/previews/buttons-pill.svg" }),
+// which the app's editor shows as picture tiles. Every key must be one of the field's options and every picture must exist
+// in public/.
+//
 // Hero slider: each manifest says what its opening looks like in "heroSlider" (left out of registry.json):
 //   { "kind": "backdrop" | "panel" | "band", "source": "hero.image" | "hero.images", "skip": ["hero.overlay", ...],
 //     "defaults": { "hero.transition": "fade" } }   (optional: the template's own defaults, so its slideshow stays as it was)
@@ -50,6 +60,8 @@ const logoSettings = JSON.parse(readFileSync(path.join(root, "_kit", "logo-setti
 const siteOptions = JSON.parse(readFileSync(path.join(root, "_kit", "site-options.json"), "utf8"));
 const cardSettings = JSON.parse(readFileSync(path.join(root, "_kit", "card-settings.json"), "utf8"));
 const heroSettings = JSON.parse(readFileSync(path.join(root, "_kit", "hero-settings.json"), "utf8"));
+const styleSettings = JSON.parse(readFileSync(path.join(root, "_kit", "style-settings.json"), "utf8"));
+const publicDir = path.join(root, "..", "public");
 const HERO_KINDS = new Set(Object.keys(heroSettings.kinds));
 const HERO_SOURCES = new Set(["hero.image", "hero.images"]);
 /** Shared settings a manifest may give its own default (in "defaults"). */
@@ -73,6 +85,7 @@ const manifests = readdirSync(root, { withFileTypes: true })
     withLogoOptions(d.name, manifest);
     withSiteOptions(d.name, manifest);
     withCardOptions(d.name, manifest);
+    withStyleOptions(d.name, manifest);
     withHeroOptions(d.name, manifest);
     const keys = new Set();
     for (const field of manifest.schema) {
@@ -80,6 +93,7 @@ const manifests = readdirSync(root, { withFileTypes: true })
       if (keys.has(field.key)) fail(`${d.name}: duplicate field "${field.key}"`);
       keys.add(field.key);
       if (!(field.key in manifest.defaults)) fail(`${d.name}: no default for "${field.key}"`);
+      checkPreviews(d.name, field);
     }
     manifest.schema = manifest.schema.map((field) => withArabic(d.name, field));
     checkArabicText(d.name, manifest);
@@ -170,6 +184,32 @@ function withCardOptions(id, manifest) {
   }
   const fields = cardSettings.fields.map((f) => ({ key: f.key, type: f.type, label: f.label, group: cardSettings.group, ...f }));
   insertGroup(manifest, fields, cardSettings.defaults, siteOptions.fontsAndColors.group);
+}
+
+/** Adds the shared page style options (templates/_kit/style-settings.json) in a "Page style" group after "Cards". */
+function withStyleOptions(id, manifest) {
+  const skip = new Set(manifest.pageStyle?.skip ?? []);
+  delete manifest.pageStyle;
+  for (const key of skip) if (!styleSettings.fields.some((f) => f.key === key)) fail(`${id}: "pageStyle.skip" has unknown field "${key}"`);
+  for (const field of styleSettings.fields) {
+    if (manifest.schema.some((f) => f.key === field.key) || field.key in manifest.defaults) fail(`${id}: "${field.key}" comes from templates/_kit/style-settings.json; remove it from the manifest`);
+  }
+  const fields = styleSettings.fields
+    .filter((f) => !skip.has(f.key))
+    .map((f) => ({ key: f.key, type: f.type, label: f.label, group: styleSettings.group, groupAr: styleSettings.groupAr, ...f }));
+  insertGroup(manifest, fields, styleSettings.defaults, cardSettings.group);
+}
+
+/** Checks a field's option pictures: a choice field, known options and pictures that exist in public/. */
+function checkPreviews(id, field) {
+  if (field.previews === undefined) return;
+  if (field.type !== "choice") fail(`${id}: field "${field.key}" has "previews", which only choice fields take`);
+  if (field.previews === null || typeof field.previews !== "object" || Array.isArray(field.previews)) fail(`${id}: "previews" of "${field.key}" must map options to pictures`);
+  for (const [option, url] of Object.entries(field.previews)) {
+    if (!field.options.includes(option)) fail(`${id}: "previews" of "${field.key}" has unknown option "${option}"`);
+    if (typeof url !== "string" || !/^\/[a-z0-9/_.-]+\.svg$/.test(url)) fail(`${id}: preview "${url}" of "${field.key}" must be a path like /kit/previews/name.svg`);
+    if (!existsSync(path.join(publicDir, url))) fail(`${id}: preview ${url} of "${field.key}" is missing from public/`);
+  }
 }
 
 /** Adds the shared hero slider options (templates/_kit/hero-settings.json) for the template's kind of opening. */

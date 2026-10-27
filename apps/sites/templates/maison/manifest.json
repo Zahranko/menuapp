@@ -11,6 +11,7 @@
   },
   "version": 2,
   "heroSlider": { "kind": "backdrop", "source": "hero.images", "skip": ["hero.overlay", "hero.height", "hero.textPosition"], "defaults": { "hero.transition": "fade", "hero.controls": [] } },
+  "pageStyle": { "skip": ["style.motion"] },
   "tier": "pro",
   "thumbnail": "/templates/maison/thumbnail.png",
   "sample": "maison",

@@ -307,7 +307,7 @@ function Tiles({ v, categories }: { v: View; categories: Category[] }) {
       {categories.map((cat) => (
         <li key={cat.id} className="rv">
           <a className="cu-tile kit-cat" href={v.href(cat.path)}>
-            <span className="cu-tile-media kit-cat-media">{cat.cover ? <Picture src={cat.cover} sizes="(min-width: 760px) 25vw, 50vw" /> : <span className="cu-blank" aria-hidden="true">{initial(cat.name)}</span>}</span>
+            <span data-k="overlay" className="cu-tile-media kit-cat-media">{cat.cover ? <Picture src={cat.cover} sizes="(min-width: 760px) 25vw, 50vw" /> : <span className="cu-blank" aria-hidden="true">{initial(cat.name)}</span>}</span>
             <span className="cu-tile-text">
               <span className="cu-tile-name">{cat.name}</span>
               <span className="cu-tile-go">
@@ -328,7 +328,7 @@ function Lookbook({ v, max }: { v: View; max?: number }) {
     <ul className="plain cu-look" data-gallery>
       {photos.map(({ src }, i) => (
         <li key={src} className="rv" style={{ "--cu-ar": ["3 / 4", "4 / 5", "2 / 3", "4 / 5", "3 / 4", "1 / 1"][i % 6] } as CSSProperties}>
-          <button type="button" className="fs-tile" data-photo={i} aria-label={fill(v.f.openPhoto, { n: i + 1 })}>
+          <button data-k="photo fill" type="button" className="fs-tile" data-photo={i} aria-label={fill(v.f.openPhoto, { n: i + 1 })}>
             <Picture src={src} sizes="(min-width: 760px) 33vw, 50vw" />
           </button>
         </li>
@@ -389,11 +389,11 @@ function Hero({ v }: { v: View }) {
         </h1>
         {subtitle && <p className="cu-hero-sub">{subtitle}</p>}
         <div className="cu-hero-actions">
-          <a className="cu-btn cu-btn-light" href={href(PAGE_PATHS.menu)}>
+          <a data-k="btn" className="cu-btn cu-btn-light" href={href(PAGE_PATHS.menu)}>
             {k.discoverAll}
           </a>
           {v.appointment && (
-            <a className="cu-btn cu-btn-ghost" href={v.appointment} target="_blank" rel="noopener noreferrer">
+            <a data-k="btn" className="cu-btn cu-btn-ghost" href={v.appointment} target="_blank" rel="noopener noreferrer">
               {k.appointment}
             </a>
           )}
@@ -432,7 +432,7 @@ function Home({ v }: { v: View }) {
       {story && (
         <section id="story" className={cx("cu-story", storyImage && "has-image")} data-section="story" aria-labelledby="cu-story-title">
           {storyImage && (
-            <div className="cu-story-img rv">
+            <div data-k="photo" className="cu-story-img rv">
               <Picture src={storyImage} sizes="(min-width: 760px) 50vw, 100vw" />
             </div>
           )}
@@ -505,12 +505,12 @@ function Appointment({ v, heading = true }: { v: View; heading?: boolean }) {
         <p className="cu-lead">{k.appointmentLead}</p>
         <div className="cu-visit-actions">
           {v.appointment && (
-            <a className="cu-btn" href={v.appointment} target="_blank" rel="noopener noreferrer">
+            <a data-k="btn" className="cu-btn" href={v.appointment} target="_blank" rel="noopener noreferrer">
               <WhatsApp /> {k.appointment}
             </a>
           )}
           {contact.maps && (
-            <a className="cu-btn cu-btn-line" href={contact.maps} target="_blank" rel="noopener noreferrer">
+            <a data-k="btn" className="cu-btn cu-btn-line" href={contact.maps} target="_blank" rel="noopener noreferrer">
               <Pin /> {ctx.t.directions}
             </a>
           )}
@@ -644,7 +644,7 @@ function BoutiquePage({ v }: { v: View }) {
       {story && (
         <section className={cx("cu-story", storyImage && "has-image")} data-section="story" aria-labelledby="cu-story-title">
           {storyImage && (
-            <div className="cu-story-img">
+            <div data-k="photo" className="cu-story-img">
               <Picture src={storyImage} sizes="(min-width: 760px) 50vw, 100vw" />
             </div>
           )}

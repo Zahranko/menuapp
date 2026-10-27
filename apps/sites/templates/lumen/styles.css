@@ -10,6 +10,7 @@
 @import "../_kit/options.css";
 @import "../_kit/cards.css";
 @import "../_kit/hero.css";
+@import "../_kit/style.css";
 
 .t-lumen {
   --wrap: 1240px;
@@ -661,7 +662,7 @@
   .sec {
     max-width: var(--wrap);
     margin: 0 auto;
-    padding: 60px var(--pad) 0;
+    padding: calc(60px * var(--kit-space, 1)) var(--pad) 0;
   }
   .sec-head {
     display: flex;
@@ -985,7 +986,7 @@
   .statement {
     position: relative;
     max-width: var(--wrap);
-    margin: 70px auto 0;
+    margin: calc(70px * var(--kit-space, 1)) auto 0;
     padding: 0 var(--pad);
   }
   .statement-in {
@@ -1390,10 +1391,10 @@
     color: var(--bg);
   }
   .page > .sec:first-of-type {
-    padding-top: 36px;
+    padding-top: calc(36px * var(--kit-space, 1));
   }
   .menu-block {
-    padding-top: 44px;
+    padding-top: calc(44px * var(--kit-space, 1));
     scroll-margin-top: calc(var(--top-h) + 66px);
   }
   .band {
@@ -1434,7 +1435,7 @@
 
   /* ---------- footer ---------- */
   .foot {
-    margin-top: 90px;
+    margin-top: calc(90px * var(--kit-space, 1));
     background: var(--ink);
     color: var(--bg);
     padding-bottom: calc(var(--tab-h) + 26px + env(safe-area-inset-bottom));

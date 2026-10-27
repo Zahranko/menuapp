@@ -4,6 +4,7 @@
 @import "../_kit/options.css";
 @import "../_kit/cards.css";
 @import "../_kit/hero.css";
+@import "../_kit/style.css";
 
 .t-handy {
   container: page / inline-size;
@@ -259,11 +260,11 @@
 
   /* services */
   .services {
-    padding: 56px 16px 20px;
+    padding: calc(56px * var(--kit-space, 1)) 16px calc(20px * var(--kit-space, 1));
     scroll-margin-top: 64px;
   }
   .group {
-    padding-top: 26px;
+    padding-top: calc(26px * var(--kit-space, 1));
     scroll-margin-top: 74px;
   }
   .group h3 {
@@ -372,8 +373,8 @@
 
   /* areas */
   .areas {
-    margin: 40px 16px 0;
-    padding: 26px 20px;
+    margin: calc(40px * var(--kit-space, 1)) 16px 0;
+    padding: calc(26px * var(--kit-space, 1)) 20px;
     border-radius: var(--r);
     background: var(--acc);
     color: var(--acc-ink);
@@ -405,7 +406,7 @@
 
   /* steps */
   .how {
-    padding: 60px 16px 20px;
+    padding: calc(60px * var(--kit-space, 1)) 16px calc(20px * var(--kit-space, 1));
     scroll-margin-top: 64px;
   }
   .steps {
@@ -450,7 +451,7 @@
 
   /* reviews */
   .reviews {
-    padding: 60px 16px 20px;
+    padding: calc(60px * var(--kit-space, 1)) 16px calc(20px * var(--kit-space, 1));
   }
   .review-list {
     display: grid;
@@ -478,7 +479,7 @@
 
   /* faq */
   .faq {
-    padding: 60px 16px 20px;
+    padding: calc(60px * var(--kit-space, 1)) 16px calc(20px * var(--kit-space, 1));
     scroll-margin-top: 64px;
   }
   .faq-list {
@@ -534,7 +535,7 @@
 
   /* visit */
   .visit {
-    padding: 60px 16px 30px;
+    padding: calc(60px * var(--kit-space, 1)) 16px calc(30px * var(--kit-space, 1));
     scroll-margin-top: 64px;
   }
   .visit-grid {
@@ -554,7 +555,7 @@
   }
 
   .foot {
-    padding: 22px 16px 30px;
+    padding: calc(22px * var(--kit-space, 1)) 16px calc(30px * var(--kit-space, 1));
     color: var(--muted);
     border-top: 1px solid var(--line);
   }
@@ -669,7 +670,7 @@
       font-size: calc(44px * var(--fs));
     }
     .services {
-      padding-top: 80px;
+      padding-top: calc(80px * var(--kit-space, 1));
     }
     .cards {
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -679,15 +680,15 @@
       display: flex;
       align-items: center;
       gap: 30px;
-      margin: 60px max(32px, calc((100cqi - 1180px) / 2)) 0;
-      padding: 34px 40px;
+      margin: calc(60px * var(--kit-space, 1)) max(32px, calc((100cqi - 1180px) / 2)) 0;
+      padding: calc(34px * var(--kit-space, 1)) 40px;
     }
     .areas h2 {
       flex: none;
       margin: 0;
     }
     .how {
-      padding-top: 90px;
+      padding-top: calc(90px * var(--kit-space, 1));
     }
     .steps {
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));

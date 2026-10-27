@@ -55,7 +55,7 @@ export default function BentoTemplate({ site, now }: TemplateProps & { now?: Dat
             <div className="tile tile-hero c1">
               <h1 id="hero-title">{ctx.text("hero.title") || site.business.name}</h1>
               {ctx.text("hero.subtitle") && <p>{ctx.text("hero.subtitle")}</p>}
-              <a className="go" href="#menu">
+              <a data-k="btn" className="go" href="#menu">
                 {c.see} <Arrow />
               </a>
             </div>
@@ -78,7 +78,7 @@ export default function BentoTemplate({ site, now }: TemplateProps & { now?: Dat
             )}
             {pick && (
               <button type="button" className="tile tile-pick c3" data-item-id={pick.id}>
-                <span className="pick-media">
+                <span data-k="photo" className="pick-media">
                   <ProductPicture item={pick} sizes="160px" />
                 </span>
                 <span className="pick-text">
@@ -138,13 +138,13 @@ export default function BentoTemplate({ site, now }: TemplateProps & { now?: Dat
         {(story || ctx.on("visit")) && (
           <div className="bento outro">
             {story && (
-              <section id="story" className="tile tile-story c1" data-section="story" aria-labelledby="story-title">
+              <section id="story" className="tile tile-story c1" data-section="story" data-k="boxed" aria-labelledby="story-title">
                 <h2 id="story-title">{ctx.text("story.title") || c.about}</h2>
                 <p>{story}</p>
               </section>
             )}
             {ctx.on("visit") && hasHours(ctx.hours) && (
-              <section className="tile tile-hours c2" data-section="visit" aria-labelledby="hours-title">
+              <section className="tile tile-hours c2" data-section="visit" data-k="boxed" aria-labelledby="hours-title">
                 <h2 id="hours-title">{c.hours}</h2>
                 <HoursList ctx={ctx} />
               </section>

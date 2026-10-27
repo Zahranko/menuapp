@@ -4,6 +4,7 @@
 @import "../_kit/options.css";
 @import "../_kit/cards.css";
 @import "../_kit/hero.css";
+@import "../_kit/style.css";
 
 .t-mono {
   container: page / inline-size;
@@ -90,7 +91,7 @@
     scroll-margin-top: 10px;
   }
   .index {
-    padding: 18px 14px 26px;
+    padding: calc(18px * var(--kit-space, 1)) 14px calc(26px * var(--kit-space, 1));
     border-bottom: 1px solid var(--line);
   }
   .index a {
@@ -125,7 +126,7 @@
     display: flex;
     align-items: baseline;
     gap: 14px;
-    padding: 34px 14px 14px;
+    padding: calc(34px * var(--kit-space, 1)) 14px calc(14px * var(--kit-space, 1));
     font-size: calc(38px * var(--fs));
     text-transform: uppercase;
     overflow-wrap: anywhere;
@@ -226,7 +227,7 @@
     display: grid;
   }
   .info-cell {
-    padding: 18px 14px 26px;
+    padding: calc(18px * var(--kit-space, 1)) 14px calc(26px * var(--kit-space, 1));
     border-bottom: 1px solid var(--line);
   }
   .info-cell p {
@@ -252,7 +253,7 @@
     border-color: color-mix(in srgb, currentColor 40%, transparent);
   }
   .foot {
-    padding: 16px 14px 28px;
+    padding: calc(16px * var(--kit-space, 1)) 14px calc(28px * var(--kit-space, 1));
     color: var(--muted);
     font-size: 12px;
     text-transform: uppercase;
@@ -291,7 +292,7 @@
     }
     .block-head {
       font-size: calc(64px * var(--fs));
-      padding-top: 56px;
+      padding-top: calc(56px * var(--kit-space, 1));
     }
     .info-grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));

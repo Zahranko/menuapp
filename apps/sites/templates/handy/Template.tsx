@@ -67,7 +67,7 @@ export default function HandyTemplate({ site, now }: TemplateProps & { now?: Dat
           {ctx.on("visit") && <a href="#visit">{c.contact}</a>}
         </nav>
         {book && (
-          <a className="btn small" href={book} rel="noopener" target="_blank" aria-label={c.request}>
+          <a data-k="btn" className="btn small" href={book} rel="noopener" target="_blank" aria-label={c.request}>
             <WhatsApp /> <span>{c.request}</span>
           </a>
         )}
@@ -88,7 +88,7 @@ export default function HandyTemplate({ site, now }: TemplateProps & { now?: Dat
                 ))}
               </nav>
               {book && (
-                <a className="btn wide" href={book} rel="noopener" target="_blank">
+                <a data-k="btn" className="btn wide" href={book} rel="noopener" target="_blank">
                   <WhatsApp /> {c.request}
                 </a>
               )}

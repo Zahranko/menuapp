@@ -230,7 +230,7 @@ export default function NeonDinerTemplate({
                 <h3>{ctx.t.findUs}</h3>
                 <ContactList ctx={ctx} />
                 {ctx.contact.whatsapp && (
-                  <a
+                  <a data-k="btn"
                     className="order"
                     href={ctx.contact.whatsapp}
                     rel="noopener"

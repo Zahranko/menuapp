@@ -9,6 +9,7 @@
 @import "../_kit/options.css";
 @import "../_kit/cards.css";
 @import "../_kit/hero.css";
+@import "../_kit/style.css";
 
 .t-atlas {
   --pad: clamp(16px, 4vw, 48px);
@@ -534,7 +535,7 @@
   .a-sec {
     max-width: var(--wrap);
     margin: 0 auto;
-    padding: 56px var(--pad) 0;
+    padding: calc(56px * var(--kit-space, 1)) var(--pad) 0;
   }
   .a-sec-head {
     display: flex;
@@ -1001,7 +1002,7 @@
   .a-story {
     max-width: var(--wrap);
     margin: 0 auto;
-    padding: 64px var(--pad) 0;
+    padding: calc(64px * var(--kit-space, 1)) var(--pad) 0;
     display: grid;
   }
   .a-story-img {
@@ -1255,7 +1256,7 @@
   }
   .a-page .a-sec:first-of-type,
   .a-chips + .a-sec {
-    padding-top: 28px;
+    padding-top: calc(28px * var(--kit-space, 1));
   }
   .a-block {
     scroll-margin-top: calc(var(--sticky) + 64px);
@@ -1292,7 +1293,7 @@
 
   /* ---------- footer ---------- */
   .a-foot {
-    margin-top: 88px;
+    margin-top: calc(88px * var(--kit-space, 1));
     background: var(--surf);
     border-top: 1px solid var(--line);
     overflow: hidden;
@@ -1774,7 +1775,7 @@
     }
 
     .a-sec {
-      padding-top: 96px;
+      padding-top: calc(96px * var(--kit-space, 1));
     }
     .a-sec-head {
       margin-bottom: 30px;
@@ -1898,7 +1899,7 @@
       padding-bottom: 28px;
     }
     .a-foot {
-      margin-top: 128px;
+      margin-top: calc(128px * var(--kit-space, 1));
     }
     .a-foot-grid {
       padding-top: 64px;

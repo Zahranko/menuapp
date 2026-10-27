@@ -185,7 +185,7 @@ function Header({ v }: { v: View }) {
                 {ctx.today && <p>{ctx.today}</p>}
                 {ctx.site.business.address && <p>{ctx.site.business.address}</p>}
                 {v.order && (
-                  <a className="mx-btn" href={v.order} target="_blank" rel="noopener noreferrer">
+                  <a data-k="btn" className="mx-btn" href={v.order} target="_blank" rel="noopener noreferrer">
                     {v.cta}
                   </a>
                 )}
@@ -199,7 +199,7 @@ function Header({ v }: { v: View }) {
         </a>
         <div className="mx-head-end">
           {v.order && (
-            <a className="mx-reserve" href={v.order} target="_blank" rel="noopener noreferrer" aria-label={v.cta}>
+            <a data-k="btn" className="mx-reserve" href={v.order} target="_blank" rel="noopener noreferrer" aria-label={v.cta}>
               <WhatsApp className="mx-reserve-icon" />
               <span className="mx-reserve-word">{v.cta}</span>
             </a>
@@ -316,7 +316,7 @@ function Hero({ v, layout }: { v: View; layout: (typeof HERO)[number] }) {
         </h1>
         {tagline && <p className="mx-tagline mx-in">{tagline}</p>}
         <div className="mx-hero-actions mx-in">
-          <a className="mx-btn" href={href(PAGE_PATHS.menu)}>
+          <a data-k="btn" className="mx-btn" href={href(PAGE_PATHS.menu)}>
             {c.browse}
           </a>
           {v.order && (
@@ -378,7 +378,7 @@ function Home({ v, layout }: { v: View; layout: (typeof HERO)[number] }) {
           </div>
         )}
         <div className="mx-center">
-          <a className="mx-btn is-quiet" href={href(PAGE_PATHS.menu)}>
+          <a data-k="btn" className="mx-btn is-quiet" href={href(PAGE_PATHS.menu)}>
             {c.viewAll}
           </a>
         </div>
@@ -394,7 +394,7 @@ function Home({ v, layout }: { v: View; layout: (typeof HERO)[number] }) {
             <More href={href(PAGE_PATHS.visit)}>{c.visit}</More>
           </div>
           {storyImage && (
-            <figure className="mx-story-media mx-frame mx-reveal">
+            <figure data-k="photo" className="mx-story-media mx-frame mx-reveal">
               <Picture src={storyImage} sizes="(min-width: 900px) 45vw, 100vw" />
             </figure>
           )}
@@ -407,7 +407,7 @@ function Home({ v, layout }: { v: View; layout: (typeof HERO)[number] }) {
           <ul className="plain mx-film-strip" data-gallery>
             {v.photos.slice(0, 8).map((p, i) => (
               <li key={p.src} className={`mx-film-${i % 3}`}>
-                <button type="button" className="mx-shot" data-photo={i} aria-label={p.caption ?? fill(c.photo, { n: i + 1 })}>
+                <button data-k="photo fill" type="button" className="mx-shot" data-photo={i} aria-label={p.caption ?? fill(c.photo, { n: i + 1 })}>
                   <Picture src={p.src} sizes="(min-width: 900px) 40vw, 80vw" />
                 </button>
               </li>
@@ -435,11 +435,11 @@ function Signatures({ v, n }: { v: View; n: number }) {
     <section id="best" className={cx("mx-chap mx-sig", pics.length > 0 && "has-image")} data-section="best" aria-labelledby="best-title">
       {pics.length > 0 && (
         <div className="mx-sig-media">
-          <figure className="mx-sig-main mx-reveal">
+          <figure data-k="photo" className="mx-sig-main mx-reveal">
             <Picture src={pics[0].imageUrl!} sizes="(min-width: 900px) 45vw, 100vw" />
           </figure>
           {pics[1] && (
-            <figure className="mx-sig-second mx-reveal">
+            <figure data-k="photo" className="mx-sig-second mx-reveal">
               <Picture src={pics[1].imageUrl!} sizes="(min-width: 900px) 18vw, 40vw" />
             </figure>
           )}
@@ -570,7 +570,7 @@ function Visit({ v, n, heading = true }: { v: View; n?: number; heading?: boolea
             )}
           </ul>
           {v.order && (
-            <a className="mx-btn" href={v.order} target="_blank" rel="noopener noreferrer">
+            <a data-k="btn" className="mx-btn" href={v.order} target="_blank" rel="noopener noreferrer">
               {v.cta}
             </a>
           )}
@@ -804,7 +804,7 @@ function VisitPage({ v }: { v: View }) {
             <p className="mx-story-text mx-drop">{story}</p>
           </div>
           {storyImage && (
-            <figure className="mx-story-media mx-frame mx-reveal">
+            <figure data-k="photo" className="mx-story-media mx-frame mx-reveal">
               <Picture src={storyImage} sizes="(min-width: 900px) 45vw, 100vw" />
             </figure>
           )}

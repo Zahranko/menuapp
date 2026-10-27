@@ -9,6 +9,7 @@
 @import "../_kit/options.css";
 @import "../_kit/cards.css";
 @import "../_kit/hero.css";
+@import "../_kit/style.css";
 
 html.mx-locked {
   overflow: hidden;
@@ -632,7 +633,7 @@ html.mx-locked {
   .mx-chap {
     max-width: 1320px;
     margin-inline: auto;
-    padding: clamp(84px, 12vw, 170px) var(--pad) 0;
+    padding: calc(clamp(84px, 12vw, 170px) * var(--kit-space, 1)) var(--pad) 0;
   }
   .mx-chap-head {
     display: grid;
@@ -1419,7 +1420,7 @@ html.mx-locked {
 
   .mx-page > .mx-chap:last-child,
   .mx-page > .mx-visit:last-child {
-    padding-bottom: clamp(72px, 10vw, 140px);
+    padding-bottom: calc(clamp(72px, 10vw, 140px) * var(--kit-space, 1));
   }
   .mx-page > .mx-visit:first-of-type {
     padding-top: clamp(56px, 8vw, 96px);
@@ -1427,7 +1428,7 @@ html.mx-locked {
 
   /* ---------- footer ---------- */
   .mx-foot {
-    margin-top: clamp(96px, 14vw, 200px);
+    margin-top: calc(clamp(96px, 14vw, 200px) * var(--kit-space, 1));
     border-top: 1px solid var(--line);
   }
   .mx-page + .mx-foot {

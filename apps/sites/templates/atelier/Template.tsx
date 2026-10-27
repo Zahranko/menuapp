@@ -114,7 +114,7 @@ export default function AtelierTemplate({
           {ctx.on("visit") && <a href="#visit">{c.visit}</a>}
         </nav>
         {book && (
-          <a className="btn small" href={book} rel="noopener" target="_blank">
+          <a data-k="btn" className="btn small" href={book} rel="noopener" target="_blank">
             {c.book}
           </a>
         )}
@@ -143,11 +143,11 @@ export default function AtelierTemplate({
             )}
             <div className="hero-actions">
               {book && (
-                <a className="btn" href={book} rel="noopener" target="_blank">
+                <a data-k="btn" className="btn" href={book} rel="noopener" target="_blank">
                   {c.book}
                 </a>
               )}
-              <a className="btn ghost" href="#menu">
+              <a data-k="btn" className="btn ghost" href="#menu">
                 {c.services} <Arrow />
               </a>
             </div>
@@ -252,7 +252,7 @@ export default function AtelierTemplate({
             aria-labelledby="story-title"
           >
             {storyImage && (
-              <div className="story-image">
+              <div data-k="photo" className="story-image">
                 <Picture
                   src={storyImage}
                   sizes="(min-width: 760px) 45vw, 100vw"
@@ -278,7 +278,7 @@ export default function AtelierTemplate({
             </h2>
             <ul className="plain" data-gallery>
               {ctx.gallery.slice(0, 6).map((src, i) => (
-                <li key={src + i}>
+                <li key={src + i} data-k="photo fill">
                   <Picture
                     src={src}
                     sizes="(min-width: 760px) 33vw, 50vw"
@@ -329,7 +329,7 @@ export default function AtelierTemplate({
                 <h3>{c.contact}</h3>
                 <ContactList ctx={ctx} />
                 {book && (
-                  <a className="btn" href={book} rel="noopener" target="_blank">
+                  <a data-k="btn" className="btn" href={book} rel="noopener" target="_blank">
                     {c.book}
                   </a>
                 )}

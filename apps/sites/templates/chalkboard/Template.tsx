@@ -88,7 +88,7 @@ export default function ChalkBoardTemplate({ site, now }: TemplateProps & { now?
             <section className="special" data-section="special" aria-labelledby="special-title">
               <h2 id="special-title">{ctx.text("special.title") || c.special}</h2>
               <button type="button" className="special-card" data-item-id={special.id}>
-                <span className="special-photo">
+                <span data-k="photo" className="special-photo">
                   <ProductPicture item={special} sizes="(min-width: 760px) 320px, 70vw" />
                 </span>
                 <span className="special-text">
@@ -173,12 +173,12 @@ export default function ChalkBoardTemplate({ site, now }: TemplateProps & { now?
                   <ContactList ctx={ctx} />
                   <div className="actions">
                     {ctx.contact.whatsapp && (
-                      <a className="chalk-btn" href={ctx.contact.whatsapp} rel="noopener" target="_blank">
+                      <a data-k="btn" className="chalk-btn" href={ctx.contact.whatsapp} rel="noopener" target="_blank">
                         <WhatsApp /> {c.order}
                       </a>
                     )}
                     {ctx.contact.maps && (
-                      <a className="chalk-btn ghost" href={ctx.contact.maps} rel="noopener" target="_blank">
+                      <a data-k="btn" className="chalk-btn ghost" href={ctx.contact.maps} rel="noopener" target="_blank">
                         {ctx.t.directions}
                       </a>
                     )}

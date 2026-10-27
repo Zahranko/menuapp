@@ -202,7 +202,7 @@ function Header({ v }: { v: View }) {
           ))}
         </nav>
         {v.order && (
-          <a className="order-pill" href={v.order} target="_blank" rel="noopener noreferrer">
+          <a data-k="btn" className="order-pill" href={v.order} target="_blank" rel="noopener noreferrer">
             <WhatsApp />
             <span>{v.cta}</span>
           </a>
@@ -220,7 +220,7 @@ function CakeCard({ v, item, rank }: { v: View; item: MenuItem; rank?: number })
     <button type="button" className={cx("cake kit-card kit-card-pad", !item.isAvailable && "out")} data-item-id={item.id}>
       <span className="stand">
         <span className="doily" aria-hidden="true" />
-        <span className="plate">
+        <span data-k="photo" className="plate">
           <ProductPicture item={item} sizes="(min-width: 1100px) 220px, (min-width: 700px) 30vw, 45vw" />
         </span>
         {rank !== undefined && <span className="rosette">{rank}</span>}
@@ -322,7 +322,7 @@ function Scrapbook({ v, photos, offset = 0 }: { v: View; photos: { src: string; 
       {photos.map((p, i) => (
         <li key={p.src} className="reveal" style={{ "--i": i } as CSSProperties}>
           <button type="button" className="polaroid" data-photo={i + offset} aria-label={p.caption ?? fill(v.c.photo, { n: i + offset + 1 })}>
-            <span className="pol-pic">
+            <span data-k="photo fill" className="pol-pic">
               <Picture src={p.src} sizes="(min-width: 900px) 280px, 45vw" />
             </span>
           </button>
@@ -364,11 +364,11 @@ function Hero({ v }: { v: View }) {
           <h1 className="hero-title">{title}</h1>
           {subtitle && <p className="hero-sub">{subtitle}</p>}
           <div className="actions">
-            <a className="btn" href={href(PAGE_PATHS.menu)}>
+            <a data-k="btn" className="btn" href={href(PAGE_PATHS.menu)}>
               {c.browse} <Arrow className="flip" />
             </a>
             {v.order && (
-              <a className="btn btn-soft" href={v.order} target="_blank" rel="noopener noreferrer">
+              <a data-k="btn" className="btn btn-soft" href={v.order} target="_blank" rel="noopener noreferrer">
                 <WhatsApp /> {v.cta}
               </a>
             )}
@@ -462,7 +462,7 @@ function Story({ v, text: body }: { v: View; text: string }) {
       <div className="wrap story-in">
         {pic && (
           <div className="story-pic reveal">
-            <span className="arch">
+            <span data-k="photo" className="arch">
               <Picture src={pic} sizes="(min-width: 900px) 40vw, 80vw" />
             </span>
             <Heart className="story-heart" />
@@ -575,12 +575,12 @@ function VisitCard({ v, heading = true }: { v: View; heading?: boolean }) {
               {(contact.whatsapp || contact.maps) && (
                 <div className="actions">
                   {contact.whatsapp && (
-                    <a className="btn" href={contact.whatsapp} target="_blank" rel="noopener noreferrer">
+                    <a data-k="btn" className="btn" href={contact.whatsapp} target="_blank" rel="noopener noreferrer">
                       <WhatsApp /> {v.cta}
                     </a>
                   )}
                   {contact.maps && (
-                    <a className="btn btn-soft" href={contact.maps} target="_blank" rel="noopener noreferrer">
+                    <a data-k="btn" className="btn btn-soft" href={contact.maps} target="_blank" rel="noopener noreferrer">
                       <Pin /> {ctx.t.directions}
                     </a>
                   )}

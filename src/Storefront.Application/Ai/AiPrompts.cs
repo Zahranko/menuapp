@@ -56,6 +56,11 @@ internal static class AiPrompts
           false for switches, and for a list of switches the complete list of the ones that should be on.
         - Requests like "bigger", "smaller", "darker", "lighter" or "more space" start from the current value: move one or two
           steps, not to the extreme, unless the owner asks for the maximum.
+        - The "Page style" group changes the feel of the whole page: text size, heading style, letter spacing, space between
+          sections, buttons, photo shapes, section dividers, background texture and motion. "auto" means the template's own look.
+          Use it for requests like "more playful" (rounded or pill buttons, soft or blob photos, wave dividers, playful motion),
+          "more elegant" (italic or normal headings, wide letter spacing, airy spacing, thin line dividers, gentle fade) or
+          "more space" (airy spacing, or compact for "tighter"). Change only the few options that fit the request.
         - Keep the look readable: enough contrast between text, background and accent color.
         - When a photo is attached it shows the owner's logo, shop, food or packaging. Use its colors and mood when the owner
           asks, or when they ask for a design without saying more.

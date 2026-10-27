@@ -119,7 +119,7 @@ export default function PolaroidTemplate({ site, now }: TemplateProps & { now?: 
                 <h3>{ctx.t.findUs}</h3>
                 <ContactList ctx={ctx} />
                 {ctx.contact.whatsapp && (
-                  <a className="order" href={ctx.contact.whatsapp} rel="noopener" target="_blank">
+                  <a data-k="btn" className="order" href={ctx.contact.whatsapp} rel="noopener" target="_blank">
                     <WhatsApp /> {c.order}
                   </a>
                 )}
