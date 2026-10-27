@@ -134,8 +134,23 @@
 [data-card-photo="rounded"] :is(.kit-card-media, .kit-cat-media) {
   border-radius: 14px !important;
 }
-/* A circle: as wide as the box allows up to --kit-circle (a wide top photo becomes a round plate in the middle). */
+/* A circle. A wide top photo (.kit-flush) becomes a round plate in the middle, as wide as the box allows up to
+ * --kit-circle; any other photo (a side thumbnail, a grid tile) keeps its own width, up to --kit-circle, and is made as
+ * tall as it is wide: it never grows into a plate. */
 [data-card-photo="circle"] :is(.kit-card-media, .kit-cat-media) {
+  border-radius: 50% !important;
+}
+[data-card-photo="circle"] :is(.kit-card-media, .kit-cat-media):not(.kit-flush) {
+  align-self: center !important;
+  flex-grow: 0 !important;
+  flex-basis: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  max-width: var(--kit-circle, 220px) !important;
+  aspect-ratio: 1 / 1 !important;
+}
+[data-card-photo="circle"] :is(.kit-card-media, .kit-cat-media).kit-flush {
   flex: none !important;
   align-self: center !important;
   justify-self: center !important;
@@ -145,7 +160,6 @@
   max-height: none !important;
   aspect-ratio: 1 / 1 !important;
   margin-inline: auto !important;
-  border-radius: 50% !important;
 }
 [data-card-photo="circle"] :is(.kit-card, .kit-cat) > :is(.kit-card-media, .kit-cat-media).kit-flush {
   margin-top: 14px !important;

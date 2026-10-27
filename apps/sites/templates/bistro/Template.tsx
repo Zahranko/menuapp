@@ -137,7 +137,7 @@ export default function BistroCardTemplate({
                 aria-labelledby="special-title"
               >
                 <Clip />
-                <h2 id="special-title">
+                <h2 data-k="label" id="special-title">
                   {ctx.text("special.title") || c.special}
                 </h2>
                 <button

@@ -149,7 +149,7 @@ export default function NeonDinerTemplate({
               className="group"
               aria-labelledby={`${section.anchor}-h`}
             >
-              <h2 id={`${section.anchor}-h`} className="ribbon">
+              <h2 data-k="label" id={`${section.anchor}-h`} className="ribbon">
                 <span>{section.name}</span>
               </h2>
               <ul className="plain combos kit-cards">

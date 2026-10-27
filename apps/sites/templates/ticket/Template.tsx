@@ -170,7 +170,7 @@ export default function TicketTemplate({
                   className="group"
                   aria-labelledby={`${section.anchor}-h`}
                 >
-                  <h2 id={`${section.anchor}-h`} className="rule">
+                  <h2 data-k="label" id={`${section.anchor}-h`} className="rule">
                     <span>{section.name}</span>
                   </h2>
                   <ul className="plain kit-cards kit-rows">
@@ -224,7 +224,7 @@ export default function TicketTemplate({
                 data-section="visit"
                 aria-labelledby="visit-title"
               >
-                <h2 id="visit-title" className="rule">
+                <h2 data-k="label" id="visit-title" className="rule">
                   <span>{c.where}</span>
                 </h2>
                 {location && <p className="today-spot">{location}</p>}

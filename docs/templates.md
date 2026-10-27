@@ -90,7 +90,11 @@ designed:
 `optionRoot(ctx)` puts one `data-ps-*` attribute on the root for each option that is not `auto` (`styleAttributes()`),
 and `_kit/style.css`, imported by every `styles.css` after `hero.css`, styles them. Its rules use `!important` under
 those attributes, so they win over the template only when the owner picked something. Arabic headings never get
-italic, condensed letters or letter spacing. Motion uses CSS scroll-driven animations inside
+italic, condensed letters, outlines or letter spacing. Outlines go only on display headings (the opening headline and
+section titles), never on labels, header, footer or highlight titles. On a phone (560px and under), larger and big
+text leaves headings at the template's size, capital display headings are set 12% smaller, and wide spacing is
+reduced, so a word in a heading never breaks in the middle (display headings wrap only between words). On a dark
+theme (`color-scheme: dark` on the root) the paper texture is a faint fine grain. Motion uses CSS scroll-driven animations inside
 `@media (prefers-reduced-motion: no-preference)`, with no JavaScript, and changes nothing in browsers without them.
 
 What a template marks so the options can reach it:
@@ -100,6 +104,8 @@ What a template marks so the options can reach it:
   `.kit-cat-media`. Add `fill` for a gallery tile that must keep its grid cell, and `overlay` for a photo with text laid
   over it: those keep a rounded box instead of a circle, arch or blob.
 - `data-k="boxed"` on a section drawn as a card of its own: it gets no divider band.
+- `data-k="label"` on a small section heading (under 26px on a phone at the default text size): it stays solid when
+  headings are outlined.
 - `calc(<n>px * var(--kit-space, 1))` in the vertical padding and margins of the sections.
 - Sections are found by `data-section`. The header, hero, announcement, ticker, order bar and footer never get
   dividers or motion.

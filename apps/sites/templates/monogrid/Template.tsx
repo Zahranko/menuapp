@@ -50,7 +50,7 @@ export default function MonoGridTemplate({ site, now }: TemplateProps & { now?: 
         <section id="menu" className="catalog" data-section="menu" aria-label={c.menu}>
           {ctx.sections.length > 1 && (
             <nav className="index" aria-label={c.index}>
-              <h2 className="label">{c.index}</h2>
+              <h2 data-k="label" className="label">{c.index}</h2>
               <ol className="plain">
                 {ctx.sections.map((s, i) => (
                   <li key={s.id}>

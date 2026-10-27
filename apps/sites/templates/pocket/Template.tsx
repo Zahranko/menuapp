@@ -128,13 +128,13 @@ export default function PocketCatalogTemplate({ site, now }: TemplateProps & { n
           <div className="info">
             {story && (
               <section className="card" id="story" data-section="story" data-k="boxed" aria-labelledby="story-title">
-                <h2 id="story-title">{ctx.text("story.title") || c.about}</h2>
+                <h2 data-k="label" id="story-title">{ctx.text("story.title") || c.about}</h2>
                 <p>{story}</p>
               </section>
             )}
             {ctx.on("visit") && (
               <section className="card" id="visit" data-section="visit" data-k="boxed" aria-labelledby="visit-title">
-                <h2 id="visit-title">{c.visit}</h2>
+                <h2 data-k="label" id="visit-title">{c.visit}</h2>
                 <div className="visit-cols">
                   <ContactList ctx={ctx} />
                   {hasHours(ctx.hours) && (

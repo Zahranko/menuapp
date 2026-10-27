@@ -74,7 +74,7 @@ export default function LinenTemplate({ site, now }: TemplateProps & { now?: Dat
           )}
 
           <section id="menu" className="menu" data-section="menu" aria-labelledby="menu-title">
-            <h2 id="menu-title" className="menu-title">
+            <h2 data-k="label" id="menu-title" className="menu-title">
               {c.menu}
             </h2>
             {ctx.sections.length > 1 && (

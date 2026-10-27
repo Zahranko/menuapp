@@ -71,7 +71,7 @@ export default function ZenTemplate({ site, now }: TemplateProps & { now?: Date 
         <section id="menu" className="menu" data-section="menu" aria-label={c.menu}>
           {ctx.sections.map((section, si) => (
             <section key={section.id} id={section.anchor} className="course" aria-labelledby={`${section.anchor}-h`}>
-              <h2 id={`${section.anchor}-h`}>
+              <h2 data-k="label" id={`${section.anchor}-h`}>
                 <span className="course-no">{pad(si + 1)}</span>
                 <span className="course-name">{section.name}</span>
               </h2>

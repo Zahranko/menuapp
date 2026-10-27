@@ -15,6 +15,7 @@ import styleSettings from "./style-settings.json";
  *   data-k="overlay" a photo box with text laid over it: it keeps a full (rounded) box instead of a circle, arch or blob
  *   data-k="fill"    a gallery tile: it keeps its place in the grid, so a circle may be oval
  *   data-k="boxed"   a section drawn as a box of its own: it gets no divider band
+ *   data-k="label"   a small section heading (under 26px on a phone): it stays solid when headings are outlined
  *   calc(<n>px * var(--kit-space, 1)) in the vertical padding and margins of the template's sections
  */
 

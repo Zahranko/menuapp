@@ -177,7 +177,7 @@ export default function AgencyTemplate({ site, now }: TemplateProps & { now?: Da
 
         {ctx.on("reviews") && ctx.reviews.length > 0 && (
           <section className="reviews" data-section="reviews" aria-labelledby="reviews-title">
-            <h2 id="reviews-title" className="small-title">
+            <h2 data-k="label" id="reviews-title" className="small-title">
               {c.reviews}
             </h2>
             <div className="quotes">
@@ -193,7 +193,7 @@ export default function AgencyTemplate({ site, now }: TemplateProps & { now?: Da
 
         {ctx.on("faq") && questions.length > 0 && (
           <section className="faq" data-section="faq" aria-labelledby="faq-title">
-            <h2 id="faq-title" className="small-title">
+            <h2 data-k="label" id="faq-title" className="small-title">
               {c.faq}
             </h2>
             <div className="faq-list">

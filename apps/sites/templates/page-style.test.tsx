@@ -113,4 +113,31 @@ describe("page style stylesheet", () => {
       }
     }
   });
+
+  it("never cuts a word in a display heading, and keeps big headings inside a phone screen", () => {
+    expect(css).toMatch(/:is\(h1, h2\) \{\s*overflow-wrap: normal !important;\s*word-break: normal !important;\s*hyphens: manual !important;/);
+    expect(css).not.toContain("overflow-wrap: anywhere");
+    const phone = css.slice(css.indexOf("@media (max-width: 560px)"));
+    expect(phone).toContain("min(var(--kit-text, 1), 1)");
+    expect(css).toMatch(/:is\(\[data-ps-text="larger"\], \[data-ps-text="big"\]\)\[data-ps-track="wide"\] :is\(h1, h2\) \{\s*letter-spacing: 0 !important;/);
+  });
+
+  it("outlines only display headings, never Arabic ones or labels", () => {
+    const rules = css.match(/\[data-ps-head="outlined"\][^{]*\{/g) ?? [];
+    expect(rules.length).toBeGreaterThan(0);
+    for (const rule of rules) {
+      expect(rule).toContain(":lang(ar)");
+      expect(rule).toContain('[data-k~="label"]');
+      expect(rule).not.toMatch(/h3|h4/);
+    }
+  });
+
+  it("finds dark themes the way templates write them, for the paper texture", () => {
+    expect(css).toContain('[data-ps-tex="paper"][style*="color-scheme:dark"]');
+    const maison = fixtureFor("maison");
+    applySiteOptions(maison, "tex_paper");
+    const dark = parse(html(maison));
+    expect(root(dark, "maison").getAttribute("style")).toContain("color-scheme:dark");
+    expect(root(parse(html(fixtureFor("souq"))), "souq").getAttribute("style")).toContain("color-scheme:light");
+  });
 });

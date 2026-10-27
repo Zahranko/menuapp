@@ -164,7 +164,7 @@ export default function HandyTemplate({ site, now }: TemplateProps & { now?: Dat
 
         {ctx.on("areas") && areas.length > 0 && (
           <section className="areas" data-section="areas" aria-labelledby="areas-title">
-            <h2 id="areas-title">
+            <h2 data-k="label" id="areas-title">
               <Pin /> {c.areas}
             </h2>
             <ul className="plain area-list">

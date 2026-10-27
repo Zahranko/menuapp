@@ -139,19 +139,19 @@ export default function BentoTemplate({ site, now }: TemplateProps & { now?: Dat
           <div className="bento outro">
             {story && (
               <section id="story" className="tile tile-story c1" data-section="story" data-k="boxed" aria-labelledby="story-title">
-                <h2 id="story-title">{ctx.text("story.title") || c.about}</h2>
+                <h2 data-k="label" id="story-title">{ctx.text("story.title") || c.about}</h2>
                 <p>{story}</p>
               </section>
             )}
             {ctx.on("visit") && hasHours(ctx.hours) && (
               <section className="tile tile-hours c2" data-section="visit" data-k="boxed" aria-labelledby="hours-title">
-                <h2 id="hours-title">{c.hours}</h2>
+                <h2 data-k="label" id="hours-title">{c.hours}</h2>
                 <HoursList ctx={ctx} />
               </section>
             )}
             {ctx.on("visit") && (
               <section id="visit" className="tile tile-contact c4" aria-labelledby="contact-title">
-                <h2 id="contact-title">{c.contact}</h2>
+                <h2 data-k="label" id="contact-title">{c.contact}</h2>
                 <ContactList ctx={ctx} />
               </section>
             )}

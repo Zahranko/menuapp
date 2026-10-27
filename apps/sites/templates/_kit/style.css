@@ -35,11 +35,32 @@
   zoom: calc(1 + (var(--kit-text) - 1) / 2);
 }
 
+/* On a phone, headings are already as large as the screen allows: larger and big text grows the rest of the page, not
+ * the headings, so their words still fit on a line. Capitals are wider than small letters, so capital display headings
+ * are set a little smaller there. */
+@media (max-width: 560px) {
+  [data-ps-head="uppercase"]:not(:lang(ar)) {
+    --kit-caps: 0.88;
+  }
+  :is([data-ps-text], [data-ps-head="uppercase"])
+    :is(h2, h3):not(:is(p, dd, dt, blockquote, address, figcaption, .kit-card, .kit-cat, [data-section="header"], dialog) *) {
+    zoom: calc(min(var(--kit-text, 1), 1) * var(--kit-caps, 1)) !important;
+  }
+  :is([data-ps-text], [data-ps-head="uppercase"]) h1:not(:is(p, dd, dt, blockquote, address, figcaption, .kit-card, .kit-cat, [data-section="header"], dialog) *) {
+    zoom: calc(min(1 + (var(--kit-text, 1) - 1) / 2, 1) * var(--kit-caps, 1)) !important;
+  }
+}
+
 /* ---------- headings ---------- */
-/* Bigger, wider or capital headings break a long word rather than run off a phone screen. */
-:is([data-ps-text], [data-ps-head], [data-ps-track]) :is(h1, h2, h3) {
-  overflow-wrap: anywhere;
-  hyphens: auto;
+/* Words in display headings are never cut in the middle ("STRONGE R"): they wrap between words, hyphenate only where the
+ * text has a soft hyphen, and only a smaller heading breaks a word that is longer than the whole line. */
+:is([data-ps-text], [data-ps-head], [data-ps-track]) :is(h1, h2) {
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+  hyphens: manual !important;
+}
+:is([data-ps-text], [data-ps-head], [data-ps-track]) h3 {
+  overflow-wrap: break-word;
 }
 [data-ps-head="normal"] :is(h1, h2, h3) {
   font-style: normal !important;
@@ -61,14 +82,19 @@
   line-height: 0.98 !important;
   text-transform: uppercase !important;
 }
-/* Outlined: the letters keep their color for the outline (and for contrast checks); only their inside is see-through.
- * Section titles keep a light tint inside so smaller ones still read well. */
-[data-ps-head="outlined"] :is(h1, h2) {
+/* Outlined: only display headings, the opening headline and section titles. Small headings stay solid: titles in the
+ * header, footer and highlight strip, and those a template marks data-k="label" (under 26px on a phone). Arabic letters
+ * are joined and fine-stroked, hollow they are hard to read: Arabic headings stay solid (like italic). The letters keep
+ * their color for the outline (and for contrast checks); only their inside is see-through. Section titles keep a light
+ * tint inside. */
+[data-ps-head="outlined"]
+  :is(h1, h2):not(:lang(ar), [data-k~="label"], .sr-only, :is([data-section="header"], [data-section="footer"], [data-section="highlights"], dialog, .kit-card, .kit-cat) *) {
   -webkit-text-fill-color: transparent;
   -webkit-text-stroke: max(1.2px, 0.035em) currentColor;
   paint-order: stroke fill;
 }
-[data-ps-head="outlined"] h2 {
+[data-ps-head="outlined"]
+  h2:not(:lang(ar), [data-k~="label"], .sr-only, :is([data-section="header"], [data-section="footer"], [data-section="highlights"], dialog, .kit-card, .kit-cat) *) {
   -webkit-text-fill-color: color-mix(in srgb, currentColor 22%, transparent);
 }
 
@@ -82,6 +108,17 @@
 }
 [data-ps-track="wide"] :is(h1, h2, h3):not(:lang(ar)) {
   letter-spacing: 0.06em !important;
+}
+/* Capitals already read wide: on a phone they get only a little extra spacing, so long words still fit. */
+@media (max-width: 560px) {
+  [data-ps-head="uppercase"][data-ps-track="wide"] :is(h1, h2, h3):not(:lang(ar)) {
+    letter-spacing: 0.02em !important;
+  }
+}
+/* With larger or big text, wide spacing would push long words in display headings past a phone's edge: they keep
+ * normal spacing there; smaller headings stay wide. */
+:is([data-ps-text="larger"], [data-ps-text="big"])[data-ps-track="wide"] :is(h1, h2) {
+  letter-spacing: 0 !important;
 }
 
 /* ---------- space between sections ---------- */
@@ -179,6 +216,17 @@
   max-height: none !important;
   aspect-ratio: 1 / 1 !important;
   margin-inline: auto !important;
+}
+/* Other product photos (side thumbnails, grid tiles) keep their width, up to the plate size, and become as tall as wide. */
+[data-ps-photo="circle"]:not([data-card-photo]) :is(.kit-card-media, .kit-cat-media):not(.kit-flush, [data-k~="overlay"]) {
+  align-self: center !important;
+  flex-grow: 0 !important;
+  flex-basis: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  max-width: var(--kit-circle, 240px) !important;
+  aspect-ratio: 1 / 1 !important;
 }
 [data-ps-photo="circle"]:not([data-card-photo]) :is(.kit-card, .kit-cat) > :is(.kit-card-media, .kit-cat-media).kit-flush {
   margin-top: 14px !important;
@@ -287,6 +335,13 @@
   background-size:
     320px 320px,
     100% 100% !important;
+}
+
+/* On a dark theme (the template sets color-scheme: dark on its root), paper fibres read as streaks: it becomes a plain,
+ * barely visible fine grain of light specks. */
+[data-ps-tex="paper"][style*="color-scheme:dark"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='1' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0.35 0 0 0 -0.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E") !important;
+  background-size: 160px 160px !important;
 }
 
 /* ---------- motion on scroll ---------- */
