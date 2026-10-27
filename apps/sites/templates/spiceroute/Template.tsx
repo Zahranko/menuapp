@@ -10,6 +10,7 @@ import { HeroPhotos } from "../_kit/HeroPhotos";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
+import { basicLinks, orderCta, pageTop, SiteHero, SiteMasthead } from "../_kit/Top";
 
 const copy = {
   en: { welcome: "Ahlan wa sahlan", menu: "Our table", jump: "Menu sections", story: "Our story", visit: "Visit us", hours: "Hours", reserve: "Reserve on WhatsApp" },
@@ -60,25 +61,30 @@ export default function SpiceRouteTemplate({ site, now }: TemplateProps & { now?
   const story = ctx.on("story") && ctx.text("story.text");
 
   const order = orderButton(site, { label: c.reserve });
+  const top = pageTop(ctx, { photos: heroPics });
   return (
     <div data-template="spiceroute" {...logoRoot(ctx)} {...optionRoot(ctx, order)} className={cx("t-spice", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["naskh", "classic", "elegant"], defaultAccent: "#1F5F5B" })}>
       <TemplateStyles id="spiceroute" />
       <TopBars ctx={ctx} />
       {pattern && <StarBand id="stars-top" />}
-      <header className="head" data-section="header">
-        <Logo ctx={ctx} className="medallion" />
-        <p className="welcome">{ctx.text("hero.eyebrow") || c.welcome}</p>
-        <h1 className="kit-name">{site.business.name}</h1>
-        {ctx.text("hero.title") && <p className="tagline">{ctx.text("hero.title")}</p>}
-        {ctx.today && <p className="today">{ctx.today}</p>}
-      </header>
+      <SiteMasthead ctx={ctx} top={top} links={basicLinks(ctx, { story })} cta={orderCta(order)} fallback="centered">
+        <header className="head" data-section="header" data-k="masthead">
+          <Logo ctx={ctx} className="medallion" />
+          <p className="welcome">{ctx.text("hero.eyebrow") || c.welcome}</p>
+          <h1 className="kit-name">{site.business.name}</h1>
+          {ctx.text("hero.title") && <p className="tagline">{ctx.text("hero.title")}</p>}
+          {ctx.today && <p className="today">{ctx.today}</p>}
+        </header>
+      </SiteMasthead>
 
       <main>
-        {hero && (
-          <div className="window" data-section="hero">
-            <HeroPhotos ctx={ctx} photos={heroPics} sizes="(min-width: 760px) 560px, 90vw" />
-          </div>
-        )}
+        <SiteHero ctx={ctx} top={top} title={site.business.name} subtitle={ctx.text("hero.title")}>
+          {hero && (
+            <div className="window" data-section="hero">
+              <HeroPhotos ctx={ctx} photos={heroPics} sizes="(min-width: 760px) 560px, 90vw" />
+            </div>
+          )}
+        </SiteHero>
 
         <section id="menu" className="menu" data-section="menu" aria-labelledby="menu-title">
           <h2 id="menu-title" className="menu-title">

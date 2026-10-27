@@ -8,6 +8,7 @@ import { fontVariables } from "../_kit/fonts";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
+import { basicLinks, orderCta, pageTop, SiteHero, SiteMasthead } from "../_kit/Top";
 
 const copy = {
   en: { index: "Index", items: "Items", info: "Information", hours: "Hours", contact: "Contact", about: "About", menu: "Catalog" },
@@ -31,20 +32,24 @@ export default function MonoGridTemplate({ site, now }: TemplateProps & { now?: 
   const numbers = new Map(ctx.sections.flatMap((s) => s.products).map((p, i) => [p.id, i + 1]));
 
   const order = orderButton(site);
+  const top = pageTop(ctx, { photos: heroPhotos(site.settings, null) });
   return (
     <div data-template="monogrid" {...logoRoot(ctx)} {...optionRoot(ctx, order)} className={cx("t-mono", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["grotesk", "modern", "mono"], defaultAccent: "#FF3B00", radius: { rounded: "0px", sharp: "0px" } })}>
       <TemplateStyles id="monogrid" />
       <TopBars ctx={ctx} />
-      <header className="head" data-section="header">
-        <div className="meta">
-          <span>{site.business.address}</span>
-          {ctx.today && <span>{ctx.today}</span>}
-        </div>
-        {ctx.image("logo") && <Logo ctx={ctx} className="logo" sizes="64px" />}
-        <h1 className="name kit-name">{site.business.name}</h1>
-        {ctx.text("hero.title") && <p className="lede">{ctx.text("hero.title")}</p>}
-        <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} />
-      </header>
+      <SiteMasthead ctx={ctx} top={top} links={basicLinks(ctx, { story })} cta={orderCta(order)} fallback="classic">
+        <header className="head" data-section="header" data-k="masthead">
+          <div className="meta">
+            <span>{site.business.address}</span>
+            {ctx.today && <span>{ctx.today}</span>}
+          </div>
+          {ctx.image("logo") && <Logo ctx={ctx} className="logo" sizes="64px" />}
+          <h1 className="name kit-name">{site.business.name}</h1>
+          {ctx.text("hero.title") && <p className="lede">{ctx.text("hero.title")}</p>}
+          <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} />
+        </header>
+      </SiteMasthead>
+      <SiteHero ctx={ctx} top={top} title={site.business.name} subtitle={ctx.text("hero.title")} />
 
       <main>
         <section id="menu" className="catalog" data-section="menu" aria-label={c.menu}>

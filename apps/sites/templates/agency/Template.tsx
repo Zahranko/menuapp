@@ -12,6 +12,7 @@ import { bookLink, faqs, highlights, steps } from "../_kit/services";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
+import { pageTop, SiteHeader, SiteHero, type NavLink } from "../_kit/Top";
 
 const copy = {
   en: { services: "Services", work: "Selected work", process: "Process", faq: "Questions", contact: "Contact", start: "Start a project", from: "From", reviews: "Clients on working with us", talk: "Let's talk", email: "Email us", hours: "Studio hours", reach: "Reach us", menu: "Main menu", count: "services" },
@@ -43,42 +44,53 @@ export default function AgencyTemplate({ site, now }: TemplateProps & { now?: Da
   const offsets = ctx.sections.map((_, i) => ctx.sections.slice(0, i).reduce((n, s) => n + s.products.length, 0));
 
   const order = orderButton(site, { label: c.start, whatsapp: book });
+  const top = pageTop(ctx, { photos: heroPics });
+  const links: NavLink[] = [
+    { href: "#menu", label: c.services },
+    ...(ctx.on("work") && ctx.gallery.length > 0 ? [{ href: "#work", label: c.work }] : []),
+    ...(ctx.on("steps") && process.length > 0 ? [{ href: "#process", label: c.process }] : []),
+    { href: "#contact", label: c.contact },
+  ];
   return (
     <div data-template="agency" {...logoRoot(ctx)} {...optionRoot(ctx, order)} className={cx("t-agency", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["bold", "grotesk", "modern", "condensed"], defaultAccent: "#D7FF3A", radius: { rounded: "22px", sharp: "0px" } })}>
       <TemplateStyles id="agency" />
       <TopBars ctx={ctx} />
-      <header className="head kit-head" data-section="header">
-        <a className="brand kit-lockup" href="#top">
-          <Logo ctx={ctx} />
-          <BrandName ctx={ctx} />
-        </a>
-        <nav aria-label={c.menu}>
-          <a href="#menu">{c.services}</a>
-          {ctx.on("work") && ctx.gallery.length > 0 && <a href="#work">{c.work}</a>}
-          {ctx.on("steps") && process.length > 0 && <a href="#process">{c.process}</a>}
-          <a href="#contact">{c.contact}</a>
-        </nav>
-        <a data-k="btn" className="pill" href="#contact">
-          {c.start}
-        </a>
-      </header>
+      <SiteHeader ctx={ctx} top={top} links={links} cta={{ href: "#contact", label: c.start }}>
+        <header className="head kit-head" data-section="header">
+          <a className="brand kit-lockup" href="#top">
+            <Logo ctx={ctx} />
+            <BrandName ctx={ctx} />
+          </a>
+          <nav aria-label={c.menu}>
+            <a href="#menu">{c.services}</a>
+            {ctx.on("work") && ctx.gallery.length > 0 && <a href="#work">{c.work}</a>}
+            {ctx.on("steps") && process.length > 0 && <a href="#process">{c.process}</a>}
+            <a href="#contact">{c.contact}</a>
+          </nav>
+          <a data-k="btn" className="pill" href="#contact">
+            {c.start}
+          </a>
+        </header>
+      </SiteHeader>
 
       <main id="top">
-        <section className="hero" data-section="hero" aria-labelledby="hero-title">
-          {ctx.text("hero.eyebrow") && <p className="eyebrow">{ctx.text("hero.eyebrow")}</p>}
-          <h1 id="hero-title">{ctx.text("hero.title") || site.business.name}</h1>
-          <div className="hero-foot">
-            {ctx.text("hero.subtitle") && <p className="lede">{ctx.text("hero.subtitle")}</p>}
-            <a className="round" href="#menu" aria-label={c.services}>
-              <Arrow />
-            </a>
-          </div>
-          {hero && (
-            <div className="hero-image">
-              <HeroPhotos ctx={ctx} photos={heroPics} sizes="100vw" />
+        <SiteHero ctx={ctx} top={top} actions={[{ href: "#contact", label: c.start }, { href: "#menu", label: c.services }]}>
+          <section className="hero" data-section="hero" aria-labelledby="hero-title">
+            {ctx.text("hero.eyebrow") && <p className="eyebrow">{ctx.text("hero.eyebrow")}</p>}
+            <h1 id="hero-title">{ctx.text("hero.title") || site.business.name}</h1>
+            <div className="hero-foot">
+              {ctx.text("hero.subtitle") && <p className="lede">{ctx.text("hero.subtitle")}</p>}
+              <a className="round" href="#menu" aria-label={c.services}>
+                <Arrow />
+              </a>
             </div>
-          )}
-        </section>
+            {hero && (
+              <div className="hero-image">
+                <HeroPhotos ctx={ctx} photos={heroPics} sizes="100vw" />
+              </div>
+            )}
+          </section>
+        </SiteHero>
 
         {ctx.on("marquee") && names.length > 0 && (
           <div className="marquee" data-section="marquee" aria-hidden="true">

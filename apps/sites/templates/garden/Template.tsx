@@ -10,6 +10,7 @@ import { HeroPhotos } from "../_kit/HeroPhotos";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
+import { basicLinks, orderCta, pageTop, SiteHeader, SiteHero } from "../_kit/Top";
 
 const copy = {
   en: { see: "Browse the menu", jump: "Menu sections", story: "Grown with love", visit: "Visit us", hours: "Hours", order: "Order on WhatsApp", menu: "Menu" },
@@ -50,34 +51,39 @@ export default function GardenTemplate({ site, now }: TemplateProps & { now?: Da
   const story = ctx.on("story") && ctx.text("story.text");
 
   const order = orderButton(site, { label: c.order });
+  const top = pageTop(ctx, { photos: heroPics });
   return (
     <div data-template="garden" {...logoRoot(ctx)} {...optionRoot(ctx, order)} className={cx("t-garden", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["soft", "round", "elegant"], defaultAccent: "#3F7D4E" })}>
       <TemplateStyles id="garden" />
       <TopBars ctx={ctx} />
-      <header className="head kit-head" data-section="header">
-        <a className="brand kit-lockup" href="#top">
-          <Logo ctx={ctx} />
-          <BrandName ctx={ctx} />
-        </a>
-        {ctx.today && <span className="pill">{ctx.today}</span>}
-      </header>
+      <SiteHeader ctx={ctx} top={top} links={basicLinks(ctx, { story })} cta={orderCta(order)}>
+        <header className="head kit-head" data-section="header">
+          <a className="brand kit-lockup" href="#top">
+            <Logo ctx={ctx} />
+            <BrandName ctx={ctx} />
+          </a>
+          {ctx.today && <span className="pill">{ctx.today}</span>}
+        </header>
+      </SiteHeader>
 
       <main id="top">
-        <section className="hero" data-section="hero" aria-labelledby="hero-title">
-          {leaves && <Leaf className="leaf leaf-a" />}
-          <div className="hero-text">
-            <h1 id="hero-title">{ctx.text("hero.title") || site.business.name}</h1>
-            {ctx.text("hero.subtitle") && <p>{ctx.text("hero.subtitle")}</p>}
-            <a data-k="btn" className="button" href="#menu">
-              {c.see}
-            </a>
-          </div>
-          {hero && (
-            <div className="hero-blob">
-              <HeroPhotos ctx={ctx} photos={heroPics} sizes="(min-width: 760px) 40vw, 90vw" />
+        <SiteHero ctx={ctx} top={top}>
+          <section className="hero" data-section="hero" aria-labelledby="hero-title">
+            {leaves && <Leaf className="leaf leaf-a" />}
+            <div className="hero-text">
+              <h1 id="hero-title">{ctx.text("hero.title") || site.business.name}</h1>
+              {ctx.text("hero.subtitle") && <p>{ctx.text("hero.subtitle")}</p>}
+              <a data-k="btn" className="button" href="#menu">
+                {c.see}
+              </a>
             </div>
-          )}
-        </section>
+            {hero && (
+              <div className="hero-blob">
+                <HeroPhotos ctx={ctx} photos={heroPics} sizes="(min-width: 760px) 40vw, 90vw" />
+              </div>
+            )}
+          </section>
+        </SiteHero>
 
         <section id="menu" className="menu" data-section="menu" aria-label={c.menu}>
           <Wave />

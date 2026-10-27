@@ -10,6 +10,7 @@ import { WhatsApp } from "../_kit/icons";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
+import { basicLinks, orderCta, pageTop, SiteHero, SiteMasthead } from "../_kit/Top";
 
 const copy = {
   en: {
@@ -93,6 +94,7 @@ export default function NeonDinerTemplate({
   );
 
   const order = orderButton(site, { label: c.order });
+  const top = pageTop(ctx, { photos: heroPhotos(site.settings, null) });
   return (
     <div
       data-template="neondiner" {...logoRoot(ctx)} {...optionRoot(ctx, order)}
@@ -105,22 +107,25 @@ export default function NeonDinerTemplate({
     >
       <TemplateStyles id="neondiner" />
       <TopBars ctx={ctx} />
-      <header className="sign" data-section="header">
-        <div className="sign-top">
-          <Logo ctx={ctx} />
-          {ctx.hours.some((h) => h.time) && (
-            <span className={cx("open", openToday && "lit")}>
-              {openToday ? c.open : c.closed}
-            </span>
+      <SiteMasthead ctx={ctx} top={top} links={basicLinks(ctx, { story })} cta={orderCta(order)} fallback="big">
+        <header className="sign" data-section="header" data-k="masthead">
+          <div className="sign-top">
+            <Logo ctx={ctx} />
+            {ctx.hours.some((h) => h.time) && (
+              <span className={cx("open", openToday && "lit")}>
+                {openToday ? c.open : c.closed}
+              </span>
+            )}
+          </div>
+          <h1 className="neon kit-name">{site.business.name}</h1>
+          {ctx.text("hero.title") && (
+            <p className="sign-sub">{ctx.text("hero.title")}</p>
           )}
-        </div>
-        <h1 className="neon kit-name">{site.business.name}</h1>
-        {ctx.text("hero.title") && (
-          <p className="sign-sub">{ctx.text("hero.title")}</p>
-        )}
-        {ctx.today && <p className="sign-today">{ctx.today}</p>}
-        <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} />
-      </header>
+          {ctx.today && <p className="sign-today">{ctx.today}</p>}
+          <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} />
+        </header>
+      </SiteMasthead>
+      <SiteHero ctx={ctx} top={top} title={site.business.name} subtitle={ctx.text("hero.title")} />
       <Strip on={checks} />
 
       <main>

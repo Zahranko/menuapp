@@ -13,10 +13,11 @@ import { HeroPhotos } from "../_kit/HeroPhotos";
 import { Picture } from "../_kit/Picture";
 import { hasHours, type MenuItem } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
+import { orderCta, pageTop, SiteHeader, SiteHero, type Top } from "../_kit/Top";
 import { themeVars, type Palette } from "../_kit/theme";
 import { copyFor, fill } from "../_premium/copy";
 import { Lightbox } from "../_premium/Lightbox";
-import { bestSellers, categoryTree, galleryPhotos, PAGE_PATHS, resolvePage, type Category, type Page, type Tree } from "../_premium/pages";
+import { bestSellers, categoryTree, galleryPhotos, PAGE_PATHS, pageLinks, resolvePage, type Category, type Page, type Tree } from "../_premium/pages";
 import { HomeIcon, MenuIcon, PhotoIcon, PinIcon, StarIcon } from "./icons";
 
 /*
@@ -40,6 +41,8 @@ const CARDS = ["stickers", "list"] as const;
 const TILE_COLORS = 5;
 
 type View = {
+  /** The owner\'s header and opening layout (_kit/Top.tsx). */
+  top: Top;
   ctx: SiteContext;
   c: ReturnType<typeof copyFor>;
   tree: Tree;
@@ -76,6 +79,7 @@ export default function LumenTemplate({ site, path = [], base, now }: TemplatePr
   const phone = site.business.whatsApp;
   const v: View = {
     ctx,
+    top: pageTop(ctx, { photos: heroPhotos(site.settings, "hero.image"), backdrop: false, home: page.kind === "home" }),
     c,
     tree,
     page,
@@ -100,7 +104,9 @@ export default function LumenTemplate({ site, path = [], base, now }: TemplatePr
     >
       <TemplateStyles id="lumen" />
       <TopBars ctx={ctx} announcement={false} />
-      <Header v={v} />
+      <SiteHeader ctx={ctx} top={v.top} links={pageLinks(v, { home: c.home, menu: c.menu, best: c.best, gallery: c.gallery, visit: c.visit })} cta={orderCta(v.fab)} home={v.href("")}>
+        <Header v={v} />
+      </SiteHeader>
       {page.kind === "home" ? (
         <main>
           <Home v={v} />
@@ -439,7 +445,9 @@ function Home({ v }: { v: View }) {
   const story = ctx.on("story") && ctx.text("story.text");
   return (
     <>
-      <Hero v={v} />
+      <SiteHero ctx={ctx} top={v.top} menuHref={href(PAGE_PATHS.menu)} actions={[{ href: href(PAGE_PATHS.menu), label: c.browse }, { href: href(PAGE_PATHS.visit), label: c.visit }]} eyebrow={ctx.text("hero.sticker")}>
+        <Hero v={v} />
+      </SiteHero>
       <Ticker v={v} />
 
       <section id="menu" className="sec sec-tiles" data-section="menu" aria-labelledby="cats-title">

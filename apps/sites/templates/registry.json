@@ -798,12 +798,184 @@
           }
         },
         {
+          "key": "header.layout",
+          "type": "choice",
+          "label": "Header layout",
+          "labelAr": "تصميم الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "classic",
+            "centered",
+            "split",
+            "pill",
+            "big",
+            "minimal",
+            "drawer"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "classic": "Classic bar",
+            "centered": "Logo in the middle",
+            "split": "Links around the logo",
+            "pill": "Floating bar",
+            "big": "Big name",
+            "minimal": "Logo and menu button",
+            "drawer": "Side menu"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "classic": "شريط كلاسيكي",
+            "centered": "الشعار في الوسط",
+            "split": "الروابط حول الشعار",
+            "pill": "شريط عائم",
+            "big": "اسم كبير",
+            "minimal": "الشعار وزر القائمة",
+            "drawer": "قائمة جانبية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "classic": "/kit/previews/header-classic.svg",
+            "centered": "/kit/previews/header-centered.svg",
+            "split": "/kit/previews/header-split.svg",
+            "pill": "/kit/previews/header-pill.svg",
+            "big": "/kit/previews/header-big.svg",
+            "minimal": "/kit/previews/header-minimal.svg",
+            "drawer": "/kit/previews/header-drawer.svg"
+          }
+        },
+        {
+          "key": "header.style",
+          "type": "choice",
+          "label": "Header look",
+          "labelAr": "مظهر الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "solid",
+            "transparent",
+            "glass",
+            "accent"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid",
+            "transparent": "See-through, over the top photo",
+            "glass": "Frosted glass",
+            "accent": "In the accent color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "بخلفية كاملة",
+            "transparent": "شفافة فوق الصورة",
+            "glass": "زجاج ضبابي",
+            "accent": "باللون المميز"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/headerstyle-solid.svg",
+            "transparent": "/kit/previews/headerstyle-transparent.svg",
+            "glass": "/kit/previews/headerstyle-glass.svg",
+            "accent": "/kit/previews/headerstyle-accent.svg"
+          }
+        },
+        {
+          "key": "header.sticky",
+          "type": "choice",
+          "label": "Header while scrolling",
+          "labelAr": "الترويسة أثناء التمرير",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "on": "Stays at the top",
+            "off": "Scrolls away"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "on": "تبقى في الأعلى",
+            "off": "تختفي مع التمرير"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "on": "/kit/previews/sticky-on.svg",
+            "off": "/kit/previews/sticky-off.svg"
+          }
+        },
+        {
+          "key": "hero.variant",
+          "type": "choice",
+          "label": "Top of the page",
+          "labelAr": "أعلى الصفحة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "full",
+            "split",
+            "framed",
+            "poster",
+            "collage",
+            "arch",
+            "stacked",
+            "menu",
+            "type",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "full": "Full photo",
+            "split": "Photo beside the text",
+            "framed": "Framed photo",
+            "poster": "Poster with big type",
+            "collage": "Three photos",
+            "arch": "Arch window",
+            "stacked": "Photo under the text",
+            "menu": "Menu first",
+            "type": "Text only",
+            "circle": "Round photo"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "full": "صورة كاملة",
+            "split": "الصورة بجانب النص",
+            "framed": "صورة في إطار",
+            "poster": "ملصق بخط كبير",
+            "collage": "ثلاث صور",
+            "arch": "نافذة مقوّسة",
+            "stacked": "الصورة تحت النص",
+            "menu": "القائمة أولًا",
+            "type": "نص فقط",
+            "circle": "صورة دائرية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "full": "/kit/previews/hero-full.svg",
+            "split": "/kit/previews/hero-split.svg",
+            "framed": "/kit/previews/hero-framed.svg",
+            "poster": "/kit/previews/hero-poster.svg",
+            "collage": "/kit/previews/hero-collage.svg",
+            "arch": "/kit/previews/hero-arch.svg",
+            "stacked": "/kit/previews/hero-stacked.svg",
+            "menu": "/kit/previews/hero-menu.svg",
+            "type": "/kit/previews/hero-type.svg",
+            "circle": "/kit/previews/hero-circle.svg"
+          }
+        },
+        {
           "key": "hero.layout",
           "type": "choice",
-          "label": "Layout",
-          "labelAr": "التخطيط",
-          "group": "Hero header",
-          "groupAr": "الواجهة الرئيسية",
+          "label": "Template default: its own top",
+          "labelAr": "أعلى الصفحة الأصلي للقالب",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
           "options": [
             "full",
             "split"
@@ -1350,7 +1522,6 @@
         "accent": "#D9542C",
         "corners": "rounded",
         "texture": false,
-        "hero.layout": "full",
         "hero.image": "preset:counter",
         "hero.eyebrow": "",
         "hero.title": "Coffee worth crossing the city for.",
@@ -1415,6 +1586,11 @@
         "style.dividers": "auto",
         "style.texture": "auto",
         "style.motion": "auto",
+        "header.layout": "auto",
+        "header.style": "auto",
+        "header.sticky": "auto",
+        "hero.variant": "auto",
+        "hero.layout": "full",
         "hero.slides": [],
         "hero.transition": "slide",
         "hero.autoplay": true,
@@ -2219,6 +2395,178 @@
           }
         },
         {
+          "key": "header.layout",
+          "type": "choice",
+          "label": "Header layout",
+          "labelAr": "تصميم الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "classic",
+            "centered",
+            "split",
+            "pill",
+            "big",
+            "minimal",
+            "drawer"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "classic": "Classic bar",
+            "centered": "Logo in the middle",
+            "split": "Links around the logo",
+            "pill": "Floating bar",
+            "big": "Big name",
+            "minimal": "Logo and menu button",
+            "drawer": "Side menu"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "classic": "شريط كلاسيكي",
+            "centered": "الشعار في الوسط",
+            "split": "الروابط حول الشعار",
+            "pill": "شريط عائم",
+            "big": "اسم كبير",
+            "minimal": "الشعار وزر القائمة",
+            "drawer": "قائمة جانبية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "classic": "/kit/previews/header-classic.svg",
+            "centered": "/kit/previews/header-centered.svg",
+            "split": "/kit/previews/header-split.svg",
+            "pill": "/kit/previews/header-pill.svg",
+            "big": "/kit/previews/header-big.svg",
+            "minimal": "/kit/previews/header-minimal.svg",
+            "drawer": "/kit/previews/header-drawer.svg"
+          }
+        },
+        {
+          "key": "header.style",
+          "type": "choice",
+          "label": "Header look",
+          "labelAr": "مظهر الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "solid",
+            "transparent",
+            "glass",
+            "accent"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid",
+            "transparent": "See-through, over the top photo",
+            "glass": "Frosted glass",
+            "accent": "In the accent color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "بخلفية كاملة",
+            "transparent": "شفافة فوق الصورة",
+            "glass": "زجاج ضبابي",
+            "accent": "باللون المميز"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/headerstyle-solid.svg",
+            "transparent": "/kit/previews/headerstyle-transparent.svg",
+            "glass": "/kit/previews/headerstyle-glass.svg",
+            "accent": "/kit/previews/headerstyle-accent.svg"
+          }
+        },
+        {
+          "key": "header.sticky",
+          "type": "choice",
+          "label": "Header while scrolling",
+          "labelAr": "الترويسة أثناء التمرير",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "on": "Stays at the top",
+            "off": "Scrolls away"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "on": "تبقى في الأعلى",
+            "off": "تختفي مع التمرير"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "on": "/kit/previews/sticky-on.svg",
+            "off": "/kit/previews/sticky-off.svg"
+          }
+        },
+        {
+          "key": "hero.variant",
+          "type": "choice",
+          "label": "Top of the page",
+          "labelAr": "أعلى الصفحة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "full",
+            "split",
+            "framed",
+            "poster",
+            "collage",
+            "arch",
+            "stacked",
+            "menu",
+            "type",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "full": "Full photo",
+            "split": "Photo beside the text",
+            "framed": "Framed photo",
+            "poster": "Poster with big type",
+            "collage": "Three photos",
+            "arch": "Arch window",
+            "stacked": "Photo under the text",
+            "menu": "Menu first",
+            "type": "Text only",
+            "circle": "Round photo"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "full": "صورة كاملة",
+            "split": "الصورة بجانب النص",
+            "framed": "صورة في إطار",
+            "poster": "ملصق بخط كبير",
+            "collage": "ثلاث صور",
+            "arch": "نافذة مقوّسة",
+            "stacked": "الصورة تحت النص",
+            "menu": "القائمة أولًا",
+            "type": "نص فقط",
+            "circle": "صورة دائرية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "full": "/kit/previews/hero-full.svg",
+            "split": "/kit/previews/hero-split.svg",
+            "framed": "/kit/previews/hero-framed.svg",
+            "poster": "/kit/previews/hero-poster.svg",
+            "collage": "/kit/previews/hero-collage.svg",
+            "arch": "/kit/previews/hero-arch.svg",
+            "stacked": "/kit/previews/hero-stacked.svg",
+            "menu": "/kit/previews/hero-menu.svg",
+            "type": "/kit/previews/hero-type.svg",
+            "circle": "/kit/previews/hero-circle.svg"
+          }
+        },
+        {
           "key": "columns",
           "type": "choice",
           "label": "Menu columns on big screens",
@@ -2612,6 +2960,10 @@
         "style.dividers": "auto",
         "style.texture": "auto",
         "style.motion": "auto",
+        "header.layout": "auto",
+        "header.style": "auto",
+        "header.sticky": "auto",
+        "hero.variant": "auto",
         "hero.slides": [],
         "hero.transition": "slide",
         "hero.autoplay": true,
@@ -3422,6 +3774,178 @@
           }
         },
         {
+          "key": "header.layout",
+          "type": "choice",
+          "label": "Header layout",
+          "labelAr": "تصميم الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "classic",
+            "centered",
+            "split",
+            "pill",
+            "big",
+            "minimal",
+            "drawer"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "classic": "Classic bar",
+            "centered": "Logo in the middle",
+            "split": "Links around the logo",
+            "pill": "Floating bar",
+            "big": "Big name",
+            "minimal": "Logo and menu button",
+            "drawer": "Side menu"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "classic": "شريط كلاسيكي",
+            "centered": "الشعار في الوسط",
+            "split": "الروابط حول الشعار",
+            "pill": "شريط عائم",
+            "big": "اسم كبير",
+            "minimal": "الشعار وزر القائمة",
+            "drawer": "قائمة جانبية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "classic": "/kit/previews/header-classic.svg",
+            "centered": "/kit/previews/header-centered.svg",
+            "split": "/kit/previews/header-split.svg",
+            "pill": "/kit/previews/header-pill.svg",
+            "big": "/kit/previews/header-big.svg",
+            "minimal": "/kit/previews/header-minimal.svg",
+            "drawer": "/kit/previews/header-drawer.svg"
+          }
+        },
+        {
+          "key": "header.style",
+          "type": "choice",
+          "label": "Header look",
+          "labelAr": "مظهر الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "solid",
+            "transparent",
+            "glass",
+            "accent"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid",
+            "transparent": "See-through, over the top photo",
+            "glass": "Frosted glass",
+            "accent": "In the accent color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "بخلفية كاملة",
+            "transparent": "شفافة فوق الصورة",
+            "glass": "زجاج ضبابي",
+            "accent": "باللون المميز"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/headerstyle-solid.svg",
+            "transparent": "/kit/previews/headerstyle-transparent.svg",
+            "glass": "/kit/previews/headerstyle-glass.svg",
+            "accent": "/kit/previews/headerstyle-accent.svg"
+          }
+        },
+        {
+          "key": "header.sticky",
+          "type": "choice",
+          "label": "Header while scrolling",
+          "labelAr": "الترويسة أثناء التمرير",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "on": "Stays at the top",
+            "off": "Scrolls away"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "on": "تبقى في الأعلى",
+            "off": "تختفي مع التمرير"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "on": "/kit/previews/sticky-on.svg",
+            "off": "/kit/previews/sticky-off.svg"
+          }
+        },
+        {
+          "key": "hero.variant",
+          "type": "choice",
+          "label": "Top of the page",
+          "labelAr": "أعلى الصفحة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "full",
+            "split",
+            "framed",
+            "poster",
+            "collage",
+            "arch",
+            "stacked",
+            "menu",
+            "type",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "full": "Full photo",
+            "split": "Photo beside the text",
+            "framed": "Framed photo",
+            "poster": "Poster with big type",
+            "collage": "Three photos",
+            "arch": "Arch window",
+            "stacked": "Photo under the text",
+            "menu": "Menu first",
+            "type": "Text only",
+            "circle": "Round photo"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "full": "صورة كاملة",
+            "split": "الصورة بجانب النص",
+            "framed": "صورة في إطار",
+            "poster": "ملصق بخط كبير",
+            "collage": "ثلاث صور",
+            "arch": "نافذة مقوّسة",
+            "stacked": "الصورة تحت النص",
+            "menu": "القائمة أولًا",
+            "type": "نص فقط",
+            "circle": "صورة دائرية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "full": "/kit/previews/hero-full.svg",
+            "split": "/kit/previews/hero-split.svg",
+            "framed": "/kit/previews/hero-framed.svg",
+            "poster": "/kit/previews/hero-poster.svg",
+            "collage": "/kit/previews/hero-collage.svg",
+            "arch": "/kit/previews/hero-arch.svg",
+            "stacked": "/kit/previews/hero-stacked.svg",
+            "menu": "/kit/previews/hero-menu.svg",
+            "type": "/kit/previews/hero-type.svg",
+            "circle": "/kit/previews/hero-circle.svg"
+          }
+        },
+        {
           "key": "hero.image",
           "type": "image",
           "label": "Hero picture",
@@ -3850,6 +4374,10 @@
         "style.dividers": "auto",
         "style.texture": "auto",
         "style.motion": "auto",
+        "header.layout": "auto",
+        "header.style": "auto",
+        "header.sticky": "auto",
+        "hero.variant": "auto",
         "hero.slides": [],
         "hero.transition": "slide",
         "hero.autoplay": true,
@@ -4640,6 +5168,178 @@
           }
         },
         {
+          "key": "header.layout",
+          "type": "choice",
+          "label": "Header layout",
+          "labelAr": "تصميم الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "classic",
+            "centered",
+            "split",
+            "pill",
+            "big",
+            "minimal",
+            "drawer"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "classic": "Classic bar",
+            "centered": "Logo in the middle",
+            "split": "Links around the logo",
+            "pill": "Floating bar",
+            "big": "Big name",
+            "minimal": "Logo and menu button",
+            "drawer": "Side menu"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "classic": "شريط كلاسيكي",
+            "centered": "الشعار في الوسط",
+            "split": "الروابط حول الشعار",
+            "pill": "شريط عائم",
+            "big": "اسم كبير",
+            "minimal": "الشعار وزر القائمة",
+            "drawer": "قائمة جانبية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "classic": "/kit/previews/header-classic.svg",
+            "centered": "/kit/previews/header-centered.svg",
+            "split": "/kit/previews/header-split.svg",
+            "pill": "/kit/previews/header-pill.svg",
+            "big": "/kit/previews/header-big.svg",
+            "minimal": "/kit/previews/header-minimal.svg",
+            "drawer": "/kit/previews/header-drawer.svg"
+          }
+        },
+        {
+          "key": "header.style",
+          "type": "choice",
+          "label": "Header look",
+          "labelAr": "مظهر الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "solid",
+            "transparent",
+            "glass",
+            "accent"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid",
+            "transparent": "See-through, over the top photo",
+            "glass": "Frosted glass",
+            "accent": "In the accent color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "بخلفية كاملة",
+            "transparent": "شفافة فوق الصورة",
+            "glass": "زجاج ضبابي",
+            "accent": "باللون المميز"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/headerstyle-solid.svg",
+            "transparent": "/kit/previews/headerstyle-transparent.svg",
+            "glass": "/kit/previews/headerstyle-glass.svg",
+            "accent": "/kit/previews/headerstyle-accent.svg"
+          }
+        },
+        {
+          "key": "header.sticky",
+          "type": "choice",
+          "label": "Header while scrolling",
+          "labelAr": "الترويسة أثناء التمرير",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "on": "Stays at the top",
+            "off": "Scrolls away"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "on": "تبقى في الأعلى",
+            "off": "تختفي مع التمرير"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "on": "/kit/previews/sticky-on.svg",
+            "off": "/kit/previews/sticky-off.svg"
+          }
+        },
+        {
+          "key": "hero.variant",
+          "type": "choice",
+          "label": "Top of the page",
+          "labelAr": "أعلى الصفحة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "full",
+            "split",
+            "framed",
+            "poster",
+            "collage",
+            "arch",
+            "stacked",
+            "menu",
+            "type",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "full": "Full photo",
+            "split": "Photo beside the text",
+            "framed": "Framed photo",
+            "poster": "Poster with big type",
+            "collage": "Three photos",
+            "arch": "Arch window",
+            "stacked": "Photo under the text",
+            "menu": "Menu first",
+            "type": "Text only",
+            "circle": "Round photo"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "full": "صورة كاملة",
+            "split": "الصورة بجانب النص",
+            "framed": "صورة في إطار",
+            "poster": "ملصق بخط كبير",
+            "collage": "ثلاث صور",
+            "arch": "نافذة مقوّسة",
+            "stacked": "الصورة تحت النص",
+            "menu": "القائمة أولًا",
+            "type": "نص فقط",
+            "circle": "صورة دائرية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "full": "/kit/previews/hero-full.svg",
+            "split": "/kit/previews/hero-split.svg",
+            "framed": "/kit/previews/hero-framed.svg",
+            "poster": "/kit/previews/hero-poster.svg",
+            "collage": "/kit/previews/hero-collage.svg",
+            "arch": "/kit/previews/hero-arch.svg",
+            "stacked": "/kit/previews/hero-stacked.svg",
+            "menu": "/kit/previews/hero-menu.svg",
+            "type": "/kit/previews/hero-type.svg",
+            "circle": "/kit/previews/hero-circle.svg"
+          }
+        },
+        {
           "key": "hero.image",
           "type": "image",
           "label": "Hero picture",
@@ -5079,6 +5779,10 @@
         "style.dividers": "auto",
         "style.texture": "auto",
         "style.motion": "auto",
+        "header.layout": "auto",
+        "header.style": "auto",
+        "header.sticky": "auto",
+        "hero.variant": "auto",
         "hero.slides": [],
         "hero.transition": "slide",
         "hero.autoplay": true,
@@ -5888,6 +6592,178 @@
           }
         },
         {
+          "key": "header.layout",
+          "type": "choice",
+          "label": "Header layout",
+          "labelAr": "تصميم الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "classic",
+            "centered",
+            "split",
+            "pill",
+            "big",
+            "minimal",
+            "drawer"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "classic": "Classic bar",
+            "centered": "Logo in the middle",
+            "split": "Links around the logo",
+            "pill": "Floating bar",
+            "big": "Big name",
+            "minimal": "Logo and menu button",
+            "drawer": "Side menu"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "classic": "شريط كلاسيكي",
+            "centered": "الشعار في الوسط",
+            "split": "الروابط حول الشعار",
+            "pill": "شريط عائم",
+            "big": "اسم كبير",
+            "minimal": "الشعار وزر القائمة",
+            "drawer": "قائمة جانبية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "classic": "/kit/previews/header-classic.svg",
+            "centered": "/kit/previews/header-centered.svg",
+            "split": "/kit/previews/header-split.svg",
+            "pill": "/kit/previews/header-pill.svg",
+            "big": "/kit/previews/header-big.svg",
+            "minimal": "/kit/previews/header-minimal.svg",
+            "drawer": "/kit/previews/header-drawer.svg"
+          }
+        },
+        {
+          "key": "header.style",
+          "type": "choice",
+          "label": "Header look",
+          "labelAr": "مظهر الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "solid",
+            "transparent",
+            "glass",
+            "accent"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid",
+            "transparent": "See-through, over the top photo",
+            "glass": "Frosted glass",
+            "accent": "In the accent color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "بخلفية كاملة",
+            "transparent": "شفافة فوق الصورة",
+            "glass": "زجاج ضبابي",
+            "accent": "باللون المميز"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/headerstyle-solid.svg",
+            "transparent": "/kit/previews/headerstyle-transparent.svg",
+            "glass": "/kit/previews/headerstyle-glass.svg",
+            "accent": "/kit/previews/headerstyle-accent.svg"
+          }
+        },
+        {
+          "key": "header.sticky",
+          "type": "choice",
+          "label": "Header while scrolling",
+          "labelAr": "الترويسة أثناء التمرير",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "on": "Stays at the top",
+            "off": "Scrolls away"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "on": "تبقى في الأعلى",
+            "off": "تختفي مع التمرير"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "on": "/kit/previews/sticky-on.svg",
+            "off": "/kit/previews/sticky-off.svg"
+          }
+        },
+        {
+          "key": "hero.variant",
+          "type": "choice",
+          "label": "Top of the page",
+          "labelAr": "أعلى الصفحة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "full",
+            "split",
+            "framed",
+            "poster",
+            "collage",
+            "arch",
+            "stacked",
+            "menu",
+            "type",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "full": "Full photo",
+            "split": "Photo beside the text",
+            "framed": "Framed photo",
+            "poster": "Poster with big type",
+            "collage": "Three photos",
+            "arch": "Arch window",
+            "stacked": "Photo under the text",
+            "menu": "Menu first",
+            "type": "Text only",
+            "circle": "Round photo"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "full": "صورة كاملة",
+            "split": "الصورة بجانب النص",
+            "framed": "صورة في إطار",
+            "poster": "ملصق بخط كبير",
+            "collage": "ثلاث صور",
+            "arch": "نافذة مقوّسة",
+            "stacked": "الصورة تحت النص",
+            "menu": "القائمة أولًا",
+            "type": "نص فقط",
+            "circle": "صورة دائرية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "full": "/kit/previews/hero-full.svg",
+            "split": "/kit/previews/hero-split.svg",
+            "framed": "/kit/previews/hero-framed.svg",
+            "poster": "/kit/previews/hero-poster.svg",
+            "collage": "/kit/previews/hero-collage.svg",
+            "arch": "/kit/previews/hero-arch.svg",
+            "stacked": "/kit/previews/hero-stacked.svg",
+            "menu": "/kit/previews/hero-menu.svg",
+            "type": "/kit/previews/hero-type.svg",
+            "circle": "/kit/previews/hero-circle.svg"
+          }
+        },
+        {
           "key": "hero.title",
           "type": "text",
           "label": "Banner headline",
@@ -6249,6 +7125,10 @@
         "style.dividers": "auto",
         "style.texture": "auto",
         "style.motion": "auto",
+        "header.layout": "auto",
+        "header.style": "auto",
+        "header.sticky": "auto",
+        "hero.variant": "auto",
         "hero.slides": [],
         "hero.transition": "slide",
         "hero.autoplay": true,
@@ -7053,6 +7933,178 @@
           }
         },
         {
+          "key": "header.layout",
+          "type": "choice",
+          "label": "Header layout",
+          "labelAr": "تصميم الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "classic",
+            "centered",
+            "split",
+            "pill",
+            "big",
+            "minimal",
+            "drawer"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "classic": "Classic bar",
+            "centered": "Logo in the middle",
+            "split": "Links around the logo",
+            "pill": "Floating bar",
+            "big": "Big name",
+            "minimal": "Logo and menu button",
+            "drawer": "Side menu"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "classic": "شريط كلاسيكي",
+            "centered": "الشعار في الوسط",
+            "split": "الروابط حول الشعار",
+            "pill": "شريط عائم",
+            "big": "اسم كبير",
+            "minimal": "الشعار وزر القائمة",
+            "drawer": "قائمة جانبية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "classic": "/kit/previews/header-classic.svg",
+            "centered": "/kit/previews/header-centered.svg",
+            "split": "/kit/previews/header-split.svg",
+            "pill": "/kit/previews/header-pill.svg",
+            "big": "/kit/previews/header-big.svg",
+            "minimal": "/kit/previews/header-minimal.svg",
+            "drawer": "/kit/previews/header-drawer.svg"
+          }
+        },
+        {
+          "key": "header.style",
+          "type": "choice",
+          "label": "Header look",
+          "labelAr": "مظهر الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "solid",
+            "transparent",
+            "glass",
+            "accent"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid",
+            "transparent": "See-through, over the top photo",
+            "glass": "Frosted glass",
+            "accent": "In the accent color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "بخلفية كاملة",
+            "transparent": "شفافة فوق الصورة",
+            "glass": "زجاج ضبابي",
+            "accent": "باللون المميز"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/headerstyle-solid.svg",
+            "transparent": "/kit/previews/headerstyle-transparent.svg",
+            "glass": "/kit/previews/headerstyle-glass.svg",
+            "accent": "/kit/previews/headerstyle-accent.svg"
+          }
+        },
+        {
+          "key": "header.sticky",
+          "type": "choice",
+          "label": "Header while scrolling",
+          "labelAr": "الترويسة أثناء التمرير",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "on": "Stays at the top",
+            "off": "Scrolls away"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "on": "تبقى في الأعلى",
+            "off": "تختفي مع التمرير"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "on": "/kit/previews/sticky-on.svg",
+            "off": "/kit/previews/sticky-off.svg"
+          }
+        },
+        {
+          "key": "hero.variant",
+          "type": "choice",
+          "label": "Top of the page",
+          "labelAr": "أعلى الصفحة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "full",
+            "split",
+            "framed",
+            "poster",
+            "collage",
+            "arch",
+            "stacked",
+            "menu",
+            "type",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "full": "Full photo",
+            "split": "Photo beside the text",
+            "framed": "Framed photo",
+            "poster": "Poster with big type",
+            "collage": "Three photos",
+            "arch": "Arch window",
+            "stacked": "Photo under the text",
+            "menu": "Menu first",
+            "type": "Text only",
+            "circle": "Round photo"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "full": "صورة كاملة",
+            "split": "الصورة بجانب النص",
+            "framed": "صورة في إطار",
+            "poster": "ملصق بخط كبير",
+            "collage": "ثلاث صور",
+            "arch": "نافذة مقوّسة",
+            "stacked": "الصورة تحت النص",
+            "menu": "القائمة أولًا",
+            "type": "نص فقط",
+            "circle": "صورة دائرية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "full": "/kit/previews/hero-full.svg",
+            "split": "/kit/previews/hero-split.svg",
+            "framed": "/kit/previews/hero-framed.svg",
+            "poster": "/kit/previews/hero-poster.svg",
+            "collage": "/kit/previews/hero-collage.svg",
+            "arch": "/kit/previews/hero-arch.svg",
+            "stacked": "/kit/previews/hero-stacked.svg",
+            "menu": "/kit/previews/hero-menu.svg",
+            "type": "/kit/previews/hero-type.svg",
+            "circle": "/kit/previews/hero-circle.svg"
+          }
+        },
+        {
           "key": "hero.title",
           "type": "text",
           "label": "Tagline",
@@ -7426,6 +8478,10 @@
         "style.dividers": "auto",
         "style.texture": "auto",
         "style.motion": "auto",
+        "header.layout": "auto",
+        "header.style": "auto",
+        "header.sticky": "auto",
+        "hero.variant": "auto",
         "hero.slides": [],
         "hero.transition": "slide",
         "hero.autoplay": true,
@@ -8235,6 +9291,178 @@
           }
         },
         {
+          "key": "header.layout",
+          "type": "choice",
+          "label": "Header layout",
+          "labelAr": "تصميم الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "classic",
+            "centered",
+            "split",
+            "pill",
+            "big",
+            "minimal",
+            "drawer"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "classic": "Classic bar",
+            "centered": "Logo in the middle",
+            "split": "Links around the logo",
+            "pill": "Floating bar",
+            "big": "Big name",
+            "minimal": "Logo and menu button",
+            "drawer": "Side menu"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "classic": "شريط كلاسيكي",
+            "centered": "الشعار في الوسط",
+            "split": "الروابط حول الشعار",
+            "pill": "شريط عائم",
+            "big": "اسم كبير",
+            "minimal": "الشعار وزر القائمة",
+            "drawer": "قائمة جانبية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "classic": "/kit/previews/header-classic.svg",
+            "centered": "/kit/previews/header-centered.svg",
+            "split": "/kit/previews/header-split.svg",
+            "pill": "/kit/previews/header-pill.svg",
+            "big": "/kit/previews/header-big.svg",
+            "minimal": "/kit/previews/header-minimal.svg",
+            "drawer": "/kit/previews/header-drawer.svg"
+          }
+        },
+        {
+          "key": "header.style",
+          "type": "choice",
+          "label": "Header look",
+          "labelAr": "مظهر الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "solid",
+            "transparent",
+            "glass",
+            "accent"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid",
+            "transparent": "See-through, over the top photo",
+            "glass": "Frosted glass",
+            "accent": "In the accent color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "بخلفية كاملة",
+            "transparent": "شفافة فوق الصورة",
+            "glass": "زجاج ضبابي",
+            "accent": "باللون المميز"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/headerstyle-solid.svg",
+            "transparent": "/kit/previews/headerstyle-transparent.svg",
+            "glass": "/kit/previews/headerstyle-glass.svg",
+            "accent": "/kit/previews/headerstyle-accent.svg"
+          }
+        },
+        {
+          "key": "header.sticky",
+          "type": "choice",
+          "label": "Header while scrolling",
+          "labelAr": "الترويسة أثناء التمرير",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "on": "Stays at the top",
+            "off": "Scrolls away"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "on": "تبقى في الأعلى",
+            "off": "تختفي مع التمرير"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "on": "/kit/previews/sticky-on.svg",
+            "off": "/kit/previews/sticky-off.svg"
+          }
+        },
+        {
+          "key": "hero.variant",
+          "type": "choice",
+          "label": "Top of the page",
+          "labelAr": "أعلى الصفحة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "full",
+            "split",
+            "framed",
+            "poster",
+            "collage",
+            "arch",
+            "stacked",
+            "menu",
+            "type",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "full": "Full photo",
+            "split": "Photo beside the text",
+            "framed": "Framed photo",
+            "poster": "Poster with big type",
+            "collage": "Three photos",
+            "arch": "Arch window",
+            "stacked": "Photo under the text",
+            "menu": "Menu first",
+            "type": "Text only",
+            "circle": "Round photo"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "full": "صورة كاملة",
+            "split": "الصورة بجانب النص",
+            "framed": "صورة في إطار",
+            "poster": "ملصق بخط كبير",
+            "collage": "ثلاث صور",
+            "arch": "نافذة مقوّسة",
+            "stacked": "الصورة تحت النص",
+            "menu": "القائمة أولًا",
+            "type": "نص فقط",
+            "circle": "صورة دائرية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "full": "/kit/previews/hero-full.svg",
+            "split": "/kit/previews/hero-split.svg",
+            "framed": "/kit/previews/hero-framed.svg",
+            "poster": "/kit/previews/hero-poster.svg",
+            "collage": "/kit/previews/hero-collage.svg",
+            "arch": "/kit/previews/hero-arch.svg",
+            "stacked": "/kit/previews/hero-stacked.svg",
+            "menu": "/kit/previews/hero-menu.svg",
+            "type": "/kit/previews/hero-type.svg",
+            "circle": "/kit/previews/hero-circle.svg"
+          }
+        },
+        {
           "key": "hero.title",
           "type": "text",
           "label": "Headline",
@@ -8586,6 +9814,10 @@
         "style.dividers": "auto",
         "style.texture": "auto",
         "style.motion": "auto",
+        "header.layout": "auto",
+        "header.style": "auto",
+        "header.sticky": "auto",
+        "hero.variant": "auto",
         "hero.slides": [],
         "hero.transition": "slide",
         "hero.autoplay": true,
@@ -9382,6 +10614,178 @@
           }
         },
         {
+          "key": "header.layout",
+          "type": "choice",
+          "label": "Header layout",
+          "labelAr": "تصميم الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "classic",
+            "centered",
+            "split",
+            "pill",
+            "big",
+            "minimal",
+            "drawer"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "classic": "Classic bar",
+            "centered": "Logo in the middle",
+            "split": "Links around the logo",
+            "pill": "Floating bar",
+            "big": "Big name",
+            "minimal": "Logo and menu button",
+            "drawer": "Side menu"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "classic": "شريط كلاسيكي",
+            "centered": "الشعار في الوسط",
+            "split": "الروابط حول الشعار",
+            "pill": "شريط عائم",
+            "big": "اسم كبير",
+            "minimal": "الشعار وزر القائمة",
+            "drawer": "قائمة جانبية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "classic": "/kit/previews/header-classic.svg",
+            "centered": "/kit/previews/header-centered.svg",
+            "split": "/kit/previews/header-split.svg",
+            "pill": "/kit/previews/header-pill.svg",
+            "big": "/kit/previews/header-big.svg",
+            "minimal": "/kit/previews/header-minimal.svg",
+            "drawer": "/kit/previews/header-drawer.svg"
+          }
+        },
+        {
+          "key": "header.style",
+          "type": "choice",
+          "label": "Header look",
+          "labelAr": "مظهر الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "solid",
+            "transparent",
+            "glass",
+            "accent"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid",
+            "transparent": "See-through, over the top photo",
+            "glass": "Frosted glass",
+            "accent": "In the accent color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "بخلفية كاملة",
+            "transparent": "شفافة فوق الصورة",
+            "glass": "زجاج ضبابي",
+            "accent": "باللون المميز"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/headerstyle-solid.svg",
+            "transparent": "/kit/previews/headerstyle-transparent.svg",
+            "glass": "/kit/previews/headerstyle-glass.svg",
+            "accent": "/kit/previews/headerstyle-accent.svg"
+          }
+        },
+        {
+          "key": "header.sticky",
+          "type": "choice",
+          "label": "Header while scrolling",
+          "labelAr": "الترويسة أثناء التمرير",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "on": "Stays at the top",
+            "off": "Scrolls away"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "on": "تبقى في الأعلى",
+            "off": "تختفي مع التمرير"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "on": "/kit/previews/sticky-on.svg",
+            "off": "/kit/previews/sticky-off.svg"
+          }
+        },
+        {
+          "key": "hero.variant",
+          "type": "choice",
+          "label": "Top of the page",
+          "labelAr": "أعلى الصفحة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "full",
+            "split",
+            "framed",
+            "poster",
+            "collage",
+            "arch",
+            "stacked",
+            "menu",
+            "type",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "full": "Full photo",
+            "split": "Photo beside the text",
+            "framed": "Framed photo",
+            "poster": "Poster with big type",
+            "collage": "Three photos",
+            "arch": "Arch window",
+            "stacked": "Photo under the text",
+            "menu": "Menu first",
+            "type": "Text only",
+            "circle": "Round photo"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "full": "صورة كاملة",
+            "split": "الصورة بجانب النص",
+            "framed": "صورة في إطار",
+            "poster": "ملصق بخط كبير",
+            "collage": "ثلاث صور",
+            "arch": "نافذة مقوّسة",
+            "stacked": "الصورة تحت النص",
+            "menu": "القائمة أولًا",
+            "type": "نص فقط",
+            "circle": "صورة دائرية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "full": "/kit/previews/hero-full.svg",
+            "split": "/kit/previews/hero-split.svg",
+            "framed": "/kit/previews/hero-framed.svg",
+            "poster": "/kit/previews/hero-poster.svg",
+            "collage": "/kit/previews/hero-collage.svg",
+            "arch": "/kit/previews/hero-arch.svg",
+            "stacked": "/kit/previews/hero-stacked.svg",
+            "menu": "/kit/previews/hero-menu.svg",
+            "type": "/kit/previews/hero-type.svg",
+            "circle": "/kit/previews/hero-circle.svg"
+          }
+        },
+        {
           "key": "hero.title",
           "type": "text",
           "label": "Line under the sign",
@@ -9730,6 +11134,10 @@
         "style.dividers": "auto",
         "style.texture": "auto",
         "style.motion": "auto",
+        "header.layout": "auto",
+        "header.style": "auto",
+        "header.sticky": "auto",
+        "hero.variant": "auto",
         "hero.slides": [],
         "hero.transition": "slide",
         "hero.autoplay": true,
@@ -10526,6 +11934,178 @@
           }
         },
         {
+          "key": "header.layout",
+          "type": "choice",
+          "label": "Header layout",
+          "labelAr": "تصميم الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "classic",
+            "centered",
+            "split",
+            "pill",
+            "big",
+            "minimal",
+            "drawer"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "classic": "Classic bar",
+            "centered": "Logo in the middle",
+            "split": "Links around the logo",
+            "pill": "Floating bar",
+            "big": "Big name",
+            "minimal": "Logo and menu button",
+            "drawer": "Side menu"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "classic": "شريط كلاسيكي",
+            "centered": "الشعار في الوسط",
+            "split": "الروابط حول الشعار",
+            "pill": "شريط عائم",
+            "big": "اسم كبير",
+            "minimal": "الشعار وزر القائمة",
+            "drawer": "قائمة جانبية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "classic": "/kit/previews/header-classic.svg",
+            "centered": "/kit/previews/header-centered.svg",
+            "split": "/kit/previews/header-split.svg",
+            "pill": "/kit/previews/header-pill.svg",
+            "big": "/kit/previews/header-big.svg",
+            "minimal": "/kit/previews/header-minimal.svg",
+            "drawer": "/kit/previews/header-drawer.svg"
+          }
+        },
+        {
+          "key": "header.style",
+          "type": "choice",
+          "label": "Header look",
+          "labelAr": "مظهر الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "solid",
+            "transparent",
+            "glass",
+            "accent"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid",
+            "transparent": "See-through, over the top photo",
+            "glass": "Frosted glass",
+            "accent": "In the accent color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "بخلفية كاملة",
+            "transparent": "شفافة فوق الصورة",
+            "glass": "زجاج ضبابي",
+            "accent": "باللون المميز"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/headerstyle-solid.svg",
+            "transparent": "/kit/previews/headerstyle-transparent.svg",
+            "glass": "/kit/previews/headerstyle-glass.svg",
+            "accent": "/kit/previews/headerstyle-accent.svg"
+          }
+        },
+        {
+          "key": "header.sticky",
+          "type": "choice",
+          "label": "Header while scrolling",
+          "labelAr": "الترويسة أثناء التمرير",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "on": "Stays at the top",
+            "off": "Scrolls away"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "on": "تبقى في الأعلى",
+            "off": "تختفي مع التمرير"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "on": "/kit/previews/sticky-on.svg",
+            "off": "/kit/previews/sticky-off.svg"
+          }
+        },
+        {
+          "key": "hero.variant",
+          "type": "choice",
+          "label": "Top of the page",
+          "labelAr": "أعلى الصفحة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "full",
+            "split",
+            "framed",
+            "poster",
+            "collage",
+            "arch",
+            "stacked",
+            "menu",
+            "type",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "full": "Full photo",
+            "split": "Photo beside the text",
+            "framed": "Framed photo",
+            "poster": "Poster with big type",
+            "collage": "Three photos",
+            "arch": "Arch window",
+            "stacked": "Photo under the text",
+            "menu": "Menu first",
+            "type": "Text only",
+            "circle": "Round photo"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "full": "صورة كاملة",
+            "split": "الصورة بجانب النص",
+            "framed": "صورة في إطار",
+            "poster": "ملصق بخط كبير",
+            "collage": "ثلاث صور",
+            "arch": "نافذة مقوّسة",
+            "stacked": "الصورة تحت النص",
+            "menu": "القائمة أولًا",
+            "type": "نص فقط",
+            "circle": "صورة دائرية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "full": "/kit/previews/hero-full.svg",
+            "split": "/kit/previews/hero-split.svg",
+            "framed": "/kit/previews/hero-framed.svg",
+            "poster": "/kit/previews/hero-poster.svg",
+            "collage": "/kit/previews/hero-collage.svg",
+            "arch": "/kit/previews/hero-arch.svg",
+            "stacked": "/kit/previews/hero-stacked.svg",
+            "menu": "/kit/previews/hero-menu.svg",
+            "type": "/kit/previews/hero-type.svg",
+            "circle": "/kit/previews/hero-circle.svg"
+          }
+        },
+        {
           "key": "hero.title",
           "type": "text",
           "label": "Headline",
@@ -10883,6 +12463,10 @@
         "style.dividers": "auto",
         "style.texture": "auto",
         "style.motion": "auto",
+        "header.layout": "auto",
+        "header.style": "auto",
+        "header.sticky": "auto",
+        "hero.variant": "auto",
         "hero.slides": [],
         "hero.transition": "slide",
         "hero.autoplay": true,
@@ -11672,6 +13256,178 @@
           }
         },
         {
+          "key": "header.layout",
+          "type": "choice",
+          "label": "Header layout",
+          "labelAr": "تصميم الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "classic",
+            "centered",
+            "split",
+            "pill",
+            "big",
+            "minimal",
+            "drawer"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "classic": "Classic bar",
+            "centered": "Logo in the middle",
+            "split": "Links around the logo",
+            "pill": "Floating bar",
+            "big": "Big name",
+            "minimal": "Logo and menu button",
+            "drawer": "Side menu"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "classic": "شريط كلاسيكي",
+            "centered": "الشعار في الوسط",
+            "split": "الروابط حول الشعار",
+            "pill": "شريط عائم",
+            "big": "اسم كبير",
+            "minimal": "الشعار وزر القائمة",
+            "drawer": "قائمة جانبية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "classic": "/kit/previews/header-classic.svg",
+            "centered": "/kit/previews/header-centered.svg",
+            "split": "/kit/previews/header-split.svg",
+            "pill": "/kit/previews/header-pill.svg",
+            "big": "/kit/previews/header-big.svg",
+            "minimal": "/kit/previews/header-minimal.svg",
+            "drawer": "/kit/previews/header-drawer.svg"
+          }
+        },
+        {
+          "key": "header.style",
+          "type": "choice",
+          "label": "Header look",
+          "labelAr": "مظهر الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "solid",
+            "transparent",
+            "glass",
+            "accent"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid",
+            "transparent": "See-through, over the top photo",
+            "glass": "Frosted glass",
+            "accent": "In the accent color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "بخلفية كاملة",
+            "transparent": "شفافة فوق الصورة",
+            "glass": "زجاج ضبابي",
+            "accent": "باللون المميز"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/headerstyle-solid.svg",
+            "transparent": "/kit/previews/headerstyle-transparent.svg",
+            "glass": "/kit/previews/headerstyle-glass.svg",
+            "accent": "/kit/previews/headerstyle-accent.svg"
+          }
+        },
+        {
+          "key": "header.sticky",
+          "type": "choice",
+          "label": "Header while scrolling",
+          "labelAr": "الترويسة أثناء التمرير",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "on": "Stays at the top",
+            "off": "Scrolls away"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "on": "تبقى في الأعلى",
+            "off": "تختفي مع التمرير"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "on": "/kit/previews/sticky-on.svg",
+            "off": "/kit/previews/sticky-off.svg"
+          }
+        },
+        {
+          "key": "hero.variant",
+          "type": "choice",
+          "label": "Top of the page",
+          "labelAr": "أعلى الصفحة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "full",
+            "split",
+            "framed",
+            "poster",
+            "collage",
+            "arch",
+            "stacked",
+            "menu",
+            "type",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "full": "Full photo",
+            "split": "Photo beside the text",
+            "framed": "Framed photo",
+            "poster": "Poster with big type",
+            "collage": "Three photos",
+            "arch": "Arch window",
+            "stacked": "Photo under the text",
+            "menu": "Menu first",
+            "type": "Text only",
+            "circle": "Round photo"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "full": "صورة كاملة",
+            "split": "الصورة بجانب النص",
+            "framed": "صورة في إطار",
+            "poster": "ملصق بخط كبير",
+            "collage": "ثلاث صور",
+            "arch": "نافذة مقوّسة",
+            "stacked": "الصورة تحت النص",
+            "menu": "القائمة أولًا",
+            "type": "نص فقط",
+            "circle": "صورة دائرية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "full": "/kit/previews/hero-full.svg",
+            "split": "/kit/previews/hero-split.svg",
+            "framed": "/kit/previews/hero-framed.svg",
+            "poster": "/kit/previews/hero-poster.svg",
+            "collage": "/kit/previews/hero-collage.svg",
+            "arch": "/kit/previews/hero-arch.svg",
+            "stacked": "/kit/previews/hero-stacked.svg",
+            "menu": "/kit/previews/hero-menu.svg",
+            "type": "/kit/previews/hero-type.svg",
+            "circle": "/kit/previews/hero-circle.svg"
+          }
+        },
+        {
           "key": "hero.eyebrow",
           "type": "text",
           "label": "Small line above the name",
@@ -12042,6 +13798,10 @@
         "style.dividers": "auto",
         "style.texture": "auto",
         "style.motion": "auto",
+        "header.layout": "auto",
+        "header.style": "auto",
+        "header.sticky": "auto",
+        "hero.variant": "auto",
         "hero.slides": [],
         "hero.transition": "slide",
         "hero.autoplay": true,
@@ -12831,6 +14591,178 @@
           }
         },
         {
+          "key": "header.layout",
+          "type": "choice",
+          "label": "Header layout",
+          "labelAr": "تصميم الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "classic",
+            "centered",
+            "split",
+            "pill",
+            "big",
+            "minimal",
+            "drawer"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "classic": "Classic bar",
+            "centered": "Logo in the middle",
+            "split": "Links around the logo",
+            "pill": "Floating bar",
+            "big": "Big name",
+            "minimal": "Logo and menu button",
+            "drawer": "Side menu"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "classic": "شريط كلاسيكي",
+            "centered": "الشعار في الوسط",
+            "split": "الروابط حول الشعار",
+            "pill": "شريط عائم",
+            "big": "اسم كبير",
+            "minimal": "الشعار وزر القائمة",
+            "drawer": "قائمة جانبية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "classic": "/kit/previews/header-classic.svg",
+            "centered": "/kit/previews/header-centered.svg",
+            "split": "/kit/previews/header-split.svg",
+            "pill": "/kit/previews/header-pill.svg",
+            "big": "/kit/previews/header-big.svg",
+            "minimal": "/kit/previews/header-minimal.svg",
+            "drawer": "/kit/previews/header-drawer.svg"
+          }
+        },
+        {
+          "key": "header.style",
+          "type": "choice",
+          "label": "Header look",
+          "labelAr": "مظهر الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "solid",
+            "transparent",
+            "glass",
+            "accent"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid",
+            "transparent": "See-through, over the top photo",
+            "glass": "Frosted glass",
+            "accent": "In the accent color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "بخلفية كاملة",
+            "transparent": "شفافة فوق الصورة",
+            "glass": "زجاج ضبابي",
+            "accent": "باللون المميز"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/headerstyle-solid.svg",
+            "transparent": "/kit/previews/headerstyle-transparent.svg",
+            "glass": "/kit/previews/headerstyle-glass.svg",
+            "accent": "/kit/previews/headerstyle-accent.svg"
+          }
+        },
+        {
+          "key": "header.sticky",
+          "type": "choice",
+          "label": "Header while scrolling",
+          "labelAr": "الترويسة أثناء التمرير",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "on": "Stays at the top",
+            "off": "Scrolls away"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "on": "تبقى في الأعلى",
+            "off": "تختفي مع التمرير"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "on": "/kit/previews/sticky-on.svg",
+            "off": "/kit/previews/sticky-off.svg"
+          }
+        },
+        {
+          "key": "hero.variant",
+          "type": "choice",
+          "label": "Top of the page",
+          "labelAr": "أعلى الصفحة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "full",
+            "split",
+            "framed",
+            "poster",
+            "collage",
+            "arch",
+            "stacked",
+            "menu",
+            "type",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "full": "Full photo",
+            "split": "Photo beside the text",
+            "framed": "Framed photo",
+            "poster": "Poster with big type",
+            "collage": "Three photos",
+            "arch": "Arch window",
+            "stacked": "Photo under the text",
+            "menu": "Menu first",
+            "type": "Text only",
+            "circle": "Round photo"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "full": "صورة كاملة",
+            "split": "الصورة بجانب النص",
+            "framed": "صورة في إطار",
+            "poster": "ملصق بخط كبير",
+            "collage": "ثلاث صور",
+            "arch": "نافذة مقوّسة",
+            "stacked": "الصورة تحت النص",
+            "menu": "القائمة أولًا",
+            "type": "نص فقط",
+            "circle": "صورة دائرية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "full": "/kit/previews/hero-full.svg",
+            "split": "/kit/previews/hero-split.svg",
+            "framed": "/kit/previews/hero-framed.svg",
+            "poster": "/kit/previews/hero-poster.svg",
+            "collage": "/kit/previews/hero-collage.svg",
+            "arch": "/kit/previews/hero-arch.svg",
+            "stacked": "/kit/previews/hero-stacked.svg",
+            "menu": "/kit/previews/hero-menu.svg",
+            "type": "/kit/previews/hero-type.svg",
+            "circle": "/kit/previews/hero-circle.svg"
+          }
+        },
+        {
           "key": "hero.title",
           "type": "text",
           "label": "Headline",
@@ -13198,6 +15130,10 @@
         "style.dividers": "auto",
         "style.texture": "auto",
         "style.motion": "auto",
+        "header.layout": "auto",
+        "header.style": "auto",
+        "header.sticky": "auto",
+        "hero.variant": "auto",
         "hero.slides": [],
         "hero.transition": "slide",
         "hero.autoplay": true,
@@ -13987,6 +15923,178 @@
           }
         },
         {
+          "key": "header.layout",
+          "type": "choice",
+          "label": "Header layout",
+          "labelAr": "تصميم الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "classic",
+            "centered",
+            "split",
+            "pill",
+            "big",
+            "minimal",
+            "drawer"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "classic": "Classic bar",
+            "centered": "Logo in the middle",
+            "split": "Links around the logo",
+            "pill": "Floating bar",
+            "big": "Big name",
+            "minimal": "Logo and menu button",
+            "drawer": "Side menu"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "classic": "شريط كلاسيكي",
+            "centered": "الشعار في الوسط",
+            "split": "الروابط حول الشعار",
+            "pill": "شريط عائم",
+            "big": "اسم كبير",
+            "minimal": "الشعار وزر القائمة",
+            "drawer": "قائمة جانبية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "classic": "/kit/previews/header-classic.svg",
+            "centered": "/kit/previews/header-centered.svg",
+            "split": "/kit/previews/header-split.svg",
+            "pill": "/kit/previews/header-pill.svg",
+            "big": "/kit/previews/header-big.svg",
+            "minimal": "/kit/previews/header-minimal.svg",
+            "drawer": "/kit/previews/header-drawer.svg"
+          }
+        },
+        {
+          "key": "header.style",
+          "type": "choice",
+          "label": "Header look",
+          "labelAr": "مظهر الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "solid",
+            "transparent",
+            "glass",
+            "accent"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid",
+            "transparent": "See-through, over the top photo",
+            "glass": "Frosted glass",
+            "accent": "In the accent color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "بخلفية كاملة",
+            "transparent": "شفافة فوق الصورة",
+            "glass": "زجاج ضبابي",
+            "accent": "باللون المميز"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/headerstyle-solid.svg",
+            "transparent": "/kit/previews/headerstyle-transparent.svg",
+            "glass": "/kit/previews/headerstyle-glass.svg",
+            "accent": "/kit/previews/headerstyle-accent.svg"
+          }
+        },
+        {
+          "key": "header.sticky",
+          "type": "choice",
+          "label": "Header while scrolling",
+          "labelAr": "الترويسة أثناء التمرير",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "on": "Stays at the top",
+            "off": "Scrolls away"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "on": "تبقى في الأعلى",
+            "off": "تختفي مع التمرير"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "on": "/kit/previews/sticky-on.svg",
+            "off": "/kit/previews/sticky-off.svg"
+          }
+        },
+        {
+          "key": "hero.variant",
+          "type": "choice",
+          "label": "Top of the page",
+          "labelAr": "أعلى الصفحة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "full",
+            "split",
+            "framed",
+            "poster",
+            "collage",
+            "arch",
+            "stacked",
+            "menu",
+            "type",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "full": "Full photo",
+            "split": "Photo beside the text",
+            "framed": "Framed photo",
+            "poster": "Poster with big type",
+            "collage": "Three photos",
+            "arch": "Arch window",
+            "stacked": "Photo under the text",
+            "menu": "Menu first",
+            "type": "Text only",
+            "circle": "Round photo"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "full": "صورة كاملة",
+            "split": "الصورة بجانب النص",
+            "framed": "صورة في إطار",
+            "poster": "ملصق بخط كبير",
+            "collage": "ثلاث صور",
+            "arch": "نافذة مقوّسة",
+            "stacked": "الصورة تحت النص",
+            "menu": "القائمة أولًا",
+            "type": "نص فقط",
+            "circle": "صورة دائرية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "full": "/kit/previews/hero-full.svg",
+            "split": "/kit/previews/hero-split.svg",
+            "framed": "/kit/previews/hero-framed.svg",
+            "poster": "/kit/previews/hero-poster.svg",
+            "collage": "/kit/previews/hero-collage.svg",
+            "arch": "/kit/previews/hero-arch.svg",
+            "stacked": "/kit/previews/hero-stacked.svg",
+            "menu": "/kit/previews/hero-menu.svg",
+            "type": "/kit/previews/hero-type.svg",
+            "circle": "/kit/previews/hero-circle.svg"
+          }
+        },
+        {
           "key": "hero.title",
           "type": "text",
           "label": "Line under the name",
@@ -14340,6 +16448,10 @@
         "style.dividers": "auto",
         "style.texture": "auto",
         "style.motion": "auto",
+        "header.layout": "auto",
+        "header.style": "auto",
+        "header.sticky": "auto",
+        "hero.variant": "auto",
         "hero.slides": [],
         "hero.transition": "slide",
         "hero.autoplay": true,
@@ -15137,6 +17249,178 @@
           }
         },
         {
+          "key": "header.layout",
+          "type": "choice",
+          "label": "Header layout",
+          "labelAr": "تصميم الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "classic",
+            "centered",
+            "split",
+            "pill",
+            "big",
+            "minimal",
+            "drawer"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "classic": "Classic bar",
+            "centered": "Logo in the middle",
+            "split": "Links around the logo",
+            "pill": "Floating bar",
+            "big": "Big name",
+            "minimal": "Logo and menu button",
+            "drawer": "Side menu"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "classic": "شريط كلاسيكي",
+            "centered": "الشعار في الوسط",
+            "split": "الروابط حول الشعار",
+            "pill": "شريط عائم",
+            "big": "اسم كبير",
+            "minimal": "الشعار وزر القائمة",
+            "drawer": "قائمة جانبية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "classic": "/kit/previews/header-classic.svg",
+            "centered": "/kit/previews/header-centered.svg",
+            "split": "/kit/previews/header-split.svg",
+            "pill": "/kit/previews/header-pill.svg",
+            "big": "/kit/previews/header-big.svg",
+            "minimal": "/kit/previews/header-minimal.svg",
+            "drawer": "/kit/previews/header-drawer.svg"
+          }
+        },
+        {
+          "key": "header.style",
+          "type": "choice",
+          "label": "Header look",
+          "labelAr": "مظهر الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "solid",
+            "transparent",
+            "glass",
+            "accent"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid",
+            "transparent": "See-through, over the top photo",
+            "glass": "Frosted glass",
+            "accent": "In the accent color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "بخلفية كاملة",
+            "transparent": "شفافة فوق الصورة",
+            "glass": "زجاج ضبابي",
+            "accent": "باللون المميز"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/headerstyle-solid.svg",
+            "transparent": "/kit/previews/headerstyle-transparent.svg",
+            "glass": "/kit/previews/headerstyle-glass.svg",
+            "accent": "/kit/previews/headerstyle-accent.svg"
+          }
+        },
+        {
+          "key": "header.sticky",
+          "type": "choice",
+          "label": "Header while scrolling",
+          "labelAr": "الترويسة أثناء التمرير",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "on": "Stays at the top",
+            "off": "Scrolls away"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "on": "تبقى في الأعلى",
+            "off": "تختفي مع التمرير"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "on": "/kit/previews/sticky-on.svg",
+            "off": "/kit/previews/sticky-off.svg"
+          }
+        },
+        {
+          "key": "hero.variant",
+          "type": "choice",
+          "label": "Top of the page",
+          "labelAr": "أعلى الصفحة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "full",
+            "split",
+            "framed",
+            "poster",
+            "collage",
+            "arch",
+            "stacked",
+            "menu",
+            "type",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "full": "Full photo",
+            "split": "Photo beside the text",
+            "framed": "Framed photo",
+            "poster": "Poster with big type",
+            "collage": "Three photos",
+            "arch": "Arch window",
+            "stacked": "Photo under the text",
+            "menu": "Menu first",
+            "type": "Text only",
+            "circle": "Round photo"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "full": "صورة كاملة",
+            "split": "الصورة بجانب النص",
+            "framed": "صورة في إطار",
+            "poster": "ملصق بخط كبير",
+            "collage": "ثلاث صور",
+            "arch": "نافذة مقوّسة",
+            "stacked": "الصورة تحت النص",
+            "menu": "القائمة أولًا",
+            "type": "نص فقط",
+            "circle": "صورة دائرية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "full": "/kit/previews/hero-full.svg",
+            "split": "/kit/previews/hero-split.svg",
+            "framed": "/kit/previews/hero-framed.svg",
+            "poster": "/kit/previews/hero-poster.svg",
+            "collage": "/kit/previews/hero-collage.svg",
+            "arch": "/kit/previews/hero-arch.svg",
+            "stacked": "/kit/previews/hero-stacked.svg",
+            "menu": "/kit/previews/hero-menu.svg",
+            "type": "/kit/previews/hero-type.svg",
+            "circle": "/kit/previews/hero-circle.svg"
+          }
+        },
+        {
           "key": "hero.title",
           "type": "text",
           "label": "Headline",
@@ -15484,6 +17768,10 @@
         "style.dividers": "auto",
         "style.texture": "auto",
         "style.motion": "auto",
+        "header.layout": "auto",
+        "header.style": "auto",
+        "header.sticky": "auto",
+        "hero.variant": "auto",
         "hero.slides": [],
         "hero.transition": "slide",
         "hero.autoplay": true,
@@ -16272,6 +18560,178 @@
           }
         },
         {
+          "key": "header.layout",
+          "type": "choice",
+          "label": "Header layout",
+          "labelAr": "تصميم الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "classic",
+            "centered",
+            "split",
+            "pill",
+            "big",
+            "minimal",
+            "drawer"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "classic": "Classic bar",
+            "centered": "Logo in the middle",
+            "split": "Links around the logo",
+            "pill": "Floating bar",
+            "big": "Big name",
+            "minimal": "Logo and menu button",
+            "drawer": "Side menu"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "classic": "شريط كلاسيكي",
+            "centered": "الشعار في الوسط",
+            "split": "الروابط حول الشعار",
+            "pill": "شريط عائم",
+            "big": "اسم كبير",
+            "minimal": "الشعار وزر القائمة",
+            "drawer": "قائمة جانبية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "classic": "/kit/previews/header-classic.svg",
+            "centered": "/kit/previews/header-centered.svg",
+            "split": "/kit/previews/header-split.svg",
+            "pill": "/kit/previews/header-pill.svg",
+            "big": "/kit/previews/header-big.svg",
+            "minimal": "/kit/previews/header-minimal.svg",
+            "drawer": "/kit/previews/header-drawer.svg"
+          }
+        },
+        {
+          "key": "header.style",
+          "type": "choice",
+          "label": "Header look",
+          "labelAr": "مظهر الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "solid",
+            "transparent",
+            "glass",
+            "accent"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid",
+            "transparent": "See-through, over the top photo",
+            "glass": "Frosted glass",
+            "accent": "In the accent color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "بخلفية كاملة",
+            "transparent": "شفافة فوق الصورة",
+            "glass": "زجاج ضبابي",
+            "accent": "باللون المميز"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/headerstyle-solid.svg",
+            "transparent": "/kit/previews/headerstyle-transparent.svg",
+            "glass": "/kit/previews/headerstyle-glass.svg",
+            "accent": "/kit/previews/headerstyle-accent.svg"
+          }
+        },
+        {
+          "key": "header.sticky",
+          "type": "choice",
+          "label": "Header while scrolling",
+          "labelAr": "الترويسة أثناء التمرير",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "on": "Stays at the top",
+            "off": "Scrolls away"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "on": "تبقى في الأعلى",
+            "off": "تختفي مع التمرير"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "on": "/kit/previews/sticky-on.svg",
+            "off": "/kit/previews/sticky-off.svg"
+          }
+        },
+        {
+          "key": "hero.variant",
+          "type": "choice",
+          "label": "Top of the page",
+          "labelAr": "أعلى الصفحة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "full",
+            "split",
+            "framed",
+            "poster",
+            "collage",
+            "arch",
+            "stacked",
+            "menu",
+            "type",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "full": "Full photo",
+            "split": "Photo beside the text",
+            "framed": "Framed photo",
+            "poster": "Poster with big type",
+            "collage": "Three photos",
+            "arch": "Arch window",
+            "stacked": "Photo under the text",
+            "menu": "Menu first",
+            "type": "Text only",
+            "circle": "Round photo"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "full": "صورة كاملة",
+            "split": "الصورة بجانب النص",
+            "framed": "صورة في إطار",
+            "poster": "ملصق بخط كبير",
+            "collage": "ثلاث صور",
+            "arch": "نافذة مقوّسة",
+            "stacked": "الصورة تحت النص",
+            "menu": "القائمة أولًا",
+            "type": "نص فقط",
+            "circle": "صورة دائرية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "full": "/kit/previews/hero-full.svg",
+            "split": "/kit/previews/hero-split.svg",
+            "framed": "/kit/previews/hero-framed.svg",
+            "poster": "/kit/previews/hero-poster.svg",
+            "collage": "/kit/previews/hero-collage.svg",
+            "arch": "/kit/previews/hero-arch.svg",
+            "stacked": "/kit/previews/hero-stacked.svg",
+            "menu": "/kit/previews/hero-menu.svg",
+            "type": "/kit/previews/hero-type.svg",
+            "circle": "/kit/previews/hero-circle.svg"
+          }
+        },
+        {
           "key": "hero.title",
           "type": "text",
           "label": "Line under the name",
@@ -16618,6 +19078,10 @@
         "style.dividers": "auto",
         "style.texture": "auto",
         "style.motion": "auto",
+        "header.layout": "auto",
+        "header.style": "auto",
+        "header.sticky": "auto",
+        "hero.variant": "auto",
         "hero.slides": [],
         "hero.transition": "slide",
         "hero.autoplay": true,
@@ -17414,6 +19878,178 @@
           }
         },
         {
+          "key": "header.layout",
+          "type": "choice",
+          "label": "Header layout",
+          "labelAr": "تصميم الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "classic",
+            "centered",
+            "split",
+            "pill",
+            "big",
+            "minimal",
+            "drawer"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "classic": "Classic bar",
+            "centered": "Logo in the middle",
+            "split": "Links around the logo",
+            "pill": "Floating bar",
+            "big": "Big name",
+            "minimal": "Logo and menu button",
+            "drawer": "Side menu"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "classic": "شريط كلاسيكي",
+            "centered": "الشعار في الوسط",
+            "split": "الروابط حول الشعار",
+            "pill": "شريط عائم",
+            "big": "اسم كبير",
+            "minimal": "الشعار وزر القائمة",
+            "drawer": "قائمة جانبية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "classic": "/kit/previews/header-classic.svg",
+            "centered": "/kit/previews/header-centered.svg",
+            "split": "/kit/previews/header-split.svg",
+            "pill": "/kit/previews/header-pill.svg",
+            "big": "/kit/previews/header-big.svg",
+            "minimal": "/kit/previews/header-minimal.svg",
+            "drawer": "/kit/previews/header-drawer.svg"
+          }
+        },
+        {
+          "key": "header.style",
+          "type": "choice",
+          "label": "Header look",
+          "labelAr": "مظهر الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "solid",
+            "transparent",
+            "glass",
+            "accent"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid",
+            "transparent": "See-through, over the top photo",
+            "glass": "Frosted glass",
+            "accent": "In the accent color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "بخلفية كاملة",
+            "transparent": "شفافة فوق الصورة",
+            "glass": "زجاج ضبابي",
+            "accent": "باللون المميز"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/headerstyle-solid.svg",
+            "transparent": "/kit/previews/headerstyle-transparent.svg",
+            "glass": "/kit/previews/headerstyle-glass.svg",
+            "accent": "/kit/previews/headerstyle-accent.svg"
+          }
+        },
+        {
+          "key": "header.sticky",
+          "type": "choice",
+          "label": "Header while scrolling",
+          "labelAr": "الترويسة أثناء التمرير",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "on": "Stays at the top",
+            "off": "Scrolls away"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "on": "تبقى في الأعلى",
+            "off": "تختفي مع التمرير"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "on": "/kit/previews/sticky-on.svg",
+            "off": "/kit/previews/sticky-off.svg"
+          }
+        },
+        {
+          "key": "hero.variant",
+          "type": "choice",
+          "label": "Top of the page",
+          "labelAr": "أعلى الصفحة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "full",
+            "split",
+            "framed",
+            "poster",
+            "collage",
+            "arch",
+            "stacked",
+            "menu",
+            "type",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "full": "Full photo",
+            "split": "Photo beside the text",
+            "framed": "Framed photo",
+            "poster": "Poster with big type",
+            "collage": "Three photos",
+            "arch": "Arch window",
+            "stacked": "Photo under the text",
+            "menu": "Menu first",
+            "type": "Text only",
+            "circle": "Round photo"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "full": "صورة كاملة",
+            "split": "الصورة بجانب النص",
+            "framed": "صورة في إطار",
+            "poster": "ملصق بخط كبير",
+            "collage": "ثلاث صور",
+            "arch": "نافذة مقوّسة",
+            "stacked": "الصورة تحت النص",
+            "menu": "القائمة أولًا",
+            "type": "نص فقط",
+            "circle": "صورة دائرية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "full": "/kit/previews/hero-full.svg",
+            "split": "/kit/previews/hero-split.svg",
+            "framed": "/kit/previews/hero-framed.svg",
+            "poster": "/kit/previews/hero-poster.svg",
+            "collage": "/kit/previews/hero-collage.svg",
+            "arch": "/kit/previews/hero-arch.svg",
+            "stacked": "/kit/previews/hero-stacked.svg",
+            "menu": "/kit/previews/hero-menu.svg",
+            "type": "/kit/previews/hero-type.svg",
+            "circle": "/kit/previews/hero-circle.svg"
+          }
+        },
+        {
           "key": "hero.eyebrow",
           "type": "text",
           "label": "Greeting",
@@ -17760,6 +20396,10 @@
         "style.dividers": "auto",
         "style.texture": "auto",
         "style.motion": "auto",
+        "header.layout": "auto",
+        "header.style": "auto",
+        "header.sticky": "auto",
+        "hero.variant": "auto",
         "hero.slides": [],
         "hero.transition": "slide",
         "hero.autoplay": true,
@@ -18547,6 +21187,178 @@
           }
         },
         {
+          "key": "header.layout",
+          "type": "choice",
+          "label": "Header layout",
+          "labelAr": "تصميم الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "classic",
+            "centered",
+            "split",
+            "pill",
+            "big",
+            "minimal",
+            "drawer"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "classic": "Classic bar",
+            "centered": "Logo in the middle",
+            "split": "Links around the logo",
+            "pill": "Floating bar",
+            "big": "Big name",
+            "minimal": "Logo and menu button",
+            "drawer": "Side menu"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "classic": "شريط كلاسيكي",
+            "centered": "الشعار في الوسط",
+            "split": "الروابط حول الشعار",
+            "pill": "شريط عائم",
+            "big": "اسم كبير",
+            "minimal": "الشعار وزر القائمة",
+            "drawer": "قائمة جانبية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "classic": "/kit/previews/header-classic.svg",
+            "centered": "/kit/previews/header-centered.svg",
+            "split": "/kit/previews/header-split.svg",
+            "pill": "/kit/previews/header-pill.svg",
+            "big": "/kit/previews/header-big.svg",
+            "minimal": "/kit/previews/header-minimal.svg",
+            "drawer": "/kit/previews/header-drawer.svg"
+          }
+        },
+        {
+          "key": "header.style",
+          "type": "choice",
+          "label": "Header look",
+          "labelAr": "مظهر الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "solid",
+            "transparent",
+            "glass",
+            "accent"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid",
+            "transparent": "See-through, over the top photo",
+            "glass": "Frosted glass",
+            "accent": "In the accent color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "بخلفية كاملة",
+            "transparent": "شفافة فوق الصورة",
+            "glass": "زجاج ضبابي",
+            "accent": "باللون المميز"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/headerstyle-solid.svg",
+            "transparent": "/kit/previews/headerstyle-transparent.svg",
+            "glass": "/kit/previews/headerstyle-glass.svg",
+            "accent": "/kit/previews/headerstyle-accent.svg"
+          }
+        },
+        {
+          "key": "header.sticky",
+          "type": "choice",
+          "label": "Header while scrolling",
+          "labelAr": "الترويسة أثناء التمرير",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "on": "Stays at the top",
+            "off": "Scrolls away"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "on": "تبقى في الأعلى",
+            "off": "تختفي مع التمرير"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "on": "/kit/previews/sticky-on.svg",
+            "off": "/kit/previews/sticky-off.svg"
+          }
+        },
+        {
+          "key": "hero.variant",
+          "type": "choice",
+          "label": "Top of the page",
+          "labelAr": "أعلى الصفحة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "full",
+            "split",
+            "framed",
+            "poster",
+            "collage",
+            "arch",
+            "stacked",
+            "menu",
+            "type",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "full": "Full photo",
+            "split": "Photo beside the text",
+            "framed": "Framed photo",
+            "poster": "Poster with big type",
+            "collage": "Three photos",
+            "arch": "Arch window",
+            "stacked": "Photo under the text",
+            "menu": "Menu first",
+            "type": "Text only",
+            "circle": "Round photo"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "full": "صورة كاملة",
+            "split": "الصورة بجانب النص",
+            "framed": "صورة في إطار",
+            "poster": "ملصق بخط كبير",
+            "collage": "ثلاث صور",
+            "arch": "نافذة مقوّسة",
+            "stacked": "الصورة تحت النص",
+            "menu": "القائمة أولًا",
+            "type": "نص فقط",
+            "circle": "صورة دائرية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "full": "/kit/previews/hero-full.svg",
+            "split": "/kit/previews/hero-split.svg",
+            "framed": "/kit/previews/hero-framed.svg",
+            "poster": "/kit/previews/hero-poster.svg",
+            "collage": "/kit/previews/hero-collage.svg",
+            "arch": "/kit/previews/hero-arch.svg",
+            "stacked": "/kit/previews/hero-stacked.svg",
+            "menu": "/kit/previews/hero-menu.svg",
+            "type": "/kit/previews/hero-type.svg",
+            "circle": "/kit/previews/hero-circle.svg"
+          }
+        },
+        {
           "key": "hero.title",
           "type": "text",
           "label": "Tagline",
@@ -18894,6 +21706,10 @@
         "style.dividers": "auto",
         "style.texture": "auto",
         "style.motion": "auto",
+        "header.layout": "auto",
+        "header.style": "auto",
+        "header.sticky": "auto",
+        "hero.variant": "auto",
         "hero.slides": [],
         "hero.transition": "slide",
         "hero.autoplay": true,
@@ -19682,6 +22498,178 @@
           }
         },
         {
+          "key": "header.layout",
+          "type": "choice",
+          "label": "Header layout",
+          "labelAr": "تصميم الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "classic",
+            "centered",
+            "split",
+            "pill",
+            "big",
+            "minimal",
+            "drawer"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "classic": "Classic bar",
+            "centered": "Logo in the middle",
+            "split": "Links around the logo",
+            "pill": "Floating bar",
+            "big": "Big name",
+            "minimal": "Logo and menu button",
+            "drawer": "Side menu"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "classic": "شريط كلاسيكي",
+            "centered": "الشعار في الوسط",
+            "split": "الروابط حول الشعار",
+            "pill": "شريط عائم",
+            "big": "اسم كبير",
+            "minimal": "الشعار وزر القائمة",
+            "drawer": "قائمة جانبية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "classic": "/kit/previews/header-classic.svg",
+            "centered": "/kit/previews/header-centered.svg",
+            "split": "/kit/previews/header-split.svg",
+            "pill": "/kit/previews/header-pill.svg",
+            "big": "/kit/previews/header-big.svg",
+            "minimal": "/kit/previews/header-minimal.svg",
+            "drawer": "/kit/previews/header-drawer.svg"
+          }
+        },
+        {
+          "key": "header.style",
+          "type": "choice",
+          "label": "Header look",
+          "labelAr": "مظهر الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "solid",
+            "transparent",
+            "glass",
+            "accent"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid",
+            "transparent": "See-through, over the top photo",
+            "glass": "Frosted glass",
+            "accent": "In the accent color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "بخلفية كاملة",
+            "transparent": "شفافة فوق الصورة",
+            "glass": "زجاج ضبابي",
+            "accent": "باللون المميز"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/headerstyle-solid.svg",
+            "transparent": "/kit/previews/headerstyle-transparent.svg",
+            "glass": "/kit/previews/headerstyle-glass.svg",
+            "accent": "/kit/previews/headerstyle-accent.svg"
+          }
+        },
+        {
+          "key": "header.sticky",
+          "type": "choice",
+          "label": "Header while scrolling",
+          "labelAr": "الترويسة أثناء التمرير",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "on": "Stays at the top",
+            "off": "Scrolls away"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "on": "تبقى في الأعلى",
+            "off": "تختفي مع التمرير"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "on": "/kit/previews/sticky-on.svg",
+            "off": "/kit/previews/sticky-off.svg"
+          }
+        },
+        {
+          "key": "hero.variant",
+          "type": "choice",
+          "label": "Top of the page",
+          "labelAr": "أعلى الصفحة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "full",
+            "split",
+            "framed",
+            "poster",
+            "collage",
+            "arch",
+            "stacked",
+            "menu",
+            "type",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "full": "Full photo",
+            "split": "Photo beside the text",
+            "framed": "Framed photo",
+            "poster": "Poster with big type",
+            "collage": "Three photos",
+            "arch": "Arch window",
+            "stacked": "Photo under the text",
+            "menu": "Menu first",
+            "type": "Text only",
+            "circle": "Round photo"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "full": "صورة كاملة",
+            "split": "الصورة بجانب النص",
+            "framed": "صورة في إطار",
+            "poster": "ملصق بخط كبير",
+            "collage": "ثلاث صور",
+            "arch": "نافذة مقوّسة",
+            "stacked": "الصورة تحت النص",
+            "menu": "القائمة أولًا",
+            "type": "نص فقط",
+            "circle": "صورة دائرية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "full": "/kit/previews/hero-full.svg",
+            "split": "/kit/previews/hero-split.svg",
+            "framed": "/kit/previews/hero-framed.svg",
+            "poster": "/kit/previews/hero-poster.svg",
+            "collage": "/kit/previews/hero-collage.svg",
+            "arch": "/kit/previews/hero-arch.svg",
+            "stacked": "/kit/previews/hero-stacked.svg",
+            "menu": "/kit/previews/hero-menu.svg",
+            "type": "/kit/previews/hero-type.svg",
+            "circle": "/kit/previews/hero-circle.svg"
+          }
+        },
+        {
           "key": "hero.eyebrow",
           "type": "text",
           "label": "Small line above the headline",
@@ -20291,6 +23279,10 @@
         "style.dividers": "auto",
         "style.texture": "auto",
         "style.motion": "auto",
+        "header.layout": "auto",
+        "header.style": "auto",
+        "header.sticky": "auto",
+        "hero.variant": "auto",
         "hero.slides": [],
         "hero.transition": "slide",
         "hero.autoplay": true,
@@ -21110,6 +24102,178 @@
           }
         },
         {
+          "key": "header.layout",
+          "type": "choice",
+          "label": "Header layout",
+          "labelAr": "تصميم الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "classic",
+            "centered",
+            "split",
+            "pill",
+            "big",
+            "minimal",
+            "drawer"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "classic": "Classic bar",
+            "centered": "Logo in the middle",
+            "split": "Links around the logo",
+            "pill": "Floating bar",
+            "big": "Big name",
+            "minimal": "Logo and menu button",
+            "drawer": "Side menu"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "classic": "شريط كلاسيكي",
+            "centered": "الشعار في الوسط",
+            "split": "الروابط حول الشعار",
+            "pill": "شريط عائم",
+            "big": "اسم كبير",
+            "minimal": "الشعار وزر القائمة",
+            "drawer": "قائمة جانبية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "classic": "/kit/previews/header-classic.svg",
+            "centered": "/kit/previews/header-centered.svg",
+            "split": "/kit/previews/header-split.svg",
+            "pill": "/kit/previews/header-pill.svg",
+            "big": "/kit/previews/header-big.svg",
+            "minimal": "/kit/previews/header-minimal.svg",
+            "drawer": "/kit/previews/header-drawer.svg"
+          }
+        },
+        {
+          "key": "header.style",
+          "type": "choice",
+          "label": "Header look",
+          "labelAr": "مظهر الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "solid",
+            "transparent",
+            "glass",
+            "accent"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid",
+            "transparent": "See-through, over the top photo",
+            "glass": "Frosted glass",
+            "accent": "In the accent color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "بخلفية كاملة",
+            "transparent": "شفافة فوق الصورة",
+            "glass": "زجاج ضبابي",
+            "accent": "باللون المميز"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/headerstyle-solid.svg",
+            "transparent": "/kit/previews/headerstyle-transparent.svg",
+            "glass": "/kit/previews/headerstyle-glass.svg",
+            "accent": "/kit/previews/headerstyle-accent.svg"
+          }
+        },
+        {
+          "key": "header.sticky",
+          "type": "choice",
+          "label": "Header while scrolling",
+          "labelAr": "الترويسة أثناء التمرير",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "on": "Stays at the top",
+            "off": "Scrolls away"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "on": "تبقى في الأعلى",
+            "off": "تختفي مع التمرير"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "on": "/kit/previews/sticky-on.svg",
+            "off": "/kit/previews/sticky-off.svg"
+          }
+        },
+        {
+          "key": "hero.variant",
+          "type": "choice",
+          "label": "Top of the page",
+          "labelAr": "أعلى الصفحة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "full",
+            "split",
+            "framed",
+            "poster",
+            "collage",
+            "arch",
+            "stacked",
+            "menu",
+            "type",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "full": "Full photo",
+            "split": "Photo beside the text",
+            "framed": "Framed photo",
+            "poster": "Poster with big type",
+            "collage": "Three photos",
+            "arch": "Arch window",
+            "stacked": "Photo under the text",
+            "menu": "Menu first",
+            "type": "Text only",
+            "circle": "Round photo"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "full": "صورة كاملة",
+            "split": "الصورة بجانب النص",
+            "framed": "صورة في إطار",
+            "poster": "ملصق بخط كبير",
+            "collage": "ثلاث صور",
+            "arch": "نافذة مقوّسة",
+            "stacked": "الصورة تحت النص",
+            "menu": "القائمة أولًا",
+            "type": "نص فقط",
+            "circle": "صورة دائرية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "full": "/kit/previews/hero-full.svg",
+            "split": "/kit/previews/hero-split.svg",
+            "framed": "/kit/previews/hero-framed.svg",
+            "poster": "/kit/previews/hero-poster.svg",
+            "collage": "/kit/previews/hero-collage.svg",
+            "arch": "/kit/previews/hero-arch.svg",
+            "stacked": "/kit/previews/hero-stacked.svg",
+            "menu": "/kit/previews/hero-menu.svg",
+            "type": "/kit/previews/hero-type.svg",
+            "circle": "/kit/previews/hero-circle.svg"
+          }
+        },
+        {
           "key": "hero.eyebrow",
           "type": "text",
           "label": "Small line above the headline",
@@ -21757,6 +24921,10 @@
         "style.dividers": "auto",
         "style.texture": "auto",
         "style.motion": "auto",
+        "header.layout": "auto",
+        "header.style": "auto",
+        "header.sticky": "auto",
+        "hero.variant": "auto",
         "hero.slides": [],
         "hero.transition": "slide",
         "hero.autoplay": true,
@@ -22586,6 +25754,178 @@
           }
         },
         {
+          "key": "header.layout",
+          "type": "choice",
+          "label": "Header layout",
+          "labelAr": "تصميم الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "classic",
+            "centered",
+            "split",
+            "pill",
+            "big",
+            "minimal",
+            "drawer"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "classic": "Classic bar",
+            "centered": "Logo in the middle",
+            "split": "Links around the logo",
+            "pill": "Floating bar",
+            "big": "Big name",
+            "minimal": "Logo and menu button",
+            "drawer": "Side menu"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "classic": "شريط كلاسيكي",
+            "centered": "الشعار في الوسط",
+            "split": "الروابط حول الشعار",
+            "pill": "شريط عائم",
+            "big": "اسم كبير",
+            "minimal": "الشعار وزر القائمة",
+            "drawer": "قائمة جانبية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "classic": "/kit/previews/header-classic.svg",
+            "centered": "/kit/previews/header-centered.svg",
+            "split": "/kit/previews/header-split.svg",
+            "pill": "/kit/previews/header-pill.svg",
+            "big": "/kit/previews/header-big.svg",
+            "minimal": "/kit/previews/header-minimal.svg",
+            "drawer": "/kit/previews/header-drawer.svg"
+          }
+        },
+        {
+          "key": "header.style",
+          "type": "choice",
+          "label": "Header look",
+          "labelAr": "مظهر الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "solid",
+            "transparent",
+            "glass",
+            "accent"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid",
+            "transparent": "See-through, over the top photo",
+            "glass": "Frosted glass",
+            "accent": "In the accent color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "بخلفية كاملة",
+            "transparent": "شفافة فوق الصورة",
+            "glass": "زجاج ضبابي",
+            "accent": "باللون المميز"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/headerstyle-solid.svg",
+            "transparent": "/kit/previews/headerstyle-transparent.svg",
+            "glass": "/kit/previews/headerstyle-glass.svg",
+            "accent": "/kit/previews/headerstyle-accent.svg"
+          }
+        },
+        {
+          "key": "header.sticky",
+          "type": "choice",
+          "label": "Header while scrolling",
+          "labelAr": "الترويسة أثناء التمرير",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "on": "Stays at the top",
+            "off": "Scrolls away"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "on": "تبقى في الأعلى",
+            "off": "تختفي مع التمرير"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "on": "/kit/previews/sticky-on.svg",
+            "off": "/kit/previews/sticky-off.svg"
+          }
+        },
+        {
+          "key": "hero.variant",
+          "type": "choice",
+          "label": "Top of the page",
+          "labelAr": "أعلى الصفحة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "full",
+            "split",
+            "framed",
+            "poster",
+            "collage",
+            "arch",
+            "stacked",
+            "menu",
+            "type",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "full": "Full photo",
+            "split": "Photo beside the text",
+            "framed": "Framed photo",
+            "poster": "Poster with big type",
+            "collage": "Three photos",
+            "arch": "Arch window",
+            "stacked": "Photo under the text",
+            "menu": "Menu first",
+            "type": "Text only",
+            "circle": "Round photo"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "full": "صورة كاملة",
+            "split": "الصورة بجانب النص",
+            "framed": "صورة في إطار",
+            "poster": "ملصق بخط كبير",
+            "collage": "ثلاث صور",
+            "arch": "نافذة مقوّسة",
+            "stacked": "الصورة تحت النص",
+            "menu": "القائمة أولًا",
+            "type": "نص فقط",
+            "circle": "صورة دائرية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "full": "/kit/previews/hero-full.svg",
+            "split": "/kit/previews/hero-split.svg",
+            "framed": "/kit/previews/hero-framed.svg",
+            "poster": "/kit/previews/hero-poster.svg",
+            "collage": "/kit/previews/hero-collage.svg",
+            "arch": "/kit/previews/hero-arch.svg",
+            "stacked": "/kit/previews/hero-stacked.svg",
+            "menu": "/kit/previews/hero-menu.svg",
+            "type": "/kit/previews/hero-type.svg",
+            "circle": "/kit/previews/hero-circle.svg"
+          }
+        },
+        {
           "key": "hero.eyebrow",
           "type": "text",
           "label": "Small line above the title",
@@ -23291,6 +26631,10 @@
         "style.dividers": "auto",
         "style.texture": "auto",
         "style.motion": "auto",
+        "header.layout": "auto",
+        "header.style": "auto",
+        "header.sticky": "auto",
+        "hero.variant": "auto",
         "hero.slides": [],
         "hero.transition": "slide",
         "hero.autoplay": true,
@@ -24124,6 +27468,178 @@
           }
         },
         {
+          "key": "header.layout",
+          "type": "choice",
+          "label": "Header layout",
+          "labelAr": "تصميم الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "classic",
+            "centered",
+            "split",
+            "pill",
+            "big",
+            "minimal",
+            "drawer"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "classic": "Classic bar",
+            "centered": "Logo in the middle",
+            "split": "Links around the logo",
+            "pill": "Floating bar",
+            "big": "Big name",
+            "minimal": "Logo and menu button",
+            "drawer": "Side menu"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "classic": "شريط كلاسيكي",
+            "centered": "الشعار في الوسط",
+            "split": "الروابط حول الشعار",
+            "pill": "شريط عائم",
+            "big": "اسم كبير",
+            "minimal": "الشعار وزر القائمة",
+            "drawer": "قائمة جانبية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "classic": "/kit/previews/header-classic.svg",
+            "centered": "/kit/previews/header-centered.svg",
+            "split": "/kit/previews/header-split.svg",
+            "pill": "/kit/previews/header-pill.svg",
+            "big": "/kit/previews/header-big.svg",
+            "minimal": "/kit/previews/header-minimal.svg",
+            "drawer": "/kit/previews/header-drawer.svg"
+          }
+        },
+        {
+          "key": "header.style",
+          "type": "choice",
+          "label": "Header look",
+          "labelAr": "مظهر الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "solid",
+            "transparent",
+            "glass",
+            "accent"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid",
+            "transparent": "See-through, over the top photo",
+            "glass": "Frosted glass",
+            "accent": "In the accent color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "بخلفية كاملة",
+            "transparent": "شفافة فوق الصورة",
+            "glass": "زجاج ضبابي",
+            "accent": "باللون المميز"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/headerstyle-solid.svg",
+            "transparent": "/kit/previews/headerstyle-transparent.svg",
+            "glass": "/kit/previews/headerstyle-glass.svg",
+            "accent": "/kit/previews/headerstyle-accent.svg"
+          }
+        },
+        {
+          "key": "header.sticky",
+          "type": "choice",
+          "label": "Header while scrolling",
+          "labelAr": "الترويسة أثناء التمرير",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "on": "Stays at the top",
+            "off": "Scrolls away"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "on": "تبقى في الأعلى",
+            "off": "تختفي مع التمرير"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "on": "/kit/previews/sticky-on.svg",
+            "off": "/kit/previews/sticky-off.svg"
+          }
+        },
+        {
+          "key": "hero.variant",
+          "type": "choice",
+          "label": "Top of the page",
+          "labelAr": "أعلى الصفحة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "full",
+            "split",
+            "framed",
+            "poster",
+            "collage",
+            "arch",
+            "stacked",
+            "menu",
+            "type",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "full": "Full photo",
+            "split": "Photo beside the text",
+            "framed": "Framed photo",
+            "poster": "Poster with big type",
+            "collage": "Three photos",
+            "arch": "Arch window",
+            "stacked": "Photo under the text",
+            "menu": "Menu first",
+            "type": "Text only",
+            "circle": "Round photo"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "full": "صورة كاملة",
+            "split": "الصورة بجانب النص",
+            "framed": "صورة في إطار",
+            "poster": "ملصق بخط كبير",
+            "collage": "ثلاث صور",
+            "arch": "نافذة مقوّسة",
+            "stacked": "الصورة تحت النص",
+            "menu": "القائمة أولًا",
+            "type": "نص فقط",
+            "circle": "صورة دائرية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "full": "/kit/previews/hero-full.svg",
+            "split": "/kit/previews/hero-split.svg",
+            "framed": "/kit/previews/hero-framed.svg",
+            "poster": "/kit/previews/hero-poster.svg",
+            "collage": "/kit/previews/hero-collage.svg",
+            "arch": "/kit/previews/hero-arch.svg",
+            "stacked": "/kit/previews/hero-stacked.svg",
+            "menu": "/kit/previews/hero-menu.svg",
+            "type": "/kit/previews/hero-type.svg",
+            "circle": "/kit/previews/hero-circle.svg"
+          }
+        },
+        {
           "key": "hero.title",
           "type": "text",
           "label": "Big title",
@@ -24854,6 +28370,10 @@
         "style.dividers": "auto",
         "style.texture": "auto",
         "style.motion": "auto",
+        "header.layout": "auto",
+        "header.style": "auto",
+        "header.sticky": "auto",
+        "hero.variant": "auto",
         "hero.slides": [],
         "hero.transition": "slide",
         "hero.autoplay": true,
@@ -25686,6 +29206,178 @@
           }
         },
         {
+          "key": "header.layout",
+          "type": "choice",
+          "label": "Header layout",
+          "labelAr": "تصميم الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "classic",
+            "centered",
+            "split",
+            "pill",
+            "big",
+            "minimal",
+            "drawer"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "classic": "Classic bar",
+            "centered": "Logo in the middle",
+            "split": "Links around the logo",
+            "pill": "Floating bar",
+            "big": "Big name",
+            "minimal": "Logo and menu button",
+            "drawer": "Side menu"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "classic": "شريط كلاسيكي",
+            "centered": "الشعار في الوسط",
+            "split": "الروابط حول الشعار",
+            "pill": "شريط عائم",
+            "big": "اسم كبير",
+            "minimal": "الشعار وزر القائمة",
+            "drawer": "قائمة جانبية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "classic": "/kit/previews/header-classic.svg",
+            "centered": "/kit/previews/header-centered.svg",
+            "split": "/kit/previews/header-split.svg",
+            "pill": "/kit/previews/header-pill.svg",
+            "big": "/kit/previews/header-big.svg",
+            "minimal": "/kit/previews/header-minimal.svg",
+            "drawer": "/kit/previews/header-drawer.svg"
+          }
+        },
+        {
+          "key": "header.style",
+          "type": "choice",
+          "label": "Header look",
+          "labelAr": "مظهر الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "solid",
+            "transparent",
+            "glass",
+            "accent"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid",
+            "transparent": "See-through, over the top photo",
+            "glass": "Frosted glass",
+            "accent": "In the accent color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "بخلفية كاملة",
+            "transparent": "شفافة فوق الصورة",
+            "glass": "زجاج ضبابي",
+            "accent": "باللون المميز"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/headerstyle-solid.svg",
+            "transparent": "/kit/previews/headerstyle-transparent.svg",
+            "glass": "/kit/previews/headerstyle-glass.svg",
+            "accent": "/kit/previews/headerstyle-accent.svg"
+          }
+        },
+        {
+          "key": "header.sticky",
+          "type": "choice",
+          "label": "Header while scrolling",
+          "labelAr": "الترويسة أثناء التمرير",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "on": "Stays at the top",
+            "off": "Scrolls away"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "on": "تبقى في الأعلى",
+            "off": "تختفي مع التمرير"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "on": "/kit/previews/sticky-on.svg",
+            "off": "/kit/previews/sticky-off.svg"
+          }
+        },
+        {
+          "key": "hero.variant",
+          "type": "choice",
+          "label": "Top of the page",
+          "labelAr": "أعلى الصفحة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "full",
+            "split",
+            "framed",
+            "poster",
+            "collage",
+            "arch",
+            "stacked",
+            "menu",
+            "type",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "full": "Full photo",
+            "split": "Photo beside the text",
+            "framed": "Framed photo",
+            "poster": "Poster with big type",
+            "collage": "Three photos",
+            "arch": "Arch window",
+            "stacked": "Photo under the text",
+            "menu": "Menu first",
+            "type": "Text only",
+            "circle": "Round photo"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "full": "صورة كاملة",
+            "split": "الصورة بجانب النص",
+            "framed": "صورة في إطار",
+            "poster": "ملصق بخط كبير",
+            "collage": "ثلاث صور",
+            "arch": "نافذة مقوّسة",
+            "stacked": "الصورة تحت النص",
+            "menu": "القائمة أولًا",
+            "type": "نص فقط",
+            "circle": "صورة دائرية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "full": "/kit/previews/hero-full.svg",
+            "split": "/kit/previews/hero-split.svg",
+            "framed": "/kit/previews/hero-framed.svg",
+            "poster": "/kit/previews/hero-poster.svg",
+            "collage": "/kit/previews/hero-collage.svg",
+            "arch": "/kit/previews/hero-arch.svg",
+            "stacked": "/kit/previews/hero-stacked.svg",
+            "menu": "/kit/previews/hero-menu.svg",
+            "type": "/kit/previews/hero-type.svg",
+            "circle": "/kit/previews/hero-circle.svg"
+          }
+        },
+        {
           "key": "hero.title",
           "type": "text",
           "label": "Big title",
@@ -26338,6 +30030,10 @@
         "style.dividers": "auto",
         "style.texture": "auto",
         "style.motion": "auto",
+        "header.layout": "auto",
+        "header.style": "auto",
+        "header.sticky": "auto",
+        "hero.variant": "auto",
         "hero.slides": [],
         "hero.transition": "slide",
         "hero.autoplay": true,
@@ -27113,21 +30809,184 @@
           }
         },
         {
-          "key": "cta.label",
-          "type": "text",
-          "label": "Reserve button text",
-          "labelAr": "نص زر الحجز",
-          "group": "Navigation",
-          "groupAr": "التنقل",
-          "max": 30
+          "key": "header.layout",
+          "type": "choice",
+          "label": "Header layout",
+          "labelAr": "تصميم الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "classic",
+            "centered",
+            "split",
+            "pill",
+            "big",
+            "minimal",
+            "drawer"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "classic": "Classic bar",
+            "centered": "Logo in the middle",
+            "split": "Links around the logo",
+            "pill": "Floating bar",
+            "big": "Big name",
+            "minimal": "Logo and menu button",
+            "drawer": "Side menu"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "classic": "شريط كلاسيكي",
+            "centered": "الشعار في الوسط",
+            "split": "الروابط حول الشعار",
+            "pill": "شريط عائم",
+            "big": "اسم كبير",
+            "minimal": "الشعار وزر القائمة",
+            "drawer": "قائمة جانبية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "classic": "/kit/previews/header-classic.svg",
+            "centered": "/kit/previews/header-centered.svg",
+            "split": "/kit/previews/header-split.svg",
+            "pill": "/kit/previews/header-pill.svg",
+            "big": "/kit/previews/header-big.svg",
+            "minimal": "/kit/previews/header-minimal.svg",
+            "drawer": "/kit/previews/header-drawer.svg"
+          }
+        },
+        {
+          "key": "header.style",
+          "type": "choice",
+          "label": "Header look",
+          "labelAr": "مظهر الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "solid",
+            "transparent",
+            "glass",
+            "accent"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid",
+            "transparent": "See-through, over the top photo",
+            "glass": "Frosted glass",
+            "accent": "In the accent color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "بخلفية كاملة",
+            "transparent": "شفافة فوق الصورة",
+            "glass": "زجاج ضبابي",
+            "accent": "باللون المميز"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/headerstyle-solid.svg",
+            "transparent": "/kit/previews/headerstyle-transparent.svg",
+            "glass": "/kit/previews/headerstyle-glass.svg",
+            "accent": "/kit/previews/headerstyle-accent.svg"
+          }
+        },
+        {
+          "key": "header.sticky",
+          "type": "choice",
+          "label": "Header while scrolling",
+          "labelAr": "الترويسة أثناء التمرير",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "on": "Stays at the top",
+            "off": "Scrolls away"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "on": "تبقى في الأعلى",
+            "off": "تختفي مع التمرير"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "on": "/kit/previews/sticky-on.svg",
+            "off": "/kit/previews/sticky-off.svg"
+          }
+        },
+        {
+          "key": "hero.variant",
+          "type": "choice",
+          "label": "Top of the page",
+          "labelAr": "أعلى الصفحة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "full",
+            "split",
+            "framed",
+            "poster",
+            "collage",
+            "arch",
+            "stacked",
+            "menu",
+            "type",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "full": "Full photo",
+            "split": "Photo beside the text",
+            "framed": "Framed photo",
+            "poster": "Poster with big type",
+            "collage": "Three photos",
+            "arch": "Arch window",
+            "stacked": "Photo under the text",
+            "menu": "Menu first",
+            "type": "Text only",
+            "circle": "Round photo"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "full": "صورة كاملة",
+            "split": "الصورة بجانب النص",
+            "framed": "صورة في إطار",
+            "poster": "ملصق بخط كبير",
+            "collage": "ثلاث صور",
+            "arch": "نافذة مقوّسة",
+            "stacked": "الصورة تحت النص",
+            "menu": "القائمة أولًا",
+            "type": "نص فقط",
+            "circle": "صورة دائرية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "full": "/kit/previews/hero-full.svg",
+            "split": "/kit/previews/hero-split.svg",
+            "framed": "/kit/previews/hero-framed.svg",
+            "poster": "/kit/previews/hero-poster.svg",
+            "collage": "/kit/previews/hero-collage.svg",
+            "arch": "/kit/previews/hero-arch.svg",
+            "stacked": "/kit/previews/hero-stacked.svg",
+            "menu": "/kit/previews/hero-menu.svg",
+            "type": "/kit/previews/hero-type.svg",
+            "circle": "/kit/previews/hero-circle.svg"
+          }
         },
         {
           "key": "hero.layout",
           "type": "choice",
-          "label": "Layout",
-          "labelAr": "التخطيط",
-          "group": "Hero header",
-          "groupAr": "الواجهة الرئيسية",
+          "label": "Template default: its own top",
+          "labelAr": "أعلى الصفحة الأصلي للقالب",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
           "options": [
             "cover",
             "slides",
@@ -27146,6 +31005,15 @@
             "split": "صورة داخل إطار",
             "text": "الاسم فقط"
           }
+        },
+        {
+          "key": "cta.label",
+          "type": "text",
+          "label": "Reserve button text",
+          "labelAr": "نص زر الحجز",
+          "group": "Navigation",
+          "groupAr": "التنقل",
+          "max": 30
         },
         {
           "key": "hero.images",
@@ -27650,7 +31518,6 @@
         "colors.background": "default",
         "accent": "#C9A45C",
         "cta.label": "Reserve a table",
-        "hero.layout": "cover",
         "hero.images": [
           "preset:noir",
           "preset:marble"
@@ -27716,6 +31583,11 @@
         "style.photos": "auto",
         "style.dividers": "auto",
         "style.texture": "auto",
+        "header.layout": "auto",
+        "header.style": "auto",
+        "header.sticky": "auto",
+        "hero.variant": "auto",
+        "hero.layout": "cover",
         "hero.transition": "fade",
         "hero.autoplay": true,
         "hero.speed": "normal",
@@ -28504,21 +32376,184 @@
           }
         },
         {
-          "key": "cta.label",
-          "type": "text",
-          "label": "Order button text",
-          "labelAr": "نص زر الطلب",
-          "group": "Navigation",
-          "groupAr": "التنقل",
-          "max": 30
+          "key": "header.layout",
+          "type": "choice",
+          "label": "Header layout",
+          "labelAr": "تصميم الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "classic",
+            "centered",
+            "split",
+            "pill",
+            "big",
+            "minimal",
+            "drawer"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "classic": "Classic bar",
+            "centered": "Logo in the middle",
+            "split": "Links around the logo",
+            "pill": "Floating bar",
+            "big": "Big name",
+            "minimal": "Logo and menu button",
+            "drawer": "Side menu"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "classic": "شريط كلاسيكي",
+            "centered": "الشعار في الوسط",
+            "split": "الروابط حول الشعار",
+            "pill": "شريط عائم",
+            "big": "اسم كبير",
+            "minimal": "الشعار وزر القائمة",
+            "drawer": "قائمة جانبية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "classic": "/kit/previews/header-classic.svg",
+            "centered": "/kit/previews/header-centered.svg",
+            "split": "/kit/previews/header-split.svg",
+            "pill": "/kit/previews/header-pill.svg",
+            "big": "/kit/previews/header-big.svg",
+            "minimal": "/kit/previews/header-minimal.svg",
+            "drawer": "/kit/previews/header-drawer.svg"
+          }
+        },
+        {
+          "key": "header.style",
+          "type": "choice",
+          "label": "Header look",
+          "labelAr": "مظهر الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "solid",
+            "transparent",
+            "glass",
+            "accent"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid",
+            "transparent": "See-through, over the top photo",
+            "glass": "Frosted glass",
+            "accent": "In the accent color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "بخلفية كاملة",
+            "transparent": "شفافة فوق الصورة",
+            "glass": "زجاج ضبابي",
+            "accent": "باللون المميز"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/headerstyle-solid.svg",
+            "transparent": "/kit/previews/headerstyle-transparent.svg",
+            "glass": "/kit/previews/headerstyle-glass.svg",
+            "accent": "/kit/previews/headerstyle-accent.svg"
+          }
+        },
+        {
+          "key": "header.sticky",
+          "type": "choice",
+          "label": "Header while scrolling",
+          "labelAr": "الترويسة أثناء التمرير",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "on": "Stays at the top",
+            "off": "Scrolls away"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "on": "تبقى في الأعلى",
+            "off": "تختفي مع التمرير"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "on": "/kit/previews/sticky-on.svg",
+            "off": "/kit/previews/sticky-off.svg"
+          }
+        },
+        {
+          "key": "hero.variant",
+          "type": "choice",
+          "label": "Top of the page",
+          "labelAr": "أعلى الصفحة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "full",
+            "split",
+            "framed",
+            "poster",
+            "collage",
+            "arch",
+            "stacked",
+            "menu",
+            "type",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "full": "Full photo",
+            "split": "Photo beside the text",
+            "framed": "Framed photo",
+            "poster": "Poster with big type",
+            "collage": "Three photos",
+            "arch": "Arch window",
+            "stacked": "Photo under the text",
+            "menu": "Menu first",
+            "type": "Text only",
+            "circle": "Round photo"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "full": "صورة كاملة",
+            "split": "الصورة بجانب النص",
+            "framed": "صورة في إطار",
+            "poster": "ملصق بخط كبير",
+            "collage": "ثلاث صور",
+            "arch": "نافذة مقوّسة",
+            "stacked": "الصورة تحت النص",
+            "menu": "القائمة أولًا",
+            "type": "نص فقط",
+            "circle": "صورة دائرية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "full": "/kit/previews/hero-full.svg",
+            "split": "/kit/previews/hero-split.svg",
+            "framed": "/kit/previews/hero-framed.svg",
+            "poster": "/kit/previews/hero-poster.svg",
+            "collage": "/kit/previews/hero-collage.svg",
+            "arch": "/kit/previews/hero-arch.svg",
+            "stacked": "/kit/previews/hero-stacked.svg",
+            "menu": "/kit/previews/hero-menu.svg",
+            "type": "/kit/previews/hero-type.svg",
+            "circle": "/kit/previews/hero-circle.svg"
+          }
         },
         {
           "key": "hero.layout",
           "type": "choice",
-          "label": "Layout",
-          "labelAr": "التخطيط",
-          "group": "Hero header",
-          "groupAr": "الواجهة الرئيسية",
+          "label": "Template default: its own top",
+          "labelAr": "أعلى الصفحة الأصلي للقالب",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
           "options": [
             "bento",
             "poster"
@@ -28531,6 +32566,15 @@
             "bento": "صورة ومربعات",
             "poster": "ملصق بخط كبير"
           }
+        },
+        {
+          "key": "cta.label",
+          "type": "text",
+          "label": "Order button text",
+          "labelAr": "نص زر الطلب",
+          "group": "Navigation",
+          "groupAr": "التنقل",
+          "max": 30
         },
         {
           "key": "hero.image",
@@ -29030,7 +33074,6 @@
         "accent": "#FF5A1F",
         "corners": "rounded",
         "cta.label": "",
-        "hero.layout": "bento",
         "hero.image": "preset:pour",
         "hero.sticker": "Roasted this week",
         "hero.title": "Loud coffee for sunny mornings.",
@@ -29092,6 +33135,11 @@
         "style.photos": "auto",
         "style.dividers": "auto",
         "style.texture": "auto",
+        "header.layout": "auto",
+        "header.style": "auto",
+        "header.sticky": "auto",
+        "hero.variant": "auto",
+        "hero.layout": "bento",
         "hero.slides": [],
         "hero.transition": "slide",
         "hero.autoplay": true,
@@ -29879,6 +33927,201 @@
           }
         },
         {
+          "key": "header.layout",
+          "type": "choice",
+          "label": "Header layout",
+          "labelAr": "تصميم الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "classic",
+            "centered",
+            "split",
+            "pill",
+            "big",
+            "minimal",
+            "drawer"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "classic": "Classic bar",
+            "centered": "Logo in the middle",
+            "split": "Links around the logo",
+            "pill": "Floating bar",
+            "big": "Big name",
+            "minimal": "Logo and menu button",
+            "drawer": "Side menu"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "classic": "شريط كلاسيكي",
+            "centered": "الشعار في الوسط",
+            "split": "الروابط حول الشعار",
+            "pill": "شريط عائم",
+            "big": "اسم كبير",
+            "minimal": "الشعار وزر القائمة",
+            "drawer": "قائمة جانبية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "classic": "/kit/previews/header-classic.svg",
+            "centered": "/kit/previews/header-centered.svg",
+            "split": "/kit/previews/header-split.svg",
+            "pill": "/kit/previews/header-pill.svg",
+            "big": "/kit/previews/header-big.svg",
+            "minimal": "/kit/previews/header-minimal.svg",
+            "drawer": "/kit/previews/header-drawer.svg"
+          }
+        },
+        {
+          "key": "header.style",
+          "type": "choice",
+          "label": "Header look",
+          "labelAr": "مظهر الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "solid",
+            "transparent",
+            "glass",
+            "accent"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid",
+            "transparent": "See-through, over the top photo",
+            "glass": "Frosted glass",
+            "accent": "In the accent color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "بخلفية كاملة",
+            "transparent": "شفافة فوق الصورة",
+            "glass": "زجاج ضبابي",
+            "accent": "باللون المميز"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/headerstyle-solid.svg",
+            "transparent": "/kit/previews/headerstyle-transparent.svg",
+            "glass": "/kit/previews/headerstyle-glass.svg",
+            "accent": "/kit/previews/headerstyle-accent.svg"
+          }
+        },
+        {
+          "key": "header.sticky",
+          "type": "choice",
+          "label": "Header while scrolling",
+          "labelAr": "الترويسة أثناء التمرير",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "on": "Stays at the top",
+            "off": "Scrolls away"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "on": "تبقى في الأعلى",
+            "off": "تختفي مع التمرير"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "on": "/kit/previews/sticky-on.svg",
+            "off": "/kit/previews/sticky-off.svg"
+          }
+        },
+        {
+          "key": "hero.variant",
+          "type": "choice",
+          "label": "Top of the page",
+          "labelAr": "أعلى الصفحة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "full",
+            "split",
+            "framed",
+            "poster",
+            "collage",
+            "arch",
+            "stacked",
+            "menu",
+            "type",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "full": "Full photo",
+            "split": "Photo beside the text",
+            "framed": "Framed photo",
+            "poster": "Poster with big type",
+            "collage": "Three photos",
+            "arch": "Arch window",
+            "stacked": "Photo under the text",
+            "menu": "Menu first",
+            "type": "Text only",
+            "circle": "Round photo"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "full": "صورة كاملة",
+            "split": "الصورة بجانب النص",
+            "framed": "صورة في إطار",
+            "poster": "ملصق بخط كبير",
+            "collage": "ثلاث صور",
+            "arch": "نافذة مقوّسة",
+            "stacked": "الصورة تحت النص",
+            "menu": "القائمة أولًا",
+            "type": "نص فقط",
+            "circle": "صورة دائرية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "full": "/kit/previews/hero-full.svg",
+            "split": "/kit/previews/hero-split.svg",
+            "framed": "/kit/previews/hero-framed.svg",
+            "poster": "/kit/previews/hero-poster.svg",
+            "collage": "/kit/previews/hero-collage.svg",
+            "arch": "/kit/previews/hero-arch.svg",
+            "stacked": "/kit/previews/hero-stacked.svg",
+            "menu": "/kit/previews/hero-menu.svg",
+            "type": "/kit/previews/hero-type.svg",
+            "circle": "/kit/previews/hero-circle.svg"
+          }
+        },
+        {
+          "key": "hero.layout",
+          "type": "choice",
+          "label": "Template default: its own top",
+          "labelAr": "أعلى الصفحة الأصلي للقالب",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "split",
+            "flip",
+            "text"
+          ],
+          "optionLabels": {
+            "split": "Photo at the end",
+            "flip": "Photo at the start",
+            "text": "Text only"
+          },
+          "optionLabelsAr": {
+            "split": "الصورة في جهة النهاية",
+            "flip": "الصورة في جهة البداية",
+            "text": "نص فقط"
+          }
+        },
+        {
           "key": "cta.label",
           "type": "text",
           "label": "Order button text",
@@ -29895,29 +34138,6 @@
           "group": "Navigation",
           "groupAr": "التنقل",
           "max": 80
-        },
-        {
-          "key": "hero.layout",
-          "type": "choice",
-          "label": "Layout",
-          "labelAr": "التخطيط",
-          "group": "Hero header",
-          "groupAr": "الواجهة الرئيسية",
-          "options": [
-            "split",
-            "flip",
-            "text"
-          ],
-          "optionLabels": {
-            "split": "Photo at the end",
-            "flip": "Photo at the start",
-            "text": "Text only"
-          },
-          "optionLabelsAr": {
-            "split": "الصورة في جهة النهاية",
-            "flip": "الصورة في جهة البداية",
-            "text": "نص فقط"
-          }
         },
         {
           "key": "hero.image",
@@ -30411,7 +34631,6 @@
         "corners": "rounded",
         "cta.label": "",
         "announcement": "Free delivery on larger orders. Exchanges within 14 days.",
-        "hero.layout": "split",
         "hero.image": "preset:shelf",
         "hero.eyebrow": "New season",
         "hero.title": "Everyday objects, made by hand.",
@@ -30474,6 +34693,11 @@
         "style.photos": "auto",
         "style.dividers": "auto",
         "style.texture": "auto",
+        "header.layout": "auto",
+        "header.style": "auto",
+        "header.sticky": "auto",
+        "hero.variant": "auto",
+        "hero.layout": "split",
         "hero.slides": [],
         "hero.transition": "slide",
         "hero.autoplay": true,
@@ -31259,21 +35483,184 @@
           }
         },
         {
-          "key": "cta.label",
-          "type": "text",
-          "label": "Order button text",
-          "labelAr": "نص زر الطلب",
-          "group": "Navigation",
-          "groupAr": "التنقل",
-          "max": 30
+          "key": "header.layout",
+          "type": "choice",
+          "label": "Header layout",
+          "labelAr": "تصميم الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "classic",
+            "centered",
+            "split",
+            "pill",
+            "big",
+            "minimal",
+            "drawer"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "classic": "Classic bar",
+            "centered": "Logo in the middle",
+            "split": "Links around the logo",
+            "pill": "Floating bar",
+            "big": "Big name",
+            "minimal": "Logo and menu button",
+            "drawer": "Side menu"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "classic": "شريط كلاسيكي",
+            "centered": "الشعار في الوسط",
+            "split": "الروابط حول الشعار",
+            "pill": "شريط عائم",
+            "big": "اسم كبير",
+            "minimal": "الشعار وزر القائمة",
+            "drawer": "قائمة جانبية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "classic": "/kit/previews/header-classic.svg",
+            "centered": "/kit/previews/header-centered.svg",
+            "split": "/kit/previews/header-split.svg",
+            "pill": "/kit/previews/header-pill.svg",
+            "big": "/kit/previews/header-big.svg",
+            "minimal": "/kit/previews/header-minimal.svg",
+            "drawer": "/kit/previews/header-drawer.svg"
+          }
+        },
+        {
+          "key": "header.style",
+          "type": "choice",
+          "label": "Header look",
+          "labelAr": "مظهر الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "solid",
+            "transparent",
+            "glass",
+            "accent"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid",
+            "transparent": "See-through, over the top photo",
+            "glass": "Frosted glass",
+            "accent": "In the accent color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "بخلفية كاملة",
+            "transparent": "شفافة فوق الصورة",
+            "glass": "زجاج ضبابي",
+            "accent": "باللون المميز"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/headerstyle-solid.svg",
+            "transparent": "/kit/previews/headerstyle-transparent.svg",
+            "glass": "/kit/previews/headerstyle-glass.svg",
+            "accent": "/kit/previews/headerstyle-accent.svg"
+          }
+        },
+        {
+          "key": "header.sticky",
+          "type": "choice",
+          "label": "Header while scrolling",
+          "labelAr": "الترويسة أثناء التمرير",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "on": "Stays at the top",
+            "off": "Scrolls away"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "on": "تبقى في الأعلى",
+            "off": "تختفي مع التمرير"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "on": "/kit/previews/sticky-on.svg",
+            "off": "/kit/previews/sticky-off.svg"
+          }
+        },
+        {
+          "key": "hero.variant",
+          "type": "choice",
+          "label": "Top of the page",
+          "labelAr": "أعلى الصفحة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "full",
+            "split",
+            "framed",
+            "poster",
+            "collage",
+            "arch",
+            "stacked",
+            "menu",
+            "type",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "full": "Full photo",
+            "split": "Photo beside the text",
+            "framed": "Framed photo",
+            "poster": "Poster with big type",
+            "collage": "Three photos",
+            "arch": "Arch window",
+            "stacked": "Photo under the text",
+            "menu": "Menu first",
+            "type": "Text only",
+            "circle": "Round photo"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "full": "صورة كاملة",
+            "split": "الصورة بجانب النص",
+            "framed": "صورة في إطار",
+            "poster": "ملصق بخط كبير",
+            "collage": "ثلاث صور",
+            "arch": "نافذة مقوّسة",
+            "stacked": "الصورة تحت النص",
+            "menu": "القائمة أولًا",
+            "type": "نص فقط",
+            "circle": "صورة دائرية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "full": "/kit/previews/hero-full.svg",
+            "split": "/kit/previews/hero-split.svg",
+            "framed": "/kit/previews/hero-framed.svg",
+            "poster": "/kit/previews/hero-poster.svg",
+            "collage": "/kit/previews/hero-collage.svg",
+            "arch": "/kit/previews/hero-arch.svg",
+            "stacked": "/kit/previews/hero-stacked.svg",
+            "menu": "/kit/previews/hero-menu.svg",
+            "type": "/kit/previews/hero-type.svg",
+            "circle": "/kit/previews/hero-circle.svg"
+          }
         },
         {
           "key": "hero.layout",
           "type": "choice",
-          "label": "Layout",
-          "labelAr": "التخطيط",
-          "group": "Hero header",
-          "groupAr": "الواجهة الرئيسية",
+          "label": "Template default: its own top",
+          "labelAr": "أعلى الصفحة الأصلي للقالب",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
           "options": [
             "poster",
             "full",
@@ -31292,6 +35679,15 @@
             "slides": "عرض صور بملء الشاشة",
             "type": "نص فقط"
           }
+        },
+        {
+          "key": "cta.label",
+          "type": "text",
+          "label": "Order button text",
+          "labelAr": "نص زر الطلب",
+          "group": "Navigation",
+          "groupAr": "التنقل",
+          "max": 30
         },
         {
           "key": "hero.images",
@@ -31795,7 +36191,6 @@
         "corners": "sharp",
         "grain": true,
         "cta.label": "",
-        "hero.layout": "poster",
         "hero.images": [
           "preset:embers",
           "preset:flames"
@@ -31861,6 +36256,11 @@
         "style.photos": "auto",
         "style.dividers": "auto",
         "style.texture": "auto",
+        "header.layout": "auto",
+        "header.style": "auto",
+        "header.sticky": "auto",
+        "hero.variant": "auto",
+        "hero.layout": "poster",
         "hero.transition": "slide",
         "hero.autoplay": true,
         "hero.speed": "normal",
@@ -32635,21 +37035,184 @@
           }
         },
         {
-          "key": "cta.label",
-          "type": "text",
-          "label": "Order button text",
-          "labelAr": "نص زر الطلب",
-          "group": "Navigation",
-          "groupAr": "التنقل",
-          "max": 30
+          "key": "header.layout",
+          "type": "choice",
+          "label": "Header layout",
+          "labelAr": "تصميم الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "classic",
+            "centered",
+            "split",
+            "pill",
+            "big",
+            "minimal",
+            "drawer"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "classic": "Classic bar",
+            "centered": "Logo in the middle",
+            "split": "Links around the logo",
+            "pill": "Floating bar",
+            "big": "Big name",
+            "minimal": "Logo and menu button",
+            "drawer": "Side menu"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "classic": "شريط كلاسيكي",
+            "centered": "الشعار في الوسط",
+            "split": "الروابط حول الشعار",
+            "pill": "شريط عائم",
+            "big": "اسم كبير",
+            "minimal": "الشعار وزر القائمة",
+            "drawer": "قائمة جانبية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "classic": "/kit/previews/header-classic.svg",
+            "centered": "/kit/previews/header-centered.svg",
+            "split": "/kit/previews/header-split.svg",
+            "pill": "/kit/previews/header-pill.svg",
+            "big": "/kit/previews/header-big.svg",
+            "minimal": "/kit/previews/header-minimal.svg",
+            "drawer": "/kit/previews/header-drawer.svg"
+          }
+        },
+        {
+          "key": "header.style",
+          "type": "choice",
+          "label": "Header look",
+          "labelAr": "مظهر الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "solid",
+            "transparent",
+            "glass",
+            "accent"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid",
+            "transparent": "See-through, over the top photo",
+            "glass": "Frosted glass",
+            "accent": "In the accent color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "بخلفية كاملة",
+            "transparent": "شفافة فوق الصورة",
+            "glass": "زجاج ضبابي",
+            "accent": "باللون المميز"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/headerstyle-solid.svg",
+            "transparent": "/kit/previews/headerstyle-transparent.svg",
+            "glass": "/kit/previews/headerstyle-glass.svg",
+            "accent": "/kit/previews/headerstyle-accent.svg"
+          }
+        },
+        {
+          "key": "header.sticky",
+          "type": "choice",
+          "label": "Header while scrolling",
+          "labelAr": "الترويسة أثناء التمرير",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "on": "Stays at the top",
+            "off": "Scrolls away"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "on": "تبقى في الأعلى",
+            "off": "تختفي مع التمرير"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "on": "/kit/previews/sticky-on.svg",
+            "off": "/kit/previews/sticky-off.svg"
+          }
+        },
+        {
+          "key": "hero.variant",
+          "type": "choice",
+          "label": "Top of the page",
+          "labelAr": "أعلى الصفحة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "full",
+            "split",
+            "framed",
+            "poster",
+            "collage",
+            "arch",
+            "stacked",
+            "menu",
+            "type",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "full": "Full photo",
+            "split": "Photo beside the text",
+            "framed": "Framed photo",
+            "poster": "Poster with big type",
+            "collage": "Three photos",
+            "arch": "Arch window",
+            "stacked": "Photo under the text",
+            "menu": "Menu first",
+            "type": "Text only",
+            "circle": "Round photo"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "full": "صورة كاملة",
+            "split": "الصورة بجانب النص",
+            "framed": "صورة في إطار",
+            "poster": "ملصق بخط كبير",
+            "collage": "ثلاث صور",
+            "arch": "نافذة مقوّسة",
+            "stacked": "الصورة تحت النص",
+            "menu": "القائمة أولًا",
+            "type": "نص فقط",
+            "circle": "صورة دائرية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "full": "/kit/previews/hero-full.svg",
+            "split": "/kit/previews/hero-split.svg",
+            "framed": "/kit/previews/hero-framed.svg",
+            "poster": "/kit/previews/hero-poster.svg",
+            "collage": "/kit/previews/hero-collage.svg",
+            "arch": "/kit/previews/hero-arch.svg",
+            "stacked": "/kit/previews/hero-stacked.svg",
+            "menu": "/kit/previews/hero-menu.svg",
+            "type": "/kit/previews/hero-type.svg",
+            "circle": "/kit/previews/hero-circle.svg"
+          }
         },
         {
           "key": "hero.layout",
           "type": "choice",
-          "label": "Layout",
-          "labelAr": "التخطيط",
-          "group": "Hero header",
-          "groupAr": "الواجهة الرئيسية",
+          "label": "Template default: its own top",
+          "labelAr": "أعلى الصفحة الأصلي للقالب",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
           "options": [
             "blob",
             "slider",
@@ -32668,6 +37231,15 @@
             "bubbles": "فقاعات صور دائرية",
             "text": "نص فقط"
           }
+        },
+        {
+          "key": "cta.label",
+          "type": "text",
+          "label": "Order button text",
+          "labelAr": "نص زر الطلب",
+          "group": "Navigation",
+          "groupAr": "التنقل",
+          "max": 30
         },
         {
           "key": "hero.images",
@@ -33137,7 +37709,6 @@
         "accent": "#D6467A",
         "doodles": true,
         "cta.label": "",
-        "hero.layout": "blob",
         "hero.images": [
           "preset:blossom",
           "preset:sprinkles"
@@ -33202,6 +37773,11 @@
         "style.photos": "auto",
         "style.dividers": "auto",
         "style.texture": "auto",
+        "header.layout": "auto",
+        "header.style": "auto",
+        "header.sticky": "auto",
+        "hero.variant": "auto",
+        "hero.layout": "blob",
         "hero.transition": "slide",
         "hero.autoplay": true,
         "hero.speed": "normal",
@@ -34006,6 +38582,178 @@
           }
         },
         {
+          "key": "header.layout",
+          "type": "choice",
+          "label": "Header layout",
+          "labelAr": "تصميم الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "classic",
+            "centered",
+            "split",
+            "pill",
+            "big",
+            "minimal",
+            "drawer"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "classic": "Classic bar",
+            "centered": "Logo in the middle",
+            "split": "Links around the logo",
+            "pill": "Floating bar",
+            "big": "Big name",
+            "minimal": "Logo and menu button",
+            "drawer": "Side menu"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "classic": "شريط كلاسيكي",
+            "centered": "الشعار في الوسط",
+            "split": "الروابط حول الشعار",
+            "pill": "شريط عائم",
+            "big": "اسم كبير",
+            "minimal": "الشعار وزر القائمة",
+            "drawer": "قائمة جانبية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "classic": "/kit/previews/header-classic.svg",
+            "centered": "/kit/previews/header-centered.svg",
+            "split": "/kit/previews/header-split.svg",
+            "pill": "/kit/previews/header-pill.svg",
+            "big": "/kit/previews/header-big.svg",
+            "minimal": "/kit/previews/header-minimal.svg",
+            "drawer": "/kit/previews/header-drawer.svg"
+          }
+        },
+        {
+          "key": "header.style",
+          "type": "choice",
+          "label": "Header look",
+          "labelAr": "مظهر الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "solid",
+            "transparent",
+            "glass",
+            "accent"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid",
+            "transparent": "See-through, over the top photo",
+            "glass": "Frosted glass",
+            "accent": "In the accent color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "بخلفية كاملة",
+            "transparent": "شفافة فوق الصورة",
+            "glass": "زجاج ضبابي",
+            "accent": "باللون المميز"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/headerstyle-solid.svg",
+            "transparent": "/kit/previews/headerstyle-transparent.svg",
+            "glass": "/kit/previews/headerstyle-glass.svg",
+            "accent": "/kit/previews/headerstyle-accent.svg"
+          }
+        },
+        {
+          "key": "header.sticky",
+          "type": "choice",
+          "label": "Header while scrolling",
+          "labelAr": "الترويسة أثناء التمرير",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "on": "Stays at the top",
+            "off": "Scrolls away"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "on": "تبقى في الأعلى",
+            "off": "تختفي مع التمرير"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "on": "/kit/previews/sticky-on.svg",
+            "off": "/kit/previews/sticky-off.svg"
+          }
+        },
+        {
+          "key": "hero.variant",
+          "type": "choice",
+          "label": "Top of the page",
+          "labelAr": "أعلى الصفحة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "full",
+            "split",
+            "framed",
+            "poster",
+            "collage",
+            "arch",
+            "stacked",
+            "menu",
+            "type",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "full": "Full photo",
+            "split": "Photo beside the text",
+            "framed": "Framed photo",
+            "poster": "Poster with big type",
+            "collage": "Three photos",
+            "arch": "Arch window",
+            "stacked": "Photo under the text",
+            "menu": "Menu first",
+            "type": "Text only",
+            "circle": "Round photo"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "full": "صورة كاملة",
+            "split": "الصورة بجانب النص",
+            "framed": "صورة في إطار",
+            "poster": "ملصق بخط كبير",
+            "collage": "ثلاث صور",
+            "arch": "نافذة مقوّسة",
+            "stacked": "الصورة تحت النص",
+            "menu": "القائمة أولًا",
+            "type": "نص فقط",
+            "circle": "صورة دائرية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "full": "/kit/previews/hero-full.svg",
+            "split": "/kit/previews/hero-split.svg",
+            "framed": "/kit/previews/hero-framed.svg",
+            "poster": "/kit/previews/hero-poster.svg",
+            "collage": "/kit/previews/hero-collage.svg",
+            "arch": "/kit/previews/hero-arch.svg",
+            "stacked": "/kit/previews/hero-stacked.svg",
+            "menu": "/kit/previews/hero-menu.svg",
+            "type": "/kit/previews/hero-type.svg",
+            "circle": "/kit/previews/hero-circle.svg"
+          }
+        },
+        {
           "key": "announcement",
           "type": "text",
           "label": "Announcement",
@@ -34487,6 +39235,10 @@
         "style.dividers": "auto",
         "style.texture": "auto",
         "style.motion": "auto",
+        "header.layout": "auto",
+        "header.style": "auto",
+        "header.sticky": "auto",
+        "hero.variant": "auto",
         "hero.slides": [],
         "hero.transition": "slide",
         "hero.autoplay": true,
@@ -35292,6 +40044,178 @@
           }
         },
         {
+          "key": "header.layout",
+          "type": "choice",
+          "label": "Header layout",
+          "labelAr": "تصميم الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "classic",
+            "centered",
+            "split",
+            "pill",
+            "big",
+            "minimal",
+            "drawer"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "classic": "Classic bar",
+            "centered": "Logo in the middle",
+            "split": "Links around the logo",
+            "pill": "Floating bar",
+            "big": "Big name",
+            "minimal": "Logo and menu button",
+            "drawer": "Side menu"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "classic": "شريط كلاسيكي",
+            "centered": "الشعار في الوسط",
+            "split": "الروابط حول الشعار",
+            "pill": "شريط عائم",
+            "big": "اسم كبير",
+            "minimal": "الشعار وزر القائمة",
+            "drawer": "قائمة جانبية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "classic": "/kit/previews/header-classic.svg",
+            "centered": "/kit/previews/header-centered.svg",
+            "split": "/kit/previews/header-split.svg",
+            "pill": "/kit/previews/header-pill.svg",
+            "big": "/kit/previews/header-big.svg",
+            "minimal": "/kit/previews/header-minimal.svg",
+            "drawer": "/kit/previews/header-drawer.svg"
+          }
+        },
+        {
+          "key": "header.style",
+          "type": "choice",
+          "label": "Header look",
+          "labelAr": "مظهر الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "solid",
+            "transparent",
+            "glass",
+            "accent"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid",
+            "transparent": "See-through, over the top photo",
+            "glass": "Frosted glass",
+            "accent": "In the accent color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "بخلفية كاملة",
+            "transparent": "شفافة فوق الصورة",
+            "glass": "زجاج ضبابي",
+            "accent": "باللون المميز"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/headerstyle-solid.svg",
+            "transparent": "/kit/previews/headerstyle-transparent.svg",
+            "glass": "/kit/previews/headerstyle-glass.svg",
+            "accent": "/kit/previews/headerstyle-accent.svg"
+          }
+        },
+        {
+          "key": "header.sticky",
+          "type": "choice",
+          "label": "Header while scrolling",
+          "labelAr": "الترويسة أثناء التمرير",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "on": "Stays at the top",
+            "off": "Scrolls away"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "on": "تبقى في الأعلى",
+            "off": "تختفي مع التمرير"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "on": "/kit/previews/sticky-on.svg",
+            "off": "/kit/previews/sticky-off.svg"
+          }
+        },
+        {
+          "key": "hero.variant",
+          "type": "choice",
+          "label": "Top of the page",
+          "labelAr": "أعلى الصفحة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "full",
+            "split",
+            "framed",
+            "poster",
+            "collage",
+            "arch",
+            "stacked",
+            "menu",
+            "type",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "full": "Full photo",
+            "split": "Photo beside the text",
+            "framed": "Framed photo",
+            "poster": "Poster with big type",
+            "collage": "Three photos",
+            "arch": "Arch window",
+            "stacked": "Photo under the text",
+            "menu": "Menu first",
+            "type": "Text only",
+            "circle": "Round photo"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "full": "صورة كاملة",
+            "split": "الصورة بجانب النص",
+            "framed": "صورة في إطار",
+            "poster": "ملصق بخط كبير",
+            "collage": "ثلاث صور",
+            "arch": "نافذة مقوّسة",
+            "stacked": "الصورة تحت النص",
+            "menu": "القائمة أولًا",
+            "type": "نص فقط",
+            "circle": "صورة دائرية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "full": "/kit/previews/hero-full.svg",
+            "split": "/kit/previews/hero-split.svg",
+            "framed": "/kit/previews/hero-framed.svg",
+            "poster": "/kit/previews/hero-poster.svg",
+            "collage": "/kit/previews/hero-collage.svg",
+            "arch": "/kit/previews/hero-arch.svg",
+            "stacked": "/kit/previews/hero-stacked.svg",
+            "menu": "/kit/previews/hero-menu.svg",
+            "type": "/kit/previews/hero-type.svg",
+            "circle": "/kit/previews/hero-circle.svg"
+          }
+        },
+        {
           "key": "announcement",
           "type": "text",
           "label": "Announcement",
@@ -35841,6 +40765,10 @@
         "style.dividers": "auto",
         "style.texture": "auto",
         "style.motion": "auto",
+        "header.layout": "auto",
+        "header.style": "auto",
+        "header.sticky": "auto",
+        "hero.variant": "auto",
         "hero.slides": [],
         "hero.transition": "slide",
         "hero.autoplay": true,
@@ -36613,6 +41541,178 @@
           }
         },
         {
+          "key": "header.layout",
+          "type": "choice",
+          "label": "Header layout",
+          "labelAr": "تصميم الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "classic",
+            "centered",
+            "split",
+            "pill",
+            "big",
+            "minimal",
+            "drawer"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "classic": "Classic bar",
+            "centered": "Logo in the middle",
+            "split": "Links around the logo",
+            "pill": "Floating bar",
+            "big": "Big name",
+            "minimal": "Logo and menu button",
+            "drawer": "Side menu"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "classic": "شريط كلاسيكي",
+            "centered": "الشعار في الوسط",
+            "split": "الروابط حول الشعار",
+            "pill": "شريط عائم",
+            "big": "اسم كبير",
+            "minimal": "الشعار وزر القائمة",
+            "drawer": "قائمة جانبية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "classic": "/kit/previews/header-classic.svg",
+            "centered": "/kit/previews/header-centered.svg",
+            "split": "/kit/previews/header-split.svg",
+            "pill": "/kit/previews/header-pill.svg",
+            "big": "/kit/previews/header-big.svg",
+            "minimal": "/kit/previews/header-minimal.svg",
+            "drawer": "/kit/previews/header-drawer.svg"
+          }
+        },
+        {
+          "key": "header.style",
+          "type": "choice",
+          "label": "Header look",
+          "labelAr": "مظهر الترويسة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "solid",
+            "transparent",
+            "glass",
+            "accent"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid",
+            "transparent": "See-through, over the top photo",
+            "glass": "Frosted glass",
+            "accent": "In the accent color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "بخلفية كاملة",
+            "transparent": "شفافة فوق الصورة",
+            "glass": "زجاج ضبابي",
+            "accent": "باللون المميز"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/headerstyle-solid.svg",
+            "transparent": "/kit/previews/headerstyle-transparent.svg",
+            "glass": "/kit/previews/headerstyle-glass.svg",
+            "accent": "/kit/previews/headerstyle-accent.svg"
+          }
+        },
+        {
+          "key": "header.sticky",
+          "type": "choice",
+          "label": "Header while scrolling",
+          "labelAr": "الترويسة أثناء التمرير",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "on": "Stays at the top",
+            "off": "Scrolls away"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "on": "تبقى في الأعلى",
+            "off": "تختفي مع التمرير"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "on": "/kit/previews/sticky-on.svg",
+            "off": "/kit/previews/sticky-off.svg"
+          }
+        },
+        {
+          "key": "hero.variant",
+          "type": "choice",
+          "label": "Top of the page",
+          "labelAr": "أعلى الصفحة",
+          "group": "Page layout",
+          "groupAr": "تخطيط الصفحة",
+          "options": [
+            "auto",
+            "full",
+            "split",
+            "framed",
+            "poster",
+            "collage",
+            "arch",
+            "stacked",
+            "menu",
+            "type",
+            "circle"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "full": "Full photo",
+            "split": "Photo beside the text",
+            "framed": "Framed photo",
+            "poster": "Poster with big type",
+            "collage": "Three photos",
+            "arch": "Arch window",
+            "stacked": "Photo under the text",
+            "menu": "Menu first",
+            "type": "Text only",
+            "circle": "Round photo"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "full": "صورة كاملة",
+            "split": "الصورة بجانب النص",
+            "framed": "صورة في إطار",
+            "poster": "ملصق بخط كبير",
+            "collage": "ثلاث صور",
+            "arch": "نافذة مقوّسة",
+            "stacked": "الصورة تحت النص",
+            "menu": "القائمة أولًا",
+            "type": "نص فقط",
+            "circle": "صورة دائرية"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "full": "/kit/previews/hero-full.svg",
+            "split": "/kit/previews/hero-split.svg",
+            "framed": "/kit/previews/hero-framed.svg",
+            "poster": "/kit/previews/hero-poster.svg",
+            "collage": "/kit/previews/hero-collage.svg",
+            "arch": "/kit/previews/hero-arch.svg",
+            "stacked": "/kit/previews/hero-stacked.svg",
+            "menu": "/kit/previews/hero-menu.svg",
+            "type": "/kit/previews/hero-type.svg",
+            "circle": "/kit/previews/hero-circle.svg"
+          }
+        },
+        {
           "key": "cta.label",
           "type": "text",
           "label": "Order button text",
@@ -37234,6 +42334,10 @@
         "style.photos": "auto",
         "style.dividers": "auto",
         "style.texture": "auto",
+        "header.layout": "auto",
+        "header.style": "auto",
+        "header.sticky": "auto",
+        "hero.variant": "auto",
         "hero.slides": [],
         "hero.transition": "slide",
         "hero.autoplay": true,

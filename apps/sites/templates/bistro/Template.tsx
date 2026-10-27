@@ -10,6 +10,7 @@ import { WhatsApp } from "../_kit/icons";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
+import { basicLinks, orderCta, pageTop, SiteHero, SiteMasthead } from "../_kit/Top";
 
 const copy = {
   en: {
@@ -107,6 +108,32 @@ export default function BistroCardTemplate({
   );
 
   const order = orderButton(site, { label: c.book });
+  const note = special && (
+    <section
+      className="note"
+      data-section="special"
+      aria-labelledby="special-title"
+    >
+      <Clip />
+      <h2 data-k="label" id="special-title">
+        {ctx.text("special.title") || c.special}
+      </h2>
+      <button
+        type="button"
+        className="note-item"
+        data-item-id={special.id}
+      >
+        <span className="note-photo">
+          <ProductPicture item={special} sizes="88px" />
+        </span>
+        <span className="note-text">
+          <span className="note-name">{special.name}</span>
+          <span className="note-price">{special.priceText}</span>
+        </span>
+      </button>
+    </section>
+  );
+  const top = pageTop(ctx, { photos: heroPhotos(site.settings, null) });
   return (
     <div
       data-template="bistro" {...logoRoot(ctx)} {...optionRoot(ctx, order)}
@@ -121,43 +148,28 @@ export default function BistroCardTemplate({
       <TopBars ctx={ctx} />
       <div className={cx("table", `cloth-${cloth}`)}>
         <div className="card">
-          <header className="page cover" data-section="header">
-            <Logo ctx={ctx} className="monogram" />
-            <p className="est">{ctx.text("hero.eyebrow")}</p>
-            <h1 className="kit-name">{site.business.name}</h1>
-            {ctx.text("hero.title") && (
-              <p className="tagline">{ctx.text("hero.title")}</p>
-            )}
-            {ctx.today && <p className="today">{ctx.today}</p>}
-            <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} />
-            {special && (
-              <section
-                className="note"
-                data-section="special"
-                aria-labelledby="special-title"
-              >
-                <Clip />
-                <h2 data-k="label" id="special-title">
-                  {ctx.text("special.title") || c.special}
-                </h2>
-                <button
-                  type="button"
-                  className="note-item"
-                  data-item-id={special.id}
-                >
-                  <span className="note-photo">
-                    <ProductPicture item={special} sizes="88px" />
-                  </span>
-                  <span className="note-text">
-                    <span className="note-name">{special.name}</span>
-                    <span className="note-price">{special.priceText}</span>
-                  </span>
-                </button>
-              </section>
-            )}
-          </header>
+          <SiteMasthead ctx={ctx} top={top} links={basicLinks(ctx, { story })} cta={orderCta(order)} fallback="centered">
+            <header className="page cover" data-section="header" data-k="masthead">
+              <Logo ctx={ctx} className="monogram" />
+              <p className="est">{ctx.text("hero.eyebrow")}</p>
+              <h1 className="kit-name">{site.business.name}</h1>
+              {ctx.text("hero.title") && (
+                <p className="tagline">{ctx.text("hero.title")}</p>
+              )}
+              {ctx.today && <p className="today">{ctx.today}</p>}
+              <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} />
+              {note}
+            </header>
+          </SiteMasthead>
+          {/* A shared opening lies on a page of the menu card, like the cover it replaces. */}
+          {top.layout.hero !== "auto" && (
+            <div className="page opening">
+              <SiteHero ctx={ctx} top={top} title={site.business.name} subtitle={ctx.text("hero.title")} />
+            </div>
+          )}
 
           <main className="page inside">
+            {top.layout.hero !== "auto" && note}
             <section
               id="menu"
               className="menu"

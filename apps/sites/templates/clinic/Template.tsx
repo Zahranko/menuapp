@@ -11,6 +11,7 @@ import { bookLink, faqs, highlights, steps } from "../_kit/services";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
+import { pageTop, SiteHeader, SiteHero, type NavLink } from "../_kit/Top";
 
 const copy = {
   en: { services: "Services", how: "How it works", faq: "Questions", visit: "Contact", book: "Book a visit", from: "From", reviews: "What patients say", hours: "Opening hours", contact: "Find us", ready: "Ready when you are", readyText: "Send us a message and we will find a time that suits you.", directions: "Directions", menu: "Main menu", jump: "Service groups" },
@@ -46,77 +47,88 @@ export default function ClinicTemplate({ site, now }: TemplateProps & { now?: Da
   const questions = faqs(ctx);
 
   const order = orderButton(site, { label: c.book, whatsapp: book });
+  const top = pageTop(ctx, { photos: heroPics });
+  const links: NavLink[] = [
+    { href: "#menu", label: c.services },
+    ...(ctx.on("steps") && how.length > 0 ? [{ href: "#how", label: c.how }] : []),
+    ...(ctx.on("faq") && questions.length > 0 ? [{ href: "#faq", label: c.faq }] : []),
+    ...(ctx.on("visit") ? [{ href: "#visit", label: c.visit }] : []),
+  ];
   return (
     <div data-template="clinic" {...logoRoot(ctx)} {...optionRoot(ctx, order)} className={cx("t-clinic", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["modern", "grotesk", "round"], defaultAccent: "#1F6FEB", radius: { rounded: "20px", sharp: "6px" } })}>
       <TemplateStyles id="clinic" />
       <TopBars ctx={ctx} />
-      <header className="head kit-head" data-section="header">
-        <a className="brand kit-lockup" href="#top">
-          <Logo ctx={ctx} />
-          <BrandName ctx={ctx} />
-        </a>
-        <nav aria-label={c.menu}>
-          <a href="#menu">{c.services}</a>
-          {ctx.on("steps") && how.length > 0 && <a href="#how">{c.how}</a>}
-          {ctx.on("faq") && questions.length > 0 && <a href="#faq">{c.faq}</a>}
-          {ctx.on("visit") && <a href="#visit">{c.visit}</a>}
-        </nav>
-        {book && (
-          <a data-k="btn" className="btn small" href={book} rel="noopener" target="_blank">
-            {c.book}
+      <SiteHeader ctx={ctx} top={top} links={links} cta={book ? { href: book, label: c.book, external: true, action: "whatsapp" } : null}>
+        <header className="head kit-head" data-section="header">
+          <a className="brand kit-lockup" href="#top">
+            <Logo ctx={ctx} />
+            <BrandName ctx={ctx} />
           </a>
-        )}
-      </header>
+          <nav aria-label={c.menu}>
+            <a href="#menu">{c.services}</a>
+            {ctx.on("steps") && how.length > 0 && <a href="#how">{c.how}</a>}
+            {ctx.on("faq") && questions.length > 0 && <a href="#faq">{c.faq}</a>}
+            {ctx.on("visit") && <a href="#visit">{c.visit}</a>}
+          </nav>
+          {book && (
+            <a data-k="btn" className="btn small" href={book} rel="noopener" target="_blank">
+              {c.book}
+            </a>
+          )}
+        </header>
+      </SiteHeader>
 
       <main id="top">
-        <section className="hero" data-section="hero" aria-labelledby="hero-title">
-          <div className="hero-text">
-            {ctx.text("hero.eyebrow") && <p className="eyebrow">{ctx.text("hero.eyebrow")}</p>}
-            <h1 id="hero-title">{ctx.text("hero.title") || site.business.name}</h1>
-            {ctx.text("hero.subtitle") && <p className="lede">{ctx.text("hero.subtitle")}</p>}
-            <div className="actions">
-              {book && (
-                <a data-k="btn" className="btn" href={book} rel="noopener" target="_blank">
-                  <WhatsApp /> {c.book}
+        <SiteHero ctx={ctx} top={top} actions={[...(book ? [{ href: book, label: c.book, external: true, action: "whatsapp" as const }] : []), { href: "#menu", label: c.services }]}>
+          <section className="hero" data-section="hero" aria-labelledby="hero-title">
+            <div className="hero-text">
+              {ctx.text("hero.eyebrow") && <p className="eyebrow">{ctx.text("hero.eyebrow")}</p>}
+              <h1 id="hero-title">{ctx.text("hero.title") || site.business.name}</h1>
+              {ctx.text("hero.subtitle") && <p className="lede">{ctx.text("hero.subtitle")}</p>}
+              <div className="actions">
+                {book && (
+                  <a data-k="btn" className="btn" href={book} rel="noopener" target="_blank">
+                    <WhatsApp /> {c.book}
+                  </a>
+                )}
+                <a data-k="btn" className="btn ghost" href="#menu">
+                  {c.services}
                 </a>
+              </div>
+              {ctx.on("highlights") && points.length > 0 && (
+                <ul className="plain checks" data-section="highlights">
+                  {points.map((p) => (
+                    <li key={p.title}>
+                      <Check />
+                      <span>{p.title}</span>
+                    </li>
+                  ))}
+                </ul>
               )}
-              <a data-k="btn" className="btn ghost" href="#menu">
-                {c.services}
-              </a>
             </div>
-            {ctx.on("highlights") && points.length > 0 && (
-              <ul className="plain checks" data-section="highlights">
-                {points.map((p) => (
-                  <li key={p.title}>
-                    <Check />
-                    <span>{p.title}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-          <div className="hero-visual">
-            {hero && (
-              <div className="hero-image">
-                <HeroPhotos ctx={ctx} photos={heroPics} sizes="(min-width: 760px) 45vw, 100vw" placement="corner" />
-              </div>
-            )}
-            {(ctx.today || site.business.address) && (
-              <div className="float-card">
-                {ctx.today && (
-                  <p>
-                    <Clock /> {ctx.today}
-                  </p>
-                )}
-                {site.business.address && (
-                  <p>
-                    <Pin /> {site.business.address}
-                  </p>
-                )}
-              </div>
-            )}
-          </div>
-        </section>
+            <div className="hero-visual">
+              {hero && (
+                <div className="hero-image">
+                  <HeroPhotos ctx={ctx} photos={heroPics} sizes="(min-width: 760px) 45vw, 100vw" placement="corner" />
+                </div>
+              )}
+              {(ctx.today || site.business.address) && (
+                <div className="float-card">
+                  {ctx.today && (
+                    <p>
+                      <Clock /> {ctx.today}
+                    </p>
+                  )}
+                  {site.business.address && (
+                    <p>
+                      <Pin /> {site.business.address}
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
+          </section>
+        </SiteHero>
 
         <section id="menu" className="services" data-section="menu" aria-labelledby="services-title">
           <div className="section-head">

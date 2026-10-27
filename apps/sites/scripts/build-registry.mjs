@@ -32,6 +32,14 @@
 // and _kit/style.css styles them; "auto" keeps the template's look. A manifest may leave some out with
 // "pageStyle": { "skip": ["style.motion"] } (left out of registry.json), for a template with its own version of a setting.
 //
+// Page layout: every template gets the shared fields of templates/_kit/layout-settings.json (header layout, header look,
+// header while scrolling and the layout of the top of the page, "hero.variant") in a "Page layout" group right after
+// "Page style". templates/_kit/layout.ts reads them, _kit/Top.tsx renders the shared headers and openings and
+// _kit/layout.css styles them; "auto" keeps the template's own header and opening. A template's own "hero.layout" (its
+// own versions of its opening) moves into this group right after "hero.variant", relabelled as what "Template default"
+// shows. A manifest may leave fields or options out with
+// "layout": { "skip": ["header.sticky"], "skipOptions": { "hero.variant": ["menu"] } } (left out of registry.json).
+//
 // Previews: a "choice" field may carry "previews", a small picture per option ({ "pill": "/kit/previews/buttons-pill.svg" }),
 // which the app's editor shows as picture tiles. Every key must be one of the field's options and every picture must exist
 // in public/.
@@ -61,6 +69,7 @@ const siteOptions = JSON.parse(readFileSync(path.join(root, "_kit", "site-option
 const cardSettings = JSON.parse(readFileSync(path.join(root, "_kit", "card-settings.json"), "utf8"));
 const heroSettings = JSON.parse(readFileSync(path.join(root, "_kit", "hero-settings.json"), "utf8"));
 const styleSettings = JSON.parse(readFileSync(path.join(root, "_kit", "style-settings.json"), "utf8"));
+const layoutSettings = JSON.parse(readFileSync(path.join(root, "_kit", "layout-settings.json"), "utf8"));
 const publicDir = path.join(root, "..", "public");
 const HERO_KINDS = new Set(Object.keys(heroSettings.kinds));
 const HERO_SOURCES = new Set(["hero.image", "hero.images"]);
@@ -86,6 +95,7 @@ const manifests = readdirSync(root, { withFileTypes: true })
     withSiteOptions(d.name, manifest);
     withCardOptions(d.name, manifest);
     withStyleOptions(d.name, manifest);
+    withLayoutOptions(d.name, manifest);
     withHeroOptions(d.name, manifest);
     const keys = new Set();
     for (const field of manifest.schema) {
@@ -198,6 +208,46 @@ function withStyleOptions(id, manifest) {
     .filter((f) => !skip.has(f.key))
     .map((f) => ({ key: f.key, type: f.type, label: f.label, group: styleSettings.group, groupAr: styleSettings.groupAr, ...f }));
   insertGroup(manifest, fields, styleSettings.defaults, cardSettings.group);
+}
+
+/** Adds the shared page layout options (templates/_kit/layout-settings.json) in a "Page layout" group after "Page style". */
+function withLayoutOptions(id, manifest) {
+  const { skip: skipped = [], skipOptions = {}, ...rest } = manifest.layout ?? {};
+  delete manifest.layout;
+  if (Object.keys(rest).length) fail(`${id}: "layout" takes only "skip" and "skipOptions"`);
+  const skip = new Set(skipped);
+  const known = (key) => layoutSettings.fields.find((f) => f.key === key);
+  for (const key of skip) if (!known(key)) fail(`${id}: "layout.skip" has unknown field "${key}"`);
+  for (const [key, options] of Object.entries(skipOptions)) {
+    const field = known(key);
+    if (!field) fail(`${id}: "layout.skipOptions" has unknown field "${key}"`);
+    for (const o of options) if (o === "auto" || !field.options.includes(o)) fail(`${id}: "layout.skipOptions.${key}" cannot leave out "${o}"`);
+  }
+  for (const field of layoutSettings.fields) {
+    if (manifest.schema.some((f) => f.key === field.key) || field.key in manifest.defaults) fail(`${id}: "${field.key}" comes from templates/_kit/layout-settings.json; remove it from the manifest`);
+  }
+  const { group, groupAr } = layoutSettings;
+  const fields = layoutSettings.fields
+    .filter((f) => !skip.has(f.key))
+    .map((f) => {
+      const out = { key: f.key, type: f.type, label: f.label, group, groupAr, ...f };
+      const left = new Set(skipOptions[f.key] ?? []);
+      if (left.size === 0) return out;
+      const keep = (o) => !left.has(o);
+      const pick = (map) => map && Object.fromEntries(Object.entries(map).filter(([o]) => keep(o)));
+      return { ...out, options: f.options.filter(keep), optionLabels: pick(f.optionLabels), optionLabelsAr: pick(f.optionLabelsAr), previews: pick(f.previews) };
+    });
+  // The template's own versions of its opening go right after "hero.variant": they are what "Template default" shows.
+  const defaults = { ...layoutSettings.defaults };
+  const own = manifest.schema.findIndex((f) => f.key === "hero.layout");
+  if (own >= 0 && fields.some((f) => f.key === "hero.variant")) {
+    const [field] = manifest.schema.splice(own, 1);
+    const at = fields.findIndex((f) => f.key === "hero.variant") + 1;
+    fields.splice(at, 0, { ...field, label: layoutSettings.ownHeroLayout.label, labelAr: layoutSettings.ownHeroLayout.labelAr, group, groupAr });
+    defaults["hero.layout"] = manifest.defaults["hero.layout"];
+    delete manifest.defaults["hero.layout"];
+  }
+  insertGroup(manifest, fields, defaults, styleSettings.group);
 }
 
 /** Checks a field's option pictures: a choice field, known options and pictures that exist in public/. */

@@ -9,6 +9,7 @@ import { WhatsApp } from "../_kit/icons";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
+import { basicLinks, orderCta, pageTop, SiteHero, SiteMasthead } from "../_kit/Top";
 
 const copy = {
   en: {
@@ -114,6 +115,7 @@ export default function TicketTemplate({
   const count = ctx.sections.reduce((n, s) => n + s.products.length, 0);
 
   const order = orderButton(site, { label: c.order });
+  const top = pageTop(ctx, { photos: heroPhotos(site.settings, null) });
   return (
     <div
       data-template="ticket" {...logoRoot(ctx)} {...optionRoot(ctx, order)}
@@ -128,33 +130,36 @@ export default function TicketTemplate({
       <TopBars ctx={ctx} />
       <div className="desk">
         <div className="receipt">
-          <header className="head" data-section="header">
-            {stamp && (
-              <span className="stamp" aria-hidden="true">
-                {stamp}
-              </span>
-            )}
-            <p className="stars" aria-hidden="true">
-              * * * * * * * *
-            </p>
-            {ctx.image("logo") && <Logo ctx={ctx} className="logo" sizes="56px" />}
-            <h1 className="kit-name">{site.business.name}</h1>
-            {ctx.text("hero.title") && (
-              <p className="sub">{ctx.text("hero.title")}</p>
-            )}
-            <p className="addr">{site.business.address}</p>
-            {ctx.today && <p className="addr">{ctx.today}</p>}
-            <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} />
-            {ctx.sections.length > 1 && (
-              <nav className="jump" aria-label={c.jump}>
-                {ctx.sections.map((s) => (
-                  <a key={s.id} href={`#${s.anchor}`}>
-                    [{s.name}]
-                  </a>
-                ))}
-              </nav>
-            )}
-          </header>
+          <SiteMasthead ctx={ctx} top={top} links={basicLinks(ctx)} cta={orderCta(order)} fallback="minimal">
+            <header className="head" data-section="header" data-k="masthead">
+              {stamp && (
+                <span className="stamp" aria-hidden="true">
+                  {stamp}
+                </span>
+              )}
+              <p className="stars" aria-hidden="true">
+                * * * * * * * *
+              </p>
+              {ctx.image("logo") && <Logo ctx={ctx} className="logo" sizes="56px" />}
+              <h1 className="kit-name">{site.business.name}</h1>
+              {ctx.text("hero.title") && (
+                <p className="sub">{ctx.text("hero.title")}</p>
+              )}
+              <p className="addr">{site.business.address}</p>
+              {ctx.today && <p className="addr">{ctx.today}</p>}
+              <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} />
+              {ctx.sections.length > 1 && (
+                <nav className="jump" aria-label={c.jump}>
+                  {ctx.sections.map((s) => (
+                    <a key={s.id} href={`#${s.anchor}`}>
+                      [{s.name}]
+                    </a>
+                  ))}
+                </nav>
+              )}
+            </header>
+          </SiteMasthead>
+          <SiteHero ctx={ctx} top={top} title={site.business.name} subtitle={ctx.text("hero.title")} />
 
           <main>
             <section

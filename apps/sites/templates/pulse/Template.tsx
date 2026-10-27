@@ -11,6 +11,7 @@ import { bookLink, faqs, highlights, steps } from "../_kit/services";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
+import { pageTop, SiteHeader, SiteHero, type NavLink } from "../_kit/Top";
 
 const copy = {
   en: { plans: "Plans and classes", join: "Join now", popular: "Most popular", choose: "Choose", first: "Your first week", faq: "Questions", reviews: "Members say", hours: "Opening hours", contact: "Find us", ready: "Your first class is on us", menu: "Main menu", jump: "Plans and classes", photos: "Inside the gym", visit: "Visit" },
@@ -39,54 +40,64 @@ export default function PulseTemplate({ site, now }: TemplateProps & { now?: Dat
   const popular = plans?.products.find((p) => p.isFeatured && p.isAvailable)?.id;
 
   const order = orderButton(site, { label: c.join, whatsapp: join });
+  const top = pageTop(ctx, { photos: heroPics, backdrop: true });
+  const links: NavLink[] = [
+    { href: "#menu", label: c.plans },
+    ...(ctx.on("steps") && week.length > 0 ? [{ href: "#week", label: c.first }] : []),
+    ...(ctx.on("visit") ? [{ href: "#visit", label: c.visit }] : []),
+  ];
   return (
     <div data-template="pulse" {...logoRoot(ctx)} {...optionRoot(ctx, order)} className={cx("t-pulse", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["condensed", "bold", "grotesk"], defaultAccent: "#FF4D1C", radius: { rounded: "16px", sharp: "0px" } })}>
       <TemplateStyles id="pulse" />
       <TopBars ctx={ctx} />
-      <header className="head kit-head" data-section="header">
-        <a className="brand kit-lockup" href="#top">
-          <Logo ctx={ctx} />
-          <BrandName ctx={ctx} />
-        </a>
-        <nav aria-label={c.menu}>
-          <a href="#menu">{c.plans}</a>
-          {ctx.on("steps") && week.length > 0 && <a href="#week">{c.first}</a>}
-          {ctx.on("visit") && <a href="#visit">{c.visit}</a>}
-        </nav>
-        {join && (
-          <a data-k="btn" className="btn small" href={join} rel="noopener" target="_blank">
-            {c.join}
+      <SiteHeader ctx={ctx} top={top} links={links} cta={join ? { href: join, label: c.join, external: true, action: "whatsapp" } : null}>
+        <header className="head kit-head" data-section="header">
+          <a className="brand kit-lockup" href="#top">
+            <Logo ctx={ctx} />
+            <BrandName ctx={ctx} />
           </a>
-        )}
-      </header>
+          <nav aria-label={c.menu}>
+            <a href="#menu">{c.plans}</a>
+            {ctx.on("steps") && week.length > 0 && <a href="#week">{c.first}</a>}
+            {ctx.on("visit") && <a href="#visit">{c.visit}</a>}
+          </nav>
+          {join && (
+            <a data-k="btn" className="btn small" href={join} rel="noopener" target="_blank">
+              {c.join}
+            </a>
+          )}
+        </header>
+      </SiteHeader>
 
       <main id="top">
-        <section className="hero kit-hero" data-section="hero" aria-labelledby="hero-title">
-          {hero && (
-            <div className="hero-image kit-hero-media">
-              <HeroPhotos ctx={ctx} photos={heroPics} sizes="100vw" placement="corner" />
-            </div>
-          )}
-          <div className="hero-text kit-hero-text">
-            {ctx.today && (
-              <p className="live">
-                <Clock /> {ctx.today}
-              </p>
+        <SiteHero ctx={ctx} top={top} actions={[...(join ? [{ href: join, label: c.join, external: true, action: "whatsapp" as const }] : []), { href: "#menu", label: c.plans }]}>
+          <section className="hero kit-hero" data-section="hero" aria-labelledby="hero-title">
+            {hero && (
+              <div className="hero-image kit-hero-media">
+                <HeroPhotos ctx={ctx} photos={heroPics} sizes="100vw" placement="corner" />
+              </div>
             )}
-            <h1 id="hero-title">{ctx.text("hero.title") || site.business.name}</h1>
-            {ctx.text("hero.subtitle") && <p className="lede">{ctx.text("hero.subtitle")}</p>}
-            <div className="actions">
-              {join && (
-                <a data-k="btn" className="btn" href={join} rel="noopener" target="_blank">
-                  <WhatsApp /> {c.join}
-                </a>
+            <div className="hero-text kit-hero-text">
+              {ctx.today && (
+                <p className="live">
+                  <Clock /> {ctx.today}
+                </p>
               )}
-              <a data-k="btn" className="btn outline" href="#menu">
-                {c.plans}
-              </a>
+              <h1 id="hero-title">{ctx.text("hero.title") || site.business.name}</h1>
+              {ctx.text("hero.subtitle") && <p className="lede">{ctx.text("hero.subtitle")}</p>}
+              <div className="actions">
+                {join && (
+                  <a data-k="btn" className="btn" href={join} rel="noopener" target="_blank">
+                    <WhatsApp /> {c.join}
+                  </a>
+                )}
+                <a data-k="btn" className="btn outline" href="#menu">
+                  {c.plans}
+                </a>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </SiteHero>
 
         {ctx.on("highlights") && points.length > 0 && (
           <ul className="plain points" data-section="highlights">

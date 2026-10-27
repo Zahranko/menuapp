@@ -10,6 +10,7 @@ import { WhatsApp } from "../_kit/icons";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
+import { basicLinks, orderCta, pageTop, SiteHero, SiteMasthead } from "../_kit/Top";
 
 const copy = {
   en: { special: "Today's special", menu: "On the board", story: "Hello!", visit: "Come say hi", hours: "Hours", order: "Order on WhatsApp", jump: "Jump to" },
@@ -65,6 +66,7 @@ export default function ChalkBoardTemplate({ site, now }: TemplateProps & { now?
   const story = ctx.on("story") && ctx.text("story.text");
 
   const order = orderButton(site, { label: c.order });
+  const top = pageTop(ctx, { photos: heroPhotos(site.settings, null) });
   return (
     <div
       data-template="chalkboard" {...logoRoot(ctx)} {...optionRoot(ctx, order)}
@@ -74,14 +76,17 @@ export default function ChalkBoardTemplate({ site, now }: TemplateProps & { now?
       <TemplateStyles id="chalkboard" />
       <TopBars ctx={ctx} />
       <div className="board">
-        <header className="head" data-section="header">
-          <Logo ctx={ctx} />
-          <h1 className="kit-name">{site.business.name}</h1>
-          <Squiggle />
-          {ctx.text("hero.title") && <p className="tagline">{ctx.text("hero.title")}</p>}
-          {ctx.today && <p className="today">{ctx.today}</p>}
-          <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} />
-        </header>
+        <SiteMasthead ctx={ctx} top={top} links={basicLinks(ctx, { story })} cta={orderCta(order)} fallback="centered">
+          <header className="head" data-section="header" data-k="masthead">
+            <Logo ctx={ctx} />
+            <h1 className="kit-name">{site.business.name}</h1>
+            <Squiggle />
+            {ctx.text("hero.title") && <p className="tagline">{ctx.text("hero.title")}</p>}
+            {ctx.today && <p className="today">{ctx.today}</p>}
+            <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} />
+          </header>
+        </SiteMasthead>
+        <SiteHero ctx={ctx} top={top} title={site.business.name} subtitle={ctx.text("hero.title")} />
 
         <main>
           {special && (

@@ -11,6 +11,7 @@ import { bookLink, faqs, highlights, steps } from "../_kit/services";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
+import { pageTop, SiteHeader, SiteHero, type NavLink } from "../_kit/Top";
 
 const copy = {
   en: { services: "Services", request: "Request a visit", ask: "Request", from: "From", areas: "Areas we cover", how: "How it works", reviews: "Happy homes", faq: "Questions", hours: "Working hours", contact: "Contact", menu: "Main menu", jump: "Service types", need: "What do you need?" },
@@ -45,6 +46,13 @@ export default function HandyTemplate({ site, now }: TemplateProps & { now?: Dat
   const badges = highlights(ctx);
   const how = steps(ctx);
   const questions = faqs(ctx);
+  const top = pageTop(ctx, { photos: heroPics });
+  const links: NavLink[] = [
+    { href: "#menu", label: c.services },
+    ...(ctx.on("steps") && how.length > 0 ? [{ href: "#how", label: c.how }] : []),
+    ...(ctx.on("faq") && questions.length > 0 ? [{ href: "#faq", label: c.faq }] : []),
+    ...(ctx.on("visit") ? [{ href: "#visit", label: c.contact }] : []),
+  ];
   const areas = ctx
     .text("areas")
     .split(/[,،\n]/)
@@ -55,58 +63,62 @@ export default function HandyTemplate({ site, now }: TemplateProps & { now?: Dat
     <div data-template="handy" {...logoRoot(ctx)} {...optionRoot(ctx, order, true)} className={cx("t-handy", fontVariables, order && "has-bar")} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["round", "modern", "grotesk"], defaultAccent: "#1E5BB8", radius: { rounded: "18px", sharp: "4px" } })}>
       <TemplateStyles id="handy" />
       <TopBars ctx={ctx} />
-      <header className="head kit-head" data-section="header">
-        <a className="brand kit-lockup" href="#top">
-          <Logo ctx={ctx} />
-          <BrandName ctx={ctx} />
-        </a>
-        <nav aria-label={c.menu}>
-          <a href="#menu">{c.services}</a>
-          {ctx.on("steps") && how.length > 0 && <a href="#how">{c.how}</a>}
-          {ctx.on("faq") && questions.length > 0 && <a href="#faq">{c.faq}</a>}
-          {ctx.on("visit") && <a href="#visit">{c.contact}</a>}
-        </nav>
-        {book && (
-          <a data-k="btn" className="btn small" href={book} rel="noopener" target="_blank" aria-label={c.request}>
-            <WhatsApp /> <span>{c.request}</span>
+      <SiteHeader ctx={ctx} top={top} links={links} cta={book ? { href: book, label: c.request, external: true, action: "whatsapp" } : null}>
+        <header className="head kit-head" data-section="header">
+          <a className="brand kit-lockup" href="#top">
+            <Logo ctx={ctx} />
+            <BrandName ctx={ctx} />
           </a>
-        )}
-      </header>
+          <nav aria-label={c.menu}>
+            <a href="#menu">{c.services}</a>
+            {ctx.on("steps") && how.length > 0 && <a href="#how">{c.how}</a>}
+            {ctx.on("faq") && questions.length > 0 && <a href="#faq">{c.faq}</a>}
+            {ctx.on("visit") && <a href="#visit">{c.contact}</a>}
+          </nav>
+          {book && (
+            <a data-k="btn" className="btn small" href={book} rel="noopener" target="_blank" aria-label={c.request}>
+              <WhatsApp /> <span>{c.request}</span>
+            </a>
+          )}
+        </header>
+      </SiteHeader>
 
       <main id="top">
-        <section className="hero" data-section="hero" aria-labelledby="hero-title">
-          <div className="hero-text">
-            <h1 id="hero-title">{ctx.text("hero.title") || site.business.name}</h1>
-            {ctx.text("hero.subtitle") && <p className="lede">{ctx.text("hero.subtitle")}</p>}
-            <div className="picker">
-              <p className="picker-title">{c.need}</p>
-              <nav className="chips" aria-label={c.jump}>
-                {ctx.sections.map((s) => (
-                  <a key={s.id} href={`#${s.anchor}`}>
-                    {s.name}
+        <SiteHero ctx={ctx} top={top} actions={[...(book ? [{ href: book, label: c.request, external: true, action: "whatsapp" as const }] : []), { href: "#menu", label: c.services }]}>
+          <section className="hero" data-section="hero" aria-labelledby="hero-title">
+            <div className="hero-text">
+              <h1 id="hero-title">{ctx.text("hero.title") || site.business.name}</h1>
+              {ctx.text("hero.subtitle") && <p className="lede">{ctx.text("hero.subtitle")}</p>}
+              <div className="picker">
+                <p className="picker-title">{c.need}</p>
+                <nav className="chips" aria-label={c.jump}>
+                  {ctx.sections.map((s) => (
+                    <a key={s.id} href={`#${s.anchor}`}>
+                      {s.name}
+                    </a>
+                  ))}
+                </nav>
+                {book && (
+                  <a data-k="btn" className="btn wide" href={book} rel="noopener" target="_blank">
+                    <WhatsApp /> {c.request}
                   </a>
-                ))}
-              </nav>
-              {book && (
-                <a data-k="btn" className="btn wide" href={book} rel="noopener" target="_blank">
-                  <WhatsApp /> {c.request}
-                </a>
-              )}
-            </div>
-          </div>
-          {hero && (
-            <div className="hero-art">
-              <div className="hero-image">
-                <HeroPhotos ctx={ctx} photos={heroPics} sizes="(min-width: 760px) 45vw, 100vw" />
+                )}
               </div>
-              {ctx.today && (
-                <p className="sticker">
-                  <Clock /> {ctx.today}
-                </p>
-              )}
             </div>
-          )}
-        </section>
+            {hero && (
+              <div className="hero-art">
+                <div className="hero-image">
+                  <HeroPhotos ctx={ctx} photos={heroPics} sizes="(min-width: 760px) 45vw, 100vw" />
+                </div>
+                {ctx.today && (
+                  <p className="sticker">
+                    <Clock /> {ctx.today}
+                  </p>
+                )}
+              </div>
+            )}
+          </section>
+        </SiteHero>
 
         {ctx.on("highlights") && badges.length > 0 && (
           <ul className="plain badges" data-section="highlights">

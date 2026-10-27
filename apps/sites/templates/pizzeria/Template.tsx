@@ -9,6 +9,7 @@ import { WhatsApp } from "../_kit/icons";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
+import { basicLinks, orderCta, pageTop, SiteHeader, SiteHero } from "../_kit/Top";
 
 const copy = {
   en: { menu: "Menu", jump: "Menu sections", story: "From our oven", visit: "Come hungry", hours: "Hours", order: "Order on WhatsApp", see: "See the menu" },
@@ -47,37 +48,42 @@ export default function PizzeriaTemplate({ site, now }: TemplateProps & { now?: 
   const stamp = ctx.text("stamp");
 
   const order = orderButton(site, { label: c.order });
+  const top = pageTop(ctx, { photos: heroPhotos(site.settings, null) });
   return (
     <div data-template="pizzeria" {...logoRoot(ctx)} {...optionRoot(ctx, order)} className={cx("t-pizza", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["classic", "bold", "hand"], defaultAccent: "#C8102E" })}>
       <TemplateStyles id="pizzeria" />
       <TopBars ctx={ctx} />
-      <header className="head kit-head" data-section="header">
-        <a className="brand kit-lockup" href="#top">
-          <Logo ctx={ctx} />
-          <BrandName ctx={ctx} />
-        </a>
-        {ctx.today && <span className="head-today">{ctx.today}</span>}
-      </header>
+      <SiteHeader ctx={ctx} top={top} links={basicLinks(ctx, { story })} cta={orderCta(order)}>
+        <header className="head kit-head" data-section="header">
+          <a className="brand kit-lockup" href="#top">
+            <Logo ctx={ctx} />
+            <BrandName ctx={ctx} />
+          </a>
+          {ctx.today && <span className="head-today">{ctx.today}</span>}
+        </header>
+      </SiteHeader>
 
       <main id="top">
-        <section className="hero" data-section="hero" aria-labelledby="hero-title">
-          <div className="hero-text">
-            <h1 id="hero-title">{ctx.text("hero.title") || site.business.name}</h1>
-            {ctx.text("hero.subtitle") && <p>{ctx.text("hero.subtitle")}</p>}
-            <a data-k="btn" className="cta" href="#menu">
-              {c.see}
-            </a>
-          </div>
-          {star && (
-            <button type="button" className="hero-pie" data-item-id={star.id} aria-label={`${star.name}, ${star.priceText}`}>
-              <span className="pie">
-                <ProductPicture item={star} sizes="(min-width: 760px) 420px, 80vw" />
-              </span>
-              {stamp && <Stamp text={`${stamp} · ${stamp} · `.toUpperCase()} />}
-            </button>
-          )}
-        </section>
-        <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} className="pz-band" />
+        <SiteHero ctx={ctx} top={top}>
+          <section className="hero" data-section="hero" aria-labelledby="hero-title">
+            <div className="hero-text">
+              <h1 id="hero-title">{ctx.text("hero.title") || site.business.name}</h1>
+              {ctx.text("hero.subtitle") && <p>{ctx.text("hero.subtitle")}</p>}
+              <a data-k="btn" className="cta" href="#menu">
+                {c.see}
+              </a>
+            </div>
+            {star && (
+              <button type="button" className="hero-pie" data-item-id={star.id} aria-label={`${star.name}, ${star.priceText}`}>
+                <span className="pie">
+                  <ProductPicture item={star} sizes="(min-width: 760px) 420px, 80vw" />
+                </span>
+                {stamp && <Stamp text={`${stamp} · ${stamp} · `.toUpperCase()} />}
+              </button>
+            )}
+          </section>
+        </SiteHero>
+        {top.layout.hero === "auto" && <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} className="pz-band" />}
 
         <section id="menu" className="menu" data-section="menu" aria-label={c.menu}>
           {ctx.sections.length > 1 && (

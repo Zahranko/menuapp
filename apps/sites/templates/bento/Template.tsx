@@ -10,6 +10,7 @@ import { HeroPhotos } from "../_kit/HeroPhotos";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
+import { basicLinks, orderCta, pageTop, SiteHeader, SiteHero } from "../_kit/Top";
 
 const copy = {
   en: { see: "See the menu", today: "Today", where: "Where", about: "About us", hours: "Opening hours", contact: "Say hello", jump: "Menu sections", closed: "Closed today" },
@@ -33,62 +34,67 @@ export default function BentoTemplate({ site, now }: TemplateProps & { now?: Dat
   const pick = ctx.picks[0];
 
   const order = orderButton(site);
+  const top = pageTop(ctx, { photos: heroPics });
   return (
     <div data-template="bento" {...logoRoot(ctx)} {...optionRoot(ctx, order)} className={cx("t-bento", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["round", "grotesk", "bold"], defaultAccent: "#2F8F4E", radius: { rounded: "26px", sharp: "4px" } })}>
       <TemplateStyles id="bento" />
       <TopBars ctx={ctx} />
-      <header className="head kit-head" data-section="header">
-        <a className="brand kit-lockup" href="#top">
-          <Logo ctx={ctx} />
-          <BrandName ctx={ctx} />
-        </a>
-        {ctx.contact.instagram && (
-          <a className="round-link" href={ctx.contact.instagram} rel="noopener" target="_blank" aria-label="Instagram">
-            <Instagram />
+      <SiteHeader ctx={ctx} top={top} links={basicLinks(ctx, { story })} cta={orderCta(order)}>
+        <header className="head kit-head" data-section="header">
+          <a className="brand kit-lockup" href="#top">
+            <Logo ctx={ctx} />
+            <BrandName ctx={ctx} />
           </a>
-        )}
-      </header>
+          {ctx.contact.instagram && (
+            <a className="round-link" href={ctx.contact.instagram} rel="noopener" target="_blank" aria-label="Instagram">
+              <Instagram />
+            </a>
+          )}
+        </header>
+      </SiteHeader>
 
       <main id="top">
         {ctx.on("hero") ? (
-          <section className="bento intro" data-section="hero" aria-labelledby="hero-title">
-            <div className="tile tile-hero c1">
-              <h1 id="hero-title">{ctx.text("hero.title") || site.business.name}</h1>
-              {ctx.text("hero.subtitle") && <p>{ctx.text("hero.subtitle")}</p>}
-              <a data-k="btn" className="go" href="#menu">
-                {c.see} <Arrow />
-              </a>
-            </div>
-            {hero && (
-              <div className="tile tile-photo">
-                <HeroPhotos ctx={ctx} photos={heroPics} sizes="(min-width: 760px) 30vw, 100vw" />
+          <SiteHero ctx={ctx} top={top}>
+            <section className="bento intro" data-section="hero" aria-labelledby="hero-title">
+              <div className="tile tile-hero c1">
+                <h1 id="hero-title">{ctx.text("hero.title") || site.business.name}</h1>
+                {ctx.text("hero.subtitle") && <p>{ctx.text("hero.subtitle")}</p>}
+                <a data-k="btn" className="go" href="#menu">
+                  {c.see} <Arrow />
+                </a>
               </div>
-            )}
-            <div className="tile tile-small c2">
-              <Clock />
-              <span className="small-label">{c.today}</span>
-              <span className="small-value">{ctx.today ?? c.closed}</span>
-            </div>
-            {ctx.contact.maps && (
-              <a className="tile tile-small c4" href={ctx.contact.maps} rel="noopener" target="_blank">
-                <Pin />
-                <span className="small-label">{c.where}</span>
-                <span className="small-value">{site.business.address}</span>
-              </a>
-            )}
-            {pick && (
-              <button type="button" className="tile tile-pick c3" data-item-id={pick.id}>
-                <span data-k="photo" className="pick-media">
-                  <ProductPicture item={pick} sizes="160px" />
-                </span>
-                <span className="pick-text">
-                  {pick.labelText && <span className="tag">{pick.labelText}</span>}
-                  <span className="pick-name">{pick.name}</span>
-                  <span className="price">{pick.priceText}</span>
-                </span>
-              </button>
-            )}
-          </section>
+              {hero && (
+                <div className="tile tile-photo">
+                  <HeroPhotos ctx={ctx} photos={heroPics} sizes="(min-width: 760px) 30vw, 100vw" />
+                </div>
+              )}
+              <div className="tile tile-small c2">
+                <Clock />
+                <span className="small-label">{c.today}</span>
+                <span className="small-value">{ctx.today ?? c.closed}</span>
+              </div>
+              {ctx.contact.maps && (
+                <a className="tile tile-small c4" href={ctx.contact.maps} rel="noopener" target="_blank">
+                  <Pin />
+                  <span className="small-label">{c.where}</span>
+                  <span className="small-value">{site.business.address}</span>
+                </a>
+              )}
+              {pick && (
+                <button type="button" className="tile tile-pick c3" data-item-id={pick.id}>
+                  <span data-k="photo" className="pick-media">
+                    <ProductPicture item={pick} sizes="160px" />
+                  </span>
+                  <span className="pick-text">
+                    {pick.labelText && <span className="tag">{pick.labelText}</span>}
+                    <span className="pick-name">{pick.name}</span>
+                    <span className="price">{pick.priceText}</span>
+                  </span>
+                </button>
+              )}
+            </section>
+          </SiteHero>
         ) : (
           <h1 className="sr-only">{site.business.name}</h1>
         )}

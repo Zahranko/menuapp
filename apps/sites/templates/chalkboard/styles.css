@@ -4,6 +4,7 @@
 @import "../_kit/options.css";
 @import "../_kit/cards.css";
 @import "../_kit/hero.css";
+@import "../_kit/layout.css";
 @import "../_kit/style.css";
 
 .t-chalk {
@@ -27,6 +28,10 @@
   .board {
     position: relative;
     padding: 0 18px 10px;
+  }
+  /* The shared header and opening (Page layout) reach the edges of the board. */
+  .board > :is(.kit-hd.kit-hd.kit-hd, .kit-hv.kit-hv.kit-hv) {
+    margin-inline: -18px;
   }
   &.dust .board {
     background:
@@ -395,6 +400,9 @@
         inset 0 0 0 2px #0003,
         inset 0 0 60px #0004,
         0 30px 60px -30px #000c;
+    }
+    .board > :is(.kit-hd.kit-hd.kit-hd, .kit-hv.kit-hv.kit-hv) {
+      margin-inline: -56px;
     }
     .head h1 {
       font-size: calc(84px * var(--fs));

@@ -4,6 +4,7 @@
 @import "../_kit/options.css";
 @import "../_kit/cards.css";
 @import "../_kit/hero.css";
+@import "../_kit/layout.css";
 @import "../_kit/style.css";
 
 .t-bistro {
@@ -86,6 +87,11 @@
   }
   .tag-out {
     color: var(--muted);
+  }
+
+  /* A shared opening (Page layout) on a page of its own. */
+  .page.opening {
+    padding: 12px;
   }
 
   /* cover */

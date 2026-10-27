@@ -61,6 +61,13 @@ internal static class AiPrompts
           Use it for requests like "more playful" (rounded or pill buttons, soft or blob photos, wave dividers, playful motion),
           "more elegant" (italic or normal headings, wide letter spacing, airy spacing, thin line dividers, gentle fade) or
           "more space" (airy spacing, or compact for "tighter"). Change only the few options that fit the request.
+        - The "Page layout" group changes the shape of the top of the page: the header's layout, its look and whether it stays
+          on screen, and the layout of the opening ("hero.variant"). "auto" keeps the template's own header and opening; the
+          template's own versions of its opening ("hero.layout") only show while "hero.variant" is "auto". Use it for requests
+          like "put the logo in the middle" (header "centered", or "split" with links around it), "a bigger name at the top"
+          (header "big"), "make the top feel like a poster" (opening "poster", or "type" for words only), "show the menu
+          first" (opening "menu"), "a big photo at the top" (opening "full", with a "transparent" or "glass" header over it)
+          or "a simpler header" (header "minimal").
         - Keep the look readable: enough contrast between text, background and accent color.
         - When a photo is attached it shows the owner's logo, shop, food or packaging. Use its colors and mood when the owner
           asks, or when they ask for a design without saying more.

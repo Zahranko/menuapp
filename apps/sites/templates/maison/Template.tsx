@@ -11,11 +11,13 @@ import { Arrow, Instagram, Mail, Pin, WhatsApp } from "../_kit/icons";
 import { HeroPhotos } from "../_kit/HeroPhotos";
 import { Picture } from "../_kit/Picture";
 import { hasHours, type MenuItem } from "../_kit/site-data";
+import { heroPhotos } from "../_kit/hero";
 import { TemplateStyles } from "../_kit/TemplateStyles";
+import { orderCta, pageTop, SiteHeader, SiteHero, type Top } from "../_kit/Top";
 import { themeVars, type Palette } from "../_kit/theme";
 import { copyFor, fill } from "../_premium/copy";
 import { Lightbox } from "../_premium/Lightbox";
-import { bestSellers, categoryTree, galleryPhotos, PAGE_PATHS, resolvePage, type Category, type Page, type Tree } from "../_premium/pages";
+import { bestSellers, categoryTree, galleryPhotos, PAGE_PATHS, pageLinks, resolvePage, type Category, type Page, type Tree } from "../_premium/pages";
 import { HeroWatch, Overlay } from "./Overlay";
 
 /*
@@ -38,6 +40,8 @@ const HERO = ["cover", "slides", "split", "text"] as const;
 const CARTE = ["leaders", "pictures", "centered"] as const;
 
 type View = {
+  /** The owner\'s header and opening layout (_kit/Top.tsx). */
+  top: Top;
   ctx: SiteContext;
   c: ReturnType<typeof copyFor>;
   tree: Tree;
@@ -71,6 +75,7 @@ export default function MaisonTemplate({ site, path = [], base, now }: TemplateP
   const phone = site.business.whatsApp;
   const v: View = {
     ctx,
+    top: pageTop(ctx, { photos: heroPhotos(site.settings, "hero.images"), backdrop: ["cover", "slides"].includes(text(site.settings, "hero.layout") || "cover"), home: page.kind === "home" }),
     c,
     tree,
     page,
@@ -103,7 +108,9 @@ export default function MaisonTemplate({ site, path = [], base, now }: TemplateP
     >
       <TemplateStyles id="maison" />
       <TopBars ctx={ctx} />
-      <Header v={v} />
+      <SiteHeader ctx={ctx} top={v.top} links={pageLinks(v, { home: c.home, menu: v.menuWord, best: c.best, gallery: c.gallery, visit: c.visit })} cta={orderCta(v.fab)} home={v.href("")}>
+        <Header v={v} />
+      </SiteHeader>
       {home ? (
         <main>
           <Home v={v} layout={layout} />
@@ -352,7 +359,9 @@ function Home({ v, layout }: { v: View; layout: (typeof HERO)[number] }) {
 
   return (
     <>
-      <Hero v={v} layout={layout} />
+      <SiteHero ctx={ctx} top={v.top} menuHref={href(PAGE_PATHS.menu)} actions={[{ href: href(PAGE_PATHS.menu), label: c.browse }, { href: href(PAGE_PATHS.visit), label: c.visit }]} title={ctx.site.business.name} subtitle={ctx.text("hero.title")}>
+        <Hero v={v} layout={layout} />
+      </SiteHero>
 
       {prelude && (
         <div className="mx-prelude">

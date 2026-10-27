@@ -10,6 +10,7 @@ import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
 import type { TemplateProps } from "@/lib/types";
+import { navOf, orderCta, pageTop, SiteHeader, SiteHero } from "../_kit/Top";
 
 const copy = {
   en: { picks: "Favorites", picksTitle: "Start with these", chapter: "Chapter", story: "Our story", reviews: "Kind words", visit: "Come say hello", hours: "Opening hours", contact: "Where to find us", order: "Order on WhatsApp", nav: "Main" },
@@ -37,40 +38,45 @@ export default function ArchStoryTemplate({ site, now }: TemplateProps & { now?:
   const links: [string, string][] = [["#menu", ctx.t.menu], ...(storyText ? [["#story", c.story] as [string, string]] : []), ...(ctx.on("visit") ? [["#visit", ctx.t.visit] as [string, string]] : [])];
 
   const order = orderButton(site, { label: c.order });
+  const top = pageTop(ctx, { photos: heroPics });
   return (
     <div data-template="archstory" {...logoRoot(ctx)} {...optionRoot(ctx, order)} className={cx("t-arch", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["soft", "elegant", "classic"], defaultAccent: "#C2577A", radius: { rounded: "24px", sharp: "6px" } })}>
       <TemplateStyles id="archstory" />
       <TopBars ctx={ctx} />
-      <header className="top kit-head" data-section="header">
-        <a className="brand kit-lockup" href="#top">
-          <Logo ctx={ctx} />
-          <BrandName ctx={ctx} />
-        </a>
-        <nav aria-label={c.nav}>
-          {links.map(([href, label]) => (
-            <a key={href} href={href}>
-              {label}
-            </a>
-          ))}
-        </nav>
-      </header>
+      <SiteHeader ctx={ctx} top={top} links={navOf(links)} cta={orderCta(order)}>
+        <header className="top kit-head" data-section="header">
+          <a className="brand kit-lockup" href="#top">
+            <Logo ctx={ctx} />
+            <BrandName ctx={ctx} />
+          </a>
+          <nav aria-label={c.nav}>
+            {links.map(([href, label]) => (
+              <a key={href} href={href}>
+                {label}
+              </a>
+            ))}
+          </nav>
+        </header>
+      </SiteHeader>
 
       <main>
-        <section className="cover" id="top" data-section="hero" aria-labelledby="cover-title">
-          <div className="cover-text">
-            {ctx.text("hero.eyebrow") && <p className="eyebrow">{ctx.text("hero.eyebrow")}</p>}
-            <h1 id="cover-title">{ctx.text("hero.title") || site.business.name}</h1>
-            {ctx.text("hero.subtitle") && <p className="lede">{ctx.text("hero.subtitle")}</p>}
-            <a data-k="btn" className="pill" href="#menu">
-              {ctx.t.viewMenu} <Arrow className="flip" />
-            </a>
-          </div>
-          {hero && (
-            <div className="arch cover-arch">
-              <HeroPhotos ctx={ctx} photos={heroPics} sizes="(min-width: 760px) 45vw, 90vw" />
+        <SiteHero ctx={ctx} top={top}>
+          <section className="cover" id="top" data-section="hero" aria-labelledby="cover-title">
+            <div className="cover-text">
+              {ctx.text("hero.eyebrow") && <p className="eyebrow">{ctx.text("hero.eyebrow")}</p>}
+              <h1 id="cover-title">{ctx.text("hero.title") || site.business.name}</h1>
+              {ctx.text("hero.subtitle") && <p className="lede">{ctx.text("hero.subtitle")}</p>}
+              <a data-k="btn" className="pill" href="#menu">
+                {ctx.t.viewMenu} <Arrow className="flip" />
+              </a>
             </div>
-          )}
-        </section>
+            {hero && (
+              <div className="arch cover-arch">
+                <HeroPhotos ctx={ctx} photos={heroPics} sizes="(min-width: 760px) 45vw, 90vw" />
+              </div>
+            )}
+          </section>
+        </SiteHero>
 
         {ctx.on("picks") && ctx.picks.length > 0 && (
           <section className="picks" data-section="picks" aria-labelledby="picks-title">

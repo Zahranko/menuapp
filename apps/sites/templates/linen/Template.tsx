@@ -10,6 +10,7 @@ import { WhatsApp } from "../_kit/icons";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
+import { navOf, orderCta, pageTop, SiteHero, SiteMasthead } from "../_kit/Top";
 
 const copy = {
   en: { menu: "The menu", story: "Our kitchen", visit: "Visit us", hours: "Hours", contact: "Find us", order: "Order on WhatsApp", contents: "Menu sections" },
@@ -46,27 +47,31 @@ export default function LinenTemplate({ site, now }: TemplateProps & { now?: Dat
   const links: [string, string][] = [["#menu", c.menu], ...(story ? [["#story", c.story] as [string, string]] : []), ...(ctx.on("visit") ? [["#visit", c.visit] as [string, string]] : [])];
 
   const order = orderButton(site, { label: c.order });
+  const top = pageTop(ctx, { photos: heroPhotos(site.settings, null) });
   return (
     <div data-template="linen" {...logoRoot(ctx)} {...optionRoot(ctx, order)} className={cx("t-linen", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["classic", "elegant", "soft"], defaultAccent: "#8C2F39" })}>
       <TemplateStyles id="linen" />
       <TopBars ctx={ctx} />
       <div className="paper">
-        <header className="masthead" data-section="header">
-          <Logo ctx={ctx} />
-          <h1 className="kit-name">{site.business.name}</h1>
-          {ctx.text("hero.title") && <p className="tagline">{ctx.text("hero.title")}</p>}
-          {ornaments && <Flourish />}
-          <nav aria-label={ctx.t.menu}>
-            {links.map(([href, label]) => (
-              <a key={href} href={href}>
-                {label}
-              </a>
-            ))}
-          </nav>
-        </header>
+        <SiteMasthead ctx={ctx} top={top} links={navOf(links)} cta={orderCta(order)} fallback="centered">
+          <header className="masthead" data-section="header" data-k="masthead">
+            <Logo ctx={ctx} />
+            <h1 className="kit-name">{site.business.name}</h1>
+            {ctx.text("hero.title") && <p className="tagline">{ctx.text("hero.title")}</p>}
+            {ornaments && <Flourish />}
+            <nav aria-label={ctx.t.menu}>
+              {links.map(([href, label]) => (
+                <a key={href} href={href}>
+                  {label}
+                </a>
+              ))}
+            </nav>
+          </header>
+        </SiteMasthead>
+        <SiteHero ctx={ctx} top={top} title={site.business.name} subtitle={ctx.text("hero.title")} />
 
         <main>
-          <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} />
+          {top.layout.hero === "auto" && <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} />}
           {intro && (
             <p className="intro" data-section="intro">
               {intro}

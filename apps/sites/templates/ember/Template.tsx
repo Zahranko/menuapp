@@ -12,11 +12,13 @@ import { Arrow, Close, Pin } from "../_kit/icons";
 import { HeroPhotos } from "../_kit/HeroPhotos";
 import { Picture } from "../_kit/Picture";
 import { hasHours, type MenuItem } from "../_kit/site-data";
+import { heroPhotos } from "../_kit/hero";
 import { TemplateStyles } from "../_kit/TemplateStyles";
+import { orderCta, pageTop, SiteHeader, SiteHero, type Top } from "../_kit/Top";
 import { themeVars, type Palette } from "../_kit/theme";
 import { copyFor, fill } from "../_premium/copy";
 import { Lightbox } from "../_premium/Lightbox";
-import { bestSellers, categoryTree, galleryPhotos, PAGE_PATHS, resolvePage, type Category, type Page, type Tree } from "../_premium/pages";
+import { bestSellers, categoryTree, galleryPhotos, PAGE_PATHS, pageLinks, resolvePage, type Category, type Page, type Tree } from "../_premium/pages";
 import { emberCopy } from "./copy";
 
 /*
@@ -39,6 +41,8 @@ const HERO = ["poster", "full", "slides", "type"] as const;
 const CARDS = ["combo", "board"] as const;
 
 type View = {
+  /** The owner\'s header and opening layout (_kit/Top.tsx). */
+  top: Top;
   ctx: SiteContext;
   c: ReturnType<typeof copyFor>;
   e: ReturnType<typeof emberCopy>;
@@ -65,6 +69,7 @@ export default function EmberTemplate({ site, path = [], base, now }: TemplatePr
   const phone = site.business.whatsApp;
   const v: View = {
     ctx,
+    top: pageTop(ctx, { photos: heroPhotos(site.settings, "hero.images"), backdrop: ["full", "slides"].includes(text(site.settings, "hero.layout")), home: page.kind === "home" }),
     c,
     e,
     tree,
@@ -91,7 +96,9 @@ export default function EmberTemplate({ site, path = [], base, now }: TemplatePr
       <TemplateStyles id="ember" />
       <TopBars ctx={ctx} announcement={false} />
       {page.kind !== "home" && <Ticker v={v} />}
-      <Header v={v} />
+      <SiteHeader ctx={ctx} top={v.top} links={pageLinks(v, { home: c.home, menu: c.menu, best: e.hall, gallery: c.gallery, visit: c.visit })} cta={orderCta(order)} home={v.href("")}>
+        <Header v={v} />
+      </SiteHeader>
       {page.kind === "home" ? (
         <main>
           <Home v={v} />
@@ -493,7 +500,9 @@ function Home({ v }: { v: View }) {
   const storyImage = ctx.image("story.image");
   return (
     <>
-      <Hero v={v} />
+      <SiteHero ctx={ctx} top={v.top} menuHref={href(PAGE_PATHS.menu)} actions={[{ href: href(PAGE_PATHS.menu), label: c.browse }, { href: href(PAGE_PATHS.visit), label: c.visit }]}>
+        <Hero v={v} />
+      </SiteHero>
       <Ticker v={v} />
 
       <section id="menu" className="sec sec-menu" data-section="menu" aria-labelledby="menu-title">

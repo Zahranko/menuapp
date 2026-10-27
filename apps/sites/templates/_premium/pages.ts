@@ -2,6 +2,7 @@ import { image, list } from "@/lib/settings";
 import type { PublicSite } from "@/lib/types";
 import { menuItem, type MenuItem } from "../_kit/site-data";
 import { copyFor } from "./copy";
+import type { NavLink } from "../_kit/Top";
 
 /*
  * The pages of a Pro (multi-page) site and the category tree they are built from.
@@ -159,4 +160,22 @@ export function pageTitle(site: PublicSite, page: Page): string | null {
     case "visit":
       return `${c.visit} · ${name}`;
   }
+}
+
+/**
+ * The site's pages as header links (for the shared headers of the "Page layout" options): home, the menu, best sellers
+ * and the gallery when they have something to show, and the visit page. `words` are the template's own names for them.
+ */
+export function pageLinks(
+  v: { page: Page; href: (path: string) => string; best: readonly unknown[]; photos: readonly unknown[] },
+  words: { home: string; menu: string; best: string; gallery: string; visit: string },
+): NavLink[] {
+  const { page, href } = v;
+  return [
+    { href: href(""), label: words.home, current: page.kind === "home" },
+    { href: href(PAGE_PATHS.menu), label: words.menu, current: page.kind === "menu" || page.kind === "category" },
+    ...(v.best.length > 0 ? [{ href: href(PAGE_PATHS.best), label: words.best, current: page.kind === "best" }] : []),
+    ...(v.photos.length > 0 ? [{ href: href(PAGE_PATHS.gallery), label: words.gallery, current: page.kind === "gallery" }] : []),
+    { href: href(PAGE_PATHS.visit), label: words.visit, current: page.kind === "visit" },
+  ];
 }

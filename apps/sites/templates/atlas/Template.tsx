@@ -13,10 +13,11 @@ import { HeroPhotos } from "../_kit/HeroPhotos";
 import { Picture } from "../_kit/Picture";
 import { hasHours, tintFor, type MenuItem } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
+import { orderCta, pageTop, SiteHeader, SiteHero, type Top } from "../_kit/Top";
 import { themeVars, type Palette } from "../_kit/theme";
 import { copyFor, fill } from "../_premium/copy";
 import { Lightbox } from "../_premium/Lightbox";
-import { bestSellers, categoryTree, galleryPhotos, PAGE_PATHS, resolvePage, type Category, type Page, type Tree } from "../_premium/pages";
+import { bestSellers, categoryTree, galleryPhotos, PAGE_PATHS, pageLinks, resolvePage, type Category, type Page, type Tree } from "../_premium/pages";
 import { atlasCopy } from "./copy";
 import { Finder } from "./Finder";
 import { QuickView, type QuickItem } from "./QuickView";
@@ -41,6 +42,8 @@ const HERO = ["split", "flip", "text"] as const;
 const DENSITY = ["comfy", "dense"] as const;
 
 type View = {
+  /** The owner\'s header and opening layout (_kit/Top.tsx). */
+  top: Top;
   ctx: SiteContext;
   c: ReturnType<typeof copyFor>;
   a: ReturnType<typeof atlasCopy>;
@@ -68,6 +71,7 @@ export default function AtlasTemplate({ site, path = [], base, now }: TemplatePr
   for (const cat of tree.list) for (const p of cat.products) deptOf.set(p.id, cat.name);
   const v: View = {
     ctx,
+    top: pageTop(ctx, { photos: heroPhotos(site.settings, "hero.image"), backdrop: false, home: page.kind === "home" }),
     c,
     a,
     tree,
@@ -107,7 +111,9 @@ export default function AtlasTemplate({ site, path = [], base, now }: TemplatePr
     >
       <TemplateStyles id="atlas" />
       <TopBar v={v} />
-      <Header v={v} />
+      <SiteHeader ctx={ctx} top={v.top} links={pageLinks(v, { home: c.home, menu: c.shop, best: c.best, gallery: a.lookbook, visit: c.visit })} cta={orderCta(order)} home={v.href("")}>
+        <Header v={v} />
+      </SiteHeader>
       {page.kind === "home" ? (
         <main>
           <Home v={v} />
@@ -545,7 +551,9 @@ function Home({ v }: { v: View }) {
   const edit = [...tree.items.filter((p) => p.isFeatured || p.label === "New"), ...tree.items.filter((p) => !(p.isFeatured || p.label === "New"))].slice(0, 8);
   return (
     <>
-      <Hero v={v} />
+      <SiteHero ctx={ctx} top={v.top} menuHref={href(PAGE_PATHS.menu)} actions={[{ href: href(PAGE_PATHS.menu), label: a.shopAll }, ...(v.best.length > 0 ? [{ href: href(PAGE_PATHS.best), label: c.best }] : [])]}>
+        <Hero v={v} />
+      </SiteHero>
 
       <section id="menu" className="a-sec a-shop" data-section="menu" aria-labelledby="shop-title">
         <Head title={ctx.text("categories.title") || a.departments} id="shop-title" link={{ href: href(PAGE_PATHS.menu), label: a.shopAll }} />

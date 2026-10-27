@@ -6,8 +6,11 @@ import { ItemSheet, type SheetItem } from "../_kit/ItemSheet";
 import { tintFor } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { souqContext } from "./context";
+import { choice } from "@/lib/settings";
+import { heroPhotos } from "../_kit/hero";
+import { navOf, orderCta, pageTop, SiteHeader, SiteHero } from "../_kit/Top";
 import { Footer } from "./sections/Footer";
-import { Header } from "./sections/Header";
+import { Header, navLinks } from "./sections/Header";
 import { Hero } from "./sections/Hero";
 import { Highlights } from "./sections/Highlights";
 import { Menu } from "./sections/Menu";
@@ -23,6 +26,8 @@ export default function SouqTemplate({ site, preview, now }: TemplateProps & { n
   const ctx = souqContext(site, now);
   const announcement = ctx.text("announcement");
   const order = orderButton(site);
+  const split = choice(site.settings, "hero.layout", ["full", "split"] as const, "full") === "split";
+  const top = pageTop(ctx, { photos: heroPhotos(site.settings, "hero.image"), backdrop: !split });
   const sheetItems: SheetItem[] = ctx.sections.flatMap((section) =>
     section.products.map((p) => ({
       id: p.id,
@@ -48,9 +53,13 @@ export default function SouqTemplate({ site, preview, now }: TemplateProps & { n
           {announcement}
         </div>
       )}
-      <Header ctx={ctx} />
+      <SiteHeader ctx={ctx} top={top} links={navOf(navLinks(ctx))} cta={orderCta(order)}>
+        <Header ctx={ctx} />
+      </SiteHeader>
       <main>
-        <Hero ctx={ctx} />
+        <SiteHero ctx={ctx} top={top}>
+          <Hero ctx={ctx} />
+        </SiteHero>
         {ctx.on("highlights") && <Highlights ctx={ctx} />}
         {ctx.on("signature") && <Signature ctx={ctx} />}
         <Menu ctx={ctx} />

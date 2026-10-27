@@ -225,6 +225,18 @@ public class ChatAboutDesignTests
     }
 
     [Fact]
+    public async Task The_instructions_explain_the_page_layout_group()
+    {
+        var (handler, assistant, _) = Create();
+        await handler.Handle(Ask("Put the logo in the middle"), CancellationToken.None);
+        var instructions = assistant.Requests.Single().Instructions;
+        Assert.Contains("\"Page layout\"", instructions);
+        Assert.Contains("\"put the logo in the middle\" (header \"centered\"", instructions);
+        Assert.Contains("\"make the top feel like a poster\" (opening \"poster\"", instructions);
+        Assert.Contains("(opening \"menu\")", instructions);
+    }
+
+    [Fact]
     public async Task A_missing_reply_gets_a_short_one_in_the_chosen_language()
     {
         var (handler, assistant, _) = Create();

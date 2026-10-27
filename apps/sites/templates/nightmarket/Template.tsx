@@ -12,6 +12,7 @@ import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
 import { itemCount } from "@/lib/i18n";
 import type { TemplateProps } from "@/lib/types";
+import { basicLinks, orderCta, pageTop, SiteHeader, SiteHero } from "../_kit/Top";
 
 const copy = {
   en: { picks: "Tonight's favorites", menu: "The menu", findUs: "Find us", order: "Order on WhatsApp", photos: "From the grill", swipe: "Swipe for more", hours: "Hours" },
@@ -34,6 +35,7 @@ export default function NightMarketTemplate({ site, now }: TemplateProps & { now
   const sticker = ctx.text("hero.sticker");
   const [lead, ...rest] = ctx.picks;
   const order = orderButton(site, { label: c.order });
+  const top = pageTop(ctx, { photos: heroPics, backdrop: true });
 
   return (
     <div
@@ -43,41 +45,45 @@ export default function NightMarketTemplate({ site, now }: TemplateProps & { now
     >
       <TemplateStyles id="nightmarket" />
       <TopBars ctx={ctx} />
-      <header className="bar kit-head" data-section="header">
-        <a href="#top" className="brand kit-lockup">
-          <Logo ctx={ctx} />
-          <BrandName ctx={ctx} />
-        </a>
-        {ctx.today && (
-          <span className="open">
-            <Clock /> {ctx.today}
-          </span>
-        )}
-      </header>
+      <SiteHeader ctx={ctx} top={top} links={basicLinks(ctx)} cta={orderCta(order)}>
+        <header className="bar kit-head" data-section="header">
+          <a href="#top" className="brand kit-lockup">
+            <Logo ctx={ctx} />
+            <BrandName ctx={ctx} />
+          </a>
+          {ctx.today && (
+            <span className="open">
+              <Clock /> {ctx.today}
+            </span>
+          )}
+        </header>
+      </SiteHeader>
 
       <main>
-        <section className="hero kit-hero" id="top" data-section="hero" aria-labelledby="hero-title">
-          {hero && (
-            <div className="hero-media kit-hero-media">
-              <HeroPhotos ctx={ctx} photos={heroPics} sizes="100vw" placement="corner" />
-            </div>
-          )}
-          <div className="hero-in kit-hero-text">
-            {sticker && <span className="sticker">{sticker}</span>}
-            <h1 id="hero-title">{ctx.text("hero.title") || site.business.name}</h1>
-            {ctx.text("hero.subtitle") && <p>{ctx.text("hero.subtitle")}</p>}
-            <div className="hero-actions">
-              <a data-k="btn" className="btn" href="#menu">
-                {ctx.t.viewMenu} <Arrow className="flip" />
-              </a>
-              {ctx.contact.whatsapp && (
-                <a data-k="btn" className="btn ghost" href={ctx.contact.whatsapp} rel="noopener" target="_blank">
-                  <WhatsApp /> {c.order}
+        <SiteHero ctx={ctx} top={top} eyebrow={sticker}>
+          <section className="hero kit-hero" id="top" data-section="hero" aria-labelledby="hero-title">
+            {hero && (
+              <div className="hero-media kit-hero-media">
+                <HeroPhotos ctx={ctx} photos={heroPics} sizes="100vw" placement="corner" />
+              </div>
+            )}
+            <div className="hero-in kit-hero-text">
+              {sticker && <span className="sticker">{sticker}</span>}
+              <h1 id="hero-title">{ctx.text("hero.title") || site.business.name}</h1>
+              {ctx.text("hero.subtitle") && <p>{ctx.text("hero.subtitle")}</p>}
+              <div className="hero-actions">
+                <a data-k="btn" className="btn" href="#menu">
+                  {ctx.t.viewMenu} <Arrow className="flip" />
                 </a>
-              )}
+                {ctx.contact.whatsapp && (
+                  <a data-k="btn" className="btn ghost" href={ctx.contact.whatsapp} rel="noopener" target="_blank">
+                    <WhatsApp /> {c.order}
+                  </a>
+                )}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </SiteHero>
 
         {ctx.on("picks") && lead && (
           <section className="picks" data-section="picks" aria-labelledby="picks-title">

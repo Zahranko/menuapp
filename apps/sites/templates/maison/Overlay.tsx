@@ -80,7 +80,7 @@ export function Overlay({ word, openLabel, closeLabel, label, head, children }: 
 export function HeroWatch() {
   useEffect(() => {
     const root = document.querySelector<HTMLElement>("[data-template='maison']");
-    const hero = root?.querySelector(".mx-hero");
+    const hero = root?.querySelector(".mx-hero, .kit-hv");
     const head = root?.querySelector<HTMLElement>(".mx-head");
     if (!root || !hero) return;
     const io = new IntersectionObserver(([entry]) => root.toggleAttribute("data-past", !entry.isIntersecting), {

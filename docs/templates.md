@@ -125,6 +125,56 @@ registry build fails if a preview names an unknown option or a missing file. The
 app loads them from `AppConfig.asset()`, like thumbnails, and the deploy copies `public/kit` to the API's `wwwroot/kit`.
 Page style pictures are 80×80 tiles in `public/kit/previews/` (`auto.svg` is shared by every "Template default").
 
+## Page layout (`_kit/layout-settings.json`, `layout.ts`, `Top.tsx`, `layout.css`)
+
+Every template gets a shared "Page layout" group (تخطيط الصفحة), added by `scripts/build-registry.mjs` right after
+"Page style". Each option starts on `auto` ("Template default"), which renders the template's own header and opening
+untouched; any other value swaps in a shared header or opening from `_kit/Top.tsx`, drawn by `_kit/layout.css` (imported
+by every `styles.css` after `hero.css`) with the template's own variables (`--bg --surf --ink --muted --line --acc
+--acc-ink --acc-text --acc-soft --fd --fb --fw --ft --r`; Souq's `--s*` names are read as fallbacks), its heading rules
+and its decorations around it, so it reads as part of the template.
+
+| Key | Options |
+|---|---|
+| `header.layout` | auto, classic (logo at the start, links and button at the end), centered (logo in the middle, links on a row under it), split (links around the logo), pill (a floating rounded bar), big (a tall header with the name set large), minimal (logo and menu button), drawer (menu button first, links in a side panel) |
+| `header.style` | auto, solid, transparent (lies over a full-width top photo in light type), glass (frosted), accent |
+| `header.sticky` | auto, on, off (header while scrolling) |
+| `hero.variant` | auto, full, split, framed, poster, collage, arch, stacked (photo under centered text), menu (menu first: featured products straight away), type (text only), circle |
+
+- A template's own `hero.layout` (Souq, Atlas, Bloom, Ember, Lumen, Maison) moves into this group right after
+  `hero.variant`, labelled "Template default: its own top": it is what `auto` shows.
+- `header.style` and `header.sticky` also restyle a template's own header (any `[data-section="header"]` that is not a
+  masthead). A shared header is sticky unless it is the big one or the owner chose "Scrolls away"; a see-through header
+  stays on screen only in browsers with scroll-driven animations (it turns solid as the page scrolls) and scrolls away
+  elsewhere. A transparent or glass header, and the floating bar, lie over the photo when the opening is a full-width
+  photo (the shared "full", or a template's own photo backdrop).
+- Openings that need a photo use the hero photos; without any they use product photos (one at a time), and without
+  those a tile with the business's first letter. "Three photos" fills up with product photos. The hero slider takes
+  turns in one photo box (not in the poster's and circle's small ones). Only the full photo follows `hero.height`,
+  `hero.overlay` and `hero.textPosition`.
+- Links: one-page templates pass their section links (`basicLinks()` for menu, story and visit); Pro templates pass
+  their pages (`pageLinks()` in `_premium/pages.ts`) and show the shared opening on the home page only.
+
+How a template wires it:
+
+```tsx
+const top = pageTop(ctx, { photos: heroPics, backdrop: true /* its own opening has its photo behind the text */ });
+<SiteHeader ctx={ctx} top={top} links={basicLinks(ctx, { story })} cta={orderCta(order)}>{its own <header>}</SiteHeader>
+<SiteHero ctx={ctx} top={top} actions={[...]}>{its own opening}</SiteHero>
+```
+
+Templates whose header is also their opening (Bistro, Chalk Board, Linen, Monogrid, Neon Diner, Polaroid, Spice Route,
+Ticket) wrap it in `SiteMasthead` with a `fallback` header layout and mark it `data-k="masthead"`: a shared header
+goes above it and it becomes the opening; a shared opening replaces it, under the fallback header unless the owner
+picked one.
+
+A template leaves fields or options out with `"layout": { "skip": ["header.sticky"], "skipOptions": { "hero.variant":
+["menu"] } }` in its manifest (none does today). `templates/page-layout.test.tsx` renders every template with every
+layout, `e2e/page-layout.spec.ts` checks every layout on every template on a phone (paired with a fixed seed per
+template, English and Arabic). In fixture mode the tokens are `hl` (header layout), `hst` (header look), `stk` (header
+while scrolling) and `hv` (opening), for example `/_preview/fixture.souq.default.ar.hl_split-hst_glass-hv_collage`.
+Preview pictures: `public/kit/previews/header-*.svg`, `headerstyle-*.svg`, `sticky-*.svg` and `hero-*.svg`.
+
 ## Rules every template follows
 
 - Settings are read with the helpers in `lib/settings.ts`; never assume a key exists.

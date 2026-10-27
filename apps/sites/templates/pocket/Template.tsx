@@ -11,6 +11,7 @@ import { HeroPhotos } from "../_kit/HeroPhotos";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
+import { basicLinks, orderCta, pageTop, SiteHeader, SiteHero } from "../_kit/Top";
 
 const copy = {
   en: { shop: "Shop", all: "All", sort: "Sort", featured: "Featured", low: "Price: low to high", high: "Price: high to low", filter: "Filter by category", ask: "Ask on WhatsApp", about: "About us", visit: "Visit the shop", hours: "Opening hours", contact: "Contact", empty: "Nothing matches. Try another word or category." },
@@ -37,6 +38,7 @@ export default function PocketCatalogTemplate({ site, now }: TemplateProps & { n
   const order = new Map([...products].sort((a, b) => Number(b.isFeatured) - Number(a.isFeatured)).map((p, i) => [p.id, i]));
 
   const orderFab = orderButton(site);
+  const top = pageTop(ctx, { photos: heroPics });
   return (
     <div
       data-template="pocket" {...logoRoot(ctx)} {...optionRoot(ctx, orderFab)}
@@ -45,31 +47,35 @@ export default function PocketCatalogTemplate({ site, now }: TemplateProps & { n
     >
       <TemplateStyles id="pocket" />
       <TopBars ctx={ctx} />
-      <header className="head kit-head" data-section="header">
-        <a className="brand kit-lockup" href="#top">
-          <Logo ctx={ctx} />
-          <BrandName ctx={ctx} />
-        </a>
-        {ctx.contact.whatsapp && (
-          <a className="head-ask" href={ctx.contact.whatsapp} rel="noopener" target="_blank" aria-label={c.ask}>
-            <WhatsApp />
+      <SiteHeader ctx={ctx} top={top} links={basicLinks(ctx, { story })} cta={orderCta(orderFab)}>
+        <header className="head kit-head" data-section="header">
+          <a className="brand kit-lockup" href="#top">
+            <Logo ctx={ctx} />
+            <BrandName ctx={ctx} />
           </a>
-        )}
-      </header>
+          {ctx.contact.whatsapp && (
+            <a className="head-ask" href={ctx.contact.whatsapp} rel="noopener" target="_blank" aria-label={c.ask}>
+              <WhatsApp />
+            </a>
+          )}
+        </header>
+      </SiteHeader>
 
       <main id="top">
         {ctx.on("banner") ? (
-          <section className="banner" data-section="hero" aria-labelledby="banner-title">
-            <div className="banner-text">
-              <h1 id="banner-title">{ctx.text("hero.title") || site.business.name}</h1>
-              {ctx.text("hero.subtitle") && <p>{ctx.text("hero.subtitle")}</p>}
-            </div>
-            {banner && (
-              <div className="banner-media">
-                <HeroPhotos ctx={ctx} photos={heroPics} sizes="(min-width: 760px) 35vw, 100vw" />
+          <SiteHero ctx={ctx} top={top}>
+            <section className="banner" data-section="hero" aria-labelledby="banner-title">
+              <div className="banner-text">
+                <h1 id="banner-title">{ctx.text("hero.title") || site.business.name}</h1>
+                {ctx.text("hero.subtitle") && <p>{ctx.text("hero.subtitle")}</p>}
               </div>
-            )}
-          </section>
+              {banner && (
+                <div className="banner-media">
+                  <HeroPhotos ctx={ctx} photos={heroPics} sizes="(min-width: 760px) 35vw, 100vw" />
+                </div>
+              )}
+            </section>
+          </SiteHero>
         ) : (
           <h1 className="sr-only">{site.business.name}</h1>
         )}

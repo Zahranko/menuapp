@@ -11,11 +11,13 @@ import { Arrow, Pin, WhatsApp } from "../_kit/icons";
 import { HeroPhotos } from "../_kit/HeroPhotos";
 import { Picture } from "../_kit/Picture";
 import { hasHours, type MenuItem } from "../_kit/site-data";
+import { heroPhotos } from "../_kit/hero";
 import { TemplateStyles } from "../_kit/TemplateStyles";
+import { orderCta, pageTop, SiteHeader, SiteHero, type Top } from "../_kit/Top";
 import { themeVars, type Palette } from "../_kit/theme";
 import { copyFor, fill } from "../_premium/copy";
 import { Lightbox } from "../_premium/Lightbox";
-import { bestSellers, categoryTree, galleryPhotos, PAGE_PATHS, resolvePage, type Category, type Page, type Tree } from "../_premium/pages";
+import { bestSellers, categoryTree, galleryPhotos, PAGE_PATHS, pageLinks, resolvePage, type Category, type Page, type Tree } from "../_premium/pages";
 import { CameraIcon, CupcakeIcon, Doodles, Heart, HeartIcon, HomeIcon, PinIcon, Swash, Wave } from "./art";
 import { Carousel } from "./Carousel";
 import { wordsFor } from "./words";
@@ -105,6 +107,8 @@ function upgrade(site: PublicSite): PublicSite {
 }
 
 type View = {
+  /** The owner\'s header and opening layout (_kit/Top.tsx). */
+  top: Top;
   ctx: SiteContext;
   c: ReturnType<typeof copyFor>;
   w: ReturnType<typeof wordsFor>;
@@ -128,6 +132,7 @@ export default function BloomTemplate(props: TemplateProps & { now?: Date }) {
   const s = site.settings;
   const v: View = {
     ctx,
+    top: pageTop(ctx, { photos: heroPhotos(site.settings, "hero.images"), backdrop: false, home: page.kind === "home" }),
     c,
     w: wordsFor(ctx.locale),
     tree,
@@ -152,7 +157,9 @@ export default function BloomTemplate(props: TemplateProps & { now?: Date }) {
     >
       <TemplateStyles id="bloom" />
       <TopBars ctx={ctx} />
-      <Header v={v} />
+      <SiteHeader ctx={ctx} top={v.top} links={pageLinks(v, { home: c.home, menu: c.menu, best: c.best, gallery: c.gallery, visit: c.visit })} cta={orderCta(order)} home={v.href("")}>
+        <Header v={v} />
+      </SiteHeader>
       {page.kind === "home" ? (
         <main className="home">
           <Home v={v} />
@@ -409,7 +416,9 @@ function Home({ v }: { v: View }) {
   const bakes = v.best.length > 0 ? v.best.slice(0, 10) : tree.items.filter((p) => p.imageUrl).slice(0, 8);
   return (
     <>
-      <Hero v={v} />
+      <SiteHero ctx={ctx} top={v.top} menuHref={href(PAGE_PATHS.menu)} actions={[{ href: href(PAGE_PATHS.menu), label: c.browse }, { href: href(PAGE_PATHS.visit), label: c.visit }]}>
+        <Hero v={v} />
+      </SiteHero>
 
       <section id="menu" className="band sec-cats" data-section="menu" aria-labelledby="cats-title">
         <div className="wrap">

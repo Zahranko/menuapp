@@ -13,6 +13,7 @@ import { orderButton, socialAccounts } from "../_kit/options";
 import { Picture } from "../_kit/Picture";
 import { hasHours, type MenuItem } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
+import { orderCta, pageTop, SiteHeader, SiteHero, type Top } from "../_kit/Top";
 import { themeVars, type Palette } from "../_kit/theme";
 import { fashionCopy, fill } from "../_fashion/copy";
 import { details, sizeRange } from "../_fashion/details";
@@ -20,7 +21,7 @@ import { sheetItems, sheetLabels, viewerLabels } from "../_fashion/items";
 import { PhotoViewer, type ViewerPhoto } from "../_fashion/PhotoViewer";
 import { ProductSheet } from "../_fashion/ProductSheet";
 import { copyFor } from "../_premium/copy";
-import { bestSellers, categoryTree, galleryPhotos, PAGE_PATHS, resolvePage, type Category, type Page, type Tree } from "../_premium/pages";
+import { bestSellers, categoryTree, galleryPhotos, PAGE_PATHS, pageLinks, resolvePage, type Category, type Page, type Tree } from "../_premium/pages";
 import { coutureCopy, pieceCount } from "./copy";
 
 /*
@@ -44,6 +45,8 @@ const FONTS = ["elegant", "classic", "naskh"] as const;
 const SOCIAL_DEFAULT = ["instagram", "whatsapp"] as const;
 
 type View = {
+  /** The owner\'s header and opening layout (_kit/Top.tsx). */
+  top: Top;
   ctx: SiteContext;
   c: ReturnType<typeof copyFor>;
   k: ReturnType<typeof coutureCopy>;
@@ -71,6 +74,7 @@ export default function CoutureTemplate({ site, path = [], base, now }: Template
   for (const cat of tree.list) for (const p of cat.products) collectionOf.set(p.id, cat.parent ? `${cat.parent.name} · ${cat.name}` : cat.name);
   const v: View = {
     ctx,
+    top: pageTop(ctx, { photos: heroPhotos(site.settings, "hero.image"), backdrop: true, home: page.kind === "home" }),
     c: copyFor(ctx.locale),
     k,
     f: fashionCopy(ctx.locale),
@@ -99,7 +103,9 @@ export default function CoutureTemplate({ site, path = [], base, now }: Template
     >
       <TemplateStyles id="couture" />
       <TopBars ctx={ctx} />
-      <Header v={v} />
+      <SiteHeader ctx={ctx} top={v.top} links={pageLinks(v, { home: v.c.home, menu: k.collections, best: k.loved, gallery: k.lookbook, visit: k.boutique })} cta={orderCta(order)} home={v.href("")}>
+        <Header v={v} />
+      </SiteHeader>
       {page.kind === "home" ? (
         <main>
           <Home v={v} />
@@ -410,7 +416,9 @@ function Home({ v }: { v: View }) {
   const edit = [...tree.items.filter((p) => p.isFeatured || p.label === "New"), ...tree.items.filter((p) => !(p.isFeatured || p.label === "New"))].filter((p) => p.isAvailable).slice(0, 8);
   return (
     <>
-      <Hero v={v} />
+      <SiteHero ctx={ctx} top={v.top} menuHref={href(PAGE_PATHS.menu)} actions={[{ href: href(PAGE_PATHS.menu), label: k.allCollections }, ...(v.appointment ? [{ href: v.appointment, label: k.appointment, external: true }] : [])]}>
+        <Hero v={v} />
+      </SiteHero>
 
       <section id="menu" className="cu-sec cu-home-shop" data-section="menu" aria-labelledby="cu-collections-title">
         <Head title={ctx.text("categories.title") || k.collections} id="cu-collections-title" link={{ href: href(PAGE_PATHS.menu), label: k.allCollections }} />

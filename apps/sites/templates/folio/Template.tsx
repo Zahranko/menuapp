@@ -20,6 +20,7 @@ import { sheetItems, sheetLabels, viewerLabels } from "../_fashion/items";
 import { PhotoViewer } from "../_fashion/PhotoViewer";
 import { ProductSheet } from "../_fashion/ProductSheet";
 import { orderButton, socialAccounts } from "../_kit/options";
+import { orderCta, pageTop, SiteHeader, SiteHero, type NavLink } from "../_kit/Top";
 
 /*
  * Template 027 "Folio": an editorial lookbook for a clothing store. A magazine-cover opening with an issue line, the
@@ -48,15 +49,26 @@ export default function FolioTemplate({ site, now }: TemplateProps & { now?: Dat
   const order = orderButton(site);
   const all = ctx.sections.flatMap((s) => s.products.map((item) => ({ item, collection: s.name })));
   const photos = ctx.on("gallery") ? ctx.gallery : [];
+  const top = pageTop(ctx, { photos: heroPhotos(site.settings, "hero.image"), backdrop: false });
+  const links: NavLink[] = [
+    { href: "#menu", label: f.shop },
+    ...[...(photos.length > 0 ? [{ href: "#lookbook", label: f.lookbook }] : [])],
+    ...(ctx.on("story") && ctx.text("story.text") ? [{ href: "#story", label: ctx.t.story }] : []),
+    ...(ctx.on("visit") ? [{ href: "#visit", label: c.store }] : []),
+  ];
   const style = themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["classic", "grotesk", "soft"], defaultAccent: "#1A1A1A", radius: { rounded: "0px", sharp: "0px" } });
 
   return (
     <div data-template="folio" {...logoRoot(ctx)} {...optionRoot(ctx, order)} className={cx("t-folio", fontVariables)} style={style}>
       <TemplateStyles id="folio" />
       <TopBars ctx={ctx} />
-      <Header ctx={ctx} c={c} f={f} photos={photos.length > 0} />
+      <SiteHeader ctx={ctx} top={top} links={links} cta={orderCta(order)}>
+        <Header ctx={ctx} c={c} f={f} photos={photos.length > 0} />
+      </SiteHeader>
       <main id="top">
-        <Cover ctx={ctx} f={f} />
+        <SiteHero ctx={ctx} top={top} actions={[{ href: "#menu", label: f.shop }]}>
+          <Cover ctx={ctx} f={f} />
+        </SiteHero>
         {ctx.on("edit") && <Edit ctx={ctx} f={f} />}
         <Catalog ctx={ctx} c={c} f={f} />
         {photos.length > 0 && <Lookbook ctx={ctx} f={f} photos={photos} />}

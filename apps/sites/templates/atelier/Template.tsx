@@ -11,6 +11,7 @@ import { bookLink, highlights } from "../_kit/services";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
+import { basicLinks, pageTop, SiteHeader, SiteHero } from "../_kit/Top";
 
 const copy = {
   en: {
@@ -88,6 +89,7 @@ export default function AtelierTemplate({
   const story = ctx.on("story") && ctx.text("story.text");
   const book = bookLink(ctx);
   const order = orderButton(site, { label: c.book, whatsapp: book });
+  const top = pageTop(ctx, { photos: heroPics, backdrop: true });
   const points = highlights(ctx);
   const storyImage = ctx.image("story.image");
 
@@ -103,56 +105,60 @@ export default function AtelierTemplate({
     >
       <TemplateStyles id="atelier" />
       <TopBars ctx={ctx} />
-      <header className="head kit-head" data-section="header">
-        <a className="brand kit-lockup" href="#top">
-          <Logo ctx={ctx} />
-          <BrandName ctx={ctx} />
-        </a>
-        <nav aria-label={c.menu}>
-          <a href="#menu">{c.services}</a>
-          {story && <a href="#story">{c.about}</a>}
-          {ctx.on("visit") && <a href="#visit">{c.visit}</a>}
-        </nav>
-        {book && (
-          <a data-k="btn" className="btn small" href={book} rel="noopener" target="_blank">
-            {c.book}
+      <SiteHeader ctx={ctx} top={top} links={basicLinks(ctx, { story })} cta={book ? { href: book, label: c.book, external: true } : null}>
+        <header className="head kit-head" data-section="header">
+          <a className="brand kit-lockup" href="#top">
+            <Logo ctx={ctx} />
+            <BrandName ctx={ctx} />
           </a>
-        )}
-      </header>
+          <nav aria-label={c.menu}>
+            <a href="#menu">{c.services}</a>
+            {story && <a href="#story">{c.about}</a>}
+            {ctx.on("visit") && <a href="#visit">{c.visit}</a>}
+          </nav>
+          {book && (
+            <a data-k="btn" className="btn small" href={book} rel="noopener" target="_blank">
+              {c.book}
+            </a>
+          )}
+        </header>
+      </SiteHeader>
 
       <main id="top">
-        <section
-          className={cx("hero", "kit-hero", !hero && "no-image")}
-          data-section="hero"
-          aria-labelledby="hero-title"
-        >
-          {hero && (
-            <div className="hero-image kit-hero-media">
-              <HeroPhotos ctx={ctx} photos={heroPics} sizes="100vw" placement="corner" />
-            </div>
-          )}
-          <div className="hero-text kit-hero-text">
-            {ctx.text("hero.eyebrow") && (
-              <p className="eyebrow">{ctx.text("hero.eyebrow")}</p>
+        <SiteHero ctx={ctx} top={top} actions={[...(book ? [{ href: book, label: c.book, external: true }] : []), { href: "#menu", label: c.services }]}>
+          <section
+            className={cx("hero", "kit-hero", !hero && "no-image")}
+            data-section="hero"
+            aria-labelledby="hero-title"
+          >
+            {hero && (
+              <div className="hero-image kit-hero-media">
+                <HeroPhotos ctx={ctx} photos={heroPics} sizes="100vw" placement="corner" />
+              </div>
             )}
-            <h1 id="hero-title">
-              {ctx.text("hero.title") || site.business.name}
-            </h1>
-            {ctx.text("hero.subtitle") && (
-              <p className="lede">{ctx.text("hero.subtitle")}</p>
-            )}
-            <div className="hero-actions">
-              {book && (
-                <a data-k="btn" className="btn" href={book} rel="noopener" target="_blank">
-                  {c.book}
-                </a>
+            <div className="hero-text kit-hero-text">
+              {ctx.text("hero.eyebrow") && (
+                <p className="eyebrow">{ctx.text("hero.eyebrow")}</p>
               )}
-              <a data-k="btn" className="btn ghost" href="#menu">
-                {c.services} <Arrow />
-              </a>
+              <h1 id="hero-title">
+                {ctx.text("hero.title") || site.business.name}
+              </h1>
+              {ctx.text("hero.subtitle") && (
+                <p className="lede">{ctx.text("hero.subtitle")}</p>
+              )}
+              <div className="hero-actions">
+                {book && (
+                  <a data-k="btn" className="btn" href={book} rel="noopener" target="_blank">
+                    {c.book}
+                  </a>
+                )}
+                <a data-k="btn" className="btn ghost" href="#menu">
+                  {c.services} <Arrow />
+                </a>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </SiteHero>
 
         {ctx.on("highlights") && points.length > 0 && (
           <ul className="plain points" data-section="highlights">

@@ -5,6 +5,7 @@ import { pageBackground } from "./background";
 import { cardAttributes } from "./cards";
 import { isDark } from "./color";
 import { heroAttributes } from "./hero";
+import { layoutAttributes } from "./layout";
 import { TYPEFACE_NAMES, TYPEFACES, type FontPair, type TypefaceName } from "./fonts";
 import { contact as contactLinks } from "./site-data";
 import siteOptions from "./site-options.json";
@@ -158,6 +159,7 @@ export function optionAttributes(site: PublicSite, order: OrderButton | null = n
   // The owner's background color (_kit/background.ts): templates restyle the few parts drawn in fixed colors.
   const background = pageBackground(site.settings);
   if (background) attrs["data-page-bg"] = isDark(background) ? "dark" : "light";
-  // Card options (_kit/cards.ts, cards.css), hero options (_kit/hero.ts, hero.css) and page style (_kit/style.ts, style.css).
-  return { ...attrs, ...cardAttributes(site.settings), ...heroAttributes(site.settings), ...styleAttributes(site.settings) };
+  // Card options (_kit/cards.ts, cards.css), hero options (_kit/hero.ts, hero.css), page style (_kit/style.ts, style.css)
+  // and page layout (_kit/layout.ts, layout.css).
+  return { ...attrs, ...cardAttributes(site.settings), ...heroAttributes(site.settings), ...styleAttributes(site.settings), ...layoutAttributes(site.settings) };
 }

@@ -18,6 +18,7 @@ import { details, sizeRange } from "../_fashion/details";
 import { sheetItems, sheetLabels, viewerLabels } from "../_fashion/items";
 import { PhotoViewer } from "../_fashion/PhotoViewer";
 import { ProductSheet } from "../_fashion/ProductSheet";
+import { orderCta, pageTop, SiteHeader, SiteHero, type NavLink } from "../_kit/Top";
 
 /*
  * Template 028 "Drop": a loud streetwear store. A moving ticker, a full-screen poster for the latest drop with a
@@ -46,6 +47,13 @@ export default function DropTemplate({ site, now }: TemplateProps & { now?: Date
   const order = orderButton(site);
   const all = ctx.sections.flatMap((s) => s.products.map((item) => ({ item, collection: s.name })));
   const photos = ctx.on("gallery") ? ctx.gallery : [];
+  const top = pageTop(ctx, { photos: heroPhotos(site.settings, "hero.image"), backdrop: true });
+  const links: NavLink[] = [
+    { href: "#menu", label: f.shop },
+    ...[...(photos.length > 0 ? [{ href: "#street", label: c.photos }] : [])],
+    ...(ctx.on("story") && ctx.text("story.text") ? [{ href: "#story", label: ctx.t.story }] : []),
+    ...(ctx.on("visit") ? [{ href: "#visit", label: c.store }] : []),
+  ];
   const style = themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["condensed", "bold", "grotesk"], defaultAccent: "#C6FF00", radius: { rounded: "0px", sharp: "0px" } });
 
   return (
@@ -53,9 +61,13 @@ export default function DropTemplate({ site, now }: TemplateProps & { now?: Date
       <TemplateStyles id="drop" />
       <TopBars ctx={ctx} announcement={false} />
       {ctx.on("announcement") && ctx.text("announcement") && <Ticker text={ctx.text("announcement")} />}
-      <Header ctx={ctx} c={c} photos={photos.length > 0} />
+      <SiteHeader ctx={ctx} top={top} links={links} cta={orderCta(order)}>
+        <Header ctx={ctx} c={c} photos={photos.length > 0} />
+      </SiteHeader>
       <main id="top">
-        <Poster ctx={ctx} f={f} />
+        <SiteHero ctx={ctx} top={top} actions={[{ href: "#menu", label: f.shopAll }]}>
+          <Poster ctx={ctx} f={f} />
+        </SiteHero>
         {ctx.on("hot") && <Hot ctx={ctx} />}
         <Shop ctx={ctx} c={c} f={f} />
         {photos.length > 0 && <Wall ctx={ctx} f={f} photos={photos} />}

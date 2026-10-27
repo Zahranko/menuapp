@@ -9,6 +9,7 @@ import { fontVariables } from "../_kit/fonts";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
+import { basicLinks, orderCta, pageTop, SiteHeader, SiteHero } from "../_kit/Top";
 
 const copy = {
   en: { menu: "Menu", story: "Our way", visit: "Visit", hours: "Hours", jump: "Menu sections" },
@@ -41,32 +42,37 @@ export default function ZenTemplate({ site, now }: TemplateProps & { now?: Date 
   const story = ctx.on("story") && ctx.text("story.text");
 
   const order = orderButton(site);
+  const top = pageTop(ctx, { photos: heroPhotos(site.settings, null) });
   return (
     <div data-template="zen" {...logoRoot(ctx)} {...optionRoot(ctx, order)} className={cx("t-zen", !ctx.rtl && "vertical", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["elegant", "modern", "mono"], defaultAccent: "#B7282E", radius: { rounded: "4px", sharp: "0px" } })}>
       <TemplateStyles id="zen" />
       <TopBars ctx={ctx} />
-      <header className="head kit-head" data-section="header">
-        <a className="brand kit-lockup" href="#top">
-          <Logo ctx={ctx} className="seal" />
-          <BrandName ctx={ctx} />
-        </a>
-        <nav aria-label={c.jump}>
-          <a href="#menu">{c.menu}</a>
-          {story && <a href="#story">{c.story}</a>}
-          {ctx.on("visit") && <a href="#visit">{c.visit}</a>}
-        </nav>
-      </header>
+      <SiteHeader ctx={ctx} top={top} links={basicLinks(ctx, { story })} cta={orderCta(order)}>
+        <header className="head kit-head" data-section="header">
+          <a className="brand kit-lockup" href="#top">
+            <Logo ctx={ctx} className="seal" />
+            <BrandName ctx={ctx} />
+          </a>
+          <nav aria-label={c.jump}>
+            <a href="#menu">{c.menu}</a>
+            {story && <a href="#story">{c.story}</a>}
+            {ctx.on("visit") && <a href="#visit">{c.visit}</a>}
+          </nav>
+        </header>
+      </SiteHeader>
 
       <main id="top">
-        <section className="hero" data-section="hero" aria-labelledby="hero-title">
-          <Enso />
-          <div className="hero-text">
-            <h1 id="hero-title">{ctx.text("hero.title") || site.business.name}</h1>
-            {ctx.text("hero.subtitle") && <p>{ctx.text("hero.subtitle")}</p>}
-            {ctx.today && <p className="today">{ctx.today}</p>}
-          </div>
-        </section>
-        <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} className="zen-band" />
+        <SiteHero ctx={ctx} top={top}>
+          <section className="hero" data-section="hero" aria-labelledby="hero-title">
+            <Enso />
+            <div className="hero-text">
+              <h1 id="hero-title">{ctx.text("hero.title") || site.business.name}</h1>
+              {ctx.text("hero.subtitle") && <p>{ctx.text("hero.subtitle")}</p>}
+              {ctx.today && <p className="today">{ctx.today}</p>}
+            </div>
+          </section>
+        </SiteHero>
+        {top.layout.hero === "auto" && <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} className="zen-band" />}
 
         <section id="menu" className="menu" data-section="menu" aria-label={c.menu}>
           {ctx.sections.map((section, si) => (
