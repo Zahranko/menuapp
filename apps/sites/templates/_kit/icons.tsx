@@ -90,3 +90,29 @@ export const Arrow = (p: P) => (
     <path d="M3 8h10M9 4l4 4-4 4" />
   </svg>
 );
+export const Spark = (p: P) => (
+  <svg {...base(20)} strokeWidth={1.7} strokeLinejoin="round" {...p}>
+    <path d="M10 2.5l1.9 5.6 5.6 1.9-5.6 1.9L10 17.5l-1.9-5.6L2.5 10l5.6-1.9z" />
+  </svg>
+);
+export const Heart = (p: P) => (
+  <svg {...base(20)} strokeWidth={1.7} strokeLinejoin="round" {...p}>
+    <path d="M10 16.5S3 12.2 3 7.6A3.6 3.6 0 0 1 10 6a3.6 3.6 0 0 1 7 1.6c0 4.6-7 8.9-7 8.9z" />
+  </svg>
+);
+export const Leaf = (p: P) => (
+  <svg {...base(20)} strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" {...p}>
+    <path d="M4 16c0-7 5-12 12-12 0 7-5 12-12 12zM4 16l7-7" />
+  </svg>
+);
+export const Check = (p: P) => (
+  <svg {...base(20)} strokeWidth={1.9} strokeLinecap="round" strokeLinejoin="round" {...p}>
+    <circle cx="10" cy="10" r="7.5" />
+    <path d="M6.8 10.2l2.2 2.2 4.2-4.6" />
+  </svg>
+);
+export const Star = (p: P) => (
+  <svg {...base(20)} strokeWidth={1.5} strokeLinejoin="round" {...p}>
+    <path d="M10 2.6l2.3 4.7 5.2.8-3.8 3.6.9 5.1L10 14.4l-4.6 2.4.9-5.1L2.5 8.1l5.2-.8z" fill="currentColor" />
+  </svg>
+);

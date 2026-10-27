@@ -20,6 +20,7 @@ import {
 } from "./layout";
 import type { OrderAction, OrderButton } from "./options";
 import { Picture } from "./Picture";
+import { sortLinks } from "./sections";
 
 /*
  * The shared headers and openings of the "Page layout" options (_kit/layout.ts, styled by _kit/layout.css).
@@ -180,7 +181,7 @@ export function SiteMasthead({
 function KitHeader({
   ctx,
   top,
-  links,
+  links: own,
   cta,
   home = "#top",
   logoClassName,
@@ -189,6 +190,8 @@ function KitHeader({
   layout,
 }: HeaderProps & { layout: Exclude<HeaderLayout, "auto"> }) {
   const copy = COPY[ctx.locale];
+  // Links to the page's sections follow the owner's order of the sections ("sections.order").
+  const links = sortLinks(ctx.site.settings, own);
   const { headerStyle, sticky } = top.layout;
   // A see-through header over a photo scrolls away (it turns solid while staying on screen where the browser can).
   const stick = sticky === "on" || (sticky === "auto" && layout !== "big");

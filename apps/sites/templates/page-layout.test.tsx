@@ -131,3 +131,28 @@ describe("page layout fields", () => {
     }
   });
 });
+
+describe("Atlas's department search with a shared header", () => {
+  it.each(HEADER_LAYOUTS.filter((l) => l !== "auto"))("keeps a search button in the %s header, on every page", (layout) => {
+    for (const page of [[], ["menu"], ["visit"]]) {
+      for (const arabic of [false, true]) {
+        const doc = parse(html(withLayout("atlas", { "header.layout": layout }, arabic), page));
+        const label = `${layout} /${page.join("/")}${arabic ? " (ar)" : ""}`;
+        const toggle = doc.querySelector(".kit-hd .kit-hd-tools .finder-toggle");
+        expect(toggle, label).not.toBeNull();
+        expect(toggle!.getAttribute("aria-label"), label).toBeTruthy();
+        expect(toggle!.getAttribute("aria-expanded"), label).toBe("false");
+        const pop = doc.getElementById(toggle!.getAttribute("aria-controls")!);
+        expect(pop?.querySelector('input[type="search"]'), `${label}: the field it opens`).not.toBeNull();
+        expect(pop?.querySelectorAll(".finder-depts a").length, `${label}: the departments`).toBeGreaterThan(0);
+        expect(doc.querySelectorAll(".finder").length, `${label}: one search`).toBe(1);
+      }
+    }
+  });
+
+  it("keeps its own search field with its own header", () => {
+    const doc = parse(html(fixtureFor("atlas")));
+    expect(doc.querySelector(".a-head .finder input[type=search]")).not.toBeNull();
+    expect(doc.querySelector(".finder-toggle, .finder-pop")).toBeNull();
+  });
+});

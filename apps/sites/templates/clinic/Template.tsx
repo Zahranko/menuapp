@@ -13,6 +13,7 @@ import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
 import { pageTop, SiteHeader, SiteHero, type NavLink } from "../_kit/Top";
 import { SiteMenu } from "../_kit/Menu";
+import { ordered, sharedLayout, SiteFooter, SiteHighlights, SiteReviews, SiteVisit } from "../_kit/Sections";
 
 const copy = {
   en: { services: "Services", how: "How it works", faq: "Questions", visit: "Contact", book: "Book a visit", from: "From", reviews: "What patients say", hours: "Opening hours", contact: "Find us", ready: "Ready when you are", readyText: "Send us a message and we will find a time that suits you.", directions: "Directions", menu: "Main menu", jump: "Service groups" },
@@ -44,6 +45,8 @@ export default function ClinicTemplate({ site, now }: TemplateProps & { now?: Da
   const book = bookLink(ctx);
   const from = flag(site.settings, "prices.from", true);
   const points = highlights(ctx);
+  // A shared highlights layout draws the highlights as a section of their own, right after the opening.
+  const sharedPoints = sharedLayout(ctx, "highlights");
   const how = steps(ctx);
   const questions = faqs(ctx);
 
@@ -96,7 +99,7 @@ export default function ClinicTemplate({ site, now }: TemplateProps & { now?: Da
                   {c.services}
                 </a>
               </div>
-              {ctx.on("highlights") && points.length > 0 && (
+              {ctx.on("highlights") && points.length > 0 && !sharedPoints && (
                 <ul className="plain checks" data-section="highlights">
                   {points.map((p) => (
                     <li key={p.title}>
@@ -130,134 +133,141 @@ export default function ClinicTemplate({ site, now }: TemplateProps & { now?: Da
             </div>
           </section>
         </SiteHero>
+        {ctx.on("highlights") && <SiteHighlights ctx={ctx} items={points} />}
 
-        <section id="menu" className="services" data-section="menu" aria-labelledby="services-title">
-          <div className="section-head">
-            <p className="eyebrow">{c.services}</p>
-            <h2 id="services-title">{ctx.text("services.title") || c.services}</h2>
-          </div>
-          <SiteMenu ctx={ctx} like="grid" services pricePrefix={from ? c.from : undefined}>
-          {ctx.sections.length > 1 && (
-            <nav className="segments" aria-label={c.jump}>
-              {ctx.sections.map((s) => (
-                <a key={s.id} href={`#${s.anchor}`}>
-                  {s.name}
-                </a>
+        {ordered(ctx, {
+          menu: (
+            <section id="menu" className="services" data-section="menu" aria-labelledby="services-title">
+              <div className="section-head">
+                <p className="eyebrow">{c.services}</p>
+                <h2 id="services-title">{ctx.text("services.title") || c.services}</h2>
+              </div>
+              <SiteMenu ctx={ctx} like="grid" services pricePrefix={from ? c.from : undefined}>
+              {ctx.sections.length > 1 && (
+                <nav className="segments" aria-label={c.jump}>
+                  {ctx.sections.map((s) => (
+                    <a key={s.id} href={`#${s.anchor}`}>
+                      {s.name}
+                    </a>
+                  ))}
+                </nav>
+              )}
+              {ctx.sections.map((section) => (
+                <section key={section.id} id={section.anchor} className="group" aria-labelledby={`${section.anchor}-h`}>
+                  <h3 id={`${section.anchor}-h`}>{section.name}</h3>
+                  <ul className="plain cards kit-cards">
+                    {section.products.map((item) => (
+                      <li key={item.id}>
+                        <button type="button" className={cx("card kit-card", !item.isAvailable && "out")} data-item-id={item.id}>
+                          <span className="card-icon kit-card-media">
+                            <ProductPicture item={item} sizes="64px" />
+                          </span>
+                          <span className="card-name">{item.name}</span>
+                          {item.description && <span className="card-desc">{item.description}</span>}
+                          <span className="card-foot">
+                            <span className="card-price">
+                              {from && <small>{c.from} </small>}
+                              {item.priceText}
+                            </span>
+                            {item.labelText && <span className="tag">{item.labelText}</span>}
+                            {!item.isAvailable && <span className="tag tag-out">{ctx.t.unavailable}</span>}
+                          </span>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
               ))}
-            </nav>
-          )}
-          {ctx.sections.map((section) => (
-            <section key={section.id} id={section.anchor} className="group" aria-labelledby={`${section.anchor}-h`}>
-              <h3 id={`${section.anchor}-h`}>{section.name}</h3>
-              <ul className="plain cards kit-cards">
-                {section.products.map((item) => (
-                  <li key={item.id}>
-                    <button type="button" className={cx("card kit-card", !item.isAvailable && "out")} data-item-id={item.id}>
-                      <span className="card-icon kit-card-media">
-                        <ProductPicture item={item} sizes="64px" />
-                      </span>
-                      <span className="card-name">{item.name}</span>
-                      {item.description && <span className="card-desc">{item.description}</span>}
-                      <span className="card-foot">
-                        <span className="card-price">
-                          {from && <small>{c.from} </small>}
-                          {item.priceText}
-                        </span>
-                        {item.labelText && <span className="tag">{item.labelText}</span>}
-                        {!item.isAvailable && <span className="tag tag-out">{ctx.t.unavailable}</span>}
-                      </span>
-                    </button>
+              </SiteMenu>
+            </section>
+          ),
+          steps: ctx.on("steps") && how.length > 0 && (
+            <section id="how" className="how" data-section="steps" aria-labelledby="how-title">
+              <h2 id="how-title">{ctx.text("steps.title") || c.how}</h2>
+              <ol className="plain steps">
+                {how.map((s, i) => (
+                  <li key={s.title}>
+                    <span className="step-no" aria-hidden="true">
+                      {i + 1}
+                    </span>
+                    <h3>{s.title}</h3>
+                    {s.text && <p>{s.text}</p>}
                   </li>
                 ))}
-              </ul>
+              </ol>
             </section>
-          ))}
-          </SiteMenu>
-        </section>
-
-        {ctx.on("steps") && how.length > 0 && (
-          <section id="how" className="how" data-section="steps" aria-labelledby="how-title">
-            <h2 id="how-title">{ctx.text("steps.title") || c.how}</h2>
-            <ol className="plain steps">
-              {how.map((s, i) => (
-                <li key={s.title}>
-                  <span className="step-no" aria-hidden="true">
-                    {i + 1}
-                  </span>
-                  <h3>{s.title}</h3>
-                  {s.text && <p>{s.text}</p>}
-                </li>
-              ))}
-            </ol>
-          </section>
-        )}
-
-        {ctx.on("reviews") && ctx.reviews.length > 0 && (
-          <section className="reviews" data-section="reviews" aria-labelledby="reviews-title">
-            <h2 id="reviews-title">{c.reviews}</h2>
-            <div className="review-grid">
-              {ctx.reviews.slice(0, 3).map((r) => (
-                <figure key={r.quote}>
-                  <blockquote>{r.quote}</blockquote>
-                  {r.name && <figcaption>{r.name}</figcaption>}
-                </figure>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {ctx.on("faq") && questions.length > 0 && (
-          <section id="faq" className="faq" data-section="faq" aria-labelledby="faq-title">
-            <h2 id="faq-title">{c.faq}</h2>
-            <div className="faq-list">
-              {questions.map((q) => (
-                <details key={q.q}>
-                  <summary>{q.q}</summary>
-                  <p>{q.a}</p>
-                </details>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {ctx.on("visit") && (
-          <section id="visit" className="visit" data-section="visit" aria-labelledby="visit-title">
-            <div className="cta">
-              <h2 id="visit-title">{c.ready}</h2>
-              <p>{c.readyText}</p>
-              <div className="actions">
-                {book && (
-                  <a data-k="btn" className="btn light" href={book} rel="noopener" target="_blank">
-                    <WhatsApp /> {c.book}
-                  </a>
-                )}
-                {ctx.contact.maps && (
-                  <a data-k="btn" className="btn ghost light-ghost" href={ctx.contact.maps} rel="noopener" target="_blank">
-                    {c.directions}
-                  </a>
-                )}
-              </div>
-            </div>
-            <div className="visit-grid">
-              {hasHours(ctx.hours) && (
-                <div className="panel">
-                  <h3>{c.hours}</h3>
-                  <HoursList ctx={ctx} />
+          ),
+          reviews: ctx.on("reviews") && ctx.reviews.length > 0 && (
+            <SiteReviews ctx={ctx} title={c.reviews}>
+              <section className="reviews" data-section="reviews" aria-labelledby="reviews-title">
+                <h2 id="reviews-title">{c.reviews}</h2>
+                <div className="review-grid">
+                  {ctx.reviews.slice(0, 3).map((r) => (
+                    <figure key={r.quote}>
+                      <blockquote>{r.quote}</blockquote>
+                      {r.name && <figcaption>{r.name}</figcaption>}
+                    </figure>
+                  ))}
                 </div>
-              )}
-              <div className="panel">
-                <h3>{c.contact}</h3>
-                <ContactList ctx={ctx} />
+              </section>
+            </SiteReviews>
+          ),
+          faq: ctx.on("faq") && questions.length > 0 && (
+            <section id="faq" className="faq" data-section="faq" aria-labelledby="faq-title">
+              <h2 id="faq-title">{c.faq}</h2>
+              <div className="faq-list">
+                {questions.map((q) => (
+                  <details key={q.q}>
+                    <summary>{q.q}</summary>
+                    <p>{q.a}</p>
+                  </details>
+                ))}
               </div>
-            </div>
-          </section>
-        )}
+            </section>
+          ),
+          visit: ctx.on("visit") && (
+            <SiteVisit ctx={ctx} title={c.visit} cta={book ? { href: book, label: c.book } : null}>
+              <section id="visit" className="visit" data-section="visit" aria-labelledby="visit-title">
+                <div className="cta">
+                  <h2 id="visit-title">{c.ready}</h2>
+                  <p>{c.readyText}</p>
+                  <div className="actions">
+                    {book && (
+                      <a data-k="btn" className="btn light" href={book} rel="noopener" target="_blank">
+                        <WhatsApp /> {c.book}
+                      </a>
+                    )}
+                    {ctx.contact.maps && (
+                      <a data-k="btn" className="btn ghost light-ghost" href={ctx.contact.maps} rel="noopener" target="_blank">
+                        {c.directions}
+                      </a>
+                    )}
+                  </div>
+                </div>
+                <div className="visit-grid">
+                  {hasHours(ctx.hours) && (
+                    <div className="panel">
+                      <h3>{c.hours}</h3>
+                      <HoursList ctx={ctx} />
+                    </div>
+                  )}
+                  <div className="panel">
+                    <h3>{c.contact}</h3>
+                    <ContactList ctx={ctx} />
+                  </div>
+                </div>
+              </section>
+            </SiteVisit>
+          ),
+        })}
       </main>
 
-      <footer className="foot" data-section="footer">
-        <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
-        <Credits ctx={ctx} />
-      </footer>
+      <SiteFooter ctx={ctx} links={links}>
+        <footer className="foot" data-section="footer">
+          <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
+          <Credits ctx={ctx} />
+        </footer>
+      </SiteFooter>
       <OrderFab order={order} />
       <ProductSheet ctx={ctx} services />
     </div>

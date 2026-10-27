@@ -66,13 +66,21 @@ public sealed partial class TemplateSchema
 
     /// <summary>
     /// The schema with every preview picture that can't be shown left out: previews on a field that is not a choice,
-    /// for an option the field doesn't have, or that is not a site-relative SVG path. <paramref name="problems"/> names each one.
+    /// for an option the field doesn't have, or that is not a site-relative SVG path. An "order" field (the order of the
+    /// template's sections) whose options are not a list of section names, each once, is left out too, so the editor never
+    /// offers to move sections it can't. <paramref name="problems"/> names each one.
     /// The registry is checked when it is built (scripts/build-registry.mjs); this keeps a bad entry from reaching the editor.
     /// </summary>
     public static string WithValidPreviews(string json, out List<string> problems)
     {
         problems = [];
         var fields = JsonNode.Parse(json)!.AsArray();
+        foreach (var f in fields.OfType<JsonObject>().Where(x => x["type"]?.GetValue<string>() == "order" && !ValidOrder(x)).ToList())
+        {
+            problems.Add($"{f["key"]?.GetValue<string>() ?? "?"}: an order needs at least two sections, each named once");
+            fields.Remove(f);
+        }
+
         foreach (var f in fields.OfType<JsonObject>())
         {
             if (f["previews"] is null)
@@ -102,6 +110,18 @@ public sealed partial class TemplateSchema
 
         // Unchanged schemas keep their exact text (and their Arabic letters unescaped).
         return problems.Count == 0 ? json : fields.ToJsonString(Readable);
+    }
+
+    /// <summary>An order field's options: two or more section names, each once.</summary>
+    private static bool ValidOrder(JsonObject field)
+    {
+        if (field["options"] is not JsonArray options)
+        {
+            return false;
+        }
+
+        var names = options.Select(o => o is JsonValue v && v.TryGetValue<string>(out var s) && s.Length > 0 ? s : null).ToList();
+        return names.Count >= 2 && names.All(n => n is not null) && names.Distinct().Count() == names.Count;
     }
 
     private static readonly JsonSerializerOptions Readable = new() { Encoder = JavaScriptEncoder.Create(UnicodeRanges.All) };
@@ -260,6 +280,20 @@ public sealed partial class TemplateSchema
                 }
 
                 return null;
+
+            case "order":
+                // The order of the template's sections, by name. Names the template doesn't have, or repeats, are refused;
+                // a list without some of them is fine (the site puts a section the saved order doesn't know after the one
+                // before it), so an order saved before the template gained a section stays valid.
+                if (value is not JsonArray order)
+                {
+                    return "Put the sections in order.";
+                }
+
+                var sections = order.Select(t => t is JsonValue ov && ov.TryGetValue<string>(out var s) ? s : null).ToList();
+                return sections.All(n => n is not null && field.Options!.Contains(n)) && sections.Distinct().Count() == sections.Count
+                    ? null
+                    : $"Put these sections in order, each once: {string.Join(", ", field.Options!)}.";
 
             case "hours":
                 if (value is not JsonObject hours)

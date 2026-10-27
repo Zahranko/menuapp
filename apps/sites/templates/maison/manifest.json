@@ -16,6 +16,7 @@
   "thumbnail": "/templates/maison/thumbnail.png",
   "sample": "maison",
   "menu": { "own": ["carte.style"] },
+  "sectionsLayout": { "order": ["menu", "best", "story", "gallery", "reviews", "visit"] },
   "schema": [
     {
       "key": "font",

@@ -20,6 +20,7 @@ import { copyFor, fill } from "../_premium/copy";
 import { Lightbox } from "../_premium/Lightbox";
 import { bestSellers, categorySections, categoryTree, menuSections, galleryPhotos, PAGE_PATHS, pageLinks, resolvePage, type Category, type Page, type Tree } from "../_premium/pages";
 import { HeroWatch, Overlay } from "./Overlay";
+import { numbered, ordered, SiteFooter, SiteGallery, SiteReviews, SiteStory, SiteVisit } from "../_kit/Sections";
 
 /*
  * Template 022 "Maison" (Pro): a fine-dining house in the manner of a printed carte and a magazine feature.
@@ -125,7 +126,9 @@ export default function MaisonTemplate({ site, path = [], base, now }: TemplateP
           {page.kind === "visit" && <VisitPage v={v} />}
         </main>
       )}
-      <Footer v={v} />
+      <SiteFooter ctx={ctx} links={pageLinks(v, { home: c.home, menu: v.menuWord, best: c.best, gallery: c.gallery, visit: c.visit })} social={socialAccounts(site, SOCIAL_DEFAULT)}>
+        <Footer v={v} />
+      </SiteFooter>
       <ReserveBar v={v} />
       <ProductSheet ctx={ctx} />
       {v.photos.length > 0 && <Lightbox photos={v.photos} labels={{ close: ctx.t.close, prev: c.prev, next: c.next, photo: c.photo }} />}
@@ -355,8 +358,7 @@ function Home({ v, layout }: { v: View; layout: (typeof HERO)[number] }) {
   const showBest = ctx.on("best") && v.best.length > 0;
   const showGallery = ctx.on("gallery") && v.photos.length > 0;
   const showReviews = ctx.on("reviews") && ctx.reviews.length > 0;
-  let n = 0;
-  const next = () => ++n;
+  const num = numbered(ctx, { menu: true, best: showBest, story, gallery: showGallery, reviews: showReviews, visit: ctx.on("visit") });
 
   return (
     <>
@@ -371,69 +373,82 @@ function Home({ v, layout }: { v: View; layout: (typeof HERO)[number] }) {
         </div>
       )}
 
-      <section id="menu" className="mx-chap mx-carte" data-section="menu" aria-labelledby="carte-title">
-        <Chapter n={next()} title={ctx.text("categories.title") || v.menuWord} id="carte-title" locale={ctx.locale} />
-        <SiteMenu ctx={ctx} like={v.carte === "pictures" ? "list" : "compact"} id="kit-carte" sections={tree.roots.slice(0, 6).map((cat) => ({ id: cat.id, anchor: `h-${cat.id}`, name: cat.name, products: cat.all.slice(0, 3), link: { href: href(cat.path), label: fill(c.seeAll, { name: cat.name }) } }))}>
-        {tree.roots.length > 0 && (
-          <div className="mx-courses">
-            {tree.roots.slice(0, 6).map((cat) => (
-              <div key={cat.id} className="mx-course">
-                <h3 className="mx-course-title">
-                  <a href={href(cat.path)}>{cat.name}</a>
-                </h3>
-                {cat.children.length > 0 && <p className="mx-course-subs">{cat.children.map((s) => s.name).join("  /  ")}</p>}
-                <Dishes v={v} items={cat.all.slice(0, 3)} />
-                {cat.all.length > 3 && <More href={href(cat.path)}>{fill(c.seeAll, { name: cat.name })}</More>}
+      {ordered(ctx, {
+        menu: (
+          <section id="menu" className="mx-chap mx-carte" data-section="menu" aria-labelledby="carte-title">
+            <Chapter n={num.menu} title={ctx.text("categories.title") || v.menuWord} id="carte-title" locale={ctx.locale} />
+            <SiteMenu ctx={ctx} like={v.carte === "pictures" ? "list" : "compact"} id="kit-carte" sections={tree.roots.slice(0, 6).map((cat) => ({ id: cat.id, anchor: `h-${cat.id}`, name: cat.name, products: cat.all.slice(0, 3), link: { href: href(cat.path), label: fill(c.seeAll, { name: cat.name }) } }))}>
+            {tree.roots.length > 0 && (
+              <div className="mx-courses">
+                {tree.roots.slice(0, 6).map((cat) => (
+                  <div key={cat.id} className="mx-course">
+                    <h3 className="mx-course-title">
+                      <a href={href(cat.path)}>{cat.name}</a>
+                    </h3>
+                    {cat.children.length > 0 && <p className="mx-course-subs">{cat.children.map((s) => s.name).join("  /  ")}</p>}
+                    <Dishes v={v} items={cat.all.slice(0, 3)} />
+                    {cat.all.length > 3 && <More href={href(cat.path)}>{fill(c.seeAll, { name: cat.name })}</More>}
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        )}
-</SiteMenu>
-        <div className="mx-center">
-          <a data-k="btn" className="mx-btn is-quiet" href={href(PAGE_PATHS.menu)}>
-            {c.viewAll}
-          </a>
-        </div>
-      </section>
-
-      {showBest && <Signatures v={v} n={next()} />}
-
-      {story && (
-        <section id="story" className={cx("mx-chap mx-story", storyImage && "has-image")} data-section="story" aria-labelledby="story-title">
-          <div className="mx-story-copy">
-            <Chapter n={next()} title={ctx.text("story.title") || ctx.t.story} id="story-title" locale={ctx.locale} align="start" />
-            <p className="mx-story-text mx-drop">{story}</p>
-            <More href={href(PAGE_PATHS.visit)}>{c.visit}</More>
-          </div>
-          {storyImage && (
-            <figure data-k="photo" className="mx-story-media mx-frame mx-reveal">
-              <Picture src={storyImage} sizes="(min-width: 900px) 45vw, 100vw" />
-            </figure>
-          )}
-        </section>
-      )}
-
-      {showGallery && (
-        <section id="gallery" className="mx-chap mx-film" data-section="gallery" aria-labelledby="gallery-title">
-          <Chapter n={next()} title={ctx.text("gallery.title") || c.gallery} id="gallery-title" locale={ctx.locale} />
-          <ul className="plain mx-film-strip" data-gallery>
-            {v.photos.slice(0, 8).map((p, i) => (
-              <li key={p.src} className={`mx-film-${i % 3}`}>
-                <button data-k="photo fill" type="button" className="mx-shot" data-photo={i} aria-label={p.caption ?? fill(c.photo, { n: i + 1 })}>
-                  <Picture src={p.src} sizes="(min-width: 900px) 40vw, 80vw" />
-                </button>
-              </li>
-            ))}
-          </ul>
-          <div className="mx-center">
-            <More href={href(PAGE_PATHS.gallery)}>{c.viewAll}</More>
-          </div>
-        </section>
-      )}
-
-      {showReviews && <Reviews v={v} n={next()} />}
-
-      {ctx.on("visit") && <Visit v={v} n={next()} />}
+            )}
+    </SiteMenu>
+            <div className="mx-center">
+              <a data-k="btn" className="mx-btn is-quiet" href={href(PAGE_PATHS.menu)}>
+                {c.viewAll}
+              </a>
+            </div>
+          </section>
+        ),
+        best: showBest && (
+          <Signatures v={v} n={num.best} />
+        ),
+        story: story && (
+          <SiteStory ctx={ctx} eyebrow={c.about} title={ctx.text("story.title") || ctx.t.story} more={{ href: href(PAGE_PATHS.visit), label: c.visit }}>
+            <section id="story" className={cx("mx-chap mx-story", storyImage && "has-image")} data-section="story" aria-labelledby="story-title">
+              <div className="mx-story-copy">
+                <Chapter n={num.story} title={ctx.text("story.title") || ctx.t.story} id="story-title" locale={ctx.locale} align="start" />
+                <p className="mx-story-text mx-drop">{story}</p>
+                <More href={href(PAGE_PATHS.visit)}>{c.visit}</More>
+              </div>
+              {storyImage && (
+                <figure data-k="photo" className="mx-story-media mx-frame mx-reveal">
+                  <Picture src={storyImage} sizes="(min-width: 900px) 45vw, 100vw" />
+                </figure>
+              )}
+            </section>
+          </SiteStory>
+        ),
+        gallery: showGallery && (
+          <SiteGallery ctx={ctx} title={ctx.text("gallery.title") || c.gallery} photos={v.photos} viewer more={{ href: href(PAGE_PATHS.gallery), label: c.viewAll }}>
+            <section id="gallery" className="mx-chap mx-film" data-section="gallery" aria-labelledby="gallery-title">
+              <Chapter n={num.gallery} title={ctx.text("gallery.title") || c.gallery} id="gallery-title" locale={ctx.locale} />
+              <ul className="plain mx-film-strip" data-gallery>
+                {v.photos.slice(0, 8).map((p, i) => (
+                  <li key={p.src} className={`mx-film-${i % 3}`}>
+                    <button data-k="photo fill" type="button" className="mx-shot" data-photo={i} aria-label={p.caption ?? fill(c.photo, { n: i + 1 })}>
+                      <Picture src={p.src} sizes="(min-width: 900px) 40vw, 80vw" />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              <div className="mx-center">
+                <More href={href(PAGE_PATHS.gallery)}>{c.viewAll}</More>
+              </div>
+            </section>
+          </SiteGallery>
+        ),
+        reviews: showReviews && (
+          <SiteReviews ctx={ctx} title={ctx.t.reviews}>
+            <Reviews v={v} n={num.reviews} />
+          </SiteReviews>
+        ),
+        visit: ctx.on("visit") && (
+          <SiteVisit ctx={ctx} title={ctx.t.visit} cta={v.order ? { href: v.order, label: v.cta } : null}>
+            <Visit v={v} n={num.visit} />
+          </SiteVisit>
+        ),
+      })}
     </>
   );
 }
@@ -812,21 +827,29 @@ function VisitPage({ v }: { v: View }) {
   return (
     <>
       <PageHead v={v} trail={[{ label: v.c.visit }]} title={ctx.t.visit} lead={ctx.today} />
-      <Visit v={v} heading={false} />
+      <SiteVisit ctx={ctx} heading={false} title={ctx.t.visit} cta={v.order ? { href: v.order, label: v.cta } : null}>
+        <Visit v={v} heading={false} />
+      </SiteVisit>
       {story && (
-        <section className={cx("mx-chap mx-story", storyImage && "has-image")} data-section="story" aria-labelledby="story-title">
-          <div className="mx-story-copy">
-            <Chapter n={1} title={ctx.text("story.title") || ctx.t.story} id="story-title" locale={ctx.locale} align="start" />
-            <p className="mx-story-text mx-drop">{story}</p>
-          </div>
-          {storyImage && (
-            <figure data-k="photo" className="mx-story-media mx-frame mx-reveal">
-              <Picture src={storyImage} sizes="(min-width: 900px) 45vw, 100vw" />
-            </figure>
-          )}
-        </section>
+        <SiteStory ctx={ctx} eyebrow={v.c.about} title={ctx.text("story.title") || ctx.t.story}>
+          <section className={cx("mx-chap mx-story", storyImage && "has-image")} data-section="story" aria-labelledby="story-title">
+            <div className="mx-story-copy">
+              <Chapter n={1} title={ctx.text("story.title") || ctx.t.story} id="story-title" locale={ctx.locale} align="start" />
+              <p className="mx-story-text mx-drop">{story}</p>
+            </div>
+            {storyImage && (
+              <figure data-k="photo" className="mx-story-media mx-frame mx-reveal">
+                <Picture src={storyImage} sizes="(min-width: 900px) 45vw, 100vw" />
+              </figure>
+            )}
+          </section>
+        </SiteStory>
       )}
-      {ctx.on("reviews") && ctx.reviews.length > 0 && <Reviews v={v} n={story ? 2 : 1} />}
+      {ctx.on("reviews") && ctx.reviews.length > 0 && (
+        <SiteReviews ctx={ctx} title={ctx.t.reviews}>
+          <Reviews v={v} n={story ? 2 : 1} />
+        </SiteReviews>
+      )}
     </>
   );
 }

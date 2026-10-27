@@ -13,6 +13,7 @@
   "heroSlider": { "kind": "backdrop", "source": "hero.image" },
   "thumbnail": "/templates/pulse/thumbnail.png",
   "sample": "gym",
+  "sectionsLayout": { "order": ["highlights", "menu", "steps", "gallery", "reviews", "faq", "join", "visit"] },
   "schema": [
     {
       "key": "font",

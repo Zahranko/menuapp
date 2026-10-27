@@ -455,6 +455,42 @@
       content: none;
     }
   }
+  /* The template's own button for a product (Ask on WhatsApp, Book), under the product. */
+  & .kit-mn-li[data-act] {
+    flex-direction: column;
+    gap: calc(8px * var(--kit-space, 1));
+  }
+  & .kit-mn-act {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    align-self: flex-start;
+    min-height: 40px;
+    padding: 8px 16px;
+    border: 1px solid var(--k-acc);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--k-acc-text, var(--k-ink));
+    font-family: var(--k-fb);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+    & svg {
+      width: 16px;
+      height: 16px;
+      flex: none;
+    }
+    &:hover {
+      background: var(--k-acc);
+      color: var(--k-acc-ink);
+    }
+    &:focus-visible {
+      outline: 2px solid var(--k-acc);
+      outline-offset: 2px;
+    }
+  }
   & .kit-mn-item {
     appearance: none;
     position: relative;

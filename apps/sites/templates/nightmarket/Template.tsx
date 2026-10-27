@@ -14,6 +14,7 @@ import { itemCount } from "@/lib/i18n";
 import type { TemplateProps } from "@/lib/types";
 import { basicLinks, orderCta, pageTop, SiteHeader, SiteHero } from "../_kit/Top";
 import { SiteMenu } from "../_kit/Menu";
+import { SiteFooter, SiteGallery, SiteVisit, ordered } from "../_kit/Sections";
 
 const copy = {
   en: { picks: "Tonight's favorites", menu: "The menu", findUs: "Find us", order: "Order on WhatsApp", photos: "From the grill", swipe: "Swipe for more", hours: "Hours" },
@@ -86,112 +87,119 @@ export default function NightMarketTemplate({ site, now }: TemplateProps & { now
           </section>
         </SiteHero>
 
-        {ctx.on("picks") && lead && (
-          <section className="picks" data-section="picks" aria-labelledby="picks-title">
-            <h2 id="picks-title" className="kicker">
-              {c.picks}
-            </h2>
-            <div className={cx("picks-grid", rest.length === 0 && "single")}>
-              {[lead, ...rest].map((item, i) => (
-                <button key={item.id} type="button" className={cx("pick", i === 0 && "lead")} data-item-id={item.id}>
-                  <span data-k="photo overlay" className="pick-media">
-                    <ProductPicture item={item} sizes={i === 0 ? "(min-width: 760px) 60vw, 100vw" : "(min-width: 760px) 30vw, 50vw"} />
-                  </span>
-                  <span className="pick-info">
-                    {item.labelText && <span className="tag">{item.labelText}</span>}
-                    <span className="pick-name">{item.name}</span>
-                    <span className="price-sticker">{item.priceText}</span>
-                  </span>
-                </button>
-              ))}
-            </div>
-          </section>
-        )}
-
-        <section id="menu" className="menu" data-section="menu" aria-labelledby="menu-title">
-          <h2 id="menu-title" className="kicker">
-            {c.menu}
-          </h2>
-          <SiteMenu ctx={ctx} like="carousel">
-          {ctx.sections.length > 1 && (
-            <CategoryTabs categories={ctx.sections.map(({ anchor, name }) => ({ anchor, name }))} label={ctx.t.categories} className="chips" tabClassName="chip" activeClassName="on" />
-          )}
-          {ctx.sections.map((section) => (
-            <section key={section.id} id={section.anchor} className="row" aria-labelledby={`${section.anchor}-h`}>
-              <div className="row-head">
-                <h3 id={`${section.anchor}-h`}>{section.name}</h3>
-                <span>{itemCount(section.products.length, ctx.locale)}</span>
-              </div>
-              <ul className="plain cards kit-cards" tabIndex={0} aria-label={`${section.name}. ${c.swipe}`}>
-                {section.products.map((item) => (
-                  <li key={item.id}>
-                    <button type="button" className={cx("card kit-card", !item.isAvailable && "out")} data-item-id={item.id}>
-                      <span className="card-media kit-card-media kit-flush">
-                        <ProductPicture item={item} sizes="(min-width: 760px) 25vw, 70vw" />
-                      </span>
-                      <span className="card-body">
-                        <span className="card-tags">
-                          {item.labelText && <span className="tag">{item.labelText}</span>}
-                          {!item.isAvailable && <span className="tag tag-out">{ctx.t.soldOut}</span>}
-                        </span>
-                        <span className="card-name">{item.name}</span>
-                        {item.description && <span className="card-desc">{item.description}</span>}
-                        <span className="card-price">{item.priceText}</span>
-                      </span>
-                    </button>
-                  </li>
+        {ordered(ctx, {
+          picks: ctx.on("picks") && lead && (
+            <section className="picks" data-section="picks" aria-labelledby="picks-title">
+              <h2 id="picks-title" className="kicker">
+                {c.picks}
+              </h2>
+              <div className={cx("picks-grid", rest.length === 0 && "single")}>
+                {[lead, ...rest].map((item, i) => (
+                  <button key={item.id} type="button" className={cx("pick", i === 0 && "lead")} data-item-id={item.id}>
+                    <span data-k="photo overlay" className="pick-media">
+                      <ProductPicture item={item} sizes={i === 0 ? "(min-width: 760px) 60vw, 100vw" : "(min-width: 760px) 30vw, 50vw"} />
+                    </span>
+                    <span className="pick-info">
+                      {item.labelText && <span className="tag">{item.labelText}</span>}
+                      <span className="pick-name">{item.name}</span>
+                      <span className="price-sticker">{item.priceText}</span>
+                    </span>
+                  </button>
                 ))}
-              </ul>
-            </section>
-          ))}
-          </SiteMenu>
-        </section>
-
-        {ctx.on("gallery") && ctx.gallery.length > 0 && (
-          <section className="strip" data-section="gallery" aria-labelledby="strip-title">
-            <h2 id="strip-title" className="kicker">
-              {c.photos}
-            </h2>
-            <ul className="plain strip-row" data-gallery tabIndex={0} aria-labelledby="strip-title">
-              {ctx.gallery.map((src, i) => (
-                <li key={src + i} data-k="photo fill">
-                  <Picture src={src} alt={ctx.t.photoOf.replace("{n}", String(i + 1)).replace("{name}", site.business.name)} sizes="(min-width: 760px) 22vw, 60vw" />
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
-
-        {ctx.on("visit") && (
-          <section id="visit" className="visit" data-section="visit" aria-labelledby="visit-title">
-            <h2 id="visit-title" className="big">
-              {c.findUs}
-            </h2>
-            <div className="visit-grid">
-              <div className="panel">
-                <ContactList ctx={ctx} />
-                {ctx.contact.maps && (
-                  <a data-k="btn" className="btn" href={ctx.contact.maps} rel="noopener" target="_blank">
-                    {ctx.t.directions} <Arrow className="flip" />
-                  </a>
-                )}
               </div>
-              {hasHours(ctx.hours) && (
-                <div className="panel">
-                  <h3>{c.hours}</h3>
-                  <HoursList ctx={ctx} />
-                </div>
+            </section>
+          ),
+          menu: (
+            <section id="menu" className="menu" data-section="menu" aria-labelledby="menu-title">
+              <h2 id="menu-title" className="kicker">
+                {c.menu}
+              </h2>
+              <SiteMenu ctx={ctx} like="carousel">
+              {ctx.sections.length > 1 && (
+                <CategoryTabs categories={ctx.sections.map(({ anchor, name }) => ({ anchor, name }))} label={ctx.t.categories} className="chips" tabClassName="chip" activeClassName="on" />
               )}
-            </div>
-          </section>
-        )}
+              {ctx.sections.map((section) => (
+                <section key={section.id} id={section.anchor} className="row" aria-labelledby={`${section.anchor}-h`}>
+                  <div className="row-head">
+                    <h3 id={`${section.anchor}-h`}>{section.name}</h3>
+                    <span>{itemCount(section.products.length, ctx.locale)}</span>
+                  </div>
+                  <ul className="plain cards kit-cards" tabIndex={0} aria-label={`${section.name}. ${c.swipe}`}>
+                    {section.products.map((item) => (
+                      <li key={item.id}>
+                        <button type="button" className={cx("card kit-card", !item.isAvailable && "out")} data-item-id={item.id}>
+                          <span className="card-media kit-card-media kit-flush">
+                            <ProductPicture item={item} sizes="(min-width: 760px) 25vw, 70vw" />
+                          </span>
+                          <span className="card-body">
+                            <span className="card-tags">
+                              {item.labelText && <span className="tag">{item.labelText}</span>}
+                              {!item.isAvailable && <span className="tag tag-out">{ctx.t.soldOut}</span>}
+                            </span>
+                            <span className="card-name">{item.name}</span>
+                            {item.description && <span className="card-desc">{item.description}</span>}
+                            <span className="card-price">{item.priceText}</span>
+                          </span>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              ))}
+              </SiteMenu>
+            </section>
+          ),
+          gallery: ctx.on("gallery") && ctx.gallery.length > 0 && (
+            <SiteGallery ctx={ctx} title={c.photos}>
+              <section className="strip" data-section="gallery" aria-labelledby="strip-title">
+                <h2 id="strip-title" className="kicker">
+                  {c.photos}
+                </h2>
+                <ul className="plain strip-row" data-gallery tabIndex={0} aria-labelledby="strip-title">
+                  {ctx.gallery.map((src, i) => (
+                    <li key={src + i} data-k="photo fill">
+                      <Picture src={src} alt={ctx.t.photoOf.replace("{n}", String(i + 1)).replace("{name}", site.business.name)} sizes="(min-width: 760px) 22vw, 60vw" />
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            </SiteGallery>
+          ),
+          visit: ctx.on("visit") && (
+            <SiteVisit ctx={ctx} title={c.findUs} cta={ctx.contact.whatsapp ? { href: ctx.contact.whatsapp, label: c.order } : null}>
+              <section id="visit" className="visit" data-section="visit" aria-labelledby="visit-title">
+                <h2 id="visit-title" className="big">
+                  {c.findUs}
+                </h2>
+                <div className="visit-grid">
+                  <div className="panel">
+                    <ContactList ctx={ctx} />
+                    {ctx.contact.maps && (
+                      <a data-k="btn" className="btn" href={ctx.contact.maps} rel="noopener" target="_blank">
+                        {ctx.t.directions} <Arrow className="flip" />
+                      </a>
+                    )}
+                  </div>
+                  {hasHours(ctx.hours) && (
+                    <div className="panel">
+                      <h3>{c.hours}</h3>
+                      <HoursList ctx={ctx} />
+                    </div>
+                  )}
+                </div>
+              </section>
+            </SiteVisit>
+          ),
+        })}
       </main>
 
-      <footer className="foot" data-section="footer">
-        <FootName ctx={ctx} as="span" className="foot-name" />
-        <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
-        <Credits ctx={ctx} />
-      </footer>
+      <SiteFooter ctx={ctx} links={basicLinks(ctx)}>
+        <footer className="foot" data-section="footer">
+          <FootName ctx={ctx} as="span" className="foot-name" />
+          <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
+          <Credits ctx={ctx} />
+        </footer>
+      </SiteFooter>
 
       {order && (
         <a className="order-bar kit-order" {...orderLink(order)}>

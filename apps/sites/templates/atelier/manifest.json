@@ -13,6 +13,7 @@
   "heroSlider": { "kind": "backdrop", "source": "hero.image" },
   "thumbnail": "/templates/atelier/thumbnail.png",
   "sample": "salon",
+  "sectionsLayout": { "order": ["highlights", "menu", "story", "gallery", "reviews", "visit"] },
   "schema": [
     {
       "key": "font",

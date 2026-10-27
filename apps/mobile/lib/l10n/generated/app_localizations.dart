@@ -2407,6 +2407,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'العربية'**
   String get languageArabic;
+
+  /// No description provided for @sectionOrderHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The opening always stays at the top and the footer at the bottom.'**
+  String get sectionOrderHint;
+
+  /// No description provided for @sectionMoveUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Move {section} up'**
+  String sectionMoveUp(String section);
+
+  /// No description provided for @sectionMoveDown.
+  ///
+  /// In en, this message translates to:
+  /// **'Move {section} down'**
+  String sectionMoveDown(String section);
+
+  /// No description provided for @sectionPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'{section}, {position} of {count}'**
+  String sectionPosition(String section, int position, int count);
 }
 
 class _AppLocalizationsDelegate

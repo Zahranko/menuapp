@@ -13,6 +13,7 @@
   "heroSlider": { "kind": "band" },
   "thumbnail": "/templates/bistro/thumbnail.png",
   "sample": "restaurant",
+  "sectionsLayout": { "order": ["menu", "story", "visit"] },
   "schema": [
     {
       "key": "font",

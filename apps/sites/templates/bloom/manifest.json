@@ -15,6 +15,7 @@
   "tier": "pro",
   "thumbnail": "/templates/bloom/thumbnail.png",
   "sample": "bloom",
+  "sectionsLayout": { "order": ["menu", "best", "story", "gallery", "reviews", "visit"] },
   "schema": [
     {
       "key": "font",

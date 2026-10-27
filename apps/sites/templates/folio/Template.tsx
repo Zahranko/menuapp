@@ -22,6 +22,7 @@ import { ProductSheet } from "../_fashion/ProductSheet";
 import { orderButton, socialAccounts } from "../_kit/options";
 import { orderCta, pageTop, SiteHeader, SiteHero, type NavLink } from "../_kit/Top";
 import { SiteMenu } from "../_kit/Menu";
+import { ordered, SiteFooter, SiteGallery, SiteReviews, SiteStory, SiteVisit } from "../_kit/Sections";
 
 /*
  * Template 027 "Folio": an editorial lookbook for a clothing store. A magazine-cover opening with an issue line, the
@@ -38,7 +39,7 @@ const PALETTES = {
 
 const copy = {
   en: { menu: "Menu", collections: "Collections", issue: "N°", letter: "From the studio", notes: "Notes from our clients", store: "The store", visitUs: "Visit the studio", chapter: "Chapter", search: "Search the collection", open: "Open" },
-  ar: { menu: "القائمة", collections: "المجموعات", issue: "العدد", letter: "من الاستوديو", notes: "كلمات من زبائننا", store: "المتجر", visitUs: "زورونا في الاستوديو", chapter: "الفصل", search: "ابحث في المجموعة", open: "افتح" },
+  ar: { menu: "القائمة", collections: "المجموعات", issue: "العدد", letter: "من الاستوديو", notes: "كلمات من زبائننا", store: "المحل", visitUs: "زورونا في الاستوديو", chapter: "الفصل", search: "ابحث في المجموعة", open: "افتح" },
 };
 
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -70,14 +71,34 @@ export default function FolioTemplate({ site, now }: TemplateProps & { now?: Dat
         <SiteHero ctx={ctx} top={top} actions={[{ href: "#menu", label: f.shop }]}>
           <Cover ctx={ctx} f={f} />
         </SiteHero>
-        {ctx.on("edit") && <Edit ctx={ctx} f={f} />}
-        <Catalog ctx={ctx} c={c} f={f} />
-        {photos.length > 0 && <Lookbook ctx={ctx} f={f} photos={photos} />}
-        {ctx.on("story") && ctx.text("story.text") && <Letter ctx={ctx} c={c} />}
-        {ctx.on("reviews") && ctx.reviews.length > 0 && <Notes ctx={ctx} c={c} />}
-        {ctx.on("visit") && <Store ctx={ctx} c={c} f={f} />}
+        {ordered(ctx, {
+          picks: ctx.on("edit") && <Edit ctx={ctx} f={f} />,
+          menu: <Catalog ctx={ctx} c={c} f={f} />,
+          gallery: photos.length > 0 && (
+            <SiteGallery ctx={ctx} id="lookbook" title={ctx.text("gallery.title") || f.lookbook} photos={photos.map((src) => ({ src }))} viewer>
+              <Lookbook ctx={ctx} f={f} photos={photos} />
+            </SiteGallery>
+          ),
+          story: ctx.on("story") && ctx.text("story.text") && (
+            <SiteStory ctx={ctx} eyebrow={c.letter} title={ctx.text("story.title") || ctx.t.story}>
+              <Letter ctx={ctx} c={c} />
+            </SiteStory>
+          ),
+          reviews: ctx.on("reviews") && ctx.reviews.length > 0 && (
+            <SiteReviews ctx={ctx} title={c.notes}>
+              <Notes ctx={ctx} c={c} />
+            </SiteReviews>
+          ),
+          visit: ctx.on("visit") && (
+            <SiteVisit ctx={ctx} title={c.visitUs} cta={ctx.contact.whatsapp ? { href: ctx.contact.whatsapp, label: f.askSize } : null}>
+              <Store ctx={ctx} c={c} f={f} />
+            </SiteVisit>
+          ),
+        })}
       </main>
-      <Footer ctx={ctx} c={c} />
+      <SiteFooter ctx={ctx} links={links}>
+        <Footer ctx={ctx} c={c} />
+      </SiteFooter>
       <OrderFab order={order} />
       <ProductSheet items={sheetItems(ctx, all)} phone={site.business.whatsApp} labels={sheetLabels(ctx)} />
       {photos.length > 0 && <PhotoViewer photos={photos.map((src) => ({ src, alt: null }))} labels={viewerLabels(ctx)} />}

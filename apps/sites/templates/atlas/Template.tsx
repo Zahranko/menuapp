@@ -23,6 +23,7 @@ import { atlasCopy } from "./copy";
 import { Finder } from "./Finder";
 import { QuickView, type QuickItem } from "./QuickView";
 import { SideDrawer } from "./SideDrawer";
+import { SiteFooter, SiteGallery, SiteReviews, SiteStory, SiteVisit, ordered } from "../_kit/Sections";
 
 /*
  * Template 024 "Atlas" (Pro): a direct-to-consumer storefront. Thin announcement bar, a sticky header with a search
@@ -112,7 +113,7 @@ export default function AtlasTemplate({ site, path = [], base, now }: TemplatePr
     >
       <TemplateStyles id="atlas" />
       <TopBar v={v} />
-      <SiteHeader ctx={ctx} top={v.top} links={pageLinks(v, { home: c.home, menu: c.shop, best: c.best, gallery: a.lookbook, visit: c.visit })} cta={orderCta(order)} home={v.href("")}>
+      <SiteHeader ctx={ctx} top={v.top} links={pageLinks(v, { home: c.home, menu: c.shop, best: c.best, gallery: a.lookbook, visit: c.visit })} cta={orderCta(order)} home={v.href("")} tools={<Finder compact {...finderOf(v)} />}>
         <Header v={v} />
       </SiteHeader>
       {page.kind === "home" ? (
@@ -128,7 +129,9 @@ export default function AtlasTemplate({ site, path = [], base, now }: TemplatePr
           {page.kind === "visit" && <VisitPage v={v} />}
         </main>
       )}
-      <Footer v={v} />
+      <SiteFooter ctx={ctx} links={pageLinks(v, { home: c.home, menu: c.shop, best: c.best, gallery: a.lookbook, visit: c.visit })} social={socialAccounts(site, SOCIAL_DEFAULT)}>
+        <Footer v={v} />
+      </SiteFooter>
       <QuickView items={quick} labels={{ close: ctx.t.close, soldOut: ctx.t.soldOut, inStock: a.inStock, order: v.cta }} />
       <OrderFab order={order} />
       {v.photos.length > 0 && <Lightbox photos={v.photos} labels={{ close: ctx.t.close, prev: c.prev, next: c.next, photo: c.photo }} />}
@@ -157,13 +160,21 @@ function TopBar({ v }: { v: View }) {
   );
 }
 
+/** The department search's contents and words, for the header's search field (and the shared headers' search button). */
+function finderOf(v: View) {
+  const { ctx, a, href, tree } = v;
+  return {
+    departments: tree.list.map((d) => ({ name: d.name, href: href(d.path), parent: d.parent?.name ?? null, count: itemCount(d.all.length, ctx.locale) })),
+    products: tree.items.map((p) => ({ id: p.id, name: p.name, department: v.deptOf.get(p.id) ?? "", price: p.priceText })),
+    labels: { placeholder: a.find, label: a.findLabel, empty: a.findEmpty, departments: a.departments, products: a.products },
+  };
+}
+
 function Header({ v }: { v: View }) {
   const { ctx, c, a, page, href, tree } = v;
   const current = (kind: Page["kind"]) => (page.kind === kind ? ("page" as const) : undefined);
   const shopCurrent = page.kind === "menu" || page.kind === "category" ? ("page" as const) : undefined;
   const feature = tree.roots.find((r) => r.cover) ?? null;
-  const departments = tree.list.map((d) => ({ name: d.name, href: href(d.path), parent: d.parent?.name ?? null, count: itemCount(d.all.length, ctx.locale) }));
-  const products = tree.items.map((p) => ({ id: p.id, name: p.name, department: v.deptOf.get(p.id) ?? "", price: p.priceText }));
 
   return (
     <header className="a-head" data-section="header">
@@ -296,7 +307,7 @@ function Header({ v }: { v: View }) {
           </a>
         </nav>
 
-        <Finder departments={departments} products={products} labels={{ placeholder: a.find, label: a.findLabel, empty: a.findEmpty, departments: a.departments, products: a.products }} />
+        <Finder {...finderOf(v)} />
 
         {v.order && (
           <a className="a-icon a-head-order" href={v.order} target="_blank" rel="noopener noreferrer" aria-label={v.cta}>
@@ -556,55 +567,66 @@ function Home({ v }: { v: View }) {
         <Hero v={v} />
       </SiteHero>
 
-      <section id="menu" className="a-sec a-shop" data-section="menu" aria-labelledby="shop-title">
-        <Head title={ctx.text("categories.title") || a.departments} id="shop-title" link={{ href: href(PAGE_PATHS.menu), label: a.shopAll }} />
-        {tree.roots.length > 0 && <Departments v={v} categories={tree.roots} />}
-        {ctx.on("arrivals") && edit.length > 0 && (
-          <div className="a-edit">
-            <Head level={3} title={ctx.text("arrivals.title") || a.newIn} id="edit-title" />
-            <SiteMenu ctx={ctx} like="grid" id="kit-picks" sections={[{ id: "edit", anchor: "edit", name: ctx.text("arrivals.title") || a.newIn, products: edit }]} flat={{ label: ctx.text("arrivals.title") || a.newIn }}>
-            <Grid v={v} items={edit} />
-</SiteMenu>
-          </div>
-        )}
-      </section>
-
-      {ctx.on("best") && v.best.length > 0 && (
-        <section id="best" className="a-sec a-best" data-section="best" aria-labelledby="best-title">
-          <Head title={ctx.text("best.title") || c.best} id="best-title" link={{ href: href(PAGE_PATHS.best), label: c.viewAll }} />
-          <Ranked v={v} items={v.best.slice(0, 5)} />
-        </section>
-      )}
-
-      {story && (
-        <section id="story" className={cx("a-story", storyImage && "has-image")} data-section="story" aria-labelledby="story-title">
-          {storyImage && (
-            <div data-k="photo overlay" className="a-story-img">
-              <Picture src={storyImage} sizes="100vw" />
-            </div>
-          )}
-          <div className="a-story-card rv">
-            <h2 id="story-title" className="a-h2">
-              {ctx.text("story.title") || ctx.t.story}
-            </h2>
-            <p>{story}</p>
-            <a className="a-link" href={href(PAGE_PATHS.visit)}>
-              {c.about} <Arrow className="flip" />
-            </a>
-          </div>
-        </section>
-      )}
-
-      {ctx.on("gallery") && v.photos.length > 0 && (
-        <section id="gallery" className="a-sec a-look" data-section="gallery" aria-labelledby="look-title">
-          <Head title={ctx.text("gallery.title") || a.lookbook} id="look-title" link={{ href: href(PAGE_PATHS.gallery), label: c.viewAll }} />
-          <Lookbook v={v} photos={v.photos.slice(0, 7)} />
-        </section>
-      )}
-
-      {ctx.on("reviews") && ctx.reviews.length > 0 && <Reviews v={v} />}
-
-      {ctx.on("visit") && <VisitStrip v={v} />}
+      {ordered(ctx, {
+        menu: (
+          <section id="menu" className="a-sec a-shop" data-section="menu" aria-labelledby="shop-title">
+            <Head title={ctx.text("categories.title") || a.departments} id="shop-title" link={{ href: href(PAGE_PATHS.menu), label: a.shopAll }} />
+            {tree.roots.length > 0 && <Departments v={v} categories={tree.roots} />}
+            {ctx.on("arrivals") && edit.length > 0 && (
+              <div className="a-edit">
+                <Head level={3} title={ctx.text("arrivals.title") || a.newIn} id="edit-title" />
+                <SiteMenu ctx={ctx} like="grid" id="kit-picks" sections={[{ id: "edit", anchor: "edit", name: ctx.text("arrivals.title") || a.newIn, products: edit }]} flat={{ label: ctx.text("arrivals.title") || a.newIn }}>
+                <Grid v={v} items={edit} />
+    </SiteMenu>
+              </div>
+            )}
+          </section>
+        ),
+        best: ctx.on("best") && v.best.length > 0 && (
+          <section id="best" className="a-sec a-best" data-section="best" aria-labelledby="best-title">
+            <Head title={ctx.text("best.title") || c.best} id="best-title" link={{ href: href(PAGE_PATHS.best), label: c.viewAll }} />
+            <Ranked v={v} items={v.best.slice(0, 5)} />
+          </section>
+        ),
+        story: story && (
+          <SiteStory ctx={ctx} title={ctx.text("story.title") || ctx.t.story} more={{ href: href(PAGE_PATHS.visit), label: c.about }}>
+            <section id="story" className={cx("a-story", storyImage && "has-image")} data-section="story" aria-labelledby="story-title">
+              {storyImage && (
+                <div data-k="photo overlay" className="a-story-img">
+                  <Picture src={storyImage} sizes="100vw" />
+                </div>
+              )}
+              <div className="a-story-card rv">
+                <h2 id="story-title" className="a-h2">
+                  {ctx.text("story.title") || ctx.t.story}
+                </h2>
+                <p>{story}</p>
+                <a className="a-link" href={href(PAGE_PATHS.visit)}>
+                  {c.about} <Arrow className="flip" />
+                </a>
+              </div>
+            </section>
+          </SiteStory>
+        ),
+        gallery: ctx.on("gallery") && v.photos.length > 0 && (
+          <SiteGallery ctx={ctx} title={ctx.text("gallery.title") || a.lookbook} photos={v.photos} viewer more={{ href: href(PAGE_PATHS.gallery), label: c.viewAll }}>
+            <section id="gallery" className="a-sec a-look" data-section="gallery" aria-labelledby="look-title">
+              <Head title={ctx.text("gallery.title") || a.lookbook} id="look-title" link={{ href: href(PAGE_PATHS.gallery), label: c.viewAll }} />
+              <Lookbook v={v} photos={v.photos.slice(0, 7)} />
+            </section>
+          </SiteGallery>
+        ),
+        reviews: ctx.on("reviews") && ctx.reviews.length > 0 && (
+          <SiteReviews ctx={ctx} title={ctx.t.reviews}>
+            <Reviews v={v} />
+          </SiteReviews>
+        ),
+        visit: ctx.on("visit") && (
+          <SiteVisit ctx={ctx} title={ctx.t.visit} cta={ctx.contact.whatsapp ? { href: ctx.contact.whatsapp, label: v.cta } : null}>
+            <VisitStrip v={v} />
+          </SiteVisit>
+        ),
+      })}
     </>
   );
 }
@@ -778,23 +800,31 @@ function VisitPage({ v }: { v: View }) {
   return (
     <>
       <PageHead v={v} trail={[{ label: c.visit }]} title={ctx.t.visit} lead={ctx.site.business.address} />
-      <VisitStrip v={v} heading={false} />
+      <SiteVisit ctx={ctx} heading={false} title={ctx.t.visit} cta={ctx.contact.whatsapp ? { href: ctx.contact.whatsapp, label: v.cta } : null}>
+        <VisitStrip v={v} heading={false} />
+      </SiteVisit>
       {story && (
-        <section className={cx("a-story", storyImage && "has-image")} data-section="story" aria-labelledby="story-title">
-          {storyImage && (
-            <div data-k="photo overlay" className="a-story-img">
-              <Picture src={storyImage} sizes="100vw" />
+        <SiteStory ctx={ctx} title={ctx.text("story.title") || ctx.t.story}>
+          <section className={cx("a-story", storyImage && "has-image")} data-section="story" aria-labelledby="story-title">
+            {storyImage && (
+              <div data-k="photo overlay" className="a-story-img">
+                <Picture src={storyImage} sizes="100vw" />
+              </div>
+            )}
+            <div className="a-story-card">
+              <h2 id="story-title" className="a-h2">
+                {ctx.text("story.title") || ctx.t.story}
+              </h2>
+              <p>{story}</p>
             </div>
-          )}
-          <div className="a-story-card">
-            <h2 id="story-title" className="a-h2">
-              {ctx.text("story.title") || ctx.t.story}
-            </h2>
-            <p>{story}</p>
-          </div>
-        </section>
+          </section>
+        </SiteStory>
       )}
-      {ctx.reviews.length > 0 && ctx.on("reviews") && <Reviews v={v} />}
+      {ctx.reviews.length > 0 && ctx.on("reviews") && (
+        <SiteReviews ctx={ctx} title={ctx.t.reviews}>
+          <Reviews v={v} />
+        </SiteReviews>
+      )}
     </>
   );
 }

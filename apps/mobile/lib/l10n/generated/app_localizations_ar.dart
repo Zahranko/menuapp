@@ -1365,4 +1365,23 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get languageArabic => 'العربية';
+
+  @override
+  String get sectionOrderHint =>
+      'تبقى الواجهة دائمًا في الأعلى والتذييل في الأسفل.';
+
+  @override
+  String sectionMoveUp(String section) {
+    return 'انقل $section للأعلى';
+  }
+
+  @override
+  String sectionMoveDown(String section) {
+    return 'انقل $section للأسفل';
+  }
+
+  @override
+  String sectionPosition(String section, int position, int count) {
+    return '$section، $position من $count';
+  }
 }

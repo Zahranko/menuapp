@@ -22,6 +22,7 @@ import { bestSellers, categorySections, categoryTree, menuSections, galleryPhoto
 import { CameraIcon, CupcakeIcon, Doodles, Heart, HeartIcon, HomeIcon, PinIcon, Swash, Wave } from "./art";
 import { Carousel } from "./Carousel";
 import { wordsFor } from "./words";
+import { SiteFooter, SiteGallery, SiteReviews, SiteStory, SiteVisit, ordered } from "../_kit/Sections";
 
 /*
  * Template 026 "Bloom" (Pro): a dreamy pastel patisserie. Its own component tree (not PremiumSite):
@@ -174,7 +175,9 @@ export default function BloomTemplate(props: TemplateProps & { now?: Date }) {
           {page.kind === "visit" && <VisitPage v={v} />}
         </main>
       )}
-      <Footer v={v} />
+      <SiteFooter ctx={ctx} links={pageLinks(v, { home: c.home, menu: c.menu, best: c.best, gallery: c.gallery, visit: c.visit })} social={socialAccounts(site, SOCIAL_DEFAULT)}>
+        <Footer v={v} />
+      </SiteFooter>
       <OrderFab order={order} />
       <ProductSheet ctx={ctx} />
       {v.photos.length > 0 && <Lightbox photos={v.photos} labels={{ close: ctx.t.close, prev: c.prev, next: c.next, photo: c.photo }} />}
@@ -421,45 +424,58 @@ function Home({ v }: { v: View }) {
         <Hero v={v} />
       </SiteHero>
 
-      <section id="menu" className="band sec-cats" data-section="menu" aria-labelledby="cats-title">
-        <div className="wrap">
-          <Heading id="cats-title" title={ctx.text("categories.title") || c.categories} link={{ href: href(PAGE_PATHS.menu), label: c.viewAll }} />
-          {tree.roots.length > 0 && <Bubbles v={v} categories={tree.roots} />}
-        </div>
-        <Wave to="var(--bg)" />
-      </section>
-
-      {ctx.on("best") && bakes.length > 0 && (
-        <section id="best" className="sec sec-bakes" data-section="best" aria-labelledby="bakes-title">
-          <div className="wrap">
-            <Heading id="bakes-title" title={ctx.text("best.title") || c.best} link={v.best.length > 0 ? { href: href(PAGE_PATHS.best), label: c.viewAll } : undefined} />
-          </div>
-          <Carousel autoplay={flag(ctx.site.settings, "carousel.autoplay", true)} label={ctx.text("best.title") || c.best} labels={{ pause: v.w.pause, play: v.w.play, prev: v.w.prev, next: v.w.next }}>
-            {bakes.map((item) => (
-              <li key={item.id}>
-                <CakeCard v={v} item={item} />
-              </li>
-            ))}
-          </Carousel>
-        </section>
-      )}
-
-      {story && <Story v={v} text={story} />}
-
-      {ctx.on("gallery") && v.photos.length > 0 && (
-        <section id="gallery" className="band sec-gallery" data-section="gallery" aria-labelledby="gallery-title">
-          <Wave to="var(--band)" flip className="wave-top" />
-          <div className="wrap">
-            <Heading id="gallery-title" title={ctx.text("gallery.title") || c.gallery} link={{ href: href(PAGE_PATHS.gallery), label: c.viewAll }} />
-            <Scrapbook v={v} photos={v.photos.slice(0, 6)} />
-          </div>
-          <Wave to="var(--bg)" />
-        </section>
-      )}
-
-      {ctx.on("reviews") && ctx.reviews.length > 0 && <Reviews v={v} />}
-
-      {ctx.on("visit") && <VisitCard v={v} />}
+      {ordered(ctx, {
+        menu: (
+          <section id="menu" className="band sec-cats" data-section="menu" aria-labelledby="cats-title">
+            <div className="wrap">
+              <Heading id="cats-title" title={ctx.text("categories.title") || c.categories} link={{ href: href(PAGE_PATHS.menu), label: c.viewAll }} />
+              {tree.roots.length > 0 && <Bubbles v={v} categories={tree.roots} />}
+            </div>
+            <Wave to="var(--bg)" />
+          </section>
+        ),
+        best: ctx.on("best") && bakes.length > 0 && (
+          <section id="best" className="sec sec-bakes" data-section="best" aria-labelledby="bakes-title">
+            <div className="wrap">
+              <Heading id="bakes-title" title={ctx.text("best.title") || c.best} link={v.best.length > 0 ? { href: href(PAGE_PATHS.best), label: c.viewAll } : undefined} />
+            </div>
+            <Carousel autoplay={flag(ctx.site.settings, "carousel.autoplay", true)} label={ctx.text("best.title") || c.best} labels={{ pause: v.w.pause, play: v.w.play, prev: v.w.prev, next: v.w.next }}>
+              {bakes.map((item) => (
+                <li key={item.id}>
+                  <CakeCard v={v} item={item} />
+                </li>
+              ))}
+            </Carousel>
+          </section>
+        ),
+        story: story && (
+          <SiteStory ctx={ctx} eyebrow={c.about} title={ctx.text("story.title") || ctx.t.story} more={{ href: href(PAGE_PATHS.visit), label: c.visit }}>
+            <Story v={v} text={story} />
+          </SiteStory>
+        ),
+        gallery: ctx.on("gallery") && v.photos.length > 0 && (
+          <SiteGallery ctx={ctx} title={ctx.text("gallery.title") || c.gallery} photos={v.photos} viewer more={{ href: href(PAGE_PATHS.gallery), label: c.viewAll }}>
+            <section id="gallery" className="band sec-gallery" data-section="gallery" aria-labelledby="gallery-title">
+              <Wave to="var(--band)" flip className="wave-top" />
+              <div className="wrap">
+                <Heading id="gallery-title" title={ctx.text("gallery.title") || c.gallery} link={{ href: href(PAGE_PATHS.gallery), label: c.viewAll }} />
+                <Scrapbook v={v} photos={v.photos.slice(0, 6)} />
+              </div>
+              <Wave to="var(--bg)" />
+            </section>
+          </SiteGallery>
+        ),
+        reviews: ctx.on("reviews") && ctx.reviews.length > 0 && (
+          <SiteReviews ctx={ctx} title={ctx.t.reviews}>
+            <Reviews v={v} />
+          </SiteReviews>
+        ),
+        visit: ctx.on("visit") && (
+          <SiteVisit ctx={ctx} title={ctx.t.visit} cta={v.order ? { href: v.order, label: v.cta } : null}>
+            <VisitCard v={v} />
+          </SiteVisit>
+        ),
+      })}
     </>
   );
 }
@@ -745,9 +761,19 @@ function VisitPage({ v }: { v: View }) {
   return (
     <>
       <PageHead v={v} trail={[{ label: c.visit }]} title={ctx.t.visit} lead={ctx.site.business.address} />
-      <VisitCard v={v} heading={false} />
-      {story && <Story v={v} text={story} />}
-      {ctx.reviews.length > 0 && ctx.on("reviews") && <Reviews v={v} />}
+      <SiteVisit ctx={ctx} heading={false} title={ctx.t.visit} cta={v.order ? { href: v.order, label: v.cta } : null}>
+        <VisitCard v={v} heading={false} />
+      </SiteVisit>
+      {story && (
+        <SiteStory ctx={ctx} eyebrow={c.about} title={ctx.text("story.title") || ctx.t.story}>
+          <Story v={v} text={story} />
+        </SiteStory>
+      )}
+      {ctx.reviews.length > 0 && ctx.on("reviews") && (
+        <SiteReviews ctx={ctx} title={ctx.t.reviews}>
+          <Reviews v={v} />
+        </SiteReviews>
+      )}
     </>
   );
 }

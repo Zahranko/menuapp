@@ -7,7 +7,7 @@ namespace Storefront.Application.Ai;
 
 /// <summary>
 /// Turns a template's settings schema into what the model may fill, and its answer back into a safe settings patch.
-/// Works from the field types (text, textarea, color, palette, choice, range, toggle, toggles), so fields added to templates later are covered
+/// Works from the field types (text, textarea, color, palette, choice, range, toggle, toggles, order), so fields added to templates later are covered
 /// without code changes. The patch is checked with the same rules a saved draft follows; anything that fails is dropped.
 /// </summary>
 public static partial class TemplateAiFields
@@ -28,15 +28,17 @@ public static partial class TemplateAiFields
 
     /// <summary>
     /// Everything the chat assistant may set from a value: texts (<see cref="IsCopy"/>), colors, themes and choices, sizes and
-    /// other ranges, switches and lists of switches (like which sections show). Left out: images and photo lists (the owner
-    /// uploads those), opening hours, and facts only the owner knows: reviews, years, contact details, places, links, the
-    /// order button's text and action, and which social accounts show.
+    /// other ranges, switches and lists of switches (like which sections show), and the order of the sections. Left out: images
+    /// and photo lists (the owner uploads those), opening hours, and facts only the owner knows: reviews, years, contact details,
+    /// places, links, the order button's text and action, and which social accounts show. How a section is laid out
+    /// ("reviews.layout") is a look, not a fact, so it stays editable.
     /// </summary>
     public static bool IsEditable(TemplateField field) => field.Type switch
     {
         "text" or "textarea" => IsCopy(field),
-        _ when FactKeys().IsMatch(field.Key) => false,
+        _ when FactKeys().IsMatch(field.Key) && !LayoutKeys().IsMatch(field.Key) => false,
         "color" or "palette" or "choice" or "toggles" => field.Options is { Count: > 0 },
+        "order" => field.Options is { Count: > 1 },
         "range" => field.Min is not null && field.RangeMax is not null && field.RangeMax >= field.Min,
         "toggle" => true,
         _ => false,
@@ -99,6 +101,17 @@ public static partial class TemplateAiFields
                 ["items"] = new JsonObject { ["type"] = "string", ["enum"] = new JsonArray(options.Select(o => (JsonNode)o).ToArray()) },
                 ["uniqueItems"] = true,
                 ["description"] = $"{field.Label}: the complete list of the ones that are on (any left out are off); options: {described}",
+            };
+        }
+
+        if (field.Type == "order")
+        {
+            return new JsonObject
+            {
+                ["type"] = "array",
+                ["items"] = new JsonObject { ["type"] = "string", ["enum"] = new JsonArray(options.Select(o => (JsonNode)o).ToArray()) },
+                ["uniqueItems"] = true,
+                ["description"] = $"{field.Label}: every section in the order it shows on the page, top to bottom (the opening always comes first and the footer last); sections: {described}",
             };
         }
 
@@ -171,6 +184,8 @@ public static partial class TemplateAiFields
                 return Switch(node) is { } on ? JsonValue.Create(on) : null;
             case "toggles":
                 return Toggles(field, node);
+            case "order":
+                return Order(field, node);
         }
 
         if (node is not JsonValue value || !value.TryGetValue<string>(out var text))
@@ -270,11 +285,46 @@ public static partial class TemplateAiFields
         return new JsonArray(options.Where(on.Contains).Select(o => (JsonNode)JsonValue.Create(o)).ToArray());
     }
 
+    /// <summary>
+    /// The sections in the proposed order, every one of the template's sections once: the ones the model named first, in its
+    /// order, then any it left out in the template's own order, so every section still shows. One unknown or repeated name
+    /// drops the whole list, so a section never moves by mistake.
+    /// </summary>
+    private static JsonArray? Order(TemplateField field, JsonNode? node)
+    {
+        if (node is not JsonArray items || field.Options is not { Count: > 1 } options)
+        {
+            return null;
+        }
+
+        var order = new List<string>();
+        foreach (var item in items)
+        {
+            if (item is not JsonValue value || !value.TryGetValue<string>(out var text) || Option(field, text) is not { } name || order.Contains(name))
+            {
+                return null;
+            }
+
+            order.Add(name);
+        }
+
+        if (order.Count == 0)
+        {
+            return null;
+        }
+
+        order.AddRange(options.Where(o => !order.Contains(o)));
+        return new JsonArray(order.Select(o => (JsonNode)JsonValue.Create(o)).ToArray());
+    }
+
     [GeneratedRegex("colou?r|theme|background|palette|tone|tint|font", RegexOptions.IgnoreCase)]
     private static partial Regex LookWords();
 
     [GeneratedRegex(@"^reviews?\.|\.since$|^order\.(label|action)$|^social\.|^(location|areas)$|phone|email|address|whatsapp|instagram|url|link", RegexOptions.IgnoreCase)]
     private static partial Regex FactKeys();
+
+    [GeneratedRegex(@"^[a-z]+\.layout$")]
+    private static partial Regex LayoutKeys();
 
     [GeneratedRegex("^#[0-9A-Fa-f]{6}$")]
     private static partial Regex HexColor();

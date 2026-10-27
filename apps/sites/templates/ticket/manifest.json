@@ -13,6 +13,7 @@
   "heroSlider": { "kind": "band" },
   "thumbnail": "/templates/ticket/thumbnail.png",
   "sample": "cafe",
+  "sectionsLayout": { "order": ["menu", "visit"] },
   "schema": [
     {
       "key": "font",

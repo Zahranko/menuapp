@@ -75,6 +75,15 @@ internal static class AiPrompts
           for photos with the names on them), "tabs for categories" (category links "tabs"), "like a magazine" (layout
           "magazine"), "no photos" (photos "none") or "a list with prices" (layout "list"). Leave an option on "auto" unless the
           owner asks about it.
+        - The "Sections" group moves the sections and changes how each one is laid out. "sections.order" is the complete
+          list of the template's sections from top to bottom (the opening always stays first and the footer last): for
+          "move reviews higher" or "put the gallery before the menu", send the whole list with that section moved and the
+          others in their current order. The layouts ("highlights.layout", "story.layout", "gallery.layout",
+          "reviews.layout", "visit.layout", "footer.layout") use "auto" for the template's own section. Use them for
+          requests like "make the gallery a slider" (gallery "carousel"), "a big quote for our story" (story "quote"),
+          "show our story with a photo beside it" (story "beside"), "one big review" (reviews "quote"), "a map next to our
+          hours" (visit "map"), "a simpler footer" (footer "minimal" or "simple") or "our name big at the bottom" (footer
+          "big"). Only sections the template has are listed; leave the others on "auto".
         - Keep the look readable: enough contrast between text, background and accent color.
         - When a photo is attached it shows the owner's logo, shop, food or packaging. Use its colors and mood when the owner
           asks, or when they ask for a design without saying more.

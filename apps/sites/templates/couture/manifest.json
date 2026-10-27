@@ -15,6 +15,7 @@
   "tier": "pro",
   "thumbnail": "/templates/couture/thumbnail.png",
   "sample": "couture",
+  "sectionsLayout": { "order": ["menu", "story", "best", "gallery", "reviews", "visit"] },
   "schema": [
     {
       "key": "font",

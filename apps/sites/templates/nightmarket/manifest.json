@@ -13,6 +13,7 @@
   "heroSlider": { "kind": "backdrop", "source": "hero.image" },
   "thumbnail": "/templates/nightmarket/thumbnail.png",
   "sample": "fastfood",
+  "sectionsLayout": { "order": ["picks", "menu", "gallery", "visit"] },
   "schema": [
     {
       "key": "font",

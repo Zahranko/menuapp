@@ -20,6 +20,7 @@ import { copyFor, fill } from "../_premium/copy";
 import { Lightbox } from "../_premium/Lightbox";
 import { bestSellers, categorySections, categoryTree, menuSections, galleryPhotos, PAGE_PATHS, pageLinks, resolvePage, type Category, type Page, type Tree } from "../_premium/pages";
 import { HomeIcon, MenuIcon, PhotoIcon, PinIcon, StarIcon } from "./icons";
+import { SiteFooter, SiteGallery, SiteReviews, SiteStory, SiteVisit, ordered } from "../_kit/Sections";
 
 /*
  * Template 023 "Lumen" (Pro): a loud, happy specialty-coffee site. Neo-Swiss type meets sticker culture.
@@ -121,7 +122,9 @@ export default function LumenTemplate({ site, path = [], base, now }: TemplatePr
           {page.kind === "visit" && <VisitPage v={v} />}
         </main>
       )}
-      <Footer v={v} />
+      <SiteFooter ctx={ctx} links={pageLinks(v, { home: c.home, menu: c.menu, best: c.best, gallery: c.gallery, visit: c.visit })} social={socialAccounts(site, SOCIAL_DEFAULT)}>
+        <Footer v={v} />
+      </SiteFooter>
       {v.fab && <OrderSticker v={v} order={v.fab} />}
       <ProductSheet ctx={ctx} />
       {v.photos.length > 0 && <Lightbox photos={v.photos} labels={{ close: ctx.t.close, prev: c.prev, next: c.next, photo: c.photo }} />}
@@ -451,36 +454,49 @@ function Home({ v }: { v: View }) {
       </SiteHero>
       <Ticker v={v} />
 
-      <section id="menu" className="sec sec-tiles" data-section="menu" aria-labelledby="cats-title">
-        <SectionHead title={ctx.text("categories.title") || c.browse} id="cats-title" link={{ href: href(PAGE_PATHS.menu), label: c.viewAll }} />
-        {v.tree.roots.length > 0 && <Tiles v={v} categories={v.tree.roots} />}
-      </section>
-
-      {ctx.on("best") && v.best.length > 0 && (
-        <section id="best" className="sec sec-rail" data-section="best" aria-labelledby="best-title">
-          <SectionHead title={ctx.text("best.title") || c.best} id="best-title" link={{ href: href(PAGE_PATHS.best), label: c.viewAll }} />
-          <ul className="plain rail">
-            {v.best.slice(0, 10).map((item, i) => (
-              <li key={item.id}>
-                <ProductCard v={v} item={item} rank={i + 1} />
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
-
-      {story && <Statement v={v} story={story} link />}
-
-      {ctx.on("gallery") && v.photos.length > 0 && (
-        <section id="gallery" className="sec" data-section="gallery" aria-labelledby="gallery-title">
-          <SectionHead title={ctx.text("gallery.title") || c.galleryLead} id="gallery-title" link={{ href: href(PAGE_PATHS.gallery), label: c.viewAll }} />
-          <Wall v={v} photos={v.photos.slice(0, 6)} />
-        </section>
-      )}
-
-      {ctx.on("reviews") && ctx.reviews.length > 0 && <Reviews v={v} />}
-
-      {ctx.on("visit") && <VisitBlock v={v} />}
+      {ordered(ctx, {
+        menu: (
+          <section id="menu" className="sec sec-tiles" data-section="menu" aria-labelledby="cats-title">
+            <SectionHead title={ctx.text("categories.title") || c.browse} id="cats-title" link={{ href: href(PAGE_PATHS.menu), label: c.viewAll }} />
+            {v.tree.roots.length > 0 && <Tiles v={v} categories={v.tree.roots} />}
+          </section>
+        ),
+        best: ctx.on("best") && v.best.length > 0 && (
+          <section id="best" className="sec sec-rail" data-section="best" aria-labelledby="best-title">
+            <SectionHead title={ctx.text("best.title") || c.best} id="best-title" link={{ href: href(PAGE_PATHS.best), label: c.viewAll }} />
+            <ul className="plain rail">
+              {v.best.slice(0, 10).map((item, i) => (
+                <li key={item.id}>
+                  <ProductCard v={v} item={item} rank={i + 1} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        ),
+        story: story && (
+          <SiteStory ctx={ctx} title={ctx.text("story.title") || ctx.t.story} more={{ href: href(PAGE_PATHS.visit), label: c.visit }}>
+            <Statement v={v} story={story} link />
+          </SiteStory>
+        ),
+        gallery: ctx.on("gallery") && v.photos.length > 0 && (
+          <SiteGallery ctx={ctx} title={ctx.text("gallery.title") || c.galleryLead} photos={v.photos} viewer more={{ href: href(PAGE_PATHS.gallery), label: c.viewAll }}>
+            <section id="gallery" className="sec" data-section="gallery" aria-labelledby="gallery-title">
+              <SectionHead title={ctx.text("gallery.title") || c.galleryLead} id="gallery-title" link={{ href: href(PAGE_PATHS.gallery), label: c.viewAll }} />
+              <Wall v={v} photos={v.photos.slice(0, 6)} />
+            </section>
+          </SiteGallery>
+        ),
+        reviews: ctx.on("reviews") && ctx.reviews.length > 0 && (
+          <SiteReviews ctx={ctx} title={ctx.t.reviews}>
+            <Reviews v={v} />
+          </SiteReviews>
+        ),
+        visit: ctx.on("visit") && (
+          <SiteVisit ctx={ctx} title={ctx.t.visit} cta={v.order ? { href: v.order, label: v.cta } : null}>
+            <VisitBlock v={v} />
+          </SiteVisit>
+        ),
+      })}
     </>
   );
 }
@@ -725,9 +741,19 @@ function VisitPage({ v }: { v: View }) {
   return (
     <>
       <PageHead v={v} trail={[{ label: c.visit }]} title={ctx.t.visit} lead={ctx.today} color="var(--c4)" photo={ctx.image("story.image")} />
-      <VisitBlock v={v} heading={false} />
-      {story && <Statement v={v} story={story} />}
-      {ctx.reviews.length > 0 && ctx.on("reviews") && <Reviews v={v} />}
+      <SiteVisit ctx={ctx} heading={false} title={ctx.t.visit} cta={v.order ? { href: v.order, label: v.cta } : null}>
+        <VisitBlock v={v} heading={false} />
+      </SiteVisit>
+      {story && (
+        <SiteStory ctx={ctx} title={ctx.text("story.title") || ctx.t.story}>
+          <Statement v={v} story={story} />
+        </SiteStory>
+      )}
+      {ctx.reviews.length > 0 && ctx.on("reviews") && (
+        <SiteReviews ctx={ctx} title={ctx.t.reviews}>
+          <Reviews v={v} />
+        </SiteReviews>
+      )}
     </>
   );
 }

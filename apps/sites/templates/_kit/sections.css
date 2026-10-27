@@ -1,0 +1,1654 @@
+/*
+ * The owner's section layouts, shared by every template (each styles.css imports this file after menu.css):
+ *   .kit-sc     a shared section (_kit/Sections.tsx): data-section = its kind (highlights, story, gallery, reviews, visit),
+ *               data-sc = its layout (_kit/sections.ts)
+ *   .kit-sc-ft  the shared footer, data-sc = its layout
+ * They only show once the owner picked a layout other than "Template default", so nothing here touches a template's own
+ * sections. They take the template's colors, fonts and corners from the --k-* variables of layout.css (the template's
+ * --bg --surf --ink --muted --line --acc --acc-ink --acc-text --acc-soft --fd --fb --fw --ft --r), so they read as part
+ * of it: text in --k-ink and --k-muted on the page's background, cards in --k-surf, and accent fills with --k-acc-ink text.
+ * Rules repeat the class (.kit-sc.kit-sc.kit-sc) to win over a template's broad rules (`.t-x main > section`,
+ * `.t-x section h2`) without !important, so the page style options (style.css, with !important) still reach them.
+ * Each section is its own size container ("ksec"): phone rules first, wider ones in container queries. Sections clip
+ * sideways, so a tilted photo or a moving strip never makes the page scroll sideways.
+ */
+
+.kit-sc.kit-sc.kit-sc,
+.kit-sc-ft.kit-sc-ft.kit-sc-ft {
+  --ks-gap: 16px;
+  --ks-r: var(--k-rs, 12px);
+  container: ksec / inline-size;
+  position: relative;
+  box-sizing: border-box;
+  display: block;
+  width: auto;
+  max-width: none;
+  min-width: 0;
+  height: auto;
+  min-height: 0;
+  margin: 0;
+  padding: calc(56px * var(--kit-space, 1)) 0;
+  overflow-x: clip;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--k-ink);
+  font-family: var(--k-fb);
+  font-size: 16px;
+  line-height: 1.6;
+  text-align: start;
+  transform: none;
+
+  & *,
+  & *::before,
+  & *::after {
+    box-sizing: border-box;
+  }
+  & .kit-sc-in {
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+  & p,
+  & ul,
+  & ol,
+  & dl,
+  & figure,
+  & blockquote {
+    margin: 0;
+  }
+  & p {
+    max-width: 68ch;
+    color: inherit;
+    font-size: inherit;
+    overflow-wrap: break-word;
+  }
+
+  /* ---------- heading ---------- */
+  & .kit-sc-head {
+    margin: 0 0 calc(24px * var(--kit-space, 1));
+  }
+  & .kit-sc-eyebrow {
+    margin: 0 0 6px;
+    color: var(--k-acc-text);
+    font: 700 13px/1.3 var(--k-fb);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  & .kit-sc-h {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--k-ink);
+    font-family: var(--k-fd);
+    font-size: clamp(28px, 6.5cqi, 46px);
+    font-style: normal;
+    font-weight: var(--k-fw);
+    letter-spacing: var(--k-ft);
+    line-height: 1.1;
+    text-align: inherit;
+    text-transform: none;
+    overflow-wrap: break-word;
+  }
+  &:lang(ar) .kit-sc-eyebrow,
+  &:lang(ar) .kit-sc-h {
+    letter-spacing: 0;
+  }
+  & .kit-sc-small {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 12px;
+    color: var(--k-ink);
+    font: 700 15px/1.3 var(--k-fb);
+    letter-spacing: 0;
+    text-transform: none;
+    & svg {
+      flex: none;
+      width: 18px;
+      height: 18px;
+      color: var(--k-acc-text);
+    }
+  }
+
+  /* ---------- cards, buttons, lines ---------- */
+  & .kit-sc-card {
+    border: 1px solid var(--k-line);
+    border-radius: var(--ks-r);
+    background: var(--k-surf);
+    color: var(--k-ink);
+    padding: 20px;
+  }
+  & .kit-sc-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: none;
+    margin: 20px 0 0;
+  }
+  & .kit-sc-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 46px;
+    margin: 0;
+    padding: 10px 20px;
+    border: 1.5px solid var(--k-acc);
+    border-radius: min(var(--k-r), 999px);
+    background: var(--k-acc);
+    color: var(--k-acc-ink);
+    font: 700 15px/1.2 var(--k-fb);
+    letter-spacing: 0;
+    text-align: center;
+    text-decoration: none;
+    text-transform: none;
+    white-space: normal;
+    & svg {
+      flex: none;
+      width: 18px;
+      height: 18px;
+    }
+    &.is-ghost {
+      border-color: var(--k-line);
+      background: transparent;
+      color: var(--k-ink);
+    }
+    &:hover {
+      filter: brightness(1.06);
+    }
+    &:focus-visible {
+      outline: 3px solid var(--k-acc-text);
+      outline-offset: 2px;
+    }
+  }
+  & a:not(.kit-sc-btn):focus-visible {
+    outline: 2px solid var(--k-acc-text);
+    outline-offset: 2px;
+  }
+  & .kit-sc-line {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 0 0 10px;
+    & svg {
+      flex: none;
+      width: 18px;
+      height: 18px;
+      margin-top: 4px;
+      color: var(--k-acc-text);
+    }
+  }
+  & .kit-sc-big {
+    color: var(--k-ink);
+    font-family: var(--k-fd);
+    font-size: clamp(24px, 5.6cqi, 38px);
+    font-weight: var(--k-fw);
+    letter-spacing: var(--k-ft);
+    line-height: 1.25;
+  }
+  &:lang(ar) .kit-sc-big {
+    letter-spacing: 0;
+    line-height: 1.5;
+  }
+  & .kit-sc-scroll {
+    display: block;
+    min-width: 0;
+    margin: 0 -16px;
+    padding: 4px 16px 16px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 16px;
+    scrollbar-width: thin;
+    &:focus-visible {
+      outline: 2px solid var(--k-acc-text);
+      outline-offset: -2px;
+    }
+    & > ul {
+      display: flex;
+      gap: 12px;
+      width: max-content;
+      min-width: 100%;
+    }
+  }
+  & .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+/* ---------- highlights ---------- */
+
+.kit-sc.kit-sc.kit-sc[data-section="highlights"] {
+  padding: calc(36px * var(--kit-space, 1)) 0;
+
+  & .kit-sc-hl {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--ks-gap);
+  }
+  & .kit-sc-hl-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    min-width: 0;
+  }
+  & .kit-sc-hl-text {
+    display: block;
+    min-width: 0;
+  }
+  & .kit-sc-hl-title {
+    margin: 0 0 4px;
+    color: var(--k-ink);
+    font-family: var(--k-fd);
+    font-size: 19px;
+    font-weight: var(--k-fw);
+    letter-spacing: 0;
+    line-height: 1.25;
+    text-transform: none;
+    overflow-wrap: break-word;
+  }
+  & .kit-sc-hl-desc {
+    color: var(--k-muted);
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  & .kit-sc-hl-icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--k-acc);
+    color: var(--k-acc-ink);
+    & svg {
+      width: 22px;
+      height: 22px;
+    }
+  }
+
+  &[data-sc="icons"] .kit-sc-hl {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+    gap: 22px 18px;
+  }
+  &[data-sc="icons"] .kit-sc-hl-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    & .kit-sc-hl-desc {
+      margin-inline: auto;
+    }
+  }
+
+  &[data-sc="cards"] .kit-sc-hl {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+  }
+  &[data-sc="cards"] .kit-sc-hl-item {
+    flex-direction: column;
+    gap: 12px;
+    padding: 22px;
+  }
+  &[data-sc="cards"] .kit-sc-hl-icon {
+    border-radius: min(var(--k-r), 14px);
+  }
+
+  &[data-sc="numbered"] .kit-sc-hl {
+    gap: 0;
+    counter-reset: none;
+  }
+  &[data-sc="numbered"] .kit-sc-hl-item.kit-sc-card {
+    gap: 18px;
+    padding: 18px 0;
+    border: 0;
+    border-top: 1px solid var(--k-line);
+    border-radius: 0;
+    background: transparent;
+  }
+  & .kit-sc-hl-num {
+    flex: none;
+    min-width: 2.2ch;
+    color: var(--k-acc-text);
+    font-family: var(--k-fd);
+    font-size: 40px;
+    font-weight: var(--k-fw);
+    line-height: 1;
+  }
+
+  & .kit-sc-st {
+    max-width: none;
+    margin: 0 0 22px;
+    color: var(--k-ink);
+    font-family: var(--k-fd);
+    font-size: clamp(30px, 8.4cqi, 72px);
+    font-weight: var(--k-fw);
+    letter-spacing: var(--k-ft);
+    line-height: 1.12;
+    overflow-wrap: break-word;
+  }
+  &:lang(ar) .kit-sc-st {
+    letter-spacing: 0;
+    line-height: 1.45;
+  }
+  & .kit-sc-st-dot {
+    color: var(--k-acc-text);
+  }
+  & .kit-sc-st-list {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+    & .kit-sc-hl-item {
+      display: block;
+      padding-top: 12px;
+      border-top: 2px solid var(--k-acc);
+    }
+    & .kit-sc-hl-title {
+      font-family: var(--k-fb);
+      font-size: 15px;
+      font-weight: 700;
+    }
+  }
+
+  &[data-sc="alternating"] .kit-sc-hl {
+    gap: calc(28px * var(--kit-space, 1));
+  }
+  &[data-sc="alternating"] .kit-sc-hl-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+    align-items: center;
+  }
+  & .kit-sc-hl-pic {
+    position: relative;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-radius: var(--ks-r);
+    background: var(--k-acc);
+    color: var(--k-acc-ink);
+    & svg {
+      width: 48px;
+      height: 48px;
+    }
+  }
+  &[data-sc="alternating"] .kit-sc-hl-title {
+    font-size: clamp(22px, 4.4cqi, 30px);
+  }
+
+  /* The moving strip: the list twice in a row (the copy hidden from screen readers), sliding along forever. */
+  &[data-sc="marquee"] {
+    padding: 0;
+    background: var(--k-acc);
+    color: var(--k-acc-ink);
+  }
+  & .kit-sc-mq {
+    overflow: hidden;
+    padding: 14px 0;
+  }
+  & .kit-sc-mq-track {
+    display: flex;
+    width: max-content;
+    animation: kit-sc-marquee 36s linear infinite;
+  }
+  &:dir(rtl) .kit-sc-mq-track {
+    animation-name: kit-sc-marquee-rtl;
+  }
+  & .kit-sc-mq:hover .kit-sc-mq-track,
+  & .kit-sc-mq:focus-within .kit-sc-mq-track {
+    animation-play-state: paused;
+  }
+  & .kit-sc-mq-run {
+    display: flex;
+    flex: none;
+    align-items: baseline;
+    gap: 0;
+  }
+  & .kit-sc-mq-item {
+    display: inline-flex;
+    flex: none;
+    align-items: baseline;
+    gap: 10px;
+    padding-inline: 0 34px;
+    white-space: nowrap;
+  }
+  & .kit-sc-mq-dot {
+    width: 16px;
+    height: 16px;
+    align-self: center;
+  }
+  & .kit-sc-mq-title {
+    margin: 0;
+    color: inherit;
+    font-family: var(--k-fd);
+    font-size: 22px;
+    font-weight: var(--k-fw);
+    letter-spacing: 0;
+    line-height: 1.3;
+    text-transform: none;
+  }
+  & .kit-sc-mq-desc {
+    font-size: 15px;
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kit-sc.kit-sc.kit-sc[data-sc="marquee"] {
+    & .kit-sc-mq-track {
+      width: auto;
+      animation: none;
+    }
+    & .kit-sc-mq-run {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px 0;
+      padding-inline: 16px;
+    }
+    & .kit-sc-mq-run[aria-hidden] {
+      display: none;
+    }
+    & .kit-sc-mq-item {
+      white-space: normal;
+    }
+  }
+}
+
+@container ksec (min-width: 760px) {
+  .kit-sc.kit-sc.kit-sc[data-section="highlights"] {
+    &[data-sc="numbered"] .kit-sc-hl {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 40px;
+    }
+    &[data-sc="alternating"] .kit-sc-hl-item {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 48px;
+    }
+    &[data-sc="alternating"] .kit-sc-hl-item:nth-child(even) .kit-sc-hl-pic {
+      order: 2;
+    }
+  }
+}
+
+/* ---------- story ---------- */
+
+.kit-sc.kit-sc.kit-sc[data-section="story"] {
+  & .kit-sc-story-copy p + p,
+  & .kit-sc-story-cols p + p,
+  & .kit-sc-letter p + p {
+    margin-top: 14px;
+  }
+  & .kit-sc-story-pic {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: var(--ks-r);
+    background: var(--k-surf);
+  }
+  & .kit-sc-since {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    margin: 0 0 16px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: var(--k-acc);
+    color: var(--k-acc-ink);
+    font-size: 14px;
+    & b {
+      font-family: var(--k-fd);
+      font-size: 18px;
+    }
+  }
+
+  /* Photo beside the text (stacked on a phone). Without a photo, a panel with the business's first letter. */
+  & .kit-sc-story-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+    align-items: center;
+  }
+  & .kit-sc-story-grid .kit-sc-story-pic {
+    aspect-ratio: 4 / 3;
+    &.is-empty {
+      /* A low band on a phone: the letter stands in for a photo, it shouldn't push the story down a whole screen. */
+      aspect-ratio: 3 / 1;
+      display: grid;
+      place-items: center;
+      background: var(--k-acc);
+      color: var(--k-acc-ink);
+      font-family: var(--k-fd);
+      font-size: 96px;
+      font-weight: var(--k-fw);
+      line-height: 1;
+    }
+  }
+  & .kit-sc-story-copy {
+    min-width: 0;
+    font-size: 17px;
+  }
+
+  /* Photo behind the text: the section's frame is the photo, darkened so light text reads on it. */
+  &[data-sc="behind"] > .kit-sc-in {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: calc(100% - 32px);
+    min-height: 420px;
+    padding: 48px 22px 28px;
+    overflow: hidden;
+    border-radius: var(--ks-r);
+    background: #1d1d1d;
+    color: #fff;
+    & .kit-sc-h,
+    & .kit-sc-eyebrow {
+      color: #fff;
+    }
+  }
+  &[data-sc="behind"].is-bare > .kit-sc-in {
+    min-height: 0;
+    background: var(--k-acc);
+    color: var(--k-acc-ink);
+    & .kit-sc-h,
+    & .kit-sc-eyebrow {
+      color: var(--k-acc-ink);
+    }
+    & .kit-sc-since {
+      background: var(--k-acc-ink);
+      color: var(--k-acc);
+    }
+    & .kit-sc-btn.is-ghost {
+      border-color: currentColor;
+      color: var(--k-acc-ink);
+    }
+  }
+  & .kit-sc-story-pic.is-behind {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: 0;
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgb(0 0 0 / 0.35), rgb(0 0 0 / 0.78));
+    }
+  }
+  &[data-sc="behind"] .kit-sc-story-copy {
+    max-width: 640px;
+    color: inherit;
+    font-size: 18px;
+    & .kit-sc-btn.is-ghost {
+      border-color: currentColor;
+      color: inherit;
+    }
+  }
+
+  /* A big quote: the first sentence large, the rest under it. */
+  &[data-sc="quote"] .kit-sc-head,
+  & .kit-sc-story-quote {
+    max-width: 860px;
+    margin-inline: auto;
+    text-align: center;
+  }
+  & .kit-sc-story-quote {
+    display: grid;
+    justify-items: center;
+    gap: 16px;
+    & blockquote::before {
+      content: "\201C" / "";
+      display: block;
+      height: 0.62em;
+      color: var(--k-acc-text);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 96px;
+      line-height: 1;
+    }
+    & .kit-sc-big {
+      margin-inline: auto;
+      max-width: 30ch;
+    }
+    & figcaption {
+      color: var(--k-muted);
+      font-size: 15px;
+      font-weight: 700;
+      &::before {
+        content: "\2014\00a0" / "";
+      }
+    }
+    & .kit-sc-story-rest {
+      margin-inline: auto;
+      color: var(--k-ink);
+      font-size: 17px;
+    }
+    & .kit-sc-actions {
+      justify-content: center;
+    }
+  }
+
+  /* A timeline: each paragraph (or sentence) on a line down the side, numbered, the first with the "since" year. */
+  & .kit-sc-tl {
+    position: relative;
+    display: grid;
+    gap: 22px;
+    max-width: 760px;
+    padding: 0;
+    &::before {
+      content: "";
+      position: absolute;
+      inset-block: 8px;
+      inset-inline-start: 27px;
+      width: 2px;
+      background: var(--k-line);
+    }
+  }
+  & .kit-sc-tl-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: 16px;
+    align-items: start;
+    font-size: 17px;
+  }
+  & .kit-sc-tl-mark {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-width: 56px;
+    height: 34px;
+    padding: 0 6px;
+    border-radius: 999px;
+    background: var(--k-acc);
+    color: var(--k-acc-ink);
+    font: 700 14px/1 var(--k-fb);
+  }
+  &[data-sc="timeline"] .kit-sc-story-pic {
+    max-width: 760px;
+    margin-top: 26px;
+    aspect-ratio: 16 / 9;
+  }
+
+  /* Two columns of text, under a wide photo band. */
+  & .kit-sc-story-band .kit-sc-story-pic {
+    aspect-ratio: 21 / 9;
+    margin-bottom: 24px;
+  }
+  & .kit-sc-story-cols {
+    font-size: 17px;
+    & p {
+      max-width: none;
+      break-inside: avoid;
+    }
+  }
+  &[data-sc="columns"] .kit-sc-since {
+    margin-top: 18px;
+  }
+
+  /* A letter: a centered card, the first letter large, signed with the business's name. */
+  &[data-sc="letter"] .kit-sc-head {
+    text-align: center;
+  }
+  & .kit-sc-letter {
+    max-width: 680px;
+    margin-inline: auto;
+    padding: 30px 24px;
+    font-size: 17px;
+    line-height: 1.75;
+    & > p {
+      max-width: none;
+    }
+    & > p:first-of-type::first-letter {
+      float: inline-start;
+      margin-inline-end: 8px;
+      color: var(--k-acc-text);
+      font-family: var(--k-fd);
+      font-size: 3.3em;
+      font-weight: var(--k-fw);
+      line-height: 0.9;
+    }
+    & .kit-sc-story-pic {
+      width: 96px;
+      height: 96px;
+      margin: 0 auto 18px;
+      border-radius: 50%;
+    }
+    & .kit-sc-sign {
+      margin-top: 18px;
+      font-family: var(--k-fd);
+      font-size: 22px;
+      font-weight: var(--k-fw);
+      text-align: end;
+      &::before {
+        content: "\2014\00a0" / "";
+      }
+    }
+    & .kit-sc-since {
+      margin-top: 14px;
+    }
+  }
+  &:lang(ar) .kit-sc-letter > p:first-of-type::first-letter {
+    float: none;
+    margin: 0;
+    color: inherit;
+    font: inherit;
+  }
+}
+
+@container ksec (min-width: 760px) {
+  .kit-sc.kit-sc.kit-sc[data-section="story"] {
+    & .kit-sc-story-grid {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      gap: 48px;
+    }
+    & .kit-sc-story-grid .kit-sc-story-pic {
+      aspect-ratio: 4 / 5;
+    }
+    & .kit-sc-story-grid .kit-sc-story-pic.is-empty {
+      aspect-ratio: 1;
+    }
+    &[data-sc="behind"] > .kit-sc-in {
+      min-height: 520px;
+      padding: 72px 56px 56px;
+    }
+    & .kit-sc-story-cols {
+      columns: 2;
+      column-gap: 48px;
+    }
+    & .kit-sc-letter {
+      padding: 48px 56px;
+    }
+  }
+}
+
+/* ---------- gallery ---------- */
+
+.kit-sc.kit-sc.kit-sc[data-section="gallery"] {
+  & .kit-sc-gal {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  & .kit-sc-gal-li {
+    position: relative;
+    min-width: 0;
+  }
+  & .kit-sc-gal-pic {
+    position: relative;
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border: 0;
+    border-radius: var(--ks-r);
+    background: var(--k-surf);
+    color: inherit;
+    font: inherit;
+    cursor: default;
+  }
+  & button.kit-sc-gal-pic {
+    cursor: zoom-in;
+    &:focus-visible {
+      outline: 3px solid var(--k-acc-text);
+      outline-offset: 2px;
+    }
+  }
+  & .kit-sc-gal[data-count="1"] {
+    grid-template-columns: minmax(0, 1fr);
+    & .kit-sc-gal-pic {
+      aspect-ratio: 16 / 10;
+    }
+  }
+  & .kit-sc-actions {
+    justify-content: center;
+  }
+
+  /* Mosaic: columns of photos in turns of shapes. */
+  &[data-sc="masonry"] .kit-sc-gal {
+    display: block;
+    columns: 2;
+    column-gap: 10px;
+    &[data-count="1"] {
+      columns: 1;
+    }
+  }
+  &[data-sc="masonry"] .kit-sc-gal-li {
+    margin-bottom: 10px;
+    break-inside: avoid;
+  }
+  &[data-sc="masonry"] .kit-sc-gal-li:nth-child(3n + 1) .kit-sc-gal-pic {
+    aspect-ratio: 3 / 4;
+  }
+  &[data-sc="masonry"] .kit-sc-gal-li:nth-child(3n + 2) .kit-sc-gal-pic {
+    aspect-ratio: 4 / 3;
+  }
+
+  /* Slider: photos in a row that scrolls sideways. */
+  /* The slider and the strip: one row that scrolls sideways inside .kit-sc-scroll. */
+  &:is([data-sc="carousel"], [data-sc="strip"]) .kit-sc-gal {
+    display: flex;
+    width: max-content;
+    min-width: 100%;
+  }
+  &[data-sc="carousel"] .kit-sc-gal-li {
+    flex: 0 0 min(78cqi, 420px);
+    scroll-snap-align: start;
+  }
+  &[data-sc="carousel"] .kit-sc-gal-pic {
+    aspect-ratio: 4 / 5;
+  }
+
+  /* Polaroid stack: white frames, a little tilted, with the caption written under the photo. */
+  &[data-sc="polaroid"] .kit-sc-gal {
+    gap: 18px 14px;
+    padding: 6px 4px 10px;
+  }
+  &[data-sc="polaroid"] .kit-sc-gal-li {
+    padding: 8px 8px 30px;
+    border-radius: 3px;
+    background: #fff;
+    box-shadow: 0 10px 24px -14px rgb(0 0 0 / 0.55), 0 1px 3px rgb(0 0 0 / 0.18);
+    transform: rotate(-2.4deg);
+    &:nth-child(even) {
+      transform: rotate(2deg) translateY(10px);
+    }
+    &:nth-child(3n) {
+      transform: rotate(-0.8deg);
+    }
+  }
+  &[data-sc="polaroid"] .kit-sc-gal-pic {
+    border-radius: 1px;
+  }
+  & .kit-sc-gal-cap {
+    position: absolute;
+    inset-inline: 10px;
+    bottom: 6px;
+    overflow: hidden;
+    color: #2b2b2b;
+    font: 600 13px/1.3 var(--k-fb);
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* One big photo and small ones. */
+  &[data-sc="feature"] .kit-sc-gal-li:first-child {
+    grid-column: 1 / -1;
+    & .kit-sc-gal-pic {
+      aspect-ratio: 4 / 3;
+    }
+  }
+
+  /* A full-width strip: edge to edge, photos side by side that scroll sideways. */
+  &[data-sc="strip"] .kit-sc-scroll {
+    width: 100cqi;
+    margin-inline: calc(50% - 50cqi);
+    padding-inline: 0;
+    scroll-padding-inline: 0;
+    & > ul {
+      gap: 4px;
+    }
+  }
+  &[data-sc="strip"] .kit-sc-gal-li {
+    flex: 0 0 auto;
+    width: min(64cqi, 320px);
+    scroll-snap-align: start;
+  }
+  &[data-sc="strip"] .kit-sc-gal-pic {
+    aspect-ratio: 3 / 4;
+    border-radius: 0;
+  }
+}
+
+@container ksec (min-width: 760px) {
+  .kit-sc.kit-sc.kit-sc[data-section="gallery"] {
+    & .kit-sc-gal {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    & .kit-sc-gal[data-count="2"],
+    & .kit-sc-gal[data-count="4"] {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    &[data-sc="masonry"] .kit-sc-gal {
+      columns: 3;
+      column-gap: 14px;
+      &[data-count="2"] {
+        columns: 2;
+      }
+    }
+    &[data-sc="masonry"] .kit-sc-gal-li {
+      margin-bottom: 14px;
+    }
+    &[data-sc="carousel"] .kit-sc-gal-li {
+      flex-basis: 340px;
+    }
+    &[data-sc="polaroid"] .kit-sc-gal {
+      gap: 34px 26px;
+      padding-inline: 24px;
+    }
+    &[data-sc="feature"] .kit-sc-gal {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    &[data-sc="feature"] .kit-sc-gal[data-count="2"] {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    &[data-sc="feature"] .kit-sc-gal-li:first-child {
+      grid-column: span 2;
+      grid-row: span 2;
+      & .kit-sc-gal-pic {
+        height: 100%;
+        aspect-ratio: auto;
+        min-height: 100%;
+      }
+    }
+    /* The big photo is as tall as the small ones beside it, so no row is left half empty. */
+    &[data-sc="feature"] .kit-sc-gal:is([data-count="3"], [data-count="4"], [data-count="6"]) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    &[data-sc="feature"] .kit-sc-gal:is([data-count="4"], [data-count="7"]) .kit-sc-gal-li:first-child {
+      grid-row: span 3;
+    }
+    &[data-sc="feature"] .kit-sc-gal[data-count="1"] .kit-sc-gal-li:first-child {
+      grid-column: 1 / -1;
+      & .kit-sc-gal-pic {
+        aspect-ratio: 16 / 9;
+      }
+    }
+    &[data-sc="strip"] .kit-sc-gal-li {
+      width: 300px;
+    }
+  }
+}
+
+/* ---------- reviews ---------- */
+
+.kit-sc.kit-sc.kit-sc[data-section="reviews"] {
+  & .kit-sc-rvs {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--ks-gap);
+  }
+  & .kit-sc-rv {
+    min-width: 0;
+  }
+  & .kit-sc-rv figure {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    height: 100%;
+  }
+  & .kit-sc-rv blockquote {
+    flex: 1;
+    padding: 0;
+    border: 0;
+    color: var(--k-ink);
+    font-size: 17px;
+    font-style: normal;
+    line-height: 1.6;
+    & p {
+      max-width: none;
+    }
+  }
+  & .kit-sc-rv figcaption {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--k-ink);
+    font-size: 15px;
+    font-weight: 700;
+  }
+  & .kit-sc-rv-who {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--k-acc);
+    color: var(--k-acc-ink);
+    font: 700 16px/1 var(--k-fd);
+  }
+  & .kit-sc-rv.kit-sc-card blockquote::before {
+    content: "\201C" / "";
+    display: block;
+    height: 0.5em;
+    color: var(--k-acc-text);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 54px;
+    line-height: 1;
+  }
+
+  &[data-sc="cards"] .kit-sc-rvs {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  }
+
+  /* One big quote: the first review large and centered, the others smaller under it. */
+  &[data-sc="quote"] .kit-sc-head {
+    text-align: center;
+  }
+  &[data-sc="quote"] .kit-sc-rvs {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    gap: 20px 28px;
+  }
+  &[data-sc="quote"] .kit-sc-rv {
+    padding-top: 16px;
+    border-top: 1px solid var(--k-line);
+  }
+  &[data-sc="quote"] .kit-sc-rv.is-big {
+    grid-column: 1 / -1;
+    padding: 0 0 12px;
+    border: 0;
+    text-align: center;
+    & figure {
+      align-items: center;
+    }
+    & blockquote {
+      max-width: 860px;
+      margin-inline: auto;
+      font-family: var(--k-fd);
+      font-size: clamp(22px, 5cqi, 36px);
+      font-weight: var(--k-fw);
+      line-height: 1.3;
+      &::before {
+        content: "\201C" / "";
+        display: block;
+        height: 0.6em;
+        color: var(--k-acc-text);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 90px;
+        line-height: 1;
+      }
+    }
+    & figcaption::before {
+      content: "\2014\00a0" / "";
+    }
+  }
+  &:lang(ar)[data-sc="quote"] .kit-sc-rv.is-big blockquote {
+    line-height: 1.6;
+  }
+
+  /* Slider: cards in a row that scrolls sideways. */
+  &[data-sc="carousel"] .kit-sc-rvs {
+    display: flex;
+    width: max-content;
+    min-width: 100%;
+  }
+  &[data-sc="carousel"] .kit-sc-rv {
+    flex: 0 0 min(82cqi, 380px);
+    scroll-snap-align: start;
+  }
+
+  /* Wall of notes: notes pinned in columns, a little tilted, with a strip of tape. */
+  &[data-sc="wall"] .kit-sc-rvs {
+    display: block;
+    columns: 1;
+    column-gap: 18px;
+    padding: 8px 4px;
+  }
+  &[data-sc="wall"] .kit-sc-rv {
+    position: relative;
+    margin: 0 0 22px;
+    padding-top: 26px;
+    break-inside: avoid;
+    box-shadow: 0 12px 24px -18px rgb(0 0 0 / 0.6);
+    transform: rotate(-1.2deg);
+    &:nth-child(even) {
+      transform: rotate(1.1deg);
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      top: -9px;
+      left: 50%;
+      width: 76px;
+      height: 20px;
+      margin-left: -38px;
+      border-radius: 2px;
+      background: var(--k-acc);
+      opacity: 0.75;
+      transform: rotate(-3deg);
+    }
+  }
+
+  /* Stars and short quotes: a row of stars with how many reviews show, then the quotes in a compact list. */
+  & .kit-sc-rv-sum {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 14px;
+    margin: 0 0 20px;
+    & p {
+      color: var(--k-muted);
+      font-weight: 700;
+    }
+  }
+  & .kit-sc-stars {
+    display: inline-flex;
+    gap: 2px;
+    color: var(--k-acc-text);
+    & svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+  &[data-sc="summary"] .kit-sc-rvs {
+    gap: 14px;
+  }
+  &[data-sc="summary"] .kit-sc-rv {
+    padding-inline-start: 16px;
+    border-inline-start: 3px solid var(--k-acc);
+    & figure {
+      gap: 6px;
+    }
+    & blockquote {
+      font-size: 16px;
+    }
+    & figcaption {
+      color: var(--k-muted);
+      font-size: 14px;
+    }
+  }
+}
+
+@container ksec (min-width: 760px) {
+  .kit-sc.kit-sc.kit-sc[data-section="reviews"] {
+    &[data-sc="wall"] .kit-sc-rvs {
+      columns: 3;
+    }
+    &[data-sc="carousel"] .kit-sc-rv {
+      flex-basis: 380px;
+    }
+    &[data-sc="summary"] .kit-sc-rvs {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px 36px;
+    }
+  }
+}
+@container ksec (min-width: 520px) {
+  .kit-sc.kit-sc.kit-sc[data-section="reviews"][data-sc="wall"] .kit-sc-rvs {
+    columns: 2;
+  }
+}
+
+/* ---------- visit ---------- */
+
+.kit-sc.kit-sc.kit-sc[data-section="visit"] {
+  & .kit-sc-hours {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    & > div {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 2px 16px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--k-line);
+    }
+    & > div:last-child {
+      border-bottom: 0;
+    }
+    & dt,
+    & dd {
+      margin: 0;
+      color: var(--k-ink);
+      font-size: 15px;
+    }
+    & dd {
+      font-variant-numeric: tabular-nums;
+    }
+    & .today dt,
+    & .today dd {
+      font-weight: 700;
+    }
+    & .today-tag {
+      display: inline-block;
+      margin-inline-start: 8px;
+      padding: 1px 8px;
+      border-radius: 999px;
+      background: var(--k-acc);
+      color: var(--k-acc-ink);
+      font-size: 12px;
+      font-weight: 700;
+      vertical-align: 1px;
+    }
+  }
+  & .kit-sc-reach {
+    display: grid;
+    gap: 4px;
+    margin: 0 0 12px;
+    & a {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 36px;
+      color: var(--k-ink);
+      text-decoration: underline;
+      text-decoration-color: var(--k-line);
+      text-underline-offset: 3px;
+      overflow-wrap: anywhere;
+      & svg {
+        flex: none;
+        width: 18px;
+        height: 18px;
+        color: var(--k-acc-text);
+      }
+    }
+  }
+
+  /* Map beside: a drawn street map (it opens directions) next to the details. */
+  & .kit-sc-visit-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+  }
+  & .kit-sc-map {
+    position: relative;
+    display: block;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border: 1px solid var(--k-line);
+    border-radius: var(--ks-r);
+    background: var(--k-surf);
+    &:focus-visible {
+      outline: 3px solid var(--k-acc-text);
+      outline-offset: 2px;
+    }
+  }
+  & .kit-sc-map-art {
+    display: block;
+    width: 100%;
+    height: 100%;
+    & .m-land {
+      fill: var(--k-surf);
+    }
+    & .m-park {
+      fill: color-mix(in srgb, var(--k-acc) 22%, var(--k-surf));
+    }
+    & .m-water {
+      fill: color-mix(in srgb, var(--k-acc) 12%, var(--k-line));
+    }
+    & .m-road {
+      fill: none;
+      stroke: var(--k-bg);
+      stroke-width: 12;
+    }
+    & .m-street {
+      fill: none;
+      stroke: var(--k-line);
+      stroke-width: 3;
+    }
+    & .m-pin path {
+      fill: var(--k-acc);
+      stroke: var(--k-acc-ink);
+      stroke-width: 2;
+    }
+    & .m-pin-dot {
+      fill: var(--k-acc-ink);
+    }
+  }
+  & .kit-sc-visit-info {
+    min-width: 0;
+    & .kit-sc-hours {
+      margin-top: 8px;
+    }
+  }
+
+  /* Cards: the hours, the address and the ways to get in touch, each in its own card. */
+  & .kit-sc-vcards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+    gap: var(--ks-gap);
+  }
+  & .kit-sc-vcard {
+    min-width: 0;
+    & > p:not(.kit-sc-actions) {
+      color: var(--k-ink);
+    }
+    & .kit-sc-actions {
+      margin-top: 14px;
+    }
+  }
+
+  /* A big hours table. */
+  & .kit-sc-table {
+    --ks-table-pad: clamp(14px, 4cqi, 22px);
+    max-width: 760px;
+    padding: 8px var(--ks-table-pad);
+  }
+  & .kit-sc-hours.is-table {
+    & > div {
+      padding: 14px 0;
+    }
+    & dt,
+    & dd {
+      /* Smaller on a narrow phone, so today's row (day, "Today" and the hours) stays on one line. */
+      font-size: clamp(15px, 4.4cqi, 18px);
+    }
+    & .today {
+      position: relative;
+      &::before {
+        content: "";
+        position: absolute;
+        inset-block: 8px;
+        inset-inline-start: calc(-1 * var(--ks-table-pad, 22px));
+        width: 4px;
+        border-radius: 2px;
+        background: var(--k-acc);
+      }
+    }
+  }
+  & .kit-sc-visit-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+    margin-top: 22px;
+    & .kit-sc-hours {
+      max-width: 520px;
+    }
+  }
+
+  /* Centered: today's hours large, then the address, the ways to get in touch and the week. */
+  &[data-sc="centered"] .kit-sc-head,
+  & .kit-sc-visit-center {
+    text-align: center;
+  }
+  & .kit-sc-visit-center {
+    display: grid;
+    justify-items: center;
+    gap: 12px;
+    max-width: 640px;
+    margin-inline: auto;
+    & .kit-sc-line {
+      justify-content: center;
+      margin: 0;
+    }
+    & .kit-sc-reach {
+      justify-items: center;
+      margin: 0;
+    }
+    & .kit-sc-actions {
+      justify-content: center;
+      margin-top: 4px;
+    }
+    & .kit-sc-hours {
+      width: min(100%, 380px);
+      margin-top: 14px;
+      text-align: start;
+    }
+  }
+
+  /* Banner: an accent band with today's hours, the address and the buttons; the week under it. */
+  & .kit-sc-banner {
+    display: grid;
+    gap: 18px;
+    padding: 26px 22px;
+    border-radius: var(--ks-r);
+    background: var(--k-acc);
+    color: var(--k-acc-ink);
+    & .kit-sc-big {
+      color: inherit;
+    }
+    & .kit-sc-line {
+      margin: 10px 0 0;
+      & svg {
+        color: inherit;
+      }
+    }
+    & .kit-sc-actions {
+      margin: 0;
+    }
+    & .kit-sc-btn {
+      border-color: var(--k-acc-ink);
+      background: var(--k-acc-ink);
+      color: var(--k-acc);
+      &.is-ghost {
+        background: transparent;
+        color: var(--k-acc-ink);
+      }
+    }
+    & .kit-sc-btn:focus-visible {
+      outline-color: var(--k-acc-ink);
+    }
+  }
+}
+
+@container ksec (min-width: 760px) {
+  .kit-sc.kit-sc.kit-sc[data-section="visit"] {
+    & .kit-sc-visit-grid {
+      grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+      gap: 44px;
+      align-items: start;
+    }
+    & .kit-sc-map {
+      aspect-ratio: auto;
+      height: 100%;
+      min-height: 380px;
+    }
+    & .kit-sc-visit-row {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 40px;
+    }
+    & .kit-sc-banner {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      padding: 36px 40px;
+    }
+  }
+}
+
+/* ---------- footer ---------- */
+
+.kit-sc-ft.kit-sc-ft.kit-sc-ft {
+  padding: calc(44px * var(--kit-space, 1)) 0 calc(28px * var(--kit-space, 1));
+  border-top: 1px solid var(--k-line);
+  background: var(--k-bg);
+  font-size: 15px;
+
+  & .kit-sc-ft-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px 24px;
+  }
+  & .kit-sc-ft-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+  }
+  & .kit-sc-ft-logo {
+    flex: none;
+    display: grid;
+    place-items: center;
+    position: relative;
+    width: 44px;
+    height: 44px;
+    overflow: hidden;
+    border-radius: min(var(--k-r), 12px);
+    background: var(--k-acc);
+    color: var(--k-acc-ink);
+    font: var(--k-fw) 20px/1 var(--k-fd);
+  }
+  & .kit-sc-ft-name {
+    min-width: 0;
+    margin: 0;
+    color: var(--k-ink);
+    font-family: var(--k-fd);
+    font-size: 22px;
+    font-weight: var(--k-fw);
+    letter-spacing: 0;
+    line-height: 1.2;
+  }
+  & .kit-sc-ft-tag {
+    max-width: 52ch;
+    margin: 12px 0 0;
+    color: var(--k-muted);
+  }
+  & .kit-sc-social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    & a {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--k-line);
+      border-radius: 50%;
+      color: var(--k-ink);
+      & svg {
+        width: 20px;
+        height: 20px;
+      }
+      &:hover {
+        border-color: var(--k-ink);
+      }
+    }
+  }
+  & .kit-sc-ft-nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 20px;
+  }
+  & .kit-sc-ft-nav a,
+  & .kit-sc-ft-col a {
+    display: inline-block;
+    padding: 6px 0;
+    color: var(--k-ink);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 4px;
+    &:hover {
+      text-decoration-color: currentColor;
+    }
+  }
+  & .kit-sc-credits {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 18px;
+    margin-top: 26px;
+    padding-top: 16px;
+    border-top: 1px solid var(--k-line);
+    color: var(--k-muted);
+    font-size: 13px;
+    & a {
+      color: var(--k-ink);
+      font-weight: 600;
+      text-decoration: none;
+    }
+  }
+
+  &[data-sc="columns"] .kit-sc-ft-cols {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 26px;
+    & .kit-sc-social {
+      margin-top: 16px;
+    }
+    & .kit-sc-ft-nav ul {
+      display: grid;
+      gap: 0;
+    }
+    & .kit-sc-ft-col > p {
+      margin: 0 0 6px;
+      color: var(--k-muted);
+    }
+  }
+
+  &[data-sc="big"] .kit-sc-ft-giant {
+    margin: 0 0 22px;
+    color: var(--k-acc-text);
+    font-family: var(--k-fd);
+    font-size: clamp(28px, min(15cqi, 100cqi / var(--ks-long, 6)), 168px);
+    font-weight: var(--k-fw);
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+  }
+  &:lang(ar)[data-sc="big"] .kit-sc-ft-giant {
+    letter-spacing: 0;
+    line-height: 1.3;
+  }
+
+  &[data-sc="centered"] {
+    text-align: center;
+    & .kit-sc-in {
+      display: grid;
+      justify-items: center;
+      gap: 16px;
+    }
+    & .kit-sc-ft-brand {
+      flex-direction: column;
+    }
+    & .kit-sc-ft-tag {
+      margin: 0;
+    }
+    & .kit-sc-ft-nav ul,
+    & .kit-sc-social {
+      justify-content: center;
+    }
+    & .kit-sc-credits {
+      width: 100%;
+      justify-content: center;
+      margin-top: 10px;
+    }
+  }
+
+  &[data-sc="minimal"] {
+    padding: 18px 0;
+    & .kit-sc-ft-line {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px 20px;
+    }
+    & .kit-sc-credits {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      justify-content: flex-start;
+    }
+    & .kit-sc-social a {
+      width: 40px;
+      height: 40px;
+      border: 0;
+    }
+  }
+}
+
+@container ksec (min-width: 760px) {
+  .kit-sc-ft.kit-sc-ft.kit-sc-ft[data-sc="columns"] .kit-sc-ft-cols {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1.4fr);
+    gap: 40px;
+  }
+}
+
+@keyframes kit-sc-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes kit-sc-marquee-rtl {
+  to {
+    transform: translateX(50%);
+  }
+}

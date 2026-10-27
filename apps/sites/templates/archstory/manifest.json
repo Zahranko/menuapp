@@ -13,6 +13,7 @@
   "heroSlider": { "kind": "panel", "source": "hero.image" },
   "thumbnail": "/templates/archstory/thumbnail.png",
   "sample": "sweets",
+  "sectionsLayout": { "order": ["picks", "menu", "story", "reviews", "visit"] },
   "schema": [
     {
       "key": "font",

@@ -13,6 +13,7 @@
   "heroSlider": { "kind": "band" },
   "thumbnail": "/templates/polaroid/thumbnail.png",
   "sample": "sweets",
+  "sectionsLayout": { "order": ["menu", "story", "visit"] },
   "schema": [
     {
       "key": "font",

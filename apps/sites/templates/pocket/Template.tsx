@@ -13,6 +13,10 @@ import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
 import { basicLinks, orderCta, pageTop, SiteHeader, SiteHero } from "../_kit/Top";
 import { SiteMenu } from "../_kit/Menu";
+import { ordered, SiteFooter, SiteStory, SiteVisit, together } from "../_kit/Sections";
+
+/** The sections in the order the template draws them (manifest "sectionsLayout.order"). */
+const ORDER = ["menu", "story", "visit"];
 
 const copy = {
   en: { shop: "Shop", all: "All", sort: "Sort", featured: "Featured", low: "Price: low to high", high: "Price: high to low", filter: "Filter by category", ask: "Ask on WhatsApp", about: "About us", visit: "Visit the shop", hours: "Opening hours", contact: "Contact", empty: "Nothing matches. Try another word or category." },
@@ -29,6 +33,7 @@ const PALETTES = {
 /** Template 005 "Pocket Catalog": a shop catalog with filters, price sorting and a WhatsApp question on every item. */
 export default function PocketCatalogTemplate({ site, now }: TemplateProps & { now?: Date }) {
   const ctx = siteContext(site, now);
+  const grouped = together(ctx, ORDER, ["story", "visit"]);
   const c = copy[ctx.locale];
   const heroPics = heroPhotos(site.settings, "hero.image");
   const banner = heroPics[0] ?? null;
@@ -81,88 +86,123 @@ export default function PocketCatalogTemplate({ site, now }: TemplateProps & { n
           <h1 className="sr-only">{site.business.name}</h1>
         )}
 
-        <section id="menu" className="catalog" data-section="menu" aria-labelledby="catalog-title">
-          <h2 id="catalog-title" className="sr-only">
-            {c.shop}
-          </h2>
-          <CatalogControls
-            gridId="catalog-grid"
-            className="controls"
-            categories={ctx.sections.map((s) => ({ id: s.anchor, name: s.name }))}
-            labels={{ all: c.all, search: ctx.t.search, sort: c.sort, featured: c.featured, priceLow: c.low, priceHigh: c.high, filter: c.filter }}
-            locale={ctx.locale}
-          />
-          <SiteMenu ctx={ctx} like="grid" id="catalog-grid" catalog>
-          <ul id="catalog-grid" className="plain grid kit-cards">
-            {products.map((item) => (
-              <li
-                key={item.id}
-                className={cx("product kit-card", !item.isAvailable && "out")}
-                data-product
-                data-cat={item.category.anchor}
-                data-q={item.search}
-                data-price={item.price}
-                data-order={order.get(item.id)}
-                style={{ order: order.get(item.id) }}
-              >
-                <button type="button" className="product-main" data-item-id={item.id}>
-                  <span className="product-media kit-card-media">
-                    <ProductPicture item={item} sizes="(min-width: 760px) 25vw, 50vw" />
-                    {(item.labelText || !item.isAvailable) && (
-                      <span className="badges">
-                        {item.labelText && <span className="tag">{item.labelText}</span>}
-                        {!item.isAvailable && <span className="tag tag-out">{ctx.t.soldOut}</span>}
+        {ordered(ctx, {
+          menu: (
+            <section id="menu" className="catalog" data-section="menu" aria-labelledby="catalog-title">
+              <h2 id="catalog-title" className="sr-only">
+                {c.shop}
+              </h2>
+              <CatalogControls
+                gridId="catalog-grid"
+                className="controls"
+                categories={ctx.sections.map((s) => ({ id: s.anchor, name: s.name }))}
+                labels={{ all: c.all, search: ctx.t.search, sort: c.sort, featured: c.featured, priceLow: c.low, priceHigh: c.high, filter: c.filter }}
+                locale={ctx.locale}
+              />
+              <SiteMenu ctx={ctx} like="grid" id="catalog-grid" catalog action={(item) => (ctx.site.business.whatsApp && item.isAvailable ? { href: whatsappLink(ctx.site.business.whatsApp, `${askStart} ${item.name}`.trim()), label: c.ask, icon: <WhatsApp /> } : null)}>
+              <ul id="catalog-grid" className="plain grid kit-cards">
+                {products.map((item) => (
+                  <li
+                    key={item.id}
+                    className={cx("product kit-card", !item.isAvailable && "out")}
+                    data-product
+                    data-cat={item.category.anchor}
+                    data-q={item.search}
+                    data-price={item.price}
+                    data-order={order.get(item.id)}
+                    style={{ order: order.get(item.id) }}
+                  >
+                    <button type="button" className="product-main" data-item-id={item.id}>
+                      <span className="product-media kit-card-media">
+                        <ProductPicture item={item} sizes="(min-width: 760px) 25vw, 50vw" />
+                        {(item.labelText || !item.isAvailable) && (
+                          <span className="badges">
+                            {item.labelText && <span className="tag">{item.labelText}</span>}
+                            {!item.isAvailable && <span className="tag tag-out">{ctx.t.soldOut}</span>}
+                          </span>
+                        )}
                       </span>
+                      <span className="product-cat">{item.category.name}</span>
+                      <span className="product-name">{item.name}</span>
+                      <span className="product-price">{item.priceText}</span>
+                    </button>
+                    {ctx.site.business.whatsApp && item.isAvailable && (
+                      <a data-k="btn" className="ask" href={whatsappLink(ctx.site.business.whatsApp, `${askStart} ${item.name}`.trim())} rel="noopener" target="_blank" aria-label={`${c.ask}: ${item.name}`}>
+                        <WhatsApp /> {c.ask}
+                      </a>
                     )}
-                  </span>
-                  <span className="product-cat">{item.category.name}</span>
-                  <span className="product-name">{item.name}</span>
-                  <span className="product-price">{item.priceText}</span>
-                </button>
-                {ctx.site.business.whatsApp && item.isAvailable && (
-                  <a data-k="btn" className="ask" href={whatsappLink(ctx.site.business.whatsApp, `${askStart} ${item.name}`.trim())} rel="noopener" target="_blank" aria-label={`${c.ask}: ${item.name}`}>
-                    <WhatsApp /> {c.ask}
-                  </a>
-                )}
-              </li>
-            ))}
-          </ul>
-          </SiteMenu>
-          <p className="empty" data-catalog-empty hidden={products.length > 0}>
-            {c.empty}
-          </p>
-        </section>
-
-        {(story || ctx.on("visit")) && (
-          <div className="info">
-            {story && (
-              <section className="card" id="story" data-section="story" data-k="boxed" aria-labelledby="story-title">
-                <h2 data-k="label" id="story-title">{ctx.text("story.title") || c.about}</h2>
-                <p>{story}</p>
-              </section>
-            )}
-            {ctx.on("visit") && (
-              <section className="card" id="visit" data-section="visit" data-k="boxed" aria-labelledby="visit-title">
-                <h2 data-k="label" id="visit-title">{c.visit}</h2>
-                <div className="visit-cols">
-                  <ContactList ctx={ctx} />
-                  {hasHours(ctx.hours) && (
-                    <div>
-                      <h3>{c.hours}</h3>
-                      <HoursList ctx={ctx} />
-                    </div>
+                  </li>
+                ))}
+              </ul>
+              </SiteMenu>
+              <p className="empty" data-catalog-empty hidden={products.length > 0}>
+                {c.empty}
+              </p>
+            </section>
+          ),
+          // The story and the visit share one "info" box while the owner keeps them where they are.
+          story: grouped
+            ? (story || ctx.on("visit")) && (
+                <div className="info">
+                  {story && (
+                    <section className="card" id="story" data-section="story" data-k="boxed" aria-labelledby="story-title">
+                      <h2 data-k="label" id="story-title">{ctx.text("story.title") || c.about}</h2>
+                      <p>{story}</p>
+                    </section>
+                  )}
+                  {ctx.on("visit") && (
+                    <section className="card" id="visit" data-section="visit" data-k="boxed" aria-labelledby="visit-title">
+                      <h2 data-k="label" id="visit-title">{c.visit}</h2>
+                      <div className="visit-cols">
+                        <ContactList ctx={ctx} />
+                        {hasHours(ctx.hours) && (
+                          <div>
+                            <h3>{c.hours}</h3>
+                            <HoursList ctx={ctx} />
+                          </div>
+                        )}
+                      </div>
+                    </section>
                   )}
                 </div>
-              </section>
-            )}
-          </div>
-        )}
+              )
+            : story && (
+                <SiteStory ctx={ctx} title={ctx.text("story.title") || c.about}>
+                  <div className="info">
+                    <section className="card" id="story" data-section="story" data-k="boxed" aria-labelledby="story-title">
+                      <h2 data-k="label" id="story-title">{ctx.text("story.title") || c.about}</h2>
+                      <p>{story}</p>
+                    </section>
+                  </div>
+                </SiteStory>
+              ),
+          visit: !grouped && ctx.on("visit") && (
+            <SiteVisit ctx={ctx} title={c.visit}>
+              <div className="info">
+                <section className="card" id="visit" data-section="visit" data-k="boxed" aria-labelledby="visit-title">
+                  <h2 data-k="label" id="visit-title">{c.visit}</h2>
+                  <div className="visit-cols">
+                    <ContactList ctx={ctx} />
+                    {hasHours(ctx.hours) && (
+                      <div>
+                        <h3>{c.hours}</h3>
+                        <HoursList ctx={ctx} />
+                      </div>
+                    )}
+                  </div>
+                </section>
+              </div>
+            </SiteVisit>
+          ),
+        })}
       </main>
 
-      <footer className="foot" data-section="footer">
-        <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
-        <Credits ctx={ctx} />
-      </footer>
+      <SiteFooter ctx={ctx} links={basicLinks(ctx, { story })}>
+        <footer className="foot" data-section="footer">
+          <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
+          <Credits ctx={ctx} />
+        </footer>
+      </SiteFooter>
       <OrderFab order={orderFab} />
       <ProductSheet ctx={ctx} />
     </div>

@@ -15,7 +15,7 @@ import 'color_picker.dart';
 import 'design_models.dart';
 
 /// Field types the editor knows. Others are skipped (with a log line) so a newer template never breaks the app.
-const supportedFieldTypes = {'text', 'textarea', 'choice', 'palette', 'color', 'image', 'images', 'range', 'toggle', 'bool', 'toggles', 'hours'};
+const supportedFieldTypes = {'text', 'textarea', 'choice', 'palette', 'color', 'image', 'images', 'range', 'toggle', 'bool', 'toggles', 'order', 'hours'};
 
 /// One control for one template setting, chosen by the field's type.
 class SettingField extends StatelessWidget {
@@ -39,6 +39,7 @@ class SettingField extends StatelessWidget {
       'toggle' || 'bool' => null,
       'toggles' when field.key == socialShowKey => _SocialTogglesSetting(field: field, value: [for (final v in (value as List?) ?? const []) v.toString()], onChanged: onChanged),
       'toggles' => _TogglesSetting(field: field, value: [for (final v in (value as List?) ?? const []) v.toString()], onChanged: onChanged),
+      'order' => _OrderSetting(field: field, value: sectionOrder(field.options, value), onChanged: onChanged),
       'hours' => _HoursSetting(value: Map<String, dynamic>.from((value as Map?) ?? const {}), onChanged: onChanged),
       _ => null,
     };
@@ -188,7 +189,7 @@ class _PictureTile extends StatelessWidget {
                 clipBehavior: Clip.antiAlias,
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(Ui.radiusSmall),
                   border: Border.all(color: selected ? BrandColors.primary : BrandColors.line, width: selected ? 3 : 1),
                 ),
                 child: picture == null
@@ -350,6 +351,110 @@ class _TogglesSetting extends StatelessWidget {
       ]);
 }
 
+/// The template's sections in the saved order (a setting of type "order"): the saved names the template has, each once, then
+/// any the saved order doesn't know yet (a section added to the template later) right after the section before it in the
+/// template's order. The website reads the order the same way (apps/sites/templates/_kit/sections.ts).
+List<String> sectionOrder(List<String> own, Object? saved) {
+  if (saved is! List) return [...own];
+  final out = <String>[];
+  for (final name in saved) {
+    if (name is String && own.contains(name) && !out.contains(name)) out.add(name);
+  }
+  for (var i = 0; i < own.length; i++) {
+    if (out.contains(own[i])) continue;
+    final before = own.sublist(0, i).reversed.where(out.contains).firstOrNull;
+    out.insert(before == null ? 0 : out.indexOf(before) + 1, own[i]);
+  }
+  return out;
+}
+
+/// The order of the template's sections: one row per section with buttons to move it up or down. The opening and the
+/// footer are not in the list; they always stay at the top and the bottom.
+class _OrderSetting extends StatelessWidget {
+  const _OrderSetting({required this.field, required this.value, required this.onChanged});
+
+  final TemplateField field;
+  final List<String> value;
+  final ValueChanged<Object?> onChanged;
+
+  void _move(int from, int to) {
+    final next = [...value];
+    next.insert(to, next.removeAt(from));
+    onChanged(next);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      Text(l.sectionOrderHint, style: TextStyle(color: BrandColors.muted, fontSize: 12.5)),
+      const SizedBox(height: 8),
+      for (var i = 0; i < value.length; i++)
+        _OrderRow(
+          key: Key('order-${field.key}-${value[i]}'),
+          label: field.optionLabelFor(context, value[i]),
+          position: i,
+          count: value.length,
+          onUp: i > 0 ? () => _move(i, i - 1) : null,
+          onDown: i < value.length - 1 ? () => _move(i, i + 1) : null,
+        ),
+    ]);
+  }
+}
+
+class _OrderRow extends StatelessWidget {
+  const _OrderRow({super.key, required this.label, required this.position, required this.count, required this.onUp, required this.onDown});
+
+  final String label;
+  final int position;
+  final int count;
+  final VoidCallback? onUp;
+  final VoidCallback? onDown;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return Container(
+      margin: const EdgeInsets.only(bottom: 6),
+      padding: const EdgeInsetsDirectional.only(start: 12, end: 4),
+      decoration: BoxDecoration(
+        color: BrandColors.canvas,
+        borderRadius: BorderRadius.circular(Ui.radiusSmall),
+        border: Border.all(color: BrandColors.line),
+      ),
+      child: Row(children: [
+        ExcludeSemantics(
+          child: Container(
+            width: 26,
+            height: 26,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(color: BrandColors.hairline, shape: BoxShape.circle),
+            child: Text('${position + 1}', style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700, color: BrandColors.ink)),
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Semantics(
+            label: l.sectionPosition(label, position + 1, count),
+            excludeSemantics: true,
+            child: Text(label, style: TextStyle(fontWeight: FontWeight.w600, color: BrandColors.ink)),
+          ),
+        ),
+        IconButton(
+          tooltip: l.sectionMoveUp(label),
+          onPressed: onUp,
+          icon: const Icon(Icons.arrow_upward_rounded),
+        ),
+        IconButton(
+          tooltip: l.sectionMoveDown(label),
+          onPressed: onDown,
+          icon: const Icon(Icons.arrow_downward_rounded),
+        ),
+      ]),
+    );
+  }
+}
+
 /// The shared "Accounts to show on your website" setting (see the sites' _kit/site-options.json).
 const socialShowKey = 'social.show';
 
@@ -424,14 +529,14 @@ class _Tile extends StatelessWidget {
         label: label,
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(Ui.radiusSmall),
           child: Container(
             width: 72,
             height: 72,
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(Ui.radiusSmall),
               border: Border.all(color: selected ? BrandColors.primary : BrandColors.line, width: selected ? 3 : 1),
             ),
             child: child,

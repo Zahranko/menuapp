@@ -11,6 +11,7 @@ import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
 import { basicLinks, orderCta, pageTop, SiteHero, SiteMasthead } from "../_kit/Top";
 import { SiteMenu } from "../_kit/Menu";
+import { SiteFooter, SiteVisit, ordered } from "../_kit/Sections";
 
 const copy = {
   en: {
@@ -163,107 +164,114 @@ export default function TicketTemplate({
           <SiteHero ctx={ctx} top={top} title={site.business.name} subtitle={ctx.text("hero.title")} />
 
           <main>
-            <section
-              id="menu"
-              className="menu"
-              data-section="menu"
-              aria-label={c.menu}
-            >
-              <SiteMenu ctx={ctx} like="compact" level={2}>
-              {ctx.sections.map((section) => (
+            {ordered(ctx, {
+              menu: (
                 <section
-                  key={section.id}
-                  id={section.anchor}
-                  className="group"
-                  aria-labelledby={`${section.anchor}-h`}
+                  id="menu"
+                  className="menu"
+                  data-section="menu"
+                  aria-label={c.menu}
                 >
-                  <h2 data-k="label" id={`${section.anchor}-h`} className="rule">
-                    <span>{section.name}</span>
-                  </h2>
-                  <ul className="plain kit-cards kit-rows">
-                    {section.products.map((item) => (
-                      <li key={item.id}>
-                        <button
-                          type="button"
-                          className={cx("line kit-card kit-card-pad", !item.isAvailable && "out")}
-                          data-item-id={item.id}
-                        >
-                          <span className="line-top">
-                            <span className="qty" aria-hidden="true">
-                              1x
-                            </span>
-                            <span className="line-name">{item.name}</span>
-                            <span className="dots" aria-hidden="true" />
-                            <span className="line-price">{item.priceText}</span>
-                          </span>
-                          {(item.description ||
-                            item.labelText ||
-                            !item.isAvailable) && (
-                            <span className="line-desc">
-                              {item.labelText && (
-                                <span className="tag">[{item.labelText}]</span>
-                              )}
-                              {!item.isAvailable && (
-                                <span className="tag tag-out">
-                                  [{ctx.t.soldOut}]
+                  <SiteMenu ctx={ctx} like="compact" level={2}>
+                  {ctx.sections.map((section) => (
+                    <section
+                      key={section.id}
+                      id={section.anchor}
+                      className="group"
+                      aria-labelledby={`${section.anchor}-h`}
+                    >
+                      <h2 data-k="label" id={`${section.anchor}-h`} className="rule">
+                        <span>{section.name}</span>
+                      </h2>
+                      <ul className="plain kit-cards kit-rows">
+                        {section.products.map((item) => (
+                          <li key={item.id}>
+                            <button
+                              type="button"
+                              className={cx("line kit-card kit-card-pad", !item.isAvailable && "out")}
+                              data-item-id={item.id}
+                            >
+                              <span className="line-top">
+                                <span className="qty" aria-hidden="true">
+                                  1x
+                                </span>
+                                <span className="line-name">{item.name}</span>
+                                <span className="dots" aria-hidden="true" />
+                                <span className="line-price">{item.priceText}</span>
+                              </span>
+                              {(item.description ||
+                                item.labelText ||
+                                !item.isAvailable) && (
+                                <span className="line-desc">
+                                  {item.labelText && (
+                                    <span className="tag">[{item.labelText}]</span>
+                                  )}
+                                  {!item.isAvailable && (
+                                    <span className="tag tag-out">
+                                      [{ctx.t.soldOut}]
+                                    </span>
+                                  )}
+                                  {item.description}
                                 </span>
                               )}
-                              {item.description}
-                            </span>
-                          )}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </section>
+                  ))}
+                  </SiteMenu>
+                  <p className="total">
+                    <span>{c.total}</span>
+                    <span className="dots" aria-hidden="true" />
+                    <span>{count}</span>
+                  </p>
                 </section>
-              ))}
-              </SiteMenu>
-              <p className="total">
-                <span>{c.total}</span>
-                <span className="dots" aria-hidden="true" />
-                <span>{count}</span>
-              </p>
-            </section>
-
-            {ctx.on("visit") && (
-              <section
-                id="visit"
-                className="visit"
-                data-section="visit"
-                aria-labelledby="visit-title"
-              >
-                <h2 data-k="label" id="visit-title" className="rule">
-                  <span>{c.where}</span>
-                </h2>
-                {location && <p className="today-spot">{location}</p>}
-                {hasHours(ctx.hours) && (
-                  <>
-                    <h3>{c.hours}</h3>
-                    <HoursList ctx={ctx} />
-                  </>
-                )}
-                <h3>{c.contact}</h3>
-                <ContactList ctx={ctx} />
-                {ctx.contact.whatsapp && (
-                  <a data-k="btn"
-                    className="order"
-                    href={ctx.contact.whatsapp}
-                    rel="noopener"
-                    target="_blank"
+              ),
+              visit: ctx.on("visit") && (
+                <SiteVisit ctx={ctx} title={c.where} cta={ctx.contact.whatsapp ? { href: ctx.contact.whatsapp, label: c.order } : null}>
+                  <section
+                    id="visit"
+                    className="visit"
+                    data-section="visit"
+                    aria-labelledby="visit-title"
                   >
-                    <WhatsApp /> {c.order}
-                  </a>
-                )}
-              </section>
-            )}
+                    <h2 data-k="label" id="visit-title" className="rule">
+                      <span>{c.where}</span>
+                    </h2>
+                    {location && <p className="today-spot">{location}</p>}
+                    {hasHours(ctx.hours) && (
+                      <>
+                        <h3>{c.hours}</h3>
+                        <HoursList ctx={ctx} />
+                      </>
+                    )}
+                    <h3>{c.contact}</h3>
+                    <ContactList ctx={ctx} />
+                    {ctx.contact.whatsapp && (
+                      <a data-k="btn"
+                        className="order"
+                        href={ctx.contact.whatsapp}
+                        rel="noopener"
+                        target="_blank"
+                      >
+                        <WhatsApp /> {c.order}
+                      </a>
+                    )}
+                  </section>
+                </SiteVisit>
+              ),
+            })}
           </main>
 
-          <footer className="foot" data-section="footer">
-            <p className="thanks">{ctx.text("thanks") || c.thanks}</p>
-            <Barcode name={site.business.name} />
-            <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
-            <Credits ctx={ctx} />
-          </footer>
+          <SiteFooter ctx={ctx} links={basicLinks(ctx)}>
+            <footer className="foot" data-section="footer">
+              <p className="thanks">{ctx.text("thanks") || c.thanks}</p>
+              <Barcode name={site.business.name} />
+              <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
+              <Credits ctx={ctx} />
+            </footer>
+          </SiteFooter>
         </div>
       </div>
       <OrderFab order={order} />

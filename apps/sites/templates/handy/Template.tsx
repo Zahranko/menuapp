@@ -13,6 +13,7 @@ import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
 import { pageTop, SiteHeader, SiteHero, type NavLink } from "../_kit/Top";
 import { SiteMenu } from "../_kit/Menu";
+import { SiteFooter, SiteHighlights, SiteReviews, SiteVisit, ordered } from "../_kit/Sections";
 
 const copy = {
   en: { services: "Services", request: "Request a visit", ask: "Request", from: "From", areas: "Areas we cover", how: "How it works", reviews: "Happy homes", faq: "Questions", hours: "Working hours", contact: "Contact", menu: "Main menu", jump: "Service types", need: "What do you need?" },
@@ -121,155 +122,161 @@ export default function HandyTemplate({ site, now }: TemplateProps & { now?: Dat
           </section>
         </SiteHero>
 
-        {ctx.on("highlights") && badges.length > 0 && (
-          <ul className="plain badges" data-section="highlights">
-            {badges.map((b) => (
-              <li key={b.title}>
-                <Shield />
-                <span>
-                  <strong>{b.title}</strong>
-                  {b.text && <small>{b.text}</small>}
-                </span>
-              </li>
-            ))}
-          </ul>
-        )}
-
-        <section id="menu" className="services" data-section="menu" aria-labelledby="services-title">
-          <h2 id="services-title" className="title">
-            {ctx.text("services.title") || c.services}
-          </h2>
-          <SiteMenu ctx={ctx} like="grid" services pricePrefix={from ? c.from : undefined}>
-          {ctx.sections.map((section) => (
-            <section key={section.id} id={section.anchor} className="group" aria-labelledby={`${section.anchor}-h`}>
-              <h3 id={`${section.anchor}-h`}>{section.name}</h3>
-              <ul className="plain cards kit-cards">
-                {section.products.map((item) => (
-                  <li key={item.id} className={cx("card kit-card", !item.isAvailable && "out")}>
-                    <button type="button" className="card-main" data-item-id={item.id}>
-                      <span className="card-pic kit-card-media kit-flush">
-                        <ProductPicture item={item} sizes="(min-width: 760px) 30vw, 90vw" />
-                        {item.labelText && <span className="tag">{item.labelText}</span>}
-                      </span>
-                      <span className="card-name">{item.name}</span>
-                      {item.description && <span className="card-desc">{item.description}</span>}
-                    </button>
-                    <div className="card-foot">
-                      <span className="card-price">
-                        {from && <small>{c.from} </small>}
-                        {item.priceText}
-                      </span>
-                      {item.isAvailable ? (
-                        book && (
-                          <a className="ask" href={bookLink(ctx, item.name) ?? book} rel="noopener" target="_blank" aria-label={`${c.ask}: ${item.name}`}>
-                            {c.ask}
-                          </a>
-                        )
-                      ) : (
-                        <span className="tag tag-out">{ctx.t.unavailable}</span>
-                      )}
-                    </div>
+        {ordered(ctx, {
+          highlights: ctx.on("highlights") && badges.length > 0 && (
+            <SiteHighlights ctx={ctx} items={badges}>
+              <ul className="plain badges" data-section="highlights">
+                {badges.map((b) => (
+                  <li key={b.title}>
+                    <Shield />
+                    <span>
+                      <strong>{b.title}</strong>
+                      {b.text && <small>{b.text}</small>}
+                    </span>
                   </li>
                 ))}
               </ul>
+            </SiteHighlights>
+          ),
+          menu: (
+            <section id="menu" className="services" data-section="menu" aria-labelledby="services-title">
+              <h2 id="services-title" className="title">
+                {ctx.text("services.title") || c.services}
+              </h2>
+              <SiteMenu ctx={ctx} like="grid" services pricePrefix={from ? c.from : undefined} action={(item) => (item.isAvailable && book ? { href: bookLink(ctx, item.name) ?? book, label: c.ask } : null)}>
+              {ctx.sections.map((section) => (
+                <section key={section.id} id={section.anchor} className="group" aria-labelledby={`${section.anchor}-h`}>
+                  <h3 id={`${section.anchor}-h`}>{section.name}</h3>
+                  <ul className="plain cards kit-cards">
+                    {section.products.map((item) => (
+                      <li key={item.id} className={cx("card kit-card", !item.isAvailable && "out")}>
+                        <button type="button" className="card-main" data-item-id={item.id}>
+                          <span className="card-pic kit-card-media kit-flush">
+                            <ProductPicture item={item} sizes="(min-width: 760px) 30vw, 90vw" />
+                            {item.labelText && <span className="tag">{item.labelText}</span>}
+                          </span>
+                          <span className="card-name">{item.name}</span>
+                          {item.description && <span className="card-desc">{item.description}</span>}
+                        </button>
+                        <div className="card-foot">
+                          <span className="card-price">
+                            {from && <small>{c.from} </small>}
+                            {item.priceText}
+                          </span>
+                          {item.isAvailable ? (
+                            book && (
+                              <a className="ask" href={bookLink(ctx, item.name) ?? book} rel="noopener" target="_blank" aria-label={`${c.ask}: ${item.name}`}>
+                                {c.ask}
+                              </a>
+                            )
+                          ) : (
+                            <span className="tag tag-out">{ctx.t.unavailable}</span>
+                          )}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              ))}
+              </SiteMenu>
             </section>
-          ))}
-          </SiteMenu>
-        </section>
-
-        {ctx.on("areas") && areas.length > 0 && (
-          <section className="areas" data-section="areas" aria-labelledby="areas-title">
-            <h2 data-k="label" id="areas-title">
-              <Pin /> {c.areas}
-            </h2>
-            <ul className="plain area-list">
-              {areas.map((a) => (
-                <li key={a}>{a}</li>
-              ))}
-            </ul>
-          </section>
-        )}
-
-        {ctx.on("steps") && how.length > 0 && (
-          <section id="how" className="how" data-section="steps" aria-labelledby="how-title">
-            <h2 id="how-title" className="title">
-              {ctx.text("steps.title") || c.how}
-            </h2>
-            <ol className="plain steps">
-              {how.map((s, i) => (
-                <li key={s.title}>
-                  <span className="step-no" aria-hidden="true">
-                    {i + 1}
-                  </span>
-                  <h3>{s.title}</h3>
-                  {s.text && <p>{s.text}</p>}
-                </li>
-              ))}
-            </ol>
-          </section>
-        )}
-
-        {ctx.on("reviews") && ctx.reviews.length > 0 && (
-          <section className="reviews" data-section="reviews" aria-labelledby="reviews-title">
-            <h2 id="reviews-title" className="title">
-              {c.reviews}
-            </h2>
-            <ul className="plain review-list">
-              {ctx.reviews.slice(0, 3).map((r) => (
-                <li key={r.quote}>
-                  <figure>
-                    <p className="stars" aria-hidden="true">
-                      ★★★★★
-                    </p>
-                    <blockquote>{r.quote}</blockquote>
-                    {r.name && <figcaption>{r.name}</figcaption>}
-                  </figure>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
-
-        {ctx.on("faq") && questions.length > 0 && (
-          <section id="faq" className="faq" data-section="faq" aria-labelledby="faq-title">
-            <h2 id="faq-title" className="title">
-              {c.faq}
-            </h2>
-            <div className="faq-list">
-              {questions.map((q) => (
-                <details key={q.q}>
-                  <summary>{q.q}</summary>
-                  <p>{q.a}</p>
-                </details>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {ctx.on("visit") && (
-          <section id="visit" className="visit" data-section="visit" aria-labelledby="visit-title">
-            <h2 id="visit-title" className="title">
-              {c.contact}
-            </h2>
-            <div className="visit-grid">
-              <div className="panel">
-                <ContactList ctx={ctx} />
+          ),
+          areas: ctx.on("areas") && areas.length > 0 && (
+            <section className="areas" data-section="areas" aria-labelledby="areas-title">
+              <h2 data-k="label" id="areas-title">
+                <Pin /> {c.areas}
+              </h2>
+              <ul className="plain area-list">
+                {areas.map((a) => (
+                  <li key={a}>{a}</li>
+                ))}
+              </ul>
+            </section>
+          ),
+          steps: ctx.on("steps") && how.length > 0 && (
+            <section id="how" className="how" data-section="steps" aria-labelledby="how-title">
+              <h2 id="how-title" className="title">
+                {ctx.text("steps.title") || c.how}
+              </h2>
+              <ol className="plain steps">
+                {how.map((s, i) => (
+                  <li key={s.title}>
+                    <span className="step-no" aria-hidden="true">
+                      {i + 1}
+                    </span>
+                    <h3>{s.title}</h3>
+                    {s.text && <p>{s.text}</p>}
+                  </li>
+                ))}
+              </ol>
+            </section>
+          ),
+          reviews: ctx.on("reviews") && ctx.reviews.length > 0 && (
+            <SiteReviews ctx={ctx} title={c.reviews}>
+              <section className="reviews" data-section="reviews" aria-labelledby="reviews-title">
+                <h2 id="reviews-title" className="title">
+                  {c.reviews}
+                </h2>
+                <ul className="plain review-list">
+                  {ctx.reviews.slice(0, 3).map((r) => (
+                    <li key={r.quote}>
+                      <figure>
+                        <p className="stars" aria-hidden="true">
+                          ★★★★★
+                        </p>
+                        <blockquote>{r.quote}</blockquote>
+                        {r.name && <figcaption>{r.name}</figcaption>}
+                      </figure>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            </SiteReviews>
+          ),
+          faq: ctx.on("faq") && questions.length > 0 && (
+            <section id="faq" className="faq" data-section="faq" aria-labelledby="faq-title">
+              <h2 id="faq-title" className="title">
+                {c.faq}
+              </h2>
+              <div className="faq-list">
+                {questions.map((q) => (
+                  <details key={q.q}>
+                    <summary>{q.q}</summary>
+                    <p>{q.a}</p>
+                  </details>
+                ))}
               </div>
-              {hasHours(ctx.hours) && (
-                <div className="panel">
-                  <h3>{c.hours}</h3>
-                  <HoursList ctx={ctx} />
+            </section>
+          ),
+          visit: ctx.on("visit") && (
+            <SiteVisit ctx={ctx} title={c.contact} cta={book ? { href: book, label: c.request } : null}>
+              <section id="visit" className="visit" data-section="visit" aria-labelledby="visit-title">
+                <h2 id="visit-title" className="title">
+                  {c.contact}
+                </h2>
+                <div className="visit-grid">
+                  <div className="panel">
+                    <ContactList ctx={ctx} />
+                  </div>
+                  {hasHours(ctx.hours) && (
+                    <div className="panel">
+                      <h3>{c.hours}</h3>
+                      <HoursList ctx={ctx} />
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          </section>
-        )}
+              </section>
+            </SiteVisit>
+          ),
+        })}
       </main>
 
-      <footer className="foot" data-section="footer">
-        <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
-        <Credits ctx={ctx} />
-      </footer>
+      <SiteFooter ctx={ctx} links={links}>
+        <footer className="foot" data-section="footer">
+          <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
+          <Credits ctx={ctx} />
+        </footer>
+      </SiteFooter>
       {order && (
         <div className="bar">
           {ctx.today && <span className="bar-today">{ctx.today}</span>}

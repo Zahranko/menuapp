@@ -842,21 +842,45 @@ const MENU_KEYS: Record<string, string> = {
   mnav: "menu.categoryNav",
   mtit: "menu.categoryTitle",
 };
+/** Section options for fixture previews (_kit/sections.ts): "hil_<highlights>", "stl_<story>", "gll_<photos>",
+ * "rvl_<reviews>", "vsl_<visit>" and "ftl_<footer>" layouts; "so_<name>+<name>+..." (the order of the sections, names from
+ * the template's "sections.order"; the ones left out follow in the template's order); "sparse" (the least content each
+ * section can show: one highlight, one review, one gallery photo, no story photo, no address, email or opening hours). */
+const SECTION_KEYS: Record<string, string> = {
+  hil: "highlights.layout",
+  stl: "story.layout",
+  gll: "gallery.layout",
+  rvl: "reviews.layout",
+  vsl: "visit.layout",
+  ftl: "footer.layout",
+};
 const HERO_KEYS: Record<string, string> = { trans: "hero.transition", speed: "hero.speed", height: "hero.height", overlay: "hero.overlay", text: "hero.textPosition" };
 
 /**
  * Card and hero slider options for fixture previews (same token part as applySiteOptions): "card_<style>",
  * "border_<width>", "bc_<accent|ink|rrggbb>" (border color), "corners_<size>", "photo_<shape>", "spacing_<tight|airy>";
- * the page style, page layout and menu layout tokens above (STYLE_KEYS, LAYOUT_KEYS, MENU_KEYS);
+ * the page style, page layout, menu layout and section tokens above (STYLE_KEYS, LAYOUT_KEYS, MENU_KEYS, SECTION_KEYS);
  * "slides" or "slides_<n>" (n hero photos in all, 2 to 6), "trans_<slide|fade|zoom>", "speed_<slow|normal|fast>",
  * "auto_off" (no autoplay), "ctrl_<both|dots|arrows|none>", "height_<size>", "overlay_<amount>", "text_<position>".
  */
+/** A token value as written: a "+" can reach the page as "%2B" (or as a space, when a path decodes it like a query). */
+function decodedOnce(value: string): string {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+}
+
 function applyCardAndHeroOption(site: PublicSite, key: string, value: string): void {
   const set = (settings: Settings) => (site.settings = { ...site.settings, ...settings });
   if (key in CARD_KEYS) set({ [CARD_KEYS[key]]: value });
   else if (key in STYLE_KEYS) set({ [STYLE_KEYS[key]]: value });
   else if (key in LAYOUT_KEYS) set({ [LAYOUT_KEYS[key]]: value });
   else if (key in MENU_KEYS) set({ [MENU_KEYS[key]]: value });
+  else if (key in SECTION_KEYS) set({ [SECTION_KEYS[key]]: value });
+  else if (key === "so") set({ "sections.order": decodedOnce(value).split(/[+, ]/).filter(Boolean) });
+  else if (key === "sparse") applySparse(site);
   else if (key === "bc") set({ "cards.borderColor": /^[0-9a-f]{6}$/i.test(value) ? `#${value.toUpperCase()}` : value });
   else if (key in HERO_KEYS) set({ [HERO_KEYS[key]]: value });
   else if (key === "auto") set({ "hero.autoplay": value !== "off" });
@@ -872,6 +896,20 @@ function applyCardAndHeroOption(site: PublicSite, key: string, value: string): v
     } else if (typeof site.settings["hero.image"] === "string") set({ "hero.image": photos[0], "hero.slides": photos.slice(1) });
     else set({ "hero.slides": photos });
   }
+}
+
+/** The least content every section can show (the "sparse" fixture option). */
+function applySparse(site: PublicSite): void {
+  const settings: Settings = { ...site.settings, "story.image": "", hours: {} };
+  for (const n of [2, 3, 4, 5, 6]) {
+    settings[`reviews.${n}.quote`] = "";
+    settings[`reviews.${n}.name`] = "";
+    settings[`highlights.${n}.title`] = "";
+    settings[`highlights.${n}.text`] = "";
+  }
+  if (Array.isArray(settings.gallery)) settings.gallery = settings.gallery.slice(0, 1);
+  site.settings = settings;
+  site.business = { ...site.business, address: null, email: null };
 }
 
 /** Custom label texts at the 24-character limit: one with spaces, one long word (badge layout tests). */

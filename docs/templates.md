@@ -217,7 +217,9 @@ Props: `like` (required), `level` (category headings h2 or h3, default 3 under t
 (default `ctx.sections`; Pro pages pass `menuSections()` or `categorySections()` from `_premium/pages.ts`), `id` (keep
 the id `MenuSearch` filters), `empty` (no-results text), `catalog` (adds the `data-product`, `data-cat`, `data-price`
 and `data-order` that `CatalogControls` reads), `services` and `pricePrefix` (service templates: "Not available",
-"From"), `page` (a whole menu or category page), `ownNav` and `flat` (one list without category titles).
+"From"), `page` (a whole menu or category page), `ownNav`, `flat` (one list without category titles) and `action` (a
+button on each product beside the one that opens it, `{ href, label, icon }` or null: Pocket's "Ask" on WhatsApp,
+Handy and Atelier's "Book").
 
 `templates/menu-layout.test.tsx` renders every template with every layout (defaults unchanged, every product shown,
 English and Arabic, unique ids, one h1, Pro menu and category pages), and `e2e/menu-layout.spec.ts` checks every layout on
@@ -226,6 +228,83 @@ search, the filters and the side list. In fixture mode the tokens are `ml` (layo
 `mrat` (photo proportions), `mpr` (prices), `mnav` (category links) and `mtit` (category titles), for example
 `/_preview/fixture.souq.default.ar.ml_tiles-mnav_tabs-mtit_number`. Preview pictures: `public/kit/previews/menu-*.svg`,
 `menucols-*.svg`, `menuphotos-*.svg`, `menushape-*.svg`, `menuprice-*.svg`, `menunav-*.svg` and `menutitle-*.svg`.
+
+## Sections (`_kit/sections-settings.json`, `sections.ts`, `Sections.tsx`, `sections.css`)
+
+Every template gets a shared "Sections" group (الأقسام), added by `scripts/build-registry.mjs` right after "Menu
+layout". It holds the order of the sections, then one layout per kind of section the template has, then the template's
+own "Sections" fields (which sections show, the announcement). Every option starts on `auto` ("Template default") and
+the template's own order: the page then renders exactly as before. A layout other than `auto` swaps in the shared
+section of `_kit/Sections.tsx`, drawn by `_kit/sections.css` (imported by every `styles.css` after `menu.css`) with the
+template's own `--k-*` variables, fonts and corners.
+
+| Key | Shown when the template has | Options |
+|---|---|---|
+| `sections.order` | always | the template's sections, between the opening (always first) and the footer (always last) |
+| `highlights.layout` | `highlights.1.title` | auto, icons (in a row), cards, numbered (a numbered list), statement (one big line), alternating (side by side with photos), marquee (a moving strip) |
+| `story.layout` | `story.text` | auto, beside (photo beside the text), behind (photo behind the text), quote (the first sentence big), timeline, columns, letter (a signed note) |
+| `gallery.layout` | `gallery` | auto, grid, masonry, carousel (a slider), polaroid, feature (one big photo and small ones), strip (a full-width row) |
+| `reviews.layout` | `reviews.1.quote` | auto, cards, quote (one big quote), carousel, wall (sticky notes), summary (stars and short quotes) |
+| `visit.layout` | `hours` | auto, map (map, details and hours), cards (hours, place, contact), table (a big hours table), centered (today's hours large), banner (a colored band) |
+| `footer.layout` | always | auto, simple, columns, big (the name large), centered, minimal |
+
+`sections.order` is a field of type `order`: its options are the template's section names (from `order.labels` in
+`sections-settings.json`, such as `menu`, `highlights`, `story`, `gallery`, `reviews`, `faq`, `visit`) and its value is
+the list in the owner's order. The backend (`TemplateSchema`) accepts only distinct known names; names left out keep
+their place after the named ones (`sectionOrder()` in `sections.ts`), so a template that gains a section later still
+shows it. The mobile editor shows it as a list with up and down buttons.
+
+Each manifest lists its sections in the order it renders them, which is also the default:
+
+```json
+"sectionsLayout": { "order": ["highlights", "signature", "menu", "story", "gallery", "reviews", "visit"] }
+```
+
+`"skip"` and `"skipOptions"` work as for the page layout (none uses them). A template's own section that the shared list
+has under another name uses the shared name (Folio and Drop's picks are `highlights`), and links to it still sort with
+it (`ANCHOR_ALIASES` in `sections.ts`: `work`, `lookbook` and `street` are the gallery, `process`, `how` and `week` the
+steps, `contact` the visit section).
+
+How a template wires it (its own section stays the children, shown while the layout is `auto`):
+
+```tsx
+{ordered(ctx, {
+  highlights: <SiteHighlights ctx={ctx}>{its own highlights}</SiteHighlights>,
+  menu: <SiteMenu ...>{its own menu}</SiteMenu>,
+  story: <SiteStory ctx={ctx} title={c.story} eyebrow={c.about}>{its own story}</SiteStory>,
+  gallery: <SiteGallery ctx={ctx} title={c.photos} viewer>{its own gallery}</SiteGallery>,
+  reviews: <SiteReviews ctx={ctx} title={c.reviews}>{its own reviews}</SiteReviews>,
+  visit: <SiteVisit ctx={ctx} title={c.visit} cta={book}>{its own visit section}</SiteVisit>,
+})}
+<SiteFooter ctx={ctx} links={links} social={socialAccounts(site, SOCIAL_DEFAULT)} tagline={...}>{its own footer}</SiteFooter>
+```
+
+- `ordered(ctx, parts)` renders the parts in the owner's order; the keys are the manifest's names, in the template's
+  own order, and a part may be `null` when it does not show.
+- `together(ctx, own, kinds)` is for templates that draw some sections in one grid (Bento, Pocket, Bistro, Monogrid):
+  true while the order and those layouts are the template's own, otherwise the template renders them one by one.
+- `numbered(ctx, shown)` gives chapter numbers in the owner's order (Maison), `sharedLayout(ctx, kind)` says whether a
+  shared layout is on (Clinic moves its highlights out of the opening then), and `orderedLinks(ctx, links)` /
+  `sortLinks()` put section links in the owner's order. The shared header (`KitHeader`) sorts its links itself.
+- Props every section takes: `id` (keep the id the template's links use), `title`, `eyebrow`, `heading` (false on a page
+  whose h1 already names the section). Each also takes its content, defaulting to the standard keys: `items`
+  (highlights), `text`, `photo`, `since` and `more` (story), `photos`, `viewer` and `more` (gallery: with `viewer` each
+  photo is a button with `data-photo="<index>"` that opens the template's photo viewer), `reviews`, `cta` (visit),
+  `links`, `social` and `tagline` (footer).
+- Missing content: a section with nothing to show renders nothing (the footer and the visit section always render),
+  the story without a photo is a colored panel or a band with the first letter, and parts of the visit section without
+  hours, an address or contact details leave themselves out.
+- Multi-page Pro sites order the sections of their home page; the visit page wraps its visit, story and reviews.
+
+`templates/sections-layout.test.tsx` renders every template with every layout and with its sections reversed (defaults
+unchanged, opening first and footer last, English and Arabic, unique ids, labels that point at headings, header links in
+the owner's order, the least content, the visit page of multi-page sites), and `e2e/sections-layout.spec.ts` checks every layout on every template on a phone (English and
+Arabic, the last page with the least content, axe, no sideways scroll, links landing), the reversed order in both
+languages, and that the photo slider scrolls inside itself and opens the viewer. In fixture mode the tokens are `hil`
+(highlights), `stl` (story), `gll` (gallery), `rvl` (reviews), `vsl` (visit), `ftl` (footer) and `so` (the order,
+names joined with `+`), for example `/_preview/fixture.souq.default.ar.so_reviews+menu-stl_quote-gll_carousel`. Preview
+pictures: `public/kit/previews/highlights-*.svg`, `story-*.svg`, `gallery-*.svg`, `reviews-*.svg`, `visit-*.svg` and
+`footer-*.svg`.
 
 ## Rules every template follows
 

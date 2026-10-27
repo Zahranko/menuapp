@@ -20,6 +20,9 @@ import { Gallery } from "./sections/Gallery";
 import { Story } from "./sections/Story";
 import { Visit } from "./sections/Visit";
 import { dotted, souqVars } from "./theme";
+import { ordered, SiteFooter, SiteGallery, SiteHighlights, SiteReviews, SiteStory, SiteVisit } from "../_kit/Sections";
+import { socialAccounts } from "../_kit/options";
+import { SOUQ_SOCIAL } from "./sections/Footer";
 
 /** Template 001 "Souq": a warm café site with a big hero, signature picks and a searchable menu. */
 export default function SouqTemplate({ site, preview, now }: TemplateProps & { now?: Date }) {
@@ -60,15 +63,39 @@ export default function SouqTemplate({ site, preview, now }: TemplateProps & { n
         <SiteHero ctx={ctx} top={top}>
           <Hero ctx={ctx} />
         </SiteHero>
-        {ctx.on("highlights") && <Highlights ctx={ctx} />}
-        {ctx.on("signature") && <Signature ctx={ctx} />}
-        <Menu ctx={ctx} />
-        {ctx.on("story") && <Story ctx={ctx} />}
-        {ctx.on("gallery") && <Gallery ctx={ctx} />}
-        {ctx.on("reviews") && <Reviews ctx={ctx} />}
-        {ctx.on("visit") && <Visit ctx={ctx} />}
+        {ordered(ctx, {
+          highlights: ctx.on("highlights") && (
+            <SiteHighlights ctx={ctx}>
+              <Highlights ctx={ctx} />
+            </SiteHighlights>
+          ),
+          signature: ctx.on("signature") && <Signature ctx={ctx} />,
+          menu: <Menu ctx={ctx} />,
+          story: ctx.on("story") && (
+            <SiteStory ctx={ctx} title={ctx.text("story.title") || ctx.t.story} eyebrow={ctx.c.storyEyebrow}>
+              <Story ctx={ctx} />
+            </SiteStory>
+          ),
+          gallery: ctx.on("gallery") && (
+            <SiteGallery ctx={ctx} title={ctx.c.galleryTitle.replace("{name}", site.business.name)} eyebrow={ctx.c.galleryEyebrow}>
+              <Gallery ctx={ctx} />
+            </SiteGallery>
+          ),
+          reviews: ctx.on("reviews") && (
+            <SiteReviews ctx={ctx} title={ctx.c.reviewsTitle} eyebrow={ctx.c.reviewsEyebrow} reviews={ctx.reviews.slice(0, 3)}>
+              <Reviews ctx={ctx} />
+            </SiteReviews>
+          ),
+          visit: ctx.on("visit") && (
+            <SiteVisit ctx={ctx} title={ctx.c.visitTitle} eyebrow={ctx.c.visitEyebrow}>
+              <Visit ctx={ctx} />
+            </SiteVisit>
+          ),
+        })}
       </main>
-      <Footer ctx={ctx} />
+      <SiteFooter ctx={ctx} links={navOf(navLinks(ctx))} social={socialAccounts(site, SOUQ_SOCIAL)} tagline={ctx.text("hero.subtitle")}>
+        <Footer ctx={ctx} />
+      </SiteFooter>
       <OrderFab order={order} />
       <ItemSheet
         items={sheetItems}

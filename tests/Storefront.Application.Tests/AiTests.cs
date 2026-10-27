@@ -249,6 +249,19 @@ public class ChatAboutDesignTests
     }
 
     [Fact]
+    public async Task The_instructions_explain_the_sections_group()
+    {
+        var (handler, assistant, _) = Create();
+        await handler.Handle(Ask("Move reviews higher"), CancellationToken.None);
+        var instructions = assistant.Requests.Single().Instructions;
+        Assert.Contains("\"Sections\"", instructions);
+        Assert.Contains("\"sections.order\"", instructions);
+        Assert.Contains("\"move reviews higher\"", instructions);
+        Assert.Contains("\"make the gallery a slider\" (gallery \"carousel\")", instructions);
+        Assert.Contains("\"a big quote for our story\" (story \"quote\")", instructions);
+    }
+
+    [Fact]
     public async Task A_missing_reply_gets_a_short_one_in_the_chosen_language()
     {
         var (handler, assistant, _) = Create();

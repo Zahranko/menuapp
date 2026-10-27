@@ -16,6 +16,7 @@
   "thumbnail": "/templates/lumen/thumbnail.png",
   "sample": "lumen",
   "menu": { "own": ["cards"] },
+  "sectionsLayout": { "order": ["menu", "best", "story", "gallery", "reviews", "visit"] },
   "schema": [
     {
       "key": "font",

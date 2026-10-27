@@ -20,6 +20,7 @@ import { PhotoViewer } from "../_fashion/PhotoViewer";
 import { ProductSheet } from "../_fashion/ProductSheet";
 import { orderCta, pageTop, SiteHeader, SiteHero, type NavLink } from "../_kit/Top";
 import { SiteMenu } from "../_kit/Menu";
+import { ordered, SiteFooter, SiteGallery, SiteReviews, SiteStory, SiteVisit } from "../_kit/Sections";
 
 /*
  * Template 028 "Drop": a loud streetwear store. A moving ticker, a full-screen poster for the latest drop with a
@@ -69,14 +70,34 @@ export default function DropTemplate({ site, now }: TemplateProps & { now?: Date
         <SiteHero ctx={ctx} top={top} actions={[{ href: "#menu", label: f.shopAll }]}>
           <Poster ctx={ctx} f={f} />
         </SiteHero>
-        {ctx.on("hot") && <Hot ctx={ctx} />}
-        <Shop ctx={ctx} c={c} f={f} />
-        {photos.length > 0 && <Wall ctx={ctx} f={f} photos={photos} />}
-        {ctx.on("story") && ctx.text("story.text") && <Statement ctx={ctx} />}
-        {ctx.on("reviews") && ctx.reviews.length > 0 && <Crew ctx={ctx} c={c} />}
-        {ctx.on("visit") && <Store ctx={ctx} c={c} f={f} />}
+        {ordered(ctx, {
+          picks: ctx.on("hot") && <Hot ctx={ctx} />,
+          menu: <Shop ctx={ctx} c={c} f={f} />,
+          gallery: photos.length > 0 && (
+            <SiteGallery ctx={ctx} id="street" title={ctx.text("gallery.title") || f.lookbook} photos={photos.map((src) => ({ src }))} viewer>
+              <Wall ctx={ctx} f={f} photos={photos} />
+            </SiteGallery>
+          ),
+          story: ctx.on("story") && ctx.text("story.text") && (
+            <SiteStory ctx={ctx} title={ctx.text("story.title") || ctx.t.story}>
+              <Statement ctx={ctx} />
+            </SiteStory>
+          ),
+          reviews: ctx.on("reviews") && ctx.reviews.length > 0 && (
+            <SiteReviews ctx={ctx} title={c.reviews}>
+              <Crew ctx={ctx} c={c} />
+            </SiteReviews>
+          ),
+          visit: ctx.on("visit") && (
+            <SiteVisit ctx={ctx} title={c.find} cta={ctx.contact.whatsapp ? { href: ctx.contact.whatsapp, label: c.hold } : null}>
+              <Store ctx={ctx} c={c} f={f} />
+            </SiteVisit>
+          ),
+        })}
       </main>
-      <Footer ctx={ctx} c={c} />
+      <SiteFooter ctx={ctx} links={links}>
+        <Footer ctx={ctx} c={c} />
+      </SiteFooter>
       <OrderFab order={order} />
       <ProductSheet items={sheetItems(ctx, all)} phone={site.business.whatsApp} labels={sheetLabels(ctx)} />
       {photos.length > 0 && <PhotoViewer photos={photos.map((src) => ({ src, alt: null }))} labels={viewerLabels(ctx)} />}

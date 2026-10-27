@@ -21,6 +21,7 @@ import { copyFor, fill } from "../_premium/copy";
 import { Lightbox } from "../_premium/Lightbox";
 import { bestSellers, categorySections, categoryTree, menuSections, galleryPhotos, PAGE_PATHS, pageLinks, resolvePage, type Category, type Page, type Tree } from "../_premium/pages";
 import { emberCopy } from "./copy";
+import { SiteFooter, SiteGallery, SiteReviews, SiteStory, SiteVisit, ordered } from "../_kit/Sections";
 
 /*
  * Template 025 "Ember" (Pro): a street-food drop. Huge condensed caps that slam in, film grain, diagonal cuts,
@@ -113,7 +114,9 @@ export default function EmberTemplate({ site, path = [], base, now }: TemplatePr
           {page.kind === "visit" && <VisitPage v={v} />}
         </main>
       )}
-      <Footer v={v} />
+      <SiteFooter ctx={ctx} links={pageLinks(v, { home: c.home, menu: c.menu, best: e.hall, gallery: c.gallery, visit: c.visit })} social={socialAccounts(site, SOCIAL_DEFAULT)}>
+        <Footer v={v} />
+      </SiteFooter>
       {order && (
         <a className="pill kit-order" {...orderLink(order)} data-section="order">
           <OrderContent order={order} icon />
@@ -506,50 +509,61 @@ function Home({ v }: { v: View }) {
       </SiteHero>
       <Ticker v={v} />
 
-      <section id="menu" className="sec sec-menu" data-section="menu" aria-labelledby="menu-title">
-        <Head title={ctx.text("categories.title") || e.menuIndex} id="menu-title" link={{ href: href(PAGE_PATHS.menu), label: c.viewAll }} />
-        {v.tree.roots.length > 0 && <Index v={v} categories={v.tree.roots} />}
-      </section>
-
-      {ctx.on("best") && v.best.length > 0 && (
-        <section id="best" className="sec sec-hall" data-section="best" aria-labelledby="best-title">
-          <Head title={e.hall} id="best-title" link={{ href: href(PAGE_PATHS.best), label: c.viewAll }} />
-          <p className="lead">{ctx.text("best.title") || c.bestLead}</p>
-          <Leaderboard v={v} items={v.best.slice(0, 5)} />
-        </section>
-      )}
-
-      {story && (
-        <section id="story" className={cx("band", storyImage && "band-pic")} data-section="story" aria-labelledby="story-title">
-          <div className="band-in">
-            <div className="band-copy">
-              <h2 id="story-title" className="band-t slam">
-                {ctx.text("story.title") || ctx.t.story}
-              </h2>
-              <p className="band-text">{story}</p>
-              <a className="more" href={href(PAGE_PATHS.visit)}>
-                {c.about} <Arrow className="flip" />
-              </a>
-            </div>
-            {storyImage && (
-              <div data-k="photo" className="band-pic-frame">
-                <Picture src={storyImage} sizes="(min-width: 900px) 40vw, 90vw" />
+      {ordered(ctx, {
+        menu: (
+          <section id="menu" className="sec sec-menu" data-section="menu" aria-labelledby="menu-title">
+            <Head title={ctx.text("categories.title") || e.menuIndex} id="menu-title" link={{ href: href(PAGE_PATHS.menu), label: c.viewAll }} />
+            {v.tree.roots.length > 0 && <Index v={v} categories={v.tree.roots} />}
+          </section>
+        ),
+        best: ctx.on("best") && v.best.length > 0 && (
+          <section id="best" className="sec sec-hall" data-section="best" aria-labelledby="best-title">
+            <Head title={e.hall} id="best-title" link={{ href: href(PAGE_PATHS.best), label: c.viewAll }} />
+            <p className="lead">{ctx.text("best.title") || c.bestLead}</p>
+            <Leaderboard v={v} items={v.best.slice(0, 5)} />
+          </section>
+        ),
+        story: story && (
+          <SiteStory ctx={ctx} title={ctx.text("story.title") || ctx.t.story} more={{ href: href(PAGE_PATHS.visit), label: c.about }}>
+            <section id="story" className={cx("band", storyImage && "band-pic")} data-section="story" aria-labelledby="story-title">
+              <div className="band-in">
+                <div className="band-copy">
+                  <h2 id="story-title" className="band-t slam">
+                    {ctx.text("story.title") || ctx.t.story}
+                  </h2>
+                  <p className="band-text">{story}</p>
+                  <a className="more" href={href(PAGE_PATHS.visit)}>
+                    {c.about} <Arrow className="flip" />
+                  </a>
+                </div>
+                {storyImage && (
+                  <div data-k="photo" className="band-pic-frame">
+                    <Picture src={storyImage} sizes="(min-width: 900px) 40vw, 90vw" />
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        </section>
-      )}
-
-      {ctx.on("gallery") && v.photos.length > 0 && (
-        <section id="gallery" className="sec sec-gallery" data-section="gallery" aria-labelledby="gallery-title">
-          <Head title={ctx.text("gallery.title") || c.gallery} id="gallery-title" link={{ href: href(PAGE_PATHS.gallery), label: e.allPhotos }} />
-          <Collage v={v} photos={v.photos.slice(0, 5)} />
-        </section>
-      )}
-
-      {ctx.on("reviews") && ctx.reviews.length > 0 && <Reviews v={v} />}
-
-      {ctx.on("visit") && <VisitBlock v={v} />}
+            </section>
+          </SiteStory>
+        ),
+        gallery: ctx.on("gallery") && v.photos.length > 0 && (
+          <SiteGallery ctx={ctx} title={ctx.text("gallery.title") || c.gallery} photos={v.photos} viewer more={{ href: href(PAGE_PATHS.gallery), label: e.allPhotos }}>
+            <section id="gallery" className="sec sec-gallery" data-section="gallery" aria-labelledby="gallery-title">
+              <Head title={ctx.text("gallery.title") || c.gallery} id="gallery-title" link={{ href: href(PAGE_PATHS.gallery), label: e.allPhotos }} />
+              <Collage v={v} photos={v.photos.slice(0, 5)} />
+            </section>
+          </SiteGallery>
+        ),
+        reviews: ctx.on("reviews") && ctx.reviews.length > 0 && (
+          <SiteReviews ctx={ctx} title={ctx.t.reviews}>
+            <Reviews v={v} />
+          </SiteReviews>
+        ),
+        visit: ctx.on("visit") && (
+          <SiteVisit ctx={ctx} title={ctx.t.visit} cta={v.order ? { href: v.order, label: v.orderLabel } : null}>
+            <VisitBlock v={v} />
+          </SiteVisit>
+        ),
+      })}
     </>
   );
 }
@@ -734,25 +748,33 @@ function VisitPage({ v }: { v: View }) {
   return (
     <>
       <PageHead v={v} trail={[{ label: c.visit }]} title={ctx.t.visit} lead={ctx.today} />
-      <VisitBlock v={v} heading={false} />
+      <SiteVisit ctx={ctx} heading={false} title={ctx.t.visit} cta={v.order ? { href: v.order, label: v.orderLabel } : null}>
+        <VisitBlock v={v} heading={false} />
+      </SiteVisit>
       {story && (
-        <section className={cx("band", storyImage && "band-pic")} data-section="story" aria-labelledby="story-title">
-          <div className="band-in">
-            <div className="band-copy">
-              <h2 id="story-title" className="band-t slam">
-                {ctx.text("story.title") || ctx.t.story}
-              </h2>
-              <p className="band-text">{story}</p>
-            </div>
-            {storyImage && (
-              <div data-k="photo" className="band-pic-frame">
-                <Picture src={storyImage} sizes="(min-width: 900px) 40vw, 90vw" />
+        <SiteStory ctx={ctx} title={ctx.text("story.title") || ctx.t.story}>
+          <section className={cx("band", storyImage && "band-pic")} data-section="story" aria-labelledby="story-title">
+            <div className="band-in">
+              <div className="band-copy">
+                <h2 id="story-title" className="band-t slam">
+                  {ctx.text("story.title") || ctx.t.story}
+                </h2>
+                <p className="band-text">{story}</p>
               </div>
-            )}
-          </div>
-        </section>
+              {storyImage && (
+                <div data-k="photo" className="band-pic-frame">
+                  <Picture src={storyImage} sizes="(min-width: 900px) 40vw, 90vw" />
+                </div>
+              )}
+            </div>
+          </section>
+        </SiteStory>
       )}
-      {ctx.reviews.length > 0 && ctx.on("reviews") && <Reviews v={v} />}
+      {ctx.reviews.length > 0 && ctx.on("reviews") && (
+        <SiteReviews ctx={ctx} title={ctx.t.reviews}>
+          <Reviews v={v} />
+        </SiteReviews>
+      )}
     </>
   );
 }

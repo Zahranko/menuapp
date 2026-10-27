@@ -12,6 +12,10 @@ import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
 import { basicLinks, orderCta, pageTop, SiteHeader, SiteHero } from "../_kit/Top";
 import { SiteMenu } from "../_kit/Menu";
+import { ordered, SiteFooter, SiteStory, SiteVisit, together } from "../_kit/Sections";
+
+/** The sections in the order the template draws them (manifest "sectionsLayout.order"). */
+const ORDER = ["menu", "story", "visit"];
 
 const copy = {
   en: { see: "See the menu", today: "Today", where: "Where", about: "About us", hours: "Opening hours", contact: "Say hello", jump: "Menu sections", closed: "Closed today" },
@@ -34,6 +38,7 @@ export default function BentoTemplate({ site, now }: TemplateProps & { now?: Dat
   const story = ctx.on("story") && ctx.text("story.text");
   const pick = ctx.picks[0];
 
+  const grouped = together(ctx, ORDER, ["story", "visit"]);
   const order = orderButton(site);
   const top = pageTop(ctx, { photos: heroPics });
   return (
@@ -100,78 +105,111 @@ export default function BentoTemplate({ site, now }: TemplateProps & { now?: Dat
           <h1 className="sr-only">{site.business.name}</h1>
         )}
 
-        <section id="menu" className="menu" data-section="menu" aria-label={ctx.t.menu}>
-          <SiteMenu ctx={ctx} like="tiles" level={2}>
-          {ctx.sections.length > 1 && (
-            <nav className="cats" aria-label={c.jump}>
-              {ctx.sections.map((s) => (
-                <a key={s.id} href={`#${s.anchor}`}>
-                  {s.name}
-                </a>
-              ))}
-            </nav>
-          )}
-          {ctx.sections.map((section, si) => (
-            <section key={section.id} id={section.anchor} className="group" aria-labelledby={`${section.anchor}-h`}>
-              <div className="group-head">
-                <h2 id={`${section.anchor}-h`}>{section.name}</h2>
-                <span>{itemCount(section.products.length, ctx.locale)}</span>
-              </div>
-              <ul className="plain bento kit-cards">
-                {section.products.map((item, i) => (
-                  <li key={item.id} className={cx("cell", item.isFeatured && item.isAvailable && "big", `c${((si + i) % 4) + 1}`)}>
-                    <button type="button" className={cx("tile", "item", "kit-card", !item.isAvailable && "out")} data-item-id={item.id}>
-                      <span className="item-media kit-card-media">
-                        <ProductPicture item={item} sizes="(min-width: 760px) 25vw, 50vw" />
-                      </span>
-                      <span className="item-text">
-                        {(item.labelText || !item.isAvailable) && (
-                          <span className="tags">
-                            {item.labelText && <span className="tag">{item.labelText}</span>}
-                            {!item.isAvailable && <span className="tag tag-out">{ctx.t.soldOut}</span>}
+        {ordered(ctx, {
+          menu: (
+            <section id="menu" className="menu" data-section="menu" aria-label={ctx.t.menu}>
+              <SiteMenu ctx={ctx} like="tiles" level={2}>
+              {ctx.sections.length > 1 && (
+                <nav className="cats" aria-label={c.jump}>
+                  {ctx.sections.map((s) => (
+                    <a key={s.id} href={`#${s.anchor}`}>
+                      {s.name}
+                    </a>
+                  ))}
+                </nav>
+              )}
+              {ctx.sections.map((section, si) => (
+                <section key={section.id} id={section.anchor} className="group" aria-labelledby={`${section.anchor}-h`}>
+                  <div className="group-head">
+                    <h2 id={`${section.anchor}-h`}>{section.name}</h2>
+                    <span>{itemCount(section.products.length, ctx.locale)}</span>
+                  </div>
+                  <ul className="plain bento kit-cards">
+                    {section.products.map((item, i) => (
+                      <li key={item.id} className={cx("cell", item.isFeatured && item.isAvailable && "big", `c${((si + i) % 4) + 1}`)}>
+                        <button type="button" className={cx("tile", "item", "kit-card", !item.isAvailable && "out")} data-item-id={item.id}>
+                          <span className="item-media kit-card-media">
+                            <ProductPicture item={item} sizes="(min-width: 760px) 25vw, 50vw" />
                           </span>
-                        )}
-                        <span className="item-name">{item.name}</span>
-                        {item.description && <span className="item-desc">{item.description}</span>}
-                        <span className="price">{item.priceText}</span>
-                      </span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
+                          <span className="item-text">
+                            {(item.labelText || !item.isAvailable) && (
+                              <span className="tags">
+                                {item.labelText && <span className="tag">{item.labelText}</span>}
+                                {!item.isAvailable && <span className="tag tag-out">{ctx.t.soldOut}</span>}
+                              </span>
+                            )}
+                            <span className="item-name">{item.name}</span>
+                            {item.description && <span className="item-desc">{item.description}</span>}
+                            <span className="price">{item.priceText}</span>
+                          </span>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              ))}
+              </SiteMenu>
             </section>
-          ))}
-          </SiteMenu>
-        </section>
-
-        {(story || ctx.on("visit")) && (
-          <div className="bento outro">
-            {story && (
-              <section id="story" className="tile tile-story c1" data-section="story" data-k="boxed" aria-labelledby="story-title">
-                <h2 data-k="label" id="story-title">{ctx.text("story.title") || c.about}</h2>
-                <p>{story}</p>
-              </section>
-            )}
-            {ctx.on("visit") && hasHours(ctx.hours) && (
-              <section className="tile tile-hours c2" data-section="visit" data-k="boxed" aria-labelledby="hours-title">
-                <h2 data-k="label" id="hours-title">{c.hours}</h2>
-                <HoursList ctx={ctx} />
-              </section>
-            )}
-            {ctx.on("visit") && (
-              <section id="visit" className="tile tile-contact c4" aria-labelledby="contact-title">
-                <h2 data-k="label" id="contact-title">{c.contact}</h2>
-                <ContactList ctx={ctx} />
-              </section>
-            )}
-          </div>
-        )}
+          ),
+          // The story, hours and contact share one grid while the owner keeps them where they are.
+          story: grouped
+            ? (story || ctx.on("visit")) && (
+                <div className="bento outro">
+                  {story && (
+                    <section id="story" className="tile tile-story c1" data-section="story" data-k="boxed" aria-labelledby="story-title">
+                      <h2 data-k="label" id="story-title">{ctx.text("story.title") || c.about}</h2>
+                      <p>{story}</p>
+                    </section>
+                  )}
+                  {ctx.on("visit") && hasHours(ctx.hours) && (
+                    <section className="tile tile-hours c2" data-section="visit" data-k="boxed" aria-labelledby="hours-title">
+                      <h2 data-k="label" id="hours-title">{c.hours}</h2>
+                      <HoursList ctx={ctx} />
+                    </section>
+                  )}
+                  {ctx.on("visit") && (
+                    <section id="visit" className="tile tile-contact c4" aria-labelledby="contact-title">
+                      <h2 data-k="label" id="contact-title">{c.contact}</h2>
+                      <ContactList ctx={ctx} />
+                    </section>
+                  )}
+                </div>
+              )
+            : story && (
+                <SiteStory ctx={ctx} title={ctx.text("story.title") || c.about}>
+                  <div className="bento outro">
+                    <section id="story" className="tile tile-story c1" data-section="story" data-k="boxed" aria-labelledby="story-title">
+                      <h2 data-k="label" id="story-title">{ctx.text("story.title") || c.about}</h2>
+                      <p>{story}</p>
+                    </section>
+                  </div>
+                </SiteStory>
+              ),
+          visit: !grouped && ctx.on("visit") && (
+            <SiteVisit ctx={ctx} title={c.contact}>
+              <div className="bento outro">
+                {hasHours(ctx.hours) && (
+                  <section className="tile tile-hours c2" data-section="visit" data-k="boxed" aria-labelledby="hours-title">
+                    <h2 data-k="label" id="hours-title">{c.hours}</h2>
+                    <HoursList ctx={ctx} />
+                  </section>
+                )}
+                <section id="visit" className="tile tile-contact c4" aria-labelledby="contact-title">
+                  <h2 data-k="label" id="contact-title">{c.contact}</h2>
+                  <ContactList ctx={ctx} />
+                </section>
+              </div>
+            </SiteVisit>
+          ),
+        })}
       </main>
 
-      <footer className="foot" data-section="footer">
-        <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
-        <Credits ctx={ctx} />
-      </footer>
+      <SiteFooter ctx={ctx} links={basicLinks(ctx, { story })}>
+        <footer className="foot" data-section="footer">
+          <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
+          <Credits ctx={ctx} />
+        </footer>
+      </SiteFooter>
       <OrderFab order={order} />
       <ProductSheet ctx={ctx} />
     </div>

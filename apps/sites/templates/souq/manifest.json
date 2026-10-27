@@ -12,6 +12,7 @@
   "version": 1,
   "heroSlider": { "kind": "backdrop", "source": "hero.image", "skip": ["hero.overlay"] },
   "thumbnail": "/templates/souq/thumbnail.png",
+  "sectionsLayout": { "order": ["highlights", "signature", "menu", "story", "gallery", "reviews", "visit"] },
   "schema": [
     {
       "key": "font",

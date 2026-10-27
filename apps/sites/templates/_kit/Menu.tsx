@@ -54,7 +54,15 @@ type Props = {
   page?: boolean;
   /** One list of products without category titles or links (a home page's picks); `label` names it for screen readers. */
   flat?: { label: string };
+  /**
+   * The template's own button for each product, kept with the shared menu (Ask on WhatsApp, Book): a link under the
+   * product, or nothing for a product without one.
+   */
+  action?: (item: MenuItem) => ItemAction | null;
 };
+
+/** A product's own button: where it goes, its words and an optional icon before them. */
+export type ItemAction = { href: string; label: string; icon?: ReactNode };
 
 const COPY = {
   en: { jump: "Jump to a category" },
@@ -95,6 +103,7 @@ function KitMenu({
   ownNav = false,
   page = false,
   flat,
+  action,
 }: Props) {
   const options = menuOptions(ctx.site.settings);
   const top = flat ? [] : sections;
@@ -124,11 +133,13 @@ function KitMenu({
       </span>
     );
     const n = order++;
+    const act = action?.(item) ?? null;
     return (
       <li
         key={item.id}
         className="kit-mn-li"
         data-q={item.search}
+        data-act={act ? "" : undefined}
         {...(catalog
           ? {
               "data-product": "",
@@ -166,6 +177,12 @@ function KitMenu({
             {m.price === "large" && price(item)}
           </span>
         </button>
+        {act && (
+          <a data-k="btn" className="kit-mn-act" href={act.href} rel="noopener" target="_blank" aria-label={`${act.label}: ${item.name}`}>
+            {act.icon}
+            {act.label}
+          </a>
+        )}
       </li>
     );
   };

@@ -14,6 +14,7 @@
   "thumbnail": "/templates/linen/thumbnail.png",
   "sample": "restaurant",
   "menu": { "own": ["columns"] },
+  "sectionsLayout": { "order": ["menu", "story", "visit"] },
   "schema": [
     {
       "key": "font",

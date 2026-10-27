@@ -12,6 +12,7 @@ import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
 import { basicLinks, orderCta, pageTop, SiteHero, SiteMasthead } from "../_kit/Top";
 import { SiteMenu } from "../_kit/Menu";
+import { ordered, SiteFooter, SiteStory, SiteVisit } from "../_kit/Sections";
 
 const copy = {
   en: {
@@ -130,134 +131,142 @@ export default function NeonDinerTemplate({
       <Strip on={checks} />
 
       <main>
-        <section
-          id="menu"
-          className="menu"
-          data-section="menu"
-          aria-label={c.menu}
-        >
-          <SiteMenu ctx={ctx} like="list" level={2}>
-          {ctx.sections.length > 1 && (
-            <nav className="jukebox" aria-label={c.jump}>
-              {ctx.sections.map((s, i) => (
-                <a key={s.id} href={`#${s.anchor}`}>
-                  <span className="key" aria-hidden="true">
-                    {String.fromCharCode(65 + (i % 26))}
-                  </span>
-                  {s.name}
-                </a>
-              ))}
-            </nav>
-          )}
-          {ctx.sections.map((section) => (
+        {ordered(ctx, {
+          menu: (
             <section
-              key={section.id}
-              id={section.anchor}
-              className="group"
-              aria-labelledby={`${section.anchor}-h`}
+              id="menu"
+              className="menu"
+              data-section="menu"
+              aria-label={c.menu}
             >
-              <h2 data-k="label" id={`${section.anchor}-h`} className="ribbon">
-                <span>{section.name}</span>
-              </h2>
-              <ul className="plain combos kit-cards">
-                {section.products.map((item) => (
-                  <li key={item.id}>
-                    <button
-                      type="button"
-                      className={cx("combo kit-card", !item.isAvailable && "out")}
-                      data-item-id={item.id}
-                    >
-                      <span className="combo-no" aria-hidden="true">
-                        <small>{c.no}</small>
-                        {numbers.get(item.id)}
+              <SiteMenu ctx={ctx} like="list" level={2}>
+              {ctx.sections.length > 1 && (
+                <nav className="jukebox" aria-label={c.jump}>
+                  {ctx.sections.map((s, i) => (
+                    <a key={s.id} href={`#${s.anchor}`}>
+                      <span className="key" aria-hidden="true">
+                        {String.fromCharCode(65 + (i % 26))}
                       </span>
-                      <span className="combo-photo kit-card-media">
-                        <ProductPicture item={item} sizes="120px" />
-                      </span>
-                      <span className="combo-text">
-                        <span className="combo-name">{item.name}</span>
-                        {item.description && (
-                          <span className="combo-desc">{item.description}</span>
-                        )}
-                        {(item.labelText || !item.isAvailable) && (
-                          <span className="tags">
-                            {item.labelText && (
-                              <span className="tag">{item.labelText}</span>
+                      {s.name}
+                    </a>
+                  ))}
+                </nav>
+              )}
+              {ctx.sections.map((section) => (
+                <section
+                  key={section.id}
+                  id={section.anchor}
+                  className="group"
+                  aria-labelledby={`${section.anchor}-h`}
+                >
+                  <h2 data-k="label" id={`${section.anchor}-h`} className="ribbon">
+                    <span>{section.name}</span>
+                  </h2>
+                  <ul className="plain combos kit-cards">
+                    {section.products.map((item) => (
+                      <li key={item.id}>
+                        <button
+                          type="button"
+                          className={cx("combo kit-card", !item.isAvailable && "out")}
+                          data-item-id={item.id}
+                        >
+                          <span className="combo-no" aria-hidden="true">
+                            <small>{c.no}</small>
+                            {numbers.get(item.id)}
+                          </span>
+                          <span className="combo-photo kit-card-media">
+                            <ProductPicture item={item} sizes="120px" />
+                          </span>
+                          <span className="combo-text">
+                            <span className="combo-name">{item.name}</span>
+                            {item.description && (
+                              <span className="combo-desc">{item.description}</span>
                             )}
-                            {!item.isAvailable && (
-                              <span className="tag tag-out">
-                                {ctx.t.soldOut}
+                            {(item.labelText || !item.isAvailable) && (
+                              <span className="tags">
+                                {item.labelText && (
+                                  <span className="tag">{item.labelText}</span>
+                                )}
+                                {!item.isAvailable && (
+                                  <span className="tag tag-out">
+                                    {ctx.t.soldOut}
+                                  </span>
+                                )}
                               </span>
                             )}
                           </span>
-                        )}
-                      </span>
-                      <span className="combo-price">{item.priceText}</span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
+                          <span className="combo-price">{item.priceText}</span>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              ))}
+              </SiteMenu>
             </section>
-          ))}
-          </SiteMenu>
-        </section>
-
-        {story && (
-          <>
-            <Strip on={checks} />
-            <section
-              id="story"
-              className="story"
-              data-section="story"
-              aria-labelledby="story-title"
-            >
-              <h2 id="story-title">{ctx.text("story.title") || c.story}</h2>
-              <p>{story}</p>
-            </section>
-          </>
-        )}
-
-        {ctx.on("visit") && (
-          <section
-            id="visit"
-            className="visit"
-            data-section="visit"
-            aria-labelledby="visit-title"
-          >
-            <h2 id="visit-title" className="neon small">
-              {c.visit}
-            </h2>
-            <div className="visit-grid">
-              {hasHours(ctx.hours) && (
-                <div className="ticket">
-                  <h3>{c.hours}</h3>
-                  <HoursList ctx={ctx} />
+          ),
+          story: story && (
+            <>
+              <Strip on={checks} />
+              <SiteStory ctx={ctx} title={ctx.text("story.title") || c.story}>
+                <section
+                  id="story"
+                  className="story"
+                  data-section="story"
+                  aria-labelledby="story-title"
+                >
+                  <h2 id="story-title">{ctx.text("story.title") || c.story}</h2>
+                  <p>{story}</p>
+                </section>
+              </SiteStory>
+            </>
+          ),
+          visit: ctx.on("visit") && (
+            <SiteVisit ctx={ctx} title={c.visit} cta={ctx.contact.whatsapp ? { href: ctx.contact.whatsapp, label: c.order } : null}>
+              <section
+                id="visit"
+                className="visit"
+                data-section="visit"
+                aria-labelledby="visit-title"
+              >
+                <h2 id="visit-title" className="neon small">
+                  {c.visit}
+                </h2>
+                <div className="visit-grid">
+                  {hasHours(ctx.hours) && (
+                    <div className="ticket">
+                      <h3>{c.hours}</h3>
+                      <HoursList ctx={ctx} />
+                    </div>
+                  )}
+                  <div className="ticket">
+                    <h3>{ctx.t.findUs}</h3>
+                    <ContactList ctx={ctx} />
+                    {ctx.contact.whatsapp && (
+                      <a data-k="btn"
+                        className="order"
+                        href={ctx.contact.whatsapp}
+                        rel="noopener"
+                        target="_blank"
+                      >
+                        <WhatsApp /> {c.order}
+                      </a>
+                    )}
+                  </div>
                 </div>
-              )}
-              <div className="ticket">
-                <h3>{ctx.t.findUs}</h3>
-                <ContactList ctx={ctx} />
-                {ctx.contact.whatsapp && (
-                  <a data-k="btn"
-                    className="order"
-                    href={ctx.contact.whatsapp}
-                    rel="noopener"
-                    target="_blank"
-                  >
-                    <WhatsApp /> {c.order}
-                  </a>
-                )}
-              </div>
-            </div>
-          </section>
-        )}
+              </section>
+            </SiteVisit>
+          ),
+        })}
       </main>
 
       <Strip on={checks} />
-      <footer className="foot" data-section="footer">
-        <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
-        <Credits ctx={ctx} />
-      </footer>
+      <SiteFooter ctx={ctx} links={basicLinks(ctx, { story })}>
+        <footer className="foot" data-section="footer">
+          <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
+          <Credits ctx={ctx} />
+        </footer>
+      </SiteFooter>
       <OrderFab order={order} />
       <ProductSheet ctx={ctx} />
     </div>

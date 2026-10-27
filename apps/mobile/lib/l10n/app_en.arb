@@ -748,5 +748,36 @@
   "aiChatSuggestLogoSize": "Make the logo bigger",
   "aiChatSuggestElegant": "Darker, more elegant look",
   "languageEnglish": "English",
-  "languageArabic": "العربية"
+  "languageArabic": "العربية",
+  "sectionOrderHint": "The opening always stays at the top and the footer at the bottom.",
+  "sectionMoveUp": "Move {section} up",
+  "@sectionMoveUp": {
+    "placeholders": {
+      "section": {
+        "type": "String"
+      }
+    }
+  },
+  "sectionMoveDown": "Move {section} down",
+  "@sectionMoveDown": {
+    "placeholders": {
+      "section": {
+        "type": "String"
+      }
+    }
+  },
+  "sectionPosition": "{section}, {position} of {count}",
+  "@sectionPosition": {
+    "placeholders": {
+      "section": {
+        "type": "String"
+      },
+      "position": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

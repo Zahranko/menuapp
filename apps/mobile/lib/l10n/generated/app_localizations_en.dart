@@ -1368,4 +1368,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get languageArabic => 'العربية';
+
+  @override
+  String get sectionOrderHint =>
+      'The opening always stays at the top and the footer at the bottom.';
+
+  @override
+  String sectionMoveUp(String section) {
+    return 'Move $section up';
+  }
+
+  @override
+  String sectionMoveDown(String section) {
+    return 'Move $section down';
+  }
+
+  @override
+  String sectionPosition(String section, int position, int count) {
+    return '$section, $position of $count';
+  }
 }

@@ -13,6 +13,7 @@
   "heroSlider": { "kind": "band" },
   "thumbnail": "/templates/neondiner/thumbnail.png",
   "sample": "fastfood",
+  "sectionsLayout": { "order": ["menu", "story", "visit"] },
   "schema": [
     {
       "key": "font",

@@ -13,6 +13,7 @@
   "heroSlider": { "kind": "panel", "source": "hero.image" },
   "thumbnail": "/templates/folio/thumbnail.png",
   "sample": "folio",
+  "sectionsLayout": { "order": ["picks", "menu", "gallery", "story", "reviews", "visit"] },
   "schema": [
     {
       "key": "font",

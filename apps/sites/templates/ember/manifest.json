@@ -16,6 +16,7 @@
   "thumbnail": "/templates/ember/thumbnail.png",
   "sample": "ember",
   "menu": { "own": ["cards"] },
+  "sectionsLayout": { "order": ["menu", "best", "story", "gallery", "reviews", "visit"] },
   "schema": [
     {
       "key": "font",

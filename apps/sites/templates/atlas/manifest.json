@@ -16,6 +16,7 @@
   "thumbnail": "/templates/atlas/thumbnail.png",
   "sample": "atlas",
   "menu": { "own": ["density"] },
+  "sectionsLayout": { "order": ["menu", "best", "story", "gallery", "reviews", "visit"] },
   "schema": [
     {
       "key": "font",

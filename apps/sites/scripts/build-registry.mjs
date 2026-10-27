@@ -47,6 +47,18 @@
 // after "menu.layout" with "menu": { "own": ["carte.style"] } (they are what "Template default" shows). A manifest may
 // leave fields or options out with "menu": { "skip": [...], "skipOptions": { "menu.layout": [...] } } (left out of registry.json).
 //
+// Sections: every template gets the shared fields of templates/_kit/sections-settings.json in a "Sections" group right
+// after "Menu layout": "sections.order", the order of its sections between the opening and the footer (a field of type
+// "order": its value is the list of the template's section names; its options are the names, in the template's own
+// order, labelled from the shared list), then one layout per kind of section the template has (highlights when it has
+// "highlights.1.title", the story when it has "story.text", photos when it has "gallery", reviews when it has
+// "reviews.1.quote", the visit section when it has "hours", and always the footer). templates/_kit/sections.ts reads them,
+// _kit/Sections.tsx renders the shared sections and ordered() puts the sections in the owner's order; "auto" and the
+// template's own order keep the page exactly as before. The template's own "Sections" fields (which sections show and the
+// announcement) move into the group, after the shared ones. Each manifest lists its sections in
+// "sectionsLayout": { "order": ["highlights", "menu", "story", "visit"] } (names from the shared list, in the order the
+// template renders them), and may leave fields or options out with "skip" and "skipOptions" (left out of registry.json).
+//
 // Previews: a "choice" field may carry "previews", a small picture per option ({ "pill": "/kit/previews/buttons-pill.svg" }),
 // which the app's editor shows as picture tiles. Every key must be one of the field's options and every picture must exist
 // in public/.
@@ -68,7 +80,7 @@ const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "temp
 const registryPath = path.join(root, "registry.json");
 // Optional "tier": "basic" (default when absent) or "pro" (Pro plan only; the backend gates choosing and publishing).
 const TIERS = new Set(["basic", "pro"]);
-const FIELD_TYPES = new Set(["choice", "palette", "color", "text", "textarea", "range", "image", "images", "toggle", "toggles", "hours"]);
+const FIELD_TYPES = new Set(["choice", "palette", "color", "text", "textarea", "range", "image", "images", "toggle", "toggles", "hours", "order"]);
 const TEXT_TYPES = new Set(["text", "textarea"]);
 const dictionary = JSON.parse(readFileSync(path.join(root, "_i18n", "ar.json"), "utf8"));
 const logoSettings = JSON.parse(readFileSync(path.join(root, "_kit", "logo-settings.json"), "utf8"));
@@ -78,11 +90,14 @@ const heroSettings = JSON.parse(readFileSync(path.join(root, "_kit", "hero-setti
 const styleSettings = JSON.parse(readFileSync(path.join(root, "_kit", "style-settings.json"), "utf8"));
 const layoutSettings = JSON.parse(readFileSync(path.join(root, "_kit", "layout-settings.json"), "utf8"));
 const menuSettings = JSON.parse(readFileSync(path.join(root, "_kit", "menu-settings.json"), "utf8"));
+const sectionsSettings = JSON.parse(readFileSync(path.join(root, "_kit", "sections-settings.json"), "utf8"));
 const publicDir = path.join(root, "..", "public");
 const HERO_KINDS = new Set(Object.keys(heroSettings.kinds));
 const HERO_SOURCES = new Set(["hero.image", "hero.images"]);
 /** Shared settings a manifest may give its own default (in "defaults"). */
 const OWN_DEFAULTS = new Set(["social.show"]);
+/** What each shared section layout needs in the template's schema to have something to show. */
+const SECTION_CONTENT = { highlights: "highlights.1.title", story: "story.text", gallery: "gallery", reviews: "reviews.1.quote", visit: "hours" };
 
 function fail(message) {
   console.error(`templates:registry: ${message}`);
@@ -105,6 +120,7 @@ const manifests = readdirSync(root, { withFileTypes: true })
     withStyleOptions(d.name, manifest);
     withLayoutOptions(d.name, manifest);
     withMenuOptions(d.name, manifest);
+    withSectionOptions(d.name, manifest);
     withHeroOptions(d.name, manifest);
     const keys = new Set();
     for (const field of manifest.schema) {
@@ -113,6 +129,7 @@ const manifests = readdirSync(root, { withFileTypes: true })
       keys.add(field.key);
       if (!(field.key in manifest.defaults)) fail(`${d.name}: no default for "${field.key}"`);
       checkPreviews(d.name, field);
+      if (field.type === "order") checkOrder(d.name, field, manifest.defaults[field.key]);
     }
     manifest.schema = manifest.schema.map((field) => withArabic(d.name, field));
     checkArabicText(d.name, manifest);
@@ -303,6 +320,52 @@ function withMenuOptions(id, manifest) {
   const at = fields.findIndex((f) => f.key === "menu.layout") + 1;
   fields.splice(at > 0 ? at : 0, 0, ...moved);
   insertGroup(manifest, fields, defaults, layoutSettings.group);
+}
+
+/** Adds the shared section options (templates/_kit/sections-settings.json) in a "Sections" group after "Menu layout". */
+function withSectionOptions(id, manifest) {
+  const { order, skip = [], skipOptions = {}, ...rest } = manifest.sectionsLayout ?? {};
+  delete manifest.sectionsLayout;
+  if (Object.keys(rest).length) fail(`${id}: "sectionsLayout" takes only "order", "skip" and "skipOptions"`);
+  const labels = sectionsSettings.order.labels;
+  if (!Array.isArray(order) || order.length < 2) fail(`${id}: "sectionsLayout.order" must list the template's sections (at least two) in the order it renders them`);
+  for (const name of order) if (!(name in labels)) fail(`${id}: "sectionsLayout.order" has unknown section "${name}" (known: ${Object.keys(labels).join(", ")})`);
+  if (new Set(order).size !== order.length) fail(`${id}: "sectionsLayout.order" lists a section twice`);
+  if (!order.includes("menu")) fail(`${id}: "sectionsLayout.order" must include "menu"`);
+  const all = [sectionsSettings.order, ...sectionsSettings.fields];
+  for (const field of all) {
+    if (manifest.schema.some((f) => f.key === field.key) || field.key in manifest.defaults) fail(`${id}: "${field.key}" comes from templates/_kit/sections-settings.json; remove it from the manifest`);
+  }
+  const { group, groupAr } = sectionsSettings;
+  const has = (section) => section === "footer" || manifest.schema.some((f) => f.key === SECTION_CONTENT[section]);
+  const layouts = sectionsSettings.fields.filter((f) => has(f.section)).map((f) => Object.fromEntries(Object.entries(f).filter(([k]) => k !== "section")));
+  const { key, type, label, labelAr } = sectionsSettings.order;
+  const fields = pruned(id, "sectionsLayout", layouts, skip.filter((k) => k !== key), skipOptions).map((f) => ({ key: f.key, type: f.type, label: f.label, group, groupAr, ...f }));
+  const orderField = {
+    key,
+    type,
+    label,
+    labelAr,
+    group,
+    groupAr,
+    options: order,
+    optionLabels: Object.fromEntries(order.map((n) => [n, labels[n]])),
+    optionLabelsAr: Object.fromEntries(order.map((n) => [n, sectionsSettings.order.labelsAr[n]])),
+  };
+  const shown = skip.includes(key) ? [] : [orderField];
+  // The template's own "Sections" fields (which sections show, the announcement) join the group, after the shared ones.
+  const own = manifest.schema.filter((f) => f.group === group);
+  manifest.schema = manifest.schema.filter((f) => f.group !== group);
+  const ownDefaults = Object.fromEntries(own.map((f) => [f.key, manifest.defaults[f.key]]));
+  insertGroup(manifest, [...shown, ...fields, ...own], { ...sectionsSettings.defaults, [key]: order, ...ownDefaults }, menuSettings.group);
+}
+
+/** Checks an "order" field: its options are the names to order and its default lists each of them once. */
+function checkOrder(id, field, value) {
+  if (!Array.isArray(field.options) || field.options.length < 2) fail(`${id}: "${field.key}" needs at least two options to order`);
+  if (!Array.isArray(value) || value.length !== field.options.length || field.options.some((o) => !value.includes(o))) {
+    fail(`${id}: the default of "${field.key}" must list each of its options once`);
+  }
 }
 
 /** Checks a field's option pictures: a choice field, known options and pictures that exist in public/. */

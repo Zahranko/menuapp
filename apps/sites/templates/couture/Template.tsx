@@ -24,6 +24,7 @@ import { ProductSheet } from "../_fashion/ProductSheet";
 import { copyFor } from "../_premium/copy";
 import { bestSellers, categorySections, categoryTree, menuSections, galleryPhotos, PAGE_PATHS, pageLinks, resolvePage, type Category, type Page, type Tree } from "../_premium/pages";
 import { coutureCopy, pieceCount } from "./copy";
+import { SiteFooter, SiteGallery, SiteReviews, SiteStory, SiteVisit, ordered } from "../_kit/Sections";
 
 /*
  * Template 029 "Couture" (Pro): a luxury fashion boutique with its own pages. A full-screen lookbook opening with the
@@ -120,7 +121,9 @@ export default function CoutureTemplate({ site, path = [], base, now }: Template
           {page.kind === "visit" && <BoutiquePage v={v} />}
         </main>
       )}
-      <Footer v={v} />
+      <SiteFooter ctx={ctx} links={pageLinks(v, { home: v.c.home, menu: k.collections, best: k.loved, gallery: k.lookbook, visit: k.boutique })} social={socialAccounts(site, SOCIAL_DEFAULT)}>
+        <Footer v={v} />
+      </SiteFooter>
       <OrderFab order={order} />
       <ProductSheet items={sheetItems(ctx, tree.items.map((item) => ({ item, collection: collectionOf.get(item.id) ?? null })))} phone={site.business.whatsApp} labels={sheetLabels(ctx)} />
       {v.photos.length > 0 && <PhotoViewer photos={v.photos} labels={viewerLabels(ctx)} />}
@@ -421,62 +424,73 @@ function Home({ v }: { v: View }) {
         <Hero v={v} />
       </SiteHero>
 
-      <section id="menu" className="cu-sec cu-home-shop" data-section="menu" aria-labelledby="cu-collections-title">
-        <Head title={ctx.text("categories.title") || k.collections} id="cu-collections-title" link={{ href: href(PAGE_PATHS.menu), label: k.allCollections }} />
-        {tree.roots.length > 0 && <Tiles v={v} categories={tree.roots} />}
-        {ctx.on("edit") && edit.length > 0 && (
-          <div className="cu-edit" data-section="highlights">
-            <Head title={ctx.text("edit.title") || k.edit} id="cu-edit-title" />
-            <SiteMenu ctx={ctx} like="carousel" id="kit-edit" sections={[{ id: "edit", anchor: "edit", name: ctx.text("edit.title") || k.edit, products: edit }]} flat={{ label: ctx.text("edit.title") || k.edit }}>
-            <ul className="plain cu-row kit-cards" tabIndex={0} aria-labelledby="cu-edit-title">
-              {edit.map((item) => (
-                <li key={item.id}>
-                  <Card v={v} item={item} sizes="(min-width: 760px) 26vw, 70vw" />
-                </li>
-              ))}
-            </ul>
-</SiteMenu>
-          </div>
-        )}
-      </section>
-
-      {story && (
-        <section id="story" className={cx("cu-story", storyImage && "has-image")} data-section="story" aria-labelledby="cu-story-title">
-          {storyImage && (
-            <div data-k="photo" className="cu-story-img rv">
-              <Picture src={storyImage} sizes="(min-width: 760px) 50vw, 100vw" />
-            </div>
-          )}
-          <div className="cu-story-text rv">
-            <p className="cu-eyebrow">{k.house}</p>
-            <h2 id="cu-story-title" className="cu-h2">
-              {ctx.text("story.title") || ctx.t.story}
-            </h2>
-            <p className="cu-story-body">{story}</p>
-            <a className="cu-more" href={href(PAGE_PATHS.visit)}>
-              {k.boutique} <Arrow className="flip" />
-            </a>
-          </div>
-        </section>
-      )}
-
-      {ctx.on("best") && v.best.length > 0 && (
-        <section id="best" className="cu-sec" data-section="best" aria-labelledby="cu-best-title">
-          <Head title={ctx.text("best.title") || k.loved} id="cu-best-title" lead={k.lovedLead} link={{ href: href(PAGE_PATHS.best), label: c.viewAll }} />
-          <Grid v={v} items={v.best.slice(0, 4)} />
-        </section>
-      )}
-
-      {ctx.on("gallery") && v.photos.length > 0 && (
-        <section id="gallery" className="cu-sec" data-section="gallery" aria-labelledby="cu-look-title">
-          <Head title={ctx.text("gallery.title") || k.lookbook} id="cu-look-title" lead={k.lookLead} link={{ href: href(PAGE_PATHS.gallery), label: c.viewAll }} />
-          <Lookbook v={v} max={6} />
-        </section>
-      )}
-
-      {ctx.on("reviews") && ctx.reviews.length > 0 && <Reviews v={v} />}
-
-      {ctx.on("visit") && <Appointment v={v} />}
+      {ordered(ctx, {
+        menu: (
+          <section id="menu" className="cu-sec cu-home-shop" data-section="menu" aria-labelledby="cu-collections-title">
+            <Head title={ctx.text("categories.title") || k.collections} id="cu-collections-title" link={{ href: href(PAGE_PATHS.menu), label: k.allCollections }} />
+            {tree.roots.length > 0 && <Tiles v={v} categories={tree.roots} />}
+            {ctx.on("edit") && edit.length > 0 && (
+              <div className="cu-edit" data-section="highlights">
+                <Head title={ctx.text("edit.title") || k.edit} id="cu-edit-title" />
+                <SiteMenu ctx={ctx} like="carousel" id="kit-edit" sections={[{ id: "edit", anchor: "edit", name: ctx.text("edit.title") || k.edit, products: edit }]} flat={{ label: ctx.text("edit.title") || k.edit }}>
+                <ul className="plain cu-row kit-cards" tabIndex={0} aria-labelledby="cu-edit-title">
+                  {edit.map((item) => (
+                    <li key={item.id}>
+                      <Card v={v} item={item} sizes="(min-width: 760px) 26vw, 70vw" />
+                    </li>
+                  ))}
+                </ul>
+    </SiteMenu>
+              </div>
+            )}
+          </section>
+        ),
+        story: story && (
+          <SiteStory ctx={ctx} eyebrow={k.house} title={ctx.text("story.title") || ctx.t.story} more={{ href: href(PAGE_PATHS.visit), label: k.boutique }}>
+            <section id="story" className={cx("cu-story", storyImage && "has-image")} data-section="story" aria-labelledby="cu-story-title">
+              {storyImage && (
+                <div data-k="photo" className="cu-story-img rv">
+                  <Picture src={storyImage} sizes="(min-width: 760px) 50vw, 100vw" />
+                </div>
+              )}
+              <div className="cu-story-text rv">
+                <p className="cu-eyebrow">{k.house}</p>
+                <h2 id="cu-story-title" className="cu-h2">
+                  {ctx.text("story.title") || ctx.t.story}
+                </h2>
+                <p className="cu-story-body">{story}</p>
+                <a className="cu-more" href={href(PAGE_PATHS.visit)}>
+                  {k.boutique} <Arrow className="flip" />
+                </a>
+              </div>
+            </section>
+          </SiteStory>
+        ),
+        best: ctx.on("best") && v.best.length > 0 && (
+          <section id="best" className="cu-sec" data-section="best" aria-labelledby="cu-best-title">
+            <Head title={ctx.text("best.title") || k.loved} id="cu-best-title" lead={k.lovedLead} link={{ href: href(PAGE_PATHS.best), label: c.viewAll }} />
+            <Grid v={v} items={v.best.slice(0, 4)} />
+          </section>
+        ),
+        gallery: ctx.on("gallery") && v.photos.length > 0 && (
+          <SiteGallery ctx={ctx} title={ctx.text("gallery.title") || k.lookbook} photos={v.photos} viewer more={{ href: href(PAGE_PATHS.gallery), label: c.viewAll }}>
+            <section id="gallery" className="cu-sec" data-section="gallery" aria-labelledby="cu-look-title">
+              <Head title={ctx.text("gallery.title") || k.lookbook} id="cu-look-title" lead={k.lookLead} link={{ href: href(PAGE_PATHS.gallery), label: c.viewAll }} />
+              <Lookbook v={v} max={6} />
+            </section>
+          </SiteGallery>
+        ),
+        reviews: ctx.on("reviews") && ctx.reviews.length > 0 && (
+          <SiteReviews ctx={ctx} title={k.clients}>
+            <Reviews v={v} />
+          </SiteReviews>
+        ),
+        visit: ctx.on("visit") && (
+          <SiteVisit ctx={ctx} title={k.appointment} cta={v.appointment ? { href: v.appointment, label: k.appointment } : null}>
+            <Appointment v={v} />
+          </SiteVisit>
+        ),
+      })}
     </>
   );
 }
@@ -655,24 +669,32 @@ function BoutiquePage({ v }: { v: View }) {
   return (
     <>
       <PageHead v={v} trail={[{ label: k.boutique }]} title={k.boutique} lead={ctx.site.business.address} />
-      <Appointment v={v} heading={false} />
+      <SiteVisit ctx={ctx} heading={false} title={k.appointment} cta={v.appointment ? { href: v.appointment, label: k.appointment } : null}>
+        <Appointment v={v} heading={false} />
+      </SiteVisit>
       {story && (
-        <section className={cx("cu-story", storyImage && "has-image")} data-section="story" aria-labelledby="cu-story-title">
-          {storyImage && (
-            <div data-k="photo" className="cu-story-img">
-              <Picture src={storyImage} sizes="(min-width: 760px) 50vw, 100vw" />
+        <SiteStory ctx={ctx} eyebrow={k.house} title={ctx.text("story.title") || ctx.t.story}>
+          <section className={cx("cu-story", storyImage && "has-image")} data-section="story" aria-labelledby="cu-story-title">
+            {storyImage && (
+              <div data-k="photo" className="cu-story-img">
+                <Picture src={storyImage} sizes="(min-width: 760px) 50vw, 100vw" />
+              </div>
+            )}
+            <div className="cu-story-text">
+              <p className="cu-eyebrow">{k.house}</p>
+              <h2 id="cu-story-title" className="cu-h2">
+                {ctx.text("story.title") || ctx.t.story}
+              </h2>
+              <p className="cu-story-body">{story}</p>
             </div>
-          )}
-          <div className="cu-story-text">
-            <p className="cu-eyebrow">{k.house}</p>
-            <h2 id="cu-story-title" className="cu-h2">
-              {ctx.text("story.title") || ctx.t.story}
-            </h2>
-            <p className="cu-story-body">{story}</p>
-          </div>
-        </section>
+          </section>
+        </SiteStory>
       )}
-      {ctx.on("reviews") && ctx.reviews.length > 0 && <Reviews v={v} />}
+      {ctx.on("reviews") && ctx.reviews.length > 0 && (
+        <SiteReviews ctx={ctx} title={k.clients}>
+          <Reviews v={v} />
+        </SiteReviews>
+      )}
     </>
   );
 }

@@ -161,6 +161,7 @@ public partial class MessagesCoverageTests
     [InlineData("address can be at most 200 characters.")]
     [InlineData("Choose one of: modern, elegant.")]
     [InlineData("Choose from: story, gallery.")]
+    [InlineData("Put these sections in order, each once: menu, story, visit.")]
     [InlineData("Use up to 40 characters.")]
     [InlineData("Choose a value from 0 to 90.")]
     [InlineData("Use steps of 5.")]
@@ -194,6 +195,7 @@ public partial class MessagesCoverageTests
             "$\"{field} can be at most {max} characters.\"",
             "$\"Choose one of: {string.Join(\", \", field.Options!)}.\"",
             "$\"Choose from: {string.Join(\", \", field.Options!)}.\"",
+            "$\"Put these sections in order, each once: {string.Join(\", \", field.Options!)}.\"",
             "$\"Use up to {max} characters.\"",
             "$\"Choose a value from {field.Min} to {field.RangeMax}.\"",
             "$\"Use steps of {step.ToString(CultureInfo.InvariantCulture)}.\"",

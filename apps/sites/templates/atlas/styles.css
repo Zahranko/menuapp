@@ -11,6 +11,7 @@
 @import "../_kit/hero.css";
 @import "../_kit/layout.css";
 @import "../_kit/menu.css";
+@import "../_kit/sections.css";
 @import "../_kit/style.css";
 
 .t-atlas {
@@ -306,6 +307,58 @@
   }
   .finder-panel[hidden] {
     display: none;
+  }
+  /* The shared headers' search button ("Page layout" options): the field and the results open under it. */
+  .finder-compact {
+    padding: 0;
+  }
+  .finder-toggle {
+    display: inline-grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--pill);
+    background: var(--surf);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .finder-toggle svg {
+    width: 18px;
+    height: 18px;
+  }
+  .finder-toggle:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+  .finder-pop {
+    position: fixed;
+    z-index: 70;
+    inset: auto 12px;
+    width: auto;
+    max-width: 480px;
+    height: auto;
+    margin: 0 auto;
+    padding: 10px;
+    overflow: visible;
+    background: var(--bg);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: calc(var(--r) * 1.2);
+    box-shadow: 0 24px 60px -20px color-mix(in srgb, var(--ink) 35%, transparent);
+  }
+  .finder-pop[hidden] {
+    display: none;
+  }
+  .finder-pop .finder-panel {
+    position: static;
+    min-width: 0;
+    max-height: min(60svh, 460px);
+    margin-top: 8px;
+    padding: 0;
+    border: 0;
+    box-shadow: none;
   }
   .finder-head {
     padding: 8px 10px 4px;

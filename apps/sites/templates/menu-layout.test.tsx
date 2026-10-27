@@ -139,3 +139,28 @@ describe("menu layout fields", () => {
     expect(resolveMenu(menuOptions({ "menu.layout": "nope", "menu.columns": 3 }), "list")).toMatchObject({ layout: "list", columns: "two" });
   });
 });
+
+describe("each product's own button with the shared menu", () => {
+  /** Templates whose products have their own button: Ask on WhatsApp, Request or Book. */
+  const ACTIONS: Record<string, RegExp> = { pocket: /^https:\/\/wa\.me\//, handy: /^https:\/\/wa\.me\//, atelier: /^https:\/\/wa\.me\// };
+
+  it.each(Object.keys(ACTIONS))("keeps the buttons of %s in every layout, in English and Arabic", (id) => {
+    for (const layout of MENU_LAYOUTS.filter((l) => l !== "auto")) {
+      for (const arabic of [false, true]) {
+        const site = withMenu(id, { "menu.layout": layout }, arabic);
+        const doc = parse(html(site));
+        const own = parse(html(withMenu(id, {}, arabic)));
+        const label = `${id} ${layout}${arabic ? " (ar)" : ""}`;
+        const buttons = [...doc.querySelectorAll(".kit-mn .kit-mn-act")];
+        expect(buttons.length, `${label}: one per product that had one`).toBe(own.querySelectorAll("[data-item-id] ~ a[aria-label], [data-item-id] + div a[aria-label]").length);
+        expect(buttons.length, label).toBeGreaterThan(0);
+        for (const a of buttons) {
+          expect(a.getAttribute("href"), label).toMatch(ACTIONS[id]);
+          expect(a.closest("button"), `${label}: not inside the product's button`).toBeNull();
+          expect(a.getAttribute("aria-label"), label).toContain(": ");
+          expect(a.closest(".kit-mn-li")!.querySelector("[data-item-id]")!.getAttribute("data-out"), `${label}: only for products on offer`).toBeNull();
+        }
+      }
+    }
+  });
+});
