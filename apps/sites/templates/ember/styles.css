@@ -970,30 +970,34 @@
   }
 
   /* ---------- hall of flame ---------- */
+  /* minmax(0, 1fr): a champion's long name at a larger text size breaks inside its card instead of widening the whole
+   * column, which pushed the list's prices off a phone's screen. */
   .hall {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: 36px;
   }
   @media (min-width: 900px) {
     .hall:not(.hall-podium) {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       align-items: start;
       gap: 56px;
     }
   }
   .hall-top {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: 40px 18px;
   }
   .hall-podium .hall-top {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
   .hall-podium .hall-1 {
     grid-column: 1 / -1;
   }
   @media (min-width: 900px) {
     .hall-podium .hall-top {
-      grid-template-columns: 1.4fr 1fr 1fr;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr);
       align-items: end;
       gap: 36px;
     }

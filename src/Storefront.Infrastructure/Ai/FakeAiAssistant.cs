@@ -55,7 +55,7 @@ internal sealed class FakeAiAssistant : IAiAssistant
                 "font": "comic-sans",
                 "hero.title": "Knafeh worth the trip",
                 "reviews.1.quote": "Best in town",
-                "order.action": "hide",
+                "order.action": "whatsapp",
                 "hero.image": "https://elsewhere.example/x.png",
                 "hours": { "sat": "closed" },
                 "no.such.setting": "x"

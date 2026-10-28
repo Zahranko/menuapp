@@ -304,8 +304,8 @@ public class AiTests(AiFactory factory) : IClassFixture<AiFactory>
         Assert.Equal("night", settings.GetProperty("theme").GetString());
         Assert.True(settings.GetProperty("texture").GetBoolean());
         Assert.Equal("Knafeh worth the trip", settings.GetProperty("hero.title").GetString());
-        // An option the template doesn't have, a made-up review, the order button's action, a photo, opening hours
-        // and an unknown setting are dropped.
+        // An option the template doesn't have, a made-up review, where the order button sends customers (the chat may only
+        // hide it or bring it back), a photo, opening hours and an unknown setting are dropped.
         foreach (var dropped in new[] { "font", "reviews.1.quote", "order.action", "hero.image", "hours", "no.such.setting" })
         {
             Assert.False(settings.TryGetProperty(dropped, out _), dropped);
@@ -324,7 +324,7 @@ public class AiTests(AiFactory factory) : IClassFixture<AiFactory>
         var properties = request.ResponseSchema["properties"]!["settings"]!["properties"]!.AsObject();
         Assert.Equal("number", properties["logo.size"]!["type"]!.GetValue<string>());
         Assert.Equal("array", properties["sections"]!["type"]!.GetValue<string>());
-        Assert.False(properties.ContainsKey("order.action"));
+        Assert.Equal(["auto", "hide"], properties["order.action"]!["enum"]!.AsArray().Select(o => o!.GetValue<string>()));
         Assert.False(properties.ContainsKey("hours"));
     }
 

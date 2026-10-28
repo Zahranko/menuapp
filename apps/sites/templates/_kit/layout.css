@@ -1073,10 +1073,11 @@
   }
 }
 
-/* Poster: huge type, a small photo tucked beside the words. */
+/* Poster: huge type, a small photo tucked beside the words. The photo's column follows the width the opening has
+ * (cqi), not the screen's: in a narrow column on a wide screen (Ticket's receipt) a screen-sized photo covered the words. */
 .kit-hv.kit-hv[data-hv="poster"] {
   & .kit-hv-in {
-    grid-template-columns: minmax(0, 1fr) clamp(104px, 30vw, 300px);
+    grid-template-columns: minmax(0, 1fr) clamp(104px, 30cqi, 300px);
     grid-template-areas:
       "eyebrow eyebrow"
       "title title"
