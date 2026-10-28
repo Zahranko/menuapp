@@ -59,6 +59,10 @@
   word-break: normal !important;
   hyphens: manual !important;
 }
+/* A business name can be one made-up word longer than the screen: in a name heading only that word breaks. */
+:is([data-ps-text], [data-ps-head], [data-ps-track]) :is(h1, h2):is(.kit-name, [data-k~="name"]) {
+  overflow-wrap: break-word !important;
+}
 :is([data-ps-text], [data-ps-head], [data-ps-track]) h3 {
   overflow-wrap: break-word;
 }
@@ -342,6 +346,11 @@
 [data-ps-tex="paper"][style*="color-scheme:dark"] {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='1' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0.35 0 0 0 -0.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E") !important;
   background-size: 160px 160px !important;
+}
+
+/* On a dark theme the gray grain lightens the page enough to cost light and colored text its contrast: it is fainter. */
+[data-ps-tex="grain"][style*="color-scheme:dark"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0.45 0 0 0 -0.16'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") !important;
 }
 
 /* ---------- motion on scroll ---------- */

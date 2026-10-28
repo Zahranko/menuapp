@@ -238,7 +238,7 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
-    background: linear-gradient(0deg, #000000d9, #0000);
+    background: linear-gradient(0deg, #000000e0, #000000a8 60%, #0000);
     color: #fff;
   }
   .pick-name {

@@ -449,6 +449,8 @@
       animation: none;
     }
     & .kit-sc-mq-run {
+      flex: 1 1 auto;
+      min-width: 0;
       flex-wrap: wrap;
       justify-content: center;
       gap: 8px 0;
@@ -458,7 +460,18 @@
       display: none;
     }
     & .kit-sc-mq-item {
+      flex: 0 1 auto;
+      max-width: 100%;
+      flex-wrap: wrap;
       white-space: normal;
+      /* Words go on the next line when the line is full, but a long title never leaves its star alone on a line. */
+      & > :not(svg) {
+        min-width: 0;
+        max-width: calc(100% - 28px);
+      }
+      & > svg {
+        flex: none;
+      }
     }
   }
 }
@@ -604,6 +617,7 @@
   }
   & .kit-sc-story-quote {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     justify-items: center;
     gap: 16px;
     & blockquote::before {
@@ -620,9 +634,12 @@
       max-width: 30ch;
     }
     & figcaption {
+      max-width: 100%;
       color: var(--k-muted);
       font-size: 15px;
       font-weight: 700;
+      /* A name with one very long word breaks inside the line instead of widening the quote. */
+      overflow-wrap: anywhere;
       &::before {
         content: "\2014\00a0" / "";
       }

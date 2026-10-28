@@ -788,6 +788,36 @@
   "@looksTitle": {
     "description": "Editor strip of the template's ready-made looks (named presets of colors, fonts and layouts)."
   },
+  "editorJumpTo": "Jump to",
+  "@editorJumpTo": {
+    "description": "Design editor: label of the row of buttons that scroll to a group of settings (Brand, Page style...)."
+  },
+  "editorJumpToGroup": "Go to {group}",
+  "@editorJumpToGroup": {
+    "description": "Screen reader label of a jump button in the design editor.",
+    "placeholders": {
+      "group": {
+        "type": "String"
+      }
+    }
+  },
+  "editorCollapseAll": "Close all",
+  "@editorCollapseAll": {
+    "description": "Design editor: closes every group of settings, so the list is short."
+  },
+  "editorExpandAll": "Open all",
+  "@editorExpandAll": {
+    "description": "Design editor: opens every group of settings."
+  },
+  "editorGroupCount": "{count, plural, =1{1 setting} other{{count} settings}}",
+  "@editorGroupCount": {
+    "description": "Design editor: under a closed group's name, how many settings it holds.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "looksSubtitle": "Ready-made styles for this template. Tap one to try it.",
   "lookApply": "Use the {look} look",
   "@lookApply": {

@@ -544,7 +544,9 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('سوق'), findsOneWidget);
-    expect(find.text('الهوية'), findsOneWidget);
+    // The group title shows on its card and on its chip in the jump bar.
+    expect(find.text('الهوية'), findsNWidgets(2));
+    expect(find.descendant(of: find.byKey(const Key('editorJumpBar')), matching: find.text('الهوية')), findsOneWidget);
     expect(find.text('نمط الخط'), findsOneWidget);
     expect(find.text('أنيق'), findsOneWidget);
     expect(find.text('خلفية منقطة'), findsOneWidget);
@@ -561,7 +563,8 @@ void main() {
     await tester.tap(find.text('Edit design'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Brand'), findsOneWidget);
+    expect(find.text('Brand'), findsNWidgets(2));
+    expect(find.descendant(of: find.byKey(const Key('editorJumpBar')), matching: find.text('Brand')), findsOneWidget);
     expect(find.text('Font style'), findsOneWidget);
     expect(find.text('Elegant'), findsOneWidget);
     expect(find.text('نمط الخط'), findsNothing);

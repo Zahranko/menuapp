@@ -159,7 +159,7 @@
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, #0000 25%, #000000b8 100%);
+    background: linear-gradient(180deg, #0000001a 0%, #00000070 35%, #000000c4 100%);
   }
   .hero-text {
     position: relative;
@@ -171,7 +171,6 @@
   }
   .hero .eyebrow {
     color: #fff;
-    opacity: 0.9;
   }
   .hero h1 {
     font-size: calc(46px * var(--fs));

@@ -19,6 +19,10 @@
     radial-gradient(ellipse 70% 80% at 50% 40%, color-mix(in srgb, var(--k-acc) 24%, transparent), transparent 70%),
     var(--sign, #1b1b22);
   color: #fffaf3;
+  /* The sign is always dark: no glass or see-through layer over it. */
+  &::before {
+    content: none;
+  }
   & .kit-hd-in {
     padding-bottom: 30px;
   }

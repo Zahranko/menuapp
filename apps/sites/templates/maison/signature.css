@@ -131,8 +131,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+    min-width: 0;
     margin-inline: auto;
     text-align: center;
+
+    /* Centered lines keep to the frame: a word longer than the line breaks instead of widening the text. */
+    & > * {
+      max-width: 100%;
+    }
   }
   & :is(.kit-hv-title, .kit-hv-eyebrow) {
     text-align: center;

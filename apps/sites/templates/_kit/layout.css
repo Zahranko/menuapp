@@ -447,6 +447,14 @@
   }
 }
 
+/* On a wide screen the big header is a few hundred pixels tall: pinned (sticky "on") it would hide half the page, so
+ * there it scrolls away with the page. */
+@container (min-width: 760px) {
+  .kit-hd.kit-hd[data-hd="big"][data-stick] {
+    position: relative !important;
+  }
+}
+
 /* Logo and menu button: the links stay in the panel at every width. */
 @container (min-width: 760px) {
   .kit-hd.kit-hd[data-hd="minimal"] {
@@ -540,6 +548,10 @@
 .kit-hd.kit-hd[data-hd="pill"][data-hd-style="accent"] {
   background: transparent;
 }
+/* On the accent color the softer gray of "today" would fade: it takes the header's own type color. */
+.kit-hd.kit-hd[data-hd-style="accent"] .kit-hd-in .kit-hd-today {
+  color: inherit;
+}
 .kit-hd.kit-hd[data-hd-style="accent"] > .kit-hd-in {
   & > .kit-hd-cta {
     background: var(--k-acc-ink);
@@ -600,6 +612,30 @@
     animation-timeline: scroll(root);
     animation-range: 0 45vh;
   }
+  /* Turning solid follows the scroll position and moves nothing, so it stays with reduced motion and with "No motion"
+   * (which stop every other animation): otherwise the stuck header would stay see-through over the page. */
+  [data-ps-motion="none"] .kit-hd.kit-hd[data-hd-style="transparent"]:not([data-hd="pill"])[data-stick] {
+    animation: kit-hd-solid linear both !important;
+    animation-timeline: scroll(root) !important;
+    animation-range: 0 45vh !important;
+  }
+  [data-ps-motion="none"] .kit-hd.kit-hd[data-hd-style="transparent"]:not([data-hd="pill"])[data-stick]::before {
+    animation: kit-hd-fade linear both !important;
+    animation-timeline: scroll(root) !important;
+    animation-range: 0 45vh !important;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .kit-hd.kit-hd[data-hd-style="transparent"]:not([data-hd="pill"])[data-stick] {
+      animation: kit-hd-solid linear both !important;
+      animation-timeline: scroll(root) !important;
+      animation-range: 0 45vh !important;
+    }
+    .kit-hd.kit-hd[data-hd-style="transparent"]:not([data-hd="pill"])[data-stick]::before {
+      animation: kit-hd-fade linear both !important;
+      animation-timeline: scroll(root) !important;
+      animation-range: 0 45vh !important;
+    }
+  }
 }
 @keyframes kit-hd-solid {
   80%,
@@ -644,6 +680,14 @@
   -webkit-backdrop-filter: blur(14px) saturate(1.3) !important;
   backdrop-filter: blur(14px) saturate(1.3) !important;
 }
+/* Solid and glass lay the page color under a header that may have been dark: its type follows, in the page's ink. */
+[data-ly-hstyle]:is([data-ly-hstyle="solid"], [data-ly-hstyle="glass"]) [data-section="header"]:not(.kit-hd, [data-k~="masthead"]) {
+  color: var(--k-ink) !important;
+
+  & :is(a, span, p, button, nav, .kit-name):not([data-k~="btn"], [data-k~="btn"] *, .kit-logo, .kit-logo *, [id="site-drawer"], [id="site-drawer"] *, dialog *) {
+    color: inherit !important;
+  }
+}
 [data-ly-hstyle="transparent"] [data-section="header"]:not(.kit-hd, [data-k~="masthead"]) {
   border-color: transparent !important;
   background: transparent !important;
@@ -668,7 +712,11 @@
     background: var(--k-acc-ink) !important;
     color: var(--k-acc) !important;
   }
+  /* The letter mark is drawn in reverse, like the header's own: in the accent it would vanish on the accent. */
   & .kit-logo:not(.kit-logo-bare) {
+    border-color: transparent !important;
+    background-color: var(--k-acc-ink) !important;
+    color: var(--k-acc) !important;
     box-shadow: 0 0 0 2px var(--k-acc-ink) !important;
   }
 }
@@ -699,6 +747,8 @@
   }
   & .kit-hv-text {
     display: grid;
+    /* One column no wider than the text box, so a word longer than the line breaks instead of widening the column. */
+    grid-template-columns: minmax(0, 1fr);
     align-content: center;
     justify-items: start;
     gap: 14px;
@@ -713,19 +763,23 @@
     line-height: 1.3;
     text-transform: uppercase;
   }
+  /* Each opening sets the headline's size in --kit-hv-fs; it shrinks so the longest word (--kit-hv-word letters, set by
+   * Top.tsx) fits the text column (--kit-hv-col of the page) even in a wide font, and a word longer than the whole line
+   * (a long business name) breaks instead of running off the screen. */
   & .kit-hv-title {
     max-width: 100%;
     margin: 0;
-    font-size: clamp(40px, 11vw, 76px);
+    --kit-hv-fs: clamp(40px, 11vw, 76px);
+    font-size: min(var(--kit-hv-fs), calc((min(100cqi, 1160px) - 48px) * var(--kit-hv-col, 1) / (var(--kit-hv-word, 1) * 0.9)));
     line-height: 1.02;
-    overflow-wrap: break-word;
+    overflow-wrap: break-word !important;
     text-wrap: balance;
   }
   &[data-len="long"] .kit-hv-title {
-    font-size: clamp(34px, 8.6vw, 60px);
+    --kit-hv-fs: clamp(34px, 8.6vw, 60px);
   }
   &[data-len="longer"] .kit-hv-title {
-    font-size: clamp(28px, 7vw, 46px);
+    --kit-hv-fs: clamp(28px, 7vw, 46px);
   }
   & .kit-hv-lede {
     max-width: 46ch;
@@ -872,6 +926,23 @@
     color: #fff;
   }
 }
+/* A soft dark cloud right behind the words, so they stay readable on a light photo whatever its height, the darkening
+ * and the place of the text: the shade above follows the photo, this one follows the text. */
+.kit-hv.kit-hv[data-hv="full"][data-photo] .kit-hv-text {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -20px -28px;
+    z-index: -1;
+    border-radius: 48px;
+    background: rgb(0 0 0 / 0.62);
+    filter: blur(26px);
+    pointer-events: none;
+  }
+}
+
 /* No photo at all: the accent's soft tint with a large ring, and the template's own colors. */
 .kit-hv.kit-hv[data-hv="full"]:not([data-photo]) {
   min-height: clamp(420px, 64svh, 640px);
@@ -1015,14 +1086,14 @@
   }
   & .kit-hv-title {
     grid-area: title;
-    font-size: clamp(60px, 18vw, 184px);
+    --kit-hv-fs: clamp(60px, 18vw, 184px);
     line-height: 0.9;
   }
   &[data-len="long"] .kit-hv-title {
-    font-size: clamp(46px, 12.5vw, 136px);
+    --kit-hv-fs: clamp(46px, 12.5vw, 136px);
   }
   &[data-len="longer"] .kit-hv-title {
-    font-size: clamp(34px, 9vw, 96px);
+    --kit-hv-fs: clamp(34px, 9vw, 96px);
   }
   & .kit-hv-lede {
     grid-area: lede;
@@ -1188,10 +1259,10 @@
     padding-block: 24px 36px;
   }
   & .kit-hv-title {
-    font-size: clamp(32px, 8.4vw, 56px);
+    --kit-hv-fs: clamp(32px, 8.4vw, 56px);
   }
   &[data-len="longer"] .kit-hv-title {
-    font-size: clamp(26px, 6.6vw, 42px);
+    --kit-hv-fs: clamp(26px, 6.6vw, 42px);
   }
   & .kit-hv-actions {
     order: 3;
@@ -1269,14 +1340,14 @@
     }
   }
   & .kit-hv-title {
-    font-size: clamp(54px, 15vw, 150px);
+    --kit-hv-fs: clamp(54px, 15vw, 150px);
     line-height: 0.94;
   }
   &[data-len="long"] .kit-hv-title {
-    font-size: clamp(42px, 11vw, 112px);
+    --kit-hv-fs: clamp(42px, 11vw, 112px);
   }
   &[data-len="longer"] .kit-hv-title {
-    font-size: clamp(32px, 8vw, 80px);
+    --kit-hv-fs: clamp(32px, 8vw, 80px);
   }
   & .kit-hv-letter {
     position: absolute;
@@ -1349,4 +1420,14 @@
 }
 .kit-hd.kit-hd:lang(ar) .kit-hd-name {
   line-height: 1.3;
+}
+
+/* The width of the headline's column on a desktop, as a share of the page, for the headline size above. */
+@container (min-width: 760px) {
+  .kit-hv.kit-hv:is([data-hv="split"], [data-hv="collage"], [data-hv="arch"], [data-hv="circle"]) {
+    --kit-hv-col: 0.5;
+  }
+  .kit-hv.kit-hv[data-hv="framed"] {
+    --kit-hv-col: 0.6;
+  }
 }

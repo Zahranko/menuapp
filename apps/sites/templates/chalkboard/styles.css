@@ -31,6 +31,8 @@
   .board {
     position: relative;
     padding: 0 18px 10px;
+    /* The board itself, also without chalk dust (on a desktop the wall around it is the frame color). */
+    background: var(--bg);
   }
   /* The shared header and opening (Page layout) reach the edges of the board. */
   .board > :is(.kit-hd.kit-hd.kit-hd, .kit-hv.kit-hv.kit-hv) {

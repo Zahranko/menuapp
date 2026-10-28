@@ -1,6 +1,7 @@
 import {
   cloneElement,
   isValidElement,
+  type CSSProperties,
   type ReactElement,
   type ReactNode,
 } from "react";
@@ -352,6 +353,11 @@ export function SiteHero({
   return <KitHero {...props} variant={props.top.layout.hero} />;
 }
 
+/** The letters of the headline's longest word, for its size (layout.css); a longer word than 14 letters breaks instead. */
+function wordFit(title: string): number {
+  return Math.min(14, Math.max(4, ...title.split(/\s+/).map((w) => [...w].length)));
+}
+
 /** "long" and "longer" headlines step down a size so they never run off a phone's screen. */
 function lengthOf(title: string): string | undefined {
   const longest = Math.max(...title.split(/\s+/).map((w) => w.length));
@@ -464,6 +470,7 @@ function KitHero({
         photo || (variant === "collage" && photos.length > 0) || undefined
       }
       data-len={lengthOf(headline)}
+      style={{ "--kit-hv-word": wordFit(headline) } as CSSProperties}
       data-sig={sig}
       data-section="hero"
       aria-labelledby="kit-hv-title"

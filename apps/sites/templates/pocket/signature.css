@@ -57,6 +57,8 @@
 [data-template="pocket"] .kit-hd.kit-hd[data-sig~="folder"] {
   border-bottom: 0;
   background: var(--k-surf);
+  /* The folder draws its own colors, whatever the header look ("accent" would leave light type on it). */
+  color: var(--k-ink);
   & > .kit-hd-in {
     position: relative;
     padding-top: 10px;

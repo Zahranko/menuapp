@@ -630,15 +630,17 @@
   }
 
   /* ---------- prices ---------- */
+  /* A pill sets its fill and its text together, over any color a template or a look gives prices (!important), so the
+   * two always match. */
   &[data-mn-price="badge"] .kit-mn-price,
   &[data-mn-price="corner"] .kit-mn-price {
     padding: 3px 11px;
     border-radius: 999px;
-    background: var(--k-acc);
-    color: var(--k-acc-ink);
+    background: var(--k-acc) !important;
+    color: var(--k-acc-ink) !important;
     font-size: 14px;
     & small {
-      color: inherit;
+      color: inherit !important;
     }
   }
   &[data-mn-price="corner"] .kit-mn-media .kit-mn-price {
@@ -646,9 +648,21 @@
     top: 10px;
     inset-inline-end: 10px;
     z-index: 1;
-    background: var(--k-bg);
-    color: var(--k-ink);
+    background: var(--k-bg) !important;
+    color: var(--k-ink) !important;
     box-shadow: 0 4px 14px -6px rgb(0 0 0 / 0.5);
+  }
+  /* A small photo beside the text (lists, the magazine in narrow columns): the pill shrinks to stay on the photo. */
+  &[data-mn-price="corner"][data-mn-photos="side"] .kit-mn-media .kit-mn-price {
+    top: 6px;
+    inset-inline-end: 6px;
+    max-width: calc(100% - 12px);
+    padding: 2px 7px;
+    font-size: 12px;
+    line-height: 1.2;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
   &[data-mn-price="under"] .kit-mn-price {
     align-self: flex-start;

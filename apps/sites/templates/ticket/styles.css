@@ -34,6 +34,8 @@
   }
   .receipt {
     position: relative;
+    /* Shared parts inside the slip lay out for its width, not the page's. */
+    container-type: inline-size;
     max-width: 460px;
     margin: 0 auto;
     padding: 34px 22px 30px;

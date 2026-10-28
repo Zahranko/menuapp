@@ -862,7 +862,8 @@ const HERO_KEYS: Record<string, string> = { trans: "hero.transition", speed: "he
  * the page style, page layout, menu layout and section tokens above (STYLE_KEYS, LAYOUT_KEYS, MENU_KEYS, SECTION_KEYS);
  * "slides" or "slides_<n>" (n hero photos in all, 2 to 6), "trans_<slide|fade|zoom>", "speed_<slow|normal|fast>",
  * "auto_off" (no autoplay), "ctrl_<both|dots|arrows|none>", "height_<size>", "overlay_<amount>", "text_<position>",
- * "look_<id>" (one of the template's looks, applied where it stands in the token).
+ * "look_<id>" (one of the template's looks, applied where it stands in the token) and "f<n>_<value>" (any design field by
+ * its place in the schema, see applyField).
  */
 /** A token value as written: a "+" can reach the page as "%2B" (or as a space, when a path decodes it like a query). */
 function decodedOnce(value: string): string {
@@ -883,6 +884,7 @@ function applyCardAndHeroOption(site: PublicSite, key: string, value: string): v
   else if (key === "so") set({ "sections.order": decodedOnce(value).split(/[+, ]/).filter(Boolean) });
   else if (key === "sparse") applySparse(site);
   else if (key === "look") applyLook(site, value);
+  else if (/^f\d+$/.test(key)) applyField(site, Number(key.slice(1)), decodedOnce(value));
   else if (key === "bc") set({ "cards.borderColor": /^[0-9a-f]{6}$/i.test(value) ? `#${value.toUpperCase()}` : value });
   else if (key in HERO_KEYS) set({ [HERO_KEYS[key]]: value });
   else if (key === "auto") set({ "hero.autoplay": value !== "off" });
@@ -905,6 +907,29 @@ function applyLook(site: PublicSite, id: string): void {
   const template = registry.templates.find((t) => t.id === site.templateId) as { looks?: { id: string; values: Settings }[] } | undefined;
   const look = template?.looks?.find((l) => l.id === id);
   if (look) site.settings = { ...site.settings, ...look.values };
+}
+
+/**
+ * Any design field by its place in the template's schema (the random-combination checks, e2e/combinations.ts):
+ * "f<n>_<value>" sets the n-th field of the template's schema. The value is an option's index for a choice, palette or
+ * color, "c<rrggbb>" for a custom color, "1" or "0" for a switch, a whole number for a range, and option indexes joined
+ * by "+" for an order or a set of switches ("n" for none). Values the field doesn't take change nothing.
+ */
+function applyField(site: PublicSite, index: number, value: string): void {
+  const field = templateInfo(site.templateId).schema[index] as { key: string; type: string; options?: string[]; min?: number; max?: number } | undefined;
+  if (!field) return;
+  const options = field.options ?? [];
+  const pick = (v: string) => (/^\d+$/.test(v) ? options[Number(v)] : undefined);
+  let next: Settings[string] | undefined;
+  if (field.type === "choice" || field.type === "palette") next = pick(value);
+  else if (field.type === "color") next = /^c[0-9a-f]{6}$/i.test(value) ? `#${value.slice(1).toUpperCase()}` : pick(value);
+  else if (field.type === "toggle") next = value === "1" ? true : value === "0" ? false : undefined;
+  else if (field.type === "range") next = /^\d+$/.test(value) ? Math.min(field.max ?? Infinity, Math.max(field.min ?? 0, Number(value))) : undefined;
+  else if (field.type === "order" || field.type === "toggles") {
+    const list = value === "n" ? [] : value.split(/[+, ]/).map(pick);
+    next = list.every(Boolean) ? (list as string[]) : undefined;
+  }
+  if (next !== undefined) site.settings = { ...site.settings, [field.key]: next };
 }
 
 /** The least content every section can show (the "sparse" fixture option). */

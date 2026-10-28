@@ -45,6 +45,23 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
   int _generation = 0;
   bool _publishing = false;
 
+  /// Groups of settings the owner closed, and a key per group to scroll to it ("Jump to").
+  final Set<String> _closed = {};
+  final Map<String, GlobalKey> _groupKeys = {};
+
+  GlobalKey _groupKey(String group) => _groupKeys.putIfAbsent(group, () => GlobalKey(debugLabel: 'group-$group'));
+
+  /// Opens a group and scrolls it to the top of the settings.
+  void _jumpTo(String group) {
+    setState(() => _closed.remove(group));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final target = _groupKeys[group]?.currentContext;
+      if (target != null && target.mounted) {
+        Scrollable.ensureVisible(target, duration: const Duration(milliseconds: 350), curve: Curves.easeOutCubic);
+      }
+    });
+  }
+
   /// The AI assistant's conversation, kept while the editor is open.
   AiChatController? _chatState;
   AiChatController get _chat => _chatState ??= AiChatController(_siteLocale);
@@ -137,9 +154,9 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
 
   /// The website's language (chosen at sign-up), which picks the template's starting texts.
   String get _siteLocale => switch (ref.read(authControllerProvider)) {
-        SignedIn(:final business) => business.locale,
-        _ => 'en',
-      };
+    SignedIn(:final business) => business.locale,
+    _ => 'en',
+  };
 
   Future<void> _reset(TemplateInfo template) async {
     final t = AppLocalizations.of(context);
@@ -356,40 +373,63 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
                   ),
                 ),
               ),
+              if (groups.length > 3)
+                _JumpBar(
+                  groups: groups.keys.toList(),
+                  allClosed: groups.keys.every(_closed.contains),
+                  onJump: _jumpTo,
+                  onToggleAll: () => setState(() {
+                    if (groups.keys.every(_closed.contains)) {
+                      _closed.clear();
+                    } else {
+                      _closed.addAll(groups.keys);
+                    }
+                  }),
+                ),
               Expanded(
-                child: ListView(
+                // Every group is built (not lazily), so "Jump to" can scroll to any of them.
+                child: SingleChildScrollView(
+                  key: const Key('editorSettings'),
                   padding: const EdgeInsets.fromLTRB(Ui.gutter, 20, Ui.gutter, 24),
-                  children: [
-                    if (template != null && template.looks.isNotEmpty)
-                      LooksStrip(
-                        key: ValueKey('looks-${template.id}'),
-                        looks: template.looks,
-                        fields: fields,
-                        values: () => _settings ?? const {},
-                        onApply: _applySuggestions,
-                      ),
-                    AiDesignAssistant(chat: _chat, fields: fields, values: () => _settings ?? const {}, onApply: _applySuggestions),
-                    for (final entry in groups.entries)
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (template != null && template.looks.isNotEmpty)
+                        LooksStrip(
+                          key: ValueKey('looks-${template.id}'),
+                          looks: template.looks,
+                          fields: fields,
+                          values: () => _settings ?? const {},
+                          onApply: _applySuggestions,
+                        ),
+                      AiDesignAssistant(chat: _chat, fields: fields, values: () => _settings ?? const {}, onApply: _applySuggestions),
+                      for (final entry in groups.entries)
+                        _GroupCard(
+                          key: _groupKey(entry.key),
+                          title: entry.key,
+                          count: entry.value.length,
+                          // A group with a field that needs fixing stays open.
+                          open: !_closed.contains(entry.key) || entry.value.any((f) => _errors.containsKey(f.key)),
+                          onToggle: () => setState(() => _closed.contains(entry.key) ? _closed.remove(entry.key) : _closed.add(entry.key)),
+                          children: [
+                            for (final f in entry.value)
+                              SettingField(
+                                key: ValueKey('${f.key}-$_generation'),
+                                field: f,
+                                value: _settings![f.key],
+                                error: _errors[f.key],
+                                onChanged: (v) => _change(f.key, v),
+                              ),
+                          ],
+                        ),
                       SectionCard(
-                        title: entry.key,
-                        children: [
-                          for (final f in entry.value)
-                            SettingField(
-                              key: ValueKey('${f.key}-$_generation'),
-                              field: f,
-                              value: _settings![f.key],
-                              error: _errors[f.key],
-                              onChanged: (v) => _change(f.key, v),
-                            ),
-                        ],
+                        title: t.menuItemsAndPrices,
+                        icon: Icons.restaurant_menu_rounded,
+                        subtitle: t.menuItemsElsewhere,
+                        children: [LightButton(label: t.manageMenu, onPressed: () => context.go('/menu'))],
                       ),
-                    SectionCard(
-                      title: t.menuItemsAndPrices,
-                      icon: Icons.restaurant_menu_rounded,
-                      subtitle: t.menuItemsElsewhere,
-                      children: [LightButton(label: t.manageMenu, onPressed: () => context.go('/menu'))],
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -406,6 +446,138 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// A row of buttons under the preview, one per group of settings, that opens the group and scrolls to it, and a button
+/// that closes (or opens) every group, so a long list of settings becomes a short list of group names.
+class _JumpBar extends StatelessWidget {
+  const _JumpBar({required this.groups, required this.allClosed, required this.onJump, required this.onToggleAll});
+
+  final List<String> groups;
+  final bool allClosed;
+  final ValueChanged<String> onJump;
+  final VoidCallback onToggleAll;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
+    return DecoratedBox(
+      key: const Key('editorJumpBar'),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(bottom: BorderSide(color: BrandColors.hairline)),
+      ),
+      child: SizedBox(
+        height: 56,
+        child: Row(
+          children: [
+            Expanded(
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsetsDirectional.fromSTEB(Ui.gutter - 4, 8, 4, 8),
+                children: [
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsetsDirectional.only(start: 4, end: 8),
+                      child: Text(
+                        t.editorJumpTo,
+                        style: TextStyle(color: BrandColors.muted, fontSize: 13, fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ),
+                  for (final group in groups)
+                    Padding(
+                      padding: const EdgeInsetsDirectional.only(end: 6),
+                      child: Semantics(
+                        label: t.editorJumpToGroup(group),
+                        excludeSemantics: true,
+                        button: true,
+                        child: ActionChip(key: Key('jump-$group'), label: Text(group), onPressed: () => onJump(group)),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+            // Always in reach, at the end of the row.
+            Padding(
+              padding: const EdgeInsetsDirectional.only(end: Ui.gutter - 8),
+              child: TextButton.icon(
+                key: const Key('editorToggleAll'),
+                style: TextButton.styleFrom(minimumSize: const Size(0, 44), padding: const EdgeInsets.symmetric(horizontal: 10)),
+                onPressed: onToggleAll,
+                icon: Icon(allClosed ? Icons.unfold_more_rounded : Icons.unfold_less_rounded, size: 20),
+                label: Text(allClosed ? t.editorExpandAll : t.editorCollapseAll),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// A group of settings with its name as a button that closes and opens it; closed, it shows how many settings it has.
+class _GroupCard extends StatelessWidget {
+  const _GroupCard({super.key, required this.title, required this.count, required this.open, required this.onToggle, required this.children});
+
+  final String title;
+  final int count;
+  final bool open;
+  final VoidCallback onToggle;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: AppCard(
+        padding: EdgeInsets.zero,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Semantics(
+              button: true,
+              expanded: open,
+              child: InkWell(
+                key: Key('group-$title'),
+                onTap: onToggle,
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(18, 18, 12, open ? 16 : 18),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(title, style: Ui.display(context, 18, weight: FontWeight.w700)),
+                            if (!open) ...[
+                              const SizedBox(height: 2),
+                              Text(t.editorGroupCount(count), style: TextStyle(color: BrandColors.muted, fontSize: 13.5)),
+                            ],
+                          ],
+                        ),
+                      ),
+                      AnimatedRotation(
+                        turns: open ? 0.5 : 0,
+                        duration: const Duration(milliseconds: 200),
+                        child: Icon(Icons.expand_more_rounded, color: BrandColors.muted),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            if (open)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(18, 0, 18, 18),
+                child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: children),
+              ),
+          ],
         ),
       ),
     );

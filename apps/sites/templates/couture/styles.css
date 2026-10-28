@@ -158,7 +158,8 @@
     top: 0;
     z-index: 30;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    /* The sides always keep room for their 44px buttons; a big logo in the middle gives way. */
+    grid-template-columns: minmax(44px, 1fr) minmax(0, auto) minmax(44px, 1fr);
     align-items: center;
     gap: 8px;
     min-height: var(--head-h);
@@ -205,6 +206,7 @@
   .cu-burger,
   .cu-head-wa {
     display: inline-grid;
+    flex: none;
     place-items: center;
     width: 44px;
     height: 44px;
@@ -312,6 +314,17 @@
     justify-items: start;
     gap: 18px;
     max-width: 720px;
+  }
+  /* A soft dark cloud behind the words on the photo: the text stays readable on a light photo or a short opening. */
+  .cu-hero:not(.is-plain) .cu-hero-text::before {
+    content: "";
+    position: absolute;
+    inset: -24px -32px;
+    z-index: -1;
+    border-radius: 56px;
+    background: rgb(15 12 8 / 0.5);
+    filter: blur(30px);
+    pointer-events: none;
   }
   .cu-hero-title {
     font-size: calc(clamp(44px, 12cqi, 112px) * var(--fs));
@@ -423,8 +436,32 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, transparent 45%, rgb(15 12 8 / 0.7));
+      background: linear-gradient(180deg, transparent 35%, rgb(15 12 8 / 0.55) 62%, rgb(15 12 8 / 0.85));
     }
+  }
+  /* A round photo becomes a plate at the top of the tile, with the name under it in the page's ink. */
+  &[data-card-photo="circle"] .cu-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: var(--ink);
+  }
+  &[data-card-photo="circle"] .cu-tile-media {
+    position: relative;
+    inset: auto;
+    flex: none;
+    width: min(76%, 220px);
+  }
+  &[data-card-photo="circle"] .cu-tile-media::after {
+    content: none;
+  }
+  &[data-card-photo="circle"] .cu-tile-text {
+    position: static;
+    justify-items: center;
+    padding-block: 8px 0;
+    text-align: center;
   }
   .cu-tile:hover .cu-tile-media img {
     transform: scale(1.05);
@@ -550,10 +587,15 @@
     text-transform: uppercase;
     text-align: center;
     translate: 0 100%;
-    transition: translate 0.45s var(--ease);
+    /* Hidden as well as moved out: a photo shape (style.photos) lets the photo box show what overflows it. */
+    visibility: hidden;
+    transition:
+      translate 0.45s var(--ease),
+      visibility 0.45s;
   }
   .cu-card:is(:hover, :focus-visible) .cu-card-view {
     translate: 0 0;
+    visibility: visible;
   }
   .cu-card-body {
     display: grid;

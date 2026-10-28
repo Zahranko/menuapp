@@ -2444,6 +2444,36 @@ abstract class AppLocalizations {
   /// **'Looks'**
   String get looksTitle;
 
+  /// Design editor: label of the row of buttons that scroll to a group of settings (Brand, Page style...).
+  ///
+  /// In en, this message translates to:
+  /// **'Jump to'**
+  String get editorJumpTo;
+
+  /// Screen reader label of a jump button in the design editor.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to {group}'**
+  String editorJumpToGroup(String group);
+
+  /// Design editor: closes every group of settings, so the list is short.
+  ///
+  /// In en, this message translates to:
+  /// **'Close all'**
+  String get editorCollapseAll;
+
+  /// Design editor: opens every group of settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open all'**
+  String get editorExpandAll;
+
+  /// Design editor: under a closed group's name, how many settings it holds.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 setting} other{{count} settings}}'**
+  String editorGroupCount(int count);
+
   /// No description provided for @looksSubtitle.
   ///
   /// In en, this message translates to:

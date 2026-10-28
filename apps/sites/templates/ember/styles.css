@@ -156,12 +156,19 @@
     rotate: calc(-2.5deg * var(--dir));
     box-shadow: 0 8px 0 var(--hard);
   }
+  /* Still (reduced motion or the "Animations" switch off): the specials wrap onto lines, once. Moving: one long row. */
   .tick-track {
     display: flex;
-    width: max-content;
+    justify-content: center;
   }
   .tick-run {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    white-space: normal;
+  }
+  .tick-run[aria-hidden] {
+    display: none;
   }
   .tick-run li {
     display: inline-flex;
@@ -1653,9 +1660,17 @@
     letter-spacing: 0.04em;
     text-transform: uppercase;
     white-space: nowrap;
+    /* A long label ("Find us on Instagram") wraps on a phone instead of running off the screen. */
+    max-width: calc(100vw - 32px);
+    padding-block: 8px;
+    line-height: 1.05;
     transition:
       rotate 0.3s var(--spring),
       scale 0.3s var(--spring);
+
+    .kit-order-label {
+      white-space: normal;
+    }
   }
   &[data-order-shape="circle"] .pill svg {
     width: 26px;
@@ -1813,7 +1828,15 @@
       animation: em-spin 0.5s var(--spring) 0.35s both;
     }
     &.motion .tick-track {
+      width: max-content;
       animation: em-tick 32s linear infinite;
+    }
+    &.motion .tick-run {
+      flex-wrap: nowrap;
+      white-space: nowrap;
+    }
+    &.motion .tick-run[aria-hidden] {
+      display: flex;
     }
     &.motion.is-ar .tick-track {
       animation-name: em-tick-rtl;

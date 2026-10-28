@@ -79,6 +79,8 @@
   }
   & .kit-hv-title {
     color: var(--k-acc);
+    /* Lit: a dark accent is brightened so the words glow on the dark panel. */
+    color: oklch(from var(--k-acc) max(l, 0.78) c h);
     text-transform: uppercase;
     text-shadow: 0 0 18px color-mix(in srgb, var(--k-acc) 55%, transparent);
   }

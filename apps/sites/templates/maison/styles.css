@@ -477,6 +477,8 @@ html.mx-locked {
     margin-top: calc(var(--head-h) * -1);
     min-height: 100svh;
     display: grid;
+    /* One column no wider than the screen: a very long word in the name breaks instead of widening it. */
+    grid-template-columns: minmax(0, 1fr);
     align-items: end;
     overflow: hidden;
   }
@@ -506,7 +508,7 @@ html.mx-locked {
     z-index: -1;
     background:
       linear-gradient(180deg, rgb(8 7 6 / 0.55) 0%, transparent 26%),
-      linear-gradient(0deg, color-mix(in srgb, var(--photo) 92%, transparent) 0%, color-mix(in srgb, var(--photo) 40%, transparent) 38%, transparent 64%),
+      linear-gradient(0deg, color-mix(in srgb, var(--photo) 92%, transparent) 0%, color-mix(in srgb, var(--photo) 58%, transparent) 40%, transparent 72%),
       rgb(8 7 6 / var(--shade));
   }
   .mx-hero-copy {
@@ -532,7 +534,8 @@ html.mx-locked {
     line-height: 0.9;
     letter-spacing: -0.025em;
     margin-inline-start: -0.04em;
-    overflow-wrap: break-word;
+    /* The name breaks only when one word is longer than the screen (stronger than "Page style", which never breaks words). */
+    overflow-wrap: break-word !important;
     padding-bottom: 0.06em;
   }
   .mx-name.is-long {

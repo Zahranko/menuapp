@@ -303,6 +303,20 @@
     gap: 16px;
     width: 100%;
   }
+  /* A soft dark cloud right behind the words: they stay readable on a light photo, however short the opening. */
+  .hero:not(.split) .heroIn {
+    isolation: isolate;
+  }
+  .hero:not(.split) .heroIn::before {
+    content: "";
+    position: absolute;
+    inset: 12px 0 12px;
+    z-index: -1;
+    border-radius: 48px;
+    background: rgb(0 0 0 / 0.5);
+    filter: blur(28px);
+    pointer-events: none;
+  }
   .hero .eyebrow {
     color: #fff;
   }

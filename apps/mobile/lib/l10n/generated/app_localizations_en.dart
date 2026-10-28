@@ -1395,6 +1395,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get looksTitle => 'Looks';
 
   @override
+  String get editorJumpTo => 'Jump to';
+
+  @override
+  String editorJumpToGroup(String group) {
+    return 'Go to $group';
+  }
+
+  @override
+  String get editorCollapseAll => 'Close all';
+
+  @override
+  String get editorExpandAll => 'Open all';
+
+  @override
+  String editorGroupCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count settings',
+      one: '1 setting',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get looksSubtitle =>
       'Ready-made styles for this template. Tap one to try it.';
 

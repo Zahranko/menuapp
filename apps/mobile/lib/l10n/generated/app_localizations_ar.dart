@@ -1392,6 +1392,35 @@ class AppLocalizationsAr extends AppLocalizations {
   String get looksTitle => 'الأنماط';
 
   @override
+  String get editorJumpTo => 'انتقل إلى';
+
+  @override
+  String editorJumpToGroup(String group) {
+    return 'انتقل إلى $group';
+  }
+
+  @override
+  String get editorCollapseAll => 'إغلاق الكل';
+
+  @override
+  String get editorExpandAll => 'فتح الكل';
+
+  @override
+  String editorGroupCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count إعداد',
+      many: '$count إعدادًا',
+      few: '$count إعدادات',
+      two: 'إعدادان',
+      one: 'إعداد واحد',
+      zero: 'لا إعدادات',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get looksSubtitle =>
       'أنماط جاهزة لهذا القالب. اضغط على أيٍّ منها لتجربته.';
 

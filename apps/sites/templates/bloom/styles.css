@@ -66,7 +66,10 @@
     font-weight: 700;
     background: var(--acc);
     color: var(--acc-ink);
-    background-image: radial-gradient(circle at 10px 50%, color-mix(in srgb, var(--acc-ink) 18%, transparent) 2px, transparent 2.5px);
+    /* Two rows of dots along the edges, none under the words (they would cost them contrast). */
+    background-image:
+      radial-gradient(circle at 10px 5px, color-mix(in srgb, var(--acc-ink) 18%, transparent) 2px, transparent 2.5px),
+      radial-gradient(circle at 10px calc(100% - 5px), color-mix(in srgb, var(--acc-ink) 18%, transparent) 2px, transparent 2.5px);
     background-size: 22px 100%;
   }
 

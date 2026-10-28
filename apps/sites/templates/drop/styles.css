@@ -225,7 +225,7 @@
       position: absolute;
       inset: 0;
       z-index: 2;
-      background: linear-gradient(180deg, rgb(0 0 0 / 0.15) 0%, rgb(0 0 0 / 0.25) 40%, rgb(0 0 0 / 0.82) 100%);
+      background: linear-gradient(180deg, rgb(0 0 0 / 0.2) 0%, rgb(0 0 0 / 0.5) 35%, rgb(0 0 0 / 0.85) 100%);
       pointer-events: none;
     }
   }

@@ -62,7 +62,8 @@
       0 0 0 6px var(--k-bg),
       0 0 0 8px var(--k-acc),
       0 0 0 22px transparent;
-    margin-top: 34px;
+    /* The lattice reaches 30px around the photo: as much room under it, so it never runs into the words below. */
+    margin-block: 34px 30px;
     overflow: visible;
   }
   & .kit-hv-media::before,

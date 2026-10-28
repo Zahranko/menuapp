@@ -93,8 +93,9 @@ those attributes, so they win over the template only when the owner picked somet
 italic, condensed letters, outlines or letter spacing. Outlines go only on display headings (the opening headline and
 section titles), never on labels, header, footer or highlight titles. On a phone (560px and under), larger and big
 text leaves headings at the template's size, capital display headings are set 12% smaller, and wide spacing is
-reduced, so a word in a heading never breaks in the middle (display headings wrap only between words). On a dark
-theme (`color-scheme: dark` on the root) the paper texture is a faint fine grain. Motion uses CSS scroll-driven animations inside
+reduced, so a word in a heading never breaks in the middle (display headings wrap only between words; the one
+exception is a business name heading, `.kit-name`, where a made-up word longer than the screen breaks). On a dark
+theme (`color-scheme: dark` on the root) the paper texture is a faint fine grain and the grain texture is fainter. Motion uses CSS scroll-driven animations inside
 `@media (prefers-reduced-motion: no-preference)`, with no JavaScript, and changes nothing in browsers without them.
 
 What a template marks so the options can reach it:
@@ -144,7 +145,9 @@ and its decorations around it, so it reads as part of the template.
 - A template's own `hero.layout` (Souq, Atlas, Bloom, Ember, Lumen, Maison) moves into this group right after
   `hero.variant`, labelled "Template default: its own top": it is what `auto` shows.
 - `header.style` and `header.sticky` also restyle a template's own header (any `[data-section="header"]` that is not a
-  masthead). A shared header is sticky unless it is the big one or the owner chose "Scrolls away"; a see-through header
+  masthead); solid and glass also set its text in the page's ink, since their background is the page color. A shared
+  header is sticky unless it is the big one or the owner chose "Scrolls away"; the big one stays on screen only on
+  phones even with "Stays at the top", because on a wide screen it is a few hundred pixels tall. A see-through header
   stays on screen only in browsers with scroll-driven animations (it turns solid as the page scrolls) and scrolls away
   elsewhere. A transparent or glass header, and the floating bar, lie over the photo when the opening is a full-width
   photo (the shared "full", or a template's own photo backdrop).
@@ -350,6 +353,24 @@ Tests: `templates/signatures.test.tsx` (the registry rules, each signature on it
 its marks and decorations added, each look from the `look_<id>` fixture token) and `e2e/signatures.spec.ts` (every
 signature, all of them on the least content, and every look on a phone, half in Arabic, with axe, no sideways scroll and no
 page errors). In fixture mode: `/_preview/fixture.ticket.default.ar.hv_stub-ml_tickets` or `/_preview/fixture.ticket.default.en.look_receipt`.
+
+## Random combinations
+
+Owners mix everything at once, so `e2e/combinations.spec.ts` renders random option sets on every template from the
+production build. `e2e/combinations.ts` builds them from `registry.json` with a seeded random generator: a look as a base,
+then colors, fonts, every shared group, the signature options and a random section order, plus long names, labels,
+logos and more photos, half in Arabic, on a phone and a desktop, sometimes on an inner page of the Pro templates. Each
+page must pass axe (WCAG 2 A/AA and 2.2 target size), have no sideways scroll and no page or console errors, keep heading
+and button text inside its box (nothing cut off by a box that hides its overflow), keep the main call to action clear of
+fixed or sticky bars, give every image an alt text, and keep text readable on what is really behind it: text that axe
+can't judge (over photos, gradients, textures) is measured on a screenshot of its place with all text hidden.
+
+Two combinations per template run by default (CI); `COMBOS=1` runs twelve and `COMBOS=<n>` runs n. `COMBO_SHOTS=<dir>`
+saves a screenshot of each page, `COMBO_REPORT=<file>` writes one JSON line per page, `COMBO_URL=<path>` checks one page
+and `COMBO_REPLAY=<file>` checks again the pages that had issues in a report. Any schema field can be set from a fixture
+token as `f<n>_<value>` (field n of the template's schema, counted from 0: an option index, `c<rrggbb>` for a color, `1`/`0`,
+a number, or option indexes joined by `+`, `n` for none), for example
+`/_preview/fixture.pulse.default.en.look_volt-f12_2-f37_0+2+1`.
 
 ## Rules every template follows
 

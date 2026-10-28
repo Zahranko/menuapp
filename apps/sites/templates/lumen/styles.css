@@ -709,6 +709,10 @@
     overflow: hidden;
     isolation: isolate;
   }
+  /* A card style from the "Cards" group replaces the tile's color with the page's: the text follows. */
+  &[data-card-style] .tile {
+    color: var(--ink);
+  }
   .tile-name {
     max-width: 78%;
     font: var(--fw) calc(clamp(26px, 7vw, 46px) * var(--fs)) / 0.98 var(--fd);

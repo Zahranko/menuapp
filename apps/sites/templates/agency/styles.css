@@ -553,6 +553,8 @@
     line-height: 0.9;
   }
   .contact-band h2 a {
+    /* Its box keeps to the tight lines: inline, a tall font's box would reach over the buttons under it. */
+    display: inline-block;
     text-decoration: none;
     background: linear-gradient(var(--acc), var(--acc)) 0 100% / 0 0.12em no-repeat;
     transition: background-size 0.4s;
