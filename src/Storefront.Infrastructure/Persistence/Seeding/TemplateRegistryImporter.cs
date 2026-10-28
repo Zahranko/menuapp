@@ -59,6 +59,7 @@ public sealed class TemplateRegistryImporter(StorefrontDbContext db, IOptions<St
             var defaults = manifest.GetProperty("defaults").GetRawText();
             var ar = manifest.TryGetProperty("ar", out var a) && a.ValueKind == JsonValueKind.Object ? a : (JsonElement?)null;
             var defaultsAr = await ArabicDefaultsAsync(id, manifest, schema, defaults);
+            var looks = await LooksAsync(id, manifest, schema);
             seen.Add(id);
 
             if (!existing.TryGetValue(id, out var template))
@@ -73,6 +74,7 @@ public sealed class TemplateRegistryImporter(StorefrontDbContext db, IOptions<St
             }
 
             template.SetArabic(Text(ar, "name"), Text(ar, "category"), Text(ar, "description"), defaultsAr);
+            template.SetLooks(looks);
         }
 
         foreach (var stale in existing.Values.Where(t => !seen.Contains(t.Id)))
@@ -112,6 +114,27 @@ public sealed class TemplateRegistryImporter(StorefrontDbContext db, IOptions<St
         }
 
         return valid.ToJsonString(Readable);
+    }
+
+    /// <summary>
+    /// The optional "looks" list, checked against the schema: only known design settings with values they accept are kept.
+    /// A bad value or look is left out and logged, so one bad look never stops the import.
+    /// </summary>
+    private async Task<string> LooksAsync(string id, JsonElement manifest, string schema)
+    {
+        if (!manifest.TryGetProperty("looks", out var element) || element.ValueKind == JsonValueKind.Null)
+        {
+            return "[]";
+        }
+
+        var problems = new List<string>();
+        var looks = await TemplateSchema.Parse(schema).ValidLooksAsync(JsonNode.Parse(element.GetRawText()), problems);
+        foreach (var problem in problems)
+        {
+            logger.LogWarning("Template {Template}: {Problem} was ignored", id, problem);
+        }
+
+        return looks;
     }
 
     private static readonly JsonSerializerOptions Readable = new() { Encoder = JavaScriptEncoder.Create(UnicodeRanges.All) };

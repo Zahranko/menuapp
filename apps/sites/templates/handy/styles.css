@@ -8,6 +8,7 @@
 @import "../_kit/menu.css";
 @import "../_kit/sections.css";
 @import "../_kit/style.css";
+@import "./signature.css";
 
 .t-handy {
   container: page / inline-size;
@@ -402,7 +403,8 @@
   .area-list li {
     padding: 6px 14px;
     border-radius: 999px;
-    background: color-mix(in srgb, var(--acc-ink) 14%, transparent);
+    /* An outline, not a tint: a tint lightens the accent behind the text, and some accents stop being readable. */
+    box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--acc-ink) 50%, transparent);
     font-size: 14px;
     font-weight: 700;
   }

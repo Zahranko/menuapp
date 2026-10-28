@@ -388,5 +388,11 @@
   "sectionOrderHint": "تبقى الواجهة دائمًا في الأعلى والتذييل في الأسفل.",
   "sectionMoveUp": "انقل {section} للأعلى",
   "sectionMoveDown": "انقل {section} للأسفل",
-  "sectionPosition": "{section}، {position} من {count}"
+  "sectionPosition": "{section}، {position} من {count}",
+  "aiChatSurprise": "فاجئني",
+  "looksTitle": "الأنماط",
+  "looksSubtitle": "أنماط جاهزة لهذا القالب. اضغط على أيٍّ منها لتجربته.",
+  "lookApply": "استخدم نمط {look}",
+  "lookApplied": "تم تطبيق {look}",
+  "lookUndone": "عاد تصميمك كما كان"
 }

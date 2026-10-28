@@ -1384,4 +1384,27 @@ class AppLocalizationsAr extends AppLocalizations {
   String sectionPosition(String section, int position, int count) {
     return '$section، $position من $count';
   }
+
+  @override
+  String get aiChatSurprise => 'فاجئني';
+
+  @override
+  String get looksTitle => 'الأنماط';
+
+  @override
+  String get looksSubtitle =>
+      'أنماط جاهزة لهذا القالب. اضغط على أيٍّ منها لتجربته.';
+
+  @override
+  String lookApply(String look) {
+    return 'استخدم نمط $look';
+  }
+
+  @override
+  String lookApplied(String look) {
+    return 'تم تطبيق $look';
+  }
+
+  @override
+  String get lookUndone => 'عاد تصميمك كما كان';
 }

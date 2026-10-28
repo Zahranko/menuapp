@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Text;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 using Storefront.Application.Templates;
@@ -133,6 +134,76 @@ public static partial class TemplateAiFields
     }
 
     private static string Number(double value) => value.ToString(CultureInfo.InvariantCulture);
+
+    /// <summary>
+    /// Tells the model what makes this template its own: the options only it has (<see cref="TemplateField.Signature"/>) and its
+    /// named looks, each with the settings it sets. Only fields the model may set are named.
+    /// </summary>
+    public static void DescribeOwn(StringBuilder input, IReadOnlyList<TemplateField> fields, IReadOnlyList<TemplateLook> looks)
+    {
+        var allowed = fields.ToDictionary(f => f.Key);
+        var signature = fields.Where(f => f.Signature is { Count: > 0 }).ToList();
+        if (signature.Count > 0)
+        {
+            input.AppendLine();
+            input.AppendLine("This template's own layout options (no other template has them; prefer them when they fit the request):");
+            foreach (var field in signature)
+            {
+                foreach (var option in field.Signature!)
+                {
+                    input.AppendLine($"- {field.Key} \"{option}\": {field.OptionLabels?.GetValueOrDefault(option) ?? option}");
+                }
+            }
+        }
+
+        var usable = looks.Where(l => l.Values.Any(v => allowed.ContainsKey(v.Key))).ToList();
+        if (usable.Count > 0)
+        {
+            input.AppendLine();
+            input.AppendLine("This template's looks (each sets several settings at once; send its id as \"look\" to use one):");
+            foreach (var look in usable)
+            {
+                var values = string.Join(", ", look.Values.Where(v => allowed.ContainsKey(v.Key)).Select(v => $"{v.Key} {v.Value?.ToJsonString()}"));
+                input.AppendLine($"- {look.Id} ({look.Label}): {values}");
+            }
+        }
+    }
+
+    /// <summary>The optional "look" property of the answer: one of the template's look ids. Null when it has none.</summary>
+    public static JsonObject? LookProperty(IReadOnlyList<TemplateLook> looks) =>
+        looks.Count == 0
+            ? null
+            : new JsonObject
+            {
+                ["type"] = "string",
+                ["enum"] = new JsonArray(looks.Select(l => (JsonNode)l.Id).ToArray()),
+                ["description"] = "Optional: one of the template's looks to start from; the settings you send are applied over it",
+            };
+
+    /// <summary>
+    /// The settings to check: the chosen look's values (when <paramref name="look"/> names one of the template's looks), with the
+    /// model's own <paramref name="settings"/> over them. The result goes through <see cref="ToPatchAsync"/> like any answer.
+    /// </summary>
+    public static JsonNode? WithLook(JsonNode? settings, JsonNode? look, IReadOnlyList<TemplateLook> looks)
+    {
+        var id = look is JsonValue v && v.TryGetValue<string>(out var text) ? text.Trim() : null;
+        var chosen = id is null ? null : looks.FirstOrDefault(l => string.Equals(l.Id, id, StringComparison.OrdinalIgnoreCase));
+        if (chosen is null)
+        {
+            return settings;
+        }
+
+        var merged = (JsonObject)chosen.Values.DeepClone();
+        if (settings is JsonObject own)
+        {
+            foreach (var (key, value) in own)
+            {
+                merged[key] = value?.DeepClone();
+            }
+        }
+
+        return merged;
+    }
 
     private static string Describe(TemplateField field, string option)
     {

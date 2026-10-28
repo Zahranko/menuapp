@@ -19,9 +19,10 @@ public sealed record AiChatMessage(string Role, string Text)
 
 /// <summary>
 /// The conversation so far, oldest first, ending with the owner's new message; the language the texts and the reply are written in
-/// ("en" or "ar"; the site's language when empty); and an optional photo sent with the new message (a logo, the shop, the food).
+/// ("en" or "ar"; the site's language when empty); an optional photo sent with the new message (a logo, the shop, the food); and
+/// <see cref="Surprise"/>, set by the editor's "Surprise me" button: the owner wants a fresh look picked for them.
 /// </summary>
-public sealed record ChatAboutDesign(IReadOnlyList<AiChatMessage> Messages, string? Language = null, AiPhoto? Photo = null)
+public sealed record ChatAboutDesign(IReadOnlyList<AiChatMessage> Messages, string? Language = null, AiPhoto? Photo = null, bool Surprise = false)
 {
     public const int MaxMessages = 20;
     public const int MaxText = 1000;
@@ -143,13 +144,15 @@ public sealed class ChatAboutDesignHandler(
         }
 
         var language = string.IsNullOrEmpty(cmd.Language) ? site.Locale : cmd.Language;
-        var answer = await assistant.GenerateAsync(Request(site, fields, cmd.Messages, language, images), ct);
+        var answer = await assistant.GenerateAsync(Request(site, fields, cmd.Messages, language, images, cmd.Surprise), ct);
         if (!answer.IsSuccess)
         {
             return answer.Error!;
         }
 
-        var patch = await TemplateAiFields.ToPatchAsync(site.Schema, fields, AiText.Field(answer.Value, "settings"), site.Current);
+        // A look the model names is applied first and its own settings over it; every value is checked the same way.
+        var proposed = TemplateAiFields.WithLook(AiText.Field(answer.Value, "settings"), AiText.Field(answer.Value, "look"), site.Looks);
+        var patch = await TemplateAiFields.ToPatchAsync(site.Schema, fields, proposed, site.Current);
         RemoveUnchanged(patch, site.Current);
         var reply = AiText.Clean(AiText.Field(answer.Value, "reply"), ReplyMax, multiline: true);
         if (reply is null)
@@ -181,7 +184,7 @@ public sealed class ChatAboutDesignHandler(
     private static bool SameNumber(JsonNode? a, JsonNode? b) =>
         a is JsonValue x && b is JsonValue y && x.TryGetValue<double>(out var m) && y.TryGetValue<double>(out var n) && m.Equals(n);
 
-    private static AiRequest Request(AiSite site, IReadOnlyList<TemplateField> fields, IReadOnlyList<AiChatMessage> messages, string language, IReadOnlyList<AiImage> images)
+    private static AiRequest Request(AiSite site, IReadOnlyList<TemplateField> fields, IReadOnlyList<AiChatMessage> messages, string language, IReadOnlyList<AiImage> images, bool surprise)
     {
         var input = new StringBuilder();
         site.Describe(input, language);
@@ -193,6 +196,7 @@ public sealed class ChatAboutDesignHandler(
             input.AppendLine($"- {field.Key} ({label}): {site.Current[field.Key]?.ToJsonString() ?? "(empty)"}");
         }
 
+        TemplateAiFields.DescribeOwn(input, fields, site.Looks);
         input.AppendLine();
         if (messages.Count > 1)
         {
@@ -211,18 +215,25 @@ public sealed class ChatAboutDesignHandler(
             input.AppendLine("The owner attached a photo to this message");
         }
 
-        var schema = new JsonObject
+        if (surprise)
         {
-            ["type"] = "object",
-            ["properties"] = new JsonObject
-            {
-                ["reply"] = new JsonObject { ["type"] = "string", ["maxLength"] = ReplyMax },
-                ["settings"] = TemplateAiFields.Schema(fields, site.Schema.Fields),
-            },
-            ["required"] = new JsonArray("reply", "settings"),
-        };
+            input.AppendLine("The owner pressed \"Surprise me\": pick a fresh design for them (see the instructions for surprises)");
+        }
 
-        return new AiRequest(AiTask.ChatAboutDesign, AiPrompts.Chat(AiSite.LanguageName(language)), input.ToString(), images, schema, Temperature: 0.5);
+        var properties = new JsonObject
+        {
+            ["reply"] = new JsonObject { ["type"] = "string", ["maxLength"] = ReplyMax },
+            ["settings"] = TemplateAiFields.Schema(fields, site.Schema.Fields),
+        };
+        if (TemplateAiFields.LookProperty(site.Looks) is { } look)
+        {
+            properties["look"] = look;
+        }
+
+        var schema = new JsonObject { ["type"] = "object", ["properties"] = properties, ["required"] = new JsonArray("reply", "settings") };
+
+        // A surprise should differ from one press to the next, so the model gets more room.
+        return new AiRequest(AiTask.ChatAboutDesign, AiPrompts.Chat(AiSite.LanguageName(language)), input.ToString(), images, schema, Temperature: surprise ? 0.9 : 0.5);
     }
 
     private static string OneLine(string? text) => string.Join(' ', (text ?? "").Split((char[])['\r', '\n'], StringSplitOptions.RemoveEmptyEntries)).Trim();

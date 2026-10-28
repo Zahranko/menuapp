@@ -17,6 +17,21 @@
   "sample": "lumen",
   "menu": { "own": ["cards"] },
   "sectionsLayout": { "order": ["menu", "best", "story", "gallery", "reviews", "visit"] },
+  "signature": {
+    "hero.variant": [
+      {"id":"sticker","base":"poster","label":"Sticker sheet","labelAr":"ورقة ملصقات","preview":"/templates/lumen/previews/hero-sticker.svg"}
+    ],
+    "menu.layout": [
+      {"id":"blocks","base":"tiles","label":"Color blocks","labelAr":"مربعات ملونة","preview":"/templates/lumen/previews/menu-blocks.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"sunny","label":{"en":"Sunny stickers","ar":"ملصقات مشمسة"},"values":{"theme":"cream","accent":"#FF5A1F","font":"modern","hero.variant":"sticker","menu.layout":"blocks","header.layout":"classic"}},
+    {"id":"matcha","label":{"en":"Matcha bar","ar":"بار الماتشا"},"values":{"theme":"matcha","accent":"#2F8F4E","font":"round","hero.variant":"sticker","menu.layout":"blocks"}},
+    {"id":"pop","label":{"en":"Pop","ar":"بوب"},"values":{"theme":"pop","accent":"#FF3D8B","font":"round","hero.variant":"sticker","menu.layout":"blocks","style.buttons":"pill"}},
+    {"id":"roast","label":{"en":"Dark roast","ar":"تحميص داكن"},"values":{"theme":"roast","accent":"#FF5A1F","font":"grotesk","hero.variant":"poster","menu.layout":"blocks","header.layout":"minimal"}},
+    {"id":"cobalt","label":{"en":"Cobalt cup","ar":"كوب الكوبالت"},"values":{"theme":"cream","accent":"#2C4BFF","font":"modern","hero.variant":"sticker","menu.layout":"grid","cards.style":"outlined"}}
+  ],
   "schema": [
     {
       "key": "font",

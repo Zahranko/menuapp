@@ -14,6 +14,21 @@
   "thumbnail": "/templates/drop/thumbnail.png",
   "sample": "drop",
   "sectionsLayout": { "order": ["picks", "menu", "gallery", "story", "reviews", "visit"] },
+  "signature": {
+    "hero.variant": [
+      {"id":"dropposter","base":"poster","label":"Drop poster","labelAr":"ملصق الإصدار","preview":"/templates/drop/previews/hero-dropposter.svg"}
+    ],
+    "menu.layout": [
+      {"id":"hangtags","base":"grid","label":"Hang tags","labelAr":"بطاقات معلّقة","preview":"/templates/drop/previews/menu-hangtags.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"volt","label":{"en":"Volt drop","ar":"إصدار فولت"},"values":{"theme":"black","accent":"#C6FF00","font":"condensed","hero.variant":"dropposter","menu.layout":"hangtags","header.layout":"classic"}},
+    {"id":"blaze","label":{"en":"Blaze","ar":"لهيب"},"values":{"theme":"black","accent":"#FF4D00","font":"condensed","hero.variant":"dropposter","menu.layout":"hangtags","style.headings":"uppercase"}},
+    {"id":"white","label":{"en":"White label","ar":"علامة بيضاء"},"values":{"theme":"white","accent":"#FF3EA5","font":"grotesk","hero.variant":"dropposter","menu.layout":"hangtags"}},
+    {"id":"concrete","label":{"en":"Concrete","ar":"خرسانة"},"values":{"theme":"concrete","accent":"#2F5BFF","font":"grotesk","hero.variant":"poster","menu.layout":"hangtags","style.texture":"grain"}},
+    {"id":"cobalt","label":{"en":"Cobalt","ar":"كوبالت"},"values":{"theme":"cobalt","accent":"#C6FF00","font":"condensed","hero.variant":"dropposter","menu.layout":"large","header.layout":"big"}}
+  ],
   "schema": [
     {
       "key": "font",

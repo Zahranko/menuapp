@@ -166,7 +166,7 @@ describe.each(ids)("site options in template %s", (id) => {
         expect(contrast(fill, onFill), `${label} button text`).toBeGreaterThanOrEqual(4.5);
       }
     }
-  });
+  }, 20_000); // Renders every background on the page: a few seconds alone, more when every test file runs at once.
 });
 
 describe("shared site options in the registry", () => {

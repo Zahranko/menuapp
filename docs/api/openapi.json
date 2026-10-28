@@ -415,6 +415,14 @@
                         "type": "string"
                       }
                     }
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "surprise": {
+                        "type": "boolean"
+                      }
+                    }
                   }
                 ]
               }
@@ -3398,7 +3406,8 @@
           "schema",
           "defaults",
           "ar",
-          "defaultsAr"
+          "defaultsAr",
+          "looks"
         ],
         "type": "object",
         "properties": {
@@ -3459,6 +3468,9 @@
             ]
           },
           "defaultsAr": {
+            "$ref": "#/components/schemas/JsonElement"
+          },
+          "looks": {
             "$ref": "#/components/schemas/JsonElement"
           }
         }

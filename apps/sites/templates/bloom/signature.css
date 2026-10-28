@@ -1,0 +1,113 @@
+/*
+ * Bloom's own layout options (manifest "signature", _kit/signatures.ts):
+ *   menu.layout  "doily"      every cake on a lace doily: a round photo inside a scalloped paper edge (base: "grid")
+ *   hero.variant "cakestand"  the photo raised on a cake stand: a round plate and stem under the circle (base: "circle")
+ */
+[data-template="bloom"] {
+  --sig-scallop: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='44'/%3E%3Ccircle cx='93.0' cy='50.0' r='6.4'/%3E%3Ccircle cx='91.5' cy='61.1' r='6.4'/%3E%3Ccircle cx='87.2' cy='71.5' r='6.4'/%3E%3Ccircle cx='80.4' cy='80.4' r='6.4'/%3E%3Ccircle cx='71.5' cy='87.2' r='6.4'/%3E%3Ccircle cx='61.1' cy='91.5' r='6.4'/%3E%3Ccircle cx='50.0' cy='93.0' r='6.4'/%3E%3Ccircle cx='38.9' cy='91.5' r='6.4'/%3E%3Ccircle cx='28.5' cy='87.2' r='6.4'/%3E%3Ccircle cx='19.6' cy='80.4' r='6.4'/%3E%3Ccircle cx='12.8' cy='71.5' r='6.4'/%3E%3Ccircle cx='8.5' cy='61.1' r='6.4'/%3E%3Ccircle cx='7.0' cy='50.0' r='6.4'/%3E%3Ccircle cx='8.5' cy='38.9' r='6.4'/%3E%3Ccircle cx='12.8' cy='28.5' r='6.4'/%3E%3Ccircle cx='19.6' cy='19.6' r='6.4'/%3E%3Ccircle cx='28.5' cy='12.8' r='6.4'/%3E%3Ccircle cx='38.9' cy='8.5' r='6.4'/%3E%3Ccircle cx='50.0' cy='7.0' r='6.4'/%3E%3Ccircle cx='61.1' cy='8.5' r='6.4'/%3E%3Ccircle cx='71.5' cy='12.8' r='6.4'/%3E%3Ccircle cx='80.4' cy='19.6' r='6.4'/%3E%3Ccircle cx='87.2' cy='28.5' r='6.4'/%3E%3Ccircle cx='91.5' cy='38.9' r='6.4'/%3E%3C/svg%3E");
+}
+
+/* ---------- doily ---------- */
+[data-template="bloom"] .kit-mn.kit-mn.kit-mn[data-sig~="doily"] {
+  & .kit-mn-item {
+    text-align: center;
+  }
+  & .kit-mn-media {
+    width: 82%;
+    margin: 10px auto 6px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    overflow: visible;
+    background: transparent;
+  }
+  & .kit-mn-media::before {
+    content: "";
+    position: absolute;
+    inset: -10px;
+    z-index: 0;
+    background:
+      radial-gradient(circle, transparent 0 58%, color-mix(in srgb, var(--k-acc) 35%, var(--k-surf)) 58.5% 59.5%, transparent 60%),
+      radial-gradient(circle, color-mix(in srgb, var(--k-acc) 28%, var(--k-surf)) 1.3px, transparent 1.8px) 0 0 / 9px 9px,
+      var(--k-surf);
+    mask: var(--sig-scallop) center / contain no-repeat;
+    filter: drop-shadow(0 4px 6px rgb(0 0 0 / 0.12));
+  }
+  & .kit-mn-media :is(img, .kit-mn-mono, svg) {
+    z-index: 1;
+    border-radius: 50%;
+  }
+  & .kit-mn-media .no-photo {
+    position: absolute;
+    inset: 6%;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+  }
+  & .kit-mn-media img {
+    inset: 6% !important;
+    width: 88% !important;
+    height: 88% !important;
+  }
+  & .kit-mn-head {
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  & .kit-mn-dots {
+    display: none;
+  }
+  & .kit-mn-name {
+    font-family: var(--k-fd);
+  }
+  & .kit-mn-price {
+    color: var(--k-acc-text);
+    font-weight: 700;
+  }
+  & .kit-mn-tags {
+    justify-content: center;
+  }
+}
+
+/* ---------- cake stand ---------- */
+[data-template="bloom"] .kit-hv.kit-hv[data-sig~="cakestand"] {
+  & .kit-hv-media,
+  & .kit-hv-mono {
+    overflow: visible;
+    margin-bottom: 52px;
+    box-shadow: none;
+  }
+  & .kit-hv-media :is(img, .kit-slider) {
+    border-radius: 50%;
+  }
+  & .kit-hv-media::after,
+  & .kit-hv-mono::after {
+    content: "";
+    position: absolute;
+    inset: auto -10% -20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(var(--k-surf), color-mix(in srgb, var(--k-acc) 18%, var(--k-surf)));
+    border: 2px solid color-mix(in srgb, var(--k-acc) 45%, var(--k-surf));
+  }
+  & .kit-hv-media::before,
+  & .kit-hv-mono::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 50%;
+    bottom: -50px;
+    z-index: -1;
+    translate: -50% 0;
+    width: 30%;
+    height: 36px;
+    border-radius: 0 0 50% 50% / 0 0 60% 60%;
+    background: linear-gradient(90deg, color-mix(in srgb, var(--k-acc) 55%, var(--k-surf)), color-mix(in srgb, var(--k-acc) 15%, var(--k-surf)) 45%, color-mix(in srgb, var(--k-acc) 55%, var(--k-surf)));
+    clip-path: polygon(38% 0, 62% 0, 62% 60%, 100% 82%, 100% 100%, 0 100%, 0 82%, 38% 60%);
+  }
+  &:dir(rtl) :is(.kit-hv-media, .kit-hv-mono)::before {
+    translate: 50% 0;
+  }
+  & .kit-hv-eyebrow {
+    font-family: var(--k-fd);
+  }
+}

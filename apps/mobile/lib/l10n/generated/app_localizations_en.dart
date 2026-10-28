@@ -1387,4 +1387,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String sectionPosition(String section, int position, int count) {
     return '$section, $position of $count';
   }
+
+  @override
+  String get aiChatSurprise => 'Surprise me';
+
+  @override
+  String get looksTitle => 'Looks';
+
+  @override
+  String get looksSubtitle =>
+      'Ready-made styles for this template. Tap one to try it.';
+
+  @override
+  String lookApply(String look) {
+    return 'Use the $look look';
+  }
+
+  @override
+  String lookApplied(String look) {
+    return '$look is on';
+  }
+
+  @override
+  String get lookUndone => 'Back to your design';
 }

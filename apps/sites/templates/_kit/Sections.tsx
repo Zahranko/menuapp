@@ -9,6 +9,7 @@ import { socialAccounts, type SocialAccount } from "./options";
 import { Picture } from "./Picture";
 import { orderChanged, sectionLayouts, sectionOrder, sortLinks, type SectionKind, type SectionLayouts } from "./sections";
 import { highlights as highlightPairs } from "./services";
+import { signatureOf } from "./signatures";
 import { hasHours } from "./site-data";
 import type { NavLink } from "./Top";
 
@@ -115,7 +116,8 @@ function Section({
   heading = true,
   children,
   className,
-}: Heading & { kind: string; layout: string; children: ReactNode; className?: string }) {
+  sig,
+}: Heading & { kind: string; layout: string; children: ReactNode; className?: string; sig?: string }) {
   const hid = `${id ?? kind}-kh`;
   return (
     <section
@@ -123,6 +125,7 @@ function Section({
       className={cx("kit-sc", `kit-sc-${kind}`, className)}
       data-section={kind}
       data-sc={layout}
+      data-sig={sig}
       {...(heading ? { "aria-labelledby": hid } : { "aria-label": title })}
     >
       <div className="kit-sc-in">
@@ -233,7 +236,7 @@ export function SiteHighlights({
       </ul>
     );
     return (
-      <section className="kit-sc kit-sc-highlights" data-section="highlights" data-sc="marquee" aria-label={name}>
+      <section className="kit-sc kit-sc-highlights" data-section="highlights" data-sc="marquee" data-sig={signatureOf(ctx.site, "highlights.layout")} aria-label={name}>
         <h2 className="sr-only">{name}</h2>
         <div className="kit-sc-mq">
           <div className="kit-sc-mq-track">
@@ -246,7 +249,7 @@ export function SiteHighlights({
   }
 
   return (
-    <section className="kit-sc kit-sc-highlights" data-section="highlights" data-sc={layout} aria-label={title ? undefined : name} aria-labelledby={title ? "highlights-kh" : undefined}>
+    <section className="kit-sc kit-sc-highlights" data-section="highlights" data-sc={layout} data-sig={signatureOf(ctx.site, "highlights.layout")} aria-label={title ? undefined : name} aria-labelledby={title ? "highlights-kh" : undefined}>
       <div className="kit-sc-in">
         {title ? (
           <div className="kit-sc-head">
@@ -424,7 +427,7 @@ export function SiteStory({
   }
 
   return (
-    <Section kind="story" layout={layout} id={id} title={title} eyebrow={eyebrow} heading={heading} className={cx(!photo && "is-bare")}>
+    <Section kind="story" layout={layout} sig={signatureOf(ctx.site, "story.layout")} id={id} title={title} eyebrow={eyebrow} heading={heading} className={cx(!photo && "is-bare")}>
       {body}
     </Section>
   );
@@ -488,7 +491,7 @@ export function SiteGallery({
     </ul>
   );
   return (
-    <Section kind="gallery" layout={layout} id={id} title={title} eyebrow={eyebrow} heading={heading}>
+    <Section kind="gallery" layout={layout} sig={signatureOf(ctx.site, "gallery.layout")} id={id} title={title} eyebrow={eyebrow} heading={heading}>
       {scroll ? (
         <div className="kit-sc-scroll" tabIndex={0} role="region" aria-label={c.photos}>
           {tiles}
@@ -579,7 +582,7 @@ export function SiteReviews({
     );
   }
   return (
-    <Section kind="reviews" layout={layout} id={id} title={title} eyebrow={eyebrow} heading={heading}>
+    <Section kind="reviews" layout={layout} sig={signatureOf(ctx.site, "reviews.layout")} id={id} title={title} eyebrow={eyebrow} heading={heading}>
       {body}
     </Section>
   );
@@ -792,7 +795,7 @@ export function SiteVisit({
   }
 
   return (
-    <Section kind="visit" layout={layout} id={id} title={title} eyebrow={eyebrow} heading={heading}>
+    <Section kind="visit" layout={layout} sig={signatureOf(ctx.site, "visit.layout")} id={id} title={title} eyebrow={eyebrow} heading={heading}>
       {body}
     </Section>
   );
@@ -942,7 +945,7 @@ export function SiteFooter({
   }
 
   return (
-    <footer className="kit-sc-ft" data-section="footer" data-sc={layout}>
+    <footer className="kit-sc-ft" data-section="footer" data-sc={layout} data-sig={signatureOf(ctx.site, "footer.layout")}>
       <div className="kit-sc-in">{body}</div>
     </footer>
   );

@@ -1,0 +1,96 @@
+/*
+ * Pocket Catalog's own layout options (manifest "signature", _kit/signatures.ts):
+ *   menu.layout   "shelf"   products standing on shelves, each with a shelf-edge price label (base: "grid")
+ *   header.layout "folder"  a catalog folder: the name on a tab over a ruled edge (base: "classic")
+ */
+
+/* ---------- shelves ---------- */
+[data-template="pocket"] .kit-mn.kit-mn.kit-mn[data-sig~="shelf"] {
+  & .kit-mn-list {
+    row-gap: 30px;
+  }
+  & .kit-mn-li {
+    position: relative;
+  }
+  & .kit-mn-item {
+    border: 0;
+    border-radius: 6px 6px 0 0;
+    background: transparent;
+    box-shadow: none;
+  }
+  & .kit-mn-media {
+    border-bottom: 9px solid color-mix(in srgb, var(--k-ink) 72%, var(--k-acc));
+    border-radius: 6px 6px 2px 2px;
+    box-shadow: 0 10px 8px -6px rgb(0 0 0 / 0.25);
+  }
+  & .kit-mn-text {
+    padding-bottom: 6px;
+  }
+  & .kit-mn-price {
+    position: relative;
+    display: inline-block;
+    padding: 3px 10px 3px 14px;
+    padding-inline: 14px 10px;
+    border: 1.5px solid var(--k-ink);
+    border-radius: 3px;
+    background: var(--k-bg);
+    font-variant-numeric: tabular-nums;
+    font-weight: 800;
+  }
+  & .kit-mn-price::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    inset-inline-start: 4px;
+    width: 5px;
+    height: 5px;
+    translate: 0 -50%;
+    border-radius: 50%;
+    background: var(--k-ink);
+  }
+  & .kit-mn-title {
+    border-bottom: 3px solid var(--k-ink);
+  }
+}
+
+/* ---------- folder tab ---------- */
+[data-template="pocket"] .kit-hd.kit-hd[data-sig~="folder"] {
+  border-bottom: 0;
+  background: var(--k-surf);
+  & > .kit-hd-in {
+    position: relative;
+    padding-top: 10px;
+    padding-bottom: 0;
+    align-items: flex-end;
+  }
+  & > .kit-hd-in::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 2px;
+    background: var(--k-ink);
+  }
+  & .kit-hd-brand {
+    position: relative;
+    z-index: 1;
+    padding: 8px 16px 10px;
+    border: 2px solid var(--k-ink);
+    border-bottom: 0;
+    border-radius: 12px 12px 0 0;
+    background: var(--k-bg);
+    margin-bottom: 0;
+  }
+  & .kit-hd-nav .kit-hd-link {
+    padding: 6px 12px;
+    border: 1.5px solid var(--k-line);
+    border-bottom: 0;
+    border-radius: 10px 10px 0 0;
+    background: color-mix(in srgb, var(--k-bg) 60%, var(--k-surf));
+  }
+  & .kit-hd-nav .kit-hd-link::after {
+    display: none;
+  }
+  & :is(.kit-hd-cta, .kit-hd-burger) {
+    margin-bottom: 8px;
+  }
+}

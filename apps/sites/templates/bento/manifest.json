@@ -14,6 +14,21 @@
   "thumbnail": "/templates/bento/thumbnail.png",
   "sample": "drinks",
   "sectionsLayout": { "order": ["menu", "story", "visit"] },
+  "signature": {
+    "menu.layout": [
+      {"id":"bentobox","base":"tiles","label":"Bento boxes","labelAr":"علب بينتو","preview":"/templates/bento/previews/menu-bentobox.svg"}
+    ],
+    "hero.variant": [
+      {"id":"lunchbox","base":"collage","label":"Packed lunch box","labelAr":"علبة الغداء","preview":"/templates/bento/previews/hero-lunchbox.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"fresh","label":{"en":"Fresh press","ar":"عصير طازج"},"values":{"theme":"fresh","accent":"#2F8F4E","font":"round","menu.layout":"bentobox","hero.variant":"lunchbox","header.layout":"pill"}},
+    {"id":"lime","label":{"en":"Lime squeeze","ar":"عصرة ليمون"},"values":{"theme":"lime","accent":"#2563EB","font":"grotesk","menu.layout":"bentobox","hero.variant":"split","header.layout":"classic","style.buttons":"pill"}},
+    {"id":"berry","label":{"en":"Berry bowl","ar":"وعاء التوت"},"values":{"theme":"berry","accent":"#C2185B","font":"round","menu.layout":"bentobox","hero.variant":"lunchbox","style.photos":"blob","style.motion":"playful"}},
+    {"id":"night","label":{"en":"Night smoothie","ar":"سموذي المساء"},"values":{"theme":"night","accent":"#E4572E","font":"bold","menu.layout":"carousel","hero.variant":"poster","header.layout":"minimal","style.headings":"uppercase"}},
+    {"id":"market","label":{"en":"Juice stand","ar":"كشك العصير"},"values":{"theme":"fresh","accent":"#E4572E","font":"bold","menu.layout":"grid","hero.variant":"menu","header.layout":"centered","cards.style":"tinted","story.layout":"quote"}}
+  ],
   "schema": [
     {
       "key": "font",

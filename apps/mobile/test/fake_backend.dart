@@ -45,7 +45,7 @@ class FakeBackend {
   final requests = <String>[];
 
   /// What `POST /ai/chat` was sent: the decoded messages, the language and whether a photo came along.
-  final aiChatRequests = <({List<Map> messages, String? language, bool photo})>[];
+  final aiChatRequests = <({List<Map> messages, String? language, bool photo, bool surprise})>[];
   final drafts = <Map<String, Object?>>[];
 
   /// The AI helper's `GET /ai/status`; null answers 404, like a server without the helper.
@@ -424,6 +424,7 @@ class FakeBackend {
           messages: (jsonDecode(field('messages') ?? '[]') as List).cast<Map>(),
           language: field('language'),
           photo: form.files.any((f) => f.key == 'file'),
+          surprise: field('surprise') == 'true',
         ));
         if (aiChat.isEmpty) return (status: 404, body: {'title': 'Not found'});
         return (status: 200, body: aiChat[math.min(aiChatRequests.length, aiChat.length) - 1]);

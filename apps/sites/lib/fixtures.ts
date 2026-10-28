@@ -861,7 +861,8 @@ const HERO_KEYS: Record<string, string> = { trans: "hero.transition", speed: "he
  * "border_<width>", "bc_<accent|ink|rrggbb>" (border color), "corners_<size>", "photo_<shape>", "spacing_<tight|airy>";
  * the page style, page layout, menu layout and section tokens above (STYLE_KEYS, LAYOUT_KEYS, MENU_KEYS, SECTION_KEYS);
  * "slides" or "slides_<n>" (n hero photos in all, 2 to 6), "trans_<slide|fade|zoom>", "speed_<slow|normal|fast>",
- * "auto_off" (no autoplay), "ctrl_<both|dots|arrows|none>", "height_<size>", "overlay_<amount>", "text_<position>".
+ * "auto_off" (no autoplay), "ctrl_<both|dots|arrows|none>", "height_<size>", "overlay_<amount>", "text_<position>",
+ * "look_<id>" (one of the template's looks, applied where it stands in the token).
  */
 /** A token value as written: a "+" can reach the page as "%2B" (or as a space, when a path decodes it like a query). */
 function decodedOnce(value: string): string {
@@ -881,6 +882,7 @@ function applyCardAndHeroOption(site: PublicSite, key: string, value: string): v
   else if (key in SECTION_KEYS) set({ [SECTION_KEYS[key]]: value });
   else if (key === "so") set({ "sections.order": decodedOnce(value).split(/[+, ]/).filter(Boolean) });
   else if (key === "sparse") applySparse(site);
+  else if (key === "look") applyLook(site, value);
   else if (key === "bc") set({ "cards.borderColor": /^[0-9a-f]{6}$/i.test(value) ? `#${value.toUpperCase()}` : value });
   else if (key in HERO_KEYS) set({ [HERO_KEYS[key]]: value });
   else if (key === "auto") set({ "hero.autoplay": value !== "off" });
@@ -896,6 +898,13 @@ function applyCardAndHeroOption(site: PublicSite, key: string, value: string): v
     } else if (typeof site.settings["hero.image"] === "string") set({ "hero.image": photos[0], "hero.slides": photos.slice(1) });
     else set({ "hero.slides": photos });
   }
+}
+
+/** One of the template's looks ("look_<id>", the manifest's "looks"): its values over the settings. Unknown ids change nothing. */
+function applyLook(site: PublicSite, id: string): void {
+  const template = registry.templates.find((t) => t.id === site.templateId) as { looks?: { id: string; values: Settings }[] } | undefined;
+  const look = template?.looks?.find((l) => l.id === id);
+  if (look) site.settings = { ...site.settings, ...look.values };
 }
 
 /** The least content every section can show (the "sparse" fixture option). */

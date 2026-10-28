@@ -17,6 +17,9 @@ public sealed record AiSite(Business Business, Template Template, TemplateSchema
 {
     public string Locale => Business.Locale;
 
+    /// <summary>The template's named looks (<see cref="Template.Looks"/>).</summary>
+    public IReadOnlyList<TemplateLook> Looks { get; } = TemplateSchema.ParseLooks(Template.Looks);
+
     /// <summary>The language name the model writes in.</summary>
     public static string LanguageName(string? locale) => Messages.IsArabic(locale) ? "Arabic" : "English";
 

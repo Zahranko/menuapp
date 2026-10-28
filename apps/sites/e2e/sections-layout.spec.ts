@@ -1,5 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
+import signatures from "../templates/_kit/signatures.generated.json";
 import registry from "../templates/registry.json";
 
 /**
@@ -79,6 +80,9 @@ async function anchorsLand(page: Page, label: string) {
   expect(missing, `${label}: links to missing sections`).toEqual([]);
 }
 
+/** A template's own (signature) layouts are drawn by a shared one, their base, and marked with data-sig. */
+const sigMap = signatures as Record<string, Record<string, Record<string, string>>>;
+
 for (const template of registry.templates) {
   const id = template.id;
   const schema = template.schema as Field[];
@@ -97,7 +101,11 @@ for (const template of registry.templates) {
           const kind = key.split(".")[0];
           const shared = page.locator(kind === "footer" ? ".kit-sc-ft" : `.kit-sc[data-section="${kind}"]`);
           if (kind === "footer" || kind === "visit") await expect(shared, `${label}: ${key}`).toHaveCount(1);
-          if ((await shared.count()) > 0) await expect(shared, `${label}: ${key}`).toHaveAttribute("data-sc", layout);
+          if ((await shared.count()) > 0) {
+            const base = sigMap[id]?.[key]?.[layout];
+            await expect(shared, `${label}: ${key}`).toHaveAttribute("data-sc", base ?? layout);
+            if (base) await expect(shared, `${label}: ${key}`).toHaveAttribute("data-sig", layout);
+          }
         }
         await noSideScroll(page);
         await anchorsLand(page, label);

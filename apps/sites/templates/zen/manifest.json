@@ -15,6 +15,21 @@
   "sample": "asian",
   "menu": { "own": ["photos"] },
   "sectionsLayout": { "order": ["menu", "story", "visit"] },
+  "signature": {
+    "menu.layout": [
+      {"id":"brush","base":"list","label":"Brush stroke list","labelAr":"قائمة بضربة فرشاة","preview":"/templates/zen/previews/menu-brush.svg"}
+    ],
+    "hero.variant": [
+      {"id":"enso","base":"circle","label":"Ensō circle","labelAr":"دائرة إنسو","preview":"/templates/zen/previews/hero-enso.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"washi","label":{"en":"Washi paper","ar":"ورق واشي"},"values":{"theme":"washi","accent":"#B7282E","font":"elegant","menu.layout":"brush","hero.variant":"enso","header.layout":"minimal"}},
+    {"id":"stone","label":{"en":"Stone garden","ar":"حديقة الحجر"},"values":{"theme":"stone","accent":"#2D4B3A","font":"modern","menu.layout":"brush","hero.variant":"type","header.layout":"classic","style.spacing":"airy"}},
+    {"id":"matcha","label":{"en":"Matcha house","ar":"بيت الماتشا"},"values":{"theme":"matcha","accent":"#2D4B3A","font":"elegant","menu.layout":"brush","hero.variant":"enso","story.layout":"quote","style.dividers":"line"}},
+    {"id":"ink","label":{"en":"Ink night","ar":"ليلة الحبر"},"values":{"theme":"ink","accent":"#B7282E","font":"mono","menu.layout":"compact","hero.variant":"enso","header.layout":"centered","style.tracking":"wide"}},
+    {"id":"counter","label":{"en":"Sushi counter","ar":"بار السوشي"},"values":{"theme":"washi","accent":"#1F3A5F","font":"modern","menu.layout":"tiles","hero.variant":"split","header.layout":"classic","cards.style":"minimal"}}
+  ],
   "schema": [
     {
       "key": "font",

@@ -13,6 +13,128 @@
       },
       "version": 1,
       "thumbnail": "/templates/souq/thumbnail.png",
+      "looks": [
+        {
+          "id": "morning",
+          "label": {
+            "en": "Morning market",
+            "ar": "سوق الصباح"
+          },
+          "values": {
+            "font": "modern",
+            "theme": "cream",
+            "accent": "#D9542C",
+            "cards.style": "auto",
+            "style.spacing": "auto",
+            "style.buttons": "auto",
+            "style.dividers": "wave",
+            "style.texture": "auto",
+            "style.motion": "auto",
+            "header.layout": "awning",
+            "hero.variant": "stall",
+            "menu.layout": "grid",
+            "highlights.layout": "icons",
+            "gallery.layout": "auto",
+            "reviews.layout": "auto"
+          }
+        },
+        {
+          "id": "night",
+          "label": {
+            "en": "Night souq",
+            "ar": "سوق الليل"
+          },
+          "values": {
+            "font": "bold",
+            "theme": "night",
+            "accent": "#F2B22E",
+            "cards.style": "auto",
+            "style.spacing": "auto",
+            "style.buttons": "auto",
+            "style.dividers": "auto",
+            "style.texture": "grain",
+            "style.motion": "auto",
+            "header.layout": "awning",
+            "hero.variant": "full",
+            "menu.layout": "carousel",
+            "highlights.layout": "auto",
+            "gallery.layout": "strip",
+            "reviews.layout": "auto"
+          }
+        },
+        {
+          "id": "minimal",
+          "label": {
+            "en": "Minimal stall",
+            "ar": "بسطة بسيطة"
+          },
+          "values": {
+            "font": "modern",
+            "theme": "sage",
+            "accent": "#2B6B4F",
+            "cards.style": "minimal",
+            "style.spacing": "airy",
+            "style.buttons": "auto",
+            "style.dividers": "none",
+            "style.texture": "auto",
+            "style.motion": "auto",
+            "header.layout": "minimal",
+            "hero.variant": "split",
+            "menu.layout": "list",
+            "highlights.layout": "auto",
+            "gallery.layout": "auto",
+            "reviews.layout": "auto"
+          }
+        },
+        {
+          "id": "spice",
+          "label": {
+            "en": "Spice stall",
+            "ar": "بسطة البهارات"
+          },
+          "values": {
+            "font": "elegant",
+            "theme": "blush",
+            "accent": "#7A3E6E",
+            "cards.style": "auto",
+            "style.spacing": "auto",
+            "style.buttons": "pill",
+            "style.dividers": "auto",
+            "style.texture": "auto",
+            "style.motion": "auto",
+            "header.layout": "awning",
+            "hero.variant": "stall",
+            "menu.layout": "tiles",
+            "highlights.layout": "auto",
+            "gallery.layout": "auto",
+            "reviews.layout": "quote"
+          }
+        },
+        {
+          "id": "bazaar",
+          "label": {
+            "en": "Weekend bazaar",
+            "ar": "بازار العطلة"
+          },
+          "values": {
+            "font": "bold",
+            "theme": "cream",
+            "accent": "#F2B22E",
+            "cards.style": "auto",
+            "style.spacing": "auto",
+            "style.buttons": "auto",
+            "style.dividers": "auto",
+            "style.texture": "auto",
+            "style.motion": "playful",
+            "header.layout": "centered",
+            "hero.variant": "collage",
+            "menu.layout": "masonry",
+            "highlights.layout": "auto",
+            "gallery.layout": "polaroid",
+            "reviews.layout": "auto"
+          }
+        }
+      ],
       "schema": [
         {
           "key": "logo",
@@ -806,6 +928,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "awning",
             "classic",
             "centered",
             "split",
@@ -816,6 +939,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "awning": "Market awning",
             "classic": "Classic bar",
             "centered": "Logo in the middle",
             "split": "Links around the logo",
@@ -826,6 +950,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "awning": "مظلة السوق",
             "classic": "شريط كلاسيكي",
             "centered": "الشعار في الوسط",
             "split": "الروابط حول الشعار",
@@ -836,6 +961,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "awning": "/templates/souq/previews/header-awning.svg",
             "classic": "/kit/previews/header-classic.svg",
             "centered": "/kit/previews/header-centered.svg",
             "split": "/kit/previews/header-split.svg",
@@ -843,7 +969,10 @@
             "big": "/kit/previews/header-big.svg",
             "minimal": "/kit/previews/header-minimal.svg",
             "drawer": "/kit/previews/header-drawer.svg"
-          }
+          },
+          "signature": [
+            "awning"
+          ]
         },
         {
           "key": "header.style",
@@ -918,6 +1047,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "stall",
             "full",
             "split",
             "framed",
@@ -931,6 +1061,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "stall": "Market stall",
             "full": "Full photo",
             "split": "Photo beside the text",
             "framed": "Framed photo",
@@ -944,6 +1075,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "stall": "بسطة السوق",
             "full": "صورة كاملة",
             "split": "الصورة بجانب النص",
             "framed": "صورة في إطار",
@@ -957,6 +1089,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "stall": "/templates/souq/previews/hero-stall.svg",
             "full": "/kit/previews/hero-full.svg",
             "split": "/kit/previews/hero-split.svg",
             "framed": "/kit/previews/hero-framed.svg",
@@ -967,7 +1100,10 @@
             "menu": "/kit/previews/hero-menu.svg",
             "type": "/kit/previews/hero-type.svg",
             "circle": "/kit/previews/hero-circle.svg"
-          }
+          },
+          "signature": [
+            "stall"
+          ]
         },
         {
           "key": "hero.layout",
@@ -2211,6 +2347,118 @@
       "version": 1,
       "thumbnail": "/templates/linen/thumbnail.png",
       "sample": "restaurant",
+      "looks": [
+        {
+          "id": "printed",
+          "label": {
+            "en": "Printed menu",
+            "ar": "القائمة المطبوعة"
+          },
+          "values": {
+            "font": "classic",
+            "theme": "linen",
+            "accent": "#8C2F39",
+            "style.headings": "auto",
+            "style.tracking": "auto",
+            "header.layout": "centered",
+            "hero.variant": "letterpress",
+            "menu.layout": "ledger",
+            "menu.columns": "auto",
+            "menu.photos": "auto",
+            "story.layout": "auto",
+            "visit.layout": "auto",
+            "footer.layout": "auto"
+          }
+        },
+        {
+          "id": "ivory",
+          "label": {
+            "en": "Ivory dinner",
+            "ar": "عشاء عاجي"
+          },
+          "values": {
+            "font": "elegant",
+            "theme": "ivory",
+            "accent": "#9A5B1E",
+            "style.headings": "auto",
+            "style.tracking": "wide",
+            "header.layout": "auto",
+            "hero.variant": "letterpress",
+            "menu.layout": "ledger",
+            "menu.columns": "two",
+            "menu.photos": "auto",
+            "story.layout": "auto",
+            "visit.layout": "auto",
+            "footer.layout": "centered"
+          }
+        },
+        {
+          "id": "slate",
+          "label": {
+            "en": "Slate evening",
+            "ar": "مساء أردوازي"
+          },
+          "values": {
+            "font": "elegant",
+            "theme": "slate",
+            "accent": "#1F3A5F",
+            "style.headings": "auto",
+            "style.tracking": "auto",
+            "header.layout": "classic",
+            "hero.variant": "type",
+            "menu.layout": "ledger",
+            "menu.columns": "auto",
+            "menu.photos": "auto",
+            "story.layout": "quote",
+            "visit.layout": "auto",
+            "footer.layout": "auto"
+          }
+        },
+        {
+          "id": "ink",
+          "label": {
+            "en": "Ink and paper",
+            "ar": "حبر وورق"
+          },
+          "values": {
+            "font": "classic",
+            "theme": "ink",
+            "accent": "#C9A45C",
+            "style.headings": "uppercase",
+            "style.tracking": "wide",
+            "header.layout": "big",
+            "hero.variant": "letterpress",
+            "menu.layout": "compact",
+            "menu.columns": "auto",
+            "menu.photos": "auto",
+            "story.layout": "auto",
+            "visit.layout": "auto",
+            "footer.layout": "auto"
+          }
+        },
+        {
+          "id": "lunch",
+          "label": {
+            "en": "Garden lunch",
+            "ar": "غداء في الحديقة"
+          },
+          "values": {
+            "font": "soft",
+            "theme": "linen",
+            "accent": "#2B4D3D",
+            "style.headings": "auto",
+            "style.tracking": "auto",
+            "header.layout": "classic",
+            "hero.variant": "stacked",
+            "menu.layout": "list",
+            "menu.columns": "auto",
+            "menu.photos": "side",
+            "story.layout": "auto",
+            "visit.layout": "cards",
+            "footer.layout": "auto"
+          }
+        }
+      ],
       "schema": [
         {
           "key": "logo",
@@ -3096,6 +3344,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "letterpress",
             "full",
             "split",
             "framed",
@@ -3109,6 +3358,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "letterpress": "Printed title page",
             "full": "Full photo",
             "split": "Photo beside the text",
             "framed": "Framed photo",
@@ -3122,6 +3372,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "letterpress": "صفحة عنوان مطبوعة",
             "full": "صورة كاملة",
             "split": "الصورة بجانب النص",
             "framed": "صورة في إطار",
@@ -3135,6 +3386,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "letterpress": "/templates/linen/previews/hero-letterpress.svg",
             "full": "/kit/previews/hero-full.svg",
             "split": "/kit/previews/hero-split.svg",
             "framed": "/kit/previews/hero-framed.svg",
@@ -3145,7 +3397,10 @@
             "menu": "/kit/previews/hero-menu.svg",
             "type": "/kit/previews/hero-type.svg",
             "circle": "/kit/previews/hero-circle.svg"
-          }
+          },
+          "signature": [
+            "letterpress"
+          ]
         },
         {
           "key": "menu.layout",
@@ -3156,6 +3411,7 @@
           "groupAr": "تخطيط القائمة",
           "options": [
             "auto",
+            "ledger",
             "grid",
             "list",
             "compact",
@@ -3167,6 +3423,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "ledger": "Letterpress menu",
             "grid": "Cards in a grid",
             "list": "List with prices",
             "compact": "Printed menu",
@@ -3178,6 +3435,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "ledger": "قائمة مطبوعة بالحروف",
             "grid": "بطاقات في شبكة",
             "list": "قائمة بالأسعار",
             "compact": "قائمة مطبوعة",
@@ -3189,6 +3447,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "ledger": "/templates/linen/previews/menu-ledger.svg",
             "grid": "/kit/previews/menu-grid.svg",
             "list": "/kit/previews/menu-list.svg",
             "compact": "/kit/previews/menu-compact.svg",
@@ -3197,7 +3456,10 @@
             "masonry": "/kit/previews/menu-masonry.svg",
             "carousel": "/kit/previews/menu-carousel.svg",
             "tiles": "/kit/previews/menu-tiles.svg"
-          }
+          },
+          "signature": [
+            "ledger"
+          ]
         },
         {
           "key": "columns",
@@ -4012,6 +4274,118 @@
       "version": 1,
       "thumbnail": "/templates/nightmarket/thumbnail.png",
       "sample": "fastfood",
+      "looks": [
+        {
+          "id": "lanterns",
+          "label": {
+            "en": "Lantern night",
+            "ar": "ليلة الفوانيس"
+          },
+          "values": {
+            "font": "condensed",
+            "theme": "midnight",
+            "accent": "#FFD23F",
+            "cards.style": "auto",
+            "cards.border": "auto",
+            "style.headings": "auto",
+            "style.texture": "auto",
+            "header.layout": "classic",
+            "header.style": "auto",
+            "hero.variant": "lanterns",
+            "menu.layout": "stalls",
+            "gallery.layout": "auto",
+            "visit.layout": "auto"
+          }
+        },
+        {
+          "id": "neon",
+          "label": {
+            "en": "Neon alley",
+            "ar": "زقاق النيون"
+          },
+          "values": {
+            "font": "bold",
+            "theme": "charcoal",
+            "accent": "#FF4F9A",
+            "cards.style": "auto",
+            "cards.border": "auto",
+            "style.headings": "uppercase",
+            "style.texture": "auto",
+            "header.layout": "pill",
+            "header.style": "auto",
+            "hero.variant": "lanterns",
+            "menu.layout": "stalls",
+            "gallery.layout": "strip",
+            "visit.layout": "auto"
+          }
+        },
+        {
+          "id": "grill",
+          "label": {
+            "en": "Charcoal grill",
+            "ar": "شواء الفحم"
+          },
+          "values": {
+            "font": "condensed",
+            "theme": "ember",
+            "accent": "#FFD23F",
+            "cards.style": "auto",
+            "cards.border": "auto",
+            "style.headings": "auto",
+            "style.texture": "grain",
+            "header.layout": "auto",
+            "header.style": "transparent",
+            "hero.variant": "full",
+            "menu.layout": "stalls",
+            "gallery.layout": "auto",
+            "visit.layout": "auto"
+          }
+        },
+        {
+          "id": "daylight",
+          "label": {
+            "en": "Day market",
+            "ar": "سوق النهار"
+          },
+          "values": {
+            "font": "grotesk",
+            "theme": "concrete",
+            "accent": "#22D3EE",
+            "cards.style": "outlined",
+            "cards.border": "thick",
+            "style.headings": "auto",
+            "style.texture": "auto",
+            "header.layout": "classic",
+            "header.style": "auto",
+            "hero.variant": "collage",
+            "menu.layout": "grid",
+            "gallery.layout": "auto",
+            "visit.layout": "auto"
+          }
+        },
+        {
+          "id": "fresh",
+          "label": {
+            "en": "Fresh street",
+            "ar": "شارع منعش"
+          },
+          "values": {
+            "font": "grotesk",
+            "theme": "midnight",
+            "accent": "#A3E635",
+            "cards.style": "auto",
+            "cards.border": "auto",
+            "style.headings": "auto",
+            "style.texture": "auto",
+            "header.layout": "minimal",
+            "header.style": "auto",
+            "hero.variant": "menu",
+            "menu.layout": "carousel",
+            "gallery.layout": "auto",
+            "visit.layout": "banner"
+          }
+        }
+      ],
       "schema": [
         {
           "key": "logo",
@@ -4909,6 +5283,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "lanterns",
             "full",
             "split",
             "framed",
@@ -4922,6 +5297,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "lanterns": "Lantern string",
             "full": "Full photo",
             "split": "Photo beside the text",
             "framed": "Framed photo",
@@ -4935,6 +5311,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "lanterns": "حبل الفوانيس",
             "full": "صورة كاملة",
             "split": "الصورة بجانب النص",
             "framed": "صورة في إطار",
@@ -4948,6 +5325,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "lanterns": "/templates/nightmarket/previews/hero-lanterns.svg",
             "full": "/kit/previews/hero-full.svg",
             "split": "/kit/previews/hero-split.svg",
             "framed": "/kit/previews/hero-framed.svg",
@@ -4958,7 +5336,10 @@
             "menu": "/kit/previews/hero-menu.svg",
             "type": "/kit/previews/hero-type.svg",
             "circle": "/kit/previews/hero-circle.svg"
-          }
+          },
+          "signature": [
+            "lanterns"
+          ]
         },
         {
           "key": "menu.layout",
@@ -4969,6 +5350,7 @@
           "groupAr": "تخطيط القائمة",
           "options": [
             "auto",
+            "stalls",
             "grid",
             "list",
             "compact",
@@ -4980,6 +5362,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "stalls": "Lit stall signs",
             "grid": "Cards in a grid",
             "list": "List with prices",
             "compact": "Printed menu",
@@ -4991,6 +5374,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "stalls": "لافتات البسطات",
             "grid": "بطاقات في شبكة",
             "list": "قائمة بالأسعار",
             "compact": "قائمة مطبوعة",
@@ -5002,6 +5386,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "stalls": "/templates/nightmarket/previews/menu-stalls.svg",
             "grid": "/kit/previews/menu-grid.svg",
             "list": "/kit/previews/menu-list.svg",
             "compact": "/kit/previews/menu-compact.svg",
@@ -5010,7 +5395,10 @@
             "masonry": "/kit/previews/menu-masonry.svg",
             "carousel": "/kit/previews/menu-carousel.svg",
             "tiles": "/kit/previews/menu-tiles.svg"
-          }
+          },
+          "signature": [
+            "stalls"
+          ]
         },
         {
           "key": "menu.columns",
@@ -5864,6 +6252,98 @@
       "version": 1,
       "thumbnail": "/templates/archstory/thumbnail.png",
       "sample": "sweets",
+      "looks": [
+        {
+          "id": "doorway",
+          "label": {
+            "en": "Sweet doorway",
+            "ar": "باب الحلوى"
+          },
+          "values": {
+            "font": "soft",
+            "theme": "blush",
+            "accent": "#C2577A",
+            "style.photos": "auto",
+            "header.layout": "auto",
+            "hero.variant": "doorway",
+            "menu.layout": "auto",
+            "story.layout": "chapter",
+            "reviews.layout": "auto"
+          }
+        },
+        {
+          "id": "sand",
+          "label": {
+            "en": "Sand and caramel",
+            "ar": "رمل وكراميل"
+          },
+          "values": {
+            "font": "elegant",
+            "theme": "sand",
+            "accent": "#B5651D",
+            "style.photos": "auto",
+            "header.layout": "auto",
+            "hero.variant": "doorway",
+            "menu.layout": "magazine",
+            "story.layout": "chapter",
+            "reviews.layout": "quote"
+          }
+        },
+        {
+          "id": "garden",
+          "label": {
+            "en": "Garden pâtisserie",
+            "ar": "حلويات الحديقة"
+          },
+          "values": {
+            "font": "classic",
+            "theme": "sage",
+            "accent": "#4F7A57",
+            "style.photos": "arch",
+            "header.layout": "auto",
+            "hero.variant": "arch",
+            "menu.layout": "grid",
+            "story.layout": "beside",
+            "reviews.layout": "auto"
+          }
+        },
+        {
+          "id": "cocoa",
+          "label": {
+            "en": "Cocoa evening",
+            "ar": "مساء الكاكاو"
+          },
+          "values": {
+            "font": "elegant",
+            "theme": "cocoa",
+            "accent": "#C2577A",
+            "style.photos": "auto",
+            "header.layout": "centered",
+            "hero.variant": "doorway",
+            "menu.layout": "carousel",
+            "story.layout": "chapter",
+            "reviews.layout": "auto"
+          }
+        },
+        {
+          "id": "journal",
+          "label": {
+            "en": "Recipe journal",
+            "ar": "دفتر الوصفات"
+          },
+          "values": {
+            "font": "classic",
+            "theme": "blush",
+            "accent": "#6B4E9B",
+            "style.photos": "auto",
+            "header.layout": "auto",
+            "hero.variant": "poster",
+            "menu.layout": "list",
+            "story.layout": "timeline",
+            "reviews.layout": "cards"
+          }
+        }
+      ],
       "schema": [
         {
           "key": "logo",
@@ -6741,6 +7221,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "doorway",
             "full",
             "split",
             "framed",
@@ -6754,6 +7235,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "doorway": "Shop doorway",
             "full": "Full photo",
             "split": "Photo beside the text",
             "framed": "Framed photo",
@@ -6767,6 +7249,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "doorway": "باب المحل",
             "full": "صورة كاملة",
             "split": "الصورة بجانب النص",
             "framed": "صورة في إطار",
@@ -6780,6 +7263,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "doorway": "/templates/archstory/previews/hero-doorway.svg",
             "full": "/kit/previews/hero-full.svg",
             "split": "/kit/previews/hero-split.svg",
             "framed": "/kit/previews/hero-framed.svg",
@@ -6790,7 +7274,10 @@
             "menu": "/kit/previews/hero-menu.svg",
             "type": "/kit/previews/hero-type.svg",
             "circle": "/kit/previews/hero-circle.svg"
-          }
+          },
+          "signature": [
+            "doorway"
+          ]
         },
         {
           "key": "menu.layout",
@@ -7102,6 +7589,7 @@
           "groupAr": "الأقسام",
           "options": [
             "auto",
+            "chapter",
             "beside",
             "behind",
             "quote",
@@ -7111,6 +7599,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "chapter": "Story as a chapter",
             "beside": "Photo beside the text",
             "behind": "Photo behind the text",
             "quote": "A big quote",
@@ -7120,6 +7609,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "chapter": "القصة كفصل من كتاب",
             "beside": "الصورة بجانب النص",
             "behind": "الصورة خلف النص",
             "quote": "اقتباس كبير",
@@ -7129,13 +7619,17 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "chapter": "/templates/archstory/previews/story-chapter.svg",
             "beside": "/kit/previews/story-beside.svg",
             "behind": "/kit/previews/story-behind.svg",
             "quote": "/kit/previews/story-quote.svg",
             "timeline": "/kit/previews/story-timeline.svg",
             "columns": "/kit/previews/story-columns.svg",
             "letter": "/kit/previews/story-letter.svg"
-          }
+          },
+          "signature": [
+            "chapter"
+          ]
         },
         {
           "key": "reviews.layout",
@@ -7751,6 +8245,103 @@
       "version": 1,
       "thumbnail": "/templates/pocket/thumbnail.png",
       "sample": "shop",
+      "looks": [
+        {
+          "id": "shelves",
+          "label": {
+            "en": "On the shelves",
+            "ar": "على الرفوف"
+          },
+          "values": {
+            "font": "grotesk",
+            "theme": "paper",
+            "accent": "#1F3A5F",
+            "cards.style": "auto",
+            "style.headings": "auto",
+            "style.buttons": "auto",
+            "style.photos": "auto",
+            "header.layout": "folder",
+            "hero.variant": "auto",
+            "menu.layout": "shelf"
+          }
+        },
+        {
+          "id": "studio",
+          "label": {
+            "en": "Clay studio",
+            "ar": "مشغل الفخار"
+          },
+          "values": {
+            "font": "modern",
+            "theme": "paper",
+            "accent": "#D9542C",
+            "cards.style": "auto",
+            "style.headings": "auto",
+            "style.buttons": "auto",
+            "style.photos": "soft",
+            "header.layout": "folder",
+            "hero.variant": "split",
+            "menu.layout": "shelf"
+          }
+        },
+        {
+          "id": "cloud",
+          "label": {
+            "en": "Cloud catalog",
+            "ar": "كتالوج هادئ"
+          },
+          "values": {
+            "font": "modern",
+            "theme": "cloud",
+            "accent": "#1F3A5F",
+            "cards.style": "raised",
+            "style.headings": "auto",
+            "style.buttons": "auto",
+            "style.photos": "auto",
+            "header.layout": "pill",
+            "hero.variant": "stacked",
+            "menu.layout": "grid"
+          }
+        },
+        {
+          "id": "mint",
+          "label": {
+            "en": "Mint market",
+            "ar": "سوق النعناع"
+          },
+          "values": {
+            "font": "bold",
+            "theme": "mint",
+            "accent": "#2B6B4F",
+            "cards.style": "auto",
+            "style.headings": "auto",
+            "style.buttons": "pill",
+            "style.photos": "auto",
+            "header.layout": "folder",
+            "hero.variant": "collage",
+            "menu.layout": "shelf"
+          }
+        },
+        {
+          "id": "graphite",
+          "label": {
+            "en": "Graphite store",
+            "ar": "متجر الجرافيت"
+          },
+          "values": {
+            "font": "grotesk",
+            "theme": "graphite",
+            "accent": "#D9542C",
+            "cards.style": "auto",
+            "style.headings": "uppercase",
+            "style.buttons": "auto",
+            "style.photos": "auto",
+            "header.layout": "classic",
+            "hero.variant": "poster",
+            "menu.layout": "tiles"
+          }
+        }
+      ],
       "schema": [
         {
           "key": "logo",
@@ -8536,6 +9127,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "folder",
             "classic",
             "centered",
             "split",
@@ -8546,6 +9138,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "folder": "Catalog folder tab",
             "classic": "Classic bar",
             "centered": "Logo in the middle",
             "split": "Links around the logo",
@@ -8556,6 +9149,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "folder": "لسان ملف الكتالوج",
             "classic": "شريط كلاسيكي",
             "centered": "الشعار في الوسط",
             "split": "الروابط حول الشعار",
@@ -8566,6 +9160,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "folder": "/templates/pocket/previews/header-folder.svg",
             "classic": "/kit/previews/header-classic.svg",
             "centered": "/kit/previews/header-centered.svg",
             "split": "/kit/previews/header-split.svg",
@@ -8573,7 +9168,10 @@
             "big": "/kit/previews/header-big.svg",
             "minimal": "/kit/previews/header-minimal.svg",
             "drawer": "/kit/previews/header-drawer.svg"
-          }
+          },
+          "signature": [
+            "folder"
+          ]
         },
         {
           "key": "header.style",
@@ -8708,6 +9306,7 @@
           "groupAr": "تخطيط القائمة",
           "options": [
             "auto",
+            "shelf",
             "grid",
             "list",
             "compact",
@@ -8719,6 +9318,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "shelf": "Shop shelves",
             "grid": "Cards in a grid",
             "list": "List with prices",
             "compact": "Printed menu",
@@ -8730,6 +9330,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "shelf": "رفوف المتجر",
             "grid": "بطاقات في شبكة",
             "list": "قائمة بالأسعار",
             "compact": "قائمة مطبوعة",
@@ -8741,6 +9342,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "shelf": "/templates/pocket/previews/menu-shelf.svg",
             "grid": "/kit/previews/menu-grid.svg",
             "list": "/kit/previews/menu-list.svg",
             "compact": "/kit/previews/menu-compact.svg",
@@ -8749,7 +9351,10 @@
             "masonry": "/kit/previews/menu-masonry.svg",
             "carousel": "/kit/previews/menu-carousel.svg",
             "tiles": "/kit/previews/menu-tiles.svg"
-          }
+          },
+          "signature": [
+            "shelf"
+          ]
         },
         {
           "key": "menu.columns",
@@ -9531,6 +10136,133 @@
       "version": 1,
       "thumbnail": "/templates/chalkboard/thumbnail.png",
       "sample": "cafe",
+      "looks": [
+        {
+          "id": "cafe",
+          "label": {
+            "en": "Café board",
+            "ar": "سبورة المقهى"
+          },
+          "values": {
+            "font": "hand",
+            "theme": "board",
+            "accent": "#F2C14E",
+            "cards.style": "auto",
+            "style.headings": "auto",
+            "style.buttons": "auto",
+            "style.dividers": "auto",
+            "style.texture": "auto",
+            "header.layout": "centered",
+            "hero.variant": "board",
+            "menu.layout": "chalk",
+            "menu.photos": "auto",
+            "menu.categoryNav": "auto",
+            "story.layout": "auto",
+            "visit.layout": "auto",
+            "footer.layout": "auto"
+          }
+        },
+        {
+          "id": "slate",
+          "label": {
+            "en": "Slate bistro",
+            "ar": "لوح أردوازي"
+          },
+          "values": {
+            "font": "round",
+            "theme": "slate",
+            "accent": "#F29A9A",
+            "cards.style": "auto",
+            "style.headings": "auto",
+            "style.buttons": "auto",
+            "style.dividers": "dots",
+            "style.texture": "auto",
+            "header.layout": "classic",
+            "hero.variant": "board",
+            "menu.layout": "chalk",
+            "menu.photos": "auto",
+            "menu.categoryNav": "tabs",
+            "story.layout": "letter",
+            "visit.layout": "auto",
+            "footer.layout": "auto"
+          }
+        },
+        {
+          "id": "kraft",
+          "label": {
+            "en": "Kraft paper",
+            "ar": "ورق كرافت"
+          },
+          "values": {
+            "font": "hand",
+            "theme": "kraft",
+            "accent": "#8E1B2C",
+            "cards.style": "outlined",
+            "style.headings": "auto",
+            "style.buttons": "auto",
+            "style.dividers": "auto",
+            "style.texture": "paper",
+            "header.layout": "centered",
+            "hero.variant": "framed",
+            "menu.layout": "list",
+            "menu.photos": "none",
+            "menu.categoryNav": "auto",
+            "story.layout": "auto",
+            "visit.layout": "auto",
+            "footer.layout": "centered"
+          }
+        },
+        {
+          "id": "night",
+          "label": {
+            "en": "After dark",
+            "ar": "بعد المغيب"
+          },
+          "values": {
+            "font": "condensed",
+            "theme": "black",
+            "accent": "#8FD3C1",
+            "cards.style": "auto",
+            "style.headings": "uppercase",
+            "style.buttons": "auto",
+            "style.dividers": "auto",
+            "style.texture": "auto",
+            "header.layout": "big",
+            "hero.variant": "poster",
+            "menu.layout": "chalk",
+            "menu.photos": "auto",
+            "menu.categoryNav": "auto",
+            "story.layout": "auto",
+            "visit.layout": "cards",
+            "footer.layout": "auto"
+          }
+        },
+        {
+          "id": "special",
+          "label": {
+            "en": "Daily special",
+            "ar": "طبق اليوم"
+          },
+          "values": {
+            "font": "round",
+            "theme": "board",
+            "accent": "#F0644A",
+            "cards.style": "auto",
+            "style.headings": "auto",
+            "style.buttons": "outline",
+            "style.dividers": "auto",
+            "style.texture": "auto",
+            "header.layout": "minimal",
+            "hero.variant": "menu",
+            "menu.layout": "chalk",
+            "menu.photos": "auto",
+            "menu.categoryNav": "auto",
+            "story.layout": "auto",
+            "visit.layout": "auto",
+            "footer.layout": "auto"
+          }
+        }
+      ],
       "schema": [
         {
           "key": "logo",
@@ -10423,6 +11155,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "board",
             "full",
             "split",
             "framed",
@@ -10436,6 +11169,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "board": "Chalkboard sign",
             "full": "Full photo",
             "split": "Photo beside the text",
             "framed": "Framed photo",
@@ -10449,6 +11183,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "board": "لوح طباشير",
             "full": "صورة كاملة",
             "split": "الصورة بجانب النص",
             "framed": "صورة في إطار",
@@ -10462,6 +11197,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "board": "/templates/chalkboard/previews/hero-board.svg",
             "full": "/kit/previews/hero-full.svg",
             "split": "/kit/previews/hero-split.svg",
             "framed": "/kit/previews/hero-framed.svg",
@@ -10472,7 +11208,10 @@
             "menu": "/kit/previews/hero-menu.svg",
             "type": "/kit/previews/hero-type.svg",
             "circle": "/kit/previews/hero-circle.svg"
-          }
+          },
+          "signature": [
+            "board"
+          ]
         },
         {
           "key": "menu.layout",
@@ -10483,6 +11222,7 @@
           "groupAr": "تخطيط القائمة",
           "options": [
             "auto",
+            "chalk",
             "grid",
             "list",
             "compact",
@@ -10494,6 +11234,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "chalk": "Chalked up in boxes",
             "grid": "Cards in a grid",
             "list": "List with prices",
             "compact": "Printed menu",
@@ -10505,6 +11246,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "chalk": "مكتوبة بالطباشير",
             "grid": "بطاقات في شبكة",
             "list": "قائمة بالأسعار",
             "compact": "قائمة مطبوعة",
@@ -10516,6 +11258,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "chalk": "/templates/chalkboard/previews/menu-chalk.svg",
             "grid": "/kit/previews/menu-grid.svg",
             "list": "/kit/previews/menu-list.svg",
             "compact": "/kit/previews/menu-compact.svg",
@@ -10524,7 +11267,10 @@
             "masonry": "/kit/previews/menu-masonry.svg",
             "carousel": "/kit/previews/menu-carousel.svg",
             "tiles": "/kit/previews/menu-tiles.svg"
-          }
+          },
+          "signature": [
+            "chalk"
+          ]
         },
         {
           "key": "menu.columns",
@@ -11323,6 +12069,113 @@
       "version": 1,
       "thumbnail": "/templates/bento/thumbnail.png",
       "sample": "drinks",
+      "looks": [
+        {
+          "id": "fresh",
+          "label": {
+            "en": "Fresh press",
+            "ar": "عصير طازج"
+          },
+          "values": {
+            "font": "round",
+            "theme": "fresh",
+            "accent": "#2F8F4E",
+            "cards.style": "auto",
+            "style.headings": "auto",
+            "style.buttons": "auto",
+            "style.photos": "auto",
+            "style.motion": "auto",
+            "header.layout": "pill",
+            "hero.variant": "lunchbox",
+            "menu.layout": "bentobox",
+            "story.layout": "auto"
+          }
+        },
+        {
+          "id": "lime",
+          "label": {
+            "en": "Lime squeeze",
+            "ar": "عصرة ليمون"
+          },
+          "values": {
+            "font": "grotesk",
+            "theme": "lime",
+            "accent": "#2563EB",
+            "cards.style": "auto",
+            "style.headings": "auto",
+            "style.buttons": "pill",
+            "style.photos": "auto",
+            "style.motion": "auto",
+            "header.layout": "classic",
+            "hero.variant": "split",
+            "menu.layout": "bentobox",
+            "story.layout": "auto"
+          }
+        },
+        {
+          "id": "berry",
+          "label": {
+            "en": "Berry bowl",
+            "ar": "وعاء التوت"
+          },
+          "values": {
+            "font": "round",
+            "theme": "berry",
+            "accent": "#C2185B",
+            "cards.style": "auto",
+            "style.headings": "auto",
+            "style.buttons": "auto",
+            "style.photos": "blob",
+            "style.motion": "playful",
+            "header.layout": "auto",
+            "hero.variant": "lunchbox",
+            "menu.layout": "bentobox",
+            "story.layout": "auto"
+          }
+        },
+        {
+          "id": "night",
+          "label": {
+            "en": "Night smoothie",
+            "ar": "سموذي المساء"
+          },
+          "values": {
+            "font": "bold",
+            "theme": "night",
+            "accent": "#E4572E",
+            "cards.style": "auto",
+            "style.headings": "uppercase",
+            "style.buttons": "auto",
+            "style.photos": "auto",
+            "style.motion": "auto",
+            "header.layout": "minimal",
+            "hero.variant": "poster",
+            "menu.layout": "carousel",
+            "story.layout": "auto"
+          }
+        },
+        {
+          "id": "market",
+          "label": {
+            "en": "Juice stand",
+            "ar": "كشك العصير"
+          },
+          "values": {
+            "font": "bold",
+            "theme": "fresh",
+            "accent": "#E4572E",
+            "cards.style": "tinted",
+            "style.headings": "auto",
+            "style.buttons": "auto",
+            "style.photos": "auto",
+            "style.motion": "auto",
+            "header.layout": "centered",
+            "hero.variant": "menu",
+            "menu.layout": "grid",
+            "story.layout": "quote"
+          }
+        }
+      ],
       "schema": [
         {
           "key": "logo",
@@ -12219,6 +13072,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "lunchbox",
             "full",
             "split",
             "framed",
@@ -12232,6 +13086,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "lunchbox": "Packed lunch box",
             "full": "Full photo",
             "split": "Photo beside the text",
             "framed": "Framed photo",
@@ -12245,6 +13100,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "lunchbox": "علبة الغداء",
             "full": "صورة كاملة",
             "split": "الصورة بجانب النص",
             "framed": "صورة في إطار",
@@ -12258,6 +13114,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "lunchbox": "/templates/bento/previews/hero-lunchbox.svg",
             "full": "/kit/previews/hero-full.svg",
             "split": "/kit/previews/hero-split.svg",
             "framed": "/kit/previews/hero-framed.svg",
@@ -12268,7 +13125,10 @@
             "menu": "/kit/previews/hero-menu.svg",
             "type": "/kit/previews/hero-type.svg",
             "circle": "/kit/previews/hero-circle.svg"
-          }
+          },
+          "signature": [
+            "lunchbox"
+          ]
         },
         {
           "key": "menu.layout",
@@ -12279,6 +13139,7 @@
           "groupAr": "تخطيط القائمة",
           "options": [
             "auto",
+            "bentobox",
             "grid",
             "list",
             "compact",
@@ -12290,6 +13151,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "bentobox": "Bento boxes",
             "grid": "Cards in a grid",
             "list": "List with prices",
             "compact": "Printed menu",
@@ -12301,6 +13163,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "bentobox": "علب بينتو",
             "grid": "بطاقات في شبكة",
             "list": "قائمة بالأسعار",
             "compact": "قائمة مطبوعة",
@@ -12312,6 +13175,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "bentobox": "/templates/bento/previews/menu-bentobox.svg",
             "grid": "/kit/previews/menu-grid.svg",
             "list": "/kit/previews/menu-list.svg",
             "compact": "/kit/previews/menu-compact.svg",
@@ -12320,7 +13184,10 @@
             "masonry": "/kit/previews/menu-masonry.svg",
             "carousel": "/kit/previews/menu-carousel.svg",
             "tiles": "/kit/previews/menu-tiles.svg"
-          }
+          },
+          "signature": [
+            "bentobox"
+          ]
         },
         {
           "key": "menu.columns",
@@ -13091,6 +13958,108 @@
       "version": 1,
       "thumbnail": "/templates/neondiner/thumbnail.png",
       "sample": "fastfood",
+      "looks": [
+        {
+          "id": "diner",
+          "label": {
+            "en": "Classic diner",
+            "ar": "مطعم كلاسيكي"
+          },
+          "values": {
+            "font": "condensed",
+            "theme": "diner",
+            "accent": "#D7263D",
+            "style.headings": "auto",
+            "style.buttons": "auto",
+            "style.photos": "auto",
+            "header.layout": "neonsign",
+            "hero.variant": "neon",
+            "menu.layout": "auto",
+            "story.layout": "auto",
+            "visit.layout": "auto"
+          }
+        },
+        {
+          "id": "milkshake",
+          "label": {
+            "en": "Milkshake bar",
+            "ar": "بار الميلك شيك"
+          },
+          "values": {
+            "font": "round",
+            "theme": "cherry",
+            "accent": "#6C3FC5",
+            "style.headings": "auto",
+            "style.buttons": "pill",
+            "style.photos": "circle",
+            "header.layout": "neonsign",
+            "hero.variant": "neon",
+            "menu.layout": "grid",
+            "story.layout": "auto",
+            "visit.layout": "auto"
+          }
+        },
+        {
+          "id": "mint",
+          "label": {
+            "en": "Mint jukebox",
+            "ar": "صندوق موسيقى نعناعي"
+          },
+          "values": {
+            "font": "bold",
+            "theme": "mint",
+            "accent": "#1B9AAA",
+            "style.headings": "auto",
+            "style.buttons": "auto",
+            "style.photos": "auto",
+            "header.layout": "neonsign",
+            "hero.variant": "split",
+            "menu.layout": "list",
+            "story.layout": "auto",
+            "visit.layout": "cards"
+          }
+        },
+        {
+          "id": "latenight",
+          "label": {
+            "en": "Late night",
+            "ar": "سهرة متأخرة"
+          },
+          "values": {
+            "font": "condensed",
+            "theme": "midnight",
+            "accent": "#F4A300",
+            "style.headings": "uppercase",
+            "style.buttons": "auto",
+            "style.photos": "auto",
+            "header.layout": "classic",
+            "hero.variant": "neon",
+            "menu.layout": "carousel",
+            "story.layout": "auto",
+            "visit.layout": "auto"
+          }
+        },
+        {
+          "id": "drivein",
+          "label": {
+            "en": "Drive-in",
+            "ar": "مطعم السيارات"
+          },
+          "values": {
+            "font": "condensed",
+            "theme": "diner",
+            "accent": "#1B9AAA",
+            "style.headings": "auto",
+            "style.buttons": "auto",
+            "style.photos": "auto",
+            "header.layout": "neonsign",
+            "hero.variant": "poster",
+            "menu.layout": "large",
+            "story.layout": "quote",
+            "visit.layout": "auto"
+          }
+        }
+      ],
       "schema": [
         {
           "key": "logo",
@@ -13864,6 +14833,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "neonsign",
             "classic",
             "centered",
             "split",
@@ -13874,6 +14844,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "neonsign": "Neon sign",
             "classic": "Classic bar",
             "centered": "Logo in the middle",
             "split": "Links around the logo",
@@ -13884,6 +14855,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "neonsign": "لافتة نيون",
             "classic": "شريط كلاسيكي",
             "centered": "الشعار في الوسط",
             "split": "الروابط حول الشعار",
@@ -13894,6 +14866,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "neonsign": "/templates/neondiner/previews/header-neonsign.svg",
             "classic": "/kit/previews/header-classic.svg",
             "centered": "/kit/previews/header-centered.svg",
             "split": "/kit/previews/header-split.svg",
@@ -13901,7 +14874,10 @@
             "big": "/kit/previews/header-big.svg",
             "minimal": "/kit/previews/header-minimal.svg",
             "drawer": "/kit/previews/header-drawer.svg"
-          }
+          },
+          "signature": [
+            "neonsign"
+          ]
         },
         {
           "key": "header.style",
@@ -13976,6 +14952,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "neon",
             "full",
             "split",
             "framed",
@@ -13989,6 +14966,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "neon": "Neon headline",
             "full": "Full photo",
             "split": "Photo beside the text",
             "framed": "Framed photo",
@@ -14002,6 +14980,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "neon": "عنوان نيون",
             "full": "صورة كاملة",
             "split": "الصورة بجانب النص",
             "framed": "صورة في إطار",
@@ -14015,6 +14994,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "neon": "/templates/neondiner/previews/hero-neon.svg",
             "full": "/kit/previews/hero-full.svg",
             "split": "/kit/previews/hero-split.svg",
             "framed": "/kit/previews/hero-framed.svg",
@@ -14025,7 +15005,10 @@
             "menu": "/kit/previews/hero-menu.svg",
             "type": "/kit/previews/hero-type.svg",
             "circle": "/kit/previews/hero-circle.svg"
-          }
+          },
+          "signature": [
+            "neon"
+          ]
         },
         {
           "key": "menu.layout",
@@ -14845,6 +15828,108 @@
       "version": 1,
       "thumbnail": "/templates/zen/thumbnail.png",
       "sample": "asian",
+      "looks": [
+        {
+          "id": "washi",
+          "label": {
+            "en": "Washi paper",
+            "ar": "ورق واشي"
+          },
+          "values": {
+            "font": "elegant",
+            "theme": "washi",
+            "accent": "#B7282E",
+            "cards.style": "auto",
+            "style.tracking": "auto",
+            "style.spacing": "auto",
+            "style.dividers": "auto",
+            "header.layout": "minimal",
+            "hero.variant": "enso",
+            "menu.layout": "brush",
+            "story.layout": "auto"
+          }
+        },
+        {
+          "id": "stone",
+          "label": {
+            "en": "Stone garden",
+            "ar": "حديقة الحجر"
+          },
+          "values": {
+            "font": "modern",
+            "theme": "stone",
+            "accent": "#2D4B3A",
+            "cards.style": "auto",
+            "style.tracking": "auto",
+            "style.spacing": "airy",
+            "style.dividers": "auto",
+            "header.layout": "classic",
+            "hero.variant": "type",
+            "menu.layout": "brush",
+            "story.layout": "auto"
+          }
+        },
+        {
+          "id": "matcha",
+          "label": {
+            "en": "Matcha house",
+            "ar": "بيت الماتشا"
+          },
+          "values": {
+            "font": "elegant",
+            "theme": "matcha",
+            "accent": "#2D4B3A",
+            "cards.style": "auto",
+            "style.tracking": "auto",
+            "style.spacing": "auto",
+            "style.dividers": "line",
+            "header.layout": "auto",
+            "hero.variant": "enso",
+            "menu.layout": "brush",
+            "story.layout": "quote"
+          }
+        },
+        {
+          "id": "ink",
+          "label": {
+            "en": "Ink night",
+            "ar": "ليلة الحبر"
+          },
+          "values": {
+            "font": "mono",
+            "theme": "ink",
+            "accent": "#B7282E",
+            "cards.style": "auto",
+            "style.tracking": "wide",
+            "style.spacing": "auto",
+            "style.dividers": "auto",
+            "header.layout": "centered",
+            "hero.variant": "enso",
+            "menu.layout": "compact",
+            "story.layout": "auto"
+          }
+        },
+        {
+          "id": "counter",
+          "label": {
+            "en": "Sushi counter",
+            "ar": "بار السوشي"
+          },
+          "values": {
+            "font": "modern",
+            "theme": "washi",
+            "accent": "#1F3A5F",
+            "cards.style": "minimal",
+            "style.tracking": "auto",
+            "style.spacing": "auto",
+            "style.dividers": "auto",
+            "header.layout": "classic",
+            "hero.variant": "split",
+            "menu.layout": "tiles",
+            "story.layout": "auto"
+          }
+        }
+      ],
       "schema": [
         {
           "key": "logo",
@@ -15722,6 +16807,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "enso",
             "full",
             "split",
             "framed",
@@ -15735,6 +16821,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "enso": "Ensō circle",
             "full": "Full photo",
             "split": "Photo beside the text",
             "framed": "Framed photo",
@@ -15748,6 +16835,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "enso": "دائرة إنسو",
             "full": "صورة كاملة",
             "split": "الصورة بجانب النص",
             "framed": "صورة في إطار",
@@ -15761,6 +16849,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "enso": "/templates/zen/previews/hero-enso.svg",
             "full": "/kit/previews/hero-full.svg",
             "split": "/kit/previews/hero-split.svg",
             "framed": "/kit/previews/hero-framed.svg",
@@ -15771,7 +16860,10 @@
             "menu": "/kit/previews/hero-menu.svg",
             "type": "/kit/previews/hero-type.svg",
             "circle": "/kit/previews/hero-circle.svg"
-          }
+          },
+          "signature": [
+            "enso"
+          ]
         },
         {
           "key": "menu.layout",
@@ -15782,6 +16874,7 @@
           "groupAr": "تخطيط القائمة",
           "options": [
             "auto",
+            "brush",
             "grid",
             "list",
             "compact",
@@ -15793,6 +16886,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "brush": "Brush stroke list",
             "grid": "Cards in a grid",
             "list": "List with prices",
             "compact": "Printed menu",
@@ -15804,6 +16898,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "brush": "قائمة بضربة فرشاة",
             "grid": "بطاقات في شبكة",
             "list": "قائمة بالأسعار",
             "compact": "قائمة مطبوعة",
@@ -15815,6 +16910,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "brush": "/templates/zen/previews/menu-brush.svg",
             "grid": "/kit/previews/menu-grid.svg",
             "list": "/kit/previews/menu-list.svg",
             "compact": "/kit/previews/menu-compact.svg",
@@ -15823,7 +16919,10 @@
             "masonry": "/kit/previews/menu-masonry.svg",
             "carousel": "/kit/previews/menu-carousel.svg",
             "tiles": "/kit/previews/menu-tiles.svg"
-          }
+          },
+          "signature": [
+            "brush"
+          ]
         },
         {
           "key": "photos",
@@ -16609,6 +17708,108 @@
       "version": 1,
       "thumbnail": "/templates/bistro/thumbnail.png",
       "sample": "restaurant",
+      "looks": [
+        {
+          "id": "gingham",
+          "label": {
+            "en": "Red gingham",
+            "ar": "مربعات حمراء"
+          },
+          "values": {
+            "font": "elegant",
+            "theme": "gingham",
+            "accent": "#9E2A2B",
+            "style.tracking": "auto",
+            "style.buttons": "auto",
+            "style.texture": "auto",
+            "header.layout": "centered",
+            "hero.variant": "tablecloth",
+            "menu.layout": "folded",
+            "story.layout": "auto",
+            "visit.layout": "auto"
+          }
+        },
+        {
+          "id": "riviera",
+          "label": {
+            "en": "Riviera blue",
+            "ar": "أزرق الريفيرا"
+          },
+          "values": {
+            "font": "classic",
+            "theme": "blue",
+            "accent": "#1F4E79",
+            "style.tracking": "auto",
+            "style.buttons": "auto",
+            "style.texture": "auto",
+            "header.layout": "classic",
+            "hero.variant": "tablecloth",
+            "menu.layout": "folded",
+            "story.layout": "letter",
+            "visit.layout": "auto"
+          }
+        },
+        {
+          "id": "oak",
+          "label": {
+            "en": "Oak table",
+            "ar": "طاولة البلوط"
+          },
+          "values": {
+            "font": "soft",
+            "theme": "oak",
+            "accent": "#6B3E26",
+            "style.tracking": "auto",
+            "style.buttons": "auto",
+            "style.texture": "paper",
+            "header.layout": "auto",
+            "hero.variant": "framed",
+            "menu.layout": "folded",
+            "story.layout": "auto",
+            "visit.layout": "cards"
+          }
+        },
+        {
+          "id": "noir",
+          "label": {
+            "en": "Bistro noir",
+            "ar": "بيسترو ليلي"
+          },
+          "values": {
+            "font": "elegant",
+            "theme": "noir",
+            "accent": "#C9A45C",
+            "style.tracking": "wide",
+            "style.buttons": "auto",
+            "style.texture": "auto",
+            "header.layout": "big",
+            "hero.variant": "tablecloth",
+            "menu.layout": "compact",
+            "story.layout": "auto",
+            "visit.layout": "auto"
+          }
+        },
+        {
+          "id": "terrace",
+          "label": {
+            "en": "Terrace lunch",
+            "ar": "غداء على الشرفة"
+          },
+          "values": {
+            "font": "soft",
+            "theme": "gingham",
+            "accent": "#3A5A40",
+            "style.tracking": "auto",
+            "style.buttons": "pill",
+            "style.texture": "auto",
+            "header.layout": "classic",
+            "hero.variant": "split",
+            "menu.layout": "list",
+            "story.layout": "auto",
+            "visit.layout": "auto"
+          }
+        }
+      ],
       "schema": [
         {
           "key": "logo",
@@ -17486,6 +18687,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "tablecloth",
             "full",
             "split",
             "framed",
@@ -17499,6 +18701,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "tablecloth": "On the tablecloth",
             "full": "Full photo",
             "split": "Photo beside the text",
             "framed": "Framed photo",
@@ -17512,6 +18715,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "tablecloth": "على مفرش الطاولة",
             "full": "صورة كاملة",
             "split": "الصورة بجانب النص",
             "framed": "صورة في إطار",
@@ -17525,6 +18729,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "tablecloth": "/templates/bistro/previews/hero-tablecloth.svg",
             "full": "/kit/previews/hero-full.svg",
             "split": "/kit/previews/hero-split.svg",
             "framed": "/kit/previews/hero-framed.svg",
@@ -17535,7 +18740,10 @@
             "menu": "/kit/previews/hero-menu.svg",
             "type": "/kit/previews/hero-type.svg",
             "circle": "/kit/previews/hero-circle.svg"
-          }
+          },
+          "signature": [
+            "tablecloth"
+          ]
         },
         {
           "key": "menu.layout",
@@ -17546,6 +18754,7 @@
           "groupAr": "تخطيط القائمة",
           "options": [
             "auto",
+            "folded",
             "grid",
             "list",
             "compact",
@@ -17557,6 +18766,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "folded": "Folded menu card",
             "grid": "Cards in a grid",
             "list": "List with prices",
             "compact": "Printed menu",
@@ -17568,6 +18778,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "folded": "بطاقة قائمة مطوية",
             "grid": "بطاقات في شبكة",
             "list": "قائمة بالأسعار",
             "compact": "قائمة مطبوعة",
@@ -17579,6 +18790,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "folded": "/templates/bistro/previews/menu-folded.svg",
             "grid": "/kit/previews/menu-grid.svg",
             "list": "/kit/previews/menu-list.svg",
             "compact": "/kit/previews/menu-compact.svg",
@@ -17587,7 +18799,10 @@
             "masonry": "/kit/previews/menu-masonry.svg",
             "carousel": "/kit/previews/menu-carousel.svg",
             "tiles": "/kit/previews/menu-tiles.svg"
-          }
+          },
+          "signature": [
+            "folded"
+          ]
         },
         {
           "key": "menu.columns",
@@ -18379,6 +19594,108 @@
       "version": 1,
       "thumbnail": "/templates/pizzeria/thumbnail.png",
       "sample": "pizza",
+      "looks": [
+        {
+          "id": "napoli",
+          "label": {
+            "en": "Napoli",
+            "ar": "نابولي"
+          },
+          "values": {
+            "font": "classic",
+            "theme": "napoli",
+            "accent": "#C8102E",
+            "cards.style": "auto",
+            "style.headings": "auto",
+            "style.buttons": "auto",
+            "style.dividers": "auto",
+            "header.layout": "classic",
+            "hero.variant": "oven",
+            "menu.layout": "peel",
+            "visit.layout": "auto"
+          }
+        },
+        {
+          "id": "basil",
+          "label": {
+            "en": "Basil garden",
+            "ar": "حديقة الريحان"
+          },
+          "values": {
+            "font": "hand",
+            "theme": "basil",
+            "accent": "#2E7D32",
+            "cards.style": "auto",
+            "style.headings": "auto",
+            "style.buttons": "auto",
+            "style.dividers": "wave",
+            "header.layout": "centered",
+            "hero.variant": "oven",
+            "menu.layout": "peel",
+            "visit.layout": "auto"
+          }
+        },
+        {
+          "id": "crust",
+          "label": {
+            "en": "Golden crust",
+            "ar": "القشرة الذهبية"
+          },
+          "values": {
+            "font": "bold",
+            "theme": "crust",
+            "accent": "#E07A1F",
+            "cards.style": "auto",
+            "style.headings": "uppercase",
+            "style.buttons": "auto",
+            "style.dividers": "auto",
+            "header.layout": "auto",
+            "hero.variant": "circle",
+            "menu.layout": "peel",
+            "visit.layout": "banner"
+          }
+        },
+        {
+          "id": "night",
+          "label": {
+            "en": "Pizza night",
+            "ar": "ليلة البيتزا"
+          },
+          "values": {
+            "font": "bold",
+            "theme": "night",
+            "accent": "#E07A1F",
+            "cards.style": "auto",
+            "style.headings": "auto",
+            "style.buttons": "auto",
+            "style.dividers": "auto",
+            "header.layout": "minimal",
+            "hero.variant": "oven",
+            "menu.layout": "carousel",
+            "visit.layout": "auto"
+          }
+        },
+        {
+          "id": "slice",
+          "label": {
+            "en": "Slice shop",
+            "ar": "محل الشرائح"
+          },
+          "values": {
+            "font": "bold",
+            "theme": "napoli",
+            "accent": "#1D3557",
+            "cards.style": "outlined",
+            "style.headings": "auto",
+            "style.buttons": "square",
+            "style.dividers": "auto",
+            "header.layout": "pill",
+            "hero.variant": "poster",
+            "menu.layout": "list",
+            "visit.layout": "auto"
+          }
+        }
+      ],
       "schema": [
         {
           "key": "logo",
@@ -19255,6 +20572,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "oven",
             "full",
             "split",
             "framed",
@@ -19268,6 +20586,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "oven": "Brick oven",
             "full": "Full photo",
             "split": "Photo beside the text",
             "framed": "Framed photo",
@@ -19281,6 +20600,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "oven": "فرن الحطب",
             "full": "صورة كاملة",
             "split": "الصورة بجانب النص",
             "framed": "صورة في إطار",
@@ -19294,6 +20614,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "oven": "/templates/pizzeria/previews/hero-oven.svg",
             "full": "/kit/previews/hero-full.svg",
             "split": "/kit/previews/hero-split.svg",
             "framed": "/kit/previews/hero-framed.svg",
@@ -19304,7 +20625,10 @@
             "menu": "/kit/previews/hero-menu.svg",
             "type": "/kit/previews/hero-type.svg",
             "circle": "/kit/previews/hero-circle.svg"
-          }
+          },
+          "signature": [
+            "oven"
+          ]
         },
         {
           "key": "menu.layout",
@@ -19315,6 +20639,7 @@
           "groupAr": "تخطيط القائمة",
           "options": [
             "auto",
+            "peel",
             "grid",
             "list",
             "compact",
@@ -19326,6 +20651,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "peel": "Pies on wooden peels",
             "grid": "Cards in a grid",
             "list": "List with prices",
             "compact": "Printed menu",
@@ -19337,6 +20663,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "peel": "فطائر على ألواح خشبية",
             "grid": "بطاقات في شبكة",
             "list": "قائمة بالأسعار",
             "compact": "قائمة مطبوعة",
@@ -19348,6 +20675,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "peel": "/templates/pizzeria/previews/menu-peel.svg",
             "grid": "/kit/previews/menu-grid.svg",
             "list": "/kit/previews/menu-list.svg",
             "compact": "/kit/previews/menu-compact.svg",
@@ -19356,7 +20684,10 @@
             "masonry": "/kit/previews/menu-masonry.svg",
             "carousel": "/kit/previews/menu-carousel.svg",
             "tiles": "/kit/previews/menu-tiles.svg"
-          }
+          },
+          "signature": [
+            "peel"
+          ]
         },
         {
           "key": "menu.columns",
@@ -20145,6 +21476,98 @@
       "version": 1,
       "thumbnail": "/templates/ticket/thumbnail.png",
       "sample": "cafe",
+      "looks": [
+        {
+          "id": "receipt",
+          "label": {
+            "en": "Till receipt",
+            "ar": "إيصال الصندوق"
+          },
+          "values": {
+            "font": "mono",
+            "theme": "thermal",
+            "accent": "#D3412F",
+            "style.tracking": "auto",
+            "style.buttons": "auto",
+            "header.layout": "auto",
+            "hero.variant": "auto",
+            "menu.layout": "auto",
+            "visit.layout": "auto"
+          }
+        },
+        {
+          "id": "admit",
+          "label": {
+            "en": "Admit one",
+            "ar": "تذكرة واحدة"
+          },
+          "values": {
+            "font": "condensed",
+            "theme": "thermal",
+            "accent": "#D3412F",
+            "style.tracking": "auto",
+            "style.buttons": "auto",
+            "header.layout": "minimal",
+            "hero.variant": "stub",
+            "menu.layout": "tickets",
+            "visit.layout": "auto"
+          }
+        },
+        {
+          "id": "kraft",
+          "label": {
+            "en": "Kraft kiosk",
+            "ar": "كشك كرافت"
+          },
+          "values": {
+            "font": "mono",
+            "theme": "kraft",
+            "accent": "#1E8C5A",
+            "style.tracking": "auto",
+            "style.buttons": "auto",
+            "header.layout": "auto",
+            "hero.variant": "stub",
+            "menu.layout": "tickets",
+            "visit.layout": "table"
+          }
+        },
+        {
+          "id": "mint",
+          "label": {
+            "en": "Mint truck",
+            "ar": "شاحنة النعناع"
+          },
+          "values": {
+            "font": "grotesk",
+            "theme": "mint",
+            "accent": "#7A3EC8",
+            "style.tracking": "auto",
+            "style.buttons": "square",
+            "header.layout": "classic",
+            "hero.variant": "stub",
+            "menu.layout": "list",
+            "visit.layout": "auto"
+          }
+        },
+        {
+          "id": "night",
+          "label": {
+            "en": "Night shift",
+            "ar": "وردية الليل"
+          },
+          "values": {
+            "font": "mono",
+            "theme": "night",
+            "accent": "#1F6FEB",
+            "style.tracking": "wide",
+            "style.buttons": "auto",
+            "header.layout": "minimal",
+            "hero.variant": "type",
+            "menu.layout": "tickets",
+            "visit.layout": "auto"
+          }
+        }
+      ],
       "schema": [
         {
           "key": "logo",
@@ -21021,6 +22444,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "stub",
             "full",
             "split",
             "framed",
@@ -21034,6 +22458,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "stub": "Admission ticket",
             "full": "Full photo",
             "split": "Photo beside the text",
             "framed": "Framed photo",
@@ -21047,6 +22472,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "stub": "تذكرة دخول",
             "full": "صورة كاملة",
             "split": "الصورة بجانب النص",
             "framed": "صورة في إطار",
@@ -21060,6 +22486,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "stub": "/templates/ticket/previews/hero-stub.svg",
             "full": "/kit/previews/hero-full.svg",
             "split": "/kit/previews/hero-split.svg",
             "framed": "/kit/previews/hero-framed.svg",
@@ -21070,7 +22497,10 @@
             "menu": "/kit/previews/hero-menu.svg",
             "type": "/kit/previews/hero-type.svg",
             "circle": "/kit/previews/hero-circle.svg"
-          }
+          },
+          "signature": [
+            "stub"
+          ]
         },
         {
           "key": "menu.layout",
@@ -21081,6 +22511,7 @@
           "groupAr": "تخطيط القائمة",
           "options": [
             "auto",
+            "tickets",
             "grid",
             "list",
             "compact",
@@ -21092,6 +22523,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "tickets": "Tear-off tickets",
             "grid": "Cards in a grid",
             "list": "List with prices",
             "compact": "Printed menu",
@@ -21103,6 +22535,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "tickets": "تذاكر قابلة للقطع",
             "grid": "بطاقات في شبكة",
             "list": "قائمة بالأسعار",
             "compact": "قائمة مطبوعة",
@@ -21114,6 +22547,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "tickets": "/templates/ticket/previews/menu-tickets.svg",
             "grid": "/kit/previews/menu-grid.svg",
             "list": "/kit/previews/menu-list.svg",
             "compact": "/kit/previews/menu-compact.svg",
@@ -21122,7 +22556,10 @@
             "masonry": "/kit/previews/menu-masonry.svg",
             "carousel": "/kit/previews/menu-carousel.svg",
             "tiles": "/kit/previews/menu-tiles.svg"
-          }
+          },
+          "signature": [
+            "tickets"
+          ]
         },
         {
           "key": "menu.columns",
@@ -21847,6 +23284,108 @@
       "version": 1,
       "thumbnail": "/templates/garden/thumbnail.png",
       "sample": "brunch",
+      "looks": [
+        {
+          "id": "sage",
+          "label": {
+            "en": "Sage brunch",
+            "ar": "فطور المريمية"
+          },
+          "values": {
+            "font": "soft",
+            "theme": "sage",
+            "accent": "#3F7D4E",
+            "cards.style": "auto",
+            "style.buttons": "auto",
+            "style.photos": "auto",
+            "style.dividers": "auto",
+            "header.layout": "classic",
+            "hero.variant": "leaf",
+            "menu.layout": "seeds",
+            "story.layout": "auto"
+          }
+        },
+        {
+          "id": "blush",
+          "label": {
+            "en": "Blush bowls",
+            "ar": "أطباق وردية"
+          },
+          "values": {
+            "font": "round",
+            "theme": "blush",
+            "accent": "#D9633F",
+            "cards.style": "auto",
+            "style.buttons": "auto",
+            "style.photos": "blob",
+            "style.dividers": "wave",
+            "header.layout": "auto",
+            "hero.variant": "leaf",
+            "menu.layout": "seeds",
+            "story.layout": "auto"
+          }
+        },
+        {
+          "id": "sunny",
+          "label": {
+            "en": "Sunny terrace",
+            "ar": "شرفة مشمسة"
+          },
+          "values": {
+            "font": "round",
+            "theme": "sunny",
+            "accent": "#B7791F",
+            "cards.style": "auto",
+            "style.buttons": "pill",
+            "style.photos": "auto",
+            "style.dividers": "auto",
+            "header.layout": "pill",
+            "hero.variant": "split",
+            "menu.layout": "seeds",
+            "story.layout": "auto"
+          }
+        },
+        {
+          "id": "forest",
+          "label": {
+            "en": "Forest table",
+            "ar": "طاولة الغابة"
+          },
+          "values": {
+            "font": "elegant",
+            "theme": "forest",
+            "accent": "#3F7D4E",
+            "cards.style": "auto",
+            "style.buttons": "auto",
+            "style.photos": "auto",
+            "style.dividers": "auto",
+            "header.layout": "centered",
+            "hero.variant": "leaf",
+            "menu.layout": "list",
+            "story.layout": "quote"
+          }
+        },
+        {
+          "id": "market",
+          "label": {
+            "en": "Farm market",
+            "ar": "سوق المزرعة"
+          },
+          "values": {
+            "font": "soft",
+            "theme": "sage",
+            "accent": "#7B5EA7",
+            "cards.style": "tinted",
+            "style.buttons": "auto",
+            "style.photos": "auto",
+            "style.dividers": "auto",
+            "header.layout": "classic",
+            "hero.variant": "collage",
+            "menu.layout": "masonry",
+            "story.layout": "auto"
+          }
+        }
+      ],
       "schema": [
         {
           "key": "logo",
@@ -22732,6 +24271,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "leaf",
             "full",
             "split",
             "framed",
@@ -22745,6 +24285,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "leaf": "Leaf-shaped photo",
             "full": "Full photo",
             "split": "Photo beside the text",
             "framed": "Framed photo",
@@ -22758,6 +24299,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "leaf": "صورة على شكل ورقة",
             "full": "صورة كاملة",
             "split": "الصورة بجانب النص",
             "framed": "صورة في إطار",
@@ -22771,6 +24313,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "leaf": "/templates/garden/previews/hero-leaf.svg",
             "full": "/kit/previews/hero-full.svg",
             "split": "/kit/previews/hero-split.svg",
             "framed": "/kit/previews/hero-framed.svg",
@@ -22781,7 +24324,10 @@
             "menu": "/kit/previews/hero-menu.svg",
             "type": "/kit/previews/hero-type.svg",
             "circle": "/kit/previews/hero-circle.svg"
-          }
+          },
+          "signature": [
+            "leaf"
+          ]
         },
         {
           "key": "menu.layout",
@@ -22792,6 +24338,7 @@
           "groupAr": "تخطيط القائمة",
           "options": [
             "auto",
+            "seeds",
             "grid",
             "list",
             "compact",
@@ -22803,6 +24350,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "seeds": "Seed packets",
             "grid": "Cards in a grid",
             "list": "List with prices",
             "compact": "Printed menu",
@@ -22814,6 +24362,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "seeds": "أكياس البذور",
             "grid": "بطاقات في شبكة",
             "list": "قائمة بالأسعار",
             "compact": "قائمة مطبوعة",
@@ -22825,6 +24374,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "seeds": "/templates/garden/previews/menu-seeds.svg",
             "grid": "/kit/previews/menu-grid.svg",
             "list": "/kit/previews/menu-list.svg",
             "compact": "/kit/previews/menu-compact.svg",
@@ -22833,7 +24383,10 @@
             "masonry": "/kit/previews/menu-masonry.svg",
             "carousel": "/kit/previews/menu-carousel.svg",
             "tiles": "/kit/previews/menu-tiles.svg"
-          }
+          },
+          "signature": [
+            "seeds"
+          ]
         },
         {
           "key": "menu.columns",
@@ -23600,6 +25153,103 @@
       "version": 1,
       "thumbnail": "/templates/monogrid/thumbnail.png",
       "sample": "shop",
+      "looks": [
+        {
+          "id": "swiss",
+          "label": {
+            "en": "Swiss index",
+            "ar": "فهرس سويسري"
+          },
+          "values": {
+            "font": "grotesk",
+            "theme": "white",
+            "accent": "#FF3B00",
+            "cards.style": "auto",
+            "style.headings": "auto",
+            "style.tracking": "auto",
+            "style.texture": "auto",
+            "header.layout": "classic",
+            "hero.variant": "swiss",
+            "menu.layout": "index"
+          }
+        },
+        {
+          "id": "concrete",
+          "label": {
+            "en": "Concrete",
+            "ar": "خرسانة"
+          },
+          "values": {
+            "font": "modern",
+            "theme": "concrete",
+            "accent": "#0047FF",
+            "cards.style": "auto",
+            "style.headings": "uppercase",
+            "style.tracking": "auto",
+            "style.texture": "auto",
+            "header.layout": "auto",
+            "hero.variant": "swiss",
+            "menu.layout": "index"
+          }
+        },
+        {
+          "id": "black",
+          "label": {
+            "en": "Black edition",
+            "ar": "الإصدار الأسود"
+          },
+          "values": {
+            "font": "grotesk",
+            "theme": "black",
+            "accent": "#FFD400",
+            "cards.style": "auto",
+            "style.headings": "auto",
+            "style.tracking": "auto",
+            "style.texture": "auto",
+            "header.layout": "big",
+            "hero.variant": "type",
+            "menu.layout": "index"
+          }
+        },
+        {
+          "id": "blueprint",
+          "label": {
+            "en": "Blueprint",
+            "ar": "مخطط أزرق"
+          },
+          "values": {
+            "font": "mono",
+            "theme": "blueprint",
+            "accent": "#FFD400",
+            "cards.style": "auto",
+            "style.headings": "auto",
+            "style.tracking": "wide",
+            "style.texture": "grid",
+            "header.layout": "auto",
+            "hero.variant": "swiss",
+            "menu.layout": "index"
+          }
+        },
+        {
+          "id": "gallery",
+          "label": {
+            "en": "Gallery shop",
+            "ar": "متجر المعرض"
+          },
+          "values": {
+            "font": "modern",
+            "theme": "white",
+            "accent": "#00A86B",
+            "cards.style": "minimal",
+            "style.headings": "auto",
+            "style.tracking": "auto",
+            "style.texture": "auto",
+            "header.layout": "minimal",
+            "hero.variant": "stacked",
+            "menu.layout": "tiles"
+          }
+        }
+      ],
       "schema": [
         {
           "key": "logo",
@@ -24477,6 +26127,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "swiss",
             "full",
             "split",
             "framed",
@@ -24490,6 +26141,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "swiss": "Swiss grid",
             "full": "Full photo",
             "split": "Photo beside the text",
             "framed": "Framed photo",
@@ -24503,6 +26155,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "swiss": "شبكة سويسرية",
             "full": "صورة كاملة",
             "split": "الصورة بجانب النص",
             "framed": "صورة في إطار",
@@ -24516,6 +26169,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "swiss": "/templates/monogrid/previews/hero-swiss.svg",
             "full": "/kit/previews/hero-full.svg",
             "split": "/kit/previews/hero-split.svg",
             "framed": "/kit/previews/hero-framed.svg",
@@ -24526,7 +26180,10 @@
             "menu": "/kit/previews/hero-menu.svg",
             "type": "/kit/previews/hero-type.svg",
             "circle": "/kit/previews/hero-circle.svg"
-          }
+          },
+          "signature": [
+            "swiss"
+          ]
         },
         {
           "key": "menu.layout",
@@ -24537,6 +26194,7 @@
           "groupAr": "تخطيط القائمة",
           "options": [
             "auto",
+            "index",
             "grid",
             "list",
             "compact",
@@ -24548,6 +26206,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "index": "Index table",
             "grid": "Cards in a grid",
             "list": "List with prices",
             "compact": "Printed menu",
@@ -24559,6 +26218,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "index": "جدول مفهرس",
             "grid": "بطاقات في شبكة",
             "list": "قائمة بالأسعار",
             "compact": "قائمة مطبوعة",
@@ -24570,6 +26230,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "index": "/templates/monogrid/previews/menu-index.svg",
             "grid": "/kit/previews/menu-grid.svg",
             "list": "/kit/previews/menu-list.svg",
             "compact": "/kit/previews/menu-compact.svg",
@@ -24578,7 +26239,10 @@
             "masonry": "/kit/previews/menu-masonry.svg",
             "carousel": "/kit/previews/menu-carousel.svg",
             "tiles": "/kit/previews/menu-tiles.svg"
-          }
+          },
+          "signature": [
+            "index"
+          ]
         },
         {
           "key": "menu.columns",
@@ -25344,6 +27008,103 @@
       "version": 1,
       "thumbnail": "/templates/spiceroute/thumbnail.png",
       "sample": "restaurant",
+      "looks": [
+        {
+          "id": "saffron",
+          "label": {
+            "en": "Saffron road",
+            "ar": "طريق الزعفران"
+          },
+          "values": {
+            "font": "naskh",
+            "theme": "saffron",
+            "accent": "#1F5F5B",
+            "header.layout": "auto",
+            "header.style": "auto",
+            "hero.variant": "mashrabiya",
+            "menu.layout": "auto",
+            "menu.categoryTitle": "auto",
+            "story.layout": "route",
+            "visit.layout": "auto"
+          }
+        },
+        {
+          "id": "rose",
+          "label": {
+            "en": "Rose courtyard",
+            "ar": "فناء الورد"
+          },
+          "values": {
+            "font": "elegant",
+            "theme": "rose",
+            "accent": "#9B2C2C",
+            "header.layout": "auto",
+            "header.style": "auto",
+            "hero.variant": "mashrabiya",
+            "menu.layout": "compact",
+            "menu.categoryTitle": "ornament",
+            "story.layout": "route",
+            "visit.layout": "auto"
+          }
+        },
+        {
+          "id": "olive",
+          "label": {
+            "en": "Olive grove",
+            "ar": "بستان الزيتون"
+          },
+          "values": {
+            "font": "classic",
+            "theme": "olive",
+            "accent": "#B7791F",
+            "header.layout": "auto",
+            "header.style": "auto",
+            "hero.variant": "arch",
+            "menu.layout": "list",
+            "menu.categoryTitle": "auto",
+            "story.layout": "route",
+            "visit.layout": "cards"
+          }
+        },
+        {
+          "id": "indigo",
+          "label": {
+            "en": "Indigo night",
+            "ar": "ليلة نيلية"
+          },
+          "values": {
+            "font": "naskh",
+            "theme": "indigo",
+            "accent": "#B7791F",
+            "header.layout": "centered",
+            "header.style": "auto",
+            "hero.variant": "mashrabiya",
+            "menu.layout": "compact",
+            "menu.categoryTitle": "auto",
+            "story.layout": "quote",
+            "visit.layout": "auto"
+          }
+        },
+        {
+          "id": "feast",
+          "label": {
+            "en": "Family feast",
+            "ar": "وليمة العائلة"
+          },
+          "values": {
+            "font": "naskh",
+            "theme": "saffron",
+            "accent": "#9B2C2C",
+            "header.layout": "auto",
+            "header.style": "transparent",
+            "hero.variant": "full",
+            "menu.layout": "magazine",
+            "menu.categoryTitle": "auto",
+            "story.layout": "route",
+            "visit.layout": "auto"
+          }
+        }
+      ],
       "schema": [
         {
           "key": "logo",
@@ -26229,6 +27990,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "mashrabiya",
             "full",
             "split",
             "framed",
@@ -26242,6 +28004,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "mashrabiya": "Mashrabiya window",
             "full": "Full photo",
             "split": "Photo beside the text",
             "framed": "Framed photo",
@@ -26255,6 +28018,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "mashrabiya": "نافذة مشربية",
             "full": "صورة كاملة",
             "split": "الصورة بجانب النص",
             "framed": "صورة في إطار",
@@ -26268,6 +28032,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "mashrabiya": "/templates/spiceroute/previews/hero-mashrabiya.svg",
             "full": "/kit/previews/hero-full.svg",
             "split": "/kit/previews/hero-split.svg",
             "framed": "/kit/previews/hero-framed.svg",
@@ -26278,7 +28043,10 @@
             "menu": "/kit/previews/hero-menu.svg",
             "type": "/kit/previews/hero-type.svg",
             "circle": "/kit/previews/hero-circle.svg"
-          }
+          },
+          "signature": [
+            "mashrabiya"
+          ]
         },
         {
           "key": "menu.layout",
@@ -26584,6 +28352,7 @@
           "groupAr": "الأقسام",
           "options": [
             "auto",
+            "route",
             "beside",
             "behind",
             "quote",
@@ -26593,6 +28362,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "route": "Along the spice route",
             "beside": "Photo beside the text",
             "behind": "Photo behind the text",
             "quote": "A big quote",
@@ -26602,6 +28372,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "route": "على طريق التوابل",
             "beside": "الصورة بجانب النص",
             "behind": "الصورة خلف النص",
             "quote": "اقتباس كبير",
@@ -26611,13 +28382,17 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "route": "/templates/spiceroute/previews/story-route.svg",
             "beside": "/kit/previews/story-beside.svg",
             "behind": "/kit/previews/story-behind.svg",
             "quote": "/kit/previews/story-quote.svg",
             "timeline": "/kit/previews/story-timeline.svg",
             "columns": "/kit/previews/story-columns.svg",
             "letter": "/kit/previews/story-letter.svg"
-          }
+          },
+          "signature": [
+            "route"
+          ]
         },
         {
           "key": "visit.layout",
@@ -27095,6 +28870,103 @@
       "version": 1,
       "thumbnail": "/templates/polaroid/thumbnail.png",
       "sample": "sweets",
+      "looks": [
+        {
+          "id": "pastel",
+          "label": {
+            "en": "Pastel wall",
+            "ar": "جدار باستيل"
+          },
+          "values": {
+            "font": "hand",
+            "theme": "pastel",
+            "accent": "#E0457B",
+            "style.buttons": "auto",
+            "style.photos": "auto",
+            "style.motion": "auto",
+            "header.layout": "auto",
+            "hero.variant": "pinboard",
+            "menu.layout": "pinned",
+            "story.layout": "auto"
+          }
+        },
+        {
+          "id": "cork",
+          "label": {
+            "en": "Cork board",
+            "ar": "لوح الفلين"
+          },
+          "values": {
+            "font": "hand",
+            "theme": "cork",
+            "accent": "#E76F51",
+            "style.buttons": "auto",
+            "style.photos": "auto",
+            "style.motion": "auto",
+            "header.layout": "centered",
+            "hero.variant": "pinboard",
+            "menu.layout": "pinned",
+            "story.layout": "auto"
+          }
+        },
+        {
+          "id": "mint",
+          "label": {
+            "en": "Mint scrapbook",
+            "ar": "دفتر نعناعي"
+          },
+          "values": {
+            "font": "round",
+            "theme": "mint",
+            "accent": "#2A9D8F",
+            "style.buttons": "auto",
+            "style.photos": "soft",
+            "style.motion": "auto",
+            "header.layout": "auto",
+            "hero.variant": "circle",
+            "menu.layout": "pinned",
+            "story.layout": "letter"
+          }
+        },
+        {
+          "id": "night",
+          "label": {
+            "en": "Photo booth",
+            "ar": "كشك الصور"
+          },
+          "values": {
+            "font": "soft",
+            "theme": "night",
+            "accent": "#E0457B",
+            "style.buttons": "auto",
+            "style.photos": "auto",
+            "style.motion": "auto",
+            "header.layout": "minimal",
+            "hero.variant": "pinboard",
+            "menu.layout": "pinned",
+            "story.layout": "auto"
+          }
+        },
+        {
+          "id": "party",
+          "label": {
+            "en": "Party table",
+            "ar": "طاولة الحفلة"
+          },
+          "values": {
+            "font": "round",
+            "theme": "pastel",
+            "accent": "#6D4BC4",
+            "style.buttons": "pill",
+            "style.photos": "auto",
+            "style.motion": "playful",
+            "header.layout": "auto",
+            "hero.variant": "collage",
+            "menu.layout": "grid",
+            "story.layout": "auto"
+          }
+        }
+      ],
       "schema": [
         {
           "key": "logo",
@@ -27972,6 +29844,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "pinboard",
             "full",
             "split",
             "framed",
@@ -27985,6 +29858,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "pinboard": "Pinboard",
             "full": "Full photo",
             "split": "Photo beside the text",
             "framed": "Framed photo",
@@ -27998,6 +29872,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "pinboard": "لوحة التثبيت",
             "full": "صورة كاملة",
             "split": "الصورة بجانب النص",
             "framed": "صورة في إطار",
@@ -28011,6 +29886,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "pinboard": "/templates/polaroid/previews/hero-pinboard.svg",
             "full": "/kit/previews/hero-full.svg",
             "split": "/kit/previews/hero-split.svg",
             "framed": "/kit/previews/hero-framed.svg",
@@ -28021,7 +29897,10 @@
             "menu": "/kit/previews/hero-menu.svg",
             "type": "/kit/previews/hero-type.svg",
             "circle": "/kit/previews/hero-circle.svg"
-          }
+          },
+          "signature": [
+            "pinboard"
+          ]
         },
         {
           "key": "menu.layout",
@@ -28032,6 +29911,7 @@
           "groupAr": "تخطيط القائمة",
           "options": [
             "auto",
+            "pinned",
             "grid",
             "list",
             "compact",
@@ -28043,6 +29923,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "pinned": "Pinned instant photos",
             "grid": "Cards in a grid",
             "list": "List with prices",
             "compact": "Printed menu",
@@ -28054,6 +29935,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "pinned": "صور فورية مثبتة",
             "grid": "بطاقات في شبكة",
             "list": "قائمة بالأسعار",
             "compact": "قائمة مطبوعة",
@@ -28065,6 +29947,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "pinned": "/templates/polaroid/previews/menu-pinned.svg",
             "grid": "/kit/previews/menu-grid.svg",
             "list": "/kit/previews/menu-list.svg",
             "compact": "/kit/previews/menu-compact.svg",
@@ -28073,7 +29956,10 @@
             "masonry": "/kit/previews/menu-masonry.svg",
             "carousel": "/kit/previews/menu-carousel.svg",
             "tiles": "/kit/previews/menu-tiles.svg"
-          }
+          },
+          "signature": [
+            "pinned"
+          ]
         },
         {
           "key": "menu.columns",
@@ -28840,6 +30726,103 @@
       "version": 1,
       "thumbnail": "/templates/atelier/thumbnail.png",
       "sample": "salon",
+      "looks": [
+        {
+          "id": "rose",
+          "label": {
+            "en": "Rose salon",
+            "ar": "صالون الورد"
+          },
+          "values": {
+            "font": "elegant",
+            "theme": "blush",
+            "accent": "#B76E79",
+            "style.headings": "auto",
+            "style.tracking": "auto",
+            "style.buttons": "auto",
+            "style.photos": "auto",
+            "header.layout": "classic",
+            "hero.variant": "editorial",
+            "menu.layout": "pricelist"
+          }
+        },
+        {
+          "id": "vogue",
+          "label": {
+            "en": "Cover story",
+            "ar": "قصة الغلاف"
+          },
+          "values": {
+            "font": "elegant",
+            "theme": "noir",
+            "accent": "#C9A45C",
+            "style.headings": "italic",
+            "style.tracking": "auto",
+            "style.buttons": "auto",
+            "style.photos": "auto",
+            "header.layout": "centered",
+            "hero.variant": "editorial",
+            "menu.layout": "pricelist"
+          }
+        },
+        {
+          "id": "sand",
+          "label": {
+            "en": "Sand studio",
+            "ar": "استوديو الرمل"
+          },
+          "values": {
+            "font": "classic",
+            "theme": "sand",
+            "accent": "#8C6A4F",
+            "style.headings": "auto",
+            "style.tracking": "auto",
+            "style.buttons": "auto",
+            "style.photos": "arch",
+            "header.layout": "auto",
+            "hero.variant": "arch",
+            "menu.layout": "pricelist"
+          }
+        },
+        {
+          "id": "sage",
+          "label": {
+            "en": "Sage spa",
+            "ar": "سبا المريمية"
+          },
+          "values": {
+            "font": "elegant",
+            "theme": "sage",
+            "accent": "#5E7D62",
+            "style.headings": "auto",
+            "style.tracking": "wide",
+            "style.buttons": "auto",
+            "style.photos": "auto",
+            "header.layout": "minimal",
+            "hero.variant": "editorial",
+            "menu.layout": "list"
+          }
+        },
+        {
+          "id": "modern",
+          "label": {
+            "en": "Modern bar",
+            "ar": "بار عصري"
+          },
+          "values": {
+            "font": "modern",
+            "theme": "blush",
+            "accent": "#2A2224",
+            "style.headings": "uppercase",
+            "style.tracking": "auto",
+            "style.buttons": "square",
+            "style.photos": "auto",
+            "header.layout": "auto",
+            "hero.variant": "split",
+            "menu.layout": "pricelist"
+          }
+        }
+      ],
       "schema": [
         {
           "key": "logo",
@@ -29717,6 +31700,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "editorial",
             "full",
             "split",
             "framed",
@@ -29730,6 +31714,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "editorial": "Magazine cover",
             "full": "Full photo",
             "split": "Photo beside the text",
             "framed": "Framed photo",
@@ -29743,6 +31728,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "editorial": "غلاف مجلة",
             "full": "صورة كاملة",
             "split": "الصورة بجانب النص",
             "framed": "صورة في إطار",
@@ -29756,6 +31742,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "editorial": "/templates/atelier/previews/hero-editorial.svg",
             "full": "/kit/previews/hero-full.svg",
             "split": "/kit/previews/hero-split.svg",
             "framed": "/kit/previews/hero-framed.svg",
@@ -29766,7 +31753,10 @@
             "menu": "/kit/previews/hero-menu.svg",
             "type": "/kit/previews/hero-type.svg",
             "circle": "/kit/previews/hero-circle.svg"
-          }
+          },
+          "signature": [
+            "editorial"
+          ]
         },
         {
           "key": "menu.layout",
@@ -29777,6 +31767,7 @@
           "groupAr": "تخطيط القائمة",
           "options": [
             "auto",
+            "pricelist",
             "grid",
             "list",
             "compact",
@@ -29788,6 +31779,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "pricelist": "Salon price list",
             "grid": "Cards in a grid",
             "list": "List with prices",
             "compact": "Printed menu",
@@ -29799,6 +31791,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "pricelist": "قائمة أسعار الصالون",
             "grid": "بطاقات في شبكة",
             "list": "قائمة بالأسعار",
             "compact": "قائمة مطبوعة",
@@ -29810,6 +31803,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "pricelist": "/templates/atelier/previews/menu-pricelist.svg",
             "grid": "/kit/previews/menu-grid.svg",
             "list": "/kit/previews/menu-list.svg",
             "compact": "/kit/previews/menu-compact.svg",
@@ -29818,7 +31812,10 @@
             "masonry": "/kit/previews/menu-masonry.svg",
             "carousel": "/kit/previews/menu-carousel.svg",
             "tiles": "/kit/previews/menu-tiles.svg"
-          }
+          },
+          "signature": [
+            "pricelist"
+          ]
         },
         {
           "key": "menu.columns",
@@ -31002,6 +32999,98 @@
       "version": 1,
       "thumbnail": "/templates/clinic/thumbnail.png",
       "sample": "clinic",
+      "looks": [
+        {
+          "id": "fresh",
+          "label": {
+            "en": "Fresh clinic",
+            "ar": "عيادة منعشة"
+          },
+          "values": {
+            "font": "modern",
+            "theme": "fresh",
+            "accent": "#1F6FEB",
+            "cards.style": "auto",
+            "style.headings": "auto",
+            "style.buttons": "auto",
+            "header.layout": "classic",
+            "hero.variant": "calm",
+            "menu.layout": "care"
+          }
+        },
+        {
+          "id": "mint",
+          "label": {
+            "en": "Mint care",
+            "ar": "عناية النعناع"
+          },
+          "values": {
+            "font": "round",
+            "theme": "mint",
+            "accent": "#0E8C7B",
+            "cards.style": "auto",
+            "style.headings": "auto",
+            "style.buttons": "pill",
+            "header.layout": "auto",
+            "hero.variant": "calm",
+            "menu.layout": "care"
+          }
+        },
+        {
+          "id": "warm",
+          "label": {
+            "en": "Warm family",
+            "ar": "عائلة دافئة"
+          },
+          "values": {
+            "font": "round",
+            "theme": "warm",
+            "accent": "#D9653B",
+            "cards.style": "tinted",
+            "style.headings": "auto",
+            "style.buttons": "auto",
+            "header.layout": "auto",
+            "hero.variant": "split",
+            "menu.layout": "care"
+          }
+        },
+        {
+          "id": "night",
+          "label": {
+            "en": "Night shift",
+            "ar": "الوردية الليلية"
+          },
+          "values": {
+            "font": "modern",
+            "theme": "night",
+            "accent": "#4C9AFF",
+            "cards.style": "auto",
+            "style.headings": "auto",
+            "style.buttons": "auto",
+            "header.layout": "minimal",
+            "hero.variant": "calm",
+            "menu.layout": "list"
+          }
+        },
+        {
+          "id": "precise",
+          "label": {
+            "en": "Precise",
+            "ar": "دقيق"
+          },
+          "values": {
+            "font": "grotesk",
+            "theme": "fresh",
+            "accent": "#6B4EE6",
+            "cards.style": "auto",
+            "style.headings": "normal",
+            "style.buttons": "square",
+            "header.layout": "auto",
+            "hero.variant": "split",
+            "menu.layout": "care"
+          }
+        }
+      ],
       "schema": [
         {
           "key": "logo",
@@ -31898,6 +33987,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "calm",
             "full",
             "split",
             "framed",
@@ -31911,6 +34001,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "calm": "Calm rings",
             "full": "Full photo",
             "split": "Photo beside the text",
             "framed": "Framed photo",
@@ -31924,6 +34015,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "calm": "حلقات هادئة",
             "full": "صورة كاملة",
             "split": "الصورة بجانب النص",
             "framed": "صورة في إطار",
@@ -31937,6 +34029,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "calm": "/templates/clinic/previews/hero-calm.svg",
             "full": "/kit/previews/hero-full.svg",
             "split": "/kit/previews/hero-split.svg",
             "framed": "/kit/previews/hero-framed.svg",
@@ -31947,7 +34040,10 @@
             "menu": "/kit/previews/hero-menu.svg",
             "type": "/kit/previews/hero-type.svg",
             "circle": "/kit/previews/hero-circle.svg"
-          }
+          },
+          "signature": [
+            "calm"
+          ]
         },
         {
           "key": "menu.layout",
@@ -31958,6 +34054,7 @@
           "groupAr": "تخطيط القائمة",
           "options": [
             "auto",
+            "care",
             "grid",
             "list",
             "compact",
@@ -31969,6 +34066,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "care": "Care cards",
             "grid": "Cards in a grid",
             "list": "List with prices",
             "compact": "Printed menu",
@@ -31980,6 +34078,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "care": "بطاقات العناية",
             "grid": "بطاقات في شبكة",
             "list": "قائمة بالأسعار",
             "compact": "قائمة مطبوعة",
@@ -31991,6 +34090,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "care": "/templates/clinic/previews/menu-care.svg",
             "grid": "/kit/previews/menu-grid.svg",
             "list": "/kit/previews/menu-list.svg",
             "compact": "/kit/previews/menu-compact.svg",
@@ -31999,7 +34099,10 @@
             "masonry": "/kit/previews/menu-masonry.svg",
             "carousel": "/kit/previews/menu-carousel.svg",
             "tiles": "/kit/previews/menu-tiles.svg"
-          }
+          },
+          "signature": [
+            "care"
+          ]
         },
         {
           "key": "menu.columns",
@@ -33132,6 +35235,103 @@
       "version": 1,
       "thumbnail": "/templates/agency/thumbnail.png",
       "sample": "studio",
+      "looks": [
+        {
+          "id": "lime",
+          "label": {
+            "en": "Lime manifesto",
+            "ar": "بيان الليموني"
+          },
+          "values": {
+            "font": "bold",
+            "theme": "ink",
+            "accent": "#D7FF3A",
+            "cards.style": "auto",
+            "style.headings": "auto",
+            "style.buttons": "auto",
+            "style.texture": "auto",
+            "header.layout": "classic",
+            "hero.variant": "manifesto",
+            "menu.layout": "services"
+          }
+        },
+        {
+          "id": "cobalt",
+          "label": {
+            "en": "Cobalt studio",
+            "ar": "استوديو الكوبالت"
+          },
+          "values": {
+            "font": "grotesk",
+            "theme": "cobalt",
+            "accent": "#FFB800",
+            "cards.style": "auto",
+            "style.headings": "uppercase",
+            "style.buttons": "auto",
+            "style.texture": "auto",
+            "header.layout": "auto",
+            "hero.variant": "manifesto",
+            "menu.layout": "services"
+          }
+        },
+        {
+          "id": "paper",
+          "label": {
+            "en": "Paper press",
+            "ar": "مطبعة الورق"
+          },
+          "values": {
+            "font": "condensed",
+            "theme": "paper",
+            "accent": "#FF4D2E",
+            "cards.style": "auto",
+            "style.headings": "auto",
+            "style.buttons": "auto",
+            "style.texture": "grain",
+            "header.layout": "auto",
+            "hero.variant": "manifesto",
+            "menu.layout": "services"
+          }
+        },
+        {
+          "id": "plum",
+          "label": {
+            "en": "Plum night",
+            "ar": "ليلة البرقوق"
+          },
+          "values": {
+            "font": "modern",
+            "theme": "plum",
+            "accent": "#FF8BD1",
+            "cards.style": "auto",
+            "style.headings": "auto",
+            "style.buttons": "auto",
+            "style.texture": "auto",
+            "header.layout": "minimal",
+            "hero.variant": "poster",
+            "menu.layout": "services"
+          }
+        },
+        {
+          "id": "grid",
+          "label": {
+            "en": "Grid portfolio",
+            "ar": "معرض الشبكة"
+          },
+          "values": {
+            "font": "grotesk",
+            "theme": "paper",
+            "accent": "#2447D9",
+            "cards.style": "outlined",
+            "style.headings": "auto",
+            "style.buttons": "square",
+            "style.texture": "auto",
+            "header.layout": "auto",
+            "hero.variant": "split",
+            "menu.layout": "services"
+          }
+        }
+      ],
       "schema": [
         {
           "key": "logo",
@@ -34033,6 +36233,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "manifesto",
             "full",
             "split",
             "framed",
@@ -34046,6 +36247,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "manifesto": "Manifesto",
             "full": "Full photo",
             "split": "Photo beside the text",
             "framed": "Framed photo",
@@ -34059,6 +36261,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "manifesto": "بيان",
             "full": "صورة كاملة",
             "split": "الصورة بجانب النص",
             "framed": "صورة في إطار",
@@ -34072,6 +36275,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "manifesto": "/templates/agency/previews/hero-manifesto.svg",
             "full": "/kit/previews/hero-full.svg",
             "split": "/kit/previews/hero-split.svg",
             "framed": "/kit/previews/hero-framed.svg",
@@ -34082,7 +36286,10 @@
             "menu": "/kit/previews/hero-menu.svg",
             "type": "/kit/previews/hero-type.svg",
             "circle": "/kit/previews/hero-circle.svg"
-          }
+          },
+          "signature": [
+            "manifesto"
+          ]
         },
         {
           "key": "menu.layout",
@@ -34093,6 +36300,7 @@
           "groupAr": "تخطيط القائمة",
           "options": [
             "auto",
+            "services",
             "grid",
             "list",
             "compact",
@@ -34104,6 +36312,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "services": "Numbered services",
             "grid": "Cards in a grid",
             "list": "List with prices",
             "compact": "Printed menu",
@@ -34115,6 +36324,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "services": "خدمات مرقّمة",
             "grid": "بطاقات في شبكة",
             "list": "قائمة بالأسعار",
             "compact": "قائمة مطبوعة",
@@ -34126,6 +36336,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "services": "/templates/agency/previews/menu-services.svg",
             "grid": "/kit/previews/menu-grid.svg",
             "list": "/kit/previews/menu-list.svg",
             "compact": "/kit/previews/menu-compact.svg",
@@ -34134,7 +36345,10 @@
             "masonry": "/kit/previews/menu-masonry.svg",
             "carousel": "/kit/previews/menu-carousel.svg",
             "tiles": "/kit/previews/menu-tiles.svg"
-          }
+          },
+          "signature": [
+            "services"
+          ]
         },
         {
           "key": "menu.columns",
@@ -35389,6 +37603,103 @@
       "version": 1,
       "thumbnail": "/templates/pulse/thumbnail.png",
       "sample": "gym",
+      "looks": [
+        {
+          "id": "carbon",
+          "label": {
+            "en": "Carbon gym",
+            "ar": "نادي الكربون"
+          },
+          "values": {
+            "font": "condensed",
+            "theme": "carbon",
+            "accent": "#FF4D1C",
+            "style.headings": "auto",
+            "style.tracking": "auto",
+            "style.buttons": "auto",
+            "style.texture": "auto",
+            "header.layout": "classic",
+            "hero.variant": "scoreboard",
+            "menu.layout": "plans"
+          }
+        },
+        {
+          "id": "volt",
+          "label": {
+            "en": "Volt",
+            "ar": "فولت"
+          },
+          "values": {
+            "font": "grotesk",
+            "theme": "volt",
+            "accent": "#C6FF00",
+            "style.headings": "uppercase",
+            "style.tracking": "auto",
+            "style.buttons": "auto",
+            "style.texture": "auto",
+            "header.layout": "auto",
+            "hero.variant": "scoreboard",
+            "menu.layout": "plans"
+          }
+        },
+        {
+          "id": "chalk",
+          "label": {
+            "en": "Chalk box",
+            "ar": "صندوق الطباشير"
+          },
+          "values": {
+            "font": "condensed",
+            "theme": "chalk",
+            "accent": "#E63946",
+            "style.headings": "auto",
+            "style.tracking": "auto",
+            "style.buttons": "auto",
+            "style.texture": "grain",
+            "header.layout": "auto",
+            "hero.variant": "poster",
+            "menu.layout": "plans"
+          }
+        },
+        {
+          "id": "steel",
+          "label": {
+            "en": "Steel club",
+            "ar": "نادي الفولاذ"
+          },
+          "values": {
+            "font": "grotesk",
+            "theme": "steel",
+            "accent": "#2EC4B6",
+            "style.headings": "auto",
+            "style.tracking": "auto",
+            "style.buttons": "square",
+            "style.texture": "auto",
+            "header.layout": "auto",
+            "hero.variant": "scoreboard",
+            "menu.layout": "list"
+          }
+        },
+        {
+          "id": "sprint",
+          "label": {
+            "en": "Sprint",
+            "ar": "انطلاقة"
+          },
+          "values": {
+            "font": "condensed",
+            "theme": "carbon",
+            "accent": "#FFD60A",
+            "style.headings": "auto",
+            "style.tracking": "tight",
+            "style.buttons": "auto",
+            "style.texture": "auto",
+            "header.layout": "big",
+            "hero.variant": "type",
+            "menu.layout": "plans"
+          }
+        }
+      ],
       "schema": [
         {
           "key": "logo",
@@ -36287,6 +38598,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "scoreboard",
             "full",
             "split",
             "framed",
@@ -36300,6 +38612,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "scoreboard": "Scoreboard",
             "full": "Full photo",
             "split": "Photo beside the text",
             "framed": "Framed photo",
@@ -36313,6 +38626,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "scoreboard": "لوحة النتائج",
             "full": "صورة كاملة",
             "split": "الصورة بجانب النص",
             "framed": "صورة في إطار",
@@ -36326,6 +38640,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "scoreboard": "/templates/pulse/previews/hero-scoreboard.svg",
             "full": "/kit/previews/hero-full.svg",
             "split": "/kit/previews/hero-split.svg",
             "framed": "/kit/previews/hero-framed.svg",
@@ -36336,7 +38651,10 @@
             "menu": "/kit/previews/hero-menu.svg",
             "type": "/kit/previews/hero-type.svg",
             "circle": "/kit/previews/hero-circle.svg"
-          }
+          },
+          "signature": [
+            "scoreboard"
+          ]
         },
         {
           "key": "menu.layout",
@@ -36347,6 +38665,7 @@
           "groupAr": "تخطيط القائمة",
           "options": [
             "auto",
+            "plans",
             "grid",
             "list",
             "compact",
@@ -36358,6 +38677,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "plans": "Membership plans",
             "grid": "Cards in a grid",
             "list": "List with prices",
             "compact": "Printed menu",
@@ -36369,6 +38689,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "plans": "باقات الاشتراك",
             "grid": "بطاقات في شبكة",
             "list": "قائمة بالأسعار",
             "compact": "قائمة مطبوعة",
@@ -36380,6 +38701,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "plans": "/templates/pulse/previews/menu-plans.svg",
             "grid": "/kit/previews/menu-grid.svg",
             "list": "/kit/previews/menu-list.svg",
             "compact": "/kit/previews/menu-compact.svg",
@@ -36388,7 +38710,10 @@
             "masonry": "/kit/previews/menu-masonry.svg",
             "carousel": "/kit/previews/menu-carousel.svg",
             "tiles": "/kit/previews/menu-tiles.svg"
-          }
+          },
+          "signature": [
+            "plans"
+          ]
         },
         {
           "key": "menu.columns",
@@ -37667,6 +39992,93 @@
       "version": 1,
       "thumbnail": "/templates/handy/thumbnail.png",
       "sample": "home",
+      "looks": [
+        {
+          "id": "toolbox",
+          "label": {
+            "en": "Toolbox",
+            "ar": "صندوق العُدّة"
+          },
+          "values": {
+            "font": "round",
+            "theme": "clean",
+            "accent": "#1E5BB8",
+            "style.headings": "auto",
+            "style.buttons": "auto",
+            "header.layout": "toolbar",
+            "hero.variant": "auto",
+            "menu.layout": "workorder"
+          }
+        },
+        {
+          "id": "sunny",
+          "label": {
+            "en": "Sunny crew",
+            "ar": "فريق مشمس"
+          },
+          "values": {
+            "font": "round",
+            "theme": "sunny",
+            "accent": "#E8572A",
+            "style.headings": "auto",
+            "style.buttons": "rounded",
+            "header.layout": "toolbar",
+            "hero.variant": "auto",
+            "menu.layout": "workorder"
+          }
+        },
+        {
+          "id": "garden",
+          "label": {
+            "en": "Garden care",
+            "ar": "عناية الحدائق"
+          },
+          "values": {
+            "font": "modern",
+            "theme": "sage",
+            "accent": "#118A5C",
+            "style.headings": "auto",
+            "style.buttons": "auto",
+            "header.layout": "classic",
+            "hero.variant": "split",
+            "menu.layout": "workorder"
+          }
+        },
+        {
+          "id": "navy",
+          "label": {
+            "en": "Night service",
+            "ar": "خدمة ليلية"
+          },
+          "values": {
+            "font": "grotesk",
+            "theme": "navy",
+            "accent": "#F6C21A",
+            "style.headings": "uppercase",
+            "style.buttons": "auto",
+            "header.layout": "toolbar",
+            "hero.variant": "auto",
+            "menu.layout": "workorder"
+          }
+        },
+        {
+          "id": "pro",
+          "label": {
+            "en": "Pro team",
+            "ar": "فريق محترف"
+          },
+          "values": {
+            "font": "grotesk",
+            "theme": "clean",
+            "accent": "#6B4EE6",
+            "style.headings": "auto",
+            "style.buttons": "square",
+            "header.layout": "toolbar",
+            "hero.variant": "poster",
+            "menu.layout": "list"
+          }
+        }
+      ],
       "schema": [
         {
           "key": "logo",
@@ -38453,6 +40865,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "toolbar",
             "classic",
             "centered",
             "split",
@@ -38463,6 +40876,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "toolbar": "Toolbox stripe",
             "classic": "Classic bar",
             "centered": "Logo in the middle",
             "split": "Links around the logo",
@@ -38473,6 +40887,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "toolbar": "شريط صندوق العُدّة",
             "classic": "شريط كلاسيكي",
             "centered": "الشعار في الوسط",
             "split": "الروابط حول الشعار",
@@ -38483,6 +40898,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "toolbar": "/templates/handy/previews/header-toolbar.svg",
             "classic": "/kit/previews/header-classic.svg",
             "centered": "/kit/previews/header-centered.svg",
             "split": "/kit/previews/header-split.svg",
@@ -38490,7 +40906,10 @@
             "big": "/kit/previews/header-big.svg",
             "minimal": "/kit/previews/header-minimal.svg",
             "drawer": "/kit/previews/header-drawer.svg"
-          }
+          },
+          "signature": [
+            "toolbar"
+          ]
         },
         {
           "key": "header.style",
@@ -38625,6 +41044,7 @@
           "groupAr": "تخطيط القائمة",
           "options": [
             "auto",
+            "workorder",
             "grid",
             "list",
             "compact",
@@ -38636,6 +41056,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "workorder": "Work orders",
             "grid": "Cards in a grid",
             "list": "List with prices",
             "compact": "Printed menu",
@@ -38647,6 +41068,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "workorder": "أوامر العمل",
             "grid": "بطاقات في شبكة",
             "list": "قائمة بالأسعار",
             "compact": "قائمة مطبوعة",
@@ -38658,6 +41080,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "workorder": "/templates/handy/previews/menu-workorder.svg",
             "grid": "/kit/previews/menu-grid.svg",
             "list": "/kit/previews/menu-list.svg",
             "compact": "/kit/previews/menu-compact.svg",
@@ -38666,7 +41089,10 @@
             "masonry": "/kit/previews/menu-masonry.svg",
             "carousel": "/kit/previews/menu-carousel.svg",
             "tiles": "/kit/previews/menu-tiles.svg"
-          }
+          },
+          "signature": [
+            "workorder"
+          ]
         },
         {
           "key": "menu.columns",
@@ -39816,6 +42242,93 @@
       "tier": "pro",
       "thumbnail": "/templates/maison/thumbnail.png",
       "sample": "maison",
+      "looks": [
+        {
+          "id": "noir",
+          "label": {
+            "en": "Gold noir",
+            "ar": "أسود ذهبي"
+          },
+          "values": {
+            "font": "elegant",
+            "theme": "noir",
+            "accent": "#C9A45C",
+            "style.tracking": "auto",
+            "style.photos": "auto",
+            "header.layout": "centered",
+            "hero.variant": "cinema",
+            "menu.layout": "engraved"
+          }
+        },
+        {
+          "id": "bordeaux",
+          "label": {
+            "en": "Bordeaux",
+            "ar": "بوردو"
+          },
+          "values": {
+            "font": "elegant",
+            "theme": "bordeaux",
+            "accent": "#D8B98A",
+            "style.tracking": "wide",
+            "style.photos": "auto",
+            "header.layout": "auto",
+            "hero.variant": "cinema",
+            "menu.layout": "engraved"
+          }
+        },
+        {
+          "id": "nuit",
+          "label": {
+            "en": "Midnight",
+            "ar": "منتصف الليل"
+          },
+          "values": {
+            "font": "classic",
+            "theme": "nuit",
+            "accent": "#C9A45C",
+            "style.tracking": "auto",
+            "style.photos": "auto",
+            "header.layout": "minimal",
+            "hero.variant": "full",
+            "menu.layout": "engraved"
+          }
+        },
+        {
+          "id": "olive",
+          "label": {
+            "en": "Olive grove",
+            "ar": "بستان الزيتون"
+          },
+          "values": {
+            "font": "classic",
+            "theme": "olive",
+            "accent": "#D8B98A",
+            "style.tracking": "auto",
+            "style.photos": "arch",
+            "header.layout": "auto",
+            "hero.variant": "framed",
+            "menu.layout": "engraved"
+          }
+        },
+        {
+          "id": "ivory",
+          "label": {
+            "en": "Ivory table",
+            "ar": "طاولة عاجية"
+          },
+          "values": {
+            "font": "elegant",
+            "theme": "ivory",
+            "accent": "#8E1B2C",
+            "style.tracking": "auto",
+            "style.photos": "auto",
+            "header.layout": "centered",
+            "hero.variant": "cinema",
+            "menu.layout": "list"
+          }
+        }
+      ],
       "schema": [
         {
           "key": "logo",
@@ -40659,6 +43172,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "cinema",
             "full",
             "split",
             "framed",
@@ -40672,6 +43186,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "cinema": "Cinema screen",
             "full": "Full photo",
             "split": "Photo beside the text",
             "framed": "Framed photo",
@@ -40685,6 +43200,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "cinema": "شاشة سينما",
             "full": "صورة كاملة",
             "split": "الصورة بجانب النص",
             "framed": "صورة في إطار",
@@ -40698,6 +43214,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "cinema": "/templates/maison/previews/hero-cinema.svg",
             "full": "/kit/previews/hero-full.svg",
             "split": "/kit/previews/hero-split.svg",
             "framed": "/kit/previews/hero-framed.svg",
@@ -40708,7 +43225,10 @@
             "menu": "/kit/previews/hero-menu.svg",
             "type": "/kit/previews/hero-type.svg",
             "circle": "/kit/previews/hero-circle.svg"
-          }
+          },
+          "signature": [
+            "cinema"
+          ]
         },
         {
           "key": "hero.layout",
@@ -40745,6 +43265,7 @@
           "groupAr": "تخطيط القائمة",
           "options": [
             "auto",
+            "engraved",
             "grid",
             "list",
             "compact",
@@ -40756,6 +43277,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "engraved": "Engraved menu card",
             "grid": "Cards in a grid",
             "list": "List with prices",
             "compact": "Printed menu",
@@ -40767,6 +43289,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "engraved": "بطاقة قائمة محفورة",
             "grid": "بطاقات في شبكة",
             "list": "قائمة بالأسعار",
             "compact": "قائمة مطبوعة",
@@ -40778,6 +43301,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "engraved": "/templates/maison/previews/menu-engraved.svg",
             "grid": "/kit/previews/menu-grid.svg",
             "list": "/kit/previews/menu-list.svg",
             "compact": "/kit/previews/menu-compact.svg",
@@ -40786,7 +43310,10 @@
             "masonry": "/kit/previews/menu-masonry.svg",
             "carousel": "/kit/previews/menu-carousel.svg",
             "tiles": "/kit/previews/menu-tiles.svg"
-          }
+          },
+          "signature": [
+            "engraved"
+          ]
         },
         {
           "key": "carte.style",
@@ -41883,6 +44410,93 @@
       "tier": "pro",
       "thumbnail": "/templates/lumen/thumbnail.png",
       "sample": "lumen",
+      "looks": [
+        {
+          "id": "sunny",
+          "label": {
+            "en": "Sunny stickers",
+            "ar": "ملصقات مشمسة"
+          },
+          "values": {
+            "font": "modern",
+            "theme": "cream",
+            "accent": "#FF5A1F",
+            "cards.style": "auto",
+            "style.buttons": "auto",
+            "header.layout": "classic",
+            "hero.variant": "sticker",
+            "menu.layout": "blocks"
+          }
+        },
+        {
+          "id": "matcha",
+          "label": {
+            "en": "Matcha bar",
+            "ar": "بار الماتشا"
+          },
+          "values": {
+            "font": "round",
+            "theme": "matcha",
+            "accent": "#2F8F4E",
+            "cards.style": "auto",
+            "style.buttons": "auto",
+            "header.layout": "auto",
+            "hero.variant": "sticker",
+            "menu.layout": "blocks"
+          }
+        },
+        {
+          "id": "pop",
+          "label": {
+            "en": "Pop",
+            "ar": "بوب"
+          },
+          "values": {
+            "font": "round",
+            "theme": "pop",
+            "accent": "#FF3D8B",
+            "cards.style": "auto",
+            "style.buttons": "pill",
+            "header.layout": "auto",
+            "hero.variant": "sticker",
+            "menu.layout": "blocks"
+          }
+        },
+        {
+          "id": "roast",
+          "label": {
+            "en": "Dark roast",
+            "ar": "تحميص داكن"
+          },
+          "values": {
+            "font": "grotesk",
+            "theme": "roast",
+            "accent": "#FF5A1F",
+            "cards.style": "auto",
+            "style.buttons": "auto",
+            "header.layout": "minimal",
+            "hero.variant": "poster",
+            "menu.layout": "blocks"
+          }
+        },
+        {
+          "id": "cobalt",
+          "label": {
+            "en": "Cobalt cup",
+            "ar": "كوب الكوبالت"
+          },
+          "values": {
+            "font": "modern",
+            "theme": "cream",
+            "accent": "#2C4BFF",
+            "cards.style": "outlined",
+            "style.buttons": "auto",
+            "header.layout": "auto",
+            "hero.variant": "sticker",
+            "menu.layout": "grid"
+          }
+        }
+      ],
       "schema": [
         {
           "key": "logo",
@@ -42758,6 +45372,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "sticker",
             "full",
             "split",
             "framed",
@@ -42771,6 +45386,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "sticker": "Sticker sheet",
             "full": "Full photo",
             "split": "Photo beside the text",
             "framed": "Framed photo",
@@ -42784,6 +45400,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "sticker": "ورقة ملصقات",
             "full": "صورة كاملة",
             "split": "الصورة بجانب النص",
             "framed": "صورة في إطار",
@@ -42797,6 +45414,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "sticker": "/templates/lumen/previews/hero-sticker.svg",
             "full": "/kit/previews/hero-full.svg",
             "split": "/kit/previews/hero-split.svg",
             "framed": "/kit/previews/hero-framed.svg",
@@ -42807,7 +45425,10 @@
             "menu": "/kit/previews/hero-menu.svg",
             "type": "/kit/previews/hero-type.svg",
             "circle": "/kit/previews/hero-circle.svg"
-          }
+          },
+          "signature": [
+            "sticker"
+          ]
         },
         {
           "key": "hero.layout",
@@ -42838,6 +45459,7 @@
           "groupAr": "تخطيط القائمة",
           "options": [
             "auto",
+            "blocks",
             "grid",
             "list",
             "compact",
@@ -42849,6 +45471,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "blocks": "Color blocks",
             "grid": "Cards in a grid",
             "list": "List with prices",
             "compact": "Printed menu",
@@ -42860,6 +45483,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "blocks": "مربعات ملونة",
             "grid": "بطاقات في شبكة",
             "list": "قائمة بالأسعار",
             "compact": "قائمة مطبوعة",
@@ -42871,6 +45495,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "blocks": "/templates/lumen/previews/menu-blocks.svg",
             "grid": "/kit/previews/menu-grid.svg",
             "list": "/kit/previews/menu-list.svg",
             "compact": "/kit/previews/menu-compact.svg",
@@ -42879,7 +45504,10 @@
             "masonry": "/kit/previews/menu-masonry.svg",
             "carousel": "/kit/previews/menu-carousel.svg",
             "tiles": "/kit/previews/menu-tiles.svg"
-          }
+          },
+          "signature": [
+            "blocks"
+          ]
         },
         {
           "key": "cards",
@@ -43968,6 +46596,98 @@
       "tier": "pro",
       "thumbnail": "/templates/atlas/thumbnail.png",
       "sample": "atlas",
+      "looks": [
+        {
+          "id": "window",
+          "label": {
+            "en": "Shop window",
+            "ar": "واجهة المتجر"
+          },
+          "values": {
+            "font": "grotesk",
+            "theme": "white",
+            "accent": "#2447D9",
+            "style.headings": "auto",
+            "style.buttons": "auto",
+            "style.photos": "auto",
+            "header.layout": "classic",
+            "hero.variant": "shopwindow",
+            "menu.layout": "storefront"
+          }
+        },
+        {
+          "id": "stone",
+          "label": {
+            "en": "Stone gallery",
+            "ar": "معرض الحجر"
+          },
+          "values": {
+            "font": "modern",
+            "theme": "stone",
+            "accent": "#C2410C",
+            "style.headings": "auto",
+            "style.buttons": "auto",
+            "style.photos": "auto",
+            "header.layout": "auto",
+            "hero.variant": "shopwindow",
+            "menu.layout": "storefront"
+          }
+        },
+        {
+          "id": "sand",
+          "label": {
+            "en": "Sand market",
+            "ar": "سوق الرمل"
+          },
+          "values": {
+            "font": "grotesk",
+            "theme": "sand",
+            "accent": "#1F7A4D",
+            "style.headings": "auto",
+            "style.buttons": "auto",
+            "style.photos": "soft",
+            "header.layout": "auto",
+            "hero.variant": "split",
+            "menu.layout": "storefront"
+          }
+        },
+        {
+          "id": "black",
+          "label": {
+            "en": "Night shop",
+            "ar": "متجر ليلي"
+          },
+          "values": {
+            "font": "mono",
+            "theme": "black",
+            "accent": "#F2C14E",
+            "style.headings": "uppercase",
+            "style.buttons": "auto",
+            "style.photos": "auto",
+            "header.layout": "auto",
+            "hero.variant": "shopwindow",
+            "menu.layout": "storefront"
+          }
+        },
+        {
+          "id": "catalog",
+          "label": {
+            "en": "Catalog",
+            "ar": "كتالوج"
+          },
+          "values": {
+            "font": "mono",
+            "theme": "white",
+            "accent": "#121212",
+            "style.headings": "auto",
+            "style.buttons": "square",
+            "style.photos": "auto",
+            "header.layout": "minimal",
+            "hero.variant": "framed",
+            "menu.layout": "storefront"
+          }
+        }
+      ],
       "schema": [
         {
           "key": "logo",
@@ -44841,6 +47561,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "shopwindow",
             "full",
             "split",
             "framed",
@@ -44854,6 +47575,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "shopwindow": "Shop window",
             "full": "Full photo",
             "split": "Photo beside the text",
             "framed": "Framed photo",
@@ -44867,6 +47589,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "shopwindow": "واجهة المتجر",
             "full": "صورة كاملة",
             "split": "الصورة بجانب النص",
             "framed": "صورة في إطار",
@@ -44880,6 +47603,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "shopwindow": "/templates/atlas/previews/hero-shopwindow.svg",
             "full": "/kit/previews/hero-full.svg",
             "split": "/kit/previews/hero-split.svg",
             "framed": "/kit/previews/hero-framed.svg",
@@ -44890,7 +47614,10 @@
             "menu": "/kit/previews/hero-menu.svg",
             "type": "/kit/previews/hero-type.svg",
             "circle": "/kit/previews/hero-circle.svg"
-          }
+          },
+          "signature": [
+            "shopwindow"
+          ]
         },
         {
           "key": "hero.layout",
@@ -44924,6 +47651,7 @@
           "groupAr": "تخطيط القائمة",
           "options": [
             "auto",
+            "storefront",
             "grid",
             "list",
             "compact",
@@ -44935,6 +47663,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "storefront": "Price tags",
             "grid": "Cards in a grid",
             "list": "List with prices",
             "compact": "Printed menu",
@@ -44946,6 +47675,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "storefront": "بطاقات الأسعار",
             "grid": "بطاقات في شبكة",
             "list": "قائمة بالأسعار",
             "compact": "قائمة مطبوعة",
@@ -44957,6 +47687,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "storefront": "/templates/atlas/previews/menu-storefront.svg",
             "grid": "/kit/previews/menu-grid.svg",
             "list": "/kit/previews/menu-list.svg",
             "compact": "/kit/previews/menu-compact.svg",
@@ -44965,7 +47696,10 @@
             "masonry": "/kit/previews/menu-masonry.svg",
             "carousel": "/kit/previews/menu-carousel.svg",
             "tiles": "/kit/previews/menu-tiles.svg"
-          }
+          },
+          "signature": [
+            "storefront"
+          ]
         },
         {
           "key": "density",
@@ -46060,6 +48794,93 @@
       "tier": "pro",
       "thumbnail": "/templates/ember/thumbnail.png",
       "sample": "ember",
+      "looks": [
+        {
+          "id": "grill",
+          "label": {
+            "en": "Charcoal grill",
+            "ar": "شواية الفحم"
+          },
+          "values": {
+            "font": "condensed",
+            "theme": "charcoal",
+            "accent": "#FF5A1F",
+            "style.headings": "auto",
+            "style.buttons": "auto",
+            "header.layout": "classic",
+            "hero.variant": "flame",
+            "menu.layout": "burst"
+          }
+        },
+        {
+          "id": "ketchup",
+          "label": {
+            "en": "Ketchup",
+            "ar": "كاتشب"
+          },
+          "values": {
+            "font": "condensed",
+            "theme": "ketchup",
+            "accent": "#FFC21A",
+            "style.headings": "auto",
+            "style.buttons": "auto",
+            "header.layout": "auto",
+            "hero.variant": "flame",
+            "menu.layout": "burst"
+          }
+        },
+        {
+          "id": "mustard",
+          "label": {
+            "en": "Mustard",
+            "ar": "خردل"
+          },
+          "values": {
+            "font": "condensed",
+            "theme": "mustard",
+            "accent": "#E5281E",
+            "style.headings": "uppercase",
+            "style.buttons": "auto",
+            "header.layout": "auto",
+            "hero.variant": "flame",
+            "menu.layout": "burst"
+          }
+        },
+        {
+          "id": "diner",
+          "label": {
+            "en": "Diner",
+            "ar": "مطعم أمريكي"
+          },
+          "values": {
+            "font": "modern",
+            "theme": "diner",
+            "accent": "#E5281E",
+            "style.headings": "auto",
+            "style.buttons": "pill",
+            "header.layout": "auto",
+            "hero.variant": "poster",
+            "menu.layout": "burst"
+          }
+        },
+        {
+          "id": "smoke",
+          "label": {
+            "en": "Smokehouse",
+            "ar": "بيت التدخين"
+          },
+          "values": {
+            "font": "condensed",
+            "theme": "charcoal",
+            "accent": "#7BC950",
+            "style.headings": "auto",
+            "style.buttons": "auto",
+            "header.layout": "minimal",
+            "hero.variant": "flame",
+            "menu.layout": "list"
+          }
+        }
+      ],
       "schema": [
         {
           "key": "logo",
@@ -46929,6 +49750,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "flame",
             "full",
             "split",
             "framed",
@@ -46942,6 +49764,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "flame": "Flame poster",
             "full": "Full photo",
             "split": "Photo beside the text",
             "framed": "Framed photo",
@@ -46955,6 +49778,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "flame": "ملصق اللهب",
             "full": "صورة كاملة",
             "split": "الصورة بجانب النص",
             "framed": "صورة في إطار",
@@ -46968,6 +49792,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "flame": "/templates/ember/previews/hero-flame.svg",
             "full": "/kit/previews/hero-full.svg",
             "split": "/kit/previews/hero-split.svg",
             "framed": "/kit/previews/hero-framed.svg",
@@ -46978,7 +49803,10 @@
             "menu": "/kit/previews/hero-menu.svg",
             "type": "/kit/previews/hero-type.svg",
             "circle": "/kit/previews/hero-circle.svg"
-          }
+          },
+          "signature": [
+            "flame"
+          ]
         },
         {
           "key": "hero.layout",
@@ -47015,6 +49843,7 @@
           "groupAr": "تخطيط القائمة",
           "options": [
             "auto",
+            "burst",
             "grid",
             "list",
             "compact",
@@ -47026,6 +49855,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "burst": "Starburst prices",
             "grid": "Cards in a grid",
             "list": "List with prices",
             "compact": "Printed menu",
@@ -47037,6 +49867,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "burst": "أسعار نجمية",
             "grid": "بطاقات في شبكة",
             "list": "قائمة بالأسعار",
             "compact": "قائمة مطبوعة",
@@ -47048,6 +49879,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "burst": "/templates/ember/previews/menu-burst.svg",
             "grid": "/kit/previews/menu-grid.svg",
             "list": "/kit/previews/menu-list.svg",
             "compact": "/kit/previews/menu-compact.svg",
@@ -47056,7 +49888,10 @@
             "masonry": "/kit/previews/menu-masonry.svg",
             "carousel": "/kit/previews/menu-carousel.svg",
             "tiles": "/kit/previews/menu-tiles.svg"
-          }
+          },
+          "signature": [
+            "burst"
+          ]
         },
         {
           "key": "cards",
@@ -48152,6 +50987,98 @@
       "tier": "pro",
       "thumbnail": "/templates/bloom/thumbnail.png",
       "sample": "bloom",
+      "looks": [
+        {
+          "id": "strawberry",
+          "label": {
+            "en": "Strawberry",
+            "ar": "فراولة"
+          },
+          "values": {
+            "font": "soft",
+            "theme": "strawberry",
+            "accent": "#D6467A",
+            "cards.style": "auto",
+            "style.buttons": "auto",
+            "style.dividers": "auto",
+            "header.layout": "classic",
+            "hero.variant": "cakestand",
+            "menu.layout": "doily"
+          }
+        },
+        {
+          "id": "pistachio",
+          "label": {
+            "en": "Pistachio",
+            "ar": "فستق"
+          },
+          "values": {
+            "font": "soft",
+            "theme": "pistachio",
+            "accent": "#4E9A5B",
+            "cards.style": "auto",
+            "style.buttons": "auto",
+            "style.dividers": "auto",
+            "header.layout": "auto",
+            "hero.variant": "cakestand",
+            "menu.layout": "doily"
+          }
+        },
+        {
+          "id": "lavender",
+          "label": {
+            "en": "Lavender",
+            "ar": "لافندر"
+          },
+          "values": {
+            "font": "round",
+            "theme": "lavender",
+            "accent": "#8159D1",
+            "cards.style": "auto",
+            "style.buttons": "pill",
+            "style.dividers": "auto",
+            "header.layout": "auto",
+            "hero.variant": "cakestand",
+            "menu.layout": "doily"
+          }
+        },
+        {
+          "id": "vanilla",
+          "label": {
+            "en": "Vanilla",
+            "ar": "فانيلا"
+          },
+          "values": {
+            "font": "classic",
+            "theme": "vanilla",
+            "accent": "#E07A3F",
+            "cards.style": "auto",
+            "style.buttons": "auto",
+            "style.dividers": "wave",
+            "header.layout": "auto",
+            "hero.variant": "circle",
+            "menu.layout": "doily"
+          }
+        },
+        {
+          "id": "party",
+          "label": {
+            "en": "Party box",
+            "ar": "علبة الحفلة"
+          },
+          "values": {
+            "font": "round",
+            "theme": "strawberry",
+            "accent": "#8159D1",
+            "cards.style": "tinted",
+            "style.buttons": "auto",
+            "style.dividers": "auto",
+            "header.layout": "auto",
+            "hero.variant": "collage",
+            "menu.layout": "doily"
+          }
+        }
+      ],
       "schema": [
         {
           "key": "logo",
@@ -49013,6 +51940,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "cakestand",
             "full",
             "split",
             "framed",
@@ -49026,6 +51954,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "cakestand": "Cake stand",
             "full": "Full photo",
             "split": "Photo beside the text",
             "framed": "Framed photo",
@@ -49039,6 +51968,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "cakestand": "حامل الكيك",
             "full": "صورة كاملة",
             "split": "الصورة بجانب النص",
             "framed": "صورة في إطار",
@@ -49052,6 +51982,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "cakestand": "/templates/bloom/previews/hero-cakestand.svg",
             "full": "/kit/previews/hero-full.svg",
             "split": "/kit/previews/hero-split.svg",
             "framed": "/kit/previews/hero-framed.svg",
@@ -49062,7 +51993,10 @@
             "menu": "/kit/previews/hero-menu.svg",
             "type": "/kit/previews/hero-type.svg",
             "circle": "/kit/previews/hero-circle.svg"
-          }
+          },
+          "signature": [
+            "cakestand"
+          ]
         },
         {
           "key": "hero.layout",
@@ -49099,6 +52033,7 @@
           "groupAr": "تخطيط القائمة",
           "options": [
             "auto",
+            "doily",
             "grid",
             "list",
             "compact",
@@ -49110,6 +52045,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "doily": "Lace doilies",
             "grid": "Cards in a grid",
             "list": "List with prices",
             "compact": "Printed menu",
@@ -49121,6 +52057,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "doily": "مفارش الدانتيل",
             "grid": "بطاقات في شبكة",
             "list": "قائمة بالأسعار",
             "compact": "قائمة مطبوعة",
@@ -49132,6 +52069,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "doily": "/templates/bloom/previews/menu-doily.svg",
             "grid": "/kit/previews/menu-grid.svg",
             "list": "/kit/previews/menu-list.svg",
             "compact": "/kit/previews/menu-compact.svg",
@@ -49140,7 +52078,10 @@
             "masonry": "/kit/previews/menu-masonry.svg",
             "carousel": "/kit/previews/menu-carousel.svg",
             "tiles": "/kit/previews/menu-tiles.svg"
-          }
+          },
+          "signature": [
+            "doily"
+          ]
         },
         {
           "key": "menu.columns",
@@ -50203,6 +53144,93 @@
       "version": 1,
       "thumbnail": "/templates/folio/thumbnail.png",
       "sample": "folio",
+      "looks": [
+        {
+          "id": "paper",
+          "label": {
+            "en": "Paper issue",
+            "ar": "عدد ورقي"
+          },
+          "values": {
+            "font": "classic",
+            "theme": "paper",
+            "accent": "#1A1A1A",
+            "style.headings": "auto",
+            "style.photos": "auto",
+            "header.layout": "centered",
+            "hero.variant": "cover",
+            "menu.layout": "lookbook"
+          }
+        },
+        {
+          "id": "white",
+          "label": {
+            "en": "White studio",
+            "ar": "استوديو أبيض"
+          },
+          "values": {
+            "font": "grotesk",
+            "theme": "white",
+            "accent": "#3E5C82",
+            "style.headings": "uppercase",
+            "style.photos": "auto",
+            "header.layout": "auto",
+            "hero.variant": "cover",
+            "menu.layout": "lookbook"
+          }
+        },
+        {
+          "id": "stone",
+          "label": {
+            "en": "Stone",
+            "ar": "حجر"
+          },
+          "values": {
+            "font": "classic",
+            "theme": "stone",
+            "accent": "#8C3B2E",
+            "style.headings": "auto",
+            "style.photos": "auto",
+            "header.layout": "auto",
+            "hero.variant": "cover",
+            "menu.layout": "magazine"
+          }
+        },
+        {
+          "id": "ink",
+          "label": {
+            "en": "Ink",
+            "ar": "حبر"
+          },
+          "values": {
+            "font": "classic",
+            "theme": "ink",
+            "accent": "#E7DCC8",
+            "style.headings": "auto",
+            "style.photos": "auto",
+            "header.layout": "minimal",
+            "hero.variant": "cover",
+            "menu.layout": "lookbook"
+          }
+        },
+        {
+          "id": "soft",
+          "label": {
+            "en": "Soft linen",
+            "ar": "كتان ناعم"
+          },
+          "values": {
+            "font": "soft",
+            "theme": "paper",
+            "accent": "#6B7A5E",
+            "style.headings": "auto",
+            "style.photos": "arch",
+            "header.layout": "auto",
+            "hero.variant": "split",
+            "menu.layout": "lookbook"
+          }
+        }
+      ],
       "schema": [
         {
           "key": "logo",
@@ -51092,6 +54120,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "cover",
             "full",
             "split",
             "framed",
@@ -51105,6 +54134,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "cover": "Magazine cover",
             "full": "Full photo",
             "split": "Photo beside the text",
             "framed": "Framed photo",
@@ -51118,6 +54148,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "cover": "غلاف مجلة",
             "full": "صورة كاملة",
             "split": "الصورة بجانب النص",
             "framed": "صورة في إطار",
@@ -51131,6 +54162,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "cover": "/templates/folio/previews/hero-cover.svg",
             "full": "/kit/previews/hero-full.svg",
             "split": "/kit/previews/hero-split.svg",
             "framed": "/kit/previews/hero-framed.svg",
@@ -51141,7 +54173,10 @@
             "menu": "/kit/previews/hero-menu.svg",
             "type": "/kit/previews/hero-type.svg",
             "circle": "/kit/previews/hero-circle.svg"
-          }
+          },
+          "signature": [
+            "cover"
+          ]
         },
         {
           "key": "menu.layout",
@@ -51152,6 +54187,7 @@
           "groupAr": "تخطيط القائمة",
           "options": [
             "auto",
+            "lookbook",
             "grid",
             "list",
             "compact",
@@ -51163,6 +54199,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "lookbook": "Lookbook",
             "grid": "Cards in a grid",
             "list": "List with prices",
             "compact": "Printed menu",
@@ -51174,6 +54211,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "lookbook": "كتيّب الإطلالات",
             "grid": "بطاقات في شبكة",
             "list": "قائمة بالأسعار",
             "compact": "قائمة مطبوعة",
@@ -51185,6 +54223,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "lookbook": "/templates/folio/previews/menu-lookbook.svg",
             "grid": "/kit/previews/menu-grid.svg",
             "list": "/kit/previews/menu-list.svg",
             "compact": "/kit/previews/menu-compact.svg",
@@ -51193,7 +54232,10 @@
             "masonry": "/kit/previews/menu-masonry.svg",
             "carousel": "/kit/previews/menu-carousel.svg",
             "tiles": "/kit/previews/menu-tiles.svg"
-          }
+          },
+          "signature": [
+            "lookbook"
+          ]
         },
         {
           "key": "menu.columns",
@@ -52197,6 +55239,93 @@
       "version": 1,
       "thumbnail": "/templates/drop/thumbnail.png",
       "sample": "drop",
+      "looks": [
+        {
+          "id": "volt",
+          "label": {
+            "en": "Volt drop",
+            "ar": "إصدار فولت"
+          },
+          "values": {
+            "font": "condensed",
+            "theme": "black",
+            "accent": "#C6FF00",
+            "style.headings": "auto",
+            "style.texture": "auto",
+            "header.layout": "classic",
+            "hero.variant": "dropposter",
+            "menu.layout": "hangtags"
+          }
+        },
+        {
+          "id": "blaze",
+          "label": {
+            "en": "Blaze",
+            "ar": "لهيب"
+          },
+          "values": {
+            "font": "condensed",
+            "theme": "black",
+            "accent": "#FF4D00",
+            "style.headings": "uppercase",
+            "style.texture": "auto",
+            "header.layout": "auto",
+            "hero.variant": "dropposter",
+            "menu.layout": "hangtags"
+          }
+        },
+        {
+          "id": "white",
+          "label": {
+            "en": "White label",
+            "ar": "علامة بيضاء"
+          },
+          "values": {
+            "font": "grotesk",
+            "theme": "white",
+            "accent": "#FF3EA5",
+            "style.headings": "auto",
+            "style.texture": "auto",
+            "header.layout": "auto",
+            "hero.variant": "dropposter",
+            "menu.layout": "hangtags"
+          }
+        },
+        {
+          "id": "concrete",
+          "label": {
+            "en": "Concrete",
+            "ar": "خرسانة"
+          },
+          "values": {
+            "font": "grotesk",
+            "theme": "concrete",
+            "accent": "#2F5BFF",
+            "style.headings": "auto",
+            "style.texture": "grain",
+            "header.layout": "auto",
+            "hero.variant": "poster",
+            "menu.layout": "hangtags"
+          }
+        },
+        {
+          "id": "cobalt",
+          "label": {
+            "en": "Cobalt",
+            "ar": "كوبالت"
+          },
+          "values": {
+            "font": "condensed",
+            "theme": "cobalt",
+            "accent": "#C6FF00",
+            "style.headings": "auto",
+            "style.texture": "auto",
+            "header.layout": "big",
+            "hero.variant": "dropposter",
+            "menu.layout": "large"
+          }
+        }
+      ],
       "schema": [
         {
           "key": "logo",
@@ -53086,6 +56215,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "dropposter",
             "full",
             "split",
             "framed",
@@ -53099,6 +56229,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "dropposter": "Drop poster",
             "full": "Full photo",
             "split": "Photo beside the text",
             "framed": "Framed photo",
@@ -53112,6 +56243,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "dropposter": "ملصق الإصدار",
             "full": "صورة كاملة",
             "split": "الصورة بجانب النص",
             "framed": "صورة في إطار",
@@ -53125,6 +56257,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "dropposter": "/templates/drop/previews/hero-dropposter.svg",
             "full": "/kit/previews/hero-full.svg",
             "split": "/kit/previews/hero-split.svg",
             "framed": "/kit/previews/hero-framed.svg",
@@ -53135,7 +56268,10 @@
             "menu": "/kit/previews/hero-menu.svg",
             "type": "/kit/previews/hero-type.svg",
             "circle": "/kit/previews/hero-circle.svg"
-          }
+          },
+          "signature": [
+            "dropposter"
+          ]
         },
         {
           "key": "menu.layout",
@@ -53146,6 +56282,7 @@
           "groupAr": "تخطيط القائمة",
           "options": [
             "auto",
+            "hangtags",
             "grid",
             "list",
             "compact",
@@ -53157,6 +56294,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "hangtags": "Hang tags",
             "grid": "Cards in a grid",
             "list": "List with prices",
             "compact": "Printed menu",
@@ -53168,6 +56306,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "hangtags": "بطاقات معلّقة",
             "grid": "بطاقات في شبكة",
             "list": "قائمة بالأسعار",
             "compact": "قائمة مطبوعة",
@@ -53179,6 +56318,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "hangtags": "/templates/drop/previews/menu-hangtags.svg",
             "grid": "/kit/previews/menu-grid.svg",
             "list": "/kit/previews/menu-list.svg",
             "compact": "/kit/previews/menu-compact.svg",
@@ -53187,7 +56327,10 @@
             "masonry": "/kit/previews/menu-masonry.svg",
             "carousel": "/kit/previews/menu-carousel.svg",
             "tiles": "/kit/previews/menu-tiles.svg"
-          }
+          },
+          "signature": [
+            "hangtags"
+          ]
         },
         {
           "key": "menu.columns",
@@ -54262,6 +57405,98 @@
       "tier": "pro",
       "thumbnail": "/templates/couture/thumbnail.png",
       "sample": "couture",
+      "looks": [
+        {
+          "id": "ivory",
+          "label": {
+            "en": "Ivory runway",
+            "ar": "منصة عاجية"
+          },
+          "values": {
+            "font": "elegant",
+            "theme": "ivory",
+            "accent": "#9A7445",
+            "style.tracking": "auto",
+            "style.buttons": "auto",
+            "style.photos": "auto",
+            "header.layout": "centered",
+            "hero.variant": "runway",
+            "menu.layout": "edit"
+          }
+        },
+        {
+          "id": "noir",
+          "label": {
+            "en": "Noir",
+            "ar": "أسود"
+          },
+          "values": {
+            "font": "elegant",
+            "theme": "noir",
+            "accent": "#9A7445",
+            "style.tracking": "wide",
+            "style.buttons": "auto",
+            "style.photos": "auto",
+            "header.layout": "auto",
+            "hero.variant": "runway",
+            "menu.layout": "edit"
+          }
+        },
+        {
+          "id": "blush",
+          "label": {
+            "en": "Blush atelier",
+            "ar": "مشغل وردي"
+          },
+          "values": {
+            "font": "classic",
+            "theme": "blush",
+            "accent": "#6E1F2B",
+            "style.tracking": "auto",
+            "style.buttons": "auto",
+            "style.photos": "arch",
+            "header.layout": "auto",
+            "hero.variant": "runway",
+            "menu.layout": "edit"
+          }
+        },
+        {
+          "id": "sage",
+          "label": {
+            "en": "Sage salon",
+            "ar": "صالون المريمية"
+          },
+          "values": {
+            "font": "elegant",
+            "theme": "sage",
+            "accent": "#2F4A3A",
+            "style.tracking": "auto",
+            "style.buttons": "auto",
+            "style.photos": "auto",
+            "header.layout": "auto",
+            "hero.variant": "split",
+            "menu.layout": "edit"
+          }
+        },
+        {
+          "id": "classic",
+          "label": {
+            "en": "Tailor",
+            "ar": "خيّاط"
+          },
+          "values": {
+            "font": "classic",
+            "theme": "ivory",
+            "accent": "#1B1712",
+            "style.tracking": "auto",
+            "style.buttons": "square",
+            "style.photos": "auto",
+            "header.layout": "minimal",
+            "hero.variant": "runway",
+            "menu.layout": "magazine"
+          }
+        }
+      ],
       "schema": [
         {
           "key": "logo",
@@ -55115,6 +58350,7 @@
           "groupAr": "تخطيط الصفحة",
           "options": [
             "auto",
+            "runway",
             "full",
             "split",
             "framed",
@@ -55128,6 +58364,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "runway": "Runway",
             "full": "Full photo",
             "split": "Photo beside the text",
             "framed": "Framed photo",
@@ -55141,6 +58378,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "runway": "منصة العرض",
             "full": "صورة كاملة",
             "split": "الصورة بجانب النص",
             "framed": "صورة في إطار",
@@ -55154,6 +58392,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "runway": "/templates/couture/previews/hero-runway.svg",
             "full": "/kit/previews/hero-full.svg",
             "split": "/kit/previews/hero-split.svg",
             "framed": "/kit/previews/hero-framed.svg",
@@ -55164,7 +58403,10 @@
             "menu": "/kit/previews/hero-menu.svg",
             "type": "/kit/previews/hero-type.svg",
             "circle": "/kit/previews/hero-circle.svg"
-          }
+          },
+          "signature": [
+            "runway"
+          ]
         },
         {
           "key": "menu.layout",
@@ -55175,6 +58417,7 @@
           "groupAr": "تخطيط القائمة",
           "options": [
             "auto",
+            "edit",
             "grid",
             "list",
             "compact",
@@ -55186,6 +58429,7 @@
           ],
           "optionLabels": {
             "auto": "Template default",
+            "edit": "The edit",
             "grid": "Cards in a grid",
             "list": "List with prices",
             "compact": "Printed menu",
@@ -55197,6 +58441,7 @@
           },
           "optionLabelsAr": {
             "auto": "كما في القالب",
+            "edit": "المختارات",
             "grid": "بطاقات في شبكة",
             "list": "قائمة بالأسعار",
             "compact": "قائمة مطبوعة",
@@ -55208,6 +58453,7 @@
           },
           "previews": {
             "auto": "/kit/previews/auto.svg",
+            "edit": "/templates/couture/previews/menu-edit.svg",
             "grid": "/kit/previews/menu-grid.svg",
             "list": "/kit/previews/menu-list.svg",
             "compact": "/kit/previews/menu-compact.svg",
@@ -55216,7 +58462,10 @@
             "masonry": "/kit/previews/menu-masonry.svg",
             "carousel": "/kit/previews/menu-carousel.svg",
             "tiles": "/kit/previews/menu-tiles.svg"
-          }
+          },
+          "signature": [
+            "edit"
+          ]
         },
         {
           "key": "menu.columns",

@@ -14,6 +14,21 @@
   "thumbnail": "/templates/garden/thumbnail.png",
   "sample": "brunch",
   "sectionsLayout": { "order": ["menu", "story", "visit"] },
+  "signature": {
+    "hero.variant": [
+      {"id":"leaf","base":"circle","label":"Leaf-shaped photo","labelAr":"صورة على شكل ورقة","preview":"/templates/garden/previews/hero-leaf.svg"}
+    ],
+    "menu.layout": [
+      {"id":"seeds","base":"grid","label":"Seed packets","labelAr":"أكياس البذور","preview":"/templates/garden/previews/menu-seeds.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"sage","label":{"en":"Sage brunch","ar":"فطور المريمية"},"values":{"theme":"sage","accent":"#3F7D4E","font":"soft","hero.variant":"leaf","menu.layout":"seeds","header.layout":"classic"}},
+    {"id":"blush","label":{"en":"Blush bowls","ar":"أطباق وردية"},"values":{"theme":"blush","accent":"#D9633F","font":"round","hero.variant":"leaf","menu.layout":"seeds","style.photos":"blob","style.dividers":"wave"}},
+    {"id":"sunny","label":{"en":"Sunny terrace","ar":"شرفة مشمسة"},"values":{"theme":"sunny","accent":"#B7791F","font":"round","hero.variant":"split","menu.layout":"seeds","header.layout":"pill","style.buttons":"pill"}},
+    {"id":"forest","label":{"en":"Forest table","ar":"طاولة الغابة"},"values":{"theme":"forest","accent":"#3F7D4E","font":"elegant","hero.variant":"leaf","menu.layout":"list","header.layout":"centered","story.layout":"quote"}},
+    {"id":"market","label":{"en":"Farm market","ar":"سوق المزرعة"},"values":{"theme":"sage","accent":"#7B5EA7","font":"soft","hero.variant":"collage","menu.layout":"masonry","header.layout":"classic","cards.style":"tinted"}}
+  ],
   "schema": [
     {
       "key": "font",

@@ -17,6 +17,21 @@
   "sample": "maison",
   "menu": { "own": ["carte.style"] },
   "sectionsLayout": { "order": ["menu", "best", "story", "gallery", "reviews", "visit"] },
+  "signature": {
+    "menu.layout": [
+      {"id":"engraved","base":"compact","label":"Engraved menu card","labelAr":"بطاقة قائمة محفورة","preview":"/templates/maison/previews/menu-engraved.svg"}
+    ],
+    "hero.variant": [
+      {"id":"cinema","base":"full","label":"Cinema screen","labelAr":"شاشة سينما","preview":"/templates/maison/previews/hero-cinema.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"noir","label":{"en":"Gold noir","ar":"أسود ذهبي"},"values":{"theme":"noir","accent":"#C9A45C","font":"elegant","hero.variant":"cinema","menu.layout":"engraved","header.layout":"centered"}},
+    {"id":"bordeaux","label":{"en":"Bordeaux","ar":"بوردو"},"values":{"theme":"bordeaux","accent":"#D8B98A","font":"elegant","hero.variant":"cinema","menu.layout":"engraved","style.tracking":"wide"}},
+    {"id":"nuit","label":{"en":"Midnight","ar":"منتصف الليل"},"values":{"theme":"nuit","accent":"#C9A45C","font":"classic","hero.variant":"full","menu.layout":"engraved","header.layout":"minimal"}},
+    {"id":"olive","label":{"en":"Olive grove","ar":"بستان الزيتون"},"values":{"theme":"olive","accent":"#D8B98A","font":"classic","hero.variant":"framed","menu.layout":"engraved","style.photos":"arch"}},
+    {"id":"ivory","label":{"en":"Ivory table","ar":"طاولة عاجية"},"values":{"theme":"ivory","accent":"#8E1B2C","font":"elegant","hero.variant":"cinema","menu.layout":"list","header.layout":"centered"}}
+  ],
   "schema": [
     {
       "key": "font",

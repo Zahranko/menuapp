@@ -75,6 +75,7 @@ class AiChatController extends ChangeNotifier {
     required Set<String> keys,
     required Map<String, dynamic> Function() values,
     required ApplySettings onApply,
+    bool surprise = false,
   }) async {
     if (busy) return false;
     final mine = AiChatBubble.owner(text, photo: photo?.bytes);
@@ -83,15 +84,10 @@ class AiChatController extends ChangeNotifier {
     error = null;
     notifyListeners();
     try {
-      final answer = await repo.chat(_turns(), language: _language, photo: photo);
-      final current = values();
-      final patch = {
-        for (final e in answer.settings.entries)
-          if (keys.contains(e.key) && !_same(current[e.key], e.value)) e.key: e.value,
-      };
-      final before = {for (final k in patch.keys) k: current[k]};
-      if (patch.isNotEmpty) await onApply(patch);
-      messages.add(AiChatBubble.assistant(answer.reply, changed: before));
+      final answer = await repo.chat(_turns(), language: _language, photo: photo, surprise: surprise);
+      final change = SettingsChange.of(answer.settings, keys: keys, current: values());
+      if (change.patch.isNotEmpty) await onApply(change.patch);
+      messages.add(AiChatBubble.assistant(answer.reply, changed: change.before));
       return true;
     } catch (e) {
       messages.remove(mine);
@@ -106,7 +102,7 @@ class AiChatController extends ChangeNotifier {
   /// Puts back the values the answer [bubble] replaced.
   Future<void> undo(AiChatBubble bubble, ApplySettings onApply) async {
     if (bubble.undone || bubble.changed.isEmpty) return;
-    await onApply(Map<String, dynamic>.of(bubble.changed));
+    await SettingsChange.undo(bubble.changed, onApply);
     bubble.undone = true;
     notifyListeners();
   }
@@ -120,7 +116,29 @@ class AiChatController extends ChangeNotifier {
           ),
       ];
 
-  static bool _same(Object? a, Object? b) {
+}
+
+/// A change to the draft that can be undone: the new values ([patch]) and the values they replace ([before]; null for a
+/// setting the draft didn't have, which Undo puts back to the template's default). Used by the AI chat and the Looks strip.
+class SettingsChange {
+  const SettingsChange(this.patch, this.before);
+
+  /// The entries of [proposed] that are among [keys] (the settings the editor shows) and differ from [current].
+  factory SettingsChange.of(Map<String, dynamic> proposed, {required Set<String> keys, required Map<String, dynamic> current}) {
+    final patch = {
+      for (final e in proposed.entries)
+        if (keys.contains(e.key) && !same(current[e.key], e.value)) e.key: e.value,
+    };
+    return SettingsChange(patch, {for (final k in patch.keys) k: current[k]});
+  }
+
+  final Map<String, dynamic> patch;
+  final Map<String, Object?> before;
+
+  /// Puts back the values a change replaced.
+  static Future<void> undo(Map<String, Object?> before, ApplySettings onApply) => onApply(Map<String, dynamic>.of(before));
+
+  static bool same(Object? a, Object? b) {
     if (a is num && b is num) return a == b;
     return jsonEncode(a) == jsonEncode(b);
   }
@@ -229,7 +247,7 @@ class _AiDesignChatState extends ConsumerState<AiDesignChat> {
     if (photo != null && mounted) setState(() => _photo = photo);
   }
 
-  Future<void> _send([String? preset]) async {
+  Future<void> _send([String? preset, bool surprise = false]) async {
     final t = AppLocalizations.of(context);
     final typed = (preset ?? _input.text).trim();
     final photo = _photo;
@@ -244,6 +262,7 @@ class _AiDesignChatState extends ConsumerState<AiDesignChat> {
       keys: {for (final f in widget.fields) f.key},
       values: widget.values,
       onApply: widget.onApply,
+      surprise: surprise,
     );
     ref.invalidate(aiStatusProvider);
     if (!ok && mounted) {
@@ -319,6 +338,7 @@ class _AiDesignChatState extends ConsumerState<AiDesignChat> {
                 if (messages.isEmpty) ...[
                   const SizedBox(height: 4),
                   Wrap(spacing: 8, runSpacing: 8, children: [
+                    _Suggestion(t.aiChatSurprise, key: const Key('aiChatSurprise'), icon: Icons.auto_awesome_rounded, onTap: canSend ? () => _send(t.aiChatSurprise, true) : null),
                     _Suggestion(t.aiChatSuggestLogo, icon: Icons.palette_outlined, onTap: canSend ? () => _matchLogo(t.aiChatSuggestLogo) : null),
                     _Suggestion(t.aiChatSuggestTexts, icon: Icons.edit_note_rounded, onTap: canSend ? () => _send(t.aiChatSuggestTexts) : null),
                     _Suggestion(t.aiChatSuggestLogoSize, icon: Icons.open_in_full_rounded, onTap: canSend ? () => _send(t.aiChatSuggestLogoSize) : null),
@@ -434,7 +454,7 @@ class _AttachedPhoto extends StatelessWidget {
 
 /// A starter idea for an empty chat; tapping it sends it.
 class _Suggestion extends StatelessWidget {
-  const _Suggestion(this.text, {required this.icon, required this.onTap});
+  const _Suggestion(this.text, {super.key, required this.icon, required this.onTap});
 
   final String text;
   final IconData icon;

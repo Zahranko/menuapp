@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using Storefront.Application.Abstractions;
 using Storefront.Application.Ai;
 using Storefront.Application.Ai.Chat;
+using Storefront.Application.Ai.Design;
 using Storefront.Application.Ai.Menu;
 using Storefront.Application.Ai.Text;
 using Storefront.Application.Common;
@@ -311,6 +312,170 @@ public class ChatAboutDesignTests
     private sealed class NoOptimizer : IImageOptimizer
     {
         public Result<OptimizedImage> Optimize(ReadOnlyMemory<byte> image, int maxSide, long maxBytes) => throw new NotSupportedException();
+    }
+}
+
+/// <summary>The template's own layout options ("signature") and its looks in the design chat and the photo helper.</summary>
+public class TemplateLooksAiTests
+{
+    private static readonly DateTimeOffset Now = new(2026, 10, 20, 9, 0, 0, TimeSpan.Zero);
+
+    private const string Schema = """
+        [ { "key": "hero.title", "type": "text", "label": "Headline", "group": "Hero", "max": 40 },
+          { "key": "theme", "type": "palette", "label": "Theme", "options": ["cream", "night"] },
+          { "key": "accent", "type": "color", "label": "Accent", "options": ["#D9542C"], "custom": true },
+          { "key": "hero.variant", "type": "choice", "label": "Opening", "group": "Page layout", "options": ["auto", "stub", "poster", "type"],
+            "optionLabels": { "auto": "Template default", "stub": "Admission ticket", "poster": "Poster", "type": "Big words" }, "signature": ["stub"] },
+          { "key": "style.buttons", "type": "choice", "label": "Buttons", "group": "Page style", "options": ["auto", "pill", "square"] },
+          { "key": "sections", "type": "toggles", "label": "Sections", "options": ["story", "gallery"] },
+          { "key": "hero.image", "type": "image", "label": "Photo" } ]
+        """;
+
+    private const string Defaults = """{ "hero.title": "Coffee", "theme": "cream", "accent": "#D9542C", "hero.variant": "auto", "style.buttons": "auto", "sections": ["story"], "hero.image": "" }""";
+
+    private const string Looks = """
+        [ { "id": "night", "label": { "en": "Night shift", "ar": "وردية الليل" }, "values": { "theme": "night", "accent": "#1F6FEB", "hero.variant": "stub", "style.buttons": "square" } },
+          { "id": "receipt", "label": { "en": "Till receipt", "ar": "إيصال" }, "values": { "theme": "cream", "hero.variant": "poster", "style.buttons": "pill" } } ]
+        """;
+
+    private static Template NewTemplate()
+    {
+        var template = Template.Create("ticket", 1, "Ticket", "Café", null, null, Schema, Defaults, 1);
+        template.SetLooks(Looks);
+        return template;
+    }
+
+    private static (ChatAboutDesignHandler Handler, WriteTextHandlerTests.FakeAssistant Assistant) Chat()
+    {
+        var business = Business.Create(Guid.CreateVersion7(), "Vanilla Café", Slug.FromStorage("vanilla"), Now);
+        var template = NewTemplate();
+        var site = Site.Create(business.Id, "ticket", template.DefaultSettings, Now);
+        var assistant = new WriteTextHandlerTests.FakeAssistant();
+        var quota = WriteTextHandlerTests.Quota(business.Id, assistant, new WriteTextHandlerTests.FakeUsage());
+        var handler = new ChatAboutDesignHandler(new ChatAboutDesignValidator(), quota, assistant, new PassOptimizer(), WriteTextHandlerTests.Businesses(business), WriteTextHandlerTests.Sites(site), WriteTextHandlerTests.Templates(template));
+        return (handler, assistant);
+    }
+
+    private static ChatAboutDesign Ask(string text, bool surprise = false) => new([new AiChatMessage(AiChatMessage.Owner, text)], null, null, surprise);
+
+    private static Dictionary<string, string> Patch(System.Text.Json.JsonElement settings) =>
+        settings.EnumerateObject().ToDictionary(p => p.Name, p => p.Value.ToString());
+
+    [Fact]
+    public async Task The_model_is_told_about_the_templates_own_options_and_looks()
+    {
+        var (handler, assistant) = Chat();
+        await handler.Handle(Ask("Make it look different"), CancellationToken.None);
+        var request = assistant.Requests.Single();
+
+        Assert.Contains("This template's own layout options", request.Input);
+        Assert.Contains("- hero.variant \"stub\": Admission ticket", request.Input);
+        Assert.Contains("- night (Night shift): theme \"night\", accent \"#1F6FEB\", hero.variant \"stub\", style.buttons \"square\"", request.Input);
+        Assert.Equal(["night", "receipt"], request.ResponseSchema["properties"]!["look"]!["enum"]!.AsArray().Select(n => n!.GetValue<string>()));
+        Assert.Contains("prefer them over the shared ones", request.Instructions);
+        Assert.Contains("changes several groups together", request.Instructions);
+        Assert.Equal(0.5, request.Temperature);
+    }
+
+    [Fact]
+    public async Task A_look_is_applied_under_the_models_own_settings()
+    {
+        var (handler, assistant) = Chat();
+        assistant.Answer = JsonNode.Parse("""{ "reply": "Night shift, with pill buttons.", "look": "night", "settings": { "style.buttons": "pill" } }""")!;
+
+        var result = await handler.Handle(Ask("Darker please"), CancellationToken.None);
+
+        Assert.Equal(
+            new Dictionary<string, string> { ["theme"] = "night", ["accent"] = "#1F6FEB", ["hero.variant"] = "stub", ["style.buttons"] = "pill" },
+            Patch(result.Value.Settings));
+    }
+
+    [Fact]
+    public async Task Unknown_looks_and_values_the_schema_refuses_are_dropped()
+    {
+        var (handler, assistant) = Chat();
+        assistant.Answer = JsonNode.Parse("""{ "reply": "Done.", "look": "disco", "settings": { "hero.variant": "lanterns", "theme": "night", "hero.image": "https://evil.test/x.jpg" } }""")!;
+        var result = await handler.Handle(Ask("Surprise"), CancellationToken.None);
+        Assert.Equal(new Dictionary<string, string> { ["theme"] = "night" }, Patch(result.Value.Settings));
+
+        // A look's value is checked like any other: one the template no longer takes is left out, the rest still apply.
+        var template = NewTemplate();
+        var looks = TemplateSchema.ParseLooks("""[ { "id": "odd", "label": { "en": "Odd", "ar": "غريب" }, "values": { "theme": "neon", "style.buttons": "square" } } ]""");
+        var merged = TemplateAiFields.WithLook(null, JsonValue.Create("odd"), looks);
+        var schema = TemplateSchema.Parse(template.SettingsSchema);
+        var fields = schema.Fields.Where(TemplateAiFields.IsEditable).ToList();
+        var patch = await TemplateAiFields.ToPatchAsync(schema, fields, merged, (JsonObject)JsonNode.Parse(Defaults)!);
+        Assert.Equal(["style.buttons"], patch.Select(p => p.Key));
+    }
+
+    [Fact]
+    public async Task Surprise_me_asks_for_a_fresh_design_with_more_room()
+    {
+        var (handler, assistant) = Chat();
+        assistant.Answer = JsonNode.Parse("""{ "reply": "Here is Till receipt.", "look": "receipt", "settings": { "accent": "#118A5C" } }""")!;
+
+        var result = await handler.Handle(Ask("Surprise me", surprise: true), CancellationToken.None);
+        var request = assistant.Requests.Single();
+
+        Assert.Contains("The owner pressed \"Surprise me\"", request.Input);
+        Assert.Contains("When the owner pressed \"Surprise me\"", request.Instructions);
+        Assert.Contains("not in use now", request.Instructions);
+        Assert.Equal(0.9, request.Temperature);
+        Assert.Equal(
+            new Dictionary<string, string> { ["accent"] = "#118A5C", ["hero.variant"] = "poster", ["style.buttons"] = "pill" },
+            Patch(result.Value.Settings));
+    }
+
+    [Fact]
+    public async Task Without_looks_there_is_no_look_to_choose()
+    {
+        var business = Business.Create(Guid.CreateVersion7(), "Vanilla Café", Slug.FromStorage("vanilla"), Now);
+        var template = Template.Create("ticket", 1, "Ticket", "Café", null, null, Schema, Defaults, 1);
+        var assistant = new WriteTextHandlerTests.FakeAssistant();
+        var handler = new ChatAboutDesignHandler(new ChatAboutDesignValidator(), WriteTextHandlerTests.Quota(business.Id, assistant, new WriteTextHandlerTests.FakeUsage()), assistant, new PassOptimizer(),
+            WriteTextHandlerTests.Businesses(business), WriteTextHandlerTests.Sites(Site.Create(business.Id, "ticket", Defaults, Now)), WriteTextHandlerTests.Templates(template));
+        await handler.Handle(Ask("Hi"), CancellationToken.None);
+        Assert.Null(assistant.Requests.Single().ResponseSchema["properties"]!["look"]);
+        Assert.DoesNotContain("This template's looks", assistant.Requests.Single().Input);
+    }
+
+    [Fact]
+    public async Task The_photo_helper_sets_layouts_and_looks_but_not_which_sections_show()
+    {
+        var business = Business.Create(Guid.CreateVersion7(), "Vanilla Café", Slug.FromStorage("vanilla"), Now);
+        var template = NewTemplate();
+        var assistant = new WriteTextHandlerTests.FakeAssistant
+        {
+            Answer = JsonNode.Parse("""{ "summary": "Dark and bold.", "look": "night", "settings": { "hero.title": "Open late", "sections": ["gallery"] } }""")!,
+        };
+        var handler = new SuggestDesignHandler(new SuggestDesignValidator(), WriteTextHandlerTests.Quota(business.Id, assistant, new WriteTextHandlerTests.FakeUsage()), assistant, new PassOptimizer(),
+            WriteTextHandlerTests.Businesses(business), WriteTextHandlerTests.Sites(Site.Create(business.Id, "ticket", Defaults, Now)), WriteTextHandlerTests.Templates(template));
+        byte[] jpeg = [0xFF, 0xD8, 0xFF, 0xE0, 0x00, 0x10, 0x4A, 0x46, 0x49, 0x46, 0x00, 0x01, 0x01];
+
+        var result = await handler.Handle(new SuggestDesign(new AiPhoto(new MemoryStream(jpeg), jpeg.Length), null), CancellationToken.None);
+
+        Assert.True(result.IsSuccess);
+        Assert.Equal(
+            new Dictionary<string, string> { ["theme"] = "night", ["accent"] = "#1F6FEB", ["hero.variant"] = "stub", ["style.buttons"] = "square", ["hero.title"] = "Open late" },
+            Patch(result.Value.Settings));
+        var request = assistant.Requests.Single();
+        Assert.NotNull(request.ResponseSchema["properties"]!["settings"]!["properties"]!["hero.variant"]);
+        Assert.Null(request.ResponseSchema["properties"]!["settings"]!["properties"]!["sections"]);
+        Assert.Contains("- hero.variant \"stub\": Admission ticket", request.Input);
+        Assert.Contains("prefer them over the shared ones", request.Instructions);
+    }
+
+    [Fact]
+    public void Signature_options_are_read_from_the_schema_and_must_be_options()
+    {
+        var schema = TemplateSchema.Parse("""[ { "key": "menu.layout", "type": "choice", "label": "Menu", "options": ["auto", "ledger", "list"], "signature": ["ledger", "nope"] } ]""");
+        Assert.Equal(["ledger"], schema.Fields.Single().Signature);
+        Assert.Null(TemplateSchema.Parse(Schema).Fields.Single(f => f.Key == "theme").Signature);
+    }
+
+    private sealed class PassOptimizer : IImageOptimizer
+    {
+        public Result<OptimizedImage> Optimize(ReadOnlyMemory<byte> image, int maxSide, long maxBytes) => new OptimizedImage(image.ToArray(), "image/jpeg", 1, 1);
     }
 }
 

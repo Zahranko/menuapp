@@ -1,0 +1,106 @@
+/*
+ * Neon Diner's own layout options (manifest "signature", _kit/signatures.ts):
+ *   header.layout "neonsign"  the name glowing in neon tubes on the dark sign, a checkered strip under it (base: "big")
+ *   hero.variant  "neon"      a glowing neon headline over the dark sign, with a checkered floor (base: "type")
+ */
+[data-template="neondiner"] {
+  --sig-neon:
+    0 0 2px #fff,
+    0 0 10px var(--k-acc),
+    0 0 22px var(--k-acc),
+    0 0 40px var(--k-acc);
+  --sig-checks: repeating-conic-gradient(var(--check, #1c1a17) 0 25%, var(--k-bg) 0 50%) 0 0 / 18px 18px;
+}
+
+/* ---------- neon sign header ---------- */
+[data-template="neondiner"] .kit-hd.kit-hd[data-sig~="neonsign"] {
+  border-bottom: 0;
+  background:
+    radial-gradient(ellipse 70% 80% at 50% 40%, color-mix(in srgb, var(--k-acc) 24%, transparent), transparent 70%),
+    var(--sign, #1b1b22);
+  color: #fffaf3;
+  & .kit-hd-in {
+    padding-bottom: 30px;
+  }
+  & .kit-hd-name {
+    font-size: clamp(20px, 6.2vw, 40px);
+    overflow-wrap: break-word;
+    word-break: normal;
+    color: #fffaf3;
+    text-shadow: var(--sig-neon);
+    text-transform: uppercase;
+  }
+  & .kit-hd-logo {
+    box-shadow: 0 0 0 2px #fffaf3, 0 0 14px var(--k-acc);
+  }
+  & :is(.kit-hd-link, .kit-hd-today, .kit-hd-burger) {
+    color: #f3efe6;
+  }
+  & .kit-hd-burger {
+    border-color: color-mix(in srgb, #fff 35%, transparent);
+  }
+  & > .kit-sig-art {
+    position: absolute;
+    inset: auto 0 0;
+    height: 18px;
+    background: var(--sig-checks);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  [data-template="neondiner"] .kit-hd.kit-hd[data-sig~="neonsign"] .kit-hd-name {
+    animation: diner-flicker 6s infinite;
+  }
+}
+
+/* ---------- neon opening ---------- */
+[data-template="neondiner"] .kit-hv.kit-hv[data-sig~="neon"] {
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 40%, color-mix(in srgb, var(--k-acc) 26%, transparent), transparent 70%),
+    var(--sign, #1b1b22);
+  color: #fffaf3;
+  padding-bottom: 22px;
+  & .kit-hv-letter {
+    display: none;
+  }
+  & .kit-hv-in {
+    min-height: 0;
+    padding-block: 44px 50px;
+    text-align: center;
+  }
+  & .kit-hv-text {
+    justify-items: center;
+  }
+  & .kit-hv-title {
+    padding: 10px 18px;
+    border: 3px solid #fffaf3;
+    border-radius: 18px;
+    color: #fffaf3;
+    text-transform: uppercase;
+    text-shadow: var(--sig-neon);
+    box-shadow: 0 0 12px var(--k-acc), inset 0 0 12px var(--k-acc);
+  }
+  & .kit-hv-eyebrow {
+    color: #ffd37a;
+    text-shadow: 0 0 8px #ffb000;
+  }
+  & :is(.kit-hv-lede, .kit-hv-meta) {
+    color: #e6e1d6;
+  }
+  & .kit-hv-btn.is-second {
+    color: #fffaf3;
+  }
+  & :is(.kit-hv-actions, .kit-hv-meta) {
+    justify-content: center;
+  }
+  & > .kit-sig-art {
+    position: absolute;
+    inset: auto 0 0;
+    height: 22px;
+    background: var(--sig-checks);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  [data-template="neondiner"] .kit-hv.kit-hv[data-sig~="neon"] .kit-hv-title {
+    animation: diner-flicker 6s infinite;
+  }
+}

@@ -14,6 +14,21 @@
   "thumbnail": "/templates/clinic/thumbnail.png",
   "sample": "clinic",
   "sectionsLayout": { "order": ["menu", "steps", "reviews", "faq", "visit"] },
+  "signature": {
+    "menu.layout": [
+      {"id":"care","base":"list","label":"Care cards","labelAr":"بطاقات العناية","preview":"/templates/clinic/previews/menu-care.svg"}
+    ],
+    "hero.variant": [
+      {"id":"calm","base":"circle","label":"Calm rings","labelAr":"حلقات هادئة","preview":"/templates/clinic/previews/hero-calm.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"fresh","label":{"en":"Fresh clinic","ar":"عيادة منعشة"},"values":{"theme":"fresh","accent":"#1F6FEB","font":"modern","hero.variant":"calm","menu.layout":"care","header.layout":"classic"}},
+    {"id":"mint","label":{"en":"Mint care","ar":"عناية النعناع"},"values":{"theme":"mint","accent":"#0E8C7B","font":"round","hero.variant":"calm","menu.layout":"care","style.buttons":"pill"}},
+    {"id":"warm","label":{"en":"Warm family","ar":"عائلة دافئة"},"values":{"theme":"warm","accent":"#D9653B","font":"round","hero.variant":"split","menu.layout":"care","cards.style":"tinted"}},
+    {"id":"night","label":{"en":"Night shift","ar":"الوردية الليلية"},"values":{"theme":"night","accent":"#4C9AFF","font":"modern","hero.variant":"calm","menu.layout":"list","header.layout":"minimal"}},
+    {"id":"precise","label":{"en":"Precise","ar":"دقيق"},"values":{"theme":"fresh","accent":"#6B4EE6","font":"grotesk","hero.variant":"split","menu.layout":"care","style.buttons":"square","style.headings":"normal"}}
+  ],
   "schema": [
     {
       "key": "font",

@@ -21,6 +21,7 @@ import {
 import type { OrderAction, OrderButton } from "./options";
 import { Picture } from "./Picture";
 import { sortLinks } from "./sections";
+import { signatureOf } from "./signatures";
 
 /*
  * The shared headers and openings of the "Page layout" options (_kit/layout.ts, styled by _kit/layout.css).
@@ -137,7 +138,16 @@ type HeaderProps = {
   buttonClassName?: string;
   /** Extra controls the header keeps whatever its layout (a search button, for example). */
   tools?: ReactNode;
+  /** Decoration for the template's own ("signature") header options, drawn behind it (aria-hidden). */
+  art?: ReactNode;
 };
+
+/** The decoration slot of a signature header or opening: hidden from screen readers, styled by the template. */
+const SigArt = ({ art }: { art?: ReactNode }) => (
+  <span className="kit-sig-art" aria-hidden="true">
+    {art}
+  </span>
+);
 
 /** The template's own header ("auto"), or the shared header in the owner's layout. */
 export function SiteHeader({
@@ -187,9 +197,11 @@ function KitHeader({
   logoClassName,
   buttonClassName,
   tools,
+  art,
   layout,
 }: HeaderProps & { layout: Exclude<HeaderLayout, "auto"> }) {
   const copy = COPY[ctx.locale];
+  const sig = signatureOf(ctx.site, "header.layout");
   // Links to the page's sections follow the owner's order of the sections ("sections.order").
   const links = sortLinks(ctx.site.settings, own);
   const { headerStyle, sticky } = top.layout;
@@ -273,7 +285,9 @@ function KitHeader({
       data-stick={stick || undefined}
       data-over={over || undefined}
       data-links={links.length}
+      data-sig={sig}
     >
+      {sig && <SigArt art={art} />}
       <div className="kit-hd-in">
         {layout === "drawer" && drawer}
         {layout === "split" && links.length > 1 ? (
@@ -324,6 +338,8 @@ type HeroProps = {
   buttonClassNames?: [string, string?];
   /** Where the full menu is ("#menu", or the menu page of a multi-page site). */
   menuHref?: string;
+  /** Decoration for the template's own ("signature") openings (aria-hidden). */
+  art?: ReactNode;
 };
 
 /** The template's own opening ("auto"), or the shared opening in the owner's layout. */
@@ -378,8 +394,10 @@ function KitHero({
   actions,
   buttonClassNames,
   menuHref = "#menu",
+  art,
   variant,
 }: HeroProps & { variant: Exclude<HeroVariant, "auto"> }) {
+  const sig = signatureOf(ctx.site, "hero.variant");
   const headline = title ?? (ctx.text("hero.title") || ctx.site.business.name);
   const kicker = eyebrow ?? ctx.text("hero.eyebrow");
   const lede = subtitle ?? ctx.text("hero.subtitle");
@@ -446,9 +464,11 @@ function KitHero({
         photo || (variant === "collage" && photos.length > 0) || undefined
       }
       data-len={lengthOf(headline)}
+      data-sig={sig}
       data-section="hero"
       aria-labelledby="kit-hv-title"
     >
+      {sig && <SigArt art={art} />}
       {variant === "full" && media}
       {variant === "full" && photo && (
         <span className="kit-hv-shade" aria-hidden="true" />

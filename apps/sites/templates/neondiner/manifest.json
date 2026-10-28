@@ -14,6 +14,21 @@
   "thumbnail": "/templates/neondiner/thumbnail.png",
   "sample": "fastfood",
   "sectionsLayout": { "order": ["menu", "story", "visit"] },
+  "signature": {
+    "header.layout": [
+      {"id":"neonsign","base":"big","label":"Neon sign","labelAr":"لافتة نيون","preview":"/templates/neondiner/previews/header-neonsign.svg"}
+    ],
+    "hero.variant": [
+      {"id":"neon","base":"type","label":"Neon headline","labelAr":"عنوان نيون","preview":"/templates/neondiner/previews/hero-neon.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"diner","label":{"en":"Classic diner","ar":"مطعم كلاسيكي"},"values":{"theme":"diner","accent":"#D7263D","font":"condensed","header.layout":"neonsign","hero.variant":"neon","menu.layout":"auto"}},
+    {"id":"milkshake","label":{"en":"Milkshake bar","ar":"بار الميلك شيك"},"values":{"theme":"cherry","accent":"#6C3FC5","font":"round","header.layout":"neonsign","hero.variant":"neon","menu.layout":"grid","style.buttons":"pill","style.photos":"circle"}},
+    {"id":"mint","label":{"en":"Mint jukebox","ar":"صندوق موسيقى نعناعي"},"values":{"theme":"mint","accent":"#1B9AAA","font":"bold","header.layout":"neonsign","hero.variant":"split","menu.layout":"list","visit.layout":"cards"}},
+    {"id":"latenight","label":{"en":"Late night","ar":"سهرة متأخرة"},"values":{"theme":"midnight","accent":"#F4A300","font":"condensed","header.layout":"classic","hero.variant":"neon","menu.layout":"carousel","style.headings":"uppercase"}},
+    {"id":"drivein","label":{"en":"Drive-in","ar":"مطعم السيارات"},"values":{"theme":"diner","accent":"#1B9AAA","font":"condensed","header.layout":"neonsign","hero.variant":"poster","menu.layout":"large","story.layout":"quote"}}
+  ],
   "schema": [
     {
       "key": "font",

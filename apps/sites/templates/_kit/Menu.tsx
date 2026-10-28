@@ -5,6 +5,7 @@ import { cx, type SiteContext } from "./context";
 import { menuAttributes, menuOptions, kitMenuOn, resolveMenu, type MenuLayout, type ResolvedMenu } from "./menu";
 import { MenuNav } from "./MenuNav";
 import { Picture } from "./Picture";
+import { signatureOf } from "./signatures";
 import type { MenuItem } from "./site-data";
 
 /*
@@ -262,7 +263,7 @@ function KitMenu({
   );
 
   return (
-    <div className={cx("kit-mn", page && "kit-mn-page")} id={id} {...menuAttributes(m)} data-flat={flat ? "" : undefined}>
+    <div className={cx("kit-mn", page && "kit-mn-page")} id={id} {...menuAttributes(m)} data-sig={signatureOf(ctx.site, "menu.layout")} data-flat={flat ? "" : undefined}>
       <div className="kit-mn-frame">
         {m.nav !== "none" && (
           <MenuNav

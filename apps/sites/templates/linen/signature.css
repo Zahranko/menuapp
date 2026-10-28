@@ -1,0 +1,129 @@
+/*
+ * Linen List's own layout options (manifest "signature", _kit/signatures.ts):
+ *   menu.layout  "ledger"       a letterpress menu: double rules, centered small-caps courses, a diamond between (base: "compact")
+ *   hero.variant "letterpress"  a printed title page: double rules, small caps and an inked name (base: "type")
+ */
+[data-template="linen"] {
+  --sig-weave:
+    repeating-linear-gradient(0deg, color-mix(in srgb, var(--k-ink) 3%, transparent) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(90deg, color-mix(in srgb, var(--k-ink) 3%, transparent) 0 1px, transparent 1px 4px);
+}
+
+/* ---------- the ledger menu ---------- */
+[data-template="linen"] .kit-mn.kit-mn.kit-mn[data-sig~="ledger"] {
+  & .kit-mn-cats {
+    gap: 30px;
+  }
+  & .kit-mn-cat {
+    padding: 18px 16px 10px;
+    border-block: 4px double var(--k-ink);
+    background: var(--sig-weave);
+  }
+  & .kit-mn-title {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+    border: 0;
+  }
+  & .kit-mn-h {
+    font-family: var(--k-fb);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+  & .kit-mn-title::after {
+    content: "";
+    width: 9px;
+    height: 9px;
+    rotate: 45deg;
+    border: 1.5px solid var(--k-acc-text);
+  }
+  & .kit-mn-count {
+    font-style: italic;
+  }
+  & .kit-mn-item {
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+  & .kit-mn-name {
+    font-family: var(--k-fd);
+    font-size: 19px;
+    font-style: italic;
+  }
+  & .kit-mn-price {
+    font-family: var(--k-fd);
+    font-variant-numeric: oldstyle-nums;
+  }
+  & .kit-mn-desc {
+    font-size: 14px;
+  }
+  & .kit-mn-tag {
+    border: 1px solid currentColor;
+    border-radius: 0;
+    background: transparent;
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+}
+
+/* ---------- the title page ---------- */
+[data-template="linen"] .kit-hv.kit-hv[data-sig~="letterpress"] {
+  & .kit-hv-letter {
+    display: none;
+  }
+  & .kit-hv-in {
+    min-height: 0;
+    max-width: 720px;
+    margin: 18px 16px;
+    margin-inline: auto;
+    padding: 34px 22px 38px;
+    border-block: 4px double var(--k-ink);
+    background: var(--sig-weave);
+    text-align: center;
+  }
+  & .kit-hv-text {
+    justify-items: center;
+  }
+  & .kit-hv-eyebrow {
+    color: var(--k-muted);
+    letter-spacing: 0.3em;
+  }
+  & .kit-hv-title {
+    font-family: var(--k-fd);
+    font-weight: 500;
+    text-shadow: 0 1px 0 color-mix(in srgb, var(--k-bg) 80%, #fff), 0 -1px 0 color-mix(in srgb, var(--k-ink) 25%, transparent);
+  }
+  & .kit-hv-title::after {
+    content: "";
+    display: block;
+    width: 10px;
+    height: 10px;
+    margin: 18px auto 0;
+    rotate: 45deg;
+    border: 1.5px solid var(--k-acc-text);
+    box-shadow: 22px -22px 0 -3px var(--k-line), -22px 22px 0 -3px var(--k-line);
+  }
+  & .kit-hv-lede {
+    font-family: var(--k-fd);
+    font-style: italic;
+  }
+  & :is(.kit-hv-actions, .kit-hv-meta) {
+    justify-content: center;
+  }
+  & .kit-hv-btn {
+    border-radius: 0;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 13px;
+  }
+}
+@container (min-width: 760px) {
+  [data-template="linen"] .kit-hv.kit-hv[data-sig~="letterpress"] .kit-hv-in {
+    margin-block: 32px;
+    padding: 56px 48px 60px;
+  }
+}

@@ -2,6 +2,7 @@ import { strings } from "@/lib/i18n";
 import { image, list, sectionOn, text } from "@/lib/settings";
 import type { PublicSite } from "@/lib/types";
 import { logoOptions, type LogoOptions } from "./logo";
+import { signatureSite } from "./signatures";
 import { contact, featured, hoursRows, menu, todayLine, type Contact, type HoursRow, type MenuItem, type MenuSection } from "./site-data";
 
 /** What every template works from, computed once per render. Templates add their own copy on top. */
@@ -29,7 +30,9 @@ export type SiteContext = {
   now: Date;
 };
 
-export function siteContext(site: PublicSite, now: Date = new Date()): SiteContext {
+export function siteContext(raw: PublicSite, now: Date = new Date()): SiteContext {
+  // The template's own ("signature") layout options read as the shared option they build on (_kit/signatures.ts).
+  const site = signatureSite(raw);
   const hours = hoursRows(site, now);
   const sections = menu(site);
   const read = (key: string) => text(site.settings, key).trim();

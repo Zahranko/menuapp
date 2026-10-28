@@ -1,0 +1,155 @@
+/*
+ * Maison's own layout options (manifest "signature", _kit/signatures.ts):
+ *   menu.layout  "engraved"  an engraved menu card: a fine double gold frame, centered courses, a diamond between dishes (base: "compact")
+ *   hero.variant "cinema"    a cinema screen: letterbox bars and a thin gold frame over the photo, the name centered (base: "full")
+ */
+
+/* ---------- engraved card ---------- */
+[data-template="maison"] .kit-mn.kit-mn.kit-mn[data-sig~="engraved"] {
+  & .kit-mn-cats {
+    gap: 28px;
+  }
+  & .kit-mn-cat {
+    padding: 28px 20px 18px;
+    border: 1px solid var(--k-acc);
+    outline: 1px solid color-mix(in srgb, var(--k-acc) 55%, transparent);
+    outline-offset: -7px;
+    text-align: center;
+  }
+  & .kit-mn-title {
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    border: 0;
+  }
+  & .kit-mn-h {
+    justify-content: center;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-size: 20px;
+  }
+  & .kit-mn-title::after {
+    content: "";
+    order: 3;
+    width: 72px;
+    height: 10px;
+    background: var(--k-acc);
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 10'%3E%3Cpath d='M0 4.5h28v1H0zM44 4.5h28v1H44z'/%3E%3Cpath d='M36 0l5 5-5 5-5-5z'/%3E%3C/svg%3E") center / contain no-repeat;
+  }
+  & .kit-mn-count {
+    display: none;
+  }
+  & .kit-mn-title > * {
+    margin-inline: auto;
+    text-align: center;
+  }
+  & .kit-mn-subh {
+    justify-content: center;
+    margin-inline: auto;
+    text-align: center;
+    font-style: italic;
+  }
+  & .kit-mn-list {
+    gap: 0;
+  }
+  & .kit-mn-li + .kit-mn-li .kit-mn-item::before {
+    content: "";
+    order: -1;
+    flex: none;
+    display: block;
+    width: 7px;
+    height: 7px;
+    margin: 0 auto 14px;
+    rotate: 45deg;
+    border: 1px solid var(--k-acc);
+  }
+  & .kit-mn-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 10px 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+  & .kit-mn-media {
+    display: none;
+  }
+  & .kit-mn-text {
+    align-items: center;
+  }
+  & .kit-mn-head {
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  & .kit-mn-dots {
+    display: none;
+  }
+  & .kit-mn-name {
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.92em;
+  }
+  & .kit-mn-price {
+    color: var(--k-acc-text);
+    font-family: var(--k-fd);
+    font-style: italic;
+  }
+  & .kit-mn-desc {
+    font-style: italic;
+    max-width: 34ch;
+    margin-inline: auto;
+  }
+  & .kit-mn-tags {
+    justify-content: center;
+  }
+}
+
+/* ---------- cinema screen ---------- */
+[data-template="maison"] .kit-hv.kit-hv[data-sig~="cinema"] {
+  border-block: 22px solid #000;
+  text-align: center;
+  & > .kit-sig-art {
+    position: absolute;
+    inset: 14px;
+    z-index: 0;
+    border: 1px solid var(--k-acc);
+    outline: 1px solid color-mix(in srgb, var(--k-acc) 45%, transparent);
+    outline-offset: -6px;
+    pointer-events: none;
+  }
+  & .kit-hv-in {
+    position: relative;
+    z-index: 1;
+    padding-inline: 34px;
+    padding-bottom: 46px;
+  }
+  & .kit-hv-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-inline: auto;
+    text-align: center;
+  }
+  & :is(.kit-hv-title, .kit-hv-eyebrow) {
+    text-align: center;
+  }
+  & .kit-hv-eyebrow {
+    justify-content: center;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+  & .kit-hv-title {
+    font-weight: 400;
+    letter-spacing: 0.02em;
+  }
+  & :is(.kit-hv-actions, .kit-hv-meta) {
+    justify-content: center;
+  }
+  & .kit-hv-lede {
+    margin-inline: auto;
+  }
+}

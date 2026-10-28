@@ -14,6 +14,21 @@
   "thumbnail": "/templates/folio/thumbnail.png",
   "sample": "folio",
   "sectionsLayout": { "order": ["picks", "menu", "gallery", "story", "reviews", "visit"] },
+  "signature": {
+    "hero.variant": [
+      {"id":"cover","base":"poster","label":"Magazine cover","labelAr":"غلاف مجلة","preview":"/templates/folio/previews/hero-cover.svg"}
+    ],
+    "menu.layout": [
+      {"id":"lookbook","base":"large","label":"Lookbook","labelAr":"كتيّب الإطلالات","preview":"/templates/folio/previews/menu-lookbook.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"paper","label":{"en":"Paper issue","ar":"عدد ورقي"},"values":{"theme":"paper","accent":"#1A1A1A","font":"classic","hero.variant":"cover","menu.layout":"lookbook","header.layout":"centered"}},
+    {"id":"white","label":{"en":"White studio","ar":"استوديو أبيض"},"values":{"theme":"white","accent":"#3E5C82","font":"grotesk","hero.variant":"cover","menu.layout":"lookbook","style.headings":"uppercase"}},
+    {"id":"stone","label":{"en":"Stone","ar":"حجر"},"values":{"theme":"stone","accent":"#8C3B2E","font":"classic","hero.variant":"cover","menu.layout":"magazine"}},
+    {"id":"ink","label":{"en":"Ink","ar":"حبر"},"values":{"theme":"ink","accent":"#E7DCC8","font":"classic","hero.variant":"cover","menu.layout":"lookbook","header.layout":"minimal"}},
+    {"id":"soft","label":{"en":"Soft linen","ar":"كتان ناعم"},"values":{"theme":"paper","accent":"#6B7A5E","font":"soft","hero.variant":"split","menu.layout":"lookbook","style.photos":"arch"}}
+  ],
   "schema": [
     {
       "key": "font",

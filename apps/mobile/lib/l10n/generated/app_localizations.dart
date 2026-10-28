@@ -2431,6 +2431,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{section}, {position} of {count}'**
   String sectionPosition(String section, int position, int count);
+
+  /// AI chat starter chip: the assistant picks a fresh design (one of the template's looks or its own layouts).
+  ///
+  /// In en, this message translates to:
+  /// **'Surprise me'**
+  String get aiChatSurprise;
+
+  /// Editor strip of the template's ready-made looks (named presets of colors, fonts and layouts).
+  ///
+  /// In en, this message translates to:
+  /// **'Looks'**
+  String get looksTitle;
+
+  /// No description provided for @looksSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready-made styles for this template. Tap one to try it.'**
+  String get looksSubtitle;
+
+  /// Screen reader label of a look tile.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the {look} look'**
+  String lookApply(String look);
+
+  /// No description provided for @lookApplied.
+  ///
+  /// In en, this message translates to:
+  /// **'{look} is on'**
+  String lookApplied(String look);
+
+  /// No description provided for @lookUndone.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to your design'**
+  String get lookUndone;
 }
 
 class _AppLocalizationsDelegate

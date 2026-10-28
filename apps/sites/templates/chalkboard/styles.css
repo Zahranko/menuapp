@@ -8,6 +8,7 @@
 @import "../_kit/menu.css";
 @import "../_kit/sections.css";
 @import "../_kit/style.css";
+@import "./signature.css";
 
 .t-chalk {
   container: page / inline-size;

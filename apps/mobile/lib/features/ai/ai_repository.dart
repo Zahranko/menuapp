@@ -31,12 +31,14 @@ class AiRepository {
 
   /// The editor's chat assistant: the conversation so far ending with the owner's new message (only the latest [chatHistory]
   /// are sent), an optional [photo] for that message and the language to write in.
-  Future<DesignChatAnswer> chat(List<AiChatTurn> messages, {String? language, AiPhoto? photo}) => _call(() async {
+  /// [surprise] is the "Surprise me" chip: the assistant picks a fresh design from the template's looks and layouts.
+  Future<DesignChatAnswer> chat(List<AiChatTurn> messages, {String? language, AiPhoto? photo, bool surprise = false}) => _call(() async {
         final recent = messages.length > chatHistory ? messages.sublist(messages.length - chatHistory) : messages;
         final form = FormData.fromMap({
           'messages': jsonEncode([for (final m in recent) {'role': m.role, 'text': m.text}]),
           'language': ?language,
           if (photo != null) 'file': _file(photo),
+          if (surprise) 'surprise': 'true',
         });
         return DesignChatAnswer.fromJson((await _dio.post<Map<String, dynamic>>('/api/v1/ai/chat', data: form, options: _slow)).data!);
       });

@@ -9,6 +9,7 @@
 @import "../_kit/menu.css";
 @import "../_kit/sections.css";
 @import "../_kit/style.css";
+@import "./signature.css";
 
 .t-souq {
   container: site / inline-size;

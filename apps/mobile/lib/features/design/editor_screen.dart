@@ -20,6 +20,7 @@ import '../site/site_web_view.dart';
 import 'design_controller.dart';
 import 'design_models.dart';
 import 'field_widgets.dart';
+import 'looks_strip.dart';
 
 /// Customize: a live preview on top, controls generated from the template's schema below, Publish at the bottom.
 /// Changes save as a draft 600 ms after the last edit; the live site changes only on Publish.
@@ -359,6 +360,14 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
                 child: ListView(
                   padding: const EdgeInsets.fromLTRB(Ui.gutter, 20, Ui.gutter, 24),
                   children: [
+                    if (template != null && template.looks.isNotEmpty)
+                      LooksStrip(
+                        key: ValueKey('looks-${template.id}'),
+                        looks: template.looks,
+                        fields: fields,
+                        values: () => _settings ?? const {},
+                        onApply: _applySuggestions,
+                      ),
                     AiDesignAssistant(chat: _chat, fields: fields, values: () => _settings ?? const {}, onApply: _applySuggestions),
                     for (final entry in groups.entries)
                       SectionCard(

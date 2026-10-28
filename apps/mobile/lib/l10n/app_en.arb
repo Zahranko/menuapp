@@ -779,5 +779,32 @@
         "type": "int"
       }
     }
-  }
+  },
+  "aiChatSurprise": "Surprise me",
+  "@aiChatSurprise": {
+    "description": "AI chat starter chip: the assistant picks a fresh design (one of the template's looks or its own layouts)."
+  },
+  "looksTitle": "Looks",
+  "@looksTitle": {
+    "description": "Editor strip of the template's ready-made looks (named presets of colors, fonts and layouts)."
+  },
+  "looksSubtitle": "Ready-made styles for this template. Tap one to try it.",
+  "lookApply": "Use the {look} look",
+  "@lookApply": {
+    "description": "Screen reader label of a look tile.",
+    "placeholders": {
+      "look": {
+        "type": "String"
+      }
+    }
+  },
+  "lookApplied": "{look} is on",
+  "@lookApplied": {
+    "placeholders": {
+      "look": {
+        "type": "String"
+      }
+    }
+  },
+  "lookUndone": "Back to your design"
 }

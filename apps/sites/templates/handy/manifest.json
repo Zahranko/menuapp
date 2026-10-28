@@ -14,6 +14,21 @@
   "thumbnail": "/templates/handy/thumbnail.png",
   "sample": "home",
   "sectionsLayout": { "order": ["highlights", "menu", "areas", "steps", "reviews", "faq", "visit"] },
+  "signature": {
+    "header.layout": [
+      {"id":"toolbar","base":"classic","label":"Toolbox stripe","labelAr":"شريط صندوق العُدّة","preview":"/templates/handy/previews/header-toolbar.svg"}
+    ],
+    "menu.layout": [
+      {"id":"workorder","base":"list","label":"Work orders","labelAr":"أوامر العمل","preview":"/templates/handy/previews/menu-workorder.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"toolbox","label":{"en":"Toolbox","ar":"صندوق العُدّة"},"values":{"theme":"clean","accent":"#1E5BB8","font":"round","header.layout":"toolbar","menu.layout":"workorder","hero.variant":"auto"}},
+    {"id":"sunny","label":{"en":"Sunny crew","ar":"فريق مشمس"},"values":{"theme":"sunny","accent":"#E8572A","font":"round","header.layout":"toolbar","menu.layout":"workorder","style.buttons":"rounded"}},
+    {"id":"garden","label":{"en":"Garden care","ar":"عناية الحدائق"},"values":{"theme":"sage","accent":"#118A5C","font":"modern","header.layout":"classic","menu.layout":"workorder","hero.variant":"split"}},
+    {"id":"navy","label":{"en":"Night service","ar":"خدمة ليلية"},"values":{"theme":"navy","accent":"#F6C21A","font":"grotesk","header.layout":"toolbar","menu.layout":"workorder","style.headings":"uppercase"}},
+    {"id":"pro","label":{"en":"Pro team","ar":"فريق محترف"},"values":{"theme":"clean","accent":"#6B4EE6","font":"grotesk","header.layout":"toolbar","menu.layout":"list","hero.variant":"poster","style.buttons":"square"}}
+  ],
   "schema": [
     {
       "key": "font",

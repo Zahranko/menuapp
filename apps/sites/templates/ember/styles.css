@@ -13,6 +13,7 @@
 @import "../_kit/menu.css";
 @import "../_kit/sections.css";
 @import "../_kit/style.css";
+@import "./signature.css";
 
 .em {
   --pad: clamp(16px, 4.5vw, 48px);

@@ -88,7 +88,18 @@ export default function ChalkBoardTemplate({ site, now }: TemplateProps & { now?
             <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} />
           </header>
         </SiteMasthead>
-        <SiteHero ctx={ctx} top={top} title={site.business.name} subtitle={ctx.text("hero.title")} />
+        <SiteHero
+          ctx={ctx}
+          top={top}
+          title={site.business.name}
+          subtitle={ctx.text("hero.title")}
+          art={
+            <>
+              <Doodle kind="star" />
+              <Doodle kind="cup" />
+            </>
+          }
+        />
 
         <main>
           {ordered(ctx, {

@@ -63,6 +63,21 @@
 // which the app's editor shows as picture tiles. Every key must be one of the field's options and every picture must exist
 // in public/.
 //
+// Signature options: a manifest may add options only that template has to the shared layout fields, in
+//   "signature": { "hero.variant": [{ "id": "board", "base": "type", "label": "Chalkboard", "labelAr": "سبورة",
+//                                     "preview": "/templates/chalkboard/previews/hero-board.svg" }], "menu.layout": [...] }
+// Fields: header.layout, hero.variant, menu.layout and the section layouts. Each option builds on a shared option of the
+// field ("base": its markup and layout) and the template's own CSS (templates/<id>/signature.css) turns it into the
+// template's own version, keyed on data-sig="<id>" (_kit/signatures.ts). The options go right after "auto", so the
+// owner sees them first, and the field lists them in "signature". Ids are unique across every template. The mapping
+// option → base goes to templates/_kit/signatures.generated.json for the sites.
+//
+// Looks: a manifest lists 4 to 6 named presets in "looks": [{ "id": "night", "label": { "en": "Night souq", "ar": "..." },
+// "values": { "theme": "night", "hero.variant": "stall", ... } }]: a bundle of values across the kit groups, colors and
+// fonts that the editor applies in one tap. Values may only set fields the template has (no texts, photos, hours or
+// facts), each to one of its options (or a #RRGGBB color where the field takes any color). In registry.json every look of a
+// template sets the same settings: one a look leaves out gets the template's default there.
+//
 // Hero slider: each manifest says what its opening looks like in "heroSlider" (left out of registry.json):
 //   { "kind": "backdrop" | "panel" | "band", "source": "hero.image" | "hero.images", "skip": ["hero.overlay", ...],
 //     "defaults": { "hero.transition": "fade" } }   (optional: the template's own defaults, so its slideshow stays as it was)
@@ -99,6 +114,18 @@ const OWN_DEFAULTS = new Set(["social.show"]);
 /** What each shared section layout needs in the template's schema to have something to show. */
 const SECTION_CONTENT = { highlights: "highlights.1.title", story: "story.text", gallery: "gallery", reviews: "reviews.1.quote", visit: "hours" };
 
+/** Shared fields that take template-only ("signature") options. */
+const SIGNATURE_FIELDS = new Set(["header.layout", "hero.variant", "menu.layout", ...sectionsSettings.fields.map((f) => f.key)]);
+/** option → base per template and field, written to templates/_kit/signatures.generated.json. */
+const signatureMap = {};
+const signatureIds = new Map();
+/** Field types a look may set: values that change the look, never the owner's texts, photos or facts. */
+const LOOK_TYPES = new Set(["choice", "palette", "color", "toggle", "range"]);
+
+/** Tests: "--manifest <file>" uses that file in place of the manifest with the same id; "--dry" checks without writing. */
+const swapAt = process.argv.indexOf("--manifest");
+const swap = swapAt > 0 ? JSON.parse(readFileSync(process.argv[swapAt + 1], "utf8")) : null;
+
 function fail(message) {
   console.error(`templates:registry: ${message}`);
   process.exit(1);
@@ -107,7 +134,8 @@ function fail(message) {
 const manifests = readdirSync(root, { withFileTypes: true })
   .filter((d) => d.isDirectory() && existsSync(path.join(root, d.name, "manifest.json")))
   .map((d) => {
-    const manifest = JSON.parse(readFileSync(path.join(root, d.name, "manifest.json"), "utf8"));
+    const read = JSON.parse(readFileSync(path.join(root, d.name, "manifest.json"), "utf8"));
+    const manifest = swap?.id === d.name ? swap : read;
     if (!/^[a-z0-9]{3,30}$/.test(d.name)) fail(`${d.name}: template ids use 3 to 30 lowercase letters and digits (they double as fixture URLs)`);
     if (manifest.id !== d.name) fail(`${d.name}/manifest.json has id "${manifest.id}"; it must match the folder name`);
     for (const key of ["number", "name", "category", "version", "schema", "defaults"]) {
@@ -122,6 +150,7 @@ const manifests = readdirSync(root, { withFileTypes: true })
     withMenuOptions(d.name, manifest);
     withSectionOptions(d.name, manifest);
     withHeroOptions(d.name, manifest);
+    withSignatureOptions(d.name, manifest);
     const keys = new Set();
     for (const field of manifest.schema) {
       if (!FIELD_TYPES.has(field.type)) fail(`${d.name}: field "${field.key}" has unknown type "${field.type}"`);
@@ -133,6 +162,7 @@ const manifests = readdirSync(root, { withFileTypes: true })
     }
     manifest.schema = manifest.schema.map((field) => withArabic(d.name, field));
     checkArabicText(d.name, manifest);
+    checkLooks(d.name, manifest);
     return manifest;
   })
   .sort((a, b) => a.number - b.number);
@@ -414,6 +444,87 @@ function withHeroOptions(id, manifest) {
   insertGroup(manifest, grouped, { ...heroSettings.defaults, ...own }, anchor?.group);
 }
 
+
+/** Adds the template's own options (manifest "signature") to the shared layout fields, right after "auto". */
+function withSignatureOptions(id, manifest) {
+  const own = manifest.signature;
+  delete manifest.signature;
+  if (own === undefined) return;
+  if (own === null || typeof own !== "object" || Array.isArray(own)) fail(`${id}: "signature" maps field keys to lists of options`);
+  for (const [key, options] of Object.entries(own)) {
+    if (!SIGNATURE_FIELDS.has(key)) fail(`${id}: "signature" cannot add options to "${key}" (only ${[...SIGNATURE_FIELDS].join(", ")})`);
+    const at = manifest.schema.findIndex((f) => f.key === key);
+    if (at < 0) fail(`${id}: "signature" names "${key}", which the template does not have`);
+    if (!Array.isArray(options) || options.length === 0) fail(`${id}: "signature.${key}" must list at least one option`);
+    const field = { ...manifest.schema[at] };
+    const added = [];
+    for (const o of options) {
+      const where = `${id}: "signature.${key}" option "${o?.id}"`;
+      if (typeof o?.id !== "string" || !/^[a-z][a-z0-9]{2,19}$/.test(o.id)) fail(`${id}: signature option ids use 3 to 20 lowercase letters and digits`);
+      if (field.options.includes(o.id)) fail(`${where} is already an option of the field`);
+      if (signatureIds.has(o.id)) fail(`${where} is also a signature option of ${signatureIds.get(o.id)}; ids are unique across templates`);
+      signatureIds.set(o.id, id);
+      if (o.base === "auto" || !field.options.includes(o.base)) fail(`${where} needs a "base": one of the field's shared options`);
+      for (const k of ["label", "labelAr"]) if (typeof o[k] !== "string" || o[k].trim() === "") fail(`${where} needs "${k}"`);
+      if (typeof o.preview !== "string" || !/^\/templates\/[a-z0-9]+\/previews\/[a-z0-9-]+\.svg$/.test(o.preview) || !o.preview.startsWith(`/templates/${id}/previews/`)) fail(`${where} needs a "preview" SVG in /templates/${id}/previews/`);
+      const picture = path.join(publicDir, o.preview);
+      if (!existsSync(picture)) fail(`${where}: ${o.preview} does not exist`);
+      if (readFileSync(picture, "utf8").includes("<text")) fail(`${where}: ${o.preview} uses <text>; draw it with shapes so it looks the same everywhere`);
+      const extra = Object.keys(o).filter((k) => !["id", "base", "label", "labelAr", "preview"].includes(k));
+      if (extra.length) fail(`${where} has unknown keys: ${extra.join(", ")}`);
+      added.push(o);
+      ((signatureMap[id] ??= {})[key] ??= {})[o.id] = o.base;
+    }
+    const ids = added.map((o) => o.id);
+    const after = (list) => [list[0], ...ids, ...list.slice(1)];
+    const map = (current, pick) => Object.fromEntries(after(field.options).map((opt) => [opt, ids.includes(opt) ? pick(added.find((a) => a.id === opt)) : current?.[opt]]).filter(([, v]) => v !== undefined));
+    field.optionLabels = map(field.optionLabels, (o) => o.label);
+    field.optionLabelsAr = map(field.optionLabelsAr, (o) => o.labelAr);
+    field.previews = map(field.previews, (o) => o.preview);
+    field.options = after(field.options);
+    field.signature = ids;
+    manifest.schema[at] = field;
+  }
+}
+
+
+/** Checks the template's looks ("looks"): 4 to 6 named presets of known fields and options. */
+function checkLooks(id, manifest) {
+  const looks = manifest.looks;
+  if (looks === undefined) return;
+  if (!Array.isArray(looks) || looks.length < 4 || looks.length > 6) fail(`${id}: "looks" must list 4 to 6 looks`);
+  const fields = new Map(manifest.schema.map((f) => [f.key, f]));
+  const seen = new Set();
+  for (const look of looks) {
+    const where = `${id}: look "${look?.id}"`;
+    if (typeof look?.id !== "string" || !/^[a-z][a-z0-9]{1,30}$/.test(look.id)) fail(`${id}: look ids use 2 to 31 lowercase letters and digits`);
+    if (seen.has(look.id)) fail(`${where} is listed twice`);
+    seen.add(look.id);
+    for (const lang of ["en", "ar"]) if (typeof look.label?.[lang] !== "string" || look.label[lang].trim() === "" || look.label[lang].length > 24) fail(`${where} needs "label.${lang}" (up to 24 characters)`);
+    if (look.values === null || typeof look.values !== "object" || Object.keys(look.values).length < 3) fail(`${where} needs "values" (at least three settings)`);
+    for (const [key, value] of Object.entries(look.values)) {
+      const field = fields.get(key);
+      if (!field) fail(`${where} sets "${key}", which the template does not have`);
+      if (!LOOK_TYPES.has(field.type)) fail(`${where} sets "${key}", a ${field.type} field; looks only set choices, colors, switches and ranges`);
+      const ok =
+        field.type === "toggle"
+          ? typeof value === "boolean"
+          : field.type === "range"
+            ? typeof value === "number" && value >= field.min && value <= field.max
+            : typeof value === "string" && (field.options.includes(value) || (field.type === "color" && field.custom === true && /^#[0-9A-F]{6}$/.test(value)));
+      if (!ok) fail(`${where} sets "${key}" to ${JSON.stringify(value)}, which it does not take`);
+    }
+  }
+  // Every look sets the same settings (any a look leaves out keeps the template's default), in the schema's order, so
+  // going from one look to another never leaves a part of the last one behind.
+  const keys = manifest.schema.map((f) => f.key).filter((key) => looks.some((l) => key in l.values));
+  manifest.looks = looks.map((l) => ({
+    id: l.id,
+    label: { en: l.label.en, ar: l.label.ar },
+    values: Object.fromEntries(keys.map((key) => [key, structuredClone(key in l.values ? l.values[key] : manifest.defaults[key])])),
+  }));
+}
+
 /** The Arabic for an editor string: the manifest's own, else the dictionary's. */
 function arabic(id, field, what, english, own) {
   const value = own ?? dictionary[english];
@@ -471,11 +582,17 @@ for (const m of manifests) {
 }
 
 const output = JSON.stringify({ templates: manifests }, null, 2) + "\n";
-if (process.argv.includes("--check")) {
+const signaturesPath = path.join(root, "_kit", "signatures.generated.json");
+const signatures = JSON.stringify(Object.fromEntries(manifests.filter((m) => signatureMap[m.id]).map((m) => [m.id, signatureMap[m.id]])), null, 2) + "\n";
+if (process.argv.includes("--dry")) {
+  console.log(`templates:registry: valid (${manifests.length} templates)`);
+} else if (process.argv.includes("--check")) {
   const current = existsSync(registryPath) ? readFileSync(registryPath, "utf8") : "";
   if (current !== output) fail("registry.json is out of date; run npm run templates:registry");
+  if ((existsSync(signaturesPath) ? readFileSync(signaturesPath, "utf8") : "") !== signatures) fail("_kit/signatures.generated.json is out of date; run npm run templates:registry");
   console.log(`templates:registry: up to date (${manifests.length} templates)`);
 } else {
   writeFileSync(registryPath, output);
+  writeFileSync(signaturesPath, signatures);
   console.log(`templates:registry: wrote ${manifests.length} templates`);
 }

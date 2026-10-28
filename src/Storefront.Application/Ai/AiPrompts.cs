@@ -24,6 +24,13 @@ internal static class AiPrompts
           Avoid near-white and near-black accents; for a custom color give #RRGGBB.
         - A color theme or background that suits the photo (light and warm, fresh, dark and elegant, and so on).
         - Font choices that match the feel (for example classic for a traditional bakery, bold for street food).
+        - Layouts and page style that suit the business: the opening, header, menu layout and page style.
+        - This template has its own layout options and looks, listed in the input. Its own options (like a special opening or
+          menu) exist only in this template and show what makes it special: prefer them over the shared ones when they fit.
+          A look is a ready-made combination by the template's designer: to use one, send its id as "look" and add only the
+          settings you want different from it.
+        - A good design changes several groups together so they belong to each other: colors and theme, fonts, the opening and
+          header, the menu layout and the page style. Prefer one coherent change over a single small one.
         Also write short, warm website texts that fit what you see and the business, in {{language}}:
         headlines, short introductions, highlights and a short story told in general terms.
         Add a summary: one short sentence for the owner, in {{language}}, saying what you picked and why.
@@ -84,6 +91,18 @@ internal static class AiPrompts
           "show our story with a photo beside it" (story "beside"), "one big review" (reviews "quote"), "a map next to our
           hours" (visit "map"), "a simpler footer" (footer "minimal" or "simple") or "our name big at the bottom" (footer
           "big"). Only sections the template has are listed; leave the others on "auto".
+        - When the owner asks for a new look, a redesign or "something different", start from one of the template's looks or
+          its own layout options, and change several groups at once.
+        - This template has its own layout options and looks, listed in the input. Its own options (like a special opening or
+          menu) exist only in this template and show what makes it special: prefer them over the shared ones when they fit.
+          A look is a ready-made combination by the template's designer: to use one, send its id as "look" and add only the
+          settings you want different from it.
+        - A good design changes several groups together so they belong to each other: colors and theme, fonts, the opening and
+          header, the menu layout and the page style. Prefer one coherent change over a single small one.
+        - When the owner pressed "Surprise me": pick a fresh, complete design that clearly differs from the current settings:
+          choose one of the template's looks that is not in use now (or its own layout options with a matching color theme),
+          then adjust two or three other groups (fonts, page style, header or menu) so the result feels new. Change no texts.
+          Say in the reply, in a few words, what you picked.
         - Keep the look readable: enough contrast between text, background and accent color.
         - When a photo is attached it shows the owner's logo, shop, food or packaging. Use its colors and mood when the owner
           asks, or when they ask for a design without saying more.

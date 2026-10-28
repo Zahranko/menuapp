@@ -14,6 +14,21 @@
   "thumbnail": "/templates/pulse/thumbnail.png",
   "sample": "gym",
   "sectionsLayout": { "order": ["highlights", "menu", "steps", "gallery", "reviews", "faq", "join", "visit"] },
+  "signature": {
+    "menu.layout": [
+      {"id":"plans","base":"large","label":"Membership plans","labelAr":"باقات الاشتراك","preview":"/templates/pulse/previews/menu-plans.svg"}
+    ],
+    "hero.variant": [
+      {"id":"scoreboard","base":"poster","label":"Scoreboard","labelAr":"لوحة النتائج","preview":"/templates/pulse/previews/hero-scoreboard.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"carbon","label":{"en":"Carbon gym","ar":"نادي الكربون"},"values":{"theme":"carbon","accent":"#FF4D1C","font":"condensed","hero.variant":"scoreboard","menu.layout":"plans","header.layout":"classic"}},
+    {"id":"volt","label":{"en":"Volt","ar":"فولت"},"values":{"theme":"volt","accent":"#C6FF00","font":"grotesk","hero.variant":"scoreboard","menu.layout":"plans","style.headings":"uppercase"}},
+    {"id":"chalk","label":{"en":"Chalk box","ar":"صندوق الطباشير"},"values":{"theme":"chalk","accent":"#E63946","font":"condensed","hero.variant":"poster","menu.layout":"plans","style.texture":"grain"}},
+    {"id":"steel","label":{"en":"Steel club","ar":"نادي الفولاذ"},"values":{"theme":"steel","accent":"#2EC4B6","font":"grotesk","hero.variant":"scoreboard","menu.layout":"list","style.buttons":"square"}},
+    {"id":"sprint","label":{"en":"Sprint","ar":"انطلاقة"},"values":{"theme":"carbon","accent":"#FFD60A","font":"condensed","hero.variant":"type","menu.layout":"plans","header.layout":"big","style.tracking":"tight"}}
+  ],
   "schema": [
     {
       "key": "font",

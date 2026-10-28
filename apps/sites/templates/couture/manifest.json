@@ -16,6 +16,21 @@
   "thumbnail": "/templates/couture/thumbnail.png",
   "sample": "couture",
   "sectionsLayout": { "order": ["menu", "story", "best", "gallery", "reviews", "visit"] },
+  "signature": {
+    "hero.variant": [
+      {"id":"runway","base":"full","label":"Runway","labelAr":"منصة العرض","preview":"/templates/couture/previews/hero-runway.svg"}
+    ],
+    "menu.layout": [
+      {"id":"edit","base":"large","label":"The edit","labelAr":"المختارات","preview":"/templates/couture/previews/menu-edit.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"ivory","label":{"en":"Ivory runway","ar":"منصة عاجية"},"values":{"theme":"ivory","accent":"#9A7445","font":"elegant","hero.variant":"runway","menu.layout":"edit","header.layout":"centered"}},
+    {"id":"noir","label":{"en":"Noir","ar":"أسود"},"values":{"theme":"noir","accent":"#9A7445","font":"elegant","hero.variant":"runway","menu.layout":"edit","style.tracking":"wide"}},
+    {"id":"blush","label":{"en":"Blush atelier","ar":"مشغل وردي"},"values":{"theme":"blush","accent":"#6E1F2B","font":"classic","hero.variant":"runway","menu.layout":"edit","style.photos":"arch"}},
+    {"id":"sage","label":{"en":"Sage salon","ar":"صالون المريمية"},"values":{"theme":"sage","accent":"#2F4A3A","font":"elegant","hero.variant":"split","menu.layout":"edit"}},
+    {"id":"classic","label":{"en":"Tailor","ar":"خيّاط"},"values":{"theme":"ivory","accent":"#1B1712","font":"classic","hero.variant":"runway","menu.layout":"magazine","header.layout":"minimal","style.buttons":"square"}}
+  ],
   "schema": [
     {
       "key": "font",

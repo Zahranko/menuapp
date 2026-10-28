@@ -306,6 +306,51 @@ names joined with `+`), for example `/_preview/fixture.souq.default.ar.so_review
 pictures: `public/kit/previews/highlights-*.svg`, `story-*.svg`, `gallery-*.svg`, `reviews-*.svg`, `visit-*.svg` and
 `footer-*.svg`.
 
+## Signature options and looks (manifest `"signature"` and `"looks"`)
+
+Every template has 1 to 3 **signature options**: options of a shared layout field (`header.layout`, `hero.variant`,
+`menu.layout` or `story.layout`) that only that template has, for example Ticket's "Admission ticket" opening and
+"Tear-off tickets" menu. They are written in the manifest:
+
+```json
+"signature": {
+  "hero.variant": [{ "id": "stub", "base": "poster", "label": "Admission ticket", "labelAr": "تذكرة دخول",
+                     "preview": "/templates/ticket/previews/hero-stub.svg" }]
+}
+```
+
+- `scripts/build-registry.mjs` puts each one right after "Template default" (`auto`) in the field's options, with its
+  labels and picture, marks the field with `"signature": [ids]`, and writes `_kit/signatures.generated.json`. It refuses a
+  field that takes no signature, an `auto` or unknown base, an id that is a shared option or another template's signature,
+  missing labels, and a picture that is not in `public/templates/<id>/previews/`, is missing, or contains `<text>`.
+- Each one is drawn by its `base` (a shared option), so it has the same words, links, photos and accessibility.
+  `_kit/signatures.ts` turns it into the base for the kit and puts `data-sig="<id>"` on the header, opening, menu or story
+  section, and the list of every signature in use on the template root. Decorations go in an `aria-hidden` `.kit-sig-art` slot.
+- The look is the template's own CSS: `templates/<id>/signature.css`, imported at the end of `styles.css`, keyed on
+  `[data-sig="<id>"]`. It must work right to left, in light and dark themes, on a phone and a desktop, without photos and
+  with reduced motion.
+
+Every template also has 4 to 6 **looks**: named sets of design settings the owner applies with one tap (the "Looks"
+strip at the top of the app's editor; the AI helper is told about them too):
+
+```json
+"looks": [{ "id": "receipt", "label": { "en": "Till receipt", "ar": "إيصال الصندوق" },
+            "values": { "theme": "thermal", "accent": "#D3412F", "font": "mono", "menu.layout": "auto" } }]
+```
+
+- Ids are `a-z0-9` with no dashes (fixture tokens split on `-`), and names are up to 24 characters.
+- Looks set only choices, themes, colors, switches and sizes, never texts or photos. Each value must be one the field takes.
+- The registry gives every look of a template the same keys, filling the ones it leaves out with the defaults, so
+  applying one look after another leaves nothing behind.
+- The API stores them in `Templates.Looks` (`TemplateSchema.ValidLooksAsync` checks them again on import). The app reads
+  them from `GET /api/v1/templates` (`looks`).
+- The gallery thumbnail shows the first look.
+
+Tests: `templates/signatures.test.tsx` (the registry rules, each signature on its base in both languages with nothing but
+its marks and decorations added, each look from the `look_<id>` fixture token) and `e2e/signatures.spec.ts` (every
+signature, all of them on the least content, and every look on a phone, half in Arabic, with axe, no sideways scroll and no
+page errors). In fixture mode: `/_preview/fixture.ticket.default.ar.hv_stub-ml_tickets` or `/_preview/fixture.ticket.default.en.look_receipt`.
+
 ## Rules every template follows
 
 - Settings are read with the helpers in `lib/settings.ts`; never assume a key exists.
@@ -331,4 +376,4 @@ Tests: `templates/all-templates.test.tsx` renders every registered template with
 200 products, with every section off and with no products. `e2e/templates.spec.ts` checks loading, horizontal
 overflow, the item dialog and accessibility on a phone.
 
-Thumbnails: `npm run build`, then `THUMBNAILS=1 npm run test:e2e -- --project=mobile thumbnails`.
+Thumbnails: `npm run build`, then `THUMBNAILS=1 npm run test:e2e -- --project=mobile thumbnails` (each in its first look).

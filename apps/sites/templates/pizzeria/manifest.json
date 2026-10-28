@@ -14,6 +14,21 @@
   "thumbnail": "/templates/pizzeria/thumbnail.png",
   "sample": "pizza",
   "sectionsLayout": { "order": ["menu", "story", "visit"] },
+  "signature": {
+    "menu.layout": [
+      {"id":"peel","base":"grid","label":"Pies on wooden peels","labelAr":"فطائر على ألواح خشبية","preview":"/templates/pizzeria/previews/menu-peel.svg"}
+    ],
+    "hero.variant": [
+      {"id":"oven","base":"arch","label":"Brick oven","labelAr":"فرن الحطب","preview":"/templates/pizzeria/previews/hero-oven.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"napoli","label":{"en":"Napoli","ar":"نابولي"},"values":{"theme":"napoli","accent":"#C8102E","font":"classic","menu.layout":"peel","hero.variant":"oven","header.layout":"classic"}},
+    {"id":"basil","label":{"en":"Basil garden","ar":"حديقة الريحان"},"values":{"theme":"basil","accent":"#2E7D32","font":"hand","menu.layout":"peel","hero.variant":"oven","header.layout":"centered","style.dividers":"wave"}},
+    {"id":"crust","label":{"en":"Golden crust","ar":"القشرة الذهبية"},"values":{"theme":"crust","accent":"#E07A1F","font":"bold","menu.layout":"peel","hero.variant":"circle","style.headings":"uppercase","visit.layout":"banner"}},
+    {"id":"night","label":{"en":"Pizza night","ar":"ليلة البيتزا"},"values":{"theme":"night","accent":"#E07A1F","font":"bold","menu.layout":"carousel","hero.variant":"oven","header.layout":"minimal"}},
+    {"id":"slice","label":{"en":"Slice shop","ar":"محل الشرائح"},"values":{"theme":"napoli","accent":"#1D3557","font":"bold","menu.layout":"list","hero.variant":"poster","header.layout":"pill","cards.style":"outlined","style.buttons":"square"}}
+  ],
   "schema": [
     {
       "key": "font",

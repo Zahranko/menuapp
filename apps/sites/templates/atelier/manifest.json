@@ -14,6 +14,21 @@
   "thumbnail": "/templates/atelier/thumbnail.png",
   "sample": "salon",
   "sectionsLayout": { "order": ["highlights", "menu", "story", "gallery", "reviews", "visit"] },
+  "signature": {
+    "hero.variant": [
+      {"id":"editorial","base":"split","label":"Magazine cover","labelAr":"غلاف مجلة","preview":"/templates/atelier/previews/hero-editorial.svg"}
+    ],
+    "menu.layout": [
+      {"id":"pricelist","base":"compact","label":"Salon price list","labelAr":"قائمة أسعار الصالون","preview":"/templates/atelier/previews/menu-pricelist.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"rose","label":{"en":"Rose salon","ar":"صالون الورد"},"values":{"theme":"blush","accent":"#B76E79","font":"elegant","hero.variant":"editorial","menu.layout":"pricelist","header.layout":"classic"}},
+    {"id":"vogue","label":{"en":"Cover story","ar":"قصة الغلاف"},"values":{"theme":"noir","accent":"#C9A45C","font":"elegant","hero.variant":"editorial","menu.layout":"pricelist","header.layout":"centered","style.headings":"italic"}},
+    {"id":"sand","label":{"en":"Sand studio","ar":"استوديو الرمل"},"values":{"theme":"sand","accent":"#8C6A4F","font":"classic","hero.variant":"arch","menu.layout":"pricelist","style.photos":"arch"}},
+    {"id":"sage","label":{"en":"Sage spa","ar":"سبا المريمية"},"values":{"theme":"sage","accent":"#5E7D62","font":"elegant","hero.variant":"editorial","menu.layout":"list","header.layout":"minimal","style.tracking":"wide"}},
+    {"id":"modern","label":{"en":"Modern bar","ar":"بار عصري"},"values":{"theme":"blush","accent":"#2A2224","font":"modern","hero.variant":"split","menu.layout":"pricelist","style.buttons":"square","style.headings":"uppercase"}}
+  ],
   "schema": [
     {
       "key": "font",

@@ -14,6 +14,21 @@
   "thumbnail": "/templates/ticket/thumbnail.png",
   "sample": "cafe",
   "sectionsLayout": { "order": ["menu", "visit"] },
+  "signature": {
+    "hero.variant": [
+      {"id":"stub","base":"poster","label":"Admission ticket","labelAr":"تذكرة دخول","preview":"/templates/ticket/previews/hero-stub.svg"}
+    ],
+    "menu.layout": [
+      {"id":"tickets","base":"list","label":"Tear-off tickets","labelAr":"تذاكر قابلة للقطع","preview":"/templates/ticket/previews/menu-tickets.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"receipt","label":{"en":"Till receipt","ar":"إيصال الصندوق"},"values":{"theme":"thermal","accent":"#D3412F","font":"mono","hero.variant":"auto","menu.layout":"auto","header.layout":"auto"}},
+    {"id":"admit","label":{"en":"Admit one","ar":"تذكرة واحدة"},"values":{"theme":"thermal","accent":"#D3412F","font":"condensed","hero.variant":"stub","menu.layout":"tickets","header.layout":"minimal"}},
+    {"id":"kraft","label":{"en":"Kraft kiosk","ar":"كشك كرافت"},"values":{"theme":"kraft","accent":"#1E8C5A","font":"mono","hero.variant":"stub","menu.layout":"tickets","visit.layout":"table"}},
+    {"id":"mint","label":{"en":"Mint truck","ar":"شاحنة النعناع"},"values":{"theme":"mint","accent":"#7A3EC8","font":"grotesk","hero.variant":"stub","menu.layout":"list","header.layout":"classic","style.buttons":"square"}},
+    {"id":"night","label":{"en":"Night shift","ar":"وردية الليل"},"values":{"theme":"night","accent":"#1F6FEB","font":"mono","hero.variant":"type","menu.layout":"tickets","header.layout":"minimal","style.tracking":"wide"}}
+  ],
   "schema": [
     {
       "key": "font",

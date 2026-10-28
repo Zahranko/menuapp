@@ -14,6 +14,21 @@
   "thumbnail": "/templates/agency/thumbnail.png",
   "sample": "studio",
   "sectionsLayout": { "order": ["marquee", "highlights", "menu", "gallery", "steps", "reviews", "faq", "visit"] },
+  "signature": {
+    "hero.variant": [
+      {"id":"manifesto","base":"type","label":"Manifesto","labelAr":"بيان","preview":"/templates/agency/previews/hero-manifesto.svg"}
+    ],
+    "menu.layout": [
+      {"id":"services","base":"list","label":"Numbered services","labelAr":"خدمات مرقّمة","preview":"/templates/agency/previews/menu-services.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"lime","label":{"en":"Lime manifesto","ar":"بيان الليموني"},"values":{"theme":"ink","accent":"#D7FF3A","font":"bold","hero.variant":"manifesto","menu.layout":"services","header.layout":"classic"}},
+    {"id":"cobalt","label":{"en":"Cobalt studio","ar":"استوديو الكوبالت"},"values":{"theme":"cobalt","accent":"#FFB800","font":"grotesk","hero.variant":"manifesto","menu.layout":"services","style.headings":"uppercase"}},
+    {"id":"paper","label":{"en":"Paper press","ar":"مطبعة الورق"},"values":{"theme":"paper","accent":"#FF4D2E","font":"condensed","hero.variant":"manifesto","menu.layout":"services","style.texture":"grain"}},
+    {"id":"plum","label":{"en":"Plum night","ar":"ليلة البرقوق"},"values":{"theme":"plum","accent":"#FF8BD1","font":"modern","hero.variant":"poster","menu.layout":"services","header.layout":"minimal"}},
+    {"id":"grid","label":{"en":"Grid portfolio","ar":"معرض الشبكة"},"values":{"theme":"paper","accent":"#2447D9","font":"grotesk","hero.variant":"split","menu.layout":"services","style.buttons":"square","cards.style":"outlined"}}
+  ],
   "schema": [
     {
       "key": "font",

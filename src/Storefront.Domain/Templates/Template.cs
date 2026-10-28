@@ -25,6 +25,11 @@ public sealed class Template
     public string? DescriptionAr { get; private set; }
     /// <summary>JSON object of Arabic text values that replace top-level keys of <see cref="DefaultSettings"/> for Arabic businesses.</summary>
     public string DefaultSettingsAr { get; private set; } = "{}";
+    /// <summary>
+    /// JSON array of the template's named looks: <c>[{ "id", "label": { "en", "ar" }, "values": { settingKey: value } }]</c>.
+    /// Each look sets several design settings at once; the importer keeps only values the schema accepts.
+    /// </summary>
+    public string Looks { get; private set; } = "[]";
     public int Version { get; private set; }
     public bool IsActive { get; private set; } = true;
     /// <summary><see cref="TemplateTier.Basic"/> (every plan) or <see cref="TemplateTier.Pro"/> (Pro plan only).</summary>
@@ -66,6 +71,9 @@ public sealed class Template
         DescriptionAr = trimmed is { Length: > 300 } ? trimmed[..300] : trimmed;
         DefaultSettingsAr = string.IsNullOrWhiteSpace(defaultSettings) ? "{}" : defaultSettings;
     }
+
+    /// <summary>Sets the looks (a JSON array checked against the schema by the importer); missing means none.</summary>
+    public void SetLooks(string? looks) => Looks = string.IsNullOrWhiteSpace(looks) ? "[]" : looks;
 
     public void Activate() => IsActive = true;
 

@@ -17,6 +17,21 @@
   "sample": "atlas",
   "menu": { "own": ["density"] },
   "sectionsLayout": { "order": ["menu", "best", "story", "gallery", "reviews", "visit"] },
+  "signature": {
+    "hero.variant": [
+      {"id":"shopwindow","base":"split","label":"Shop window","labelAr":"واجهة المتجر","preview":"/templates/atlas/previews/hero-shopwindow.svg"}
+    ],
+    "menu.layout": [
+      {"id":"storefront","base":"grid","label":"Price tags","labelAr":"بطاقات الأسعار","preview":"/templates/atlas/previews/menu-storefront.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"window","label":{"en":"Shop window","ar":"واجهة المتجر"},"values":{"theme":"white","accent":"#2447D9","font":"grotesk","hero.variant":"shopwindow","menu.layout":"storefront","header.layout":"classic"}},
+    {"id":"stone","label":{"en":"Stone gallery","ar":"معرض الحجر"},"values":{"theme":"stone","accent":"#C2410C","font":"modern","hero.variant":"shopwindow","menu.layout":"storefront"}},
+    {"id":"sand","label":{"en":"Sand market","ar":"سوق الرمل"},"values":{"theme":"sand","accent":"#1F7A4D","font":"grotesk","hero.variant":"split","menu.layout":"storefront","style.photos":"soft"}},
+    {"id":"black","label":{"en":"Night shop","ar":"متجر ليلي"},"values":{"theme":"black","accent":"#F2C14E","font":"mono","hero.variant":"shopwindow","menu.layout":"storefront","style.headings":"uppercase"}},
+    {"id":"catalog","label":{"en":"Catalog","ar":"كتالوج"},"values":{"theme":"white","accent":"#121212","font":"mono","hero.variant":"framed","menu.layout":"storefront","header.layout":"minimal","style.buttons":"square"}}
+  ],
   "schema": [
     {
       "key": "font",

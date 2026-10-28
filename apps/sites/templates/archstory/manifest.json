@@ -14,6 +14,21 @@
   "thumbnail": "/templates/archstory/thumbnail.png",
   "sample": "sweets",
   "sectionsLayout": { "order": ["picks", "menu", "story", "reviews", "visit"] },
+  "signature": {
+    "hero.variant": [
+      {"id":"doorway","base":"arch","label":"Shop doorway","labelAr":"باب المحل","preview":"/templates/archstory/previews/hero-doorway.svg"}
+    ],
+    "story.layout": [
+      {"id":"chapter","base":"letter","label":"Story as a chapter","labelAr":"القصة كفصل من كتاب","preview":"/templates/archstory/previews/story-chapter.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"doorway","label":{"en":"Sweet doorway","ar":"باب الحلوى"},"values":{"theme":"blush","accent":"#C2577A","font":"soft","hero.variant":"doorway","story.layout":"chapter","menu.layout":"auto"}},
+    {"id":"sand","label":{"en":"Sand and caramel","ar":"رمل وكراميل"},"values":{"theme":"sand","accent":"#B5651D","font":"elegant","hero.variant":"doorway","story.layout":"chapter","menu.layout":"magazine","reviews.layout":"quote"}},
+    {"id":"garden","label":{"en":"Garden pâtisserie","ar":"حلويات الحديقة"},"values":{"theme":"sage","accent":"#4F7A57","font":"classic","hero.variant":"arch","story.layout":"beside","menu.layout":"grid","style.photos":"arch"}},
+    {"id":"cocoa","label":{"en":"Cocoa evening","ar":"مساء الكاكاو"},"values":{"theme":"cocoa","accent":"#C2577A","font":"elegant","hero.variant":"doorway","story.layout":"chapter","menu.layout":"carousel","header.layout":"centered"}},
+    {"id":"journal","label":{"en":"Recipe journal","ar":"دفتر الوصفات"},"values":{"theme":"blush","accent":"#6B4E9B","font":"classic","hero.variant":"poster","story.layout":"timeline","menu.layout":"list","reviews.layout":"cards"}}
+  ],
   "schema": [
     {
       "key": "font",

@@ -16,6 +16,21 @@
   "thumbnail": "/templates/bloom/thumbnail.png",
   "sample": "bloom",
   "sectionsLayout": { "order": ["menu", "best", "story", "gallery", "reviews", "visit"] },
+  "signature": {
+    "menu.layout": [
+      {"id":"doily","base":"grid","label":"Lace doilies","labelAr":"مفارش الدانتيل","preview":"/templates/bloom/previews/menu-doily.svg"}
+    ],
+    "hero.variant": [
+      {"id":"cakestand","base":"circle","label":"Cake stand","labelAr":"حامل الكيك","preview":"/templates/bloom/previews/hero-cakestand.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"strawberry","label":{"en":"Strawberry","ar":"فراولة"},"values":{"theme":"strawberry","accent":"#D6467A","font":"soft","hero.variant":"cakestand","menu.layout":"doily","header.layout":"classic"}},
+    {"id":"pistachio","label":{"en":"Pistachio","ar":"فستق"},"values":{"theme":"pistachio","accent":"#4E9A5B","font":"soft","hero.variant":"cakestand","menu.layout":"doily"}},
+    {"id":"lavender","label":{"en":"Lavender","ar":"لافندر"},"values":{"theme":"lavender","accent":"#8159D1","font":"round","hero.variant":"cakestand","menu.layout":"doily","style.buttons":"pill"}},
+    {"id":"vanilla","label":{"en":"Vanilla","ar":"فانيلا"},"values":{"theme":"vanilla","accent":"#E07A3F","font":"classic","hero.variant":"circle","menu.layout":"doily","style.dividers":"wave"}},
+    {"id":"party","label":{"en":"Party box","ar":"علبة الحفلة"},"values":{"theme":"strawberry","accent":"#8159D1","font":"round","hero.variant":"collage","menu.layout":"doily","cards.style":"tinted"}}
+  ],
   "schema": [
     {
       "key": "font",

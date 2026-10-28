@@ -12,6 +12,7 @@ namespace Storefront.Application.Templates;
 /// <see cref="OptionLabels"/> (English option names) and <see cref="Swatches"/> (a palette option's main color) only describe options;
 /// the AI helper reads them to pick fitting values. <see cref="Previews"/> maps a choice's options to small pictures of them
 /// (site-relative SVG paths like "/kit/previews/buttons-pill.svg") that the editor shows as picture tiles.
+/// <see cref="Signature"/> names the choice's options that only this template has (its signature options); the AI helper prefers them.
 /// </summary>
 public sealed record TemplateField(
     string Key,
@@ -27,7 +28,11 @@ public sealed record TemplateField(
     bool Custom = false,
     IReadOnlyDictionary<string, string>? OptionLabels = null,
     IReadOnlyDictionary<string, string>? Swatches = null,
-    IReadOnlyDictionary<string, string>? Previews = null);
+    IReadOnlyDictionary<string, string>? Previews = null,
+    IReadOnlyList<string>? Signature = null);
+
+/// <summary>A named look: several design settings a template offers together (registry "looks").</summary>
+public sealed record TemplateLook(string Id, string Label, string LabelAr, JsonObject Values);
 
 public sealed partial class TemplateSchema
 {
@@ -58,7 +63,8 @@ public sealed partial class TemplateSchema
                 type is "color" && f["custom"]?.GetValue<bool>() == true,
                 Strings(f["optionLabels"]),
                 Strings(f["swatches"]),
-                type is "choice" ? ValidPreviews(f, out _) : null));
+                type is "choice" ? ValidPreviews(f, out _) : null,
+                type is "choice" ? Signature(f) : null));
         }
 
         return new TemplateSchema(fields);
@@ -110,6 +116,126 @@ public sealed partial class TemplateSchema
 
         // Unchanged schemas keep their exact text (and their Arabic letters unescaped).
         return problems.Count == 0 ? json : fields.ToJsonString(Readable);
+    }
+
+    /// <summary>A choice's signature options that are among its options; null when none.</summary>
+    private static List<string>? Signature(JsonNode field)
+    {
+        if (field["signature"] is not JsonArray list || field["options"] is not JsonArray options)
+        {
+            return null;
+        }
+
+        var known = options.Select(o => o is JsonValue v && v.TryGetValue<string>(out var s) ? s : null).ToHashSet();
+        var ids = list.Select(o => o is JsonValue v && v.TryGetValue<string>(out var s) ? s : null).Where(s => s is not null && known.Contains(s)).Select(s => s!).Distinct().ToList();
+        return ids.Count > 0 ? ids : null;
+    }
+
+    /// <summary>The setting types a look may set: the design ones, never text, photos, hours or the section order.</summary>
+    public static readonly IReadOnlySet<string> LookTypes = new HashSet<string> { "choice", "palette", "color", "toggle", "range" };
+
+    public const int MaxLooks = 6;
+    public const int LookLabelMax = 24;
+
+    /// <summary>
+    /// The registry's "looks" checked against the schema, as a JSON array for <c>Template.Looks</c>. A look needs an id
+    /// (lowercase letters and digits), an English and an Arabic label of up to 24 characters, and values. A value for
+    /// a setting the template doesn't have, of a type a look can't set, or that the setting refuses is left out; a look
+    /// with no values left, or a repeated id, is left out; only the first six are kept. <paramref name="problems"/> names each one.
+    /// </summary>
+    public async Task<string> ValidLooksAsync(JsonNode? looks, List<string> problems)
+    {
+        if (looks is null)
+        {
+            return "[]";
+        }
+
+        if (looks is not JsonArray list)
+        {
+            problems.Add("looks: not a list");
+            return "[]";
+        }
+
+        var byKey = Fields.ToDictionary(f => f.Key);
+        var result = new JsonArray();
+        var ids = new HashSet<string>();
+        foreach (var node in list)
+        {
+            var id = node?["id"] is JsonValue iv && iv.TryGetValue<string>(out var i) ? i : null;
+            var where = $"looks.{id ?? "?"}";
+            if (id is null || !LookId().IsMatch(id) || !ids.Add(id))
+            {
+                problems.Add($"{where}: needs a new id of lowercase letters and digits");
+                continue;
+            }
+
+            var en = node!["label"]?["en"] is JsonValue ev && ev.TryGetValue<string>(out var e) ? e.Trim() : "";
+            var ar = node["label"]?["ar"] is JsonValue av && av.TryGetValue<string>(out var a) ? a.Trim() : "";
+            if (en.Length is 0 or > LookLabelMax || ar.Length is 0 or > LookLabelMax)
+            {
+                problems.Add($"{where}: needs English and Arabic labels of up to {LookLabelMax} characters");
+                continue;
+            }
+
+            if (node["values"] is not JsonObject values)
+            {
+                problems.Add($"{where}: has no values");
+                continue;
+            }
+
+            var valid = new JsonObject();
+            foreach (var (key, value) in values)
+            {
+                if (!byKey.TryGetValue(key, out var field) || !LookTypes.Contains(field.Type))
+                {
+                    problems.Add($"{where}.{key}: not a design setting of this template");
+                    continue;
+                }
+
+                if (await CheckAsync(field, value, _ => Task.FromResult(false)) is { } error)
+                {
+                    problems.Add($"{where}.{key}: {error}");
+                    continue;
+                }
+
+                valid[key] = value!.DeepClone();
+            }
+
+            if (valid.Count == 0)
+            {
+                problems.Add($"{where}: no values left");
+                continue;
+            }
+
+            if (result.Count == MaxLooks)
+            {
+                problems.Add($"{where}: a template has up to {MaxLooks} looks");
+                continue;
+            }
+
+            result.Add(new JsonObject { ["id"] = id, ["label"] = new JsonObject { ["en"] = en, ["ar"] = ar }, ["values"] = valid });
+        }
+
+        return result.ToJsonString(Readable);
+    }
+
+    /// <summary>The looks saved by <see cref="ValidLooksAsync"/>, read back.</summary>
+    public static IReadOnlyList<TemplateLook> ParseLooks(string? json)
+    {
+        if (string.IsNullOrWhiteSpace(json) || JsonNode.Parse(json) is not JsonArray list)
+        {
+            return [];
+        }
+
+        return list.OfType<JsonObject>()
+            .Where(l => l["values"] is JsonObject)
+            .Select(l => new TemplateLook(
+                l["id"]?.GetValue<string>() ?? "",
+                l["label"]?["en"]?.GetValue<string>() ?? "",
+                l["label"]?["ar"]?.GetValue<string>() ?? "",
+                (JsonObject)l["values"]!.DeepClone()))
+            .Where(l => l.Id.Length > 0)
+            .ToList();
     }
 
     /// <summary>An order field's options: two or more section names, each once.</summary>
@@ -350,6 +476,9 @@ public sealed partial class TemplateSchema
 
     [GeneratedRegex("^/[A-Za-z0-9][A-Za-z0-9/_.-]*\\.svg$")]
     private static partial Regex PreviewPath();
+
+    [GeneratedRegex("^[a-z][a-z0-9]{1,30}$")]
+    private static partial Regex LookId();
 
     [GeneratedRegex("^#[0-9A-Fa-f]{6}$")]
     private static partial Regex HexColor();

@@ -4,6 +4,7 @@ import { applySiteOptions, fixtureFor } from "@/lib/fixtures";
 import type { PublicSite } from "@/lib/types";
 import { SECTION_LAYOUT_KEYS, SECTIONS_KEYS, sectionOrder, sortLinks } from "./_kit/sections";
 import sectionsSettings from "./_kit/sections-settings.json";
+import signatures from "./_kit/signatures.generated.json";
 import registry from "./registry.json";
 import { templates } from "./registry";
 
@@ -121,7 +122,10 @@ describe.each(ids)("sections in template %s", (id) => {
         const label = `${field.key}=${layout}${arabic ? " (ar)" : ""}`;
         const shared = doc.querySelectorAll(kind === "footer" ? ".kit-sc-ft" : `.kit-sc[data-section="${kind}"]`);
         expect(shared.length, `${label}: one shared section`).toBe(1);
-        expect(shared[0].getAttribute("data-sc")).toBe(layout);
+        // A template's own (signature) layout draws on a shared one and marks itself with data-sig.
+        const base = (signatures as Record<string, Record<string, Record<string, string>>>)[id]?.[field.key]?.[layout];
+        expect(shared[0].getAttribute("data-sc")).toBe(base ?? layout);
+        if (base) expect(shared[0].getAttribute("data-sig")?.split(" "), `${label}: marks the signature`).toContain(layout);
         expect(doc.querySelectorAll(`[data-section="${kind}"]`).length, `${label}: replaces the template's own`).toBe(1);
         const anchor = ANCHORS[id]?.[kind] ?? kind;
         if (kind !== "footer" && kind !== "highlights") expect(shared[0].id, `${label}: keeps its id`).toBe(anchor);

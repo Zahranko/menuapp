@@ -29,6 +29,7 @@ class TemplateField {
     this.step,
     this.unit,
     this.custom = false,
+    this.signature = const [],
   });
 
   factory TemplateField.fromJson(Map<String, dynamic> json) {
@@ -51,6 +52,7 @@ class TemplateField {
       step: (json['step'] as num?)?.toDouble(),
       unit: _text(json['unit']),
       custom: json['custom'] == true,
+      signature: [for (final o in (json['signature'] as List?) ?? const []) o.toString()],
     );
   }
 
@@ -87,6 +89,9 @@ class TemplateField {
   /// A color field that also takes the owner's own color (any #RRGGBB), not only its [options].
   final bool custom;
 
+  /// A choice's options that only this template has (its signature layouts); they come right after "auto".
+  final List<String> signature;
+
   String optionLabel(String option) => optionLabels[option] ?? option;
 
   /// The label in the app's language.
@@ -97,6 +102,28 @@ class TemplateField {
 
   /// An option's label in the app's language.
   String optionLabelFor(BuildContext context, String option) => (_arabic(context) ? optionLabelsAr[option] : null) ?? optionLabel(option);
+}
+
+/// One of a template's ready-made looks (`TemplateDto.looks`): several design settings that go together, applied in one tap.
+class TemplateLook {
+  const TemplateLook({required this.id, required this.label, this.labelAr, required this.values});
+
+  factory TemplateLook.fromJson(Map<String, dynamic> json) => TemplateLook(
+        id: json['id'] as String,
+        label: (json['label'] as Map?)?['en'] as String? ?? json['id'] as String,
+        labelAr: _text((json['label'] as Map?)?['ar']),
+        values: Map<String, dynamic>.from((json['values'] as Map?) ?? const {}),
+      );
+
+  final String id;
+  final String label;
+  final String? labelAr;
+
+  /// The settings the look sets, keyed like the draft.
+  final Map<String, dynamic> values;
+
+  /// The name in the app's language.
+  String labelFor(BuildContext context) => (_arabic(context) ? labelAr : null) ?? label;
 }
 
 /// A template's Arabic name, category and description (`TemplateDto.ar`).
@@ -116,6 +143,7 @@ class TemplateInfo {
     required this.fields,
     required this.defaults,
     this.defaultsAr = const {},
+    this.looks = const [],
   });
 
   factory TemplateInfo.fromJson(Map<String, dynamic> json) => TemplateInfo(
@@ -133,6 +161,10 @@ class TemplateInfo {
         fields: [for (final f in (json['schema'] as List?) ?? const []) TemplateField.fromJson(f as Map<String, dynamic>)],
         defaults: Map<String, dynamic>.from((json['defaults'] as Map?) ?? const {}),
         defaultsAr: Map<String, dynamic>.from((json['defaultsAr'] as Map?) ?? const {}),
+        looks: [
+          for (final l in (json['looks'] as List?) ?? const [])
+            if (l is Map<String, dynamic> && l['id'] is String && l['values'] is Map) TemplateLook.fromJson(l),
+        ],
       );
 
   final String id;
@@ -152,6 +184,9 @@ class TemplateInfo {
 
   /// The starting settings of an Arabic site, over [defaults] (headlines and other texts in Arabic).
   final Map<String, dynamic> defaultsAr;
+
+  /// Ready-made looks, in the order the template's designer listed them; empty when it has none.
+  final List<TemplateLook> looks;
 
   /// The name in the app's language.
   String nameFor(BuildContext context) => (_arabic(context) ? ar?.name : null) ?? name;

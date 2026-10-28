@@ -174,6 +174,39 @@ void main() {
     });
   }
 
+  // The Looks strip at the top of the editor, with the real Souq template from the sites' registry (its schema and looks).
+  for (final locale in const [Locale('en'), Locale('ar')]) {
+    final lang = locale.languageCode;
+    _shot('$lang editor: looks strip', (tester) async {
+      final registry = jsonDecode(File('../sites/templates/registry.json').readAsStringSync()) as Map<String, dynamic>;
+      final real = (registry['templates'] as List).cast<Map<String, dynamic>>().firstWhere((t) => t['id'] == 'souq');
+      final fake = FakeBackend.templates.firstWhere((t) => t['id'] == 'souq');
+      final saved = Map.of(fake);
+      fake
+        ..['schema'] = real['schema']
+        ..['defaults'] = real['defaults']
+        ..['defaultsAr'] = real['defaultsAr']
+        ..['looks'] = real['looks'];
+      addTearDown(() => fake
+        ..clear()
+        ..addAll(saved));
+      final backend = lang == 'ar' ? _arabicMenu() : FakeBackend();
+      backend
+        ..templateId = 'souq'
+        ..draft = Map<String, Object?>.of(real['defaults'] as Map<String, dynamic>);
+      await _pump(tester, signedIn: true, backend: backend, locale: locale);
+      await tester.pumpAndSettle();
+      await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text(lang == 'ar' ? 'الإعدادات' : 'Settings')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text(lang == 'ar' ? 'تعديل التصميم' : 'Edit design'));
+      await tester.pumpAndSettle();
+      await _save(tester, 'mobile-looks-$lang');
+      await tester.tap(find.byKey(const Key('look-night')));
+      await tester.pumpAndSettle();
+      await _save(tester, 'mobile-looks-applied-$lang');
+    });
+  }
+
   _shot('editor: fonts and the custom color picker', (tester) async {
     await openEditor(tester, const Locale('en'));
     await scrollToTop(tester, find.text('Fonts & colors'));

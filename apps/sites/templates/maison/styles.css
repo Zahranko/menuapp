@@ -13,6 +13,7 @@
 @import "../_kit/menu.css";
 @import "../_kit/sections.css";
 @import "../_kit/style.css";
+@import "./signature.css";
 
 html.mx-locked {
   overflow: hidden;
