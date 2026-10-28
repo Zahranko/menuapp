@@ -22,6 +22,7 @@ import { Lightbox } from "../_premium/Lightbox";
 import { bestSellers, categorySections, categoryTree, menuSections, galleryPhotos, PAGE_PATHS, pageLinks, resolvePage, type Category, type Page, type Tree } from "../_premium/pages";
 import { emberCopy } from "./copy";
 import { SiteFooter, SiteGallery, SiteReviews, SiteStory, SiteVisit, ordered } from "../_kit/Sections";
+import { tickerMarks } from "../_kit/ticker";
 
 /*
  * Template 025 "Ember" (Pro): a street-food drop. Huge condensed caps that slam in, film grain, diagonal cuts,
@@ -118,7 +119,7 @@ export default function EmberTemplate({ site, path = [], base, now }: TemplatePr
         <Footer v={v} />
       </SiteFooter>
       {order && (
-        <a className="pill kit-order" {...orderLink(order)} data-section="order">
+        <a className="pill kit-order" data-k="float" {...orderLink(order)} data-section="order">
           <OrderContent order={order} icon />
         </a>
       )}
@@ -144,21 +145,23 @@ function Ticker({ v }: { v: View }) {
     );
   }
   if (!ctx.on("announcement") || items.length === 0) return null;
-  // Enough copies to cover a wide screen; only the first set is read out.
+  // Enough copies to cover a wide screen; only the first set is read out. The owner's strip options (_kit/ticker.ts)
+  // mark its parts once they change something.
+  const tk = tickerMarks(ctx.site.settings);
   const copies = Math.max(1, Math.ceil(8 / items.length));
   const run = (hidden: boolean) =>
     Array.from({ length: copies }, (_, k) =>
       items.map((item, i) => (
-        <li key={`${k}-${i}`} aria-hidden={hidden || k > 0 ? true : undefined}>
+        <li key={`${k}-${i}`} aria-hidden={hidden || k > 0 ? true : undefined} {...tk("item", (hidden || k > 0) && "copy")}>
           {item}
         </li>
       )),
     );
   return (
-    <section className="tick" data-section="announcement" aria-label={v.e.specials}>
-      <div className="tick-track">
+    <section className="tick" data-section="announcement" aria-label={v.e.specials} {...tk("strip")}>
+      <div className="tick-track" {...tk("track")}>
         <ul className="plain tick-run">{run(false)}</ul>
-        <ul className="plain tick-run" aria-hidden="true">
+        <ul className="plain tick-run" aria-hidden="true" {...tk("copy")}>
           {run(true)}
         </ul>
       </div>
@@ -193,6 +196,7 @@ function Header({ v }: { v: View }) {
         openLabel={ctx.t.openMenu}
         closeLabel={ctx.t.close}
         buttonClassName="bar-toggle"
+        filled
         panelClassName="drawer"
         icon={<span className="bar-toggle-word">{c.menu}</span>}
         closeIcon={<Close />}

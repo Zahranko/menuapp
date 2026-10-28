@@ -768,10 +768,12 @@ export const LONG_NAMES = {
 /**
  * Site options for a fixture preview, from the same token part as the logo options ("-" between options):
  * "longname" / "longword" (a long business name), "foot_medium" / "foot_small" (footer name size), "social" (every
- * account shown), "order_<action>" (whatsapp, call, instagram, facebook, hide), "shape_<shape>" (pill, rounded, circle),
+ * account shown), "order_<action>" (whatsapp, call, instagram, facebook, hide), "shape_<shape>" (pill, rounded, circle), "pos_<position>"
+ * (end, start, center),
  * "font_<name>" (a shared font, see _kit/fonts.ts), "accent_<rrggbb>" (a custom accent color), "bg_<rrggbb>" (a background
- * color, see _kit/background.ts), "nowa" (no WhatsApp) and
- * "labels" (every product label, including long custom ones).
+ * color, see _kit/background.ts), "nowa" (no WhatsApp),
+ * "labels" (every product label, including long custom ones) and "artext" (an English site whose owner wrote the
+ * headline, its lines around it and the story title in Arabic).
  * ":" works in place of "_" in tests; page addresses escape it, so links use "_".
  */
 export function applySiteOptions(site: PublicSite, options: string): void {
@@ -785,14 +787,24 @@ export function applySiteOptions(site: PublicSite, options: string): void {
     else if (key === "foot") site.settings = { ...site.settings, "footer.nameSize": value };
     else if (key === "order") site.settings = { ...site.settings, "order.action": value };
     else if (key === "shape") site.settings = { ...site.settings, "order.shape": value };
+    else if (key === "pos") site.settings = { ...site.settings, "order.position": value };
     else if (key === "font") site.settings = { ...site.settings, "font.family": value };
     else if (key === "accent") site.settings = { ...site.settings, accent: `#${value.toUpperCase()}` };
     else if (key === "bg") site.settings = { ...site.settings, "colors.background": `#${value.toUpperCase()}` };
     else if (key === "labels") applyAllLabels(site);
+    else if (key === "artext") site.settings = { ...site.settings, ...ARABIC_TEXT };
     else if (key === "gal" || key === "galp") applyGalleryOption(site, Number(value), key === "galp");
     else applyCardAndHeroOption(site, key, value);
   }
 }
+
+/** Arabic texts an owner of a site in English may write (the "artext" option): a long headline that wraps on a phone. */
+export const ARABIC_TEXT: Settings = {
+  "hero.eyebrow": "مشاوي وكباب وشقف وصفيحة",
+  "hero.title": "مشاوي على الفحم وأطباق طازجة كل يوم",
+  "hero.subtitle": "كباب وشقف وصفيحة ومشاوي على الفحم، طازجة كل يوم.",
+  "story.title": "حكايتنا مع النار والفحم منذ البداية",
+};
 
 /** Host of the sample gallery photos in fixture previews; it does not exist, so tests and screenshots answer it themselves. */
 export const FIXTURE_PHOTO_HOST = "fixture-photo.invalid";
@@ -815,7 +827,8 @@ export const FIXTURE_SLIDES = ["/presets/loft.svg", "/presets/counter.svg", "/pr
 
 const CARD_KEYS: Record<string, string> = { card: "cards.style", border: "cards.border", corners: "cards.corners", photo: "cards.photo", spacing: "cards.spacing" };
 /** Page style options for fixture previews (_kit/style.ts): "ts_<text size>", "hs_<heading style>", "tr_<letter spacing>",
- * "sp_<space between sections>", "btn_<button style>", "pic_<photo shape>", "div_<divider>", "tex_<texture>", "mo_<motion>". */
+ * "sp_<space between sections>", "btn_<button style>", "pic_<photo shape>", "div_<divider>", "tex_<texture>", "mo_<motion>",
+ * "lh_<line spacing in headings>". */
 const STYLE_KEYS: Record<string, string> = {
   ts: "style.textSize",
   hs: "style.headings",
@@ -826,6 +839,7 @@ const STYLE_KEYS: Record<string, string> = {
   div: "style.dividers",
   tex: "style.texture",
   mo: "style.motion",
+  lh: "style.lineHeight",
 };
 /** Page layout options for fixture previews (_kit/layout.ts): "hl_<header layout>", "hst_<header look>",
  * "stk_<auto|on|off>" (header while scrolling) and "hv_<opening layout>". */
@@ -854,12 +868,16 @@ const SECTION_KEYS: Record<string, string> = {
   vsl: "visit.layout",
   ftl: "footer.layout",
 };
+/** Moving strip options for fixture previews (_kit/ticker.ts): "tks_<shape>", "tkc_<color>", "tkbg_<rrggbb>" (the owner's
+ * own strip color), "tksep_<separator>", "tksp_<speed>" and "tke_<edges>". */
+const TICKER_KEYS: Record<string, string> = { tks: "ticker.style", tkc: "ticker.color", tksep: "ticker.separator", tksp: "ticker.speed", tke: "ticker.edge" };
 const HERO_KEYS: Record<string, string> = { trans: "hero.transition", speed: "hero.speed", height: "hero.height", overlay: "hero.overlay", text: "hero.textPosition" };
 
 /**
  * Card and hero slider options for fixture previews (same token part as applySiteOptions): "card_<style>",
  * "border_<width>", "bc_<accent|ink|rrggbb>" (border color), "corners_<size>", "photo_<shape>", "spacing_<tight|airy>";
- * the page style, page layout, menu layout and section tokens above (STYLE_KEYS, LAYOUT_KEYS, MENU_KEYS, SECTION_KEYS);
+ * the page style, page layout, menu layout, section and moving strip tokens above (STYLE_KEYS, LAYOUT_KEYS, MENU_KEYS,
+ * SECTION_KEYS, TICKER_KEYS and "tkbg");
  * "slides" or "slides_<n>" (n hero photos in all, 2 to 6), "trans_<slide|fade|zoom>", "speed_<slow|normal|fast>",
  * "auto_off" (no autoplay), "ctrl_<both|dots|arrows|none>", "height_<size>", "overlay_<amount>", "text_<position>",
  * "look_<id>" (one of the template's looks, applied where it stands in the token) and "f<n>_<value>" (any design field by
@@ -881,6 +899,8 @@ function applyCardAndHeroOption(site: PublicSite, key: string, value: string): v
   else if (key in LAYOUT_KEYS) set({ [LAYOUT_KEYS[key]]: value });
   else if (key in MENU_KEYS) set({ [MENU_KEYS[key]]: value });
   else if (key in SECTION_KEYS) set({ [SECTION_KEYS[key]]: value });
+  else if (key in TICKER_KEYS) set({ [TICKER_KEYS[key]]: value });
+  else if (key === "tkbg") set({ "ticker.bg": `#${value.toUpperCase()}` });
   else if (key === "so") set({ "sections.order": decodedOnce(value).split(/[+, ]/).filter(Boolean) });
   else if (key === "sparse") applySparse(site);
   else if (key === "look") applyLook(site, value);

@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { itemCount } from "@/lib/i18n";
-import type { TemplateProps } from "@/lib/types";
+import type { Settings, TemplateProps } from "@/lib/types";
 import { BrandName, ContactList, Credits, FootName, HoursList, Logo, logoRoot, optionRoot, OrderFab, ProductPicture, SocialIcons, TopBars } from "../_kit/blocks";
 import { CatalogControls } from "../_kit/CatalogControls";
 import { cx, siteContext, type SiteContext } from "../_kit/context";
@@ -21,6 +21,7 @@ import { ProductSheet } from "../_fashion/ProductSheet";
 import { orderCta, pageTop, SiteHeader, SiteHero, type NavLink } from "../_kit/Top";
 import { SiteMenu } from "../_kit/Menu";
 import { ordered, SiteFooter, SiteGallery, SiteReviews, SiteStory, SiteVisit } from "../_kit/Sections";
+import { tickerMarks } from "../_kit/ticker";
 
 /*
  * Template 028 "Drop": a loud streetwear store. A moving ticker, a full-screen poster for the latest drop with a
@@ -62,7 +63,7 @@ export default function DropTemplate({ site, now }: TemplateProps & { now?: Date
     <div data-template="drop" {...logoRoot(ctx)} {...optionRoot(ctx, order)} className={cx("t-drop", fontVariables)} style={style}>
       <TemplateStyles id="drop" />
       <TopBars ctx={ctx} announcement={false} />
-      {ctx.on("announcement") && ctx.text("announcement") && <Ticker text={ctx.text("announcement")} />}
+      {ctx.on("announcement") && ctx.text("announcement") && <Ticker text={ctx.text("announcement")} settings={ctx.site.settings} />}
       <SiteHeader ctx={ctx} top={top} links={links} cta={orderCta(order)}>
         <Header ctx={ctx} c={c} photos={photos.length > 0} />
       </SiteHeader>
@@ -108,17 +109,21 @@ export default function DropTemplate({ site, now }: TemplateProps & { now?: Date
 type C = (typeof copy)["en"];
 type F = ReturnType<typeof fashionCopy>;
 
-/** The announcement as a moving ticker; the copies after the first are decoration (hidden from screen readers). */
-function Ticker({ text }: { text: string }) {
+/**
+ * The announcement as a moving ticker; the copies after the first are decoration (hidden from screen readers). The
+ * owner's strip options (_kit/ticker.ts) mark its parts once they change something.
+ */
+function Ticker({ text, settings }: { text: string; settings: Settings }) {
+  const tk = tickerMarks(settings);
   return (
-    <div className="dr-ticker" data-section="announcement">
+    <div className="dr-ticker" data-section="announcement" {...tk("strip")}>
       <p className="sr-only">{text}</p>
-      <div className="dr-ticker-track" aria-hidden="true">
+      <div className="dr-ticker-track" aria-hidden="true" {...tk("track")}>
         {[0, 1].map((half) => (
-          <div key={half} className="dr-ticker-half">
+          <div key={half} className="dr-ticker-half" {...tk(half > 0 && "copy")}>
             {[0, 1, 2, 3].map((n) => (
-              <span key={n}>
-                {text} <b>✦</b>
+              <span key={n} {...tk("item", n > 0 && "copy")}>
+                {text} <b {...tk("sep")}>✦</b>
               </span>
             ))}
           </div>

@@ -63,8 +63,9 @@ internal static class AiPrompts
           false for switches, and for a list of switches the complete list of the ones that should be on.
         - Requests like "bigger", "smaller", "darker", "lighter" or "more space" start from the current value: move one or two
           steps, not to the extreme, unless the owner asks for the maximum.
-        - The "Page style" group changes the feel of the whole page: text size, heading style, letter spacing, space between
-          sections, buttons, photo shapes, section dividers, background texture and motion. "auto" means the template's own look.
+        - The "Page style" group changes the feel of the whole page: text size, heading style, letter spacing, line spacing in
+          headings ("style.lineHeight"), space between sections, buttons, photo shapes, section dividers, background texture
+          and motion. "auto" means the template's own look.
           Use it for requests like "more playful" (rounded or pill buttons, soft or blob photos, wave dividers, playful motion),
           "more elegant" (italic or normal headings, wide letter spacing, airy spacing, thin line dividers, gentle fade) or
           "more space" (airy spacing, or compact for "tighter"). Change only the few options that fit the request.
@@ -91,6 +92,29 @@ internal static class AiPrompts
           "show our story with a photo beside it" (story "beside"), "one big review" (reviews "quote"), "a map next to our
           hours" (visit "map"), "a simpler footer" (footer "minimal" or "simple") or "our name big at the bottom" (footer
           "big"). Only sections the template has are listed; leave the others on "auto".
+        - The "Moving strip" group (only on templates with a moving strip of words or specials) changes that strip: its shape
+          ("ticker.style": solid band, outline, tilted, torn paper, label tags, neon line, double lines), its color
+          ("ticker.color": accent, ink for dark, paper for light, or custom with "ticker.bg" as #RRGGBB; the text color on it
+          is worked out to stay readable), what goes between the words ("ticker.separator": diamond, star, dot, flame, slash or
+          none), its speed ("ticker.speed": slow, normal, fast, or still to stop it) and its top and bottom edges
+          ("ticker.edge": flames, zigzag, waves or none). "auto" keeps the template's own strip. Use it for requests like "make
+          the moving bar red" (color custom with a red "ticker.bg", or accent when the accent is red), "stop the moving bar"
+          (speed "still"), "slow it down" (speed "slow"), "stars between the specials" (separator "star"), "make it look like
+          tape" (style "tilted") or "make the strip less loud" (style "outline", or speed "slow").
+        - The floating order button: its shape ("order.shape"), where it floats ("order.position": "end" the bottom corner,
+          "start" the other bottom corner, "center" the bottom middle; "auto" the template's place) and whether it shows
+          ("order.action": "hide" hides it, "auto" brings back a hidden button; use "auto" only for that). On a phone it
+          appears once the visitor scrolls past the top, so it never covers the opening. Use them for requests like "the button
+          covers my text" (move it with "order.position", or a smaller "circle" shape), "move the order button to the other
+          side" or "remove the order button" (action "hide"). Its text and where it sends customers are the owner's to set in
+          the editor.
+        - When the owner says text overlaps, lines run into each other, letters touch, a heading is cut off or the top feels
+          cramped (often a big heading in a condensed or poster heading style, or Arabic text in a heading made for Latin
+          letters): open up the line spacing ("style.lineHeight" "relaxed", or "normal" when it is "tight"), make the text
+          smaller ("style.textSize" "smaller", or "auto" when it is "larger" or "big"), and if that is not enough use a calmer
+          heading style ("style.headings" "normal" instead of "condensed" or "uppercase") and letter spacing ("style.tracking"
+          "normal" when it is "tight"). When something floats over the text, move or hide it (the order button above). Change
+          only what helps, and say in the reply what you changed to give the text room.
         - When the owner asks for a new look, a redesign or "something different", start from one of the template's looks or
           its own layout options, and change several groups at once.
         - This template has its own layout options and looks, listed in the input. Its own options (like a special opening or

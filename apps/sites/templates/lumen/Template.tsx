@@ -21,6 +21,7 @@ import { Lightbox } from "../_premium/Lightbox";
 import { bestSellers, categorySections, categoryTree, menuSections, galleryPhotos, PAGE_PATHS, pageLinks, resolvePage, type Category, type Page, type Tree } from "../_premium/pages";
 import { HomeIcon, MenuIcon, PhotoIcon, PinIcon, StarIcon } from "./icons";
 import { SiteFooter, SiteGallery, SiteReviews, SiteStory, SiteVisit, ordered } from "../_kit/Sections";
+import { tickerMarks } from "../_kit/ticker";
 
 /*
  * Template 023 "Lumen" (Pro): a loud, happy specialty-coffee site. Neo-Swiss type meets sticker culture.
@@ -151,11 +152,11 @@ function Header({ v }: { v: View }) {
           <BrandName ctx={ctx} className="brand-name" />
         </a>
         {ctx.today && <span className="status">{ctx.today}</span>}
-        <nav className="tabs" aria-label={c.pages}>
+        <nav className="tabs" aria-label={c.pages} data-k="bar">
           <ul className="plain">
             {tabs.map((t) => (
               <li key={t.key}>
-                <a className="tab" href={t.href} aria-current={t.current ? "page" : undefined}>
+                <a className="tab" href={t.href} aria-current={t.current ? "page" : undefined} data-k={t.current ? "filled" : undefined}>
                   {t.icon}
                   <span>{t.label}</span>
                 </a>
@@ -181,7 +182,7 @@ function Header({ v }: { v: View }) {
 function OrderSticker({ v, order }: { v: View; order: OrderButton }) {
   if (order.shape !== "auto") {
     return (
-      <a className="kit-fab kit-order fab-plain" {...orderLink(order)} aria-label={order.label}>
+      <a className="kit-fab kit-order fab-plain" data-k="float" {...orderLink(order)} aria-label={order.label}>
         <OrderIcon action={order.action} />
         <span className="kit-order-label">{order.label}</span>
       </a>
@@ -192,7 +193,7 @@ function OrderSticker({ v, order }: { v: View; order: OrderButton }) {
   // The ring is about 230 units long: shrink the letters for long labels instead of squeezing them.
   const size = Math.min(10.5, Math.max(6.5, 230 / (ring.length * 0.68)));
   return (
-    <a className="fab kit-order" {...orderLink(order)} aria-label={order.label}>
+    <a className="fab kit-order" data-k="float" {...orderLink(order)} aria-label={order.label}>
       {/* Arabic letters do not join well along a curve, so Arabic sites get a dashed ring instead of running text. */}
       <svg className="fab-ring" viewBox="0 0 100 100" aria-hidden="true">
         {v.ctx.rtl ? (
@@ -367,13 +368,15 @@ function Ticker({ v }: { v: View }) {
   if (!v.ctx.on("ticker") || words.length === 0) return null;
   // Enough copies to fill a wide screen twice, so the loop (moving by half the track) never shows a gap.
   const copies = Math.max(2, Math.ceil(16 / words.length)) * 2;
+  // The owner's strip options (_kit/ticker.ts) mark its parts once they change something.
+  const tk = tickerMarks(v.ctx.site.settings);
   return (
-    <div className="ticker" data-section="ticker">
+    <div className="ticker" data-section="ticker" {...tk("strip")}>
       <p className="sr-only">{words.join(", ")}</p>
-      <div className="ticker-track" aria-hidden="true">
+      <div className="ticker-track" aria-hidden="true" {...tk("track")}>
         {Array.from({ length: copies }, (_, n) =>
           words.map((w, i) => (
-            <span key={`${n}-${i}`} className="ticker-word">
+            <span key={`${n}-${i}`} className="ticker-word" {...tk("item", n > 0 && "copy")}>
               {w}
             </span>
           )),

@@ -231,7 +231,7 @@ export function OrderContent({ order, icon = false }: { order: OrderButton; icon
 export function OrderFab({ order }: { order: OrderButton | null }) {
   if (!order || !order.chosen) return null;
   return (
-    <a className="kit-fab kit-order" {...orderLink(order)} aria-label={order.label} data-section="order">
+    <a className="kit-fab kit-order" data-k="float" {...orderLink(order)} aria-label={order.label} data-section="order">
       <OrderIcon action={order.action} />
       <span className="kit-order-label">{order.label}</span>
     </a>

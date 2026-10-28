@@ -68,6 +68,11 @@
     letter-spacing: 0.12em;
     text-transform: uppercase;
   }
+  /* "Sold out" is outlined like the other labels, in the text's color: the kit draws it in the page color on an ink fill,
+   * which this menu leaves out. */
+  & .kit-mn-tag.is-out {
+    color: inherit;
+  }
 }
 
 /* ---------- the title page ---------- */

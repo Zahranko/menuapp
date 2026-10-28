@@ -202,7 +202,7 @@ export default function NightMarketTemplate({ site, now }: TemplateProps & { now
       </SiteFooter>
 
       {order && (
-        <a className="order-bar kit-order" {...orderLink(order)}>
+        <a className="order-bar kit-order" data-k="float" {...orderLink(order)}>
           <OrderContent order={order} icon />
         </a>
       )}

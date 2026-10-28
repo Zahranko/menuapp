@@ -16,6 +16,7 @@
   "thumbnail": "/templates/ember/thumbnail.png",
   "sample": "ember",
   "menu": { "own": ["cards"] },
+  "ticker": true,
   "sectionsLayout": { "order": ["menu", "best", "story", "gallery", "reviews", "visit"] },
   "signature": {
     "hero.variant": [
@@ -26,11 +27,11 @@
     ]
   },
   "looks": [
-    {"id":"grill","label":{"en":"Charcoal grill","ar":"شواية الفحم"},"values":{"theme":"charcoal","accent":"#FF5A1F","font":"condensed","hero.variant":"flame","menu.layout":"burst","header.layout":"classic"}},
-    {"id":"ketchup","label":{"en":"Ketchup","ar":"كاتشب"},"values":{"theme":"ketchup","accent":"#FFC21A","font":"condensed","hero.variant":"flame","menu.layout":"burst"}},
-    {"id":"mustard","label":{"en":"Mustard","ar":"خردل"},"values":{"theme":"mustard","accent":"#E5281E","font":"condensed","hero.variant":"flame","menu.layout":"burst","style.headings":"uppercase"}},
-    {"id":"diner","label":{"en":"Diner","ar":"مطعم أمريكي"},"values":{"theme":"diner","accent":"#E5281E","font":"modern","hero.variant":"poster","menu.layout":"burst","style.buttons":"pill"}},
-    {"id":"smoke","label":{"en":"Smokehouse","ar":"بيت التدخين"},"values":{"theme":"charcoal","accent":"#7BC950","font":"condensed","hero.variant":"flame","menu.layout":"list","header.layout":"minimal"}}
+    {"id":"grill","label":{"en":"Charcoal grill","ar":"شواية الفحم"},"values":{"theme":"charcoal","accent":"#FF5A1F","font":"condensed","hero.variant":"flame","menu.layout":"burst","header.layout":"classic","ticker.style":"solid","ticker.separator":"flame","ticker.speed":"normal","ticker.edge":"flames"}},
+    {"id":"ketchup","label":{"en":"Ketchup","ar":"كاتشب"},"values":{"theme":"ketchup","accent":"#FFC21A","font":"condensed","hero.variant":"flame","menu.layout":"burst","ticker.style":"tilted","ticker.color":"accent","ticker.separator":"star"}},
+    {"id":"mustard","label":{"en":"Mustard","ar":"خردل"},"values":{"theme":"mustard","accent":"#E5281E","font":"condensed","hero.variant":"flame","menu.layout":"burst","style.headings":"uppercase","ticker.style":"solid","ticker.color":"accent","ticker.separator":"star","ticker.speed":"slow"}},
+    {"id":"diner","label":{"en":"Diner","ar":"مطعم أمريكي"},"values":{"theme":"diner","accent":"#E5281E","font":"modern","hero.variant":"poster","menu.layout":"burst","style.buttons":"pill","ticker.style":"tags","ticker.color":"accent","ticker.edge":"none"}},
+    {"id":"smoke","label":{"en":"Smokehouse","ar":"بيت التدخين"},"values":{"theme":"charcoal","accent":"#7BC950","font":"condensed","hero.variant":"flame","menu.layout":"list","header.layout":"minimal","ticker.style":"neon","ticker.color":"accent","ticker.separator":"dot","ticker.speed":"slow","ticker.edge":"none"}}
   ],
   "schema": [
     {

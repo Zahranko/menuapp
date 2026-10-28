@@ -31,7 +31,7 @@ function html(site: PublicSite, page: string[] = []): string {
 const parse = (markup: string) => new DOMParser().parseFromString(markup, "text/html");
 const root = (doc: Document, id: string) => doc.querySelector(`[data-template="${id}"]`)!;
 
-const ALL = "ts_big-hs_condensed-tr_wide-sp_airy-btn_outline-pic_arch-div_wave-tex_grain-mo_rise";
+const ALL = "ts_big-hs_condensed-tr_wide-lh_relaxed-sp_airy-btn_outline-pic_arch-div_wave-tex_grain-mo_rise";
 
 describe.each(ids)("page style in template %s", (id) => {
   it("looks exactly as before with the defaults, saved or not", () => {
@@ -64,6 +64,7 @@ describe.each(ids)("page style in template %s", (id) => {
       applySiteOptions(site, ALL);
       const el = root(parse(html(site)), id);
       expect(el.getAttribute("data-ps-text")).toBe("big");
+      expect(el.getAttribute("data-ps-lh")).toBe("relaxed");
       expect(el.getAttribute("data-ps-btn")).toBe("outline");
       expect(el.getAttribute("data-ps-div")).toBe("wave");
       expect(el.getAttribute("data-ps-photo")).toBe("arch");
@@ -100,6 +101,7 @@ describe("page style stylesheet", () => {
       "style.textSize": "data-ps-text",
       "style.headings": "data-ps-head",
       "style.tracking": "data-ps-track",
+      "style.lineHeight": "data-ps-lh",
       "style.spacing": "data-ps-space",
       "style.buttons": "data-ps-btn",
       "style.photos": "data-ps-photo",

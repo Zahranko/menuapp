@@ -278,7 +278,7 @@ export default function HandyTemplate({ site, now }: TemplateProps & { now?: Dat
         </footer>
       </SiteFooter>
       {order && (
-        <div className="bar">
+        <div className="bar" data-k="float">
           {ctx.today && <span className="bar-today">{ctx.today}</span>}
           <a className="btn kit-order" {...orderLink(order)}>
             <OrderContent order={order} icon />

@@ -13,6 +13,7 @@
   "heroSlider": { "kind": "backdrop", "source": "hero.image" },
   "thumbnail": "/templates/drop/thumbnail.png",
   "sample": "drop",
+  "ticker": true,
   "sectionsLayout": { "order": ["picks", "menu", "gallery", "story", "reviews", "visit"] },
   "signature": {
     "hero.variant": [

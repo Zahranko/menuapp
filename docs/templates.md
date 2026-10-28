@@ -80,6 +80,7 @@ designed:
 | `style.textSize` | auto, smaller, larger, big |
 | `style.headings` | auto, normal, uppercase, italic, condensed, outlined |
 | `style.tracking` | auto, tight, normal, wide (letter spacing in headings) |
+| `style.lineHeight` | auto, tight, normal, relaxed (line spacing in headings) |
 | `style.spacing` | auto, compact, airy (space between sections) |
 | `style.buttons` | auto, pill, rounded, square, outline, underline, shadow |
 | `style.photos` | auto, rounded, square, soft, arch, circle, blob |
@@ -94,7 +95,15 @@ italic, condensed letters, outlines or letter spacing. Outlines go only on displ
 section titles), never on labels, header, footer or highlight titles. On a phone (560px and under), larger and big
 text leaves headings at the template's size, capital display headings are set 12% smaller, and wide spacing is
 reduced, so a word in a heading never breaks in the middle (display headings wrap only between words; the one
-exception is a business name heading, `.kit-name`, where a made-up word longer than the screen breaks). On a dark
+exception is a business name heading, `.kit-name`, where a made-up word longer than the screen breaks).
+
+Arabic letters rise and fall much further than Latin capitals, so a heading set as tight as a Latin poster face lets
+its Arabic lines run into each other. Whatever the template, heading style or line spacing, Arabic headings and names
+(`:lang(ar)`) keep a line height of at least 1.3 and no letter spacing, and "relaxed" gives them 1.5. A site in English
+whose owner wrote Arabic gets `data-ar-text` on its root (`arabicOnLatinSite()` in `options.ts`), listing where:
+`name` (the business name), `hero` (any `hero.*` text) and `titles` (any other text). The browser draws that Arabic in
+a fallback face, which is taller still, so the opening's headings and the name get 1.45 (1.6 when relaxed) and other
+headings get the Arabic minimum. On a dark
 theme (`color-scheme: dark` on the root) the paper texture is a faint fine grain and the grain texture is fainter. Motion uses CSS scroll-driven animations inside
 `@media (prefers-reduced-motion: no-preference)`, with no JavaScript, and changes nothing in browsers without them.
 
@@ -115,7 +124,15 @@ A template leaves an option out with `"pageStyle": { "skip": ["style.motion"] }`
 Couture, Ember, Lumen and Maison skip `style.motion`, because they have their own motion switch.
 `templates/page-style.test.tsx` checks every template, and `_kit/style.test.ts` checks the options.
 In fixture mode, `/_preview/fixture.<id>.<theme>.<en|ar>.ts_big-hs_condensed-btn_pill-pic_arch-div_wave-tex_grain-mo_rise`
-tries them (tokens: `ts hs tr sp btn pic div tex mo`).
+tries them (tokens: `ts hs tr lh sp btn pic div tex mo`); `artext` fills the opening and story title with Arabic on a
+site in English.
+
+`e2e/headings.spec.ts` checks every template on a phone, in Arabic and in every look. No heading's lines run into each
+other (`headingOverlaps()` in `e2e/page-checks.ts` measures each word's ink with the heading's font and compares the
+words that stand over each other). Every header button and link shows text or an icon at 3:1 (`headerControlIssues()`).
+No floating button lies over a heading or the opening's text on the first screen (`floatingCoverIssues()`). It also
+checks Arabic headings on an English site (`artext`), each header style, and the size of the app's live preview
+(355×344).
 
 ### Option pictures (`"previews"`)
 
@@ -145,7 +162,11 @@ and its decorations around it, so it reads as part of the template.
 - A template's own `hero.layout` (Souq, Atlas, Bloom, Ember, Lumen, Maison) moves into this group right after
   `hero.variant`, labelled "Template default: its own top": it is what `auto` shows.
 - `header.style` and `header.sticky` also restyle a template's own header (any `[data-section="header"]` that is not a
-  masthead); solid and glass also set its text in the page's ink, since their background is the page color. A shared
+  masthead); solid and glass also set its text in the page's ink, since their background is the page color. Two marks
+  keep header parts readable under those looks. A control drawn on a fill of its own (Ember's "Menu" pill) carries
+  `data-k="filled"` and keeps its colors. A bar of the header that floats at the foot of a phone's screen (Lumen's tabs,
+  Bloom's dock) carries `data-k="bar"`: the template sets `--k-bar-bg` and `--k-bar-ink` while it floats and sets them
+  to `initial` where the bar sits in the header, so there it takes the header's color. A shared
   header is sticky unless it is the big one or the owner chose "Scrolls away"; the big one stays on screen only on
   phones even with "Stays at the top", because on a wide screen it is a few hundred pixels tall. A see-through header
   stays on screen only in browsers with scroll-driven animations (it turns solid as the page scrolls) and scrolls away
@@ -309,6 +330,46 @@ names joined with `+`), for example `/_preview/fixture.souq.default.ar.so_review
 pictures: `public/kit/previews/highlights-*.svg`, `story-*.svg`, `gallery-*.svg`, `reviews-*.svg`, `visit-*.svg` and
 `footer-*.svg`.
 
+## Moving strip (`_kit/ticker-settings.json`, `ticker.ts`, `ticker.css`)
+
+Templates with a moving strip of words or specials (Ember, Drop, Agency, Lumen, and the shared highlights marquee on
+them) say `"ticker": true` in their manifest. `scripts/build-registry.mjs` then adds a "Moving strip" group
+(الشريط المتحرك) right after "Sections"; a manifest may not define `ticker.*` keys itself.
+
+| Key | Options |
+|---|---|
+| `ticker.style` | auto, solid, outline, tilted, torn, tags, neon, double |
+| `ticker.color` | auto, accent, ink, paper, custom (with `ticker.bg`, a color with presets and the owner's own) |
+| `ticker.separator` | auto, diamond, star, dot, flame, slash, none |
+| `ticker.speed` | auto, slow, normal, fast, still |
+| `ticker.edge` | auto, flames, none, zigzag, waves |
+
+- `tickerAttributes()` puts `data-tk-style`, `data-tk-color`, `data-tk-sep`, `data-tk-speed` and `data-tk-edge` on the
+  root for the options that are not `auto`. With every option on `auto` the page is byte for byte as before.
+- `tickerColors()` (called by `themeVars`) sets `--tk-bg` (the band) and `--tk-ink` (its text). The text is the theme's
+  dark or light color when that reads at 4.5:1, otherwise black or white. It also sets `--tk-line`, the band color
+  moved until it reads on the page, for the see-through shapes.
+- `tickerMarks(settings)` gives the template `tk("strip")`, `tk("track")`, `tk("item")`, `tk("sep")` and `tk("copy")`:
+  `data-k` marks that appear only once the owner changed something. `sep` is the template's own separator (hidden once
+  the owner picks one). `copy` is a repeat that only fills the loop (hidden when the strip stands still).
+- Every option has English and Arabic labels and an 80×80 picture without text (`public/kit/previews/ticker*.svg`).
+
+Tests: `_kit/ticker.test.ts` (attributes, contrast for every theme, accent and owner's color, labels and pictures),
+`templates/ticker-strip.test.tsx` (every template unchanged on auto, the group only where there is a strip, marks in
+both languages, readable bands in every theme) and `e2e/ticker.spec.ts` (every option on a phone in English and Arabic,
+the words readable on what is really behind them). Fixture tokens: `tks`, `tkc`, `tksep`, `tksp`, `tke` and
+`tkbg_<rrggbb>`, for example `/_preview/fixture.ember.default.ar.tks_tilted-tkc_custom-tkbg_1f6feb-tksep_star`.
+
+## The floating order button
+
+The order button floats at the bottom of the screen. On a phone it appears only once the visitor scrolls past the top
+(`[data-k~="float"]` in `options.css`, a scroll-driven animation from 8vh to 24vh of scrolling), so it never covers the
+opening's heading or text on the first screen, including in the app's short live preview. Browsers without
+scroll-driven animations show it from the start. Every floating order button carries `data-k="float"` (OrderFab, and
+the own buttons of Ember, Lumen, Atelier, Night Market and Handy's bar). `order.shape` sets its shape and
+`order.position` sets where it floats: auto, end (the bottom corner), start (the other bottom corner) or center (the
+bottom middle). Fixture tokens: `order_<action>`, `shape_<shape>` and `pos_<position>`.
+
 ## Signature options and looks (manifest `"signature"` and `"looks"`)
 
 Every template has 1 to 3 **signature options**: options of a shared layout field (`header.layout`, `hero.variant`,
@@ -362,7 +423,8 @@ then colors, fonts, every shared group, the signature options and a random secti
 logos and more photos, half in Arabic, on a phone and a desktop, sometimes on an inner page of the Pro templates. Each
 page must pass axe (WCAG 2 A/AA and 2.2 target size), have no sideways scroll and no page or console errors, keep heading
 and button text inside its box (nothing cut off by a box that hides its overflow), keep the main call to action clear of
-fixed or sticky bars, give every image an alt text, and keep text readable on what is really behind it: text that axe
+fixed or sticky bars, keep the headings and the opening's text clear of floating buttons on the first screen, show text
+or an icon on every header button and link, keep Arabic heading lines apart, give every image an alt text, and keep text readable on what is really behind it: text that axe
 can't judge (over photos, gradients, textures) is measured on a screenshot of its place with all text hidden.
 
 Two combinations per template run by default (CI); `COMBOS=1` runs twelve and `COMBOS=<n>` runs n. `COMBO_SHOTS=<dir>`

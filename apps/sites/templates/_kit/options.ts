@@ -11,6 +11,7 @@ import { TYPEFACE_NAMES, TYPEFACES, type FontPair, type TypefaceName } from "./f
 import { contact as contactLinks } from "./site-data";
 import siteOptions from "./site-options.json";
 import { styleAttributes } from "./style";
+import { tickerAttributes } from "./ticker";
 
 /*
  * The owner's site options shared by every template (fields in site-options.json, added to every template by
@@ -80,8 +81,11 @@ export function socialAccounts(site: PublicSite, templateDefault: readonly Netwo
 export type OrderAction = "whatsapp" | "call" | "instagram" | "facebook";
 export type OrderChoice = "auto" | OrderAction | "hide";
 export type OrderShape = "auto" | "pill" | "rounded" | "circle";
+/** Where a floating button sits: the bottom corner at the end of a line (right in English, left in Arabic), the other one, or the middle. */
+export type OrderPosition = "auto" | "end" | "start" | "center";
 export const ORDER_CHOICES = options<OrderChoice>("order.action");
 export const ORDER_SHAPES = options<OrderShape>("order.shape");
+export const ORDER_POSITIONS = options<OrderPosition>("order.position");
 
 const ORDER_LABELS: Record<"en" | "ar", Record<OrderAction, string>> = {
   en: { whatsapp: "Order on WhatsApp", call: "Call us", instagram: "Find us on Instagram", facebook: "Find us on Facebook" },
@@ -95,6 +99,8 @@ export type OrderButton = {
   label: string;
   /** The owner chose the shape; "auto" keeps the template's own. */
   shape: OrderShape;
+  /** The owner chose where a floating button sits; "auto" keeps the template's place. */
+  position: OrderPosition;
   /** Links outside the site open in a new tab; a phone call does not. */
   external: boolean;
   /** The owner picked an action (not "Template default"): templates without a floating button of their own show the shared one. */
@@ -126,6 +132,7 @@ export function orderButton(site: PublicSite, template: { label?: string; whatsa
     href,
     label: own || (action === "whatsapp" && template.label) || ORDER_LABELS[locale][action],
     shape: choice(site.settings, "order.shape", ORDER_SHAPES, "auto"),
+    position: choice(site.settings, "order.position", ORDER_POSITIONS, "auto"),
     external: action !== "call",
     chosen: picked !== "auto",
   };
@@ -139,6 +146,25 @@ export function typeface(settings: Settings, locale: string): FontPair | null {
   if (name === "default") return null;
   const pair: FontPair = TYPEFACES[name];
   return locale === "ar" ? { ...pair, tracking: "0" } : pair;
+}
+
+/* ---------- Arabic text on a site in English ---------- */
+
+const ARABIC = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
+
+/**
+ * Where a site in English holds Arabic the owner wrote: "name" (the business name), "hero" (the opening's texts),
+ * "titles" (any other text: section titles, the announcement). Empty on an Arabic site or with no Arabic at all.
+ * Product and category names don't count: a bilingual menu is common and its names are set small.
+ */
+export function arabicOnLatinSite(site: PublicSite): string[] {
+  if (site.business.locale === "ar") return [];
+  const places = new Set<string>();
+  if (ARABIC.test(site.business.name)) places.add("name");
+  for (const [key, value] of Object.entries(site.settings)) {
+    if (typeof value === "string" && ARABIC.test(value)) places.add(key.startsWith("hero.") ? "hero" : "titles");
+  }
+  return ["name", "hero", "titles"].filter((p) => places.has(p));
 }
 
 /* ---------- root attributes ---------- */
@@ -155,12 +181,16 @@ export function optionAttributes(site: PublicSite, order: OrderButton | null = n
   const shown = order !== null && (ownButton || order.chosen);
   if (shown && !ownButton) attrs["data-order-fab"] = order.action;
   if (shown && order.shape !== "auto") attrs["data-order-shape"] = order.shape;
+  if (shown && order.position !== "auto") attrs["data-order-pos"] = order.position;
   const font = choice(site.settings, "font.family", ["default", ...TYPEFACE_NAMES], "default");
   if (font !== "default") attrs["data-font"] = font;
   // The owner's background color (_kit/background.ts): templates restyle the few parts drawn in fixed colors.
   const background = pageBackground(site.settings);
   if (background) attrs["data-page-bg"] = isDark(background) ? "dark" : "light";
-  // Card options (_kit/cards.ts, cards.css), hero options (_kit/hero.ts, hero.css), page style (_kit/style.ts, style.css)
-  // and page layout (_kit/layout.ts, layout.css).
-  return { ...attrs, ...cardAttributes(site.settings), ...heroAttributes(site.settings), ...styleAttributes(site.settings), ...layoutAttributes(site.settings), ...signatureAttributes(site) };
+  // Arabic headings on a site in English: _kit/style.css gives those headings the room Arabic letters need.
+  const arabic = arabicOnLatinSite(site);
+  if (arabic.length) attrs["data-ar-text"] = arabic.join(" ");
+  // Card options (_kit/cards.ts, cards.css), hero options (_kit/hero.ts, hero.css), page style (_kit/style.ts, style.css),
+  // page layout (_kit/layout.ts, layout.css) and the moving strip (_kit/ticker.ts, ticker.css).
+  return { ...attrs, ...cardAttributes(site.settings), ...heroAttributes(site.settings), ...styleAttributes(site.settings), ...layoutAttributes(site.settings), ...tickerAttributes(site.settings), ...signatureAttributes(site) };
 }

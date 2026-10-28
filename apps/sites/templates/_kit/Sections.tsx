@@ -11,6 +11,7 @@ import { orderChanged, sectionLayouts, sectionOrder, sortLinks, type SectionKind
 import { highlights as highlightPairs } from "./services";
 import { signatureOf } from "./signatures";
 import { hasHours } from "./site-data";
+import { tickerMarks } from "./ticker";
 import type { NavLink } from "./Top";
 
 /*
@@ -220,11 +221,13 @@ export function SiteHighlights({
   };
 
   if (layout === "marquee") {
+    // On templates with a moving strip of their own, the owner's strip options (_kit/ticker.ts) style this one too.
+    const tk = tickerMarks(ctx.site.settings);
     const run = (hidden: boolean) => (
-      <ul className="plain kit-sc-mq-run" aria-hidden={hidden || undefined}>
+      <ul className="plain kit-sc-mq-run" aria-hidden={hidden || undefined} {...tk(hidden && "copy")}>
         {items.map((h, i) => (
-          <li key={i} className="kit-sc-mq-item">
-            <Spark className="kit-sc-mq-dot" />
+          <li key={i} className="kit-sc-mq-item" {...tk("item")}>
+            <Spark className="kit-sc-mq-dot" {...tk("sep")} />
             {hidden ? (
               <span className="kit-sc-mq-title">{h.title}</span>
             ) : (
@@ -236,10 +239,10 @@ export function SiteHighlights({
       </ul>
     );
     return (
-      <section className="kit-sc kit-sc-highlights" data-section="highlights" data-sc="marquee" data-sig={signatureOf(ctx.site, "highlights.layout")} aria-label={name}>
+      <section className="kit-sc kit-sc-highlights" data-section="highlights" data-sc="marquee" data-sig={signatureOf(ctx.site, "highlights.layout")} aria-label={name} {...tk("strip")}>
         <h2 className="sr-only">{name}</h2>
         <div className="kit-sc-mq">
-          <div className="kit-sc-mq-track">
+          <div className="kit-sc-mq-track" {...tk("track")}>
             {run(false)}
             {run(true)}
           </div>

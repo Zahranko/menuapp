@@ -37,6 +37,11 @@
   }
 }
 
+/* The flames belong to the specials strip under the poster: once the owner gives the strip edges of its own, they go. */
+[data-template="ember"][data-tk-edge] .kit-hv.kit-hv[data-sig~="flame"] > .kit-sig-art {
+  display: none;
+}
+
 /* ---------- starburst prices ---------- */
 [data-template="ember"] .kit-mn.kit-mn.kit-mn[data-sig~="burst"] {
   & .kit-mn-item {

@@ -12,6 +12,7 @@
 @import "../_kit/layout.css";
 @import "../_kit/menu.css";
 @import "../_kit/sections.css";
+@import "../_kit/ticker.css";
 @import "../_kit/style.css";
 @import "./signature.css";
 
@@ -187,11 +188,12 @@
   .tick b {
     font-weight: inherit;
   }
+  /* The price chip: the strip's colors reversed (the owner's strip colors from _kit/ticker.ts, else the sticker's). */
   .tick em {
     font-style: normal;
     padding: 1px 0.35em;
-    background: var(--popink);
-    color: var(--pop);
+    background: var(--tk-ink, var(--popink));
+    color: var(--tk-bg, var(--pop));
   }
 
   /* ---------- top bar ---------- */

@@ -45,6 +45,21 @@ public static partial class TemplateAiFields
         _ => false,
     };
 
+    /// <summary>
+    /// What the chat assistant may set: every <see cref="IsEditable"/> field, plus whether the floating order button shows.
+    /// Where it sends customers is the owner's fact, so "order.action" is offered with two options only: "hide" to take the
+    /// button away (when it covers the text, or the owner doesn't want it) and "auto" to bring a hidden one back.
+    /// </summary>
+    public static IReadOnlyList<TemplateField> ForChat(IEnumerable<TemplateField> fields) =>
+        fields.Select(f => IsEditable(f) ? f : ShowOrHide(f)).OfType<TemplateField>().ToList();
+
+    private static readonly IReadOnlyList<string> OrderShowOrHide = ["auto", "hide"];
+
+    private static TemplateField? ShowOrHide(TemplateField field) =>
+        field is { Key: "order.action", Type: "choice", Options: { } options } && OrderShowOrHide.All(options.Contains)
+            ? field with { Options = OrderShowOrHide }
+            : null;
+
     /// <summary>A text field for the Arabic version of another field (like "hero.titleAr"); the helper writes it in Arabic.</summary>
     public static bool IsArabicTwin(TemplateField field, IReadOnlyCollection<TemplateField> all) =>
         field.Key.EndsWith("Ar", StringComparison.Ordinal) && all.Any(f => f.Key == field.Key[..^2]);

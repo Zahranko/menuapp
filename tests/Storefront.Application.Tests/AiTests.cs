@@ -315,6 +315,200 @@ public class ChatAboutDesignTests
     }
 }
 
+/// <summary>
+/// Text that runs into itself, the floating order button and the moving strip in the design chat: the model can open up the
+/// line spacing, make the text smaller, move or hide the order button and restyle the strip, and is told when to.
+/// </summary>
+public class CrampedTextAndStripAiTests
+{
+    private static readonly DateTimeOffset Now = new(2026, 10, 20, 9, 0, 0, TimeSpan.Zero);
+
+    private const string Schema = """
+        [ { "key": "hero.title", "type": "text", "label": "Headline", "group": "Hero", "max": 60 },
+          { "key": "style.textSize", "type": "choice", "label": "Text size", "group": "Page style", "options": ["auto", "smaller", "larger", "big"] },
+          { "key": "style.headings", "type": "choice", "label": "Heading style", "group": "Page style", "options": ["auto", "normal", "condensed"] },
+          { "key": "style.lineHeight", "type": "choice", "label": "Line spacing in headings", "group": "Page style", "options": ["auto", "tight", "normal", "relaxed"],
+            "optionLabels": { "auto": "Template default", "tight": "Tight", "normal": "Normal", "relaxed": "Relaxed" } },
+          { "key": "order.action", "type": "choice", "label": "What the button does", "group": "Order button", "options": ["auto", "whatsapp", "call", "instagram", "facebook", "hide"],
+            "optionLabels": { "auto": "Template default", "hide": "Hide the button" } },
+          { "key": "order.label", "type": "text", "label": "Button text", "group": "Order button", "max": 24 },
+          { "key": "order.shape", "type": "choice", "label": "Button shape", "group": "Order button", "options": ["auto", "pill", "rounded", "circle"] },
+          { "key": "order.position", "type": "choice", "label": "Button position", "group": "Order button", "options": ["auto", "end", "start", "center"] },
+          { "key": "ticker.style", "type": "choice", "label": "Strip shape", "group": "Moving strip", "options": ["auto", "solid", "outline", "tilted", "torn", "tags", "neon", "double"] },
+          { "key": "ticker.color", "type": "choice", "label": "Strip color", "group": "Moving strip", "options": ["auto", "accent", "ink", "paper", "custom"] },
+          { "key": "ticker.bg", "type": "color", "label": "My own strip color", "group": "Moving strip", "options": ["#E5281E", "#FFC21A"], "custom": true },
+          { "key": "ticker.separator", "type": "choice", "label": "Between the words", "group": "Moving strip", "options": ["auto", "diamond", "star", "dot", "flame", "slash", "none"] },
+          { "key": "ticker.speed", "type": "choice", "label": "Speed", "group": "Moving strip", "options": ["auto", "slow", "normal", "fast", "still"] },
+          { "key": "ticker.edge", "type": "choice", "label": "Edges", "group": "Moving strip", "options": ["auto", "flames", "none", "zigzag", "waves"] } ]
+        """;
+
+    private const string Defaults = """
+        { "hero.title": "Charcoal grill", "style.textSize": "big", "style.headings": "condensed", "style.lineHeight": "auto", "order.action": "call",
+          "order.label": "Order now", "order.shape": "auto", "order.position": "auto", "ticker.style": "auto", "ticker.color": "auto", "ticker.bg": "#E5281E",
+          "ticker.separator": "auto", "ticker.speed": "auto", "ticker.edge": "auto" }
+        """;
+
+    private static readonly TemplateSchema Parsed = TemplateSchema.Parse(Schema);
+
+    private static (ChatAboutDesignHandler Handler, WriteTextHandlerTests.FakeAssistant Assistant) Chat()
+    {
+        var business = Business.Create(Guid.CreateVersion7(), "Ember", Slug.FromStorage("ember"), Now);
+        var template = Template.Create("ember", 1, "Ember", "Restaurant", null, null, Schema, Defaults, 1);
+        var site = Site.Create(business.Id, "ember", template.DefaultSettings, Now);
+        var assistant = new WriteTextHandlerTests.FakeAssistant();
+        var quota = WriteTextHandlerTests.Quota(business.Id, assistant, new WriteTextHandlerTests.FakeUsage());
+        var handler = new ChatAboutDesignHandler(new ChatAboutDesignValidator(), quota, assistant, new NoPhotos(), WriteTextHandlerTests.Businesses(business), WriteTextHandlerTests.Sites(site), WriteTextHandlerTests.Templates(template));
+        return (handler, assistant);
+    }
+
+    private static ChatAboutDesign Ask(string text) => new([new AiChatMessage(AiChatMessage.Owner, text)], "ar");
+
+    private static Dictionary<string, string> Patch(System.Text.Json.JsonElement settings) =>
+        settings.EnumerateObject().ToDictionary(p => p.Name, p => p.Value.ToString());
+
+    [Fact]
+    public void Line_spacing_text_size_the_order_button_and_the_strip_are_the_chats_to_set()
+    {
+        var chat = TemplateAiFields.ForChat(Parsed.Fields);
+        Assert.Equal(
+            ["hero.title", "style.textSize", "style.headings", "style.lineHeight", "order.action", "order.shape", "order.position",
+             "ticker.style", "ticker.color", "ticker.bg", "ticker.separator", "ticker.speed", "ticker.edge"],
+            chat.Select(f => f.Key));
+
+        // Where the button sends customers stays the owner's: the chat may only hide it or bring it back.
+        Assert.False(TemplateAiFields.IsEditable(Parsed.Fields.Single(f => f.Key == "order.action")));
+        Assert.Equal(["auto", "hide"], chat.Single(f => f.Key == "order.action").Options);
+        Assert.DoesNotContain(chat, f => f.Key == "order.label");
+
+        // A template whose button can't be hidden offers no action at all.
+        var noHide = TemplateSchema.Parse("""[ { "key": "order.action", "type": "choice", "label": "Action", "options": ["auto", "call"] } ]""");
+        Assert.Empty(TemplateAiFields.ForChat(noHide.Fields));
+    }
+
+    [Fact]
+    public async Task Overlapping_text_gets_more_room_and_the_button_moves_out_of_the_way()
+    {
+        var (handler, assistant) = Chat();
+        assistant.Answer = JsonNode.Parse("""
+            { "reply": "فتحت المسافة بين سطور العنوان وصغّرت الخط ونقلت زر الطلب إلى الزاوية الأخرى.",
+              "settings": { "style.lineHeight": "relaxed", "style.textSize": "smaller", "order.position": "start", "order.shape": "circle" } }
+            """)!;
+
+        var result = await handler.Handle(Ask("النص فوق بعضه والزر مغطي العنوان"), CancellationToken.None);
+
+        Assert.True(result.IsSuccess);
+        Assert.Equal(
+            new Dictionary<string, string> { ["style.lineHeight"] = "relaxed", ["style.textSize"] = "smaller", ["order.position"] = "start", ["order.shape"] = "circle" },
+            Patch(result.Value.Settings));
+        Assert.Contains("المسافة", result.Value.Reply);
+
+        var request = assistant.Requests.Single();
+        var properties = request.ResponseSchema["properties"]!["settings"]!["properties"]!;
+        Assert.Equal(["auto", "tight", "normal", "relaxed"], properties["style.lineHeight"]!["enum"]!.AsArray().Select(o => o!.GetValue<string>()));
+        Assert.Equal(["auto", "hide"], properties["order.action"]!["enum"]!.AsArray().Select(o => o!.GetValue<string>()));
+        Assert.Null(properties["order.label"]);
+        Assert.Contains("- style.lineHeight (Page style / Line spacing in headings): \"auto\"", request.Input);
+    }
+
+    [Fact]
+    public async Task The_order_button_can_be_hidden_but_never_sent_somewhere_else()
+    {
+        var (handler, assistant) = Chat();
+        assistant.Answer = JsonNode.Parse("""{ "reply": "Hidden.", "settings": { "order.action": "hide" } }""")!;
+        Assert.Equal(new Dictionary<string, string> { ["order.action"] = "hide" }, Patch((await handler.Handle(Ask("Remove the order button"), CancellationToken.None)).Value.Settings));
+
+        assistant.Answer = JsonNode.Parse("""{ "reply": "Done.", "settings": { "order.action": "whatsapp", "order.label": "Buy", "style.lineHeight": "loose" } }""")!;
+        var refused = await handler.Handle(Ask("Make the button open WhatsApp"), CancellationToken.None);
+        Assert.Empty(Patch(refused.Value.Settings));
+    }
+
+    [Fact]
+    public async Task The_strip_takes_its_shape_color_separator_speed_and_edges()
+    {
+        var (handler, assistant) = Chat();
+        assistant.Answer = JsonNode.Parse("""
+            { "reply": "The strip is red with stars and stands still.",
+              "settings": { "ticker.style": "Tilted", "ticker.color": "custom", "ticker.bg": "#c81d25", "ticker.separator": "star", "ticker.speed": "still",
+                            "ticker.edge": "waves", "ticker.shape": "round" } }
+            """)!;
+
+        var result = await handler.Handle(Ask("Make the moving bar red with stars and stop it"), CancellationToken.None);
+
+        Assert.Equal(
+            new Dictionary<string, string>
+            {
+                ["ticker.style"] = "tilted", ["ticker.color"] = "custom", ["ticker.bg"] = "#C81D25", ["ticker.separator"] = "star", ["ticker.speed"] = "still", ["ticker.edge"] = "waves",
+            },
+            Patch(result.Value.Settings));
+        var properties = assistant.Requests.Single().ResponseSchema["properties"]!["settings"]!["properties"]!;
+        Assert.Contains("#RRGGBB", properties["ticker.bg"]!["description"]!.GetValue<string>());
+    }
+
+    [Fact]
+    public async Task The_instructions_explain_cramped_text_the_order_button_and_the_moving_strip()
+    {
+        var (handler, assistant) = Chat();
+        await handler.Handle(Ask("The text overlaps"), CancellationToken.None);
+        // Read as one line: the instructions wrap their sentences.
+        var instructions = System.Text.RegularExpressions.Regex.Replace(assistant.Requests.Single().Instructions, @"\s+", " ");
+        Assert.Contains("line spacing in headings (\"style.lineHeight\")", instructions);
+        Assert.Contains("text overlaps, lines run into each other", instructions);
+        Assert.Contains("(\"style.lineHeight\" \"relaxed\"", instructions);
+        Assert.Contains("(\"style.textSize\" \"smaller\"", instructions);
+        Assert.Contains("say in the reply what you changed to give the text room", instructions);
+        Assert.Contains("\"order.position\"", instructions);
+        Assert.Contains("\"remove the order button\" (action \"hide\")", instructions);
+        Assert.Contains("\"Moving strip\"", instructions);
+        Assert.Contains("\"stop the moving bar\" (speed \"still\")", instructions);
+        Assert.Contains("\"stars between the specials\" (separator \"star\")", instructions);
+    }
+
+    [Fact]
+    public void Every_template_lets_the_chat_space_out_headings_and_move_the_button_and_restyle_any_strip()
+    {
+        using var registry = System.Text.Json.JsonDocument.Parse(File.ReadAllText(RegistryPath()));
+        var strips = 0;
+        foreach (var t in registry.RootElement.GetProperty("templates").EnumerateArray())
+        {
+            var id = t.GetProperty("id").GetString();
+            var chat = TemplateAiFields.ForChat(TemplateSchema.Parse(t.GetProperty("schema").GetRawText()).Fields).ToDictionary(f => f.Key);
+            foreach (var key in new[] { "style.lineHeight", "style.textSize", "style.headings", "order.position", "order.shape" })
+            {
+                Assert.True(chat.ContainsKey(key), $"{id} {key}");
+            }
+
+            Assert.Equal(["auto", "hide"], chat["order.action"].Options);
+            var ticker = chat.Values.Where(f => f.Group == "Moving strip").Select(f => f.Key).ToList();
+            if (ticker.Count > 0)
+            {
+                strips++;
+                Assert.Equal(["ticker.style", "ticker.color", "ticker.bg", "ticker.separator", "ticker.speed", "ticker.edge"], ticker);
+            }
+        }
+
+        Assert.Equal(4, strips);
+    }
+
+    private static string RegistryPath()
+    {
+        for (var dir = new DirectoryInfo(AppContext.BaseDirectory); dir is not null; dir = dir.Parent)
+        {
+            var path = Path.Combine(dir.FullName, "apps", "sites", "templates", "registry.json");
+            if (File.Exists(path))
+            {
+                return path;
+            }
+        }
+
+        throw new FileNotFoundException("apps/sites/templates/registry.json not found above the test folder.");
+    }
+
+    private sealed class NoPhotos : IImageOptimizer
+    {
+        public Result<OptimizedImage> Optimize(ReadOnlyMemory<byte> image, int maxSide, long maxBytes) => throw new NotSupportedException();
+    }
+}
+
 /// <summary>The template's own layout options ("signature") and its looks in the design chat and the photo helper.</summary>
 public class TemplateLooksAiTests
 {

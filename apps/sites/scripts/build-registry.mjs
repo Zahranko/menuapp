@@ -59,6 +59,11 @@
 // "sectionsLayout": { "order": ["highlights", "menu", "story", "visit"] } (names from the shared list, in the order the
 // template renders them), and may leave fields or options out with "skip" and "skipOptions" (left out of registry.json).
 //
+// Moving strip: a template with a moving strip of its own (a ticker of specials, a marquee of words) says so with
+// "ticker": true and gets the shared fields of templates/_kit/ticker-settings.json (the strip's shape, color, the owner's
+// own color, what goes between the items, speed and edges) in a "Moving strip" group right after "Sections".
+// templates/_kit/ticker.ts reads them, _kit/ticker.css styles the parts the template marks; "auto" keeps its own strip.
+//
 // Previews: a "choice" field may carry "previews", a small picture per option ({ "pill": "/kit/previews/buttons-pill.svg" }),
 // which the app's editor shows as picture tiles. Every key must be one of the field's options and every picture must exist
 // in public/.
@@ -106,6 +111,7 @@ const styleSettings = JSON.parse(readFileSync(path.join(root, "_kit", "style-set
 const layoutSettings = JSON.parse(readFileSync(path.join(root, "_kit", "layout-settings.json"), "utf8"));
 const menuSettings = JSON.parse(readFileSync(path.join(root, "_kit", "menu-settings.json"), "utf8"));
 const sectionsSettings = JSON.parse(readFileSync(path.join(root, "_kit", "sections-settings.json"), "utf8"));
+const tickerSettings = JSON.parse(readFileSync(path.join(root, "_kit", "ticker-settings.json"), "utf8"));
 const publicDir = path.join(root, "..", "public");
 const HERO_KINDS = new Set(Object.keys(heroSettings.kinds));
 const HERO_SOURCES = new Set(["hero.image", "hero.images"]);
@@ -149,6 +155,7 @@ const manifests = readdirSync(root, { withFileTypes: true })
     withLayoutOptions(d.name, manifest);
     withMenuOptions(d.name, manifest);
     withSectionOptions(d.name, manifest);
+    withTickerOptions(d.name, manifest);
     withHeroOptions(d.name, manifest);
     withSignatureOptions(d.name, manifest);
     const keys = new Set();
@@ -388,6 +395,20 @@ function withSectionOptions(id, manifest) {
   manifest.schema = manifest.schema.filter((f) => f.group !== group);
   const ownDefaults = Object.fromEntries(own.map((f) => [f.key, manifest.defaults[f.key]]));
   insertGroup(manifest, [...shown, ...fields, ...own], { ...sectionsSettings.defaults, [key]: order, ...ownDefaults }, menuSettings.group);
+}
+
+/** Adds the shared moving strip options (templates/_kit/ticker-settings.json) in a "Moving strip" group after "Sections". */
+function withTickerOptions(id, manifest) {
+  const own = manifest.ticker;
+  delete manifest.ticker;
+  for (const field of tickerSettings.fields) {
+    if (manifest.schema.some((f) => f.key === field.key) || field.key in manifest.defaults) fail(`${id}: "${field.key}" comes from templates/_kit/ticker-settings.json; remove it from the manifest`);
+  }
+  if (own === undefined) return;
+  if (own !== true) fail(`${id}: "ticker" is true for a template with a moving strip of its own (or left out)`);
+  const { group, groupAr } = tickerSettings;
+  const fields = tickerSettings.fields.map((f) => ({ key: f.key, type: f.type, label: f.label, group, groupAr, ...f }));
+  insertGroup(manifest, fields, tickerSettings.defaults, sectionsSettings.group);
 }
 
 /** Checks an "order" field: its options are the names to order and its default lists each of them once. */

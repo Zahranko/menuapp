@@ -204,7 +204,7 @@ function Header({ v }: { v: View }) {
           <Logo ctx={ctx} className="brand-logo" sizes="48px" />
           <BrandName ctx={ctx} className="brand-name" />
         </a>
-        <nav className="dock" aria-label={c.pages}>
+        <nav className="dock" aria-label={c.pages} data-k="bar">
           {links.map((l) => (
             <a key={l.href} href={l.href} aria-current={l.current}>
               <span className="dock-ic">{l.icon}</span>

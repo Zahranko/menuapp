@@ -366,7 +366,7 @@ export default function AtelierTemplate({
         </footer>
       </SiteFooter>
       {order && (
-        <a className="book-bar kit-order" {...orderLink(order)}>
+        <a className="book-bar kit-order" data-k="float" {...orderLink(order)}>
           <OrderContent order={order} />
         </a>
       )}

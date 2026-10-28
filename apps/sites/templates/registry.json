@@ -680,6 +680,38 @@
           }
         },
         {
+          "key": "style.lineHeight",
+          "type": "choice",
+          "label": "Line spacing in headings",
+          "labelAr": "تباعد أسطر العناوين",
+          "group": "Page style",
+          "groupAr": "شكل الصفحة",
+          "options": [
+            "auto",
+            "tight",
+            "normal",
+            "relaxed"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Tight",
+            "normal": "Normal",
+            "relaxed": "Relaxed"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "normal": "عادية",
+            "relaxed": "متباعدة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "tight": "/kit/previews/lineheight-tight.svg",
+            "normal": "/kit/previews/lineheight-normal.svg",
+            "relaxed": "/kit/previews/lineheight-relaxed.svg"
+          }
+        },
+        {
           "key": "style.spacing",
           "type": "choice",
           "label": "Space between sections",
@@ -2195,6 +2227,32 @@
           }
         },
         {
+          "key": "order.position",
+          "type": "choice",
+          "label": "Button position",
+          "labelAr": "مكان الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "end",
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "end": "Bottom corner",
+            "start": "Other bottom corner",
+            "center": "Bottom middle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "end": "الزاوية السفلية",
+            "start": "الزاوية السفلية الأخرى",
+            "center": "في المنتصف بالأسفل"
+          }
+        },
+        {
           "key": "order.label",
           "type": "text",
           "label": "Button text (leave empty for the usual text)",
@@ -2265,6 +2323,7 @@
         ],
         "order.action": "auto",
         "order.shape": "auto",
+        "order.position": "auto",
         "order.label": "",
         "cards.style": "auto",
         "cards.border": "auto",
@@ -2275,6 +2334,7 @@
         "style.textSize": "auto",
         "style.headings": "auto",
         "style.tracking": "auto",
+        "style.lineHeight": "auto",
         "style.spacing": "auto",
         "style.buttons": "auto",
         "style.photos": "auto",
@@ -2981,6 +3041,38 @@
             "tight": "/kit/previews/tracking-tight.svg",
             "normal": "/kit/previews/tracking-normal.svg",
             "wide": "/kit/previews/tracking-wide.svg"
+          }
+        },
+        {
+          "key": "style.lineHeight",
+          "type": "choice",
+          "label": "Line spacing in headings",
+          "labelAr": "تباعد أسطر العناوين",
+          "group": "Page style",
+          "groupAr": "شكل الصفحة",
+          "options": [
+            "auto",
+            "tight",
+            "normal",
+            "relaxed"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Tight",
+            "normal": "Normal",
+            "relaxed": "Relaxed"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "normal": "عادية",
+            "relaxed": "متباعدة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "tight": "/kit/previews/lineheight-tight.svg",
+            "normal": "/kit/previews/lineheight-normal.svg",
+            "relaxed": "/kit/previews/lineheight-relaxed.svg"
           }
         },
         {
@@ -4159,6 +4251,32 @@
           }
         },
         {
+          "key": "order.position",
+          "type": "choice",
+          "label": "Button position",
+          "labelAr": "مكان الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "end",
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "end": "Bottom corner",
+            "start": "Other bottom corner",
+            "center": "Bottom middle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "end": "الزاوية السفلية",
+            "start": "الزاوية السفلية الأخرى",
+            "center": "في المنتصف بالأسفل"
+          }
+        },
+        {
           "key": "order.label",
           "type": "text",
           "label": "Button text (leave empty for the usual text)",
@@ -4205,6 +4323,7 @@
         "social.show": [],
         "order.action": "auto",
         "order.shape": "auto",
+        "order.position": "auto",
         "order.label": "",
         "cards.style": "auto",
         "cards.border": "auto",
@@ -4215,6 +4334,7 @@
         "style.textSize": "auto",
         "style.headings": "auto",
         "style.tracking": "auto",
+        "style.lineHeight": "auto",
         "style.spacing": "auto",
         "style.buttons": "auto",
         "style.photos": "auto",
@@ -4920,6 +5040,38 @@
             "tight": "/kit/previews/tracking-tight.svg",
             "normal": "/kit/previews/tracking-normal.svg",
             "wide": "/kit/previews/tracking-wide.svg"
+          }
+        },
+        {
+          "key": "style.lineHeight",
+          "type": "choice",
+          "label": "Line spacing in headings",
+          "labelAr": "تباعد أسطر العناوين",
+          "group": "Page style",
+          "groupAr": "شكل الصفحة",
+          "options": [
+            "auto",
+            "tight",
+            "normal",
+            "relaxed"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Tight",
+            "normal": "Normal",
+            "relaxed": "Relaxed"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "normal": "عادية",
+            "relaxed": "متباعدة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "tight": "/kit/previews/lineheight-tight.svg",
+            "normal": "/kit/previews/lineheight-normal.svg",
+            "relaxed": "/kit/previews/lineheight-relaxed.svg"
           }
         },
         {
@@ -6137,6 +6289,32 @@
           }
         },
         {
+          "key": "order.position",
+          "type": "choice",
+          "label": "Button position",
+          "labelAr": "مكان الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "end",
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "end": "Bottom corner",
+            "start": "Other bottom corner",
+            "center": "Bottom middle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "end": "الزاوية السفلية",
+            "start": "الزاوية السفلية الأخرى",
+            "center": "في المنتصف بالأسفل"
+          }
+        },
+        {
           "key": "order.label",
           "type": "text",
           "label": "Button text (leave empty for the usual text)",
@@ -6183,6 +6361,7 @@
         "social.show": [],
         "order.action": "auto",
         "order.shape": "auto",
+        "order.position": "auto",
         "order.label": "",
         "cards.style": "auto",
         "cards.border": "auto",
@@ -6193,6 +6372,7 @@
         "style.textSize": "auto",
         "style.headings": "auto",
         "style.tracking": "auto",
+        "style.lineHeight": "auto",
         "style.spacing": "auto",
         "style.buttons": "auto",
         "style.photos": "auto",
@@ -6858,6 +7038,38 @@
             "tight": "/kit/previews/tracking-tight.svg",
             "normal": "/kit/previews/tracking-normal.svg",
             "wide": "/kit/previews/tracking-wide.svg"
+          }
+        },
+        {
+          "key": "style.lineHeight",
+          "type": "choice",
+          "label": "Line spacing in headings",
+          "labelAr": "تباعد أسطر العناوين",
+          "group": "Page style",
+          "groupAr": "شكل الصفحة",
+          "options": [
+            "auto",
+            "tight",
+            "normal",
+            "relaxed"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Tight",
+            "normal": "Normal",
+            "relaxed": "Relaxed"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "normal": "عادية",
+            "relaxed": "متباعدة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "tight": "/kit/previews/lineheight-tight.svg",
+            "normal": "/kit/previews/lineheight-normal.svg",
+            "relaxed": "/kit/previews/lineheight-relaxed.svg"
           }
         },
         {
@@ -8121,6 +8333,32 @@
           }
         },
         {
+          "key": "order.position",
+          "type": "choice",
+          "label": "Button position",
+          "labelAr": "مكان الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "end",
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "end": "Bottom corner",
+            "start": "Other bottom corner",
+            "center": "Bottom middle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "end": "الزاوية السفلية",
+            "start": "الزاوية السفلية الأخرى",
+            "center": "في المنتصف بالأسفل"
+          }
+        },
+        {
           "key": "order.label",
           "type": "text",
           "label": "Button text (leave empty for the usual text)",
@@ -8175,6 +8413,7 @@
         "social.show": [],
         "order.action": "auto",
         "order.shape": "auto",
+        "order.position": "auto",
         "order.label": "",
         "cards.style": "auto",
         "cards.border": "auto",
@@ -8185,6 +8424,7 @@
         "style.textSize": "auto",
         "style.headings": "auto",
         "style.tracking": "auto",
+        "style.lineHeight": "auto",
         "style.spacing": "auto",
         "style.buttons": "auto",
         "style.photos": "auto",
@@ -8876,6 +9116,38 @@
             "tight": "/kit/previews/tracking-tight.svg",
             "normal": "/kit/previews/tracking-normal.svg",
             "wide": "/kit/previews/tracking-wide.svg"
+          }
+        },
+        {
+          "key": "style.lineHeight",
+          "type": "choice",
+          "label": "Line spacing in headings",
+          "labelAr": "تباعد أسطر العناوين",
+          "group": "Page style",
+          "groupAr": "شكل الصفحة",
+          "options": [
+            "auto",
+            "tight",
+            "normal",
+            "relaxed"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Tight",
+            "normal": "Normal",
+            "relaxed": "Relaxed"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "normal": "عادية",
+            "relaxed": "متباعدة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "tight": "/kit/previews/lineheight-tight.svg",
+            "normal": "/kit/previews/lineheight-normal.svg",
+            "relaxed": "/kit/previews/lineheight-relaxed.svg"
           }
         },
         {
@@ -10022,6 +10294,32 @@
           }
         },
         {
+          "key": "order.position",
+          "type": "choice",
+          "label": "Button position",
+          "labelAr": "مكان الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "end",
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "end": "Bottom corner",
+            "start": "Other bottom corner",
+            "center": "Bottom middle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "end": "الزاوية السفلية",
+            "start": "الزاوية السفلية الأخرى",
+            "center": "في المنتصف بالأسفل"
+          }
+        },
+        {
           "key": "order.label",
           "type": "text",
           "label": "Button text (leave empty for the usual text)",
@@ -10069,6 +10367,7 @@
         "social.show": [],
         "order.action": "auto",
         "order.shape": "auto",
+        "order.position": "auto",
         "order.label": "",
         "cards.style": "auto",
         "cards.border": "auto",
@@ -10079,6 +10378,7 @@
         "style.textSize": "auto",
         "style.headings": "auto",
         "style.tracking": "auto",
+        "style.lineHeight": "auto",
         "style.spacing": "auto",
         "style.buttons": "auto",
         "style.photos": "auto",
@@ -10792,6 +11092,38 @@
             "tight": "/kit/previews/tracking-tight.svg",
             "normal": "/kit/previews/tracking-normal.svg",
             "wide": "/kit/previews/tracking-wide.svg"
+          }
+        },
+        {
+          "key": "style.lineHeight",
+          "type": "choice",
+          "label": "Line spacing in headings",
+          "labelAr": "تباعد أسطر العناوين",
+          "group": "Page style",
+          "groupAr": "شكل الصفحة",
+          "options": [
+            "auto",
+            "tight",
+            "normal",
+            "relaxed"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Tight",
+            "normal": "Normal",
+            "relaxed": "Relaxed"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "normal": "عادية",
+            "relaxed": "متباعدة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "tight": "/kit/previews/lineheight-tight.svg",
+            "normal": "/kit/previews/lineheight-normal.svg",
+            "relaxed": "/kit/previews/lineheight-relaxed.svg"
           }
         },
         {
@@ -11953,6 +12285,32 @@
           }
         },
         {
+          "key": "order.position",
+          "type": "choice",
+          "label": "Button position",
+          "labelAr": "مكان الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "end",
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "end": "Bottom corner",
+            "start": "Other bottom corner",
+            "center": "Bottom middle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "end": "الزاوية السفلية",
+            "start": "الزاوية السفلية الأخرى",
+            "center": "في المنتصف بالأسفل"
+          }
+        },
+        {
           "key": "order.label",
           "type": "text",
           "label": "Button text (leave empty for the usual text)",
@@ -12000,6 +12358,7 @@
         "social.show": [],
         "order.action": "auto",
         "order.shape": "auto",
+        "order.position": "auto",
         "order.label": "",
         "cards.style": "auto",
         "cards.border": "auto",
@@ -12010,6 +12369,7 @@
         "style.textSize": "auto",
         "style.headings": "auto",
         "style.tracking": "auto",
+        "style.lineHeight": "auto",
         "style.spacing": "auto",
         "style.buttons": "auto",
         "style.photos": "auto",
@@ -12709,6 +13069,38 @@
             "tight": "/kit/previews/tracking-tight.svg",
             "normal": "/kit/previews/tracking-normal.svg",
             "wide": "/kit/previews/tracking-wide.svg"
+          }
+        },
+        {
+          "key": "style.lineHeight",
+          "type": "choice",
+          "label": "Line spacing in headings",
+          "labelAr": "تباعد أسطر العناوين",
+          "group": "Page style",
+          "groupAr": "شكل الصفحة",
+          "options": [
+            "auto",
+            "tight",
+            "normal",
+            "relaxed"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Tight",
+            "normal": "Normal",
+            "relaxed": "Relaxed"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "normal": "عادية",
+            "relaxed": "متباعدة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "tight": "/kit/previews/lineheight-tight.svg",
+            "normal": "/kit/previews/lineheight-normal.svg",
+            "relaxed": "/kit/previews/lineheight-relaxed.svg"
           }
         },
         {
@@ -13846,6 +14238,32 @@
           }
         },
         {
+          "key": "order.position",
+          "type": "choice",
+          "label": "Button position",
+          "labelAr": "مكان الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "end",
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "end": "Bottom corner",
+            "start": "Other bottom corner",
+            "center": "Bottom middle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "end": "الزاوية السفلية",
+            "start": "الزاوية السفلية الأخرى",
+            "center": "في المنتصف بالأسفل"
+          }
+        },
+        {
           "key": "order.label",
           "type": "text",
           "label": "Button text (leave empty for the usual text)",
@@ -13892,6 +14310,7 @@
         "social.show": [],
         "order.action": "auto",
         "order.shape": "auto",
+        "order.position": "auto",
         "order.label": "",
         "cards.style": "auto",
         "cards.border": "auto",
@@ -13902,6 +14321,7 @@
         "style.textSize": "auto",
         "style.headings": "auto",
         "style.tracking": "auto",
+        "style.lineHeight": "auto",
         "style.spacing": "auto",
         "style.buttons": "auto",
         "style.photos": "auto",
@@ -14582,6 +15002,38 @@
             "tight": "/kit/previews/tracking-tight.svg",
             "normal": "/kit/previews/tracking-normal.svg",
             "wide": "/kit/previews/tracking-wide.svg"
+          }
+        },
+        {
+          "key": "style.lineHeight",
+          "type": "choice",
+          "label": "Line spacing in headings",
+          "labelAr": "تباعد أسطر العناوين",
+          "group": "Page style",
+          "groupAr": "شكل الصفحة",
+          "options": [
+            "auto",
+            "tight",
+            "normal",
+            "relaxed"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Tight",
+            "normal": "Normal",
+            "relaxed": "Relaxed"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "normal": "عادية",
+            "relaxed": "متباعدة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "tight": "/kit/previews/lineheight-tight.svg",
+            "normal": "/kit/previews/lineheight-normal.svg",
+            "relaxed": "/kit/previews/lineheight-relaxed.svg"
           }
         },
         {
@@ -15719,6 +16171,32 @@
           }
         },
         {
+          "key": "order.position",
+          "type": "choice",
+          "label": "Button position",
+          "labelAr": "مكان الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "end",
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "end": "Bottom corner",
+            "start": "Other bottom corner",
+            "center": "Bottom middle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "end": "الزاوية السفلية",
+            "start": "الزاوية السفلية الأخرى",
+            "center": "في المنتصف بالأسفل"
+          }
+        },
+        {
           "key": "order.label",
           "type": "text",
           "label": "Button text (leave empty for the usual text)",
@@ -15762,6 +16240,7 @@
         "social.show": [],
         "order.action": "auto",
         "order.shape": "auto",
+        "order.position": "auto",
         "order.label": "",
         "cards.style": "auto",
         "cards.border": "auto",
@@ -15772,6 +16251,7 @@
         "style.textSize": "auto",
         "style.headings": "auto",
         "style.tracking": "auto",
+        "style.lineHeight": "auto",
         "style.spacing": "auto",
         "style.buttons": "auto",
         "style.photos": "auto",
@@ -16444,6 +16924,38 @@
             "tight": "/kit/previews/tracking-tight.svg",
             "normal": "/kit/previews/tracking-normal.svg",
             "wide": "/kit/previews/tracking-wide.svg"
+          }
+        },
+        {
+          "key": "style.lineHeight",
+          "type": "choice",
+          "label": "Line spacing in headings",
+          "labelAr": "تباعد أسطر العناوين",
+          "group": "Page style",
+          "groupAr": "شكل الصفحة",
+          "options": [
+            "auto",
+            "tight",
+            "normal",
+            "relaxed"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Tight",
+            "normal": "Normal",
+            "relaxed": "Relaxed"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "normal": "عادية",
+            "relaxed": "متباعدة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "tight": "/kit/previews/lineheight-tight.svg",
+            "normal": "/kit/previews/lineheight-normal.svg",
+            "relaxed": "/kit/previews/lineheight-relaxed.svg"
           }
         },
         {
@@ -17598,6 +18110,32 @@
           }
         },
         {
+          "key": "order.position",
+          "type": "choice",
+          "label": "Button position",
+          "labelAr": "مكان الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "end",
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "end": "Bottom corner",
+            "start": "Other bottom corner",
+            "center": "Bottom middle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "end": "الزاوية السفلية",
+            "start": "الزاوية السفلية الأخرى",
+            "center": "في المنتصف بالأسفل"
+          }
+        },
+        {
           "key": "order.label",
           "type": "text",
           "label": "Button text (leave empty for the usual text)",
@@ -17640,6 +18178,7 @@
         "social.show": [],
         "order.action": "auto",
         "order.shape": "auto",
+        "order.position": "auto",
         "order.label": "",
         "cards.style": "auto",
         "cards.border": "auto",
@@ -17650,6 +18189,7 @@
         "style.textSize": "auto",
         "style.headings": "auto",
         "style.tracking": "auto",
+        "style.lineHeight": "auto",
         "style.spacing": "auto",
         "style.buttons": "auto",
         "style.photos": "auto",
@@ -18324,6 +18864,38 @@
             "tight": "/kit/previews/tracking-tight.svg",
             "normal": "/kit/previews/tracking-normal.svg",
             "wide": "/kit/previews/tracking-wide.svg"
+          }
+        },
+        {
+          "key": "style.lineHeight",
+          "type": "choice",
+          "label": "Line spacing in headings",
+          "labelAr": "تباعد أسطر العناوين",
+          "group": "Page style",
+          "groupAr": "شكل الصفحة",
+          "options": [
+            "auto",
+            "tight",
+            "normal",
+            "relaxed"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Tight",
+            "normal": "Normal",
+            "relaxed": "Relaxed"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "normal": "عادية",
+            "relaxed": "متباعدة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "tight": "/kit/previews/lineheight-tight.svg",
+            "normal": "/kit/previews/lineheight-normal.svg",
+            "relaxed": "/kit/previews/lineheight-relaxed.svg"
           }
         },
         {
@@ -19482,6 +20054,32 @@
           }
         },
         {
+          "key": "order.position",
+          "type": "choice",
+          "label": "Button position",
+          "labelAr": "مكان الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "end",
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "end": "Bottom corner",
+            "start": "Other bottom corner",
+            "center": "Bottom middle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "end": "الزاوية السفلية",
+            "start": "الزاوية السفلية الأخرى",
+            "center": "في المنتصف بالأسفل"
+          }
+        },
+        {
           "key": "order.label",
           "type": "text",
           "label": "Button text (leave empty for the usual text)",
@@ -19526,6 +20124,7 @@
         "social.show": [],
         "order.action": "auto",
         "order.shape": "auto",
+        "order.position": "auto",
         "order.label": "",
         "cards.style": "auto",
         "cards.border": "auto",
@@ -19536,6 +20135,7 @@
         "style.textSize": "auto",
         "style.headings": "auto",
         "style.tracking": "auto",
+        "style.lineHeight": "auto",
         "style.spacing": "auto",
         "style.buttons": "auto",
         "style.photos": "auto",
@@ -20209,6 +20809,38 @@
             "tight": "/kit/previews/tracking-tight.svg",
             "normal": "/kit/previews/tracking-normal.svg",
             "wide": "/kit/previews/tracking-wide.svg"
+          }
+        },
+        {
+          "key": "style.lineHeight",
+          "type": "choice",
+          "label": "Line spacing in headings",
+          "labelAr": "تباعد أسطر العناوين",
+          "group": "Page style",
+          "groupAr": "شكل الصفحة",
+          "options": [
+            "auto",
+            "tight",
+            "normal",
+            "relaxed"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Tight",
+            "normal": "Normal",
+            "relaxed": "Relaxed"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "normal": "عادية",
+            "relaxed": "متباعدة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "tight": "/kit/previews/lineheight-tight.svg",
+            "normal": "/kit/previews/lineheight-normal.svg",
+            "relaxed": "/kit/previews/lineheight-relaxed.svg"
           }
         },
         {
@@ -21364,6 +21996,32 @@
           }
         },
         {
+          "key": "order.position",
+          "type": "choice",
+          "label": "Button position",
+          "labelAr": "مكان الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "end",
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "end": "Bottom corner",
+            "start": "Other bottom corner",
+            "center": "Bottom middle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "end": "الزاوية السفلية",
+            "start": "الزاوية السفلية الأخرى",
+            "center": "في المنتصف بالأسفل"
+          }
+        },
+        {
           "key": "order.label",
           "type": "text",
           "label": "Button text (leave empty for the usual text)",
@@ -21408,6 +22066,7 @@
         "social.show": [],
         "order.action": "auto",
         "order.shape": "auto",
+        "order.position": "auto",
         "order.label": "",
         "cards.style": "auto",
         "cards.border": "auto",
@@ -21418,6 +22077,7 @@
         "style.textSize": "auto",
         "style.headings": "auto",
         "style.tracking": "auto",
+        "style.lineHeight": "auto",
         "style.spacing": "auto",
         "style.buttons": "auto",
         "style.photos": "auto",
@@ -22081,6 +22741,38 @@
             "tight": "/kit/previews/tracking-tight.svg",
             "normal": "/kit/previews/tracking-normal.svg",
             "wide": "/kit/previews/tracking-wide.svg"
+          }
+        },
+        {
+          "key": "style.lineHeight",
+          "type": "choice",
+          "label": "Line spacing in headings",
+          "labelAr": "تباعد أسطر العناوين",
+          "group": "Page style",
+          "groupAr": "شكل الصفحة",
+          "options": [
+            "auto",
+            "tight",
+            "normal",
+            "relaxed"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Tight",
+            "normal": "Normal",
+            "relaxed": "Relaxed"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "normal": "عادية",
+            "relaxed": "متباعدة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "tight": "/kit/previews/lineheight-tight.svg",
+            "normal": "/kit/previews/lineheight-normal.svg",
+            "relaxed": "/kit/previews/lineheight-relaxed.svg"
           }
         },
         {
@@ -23177,6 +23869,32 @@
           }
         },
         {
+          "key": "order.position",
+          "type": "choice",
+          "label": "Button position",
+          "labelAr": "مكان الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "end",
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "end": "Bottom corner",
+            "start": "Other bottom corner",
+            "center": "Bottom middle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "end": "الزاوية السفلية",
+            "start": "الزاوية السفلية الأخرى",
+            "center": "في المنتصف بالأسفل"
+          }
+        },
+        {
           "key": "order.label",
           "type": "text",
           "label": "Button text (leave empty for the usual text)",
@@ -23219,6 +23937,7 @@
         "social.show": [],
         "order.action": "auto",
         "order.shape": "auto",
+        "order.position": "auto",
         "order.label": "",
         "cards.style": "auto",
         "cards.border": "auto",
@@ -23229,6 +23948,7 @@
         "style.textSize": "auto",
         "style.headings": "auto",
         "style.tracking": "auto",
+        "style.lineHeight": "auto",
         "style.spacing": "auto",
         "style.buttons": "auto",
         "style.photos": "auto",
@@ -23908,6 +24628,38 @@
             "tight": "/kit/previews/tracking-tight.svg",
             "normal": "/kit/previews/tracking-normal.svg",
             "wide": "/kit/previews/tracking-wide.svg"
+          }
+        },
+        {
+          "key": "style.lineHeight",
+          "type": "choice",
+          "label": "Line spacing in headings",
+          "labelAr": "تباعد أسطر العناوين",
+          "group": "Page style",
+          "groupAr": "شكل الصفحة",
+          "options": [
+            "auto",
+            "tight",
+            "normal",
+            "relaxed"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Tight",
+            "normal": "Normal",
+            "relaxed": "Relaxed"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "normal": "عادية",
+            "relaxed": "متباعدة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "tight": "/kit/previews/lineheight-tight.svg",
+            "normal": "/kit/previews/lineheight-normal.svg",
+            "relaxed": "/kit/previews/lineheight-relaxed.svg"
           }
         },
         {
@@ -25042,6 +25794,32 @@
           }
         },
         {
+          "key": "order.position",
+          "type": "choice",
+          "label": "Button position",
+          "labelAr": "مكان الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "end",
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "end": "Bottom corner",
+            "start": "Other bottom corner",
+            "center": "Bottom middle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "end": "الزاوية السفلية",
+            "start": "الزاوية السفلية الأخرى",
+            "center": "في المنتصف بالأسفل"
+          }
+        },
+        {
           "key": "order.label",
           "type": "text",
           "label": "Button text (leave empty for the usual text)",
@@ -25087,6 +25865,7 @@
         "social.show": [],
         "order.action": "auto",
         "order.shape": "auto",
+        "order.position": "auto",
         "order.label": "",
         "cards.style": "auto",
         "cards.border": "auto",
@@ -25097,6 +25876,7 @@
         "style.textSize": "auto",
         "style.headings": "auto",
         "style.tracking": "auto",
+        "style.lineHeight": "auto",
         "style.spacing": "auto",
         "style.buttons": "auto",
         "style.photos": "auto",
@@ -25764,6 +26544,38 @@
             "tight": "/kit/previews/tracking-tight.svg",
             "normal": "/kit/previews/tracking-normal.svg",
             "wide": "/kit/previews/tracking-wide.svg"
+          }
+        },
+        {
+          "key": "style.lineHeight",
+          "type": "choice",
+          "label": "Line spacing in headings",
+          "labelAr": "تباعد أسطر العناوين",
+          "group": "Page style",
+          "groupAr": "شكل الصفحة",
+          "options": [
+            "auto",
+            "tight",
+            "normal",
+            "relaxed"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Tight",
+            "normal": "Normal",
+            "relaxed": "Relaxed"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "normal": "عادية",
+            "relaxed": "متباعدة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "tight": "/kit/previews/lineheight-tight.svg",
+            "normal": "/kit/previews/lineheight-normal.svg",
+            "relaxed": "/kit/previews/lineheight-relaxed.svg"
           }
         },
         {
@@ -26901,6 +27713,32 @@
           }
         },
         {
+          "key": "order.position",
+          "type": "choice",
+          "label": "Button position",
+          "labelAr": "مكان الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "end",
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "end": "Bottom corner",
+            "start": "Other bottom corner",
+            "center": "Bottom middle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "end": "الزاوية السفلية",
+            "start": "الزاوية السفلية الأخرى",
+            "center": "في المنتصف بالأسفل"
+          }
+        },
+        {
           "key": "order.label",
           "type": "text",
           "label": "Button text (leave empty for the usual text)",
@@ -26942,6 +27780,7 @@
         "social.show": [],
         "order.action": "auto",
         "order.shape": "auto",
+        "order.position": "auto",
         "order.label": "",
         "cards.style": "auto",
         "cards.border": "auto",
@@ -26952,6 +27791,7 @@
         "style.textSize": "auto",
         "style.headings": "auto",
         "style.tracking": "auto",
+        "style.lineHeight": "auto",
         "style.spacing": "auto",
         "style.buttons": "auto",
         "style.photos": "auto",
@@ -27627,6 +28467,38 @@
             "tight": "/kit/previews/tracking-tight.svg",
             "normal": "/kit/previews/tracking-normal.svg",
             "wide": "/kit/previews/tracking-wide.svg"
+          }
+        },
+        {
+          "key": "style.lineHeight",
+          "type": "choice",
+          "label": "Line spacing in headings",
+          "labelAr": "تباعد أسطر العناوين",
+          "group": "Page style",
+          "groupAr": "شكل الصفحة",
+          "options": [
+            "auto",
+            "tight",
+            "normal",
+            "relaxed"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Tight",
+            "normal": "Normal",
+            "relaxed": "Relaxed"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "normal": "عادية",
+            "relaxed": "متباعدة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "tight": "/kit/previews/lineheight-tight.svg",
+            "normal": "/kit/previews/lineheight-normal.svg",
+            "relaxed": "/kit/previews/lineheight-relaxed.svg"
           }
         },
         {
@@ -28761,6 +29633,32 @@
           }
         },
         {
+          "key": "order.position",
+          "type": "choice",
+          "label": "Button position",
+          "labelAr": "مكان الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "end",
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "end": "Bottom corner",
+            "start": "Other bottom corner",
+            "center": "Bottom middle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "end": "الزاوية السفلية",
+            "start": "الزاوية السفلية الأخرى",
+            "center": "في المنتصف بالأسفل"
+          }
+        },
+        {
           "key": "order.label",
           "type": "text",
           "label": "Button text (leave empty for the usual text)",
@@ -28805,6 +29703,7 @@
         "social.show": [],
         "order.action": "auto",
         "order.shape": "auto",
+        "order.position": "auto",
         "order.label": "",
         "cards.style": "auto",
         "cards.border": "auto",
@@ -28815,6 +29714,7 @@
         "style.textSize": "auto",
         "style.headings": "auto",
         "style.tracking": "auto",
+        "style.lineHeight": "auto",
         "style.spacing": "auto",
         "style.buttons": "auto",
         "style.photos": "auto",
@@ -29481,6 +30381,38 @@
             "tight": "/kit/previews/tracking-tight.svg",
             "normal": "/kit/previews/tracking-normal.svg",
             "wide": "/kit/previews/tracking-wide.svg"
+          }
+        },
+        {
+          "key": "style.lineHeight",
+          "type": "choice",
+          "label": "Line spacing in headings",
+          "labelAr": "تباعد أسطر العناوين",
+          "group": "Page style",
+          "groupAr": "شكل الصفحة",
+          "options": [
+            "auto",
+            "tight",
+            "normal",
+            "relaxed"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Tight",
+            "normal": "Normal",
+            "relaxed": "Relaxed"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "normal": "عادية",
+            "relaxed": "متباعدة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "tight": "/kit/previews/lineheight-tight.svg",
+            "normal": "/kit/previews/lineheight-normal.svg",
+            "relaxed": "/kit/previews/lineheight-relaxed.svg"
           }
         },
         {
@@ -30618,6 +31550,32 @@
           }
         },
         {
+          "key": "order.position",
+          "type": "choice",
+          "label": "Button position",
+          "labelAr": "مكان الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "end",
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "end": "Bottom corner",
+            "start": "Other bottom corner",
+            "center": "Bottom middle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "end": "الزاوية السفلية",
+            "start": "الزاوية السفلية الأخرى",
+            "center": "في المنتصف بالأسفل"
+          }
+        },
+        {
           "key": "order.label",
           "type": "text",
           "label": "Button text (leave empty for the usual text)",
@@ -30660,6 +31618,7 @@
         "social.show": [],
         "order.action": "auto",
         "order.shape": "auto",
+        "order.position": "auto",
         "order.label": "",
         "cards.style": "auto",
         "cards.border": "auto",
@@ -30670,6 +31629,7 @@
         "style.textSize": "auto",
         "style.headings": "auto",
         "style.tracking": "auto",
+        "style.lineHeight": "auto",
         "style.spacing": "auto",
         "style.buttons": "auto",
         "style.photos": "auto",
@@ -31337,6 +32297,38 @@
             "tight": "/kit/previews/tracking-tight.svg",
             "normal": "/kit/previews/tracking-normal.svg",
             "wide": "/kit/previews/tracking-wide.svg"
+          }
+        },
+        {
+          "key": "style.lineHeight",
+          "type": "choice",
+          "label": "Line spacing in headings",
+          "labelAr": "تباعد أسطر العناوين",
+          "group": "Page style",
+          "groupAr": "شكل الصفحة",
+          "options": [
+            "auto",
+            "tight",
+            "normal",
+            "relaxed"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Tight",
+            "normal": "Normal",
+            "relaxed": "Relaxed"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "normal": "عادية",
+            "relaxed": "متباعدة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "tight": "/kit/previews/lineheight-tight.svg",
+            "normal": "/kit/previews/lineheight-normal.svg",
+            "relaxed": "/kit/previews/lineheight-relaxed.svg"
           }
         },
         {
@@ -32852,6 +33844,32 @@
           }
         },
         {
+          "key": "order.position",
+          "type": "choice",
+          "label": "Button position",
+          "labelAr": "مكان الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "end",
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "end": "Bottom corner",
+            "start": "Other bottom corner",
+            "center": "Bottom middle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "end": "الزاوية السفلية",
+            "start": "الزاوية السفلية الأخرى",
+            "center": "في المنتصف بالأسفل"
+          }
+        },
+        {
           "key": "order.label",
           "type": "text",
           "label": "Button text (leave empty for the usual text)",
@@ -32915,6 +33933,7 @@
         "social.show": [],
         "order.action": "auto",
         "order.shape": "auto",
+        "order.position": "auto",
         "order.label": "",
         "cards.style": "auto",
         "cards.border": "auto",
@@ -32925,6 +33944,7 @@
         "style.textSize": "auto",
         "style.headings": "auto",
         "style.tracking": "auto",
+        "style.lineHeight": "auto",
         "style.spacing": "auto",
         "style.buttons": "auto",
         "style.photos": "auto",
@@ -33624,6 +34644,38 @@
             "tight": "/kit/previews/tracking-tight.svg",
             "normal": "/kit/previews/tracking-normal.svg",
             "wide": "/kit/previews/tracking-wide.svg"
+          }
+        },
+        {
+          "key": "style.lineHeight",
+          "type": "choice",
+          "label": "Line spacing in headings",
+          "labelAr": "تباعد أسطر العناوين",
+          "group": "Page style",
+          "groupAr": "شكل الصفحة",
+          "options": [
+            "auto",
+            "tight",
+            "normal",
+            "relaxed"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Tight",
+            "normal": "Normal",
+            "relaxed": "Relaxed"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "normal": "عادية",
+            "relaxed": "متباعدة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "tight": "/kit/previews/lineheight-tight.svg",
+            "normal": "/kit/previews/lineheight-normal.svg",
+            "relaxed": "/kit/previews/lineheight-relaxed.svg"
           }
         },
         {
@@ -35073,6 +36125,32 @@
           }
         },
         {
+          "key": "order.position",
+          "type": "choice",
+          "label": "Button position",
+          "labelAr": "مكان الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "end",
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "end": "Bottom corner",
+            "start": "Other bottom corner",
+            "center": "Bottom middle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "end": "الزاوية السفلية",
+            "start": "الزاوية السفلية الأخرى",
+            "center": "في المنتصف بالأسفل"
+          }
+        },
+        {
           "key": "order.label",
           "type": "text",
           "label": "Button text (leave empty for the usual text)",
@@ -35149,6 +36227,7 @@
         "social.show": [],
         "order.action": "auto",
         "order.shape": "auto",
+        "order.position": "auto",
         "order.label": "",
         "cards.style": "auto",
         "cards.border": "auto",
@@ -35159,6 +36238,7 @@
         "style.textSize": "auto",
         "style.headings": "auto",
         "style.tracking": "auto",
+        "style.lineHeight": "auto",
         "style.spacing": "auto",
         "style.buttons": "auto",
         "style.photos": "auto",
@@ -35870,6 +36950,38 @@
             "tight": "/kit/previews/tracking-tight.svg",
             "normal": "/kit/previews/tracking-normal.svg",
             "wide": "/kit/previews/tracking-wide.svg"
+          }
+        },
+        {
+          "key": "style.lineHeight",
+          "type": "choice",
+          "label": "Line spacing in headings",
+          "labelAr": "تباعد أسطر العناوين",
+          "group": "Page style",
+          "groupAr": "شكل الصفحة",
+          "options": [
+            "auto",
+            "tight",
+            "normal",
+            "relaxed"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Tight",
+            "normal": "Normal",
+            "relaxed": "Relaxed"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "normal": "عادية",
+            "relaxed": "متباعدة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "tight": "/kit/previews/lineheight-tight.svg",
+            "normal": "/kit/previews/lineheight-normal.svg",
+            "relaxed": "/kit/previews/lineheight-relaxed.svg"
           }
         },
         {
@@ -36864,6 +37976,225 @@
           "max": 80
         },
         {
+          "key": "ticker.style",
+          "type": "choice",
+          "label": "Strip shape",
+          "labelAr": "شكل الشريط",
+          "group": "Moving strip",
+          "groupAr": "الشريط المتحرك",
+          "options": [
+            "auto",
+            "solid",
+            "outline",
+            "tilted",
+            "torn",
+            "tags",
+            "neon",
+            "double"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid band",
+            "outline": "Outline",
+            "tilted": "Tilted",
+            "torn": "Torn paper",
+            "tags": "Label tags",
+            "neon": "Neon line",
+            "double": "Double lines"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "شريط ممتلئ",
+            "outline": "إطار فقط",
+            "tilted": "مائل",
+            "torn": "ورق ممزّق",
+            "tags": "ملصقات منفصلة",
+            "neon": "خط نيون",
+            "double": "خطوط مزدوجة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/ticker-solid.svg",
+            "outline": "/kit/previews/ticker-outline.svg",
+            "tilted": "/kit/previews/ticker-tilted.svg",
+            "torn": "/kit/previews/ticker-torn.svg",
+            "tags": "/kit/previews/ticker-tags.svg",
+            "neon": "/kit/previews/ticker-neon.svg",
+            "double": "/kit/previews/ticker-double.svg"
+          }
+        },
+        {
+          "key": "ticker.color",
+          "type": "choice",
+          "label": "Strip color",
+          "labelAr": "لون الشريط",
+          "group": "Moving strip",
+          "groupAr": "الشريط المتحرك",
+          "options": [
+            "auto",
+            "accent",
+            "ink",
+            "paper",
+            "custom"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "accent": "Accent color",
+            "ink": "Dark",
+            "paper": "Light",
+            "custom": "My own color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "accent": "اللون المميز",
+            "ink": "داكن",
+            "paper": "فاتح",
+            "custom": "لوني الخاص"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "accent": "/kit/previews/tickercolor-accent.svg",
+            "ink": "/kit/previews/tickercolor-ink.svg",
+            "paper": "/kit/previews/tickercolor-paper.svg",
+            "custom": "/kit/previews/tickercolor-custom.svg"
+          }
+        },
+        {
+          "key": "ticker.bg",
+          "type": "color",
+          "label": "My own strip color",
+          "labelAr": "لون الشريط الخاص",
+          "group": "Moving strip",
+          "groupAr": "الشريط المتحرك",
+          "options": [
+            "#E5281E",
+            "#FFC21A",
+            "#FF5A1F",
+            "#2F8F4E",
+            "#1F6FEB",
+            "#7B2D6E",
+            "#D6336C",
+            "#141110"
+          ],
+          "custom": true
+        },
+        {
+          "key": "ticker.separator",
+          "type": "choice",
+          "label": "Between the specials",
+          "labelAr": "الفاصل بين العروض",
+          "group": "Moving strip",
+          "groupAr": "الشريط المتحرك",
+          "options": [
+            "auto",
+            "diamond",
+            "star",
+            "dot",
+            "flame",
+            "slash",
+            "none"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "diamond": "Diamonds",
+            "star": "Stars",
+            "dot": "Dots",
+            "flame": "Flames",
+            "slash": "Slashes",
+            "none": "Nothing"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "diamond": "معيّنات",
+            "star": "نجوم",
+            "dot": "نقاط",
+            "flame": "لهب",
+            "slash": "خطوط مائلة",
+            "none": "بلا فاصل"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "diamond": "/kit/previews/tickersep-diamond.svg",
+            "star": "/kit/previews/tickersep-star.svg",
+            "dot": "/kit/previews/tickersep-dot.svg",
+            "flame": "/kit/previews/tickersep-flame.svg",
+            "slash": "/kit/previews/tickersep-slash.svg",
+            "none": "/kit/previews/tickersep-none.svg"
+          }
+        },
+        {
+          "key": "ticker.speed",
+          "type": "choice",
+          "label": "Speed",
+          "labelAr": "السرعة",
+          "group": "Moving strip",
+          "groupAr": "الشريط المتحرك",
+          "options": [
+            "auto",
+            "slow",
+            "normal",
+            "fast",
+            "still"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "slow": "Slow",
+            "normal": "Normal",
+            "fast": "Fast",
+            "still": "Still"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "slow": "بطيئة",
+            "normal": "عادية",
+            "fast": "سريعة",
+            "still": "ثابت لا يتحرك"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "slow": "/kit/previews/tickerspeed-slow.svg",
+            "normal": "/kit/previews/tickerspeed-normal.svg",
+            "fast": "/kit/previews/tickerspeed-fast.svg",
+            "still": "/kit/previews/tickerspeed-still.svg"
+          }
+        },
+        {
+          "key": "ticker.edge",
+          "type": "choice",
+          "label": "Edges",
+          "labelAr": "الحواف",
+          "group": "Moving strip",
+          "groupAr": "الشريط المتحرك",
+          "options": [
+            "auto",
+            "flames",
+            "none",
+            "zigzag",
+            "waves"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "flames": "Flames",
+            "none": "Straight",
+            "zigzag": "Zigzag",
+            "waves": "Waves"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "flames": "لهب",
+            "none": "مستقيمة",
+            "zigzag": "متعرّجة",
+            "waves": "أمواج"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "flames": "/kit/previews/tickeredge-flames.svg",
+            "none": "/kit/previews/tickeredge-none.svg",
+            "zigzag": "/kit/previews/tickeredge-zigzag.svg",
+            "waves": "/kit/previews/tickeredge-waves.svg"
+          }
+        },
+        {
           "key": "hero.eyebrow",
           "type": "text",
           "label": "Small line above the title",
@@ -37423,6 +38754,32 @@
           }
         },
         {
+          "key": "order.position",
+          "type": "choice",
+          "label": "Button position",
+          "labelAr": "مكان الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "end",
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "end": "Bottom corner",
+            "start": "Other bottom corner",
+            "center": "Bottom middle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "end": "الزاوية السفلية",
+            "start": "الزاوية السفلية الأخرى",
+            "center": "في المنتصف بالأسفل"
+          }
+        },
+        {
           "key": "order.label",
           "type": "text",
           "label": "Button text (leave empty for the usual text)",
@@ -37506,6 +38863,7 @@
         "social.show": [],
         "order.action": "auto",
         "order.shape": "auto",
+        "order.position": "auto",
         "order.label": "",
         "cards.style": "auto",
         "cards.border": "auto",
@@ -37516,6 +38874,7 @@
         "style.textSize": "auto",
         "style.headings": "auto",
         "style.tracking": "auto",
+        "style.lineHeight": "auto",
         "style.spacing": "auto",
         "style.buttons": "auto",
         "style.photos": "auto",
@@ -37548,6 +38907,12 @@
         "reviews.layout": "auto",
         "visit.layout": "auto",
         "footer.layout": "auto",
+        "ticker.style": "auto",
+        "ticker.color": "auto",
+        "ticker.bg": "#E5281E",
+        "ticker.separator": "auto",
+        "ticker.speed": "auto",
+        "ticker.edge": "auto",
         "hero.slides": [],
         "hero.transition": "slide",
         "hero.autoplay": true,
@@ -38235,6 +39600,38 @@
             "tight": "/kit/previews/tracking-tight.svg",
             "normal": "/kit/previews/tracking-normal.svg",
             "wide": "/kit/previews/tracking-wide.svg"
+          }
+        },
+        {
+          "key": "style.lineHeight",
+          "type": "choice",
+          "label": "Line spacing in headings",
+          "labelAr": "تباعد أسطر العناوين",
+          "group": "Page style",
+          "groupAr": "شكل الصفحة",
+          "options": [
+            "auto",
+            "tight",
+            "normal",
+            "relaxed"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Tight",
+            "normal": "Normal",
+            "relaxed": "Relaxed"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "normal": "عادية",
+            "relaxed": "متباعدة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "tight": "/kit/previews/lineheight-tight.svg",
+            "normal": "/kit/previews/lineheight-normal.svg",
+            "relaxed": "/kit/previews/lineheight-relaxed.svg"
           }
         },
         {
@@ -39819,6 +41216,32 @@
           }
         },
         {
+          "key": "order.position",
+          "type": "choice",
+          "label": "Button position",
+          "labelAr": "مكان الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "end",
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "end": "Bottom corner",
+            "start": "Other bottom corner",
+            "center": "Bottom middle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "end": "الزاوية السفلية",
+            "start": "الزاوية السفلية الأخرى",
+            "center": "في المنتصف بالأسفل"
+          }
+        },
+        {
           "key": "order.label",
           "type": "text",
           "label": "Button text (leave empty for the usual text)",
@@ -39896,6 +41319,7 @@
         "social.show": [],
         "order.action": "auto",
         "order.shape": "auto",
+        "order.position": "auto",
         "order.label": "",
         "cards.style": "auto",
         "cards.border": "auto",
@@ -39906,6 +41330,7 @@
         "style.textSize": "auto",
         "style.headings": "auto",
         "style.tracking": "auto",
+        "style.lineHeight": "auto",
         "style.spacing": "auto",
         "style.buttons": "auto",
         "style.photos": "auto",
@@ -40614,6 +42039,38 @@
             "tight": "/kit/previews/tracking-tight.svg",
             "normal": "/kit/previews/tracking-normal.svg",
             "wide": "/kit/previews/tracking-wide.svg"
+          }
+        },
+        {
+          "key": "style.lineHeight",
+          "type": "choice",
+          "label": "Line spacing in headings",
+          "labelAr": "تباعد أسطر العناوين",
+          "group": "Page style",
+          "groupAr": "شكل الصفحة",
+          "options": [
+            "auto",
+            "tight",
+            "normal",
+            "relaxed"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Tight",
+            "normal": "Normal",
+            "relaxed": "Relaxed"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "normal": "عادية",
+            "relaxed": "متباعدة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "tight": "/kit/previews/lineheight-tight.svg",
+            "normal": "/kit/previews/lineheight-normal.svg",
+            "relaxed": "/kit/previews/lineheight-relaxed.svg"
           }
         },
         {
@@ -42072,6 +43529,32 @@
           }
         },
         {
+          "key": "order.position",
+          "type": "choice",
+          "label": "Button position",
+          "labelAr": "مكان الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "end",
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "end": "Bottom corner",
+            "start": "Other bottom corner",
+            "center": "Bottom middle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "end": "الزاوية السفلية",
+            "start": "الزاوية السفلية الأخرى",
+            "center": "في المنتصف بالأسفل"
+          }
+        },
+        {
           "key": "order.label",
           "type": "text",
           "label": "Button text (leave empty for the usual text)",
@@ -42150,6 +43633,7 @@
         "social.show": [],
         "order.action": "auto",
         "order.shape": "auto",
+        "order.position": "auto",
         "order.label": "",
         "cards.style": "auto",
         "cards.border": "auto",
@@ -42160,6 +43644,7 @@
         "style.textSize": "auto",
         "style.headings": "auto",
         "style.tracking": "auto",
+        "style.lineHeight": "auto",
         "style.spacing": "auto",
         "style.buttons": "auto",
         "style.photos": "auto",
@@ -42845,6 +44330,38 @@
             "tight": "/kit/previews/tracking-tight.svg",
             "normal": "/kit/previews/tracking-normal.svg",
             "wide": "/kit/previews/tracking-wide.svg"
+          }
+        },
+        {
+          "key": "style.lineHeight",
+          "type": "choice",
+          "label": "Line spacing in headings",
+          "labelAr": "تباعد أسطر العناوين",
+          "group": "Page style",
+          "groupAr": "شكل الصفحة",
+          "options": [
+            "auto",
+            "tight",
+            "normal",
+            "relaxed"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Tight",
+            "normal": "Normal",
+            "relaxed": "Relaxed"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "normal": "عادية",
+            "relaxed": "متباعدة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "tight": "/kit/previews/lineheight-tight.svg",
+            "normal": "/kit/previews/lineheight-normal.svg",
+            "relaxed": "/kit/previews/lineheight-relaxed.svg"
           }
         },
         {
@@ -44266,6 +45783,32 @@
           }
         },
         {
+          "key": "order.position",
+          "type": "choice",
+          "label": "Button position",
+          "labelAr": "مكان الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "end",
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "end": "Bottom corner",
+            "start": "Other bottom corner",
+            "center": "Bottom middle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "end": "الزاوية السفلية",
+            "start": "الزاوية السفلية الأخرى",
+            "center": "في المنتصف بالأسفل"
+          }
+        },
+        {
           "key": "order.label",
           "type": "text",
           "label": "Button text (leave empty for the usual text)",
@@ -44336,6 +45879,7 @@
         ],
         "order.action": "auto",
         "order.shape": "auto",
+        "order.position": "auto",
         "order.label": "",
         "cards.style": "auto",
         "cards.border": "auto",
@@ -44346,6 +45890,7 @@
         "style.textSize": "auto",
         "style.headings": "auto",
         "style.tracking": "auto",
+        "style.lineHeight": "auto",
         "style.spacing": "auto",
         "style.buttons": "auto",
         "style.photos": "auto",
@@ -45045,6 +46590,38 @@
             "tight": "/kit/previews/tracking-tight.svg",
             "normal": "/kit/previews/tracking-normal.svg",
             "wide": "/kit/previews/tracking-wide.svg"
+          }
+        },
+        {
+          "key": "style.lineHeight",
+          "type": "choice",
+          "label": "Line spacing in headings",
+          "labelAr": "تباعد أسطر العناوين",
+          "group": "Page style",
+          "groupAr": "شكل الصفحة",
+          "options": [
+            "auto",
+            "tight",
+            "normal",
+            "relaxed"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Tight",
+            "normal": "Normal",
+            "relaxed": "Relaxed"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "normal": "عادية",
+            "relaxed": "متباعدة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "tight": "/kit/previews/lineheight-tight.svg",
+            "normal": "/kit/previews/lineheight-normal.svg",
+            "relaxed": "/kit/previews/lineheight-relaxed.svg"
           }
         },
         {
@@ -46022,6 +47599,225 @@
           }
         },
         {
+          "key": "ticker.style",
+          "type": "choice",
+          "label": "Strip shape",
+          "labelAr": "شكل الشريط",
+          "group": "Moving strip",
+          "groupAr": "الشريط المتحرك",
+          "options": [
+            "auto",
+            "solid",
+            "outline",
+            "tilted",
+            "torn",
+            "tags",
+            "neon",
+            "double"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid band",
+            "outline": "Outline",
+            "tilted": "Tilted",
+            "torn": "Torn paper",
+            "tags": "Label tags",
+            "neon": "Neon line",
+            "double": "Double lines"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "شريط ممتلئ",
+            "outline": "إطار فقط",
+            "tilted": "مائل",
+            "torn": "ورق ممزّق",
+            "tags": "ملصقات منفصلة",
+            "neon": "خط نيون",
+            "double": "خطوط مزدوجة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/ticker-solid.svg",
+            "outline": "/kit/previews/ticker-outline.svg",
+            "tilted": "/kit/previews/ticker-tilted.svg",
+            "torn": "/kit/previews/ticker-torn.svg",
+            "tags": "/kit/previews/ticker-tags.svg",
+            "neon": "/kit/previews/ticker-neon.svg",
+            "double": "/kit/previews/ticker-double.svg"
+          }
+        },
+        {
+          "key": "ticker.color",
+          "type": "choice",
+          "label": "Strip color",
+          "labelAr": "لون الشريط",
+          "group": "Moving strip",
+          "groupAr": "الشريط المتحرك",
+          "options": [
+            "auto",
+            "accent",
+            "ink",
+            "paper",
+            "custom"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "accent": "Accent color",
+            "ink": "Dark",
+            "paper": "Light",
+            "custom": "My own color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "accent": "اللون المميز",
+            "ink": "داكن",
+            "paper": "فاتح",
+            "custom": "لوني الخاص"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "accent": "/kit/previews/tickercolor-accent.svg",
+            "ink": "/kit/previews/tickercolor-ink.svg",
+            "paper": "/kit/previews/tickercolor-paper.svg",
+            "custom": "/kit/previews/tickercolor-custom.svg"
+          }
+        },
+        {
+          "key": "ticker.bg",
+          "type": "color",
+          "label": "My own strip color",
+          "labelAr": "لون الشريط الخاص",
+          "group": "Moving strip",
+          "groupAr": "الشريط المتحرك",
+          "options": [
+            "#E5281E",
+            "#FFC21A",
+            "#FF5A1F",
+            "#2F8F4E",
+            "#1F6FEB",
+            "#7B2D6E",
+            "#D6336C",
+            "#141110"
+          ],
+          "custom": true
+        },
+        {
+          "key": "ticker.separator",
+          "type": "choice",
+          "label": "Between the specials",
+          "labelAr": "الفاصل بين العروض",
+          "group": "Moving strip",
+          "groupAr": "الشريط المتحرك",
+          "options": [
+            "auto",
+            "diamond",
+            "star",
+            "dot",
+            "flame",
+            "slash",
+            "none"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "diamond": "Diamonds",
+            "star": "Stars",
+            "dot": "Dots",
+            "flame": "Flames",
+            "slash": "Slashes",
+            "none": "Nothing"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "diamond": "معيّنات",
+            "star": "نجوم",
+            "dot": "نقاط",
+            "flame": "لهب",
+            "slash": "خطوط مائلة",
+            "none": "بلا فاصل"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "diamond": "/kit/previews/tickersep-diamond.svg",
+            "star": "/kit/previews/tickersep-star.svg",
+            "dot": "/kit/previews/tickersep-dot.svg",
+            "flame": "/kit/previews/tickersep-flame.svg",
+            "slash": "/kit/previews/tickersep-slash.svg",
+            "none": "/kit/previews/tickersep-none.svg"
+          }
+        },
+        {
+          "key": "ticker.speed",
+          "type": "choice",
+          "label": "Speed",
+          "labelAr": "السرعة",
+          "group": "Moving strip",
+          "groupAr": "الشريط المتحرك",
+          "options": [
+            "auto",
+            "slow",
+            "normal",
+            "fast",
+            "still"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "slow": "Slow",
+            "normal": "Normal",
+            "fast": "Fast",
+            "still": "Still"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "slow": "بطيئة",
+            "normal": "عادية",
+            "fast": "سريعة",
+            "still": "ثابت لا يتحرك"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "slow": "/kit/previews/tickerspeed-slow.svg",
+            "normal": "/kit/previews/tickerspeed-normal.svg",
+            "fast": "/kit/previews/tickerspeed-fast.svg",
+            "still": "/kit/previews/tickerspeed-still.svg"
+          }
+        },
+        {
+          "key": "ticker.edge",
+          "type": "choice",
+          "label": "Edges",
+          "labelAr": "الحواف",
+          "group": "Moving strip",
+          "groupAr": "الشريط المتحرك",
+          "options": [
+            "auto",
+            "flames",
+            "none",
+            "zigzag",
+            "waves"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "flames": "Flames",
+            "none": "Straight",
+            "zigzag": "Zigzag",
+            "waves": "Waves"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "flames": "لهب",
+            "none": "مستقيمة",
+            "zigzag": "متعرّجة",
+            "waves": "أمواج"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "flames": "/kit/previews/tickeredge-flames.svg",
+            "none": "/kit/previews/tickeredge-none.svg",
+            "zigzag": "/kit/previews/tickeredge-zigzag.svg",
+            "waves": "/kit/previews/tickeredge-waves.svg"
+          }
+        },
+        {
           "key": "cta.label",
           "type": "text",
           "label": "Order button text",
@@ -46454,6 +48250,32 @@
           }
         },
         {
+          "key": "order.position",
+          "type": "choice",
+          "label": "Button position",
+          "labelAr": "مكان الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "end",
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "end": "Bottom corner",
+            "start": "Other bottom corner",
+            "center": "Bottom middle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "end": "الزاوية السفلية",
+            "start": "الزاوية السفلية الأخرى",
+            "center": "في المنتصف بالأسفل"
+          }
+        },
+        {
           "key": "order.label",
           "type": "text",
           "label": "Button text (leave empty for the usual text)",
@@ -46521,6 +48343,7 @@
         ],
         "order.action": "auto",
         "order.shape": "auto",
+        "order.position": "auto",
         "order.label": "",
         "cards.style": "auto",
         "cards.border": "auto",
@@ -46531,6 +48354,7 @@
         "style.textSize": "auto",
         "style.headings": "auto",
         "style.tracking": "auto",
+        "style.lineHeight": "auto",
         "style.spacing": "auto",
         "style.buttons": "auto",
         "style.photos": "auto",
@@ -46562,6 +48386,12 @@
         "reviews.layout": "auto",
         "visit.layout": "auto",
         "footer.layout": "auto",
+        "ticker.style": "auto",
+        "ticker.color": "auto",
+        "ticker.bg": "#E5281E",
+        "ticker.separator": "auto",
+        "ticker.speed": "auto",
+        "ticker.edge": "auto",
         "hero.slides": [],
         "hero.transition": "slide",
         "hero.autoplay": true,
@@ -47234,6 +49064,38 @@
             "tight": "/kit/previews/tracking-tight.svg",
             "normal": "/kit/previews/tracking-normal.svg",
             "wide": "/kit/previews/tracking-wide.svg"
+          }
+        },
+        {
+          "key": "style.lineHeight",
+          "type": "choice",
+          "label": "Line spacing in headings",
+          "labelAr": "تباعد أسطر العناوين",
+          "group": "Page style",
+          "groupAr": "شكل الصفحة",
+          "options": [
+            "auto",
+            "tight",
+            "normal",
+            "relaxed"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Tight",
+            "normal": "Normal",
+            "relaxed": "Relaxed"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "normal": "عادية",
+            "relaxed": "متباعدة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "tight": "/kit/previews/lineheight-tight.svg",
+            "normal": "/kit/previews/lineheight-normal.svg",
+            "relaxed": "/kit/previews/lineheight-relaxed.svg"
           }
         },
         {
@@ -48648,6 +50510,32 @@
           }
         },
         {
+          "key": "order.position",
+          "type": "choice",
+          "label": "Button position",
+          "labelAr": "مكان الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "end",
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "end": "Bottom corner",
+            "start": "Other bottom corner",
+            "center": "Bottom middle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "end": "الزاوية السفلية",
+            "start": "الزاوية السفلية الأخرى",
+            "center": "في المنتصف بالأسفل"
+          }
+        },
+        {
           "key": "order.label",
           "type": "text",
           "label": "Button text (leave empty for the usual text)",
@@ -48717,6 +50605,7 @@
         ],
         "order.action": "auto",
         "order.shape": "auto",
+        "order.position": "auto",
         "order.label": "",
         "cards.style": "auto",
         "cards.border": "auto",
@@ -48727,6 +50616,7 @@
         "style.textSize": "auto",
         "style.headings": "auto",
         "style.tracking": "auto",
+        "style.lineHeight": "auto",
         "style.spacing": "auto",
         "style.buttons": "auto",
         "style.photos": "auto",
@@ -48809,7 +50699,12 @@
             "style.buttons": "auto",
             "header.layout": "classic",
             "hero.variant": "flame",
-            "menu.layout": "burst"
+            "menu.layout": "burst",
+            "ticker.style": "solid",
+            "ticker.color": "auto",
+            "ticker.separator": "flame",
+            "ticker.speed": "normal",
+            "ticker.edge": "flames"
           }
         },
         {
@@ -48826,7 +50721,12 @@
             "style.buttons": "auto",
             "header.layout": "auto",
             "hero.variant": "flame",
-            "menu.layout": "burst"
+            "menu.layout": "burst",
+            "ticker.style": "tilted",
+            "ticker.color": "accent",
+            "ticker.separator": "star",
+            "ticker.speed": "auto",
+            "ticker.edge": "auto"
           }
         },
         {
@@ -48843,7 +50743,12 @@
             "style.buttons": "auto",
             "header.layout": "auto",
             "hero.variant": "flame",
-            "menu.layout": "burst"
+            "menu.layout": "burst",
+            "ticker.style": "solid",
+            "ticker.color": "accent",
+            "ticker.separator": "star",
+            "ticker.speed": "slow",
+            "ticker.edge": "auto"
           }
         },
         {
@@ -48860,7 +50765,12 @@
             "style.buttons": "pill",
             "header.layout": "auto",
             "hero.variant": "poster",
-            "menu.layout": "burst"
+            "menu.layout": "burst",
+            "ticker.style": "tags",
+            "ticker.color": "accent",
+            "ticker.separator": "auto",
+            "ticker.speed": "auto",
+            "ticker.edge": "none"
           }
         },
         {
@@ -48877,7 +50787,12 @@
             "style.buttons": "auto",
             "header.layout": "minimal",
             "hero.variant": "flame",
-            "menu.layout": "list"
+            "menu.layout": "list",
+            "ticker.style": "neon",
+            "ticker.color": "accent",
+            "ticker.separator": "dot",
+            "ticker.speed": "slow",
+            "ticker.edge": "none"
           }
         }
       ],
@@ -49423,6 +51338,38 @@
             "tight": "/kit/previews/tracking-tight.svg",
             "normal": "/kit/previews/tracking-normal.svg",
             "wide": "/kit/previews/tracking-wide.svg"
+          }
+        },
+        {
+          "key": "style.lineHeight",
+          "type": "choice",
+          "label": "Line spacing in headings",
+          "labelAr": "تباعد أسطر العناوين",
+          "group": "Page style",
+          "groupAr": "شكل الصفحة",
+          "options": [
+            "auto",
+            "tight",
+            "normal",
+            "relaxed"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Tight",
+            "normal": "Normal",
+            "relaxed": "Relaxed"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "normal": "عادية",
+            "relaxed": "متباعدة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "tight": "/kit/previews/lineheight-tight.svg",
+            "normal": "/kit/previews/lineheight-normal.svg",
+            "relaxed": "/kit/previews/lineheight-relaxed.svg"
           }
         },
         {
@@ -50415,6 +52362,225 @@
           "max": 80
         },
         {
+          "key": "ticker.style",
+          "type": "choice",
+          "label": "Strip shape",
+          "labelAr": "شكل الشريط",
+          "group": "Moving strip",
+          "groupAr": "الشريط المتحرك",
+          "options": [
+            "auto",
+            "solid",
+            "outline",
+            "tilted",
+            "torn",
+            "tags",
+            "neon",
+            "double"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid band",
+            "outline": "Outline",
+            "tilted": "Tilted",
+            "torn": "Torn paper",
+            "tags": "Label tags",
+            "neon": "Neon line",
+            "double": "Double lines"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "شريط ممتلئ",
+            "outline": "إطار فقط",
+            "tilted": "مائل",
+            "torn": "ورق ممزّق",
+            "tags": "ملصقات منفصلة",
+            "neon": "خط نيون",
+            "double": "خطوط مزدوجة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/ticker-solid.svg",
+            "outline": "/kit/previews/ticker-outline.svg",
+            "tilted": "/kit/previews/ticker-tilted.svg",
+            "torn": "/kit/previews/ticker-torn.svg",
+            "tags": "/kit/previews/ticker-tags.svg",
+            "neon": "/kit/previews/ticker-neon.svg",
+            "double": "/kit/previews/ticker-double.svg"
+          }
+        },
+        {
+          "key": "ticker.color",
+          "type": "choice",
+          "label": "Strip color",
+          "labelAr": "لون الشريط",
+          "group": "Moving strip",
+          "groupAr": "الشريط المتحرك",
+          "options": [
+            "auto",
+            "accent",
+            "ink",
+            "paper",
+            "custom"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "accent": "Accent color",
+            "ink": "Dark",
+            "paper": "Light",
+            "custom": "My own color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "accent": "اللون المميز",
+            "ink": "داكن",
+            "paper": "فاتح",
+            "custom": "لوني الخاص"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "accent": "/kit/previews/tickercolor-accent.svg",
+            "ink": "/kit/previews/tickercolor-ink.svg",
+            "paper": "/kit/previews/tickercolor-paper.svg",
+            "custom": "/kit/previews/tickercolor-custom.svg"
+          }
+        },
+        {
+          "key": "ticker.bg",
+          "type": "color",
+          "label": "My own strip color",
+          "labelAr": "لون الشريط الخاص",
+          "group": "Moving strip",
+          "groupAr": "الشريط المتحرك",
+          "options": [
+            "#E5281E",
+            "#FFC21A",
+            "#FF5A1F",
+            "#2F8F4E",
+            "#1F6FEB",
+            "#7B2D6E",
+            "#D6336C",
+            "#141110"
+          ],
+          "custom": true
+        },
+        {
+          "key": "ticker.separator",
+          "type": "choice",
+          "label": "Between the specials",
+          "labelAr": "الفاصل بين العروض",
+          "group": "Moving strip",
+          "groupAr": "الشريط المتحرك",
+          "options": [
+            "auto",
+            "diamond",
+            "star",
+            "dot",
+            "flame",
+            "slash",
+            "none"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "diamond": "Diamonds",
+            "star": "Stars",
+            "dot": "Dots",
+            "flame": "Flames",
+            "slash": "Slashes",
+            "none": "Nothing"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "diamond": "معيّنات",
+            "star": "نجوم",
+            "dot": "نقاط",
+            "flame": "لهب",
+            "slash": "خطوط مائلة",
+            "none": "بلا فاصل"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "diamond": "/kit/previews/tickersep-diamond.svg",
+            "star": "/kit/previews/tickersep-star.svg",
+            "dot": "/kit/previews/tickersep-dot.svg",
+            "flame": "/kit/previews/tickersep-flame.svg",
+            "slash": "/kit/previews/tickersep-slash.svg",
+            "none": "/kit/previews/tickersep-none.svg"
+          }
+        },
+        {
+          "key": "ticker.speed",
+          "type": "choice",
+          "label": "Speed",
+          "labelAr": "السرعة",
+          "group": "Moving strip",
+          "groupAr": "الشريط المتحرك",
+          "options": [
+            "auto",
+            "slow",
+            "normal",
+            "fast",
+            "still"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "slow": "Slow",
+            "normal": "Normal",
+            "fast": "Fast",
+            "still": "Still"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "slow": "بطيئة",
+            "normal": "عادية",
+            "fast": "سريعة",
+            "still": "ثابت لا يتحرك"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "slow": "/kit/previews/tickerspeed-slow.svg",
+            "normal": "/kit/previews/tickerspeed-normal.svg",
+            "fast": "/kit/previews/tickerspeed-fast.svg",
+            "still": "/kit/previews/tickerspeed-still.svg"
+          }
+        },
+        {
+          "key": "ticker.edge",
+          "type": "choice",
+          "label": "Edges",
+          "labelAr": "الحواف",
+          "group": "Moving strip",
+          "groupAr": "الشريط المتحرك",
+          "options": [
+            "auto",
+            "flames",
+            "none",
+            "zigzag",
+            "waves"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "flames": "Flames",
+            "none": "Straight",
+            "zigzag": "Zigzag",
+            "waves": "Waves"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "flames": "لهب",
+            "none": "مستقيمة",
+            "zigzag": "متعرّجة",
+            "waves": "أمواج"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "flames": "/kit/previews/tickeredge-flames.svg",
+            "none": "/kit/previews/tickeredge-none.svg",
+            "zigzag": "/kit/previews/tickeredge-zigzag.svg",
+            "waves": "/kit/previews/tickeredge-waves.svg"
+          }
+        },
+        {
           "key": "cta.label",
           "type": "text",
           "label": "Order button text",
@@ -50841,6 +53007,32 @@
           }
         },
         {
+          "key": "order.position",
+          "type": "choice",
+          "label": "Button position",
+          "labelAr": "مكان الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "end",
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "end": "Bottom corner",
+            "start": "Other bottom corner",
+            "center": "Bottom middle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "end": "الزاوية السفلية",
+            "start": "الزاوية السفلية الأخرى",
+            "center": "في المنتصف بالأسفل"
+          }
+        },
+        {
           "key": "order.label",
           "type": "text",
           "label": "Button text (leave empty for the usual text)",
@@ -50913,6 +53105,7 @@
         ],
         "order.action": "auto",
         "order.shape": "auto",
+        "order.position": "auto",
         "order.label": "",
         "cards.style": "auto",
         "cards.border": "auto",
@@ -50923,6 +53116,7 @@
         "style.textSize": "auto",
         "style.headings": "auto",
         "style.tracking": "auto",
+        "style.lineHeight": "auto",
         "style.spacing": "auto",
         "style.buttons": "auto",
         "style.photos": "auto",
@@ -50954,6 +53148,12 @@
         "reviews.layout": "auto",
         "visit.layout": "auto",
         "footer.layout": "auto",
+        "ticker.style": "auto",
+        "ticker.color": "auto",
+        "ticker.bg": "#E5281E",
+        "ticker.separator": "auto",
+        "ticker.speed": "auto",
+        "ticker.edge": "auto",
         "hero.transition": "slide",
         "hero.autoplay": true,
         "hero.speed": "normal",
@@ -51613,6 +53813,38 @@
             "tight": "/kit/previews/tracking-tight.svg",
             "normal": "/kit/previews/tracking-normal.svg",
             "wide": "/kit/previews/tracking-wide.svg"
+          }
+        },
+        {
+          "key": "style.lineHeight",
+          "type": "choice",
+          "label": "Line spacing in headings",
+          "labelAr": "تباعد أسطر العناوين",
+          "group": "Page style",
+          "groupAr": "شكل الصفحة",
+          "options": [
+            "auto",
+            "tight",
+            "normal",
+            "relaxed"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Tight",
+            "normal": "Normal",
+            "relaxed": "Relaxed"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "normal": "عادية",
+            "relaxed": "متباعدة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "tight": "/kit/previews/lineheight-tight.svg",
+            "normal": "/kit/previews/lineheight-normal.svg",
+            "relaxed": "/kit/previews/lineheight-relaxed.svg"
           }
         },
         {
@@ -52998,6 +55230,32 @@
           }
         },
         {
+          "key": "order.position",
+          "type": "choice",
+          "label": "Button position",
+          "labelAr": "مكان الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "end",
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "end": "Bottom corner",
+            "start": "Other bottom corner",
+            "center": "Bottom middle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "end": "الزاوية السفلية",
+            "start": "الزاوية السفلية الأخرى",
+            "center": "في المنتصف بالأسفل"
+          }
+        },
+        {
           "key": "order.label",
           "type": "text",
           "label": "Button text (leave empty for the usual text)",
@@ -53069,6 +55327,7 @@
         ],
         "order.action": "auto",
         "order.shape": "auto",
+        "order.position": "auto",
         "order.label": "",
         "cards.style": "auto",
         "cards.border": "auto",
@@ -53079,6 +55338,7 @@
         "style.textSize": "auto",
         "style.headings": "auto",
         "style.tracking": "auto",
+        "style.lineHeight": "auto",
         "style.spacing": "auto",
         "style.buttons": "auto",
         "style.photos": "auto",
@@ -53757,6 +56017,38 @@
             "tight": "/kit/previews/tracking-tight.svg",
             "normal": "/kit/previews/tracking-normal.svg",
             "wide": "/kit/previews/tracking-wide.svg"
+          }
+        },
+        {
+          "key": "style.lineHeight",
+          "type": "choice",
+          "label": "Line spacing in headings",
+          "labelAr": "تباعد أسطر العناوين",
+          "group": "Page style",
+          "groupAr": "شكل الصفحة",
+          "options": [
+            "auto",
+            "tight",
+            "normal",
+            "relaxed"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Tight",
+            "normal": "Normal",
+            "relaxed": "Relaxed"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "normal": "عادية",
+            "relaxed": "متباعدة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "tight": "/kit/previews/lineheight-tight.svg",
+            "normal": "/kit/previews/lineheight-normal.svg",
+            "relaxed": "/kit/previews/lineheight-relaxed.svg"
           }
         },
         {
@@ -55104,6 +57396,32 @@
           }
         },
         {
+          "key": "order.position",
+          "type": "choice",
+          "label": "Button position",
+          "labelAr": "مكان الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "end",
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "end": "Bottom corner",
+            "start": "Other bottom corner",
+            "center": "Bottom middle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "end": "الزاوية السفلية",
+            "start": "الزاوية السفلية الأخرى",
+            "center": "في المنتصف بالأسفل"
+          }
+        },
+        {
           "key": "order.label",
           "type": "text",
           "label": "Button text (leave empty for the usual text)",
@@ -55163,6 +57481,7 @@
         "social.show": [],
         "order.action": "auto",
         "order.shape": "auto",
+        "order.position": "auto",
         "order.label": "",
         "cards.style": "auto",
         "cards.border": "auto",
@@ -55173,6 +57492,7 @@
         "style.textSize": "auto",
         "style.headings": "auto",
         "style.tracking": "auto",
+        "style.lineHeight": "auto",
         "style.spacing": "auto",
         "style.buttons": "auto",
         "style.photos": "auto",
@@ -55852,6 +58172,38 @@
             "tight": "/kit/previews/tracking-tight.svg",
             "normal": "/kit/previews/tracking-normal.svg",
             "wide": "/kit/previews/tracking-wide.svg"
+          }
+        },
+        {
+          "key": "style.lineHeight",
+          "type": "choice",
+          "label": "Line spacing in headings",
+          "labelAr": "تباعد أسطر العناوين",
+          "group": "Page style",
+          "groupAr": "شكل الصفحة",
+          "options": [
+            "auto",
+            "tight",
+            "normal",
+            "relaxed"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Tight",
+            "normal": "Normal",
+            "relaxed": "Relaxed"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "normal": "عادية",
+            "relaxed": "متباعدة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "tight": "/kit/previews/lineheight-tight.svg",
+            "normal": "/kit/previews/lineheight-normal.svg",
+            "relaxed": "/kit/previews/lineheight-relaxed.svg"
           }
         },
         {
@@ -56825,6 +59177,225 @@
           }
         },
         {
+          "key": "ticker.style",
+          "type": "choice",
+          "label": "Strip shape",
+          "labelAr": "شكل الشريط",
+          "group": "Moving strip",
+          "groupAr": "الشريط المتحرك",
+          "options": [
+            "auto",
+            "solid",
+            "outline",
+            "tilted",
+            "torn",
+            "tags",
+            "neon",
+            "double"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "solid": "Solid band",
+            "outline": "Outline",
+            "tilted": "Tilted",
+            "torn": "Torn paper",
+            "tags": "Label tags",
+            "neon": "Neon line",
+            "double": "Double lines"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "solid": "شريط ممتلئ",
+            "outline": "إطار فقط",
+            "tilted": "مائل",
+            "torn": "ورق ممزّق",
+            "tags": "ملصقات منفصلة",
+            "neon": "خط نيون",
+            "double": "خطوط مزدوجة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "solid": "/kit/previews/ticker-solid.svg",
+            "outline": "/kit/previews/ticker-outline.svg",
+            "tilted": "/kit/previews/ticker-tilted.svg",
+            "torn": "/kit/previews/ticker-torn.svg",
+            "tags": "/kit/previews/ticker-tags.svg",
+            "neon": "/kit/previews/ticker-neon.svg",
+            "double": "/kit/previews/ticker-double.svg"
+          }
+        },
+        {
+          "key": "ticker.color",
+          "type": "choice",
+          "label": "Strip color",
+          "labelAr": "لون الشريط",
+          "group": "Moving strip",
+          "groupAr": "الشريط المتحرك",
+          "options": [
+            "auto",
+            "accent",
+            "ink",
+            "paper",
+            "custom"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "accent": "Accent color",
+            "ink": "Dark",
+            "paper": "Light",
+            "custom": "My own color"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "accent": "اللون المميز",
+            "ink": "داكن",
+            "paper": "فاتح",
+            "custom": "لوني الخاص"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "accent": "/kit/previews/tickercolor-accent.svg",
+            "ink": "/kit/previews/tickercolor-ink.svg",
+            "paper": "/kit/previews/tickercolor-paper.svg",
+            "custom": "/kit/previews/tickercolor-custom.svg"
+          }
+        },
+        {
+          "key": "ticker.bg",
+          "type": "color",
+          "label": "My own strip color",
+          "labelAr": "لون الشريط الخاص",
+          "group": "Moving strip",
+          "groupAr": "الشريط المتحرك",
+          "options": [
+            "#E5281E",
+            "#FFC21A",
+            "#FF5A1F",
+            "#2F8F4E",
+            "#1F6FEB",
+            "#7B2D6E",
+            "#D6336C",
+            "#141110"
+          ],
+          "custom": true
+        },
+        {
+          "key": "ticker.separator",
+          "type": "choice",
+          "label": "Between the specials",
+          "labelAr": "الفاصل بين العروض",
+          "group": "Moving strip",
+          "groupAr": "الشريط المتحرك",
+          "options": [
+            "auto",
+            "diamond",
+            "star",
+            "dot",
+            "flame",
+            "slash",
+            "none"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "diamond": "Diamonds",
+            "star": "Stars",
+            "dot": "Dots",
+            "flame": "Flames",
+            "slash": "Slashes",
+            "none": "Nothing"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "diamond": "معيّنات",
+            "star": "نجوم",
+            "dot": "نقاط",
+            "flame": "لهب",
+            "slash": "خطوط مائلة",
+            "none": "بلا فاصل"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "diamond": "/kit/previews/tickersep-diamond.svg",
+            "star": "/kit/previews/tickersep-star.svg",
+            "dot": "/kit/previews/tickersep-dot.svg",
+            "flame": "/kit/previews/tickersep-flame.svg",
+            "slash": "/kit/previews/tickersep-slash.svg",
+            "none": "/kit/previews/tickersep-none.svg"
+          }
+        },
+        {
+          "key": "ticker.speed",
+          "type": "choice",
+          "label": "Speed",
+          "labelAr": "السرعة",
+          "group": "Moving strip",
+          "groupAr": "الشريط المتحرك",
+          "options": [
+            "auto",
+            "slow",
+            "normal",
+            "fast",
+            "still"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "slow": "Slow",
+            "normal": "Normal",
+            "fast": "Fast",
+            "still": "Still"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "slow": "بطيئة",
+            "normal": "عادية",
+            "fast": "سريعة",
+            "still": "ثابت لا يتحرك"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "slow": "/kit/previews/tickerspeed-slow.svg",
+            "normal": "/kit/previews/tickerspeed-normal.svg",
+            "fast": "/kit/previews/tickerspeed-fast.svg",
+            "still": "/kit/previews/tickerspeed-still.svg"
+          }
+        },
+        {
+          "key": "ticker.edge",
+          "type": "choice",
+          "label": "Edges",
+          "labelAr": "الحواف",
+          "group": "Moving strip",
+          "groupAr": "الشريط المتحرك",
+          "options": [
+            "auto",
+            "flames",
+            "none",
+            "zigzag",
+            "waves"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "flames": "Flames",
+            "none": "Straight",
+            "zigzag": "Zigzag",
+            "waves": "Waves"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "flames": "لهب",
+            "none": "مستقيمة",
+            "zigzag": "متعرّجة",
+            "waves": "أمواج"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "flames": "/kit/previews/tickeredge-flames.svg",
+            "none": "/kit/previews/tickeredge-none.svg",
+            "zigzag": "/kit/previews/tickeredge-zigzag.svg",
+            "waves": "/kit/previews/tickeredge-waves.svg"
+          }
+        },
+        {
           "key": "announcement",
           "type": "text",
           "label": "Announcement",
@@ -57268,6 +59839,32 @@
           }
         },
         {
+          "key": "order.position",
+          "type": "choice",
+          "label": "Button position",
+          "labelAr": "مكان الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "end",
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "end": "Bottom corner",
+            "start": "Other bottom corner",
+            "center": "Bottom middle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "end": "الزاوية السفلية",
+            "start": "الزاوية السفلية الأخرى",
+            "center": "في المنتصف بالأسفل"
+          }
+        },
+        {
           "key": "order.label",
           "type": "text",
           "label": "Button text (leave empty for the usual text)",
@@ -57326,6 +59923,7 @@
         "social.show": [],
         "order.action": "auto",
         "order.shape": "auto",
+        "order.position": "auto",
         "order.label": "",
         "cards.style": "auto",
         "cards.border": "auto",
@@ -57336,6 +59934,7 @@
         "style.textSize": "auto",
         "style.headings": "auto",
         "style.tracking": "auto",
+        "style.lineHeight": "auto",
         "style.spacing": "auto",
         "style.buttons": "auto",
         "style.photos": "auto",
@@ -57366,6 +59965,12 @@
         "reviews.layout": "auto",
         "visit.layout": "auto",
         "footer.layout": "auto",
+        "ticker.style": "auto",
+        "ticker.color": "auto",
+        "ticker.bg": "#E5281E",
+        "ticker.separator": "auto",
+        "ticker.speed": "auto",
+        "ticker.edge": "auto",
         "hero.slides": [],
         "hero.transition": "slide",
         "hero.autoplay": true,
@@ -58023,6 +60628,38 @@
             "tight": "/kit/previews/tracking-tight.svg",
             "normal": "/kit/previews/tracking-normal.svg",
             "wide": "/kit/previews/tracking-wide.svg"
+          }
+        },
+        {
+          "key": "style.lineHeight",
+          "type": "choice",
+          "label": "Line spacing in headings",
+          "labelAr": "تباعد أسطر العناوين",
+          "group": "Page style",
+          "groupAr": "شكل الصفحة",
+          "options": [
+            "auto",
+            "tight",
+            "normal",
+            "relaxed"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "tight": "Tight",
+            "normal": "Normal",
+            "relaxed": "Relaxed"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "tight": "متقاربة",
+            "normal": "عادية",
+            "relaxed": "متباعدة"
+          },
+          "previews": {
+            "auto": "/kit/previews/auto.svg",
+            "tight": "/kit/previews/lineheight-tight.svg",
+            "normal": "/kit/previews/lineheight-normal.svg",
+            "relaxed": "/kit/previews/lineheight-relaxed.svg"
           }
         },
         {
@@ -59466,6 +62103,32 @@
           }
         },
         {
+          "key": "order.position",
+          "type": "choice",
+          "label": "Button position",
+          "labelAr": "مكان الزر",
+          "group": "Order button",
+          "groupAr": "زر الطلب",
+          "options": [
+            "auto",
+            "end",
+            "start",
+            "center"
+          ],
+          "optionLabels": {
+            "auto": "Template default",
+            "end": "Bottom corner",
+            "start": "Other bottom corner",
+            "center": "Bottom middle"
+          },
+          "optionLabelsAr": {
+            "auto": "كما في القالب",
+            "end": "الزاوية السفلية",
+            "start": "الزاوية السفلية الأخرى",
+            "center": "في المنتصف بالأسفل"
+          }
+        },
+        {
           "key": "order.label",
           "type": "text",
           "label": "Button text (leave empty for the usual text)",
@@ -59534,6 +62197,7 @@
         ],
         "order.action": "auto",
         "order.shape": "auto",
+        "order.position": "auto",
         "order.label": "",
         "cards.style": "auto",
         "cards.border": "auto",
@@ -59544,6 +62208,7 @@
         "style.textSize": "auto",
         "style.headings": "auto",
         "style.tracking": "auto",
+        "style.lineHeight": "auto",
         "style.spacing": "auto",
         "style.buttons": "auto",
         "style.photos": "auto",

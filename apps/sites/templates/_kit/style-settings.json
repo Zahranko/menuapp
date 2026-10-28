@@ -101,6 +101,36 @@
       }
     },
     {
+      "key": "style.lineHeight",
+      "type": "choice",
+      "label": "Line spacing in headings",
+      "labelAr": "تباعد أسطر العناوين",
+      "options": [
+        "auto",
+        "tight",
+        "normal",
+        "relaxed"
+      ],
+      "optionLabels": {
+        "auto": "Template default",
+        "tight": "Tight",
+        "normal": "Normal",
+        "relaxed": "Relaxed"
+      },
+      "optionLabelsAr": {
+        "auto": "كما في القالب",
+        "tight": "متقاربة",
+        "normal": "عادية",
+        "relaxed": "متباعدة"
+      },
+      "previews": {
+        "auto": "/kit/previews/auto.svg",
+        "tight": "/kit/previews/lineheight-tight.svg",
+        "normal": "/kit/previews/lineheight-normal.svg",
+        "relaxed": "/kit/previews/lineheight-relaxed.svg"
+      }
+    },
+    {
       "key": "style.spacing",
       "type": "choice",
       "label": "Space between sections",
@@ -333,6 +363,7 @@
     "style.textSize": "auto",
     "style.headings": "auto",
     "style.tracking": "auto",
+    "style.lineHeight": "auto",
     "style.spacing": "auto",
     "style.buttons": "auto",
     "style.photos": "auto",

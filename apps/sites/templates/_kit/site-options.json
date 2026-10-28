@@ -108,6 +108,19 @@
       }
     },
     {
+      "key": "order.position",
+      "type": "choice",
+      "label": "Button position",
+      "group": "Order button",
+      "options": ["auto", "end", "start", "center"],
+      "optionLabels": {
+        "auto": "Template default",
+        "end": "Bottom corner",
+        "start": "Other bottom corner",
+        "center": "Bottom middle"
+      }
+    },
+    {
       "key": "order.label",
       "type": "text",
       "label": "Button text (leave empty for the usual text)",
@@ -122,6 +135,7 @@
     "social.show": [],
     "order.action": "auto",
     "order.shape": "auto",
+    "order.position": "auto",
     "order.label": ""
   }
 }

@@ -3,6 +3,7 @@ import path from "node:path";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 import { combination, combinationCount, templates, type Combination } from "./combinations";
+import { floatingCoverIssues, headerControlIssues, headingOverlaps } from "./page-checks";
 
 /**
  * Random design combinations on every template (e2e/combinations.ts): owners can mix colors, fonts, looks, every shared
@@ -12,7 +13,11 @@ import { combination, combinationCount, templates, type Combination } from "./co
  * - pass axe (WCAG 2 A and AA, plus 2.2 AA target size: tap targets at least 24px or spaced apart),
  * - keep the page on the screen (no sideways scroll) and log no page or console errors,
  * - keep the text of headings and buttons inside their boxes, and no text cut off by a box that hides its overflow,
- * - keep the main call to action and the floating buttons uncovered by fixed or sticky bars,
+ * - keep the main call to action and the floating buttons uncovered by fixed or sticky bars, and on the first screen keep
+ *   the headings and the opening's text clear of floating buttons (e2e/page-checks.ts: a bar or pill over the opening's
+ *   text was missed while only bars covering buttons were checked),
+ * - show text or an icon that stands out on every button and link of the header (no empty pill),
+ * - keep the lines of Arabic headings from running into each other,
  * - give every image an alt text,
  * - keep text readable on what is really behind it: text over photos, gradients and decorations (what axe can't
  *   judge) is measured on a screenshot of the page with the text hidden.
@@ -384,6 +389,7 @@ async function check(page: Page): Promise<Issue[]> {
 
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
   issues.push(...(await page.evaluate(layoutIssues)));
+  issues.push(...(await page.evaluate(floatingCoverIssues)), ...(await page.evaluate(headerControlIssues)), ...(await page.evaluate(headingOverlaps, { arabicOnly: true })));
   // Floating buttons and bars at the end of the page as well.
   await page.evaluate(() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "instant" }));
   await page.waitForTimeout(100);

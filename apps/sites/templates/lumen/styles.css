@@ -13,6 +13,7 @@
 @import "../_kit/layout.css";
 @import "../_kit/menu.css";
 @import "../_kit/sections.css";
+@import "../_kit/ticker.css";
 @import "../_kit/style.css";
 @import "./signature.css";
 
@@ -253,6 +254,9 @@
     padding: 6px;
     background: var(--ink);
     color: var(--bg);
+    /* Kept with any header look while the tabs float (_kit/layout.css, data-k="bar"). */
+    --k-bar-bg: var(--ink);
+    --k-bar-ink: var(--bg);
     border-radius: min(var(--pill), 26px);
     box-shadow: 0 14px 30px -12px rgb(0 0 0 / 0.55);
   }
@@ -378,6 +382,8 @@
       background: none;
       color: inherit;
       box-shadow: none;
+      --k-bar-bg: initial;
+      --k-bar-ink: initial;
     }
     .tabs ul {
       display: flex;

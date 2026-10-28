@@ -4,8 +4,9 @@ import styleSettings from "./style-settings.json";
 
 /*
  * The owner's page style, shared by every template (fields in style-settings.json, added to every template by
- * scripts/build-registry.mjs in a "Page style" group after "Cards"): text size, heading style and letter spacing, space
- * between sections, buttons, the shape of photos, section dividers, a background texture and motion on scroll.
+ * scripts/build-registry.mjs in a "Page style" group after "Cards"): text size, heading style, letter spacing and line
+ * spacing in headings, space between sections, buttons, the shape of photos, section dividers, a background texture and
+ * motion on scroll.
  * styleAttributes() puts one data attribute on the template's root per option that differs from "Template default"
  * ("auto"); _kit/style.css styles them. A site that never touched these looks exactly as before.
  *
@@ -24,6 +25,7 @@ const options = <T extends string>(key: string) => styleSettings.fields.find((f)
 export type TextSize = "auto" | "smaller" | "larger" | "big";
 export type HeadingStyle = "auto" | "normal" | "uppercase" | "italic" | "condensed" | "outlined";
 export type Tracking = "auto" | "tight" | "normal" | "wide";
+export type LineHeight = "auto" | "tight" | "normal" | "relaxed";
 export type Spacing = "auto" | "compact" | "airy";
 export type ButtonStyle = "auto" | "pill" | "rounded" | "square" | "outline" | "underline" | "shadow";
 export type PhotoShape = "auto" | "rounded" | "square" | "soft" | "arch" | "circle" | "blob";
@@ -35,6 +37,7 @@ export type PageStyle = {
   textSize: TextSize;
   headings: HeadingStyle;
   tracking: Tracking;
+  lineHeight: LineHeight;
   spacing: Spacing;
   buttons: ButtonStyle;
   photos: PhotoShape;
@@ -48,6 +51,7 @@ const FIELDS: { [K in keyof PageStyle]: { key: string; attr: string } } = {
   textSize: { key: "style.textSize", attr: "data-ps-text" },
   headings: { key: "style.headings", attr: "data-ps-head" },
   tracking: { key: "style.tracking", attr: "data-ps-track" },
+  lineHeight: { key: "style.lineHeight", attr: "data-ps-lh" },
   spacing: { key: "style.spacing", attr: "data-ps-space" },
   buttons: { key: "style.buttons", attr: "data-ps-btn" },
   photos: { key: "style.photos", attr: "data-ps-photo" },
@@ -66,6 +70,7 @@ export function pageStyle(settings: Settings): PageStyle {
     textSize: read<TextSize>(FIELDS.textSize.key),
     headings: read<HeadingStyle>(FIELDS.headings.key),
     tracking: read<Tracking>(FIELDS.tracking.key),
+    lineHeight: read<LineHeight>(FIELDS.lineHeight.key),
     spacing: read<Spacing>(FIELDS.spacing.key),
     buttons: read<ButtonStyle>(FIELDS.buttons.key),
     photos: read<PhotoShape>(FIELDS.photos.key),

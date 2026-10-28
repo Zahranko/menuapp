@@ -150,3 +150,50 @@
   clip-path: inset(50%) !important;
   white-space: nowrap !important;
 }
+
+/* ---------- floating buttons wait for the first scroll ---------- */
+/* A button floating at the foot of the screen (data-k="float": the shared one, and the templates' own pills, stickers
+ * and bars) would lie over the opening's headline and text on a short screen: a phone, or the app's live preview. The
+ * first screen belongs to the opening, so the button appears once the visitor scrolls a little, in browsers that link
+ * animations to scrolling (it only fades: nothing moves; with reduced motion it just appears). Elsewhere it shows from
+ * the start, as before. */
+@supports (animation-timeline: scroll()) {
+  /* Doubled so it outweighs the templates' own "stop every animation" rules for reduced motion (".t-x *"). */
+  [data-template] [data-k~="float"][data-k~="float"] {
+    animation: kit-float-in linear both !important;
+    animation-timeline: scroll(root block) !important;
+    animation-range: 8vh 24vh !important;
+  }
+  /* With reduced motion it simply appears, without fading. */
+  @media (prefers-reduced-motion: reduce) {
+    [data-template] [data-k~="float"][data-k~="float"] {
+      animation-timing-function: step-end !important;
+    }
+  }
+}
+@keyframes kit-float-in {
+  from {
+    opacity: 0;
+    visibility: hidden;
+  }
+  to {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+/* Where it floats: the owner's corner, or the middle of the foot of the screen. */
+[data-order-pos="end"] .kit-order[data-k~="float"] {
+  inset-inline-start: auto !important;
+  inset-inline-end: 16px !important;
+}
+[data-order-pos="start"] .kit-order[data-k~="float"] {
+  inset-inline-start: 16px !important;
+  inset-inline-end: auto !important;
+}
+[data-order-pos="center"] .kit-order[data-k~="float"] {
+  inset-inline: 0 !important;
+  width: fit-content !important;
+  max-width: calc(100% - 32px) !important;
+  margin-inline: auto !important;
+}

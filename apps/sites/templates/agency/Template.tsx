@@ -15,6 +15,7 @@ import { themeVars } from "../_kit/theme";
 import { pageTop, SiteHeader, SiteHero, type NavLink } from "../_kit/Top";
 import { SiteMenu } from "../_kit/Menu";
 import { SiteFooter, SiteGallery, SiteHighlights, SiteReviews, SiteVisit, ordered } from "../_kit/Sections";
+import { tickerMarks } from "../_kit/ticker";
 
 const copy = {
   en: { services: "Services", work: "Selected work", process: "Process", faq: "Questions", contact: "Contact", start: "Start a project", from: "From", reviews: "Clients on working with us", talk: "Let's talk", email: "Email us", hours: "Studio hours", reach: "Reach us", menu: "Main menu", count: "services" },
@@ -42,6 +43,8 @@ export default function AgencyTemplate({ site, now }: TemplateProps & { now?: Da
   const process = steps(ctx);
   const questions = faqs(ctx);
   const names = ctx.sections.flatMap((s) => s.products.map((p) => p.name));
+  // The owner's strip options (_kit/ticker.ts) mark the marquee's parts once they change something.
+  const tk = tickerMarks(site.settings);
   // Numbering runs across groups: 01, 02 in the first group, 03 in the next, and so on.
   const offsets = ctx.sections.map((_, i) => ctx.sections.slice(0, i).reduce((n, s) => n + s.products.length, 0));
 
@@ -96,13 +99,13 @@ export default function AgencyTemplate({ site, now }: TemplateProps & { now?: Da
 
         {ordered(ctx, {
           marquee: ctx.on("marquee") && names.length > 0 && (
-            <div className="marquee" data-section="marquee" aria-hidden="true">
-              <div className="track">
+            <div className="marquee" data-section="marquee" aria-hidden="true" {...tk("strip")}>
+              <div className="track" {...tk("track")}>
                 {[0, 1].map((copyNo) => (
-                  <span key={copyNo}>
+                  <span key={copyNo} {...tk(copyNo > 0 && "copy")}>
                     {names.map((n) => (
-                      <span key={n}>
-                        {n} <i>✦</i>{" "}
+                      <span key={n} {...tk("item")}>
+                        {n} <i {...tk("sep")}>✦</i>{" "}
                       </span>
                     ))}
                   </span>

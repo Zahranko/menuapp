@@ -6,6 +6,7 @@ import { accentTokens, isDark, readable } from "./color";
 import { fontPairs, forLocale, type FontName } from "./fonts";
 import { cardVars } from "./cards";
 import { typeface } from "./options";
+import { tickerColors } from "./ticker";
 
 /** A color theme. Extra keys become CSS variables too (`stripe` → `--stripe`). */
 export type Palette = { bg: string; surf: string; ink: string; muted: string; line: string; [extra: string]: string };
@@ -47,6 +48,8 @@ export function themeVars<T extends string>(settings: Settings, locale: string, 
   };
   for (const [key, value] of Object.entries(palette)) vars[`--${key}`] = value;
   vars["--muted"] = readable(palette.muted, [palette.bg, palette.surf, ...onPanels], palette.ink);
+  // The owner's moving strip colors (_kit/ticker.ts), only when they picked one.
+  Object.assign(vars, tickerColors(settings, { bg: palette.bg, surf: palette.surf, ink: palette.ink }, accent));
   Object.assign(vars, cardVars(settings, { surface: palette.card ?? palette.surf, accent: accent.fill, inks: [palette.ink, vars["--muted"] as string, accent.text] }));
   return vars as CSSProperties;
 }

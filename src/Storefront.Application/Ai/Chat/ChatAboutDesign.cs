@@ -90,8 +90,8 @@ public sealed class ChatAboutDesignValidator : AbstractValidator<ChatAboutDesign
 }
 
 /// <summary>
-/// The editor's chat assistant. It may set every template setting that can be set from a value (<see cref="TemplateAiFields.IsEditable"/>):
-/// colors, themes, fonts, sizes, layouts, switches, sections and texts. Every value is checked with the rules of a saved draft and
+/// The editor's chat assistant. It may set every template setting that can be set from a value (<see cref="TemplateAiFields.ForChat"/>):
+/// colors, themes, fonts, sizes, layouts, switches, sections and texts, and whether the floating order button shows. Every value is checked with the rules of a saved draft and
 /// anything that fails is dropped. Each answer counts once against the monthly allowance.
 /// </summary>
 public sealed class ChatAboutDesignHandler(
@@ -137,7 +137,7 @@ public sealed class ChatAboutDesignHandler(
         }
 
         var site = loaded.Value;
-        var fields = site.Schema.Fields.Where(TemplateAiFields.IsEditable).ToList();
+        var fields = TemplateAiFields.ForChat(site.Schema.Fields);
         if (fields.Count == 0)
         {
             return AiErrors.Failed;

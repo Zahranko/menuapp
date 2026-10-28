@@ -680,11 +680,14 @@
   -webkit-backdrop-filter: blur(14px) saturate(1.3) !important;
   backdrop-filter: blur(14px) saturate(1.3) !important;
 }
-/* Solid and glass lay the page color under a header that may have been dark: its type follows, in the page's ink. */
+/* Solid and glass lay the page color under a header that may have been dark: its type follows, in the page's ink.
+ * A control drawn on a fill of its own (data-k="filled", like Ember's "Menu" pill) keeps its colors: its text in the
+ * page's ink would vanish on a fill of the same ink. A bar of the header that floats at the foot of a phone's screen
+ * (data-k="bar") is drawn by the rule after the accent header's. */
 [data-ly-hstyle]:is([data-ly-hstyle="solid"], [data-ly-hstyle="glass"]) [data-section="header"]:not(.kit-hd, [data-k~="masthead"]) {
   color: var(--k-ink) !important;
 
-  & :is(a, span, p, button, nav, .kit-name):not([data-k~="btn"], [data-k~="btn"] *, .kit-logo, .kit-logo *, [id="site-drawer"], [id="site-drawer"] *, dialog *) {
+  & :is(a, span, p, button, nav, .kit-name):not([data-k~="btn"], [data-k~="btn"] *, [data-k~="filled"], [data-k~="filled"] *, [data-k~="bar"], .kit-logo, .kit-logo *, [id="site-drawer"], [id="site-drawer"] *, dialog *) {
     color: inherit !important;
   }
 }
@@ -702,7 +705,7 @@
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
 
-  & :is(a, span, p, button, nav, .kit-name):not([data-k~="btn"], [data-k~="btn"] *, .kit-logo, .kit-logo *, [id="site-drawer"], [id="site-drawer"] *, dialog *) {
+  & :is(a, span, p, button, nav, .kit-name):not([data-k~="btn"], [data-k~="btn"] *, [data-k~="bar"], .kit-logo, .kit-logo *, [id="site-drawer"], [id="site-drawer"] *, dialog *) {
     border-color: color-mix(in srgb, currentColor 30%, transparent) !important;
     background-color: transparent !important;
     color: inherit !important;
@@ -719,6 +722,14 @@
     color: var(--k-acc) !important;
     box-shadow: 0 0 0 2px var(--k-acc-ink) !important;
   }
+}
+/* A bar of the header that leaves it on phones to float at the foot of the screen (data-k="bar": Lumen's tabs, Bloom's
+ * dock) is not over the header's color there, so with any header look it keeps the fill and text the template gives it
+ * while it floats (--k-bar-bg, --k-bar-ink). Where the bar sits in the header (wider screens) the template leaves both
+ * unset: the bar is then see-through and its text takes the header's color, like the rest of the header. */
+[data-ly-hstyle] [data-section="header"] [data-k~="bar"] {
+  background: var(--k-bar-bg) !important;
+  color: var(--k-bar-ink) !important;
 }
 
 /* ---------- shared opening ---------- */

@@ -13,6 +13,7 @@
   "heroSlider": { "kind": "panel", "source": "hero.image" },
   "thumbnail": "/templates/agency/thumbnail.png",
   "sample": "studio",
+  "ticker": true,
   "sectionsLayout": { "order": ["marquee", "highlights", "menu", "gallery", "steps", "reviews", "faq", "visit"] },
   "signature": {
     "hero.variant": [
