@@ -99,6 +99,8 @@ for (const template of registry.templates) {
 
     test("long words in headings never break in the middle on a phone", async ({ page }, info) => {
       test.skip(info.project.name !== "mobile", "a phone question");
+      // Measured at rest: an opening animation (Ember's scaling, tilting title) can catch a word mid-move.
+      await page.emulateMedia({ reducedMotion: "reduce" });
       await page.setViewportSize({ width: 360, height: 800 });
       for (const locale of ["en", "ar"]) {
         for (const sub of pages) {
