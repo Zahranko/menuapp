@@ -1,20 +1,21 @@
 import { choice } from "@/lib/settings";
 import type { TemplateProps } from "@/lib/types";
-import {
-  ContactList,
-  Credits,
-  HoursList,
-  Logo,
-  ProductPicture,
-  ProductSheet,
-  TopBars,
-} from "../_kit/blocks";
+import { ContactList, Credits, HoursList, Logo, logoRoot, optionRoot, OrderFab, ProductPicture, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
+import { heroPhotos } from "../_kit/hero";
+import { HeroBand } from "../_kit/HeroPhotos";
 import { fontVariables } from "../_kit/fonts";
 import { WhatsApp } from "../_kit/icons";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
+import { basicLinks, orderCta, pageTop, SiteHero, SiteMasthead } from "../_kit/Top";
+import { SiteMenu } from "../_kit/Menu";
+import { ordered, SiteFooter, SiteStory, SiteVisit, together } from "../_kit/Sections";
+
+/** The sections in the order the template draws them (manifest "sectionsLayout.order"). */
+const ORDER = ["menu", "story", "visit"];
 
 const copy = {
   en: {
@@ -101,6 +102,7 @@ export default function BistroCardTemplate({
   now,
 }: TemplateProps & { now?: Date }) {
   const ctx = siteContext(site, now);
+  const grouped = together(ctx, ORDER, ["story", "visit"]);
   const c = copy[ctx.locale];
   const special = ctx.on("special") ? ctx.picks[0] : undefined;
   const story = ctx.on("story") && ctx.text("story.text");
@@ -111,9 +113,36 @@ export default function BistroCardTemplate({
     "gingham",
   );
 
+  const order = orderButton(site, { label: c.book });
+  const note = special && (
+    <section
+      className="note"
+      data-section="special"
+      aria-labelledby="special-title"
+    >
+      <Clip />
+      <h2 data-k="label" id="special-title">
+        {ctx.text("special.title") || c.special}
+      </h2>
+      <button
+        type="button"
+        className="note-item"
+        data-item-id={special.id}
+      >
+        <span className="note-photo">
+          <ProductPicture item={special} sizes="88px" />
+        </span>
+        <span className="note-text">
+          <span className="note-name">{special.name}</span>
+          <span className="note-price">{special.priceText}</span>
+        </span>
+      </button>
+    </section>
+  );
+  const top = pageTop(ctx, { photos: heroPhotos(site.settings, null) });
   return (
     <div
-      data-template="bistro"
+      data-template="bistro" {...logoRoot(ctx)} {...optionRoot(ctx, order)}
       className={cx("t-bistro", fontVariables)}
       style={themeVars(site.settings, ctx.locale, {
         palettes: PALETTES,
@@ -125,147 +154,197 @@ export default function BistroCardTemplate({
       <TopBars ctx={ctx} />
       <div className={cx("table", `cloth-${cloth}`)}>
         <div className="card">
-          <header className="page cover" data-section="header">
-            <Logo ctx={ctx} className="monogram" />
-            <p className="est">{ctx.text("hero.eyebrow")}</p>
-            <h1>{site.business.name}</h1>
-            {ctx.text("hero.title") && (
-              <p className="tagline">{ctx.text("hero.title")}</p>
-            )}
-            {ctx.today && <p className="today">{ctx.today}</p>}
-            {special && (
-              <section
-                className="note"
-                data-section="special"
-                aria-labelledby="special-title"
-              >
-                <Clip />
-                <h2 id="special-title">
-                  {ctx.text("special.title") || c.special}
-                </h2>
-                <button
-                  type="button"
-                  className="note-item"
-                  data-item-id={special.id}
-                >
-                  <span className="note-photo">
-                    <ProductPicture item={special} sizes="88px" />
-                  </span>
-                  <span className="note-text">
-                    <span className="note-name">{special.name}</span>
-                    <span className="note-price">{special.priceText}</span>
-                  </span>
-                </button>
-              </section>
-            )}
-          </header>
+          <SiteMasthead ctx={ctx} top={top} links={basicLinks(ctx, { story })} cta={orderCta(order)} fallback="centered">
+            <header className="page cover" data-section="header" data-k="masthead">
+              <Logo ctx={ctx} className="monogram" />
+              <p className="est">{ctx.text("hero.eyebrow")}</p>
+              <h1 className="kit-name">{site.business.name}</h1>
+              {ctx.text("hero.title") && (
+                <p className="tagline">{ctx.text("hero.title")}</p>
+              )}
+              {ctx.today && <p className="today">{ctx.today}</p>}
+              <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} />
+              {note}
+            </header>
+          </SiteMasthead>
+          {/* A shared opening lies on a page of the menu card, like the cover it replaces. */}
+          {top.layout.hero !== "auto" && (
+            <div className="page opening">
+              <SiteHero ctx={ctx} top={top} title={site.business.name} subtitle={ctx.text("hero.title")} />
+            </div>
+          )}
 
           <main className="page inside">
-            <section
-              id="menu"
-              className="menu"
-              data-section="menu"
-              aria-labelledby="menu-title"
-            >
-              <h2 id="menu-title" className="sr-only">
-                {c.menu}
-              </h2>
-              {ctx.sections.map((section) => (
+            {top.layout.hero !== "auto" && note}
+            {ordered(ctx, {
+              menu: (
                 <section
-                  key={section.id}
-                  id={section.anchor}
-                  className="course"
-                  aria-labelledby={`${section.anchor}-h`}
+                  id="menu"
+                  className="menu"
+                  data-section="menu"
+                  aria-labelledby="menu-title"
                 >
-                  <h3 id={`${section.anchor}-h`}>{section.name}</h3>
-                  <ul className="plain">
-                    {section.products.map((item) => (
-                      <li key={item.id}>
-                        <button
-                          type="button"
-                          className={cx("dish", !item.isAvailable && "out")}
-                          data-item-id={item.id}
-                        >
-                          <span className="dish-name">
-                            {item.name}
-                            {item.labelText && (
-                              <span className="tag">{item.labelText}</span>
-                            )}
-                            {!item.isAvailable && (
-                              <span className="tag tag-out">
-                                {ctx.t.soldOut}
+                  <h2 id="menu-title" className="sr-only">
+                    {c.menu}
+                  </h2>
+                  <SiteMenu ctx={ctx} like="compact">
+                  {ctx.sections.map((section) => (
+                    <section
+                      key={section.id}
+                      id={section.anchor}
+                      className="course"
+                      aria-labelledby={`${section.anchor}-h`}
+                    >
+                      <h3 id={`${section.anchor}-h`}>{section.name}</h3>
+                      <ul className="plain kit-cards kit-rows">
+                        {section.products.map((item) => (
+                          <li key={item.id}>
+                            <button
+                              type="button"
+                              className={cx("dish kit-card kit-card-pad", !item.isAvailable && "out")}
+                              data-item-id={item.id}
+                            >
+                              <span className="dish-name">
+                                {item.name}
+                                {item.labelText && (
+                                  <span className="tag">{item.labelText}</span>
+                                )}
+                                {!item.isAvailable && (
+                                  <span className="tag tag-out">
+                                    {ctx.t.soldOut}
+                                  </span>
+                                )}
                               </span>
-                            )}
-                          </span>
-                          <span className="dish-price">{item.priceText}</span>
-                          {item.description && (
-                            <span className="dish-desc">
-                              {item.description}
-                            </span>
-                          )}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
+                              <span className="dish-price">{item.priceText}</span>
+                              {item.description && (
+                                <span className="dish-desc">
+                                  {item.description}
+                                </span>
+                              )}
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </section>
+                  ))}
+                  </SiteMenu>
                 </section>
-              ))}
-            </section>
-
-            {(story || ctx.on("visit")) && (
-              <div className="back">
-                {story && (
-                  <section
-                    id="story"
-                    className="story"
-                    data-section="story"
-                    aria-labelledby="story-title"
-                  >
-                    <h2 id="story-title">
-                      {ctx.text("story.title") || c.story}
-                    </h2>
-                    <p>{story}</p>
-                  </section>
-                )}
-                {ctx.on("visit") && (
-                  <section
-                    id="visit"
-                    className="visit"
-                    data-section="visit"
-                    aria-labelledby="visit-title"
-                  >
-                    <h2 id="visit-title">{c.visit}</h2>
-                    <div className="visit-grid">
-                      {hasHours(ctx.hours) && (
-                        <div>
-                          <h3>{c.hours}</h3>
-                          <HoursList ctx={ctx} />
-                        </div>
+              ),
+              // The story and the visit share one "back" box while the owner keeps them where they are.
+              story: grouped
+                ? (story || ctx.on("visit")) && (
+                    <div className="back">
+                      {story && (
+                        <section
+                          id="story"
+                          className="story"
+                          data-section="story"
+                          aria-labelledby="story-title"
+                        >
+                          <h2 id="story-title">
+                            {ctx.text("story.title") || c.story}
+                          </h2>
+                          <p>{story}</p>
+                        </section>
                       )}
-                      <div>
-                        <h3>{ctx.t.findUs}</h3>
-                        <ContactList ctx={ctx} />
-                        {ctx.contact.whatsapp && (
-                          <a
-                            className="book"
-                            href={ctx.contact.whatsapp}
-                            rel="noopener"
-                            target="_blank"
-                          >
-                            <WhatsApp /> {c.book}
-                          </a>
-                        )}
-                      </div>
+                      {ctx.on("visit") && (
+                        <section
+                          id="visit"
+                          className="visit"
+                          data-section="visit"
+                          aria-labelledby="visit-title"
+                        >
+                          <h2 id="visit-title">{c.visit}</h2>
+                          <div className="visit-grid">
+                            {hasHours(ctx.hours) && (
+                              <div>
+                                <h3>{c.hours}</h3>
+                                <HoursList ctx={ctx} />
+                              </div>
+                            )}
+                            <div>
+                              <h3>{ctx.t.findUs}</h3>
+                              <ContactList ctx={ctx} />
+                              {ctx.contact.whatsapp && (
+                                <a data-k="btn"
+                                  className="book"
+                                  href={ctx.contact.whatsapp}
+                                  rel="noopener"
+                                  target="_blank"
+                                >
+                                  <WhatsApp /> {c.book}
+                                </a>
+                              )}
+                            </div>
+                          </div>
+                        </section>
+                      )}
                     </div>
-                  </section>
-                )}
-              </div>
-            )}
+                  )
+                : story && (
+                    <SiteStory ctx={ctx} title={ctx.text("story.title") || c.story}>
+                      <div className="back">
+                        <section
+                          id="story"
+                          className="story"
+                          data-section="story"
+                          aria-labelledby="story-title"
+                        >
+                          <h2 id="story-title">
+                            {ctx.text("story.title") || c.story}
+                          </h2>
+                          <p>{story}</p>
+                        </section>
+                      </div>
+                    </SiteStory>
+                  ),
+              visit: !grouped && ctx.on("visit") && (
+                <SiteVisit ctx={ctx} title={c.visit} cta={ctx.contact.whatsapp ? { href: ctx.contact.whatsapp, label: c.book } : null}>
+                  <div className="back">
+                    <section
+                      id="visit"
+                      className="visit"
+                      data-section="visit"
+                      aria-labelledby="visit-title"
+                    >
+                      <h2 id="visit-title">{c.visit}</h2>
+                      <div className="visit-grid">
+                        {hasHours(ctx.hours) && (
+                          <div>
+                            <h3>{c.hours}</h3>
+                            <HoursList ctx={ctx} />
+                          </div>
+                        )}
+                        <div>
+                          <h3>{ctx.t.findUs}</h3>
+                          <ContactList ctx={ctx} />
+                          {ctx.contact.whatsapp && (
+                            <a data-k="btn"
+                              className="book"
+                              href={ctx.contact.whatsapp}
+                              rel="noopener"
+                              target="_blank"
+                            >
+                              <WhatsApp /> {c.book}
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </SiteVisit>
+              ),
+            })}
           </main>
         </div>
-        <footer className="foot" data-section="footer">
-          <Credits ctx={ctx} />
-        </footer>
+        <SiteFooter ctx={ctx} links={basicLinks(ctx, { story })}>
+          <footer className="foot" data-section="footer">
+            <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
+            <Credits ctx={ctx} />
+          </footer>
+        </SiteFooter>
       </div>
+      <OrderFab order={order} />
       <ProductSheet ctx={ctx} />
     </div>
   );

@@ -1,0 +1,92 @@
+/*
+ * Souq's own layout options (manifest "signature", _kit/signatures.ts):
+ *   header.layout "awning"  a striped market awning with a scalloped edge over the header (base: "classic")
+ *   hero.variant  "stall"   the photo under a stall's awning, the words on a wooden sign board (base: "framed")
+ */
+[data-template="souq"] {
+  --sig-awning: repeating-linear-gradient(90deg, var(--k-acc) 0 24px, color-mix(in srgb, var(--k-bg) 92%, var(--k-acc)) 24px 48px);
+  --sig-scallop: radial-gradient(circle at 12px 0, #000 11.5px, transparent 12px) 0 100% / 24px 12px repeat-x, linear-gradient(#000 0 0) 0 0 / 100% calc(100% - 11px) no-repeat;
+}
+
+/* ---------- the awning header ---------- */
+[data-template="souq"] .kit-hd.kit-hd[data-sig~="awning"] {
+  --kit-hd-h: 66px;
+  border-bottom: 0;
+  & > .kit-sig-art {
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 0;
+    height: 30px;
+    background: var(--sig-awning);
+    mask: var(--sig-scallop);
+    filter: drop-shadow(0 3px 2px rgb(0 0 0 / 0.18));
+    pointer-events: none;
+  }
+  & > .kit-hd-in {
+    position: relative;
+    z-index: 1;
+    padding-top: 34px;
+    border-bottom: 3px solid color-mix(in srgb, var(--k-ink) 70%, var(--k-acc));
+  }
+  & .kit-hd-name {
+    font-family: var(--k-fd);
+  }
+  & .kit-hd-logo {
+    box-shadow: 0 0 0 3px var(--k-bg), 0 0 0 4px var(--k-acc);
+  }
+  & .kit-hd-cta {
+    border-radius: 6px 6px 14px 14px;
+  }
+}
+
+/* ---------- the stall opening ---------- */
+[data-template="souq"] .kit-hv.kit-hv[data-sig~="stall"] {
+  & .kit-hv-media,
+  & .kit-hv-mono {
+    border: 0;
+    border-bottom: 14px solid color-mix(in srgb, var(--k-acc) 35%, #5a3a22);
+    border-radius: 6px;
+    outline: 0;
+    padding-top: 0;
+  }
+  & .kit-hv-media::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 2;
+    height: 46px;
+    background: var(--sig-awning);
+    mask: var(--sig-scallop);
+    filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.25));
+  }
+  & .kit-hv-text {
+    border: 3px solid color-mix(in srgb, var(--k-acc) 35%, #5a3a22);
+    border-radius: 10px;
+    background:
+      repeating-linear-gradient(0deg, transparent 0 22px, color-mix(in srgb, var(--k-ink) 5%, transparent) 22px 23px),
+      var(--k-bg);
+  }
+  & .kit-hv-text::before,
+  & .kit-hv-text::after {
+    content: "";
+    position: absolute;
+    top: -16px;
+    width: 3px;
+    height: 16px;
+    background: color-mix(in srgb, var(--k-acc) 35%, #5a3a22);
+  }
+  & .kit-hv-text::before {
+    inset-inline-start: 22%;
+  }
+  & .kit-hv-text::after {
+    inset-inline-end: 22%;
+  }
+  & .kit-hv-eyebrow {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--k-acc);
+    color: var(--k-acc-ink);
+    letter-spacing: 0.08em;
+  }
+}

@@ -54,10 +54,10 @@ public partial class AuthTests(StorefrontFactory factory) : IClassFixture<Storef
     public async Task Register_rejects_a_taken_link_with_the_prototype_message()
     {
         var owner = Api.NewOwner();
-        var response = await _client.PostAsJsonAsync("/api/v1/auth/register", new { businessName = "Vanilla Menu", email = owner.Email, phone = owner.Phone, password = "Sunrise2026" });
+        var response = await _client.PostAsJsonAsync("/api/v1/auth/register", new { businessName = "Demo Menu", email = owner.Email, phone = owner.Phone, password = "Sunrise2026" });
         Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
         var errors = (await Api.ProblemAsync(response)).GetProperty("errors");
-        Assert.Equal("That link is taken. Try adding your city, like vanillamenuamman.", errors.GetProperty("businessName")[0].GetString());
+        Assert.Equal("That link is taken. Try adding your area, like demomenudowntown.", errors.GetProperty("businessName")[0].GetString());
     }
 
     [Fact]
@@ -74,6 +74,39 @@ public partial class AuthTests(StorefrontFactory factory) : IClassFixture<Storef
     }
 
     [Fact]
+    public async Task Account_availability_flags_a_used_email_and_phone()
+    {
+        var first = Api.NewOwner();
+        await Api.EnsureSuccess(await _client.PostAsJsonAsync("/api/v1/auth/register", new { businessName = first.Name, email = first.Email, phone = first.Phone, password = "Sunrise2026" }));
+
+        var taken = await _client.GetFromJsonAsync<AccountAvailabilityResponse>(
+            $"/api/v1/auth/account-availability?email={Uri.EscapeDataString(first.Email.ToUpperInvariant())}&phone={Uri.EscapeDataString(first.Phone)}", Api.Json);
+        Assert.NotNull(taken!.Email);
+        Assert.NotNull(taken.Phone);
+
+        var other = Api.NewOwner();
+        var free = await _client.GetFromJsonAsync<AccountAvailabilityResponse>(
+            $"/api/v1/auth/account-availability?email={Uri.EscapeDataString(other.Email)}&phone={Uri.EscapeDataString(other.Phone)}", Api.Json);
+        Assert.Null(free!.Email);
+        Assert.Null(free.Phone);
+    }
+
+    [Fact]
+    public async Task Register_reports_a_used_email_together_with_a_taken_link()
+    {
+        var first = Api.NewOwner();
+        await Api.EnsureSuccess(await _client.PostAsJsonAsync("/api/v1/auth/register", new { businessName = first.Name, email = first.Email, phone = first.Phone, password = "Sunrise2026" }));
+
+        var other = Api.NewOwner();
+        var response = await _client.PostAsJsonAsync("/api/v1/auth/register", new { businessName = first.Name, email = first.Email, phone = other.Phone, password = "Sunrise2026" });
+        Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
+        var errors = (await Api.ProblemAsync(response)).GetProperty("errors");
+        Assert.True(errors.TryGetProperty("email", out _));
+        Assert.True(errors.TryGetProperty("businessName", out _));
+        Assert.False(errors.TryGetProperty("phone", out _));
+    }
+
+    [Fact]
     public async Task Register_rejects_reserved_links()
     {
         var owner = Api.NewOwner();
@@ -82,7 +115,7 @@ public partial class AuthTests(StorefrontFactory factory) : IClassFixture<Storef
     }
 
     [Theory]
-    [InlineData("Vanilla Menu", "vanillamenu", false)]
+    [InlineData("Demo Menu", "demomenu", false)]
     [InlineData("Brand New Bakery 77", "brandnewbakery77", true)]
     [InlineData("Login", "login", false)]
     [InlineData("مقهى", "", false)]
@@ -157,6 +190,18 @@ public partial class AuthTests(StorefrontFactory factory) : IClassFixture<Storef
 
         var afterReuse = await _client.PostAsJsonAsync("/api/v1/auth/refresh", new { refreshToken = rotated.RefreshToken });
         Assert.Equal(HttpStatusCode.Unauthorized, afterReuse.StatusCode);
+    }
+
+    [Fact]
+    public async Task Racing_refreshes_with_one_token_get_one_session()
+    {
+        var auth = await Api.RegisterAsync(_client);
+
+        var responses = await Task.WhenAll(Enumerable.Range(0, 5).Select(_ =>
+            factory.CreateClient().PostAsJsonAsync("/api/v1/auth/refresh", new { refreshToken = auth.RefreshToken })));
+
+        Assert.Single(responses, r => r.StatusCode == HttpStatusCode.OK);
+        Assert.All(responses.Where(r => r.StatusCode != HttpStatusCode.OK), r => Assert.Equal(HttpStatusCode.Unauthorized, r.StatusCode));
     }
 
     [Fact]

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Storefront.Application.Catalog;
 using Storefront.Application.Media;
+using Storefront.Domain.Media;
 using Storefront.Infrastructure.Persistence;
 
 namespace Storefront.Web.IntegrationTests;
@@ -16,9 +17,9 @@ public class CatalogTests(StorefrontFactory factory) : IClassFixture<StorefrontF
         return (factory.CreateClient().Authorized(auth.AccessToken), auth.Business.Id);
     }
 
-    private static async Task<CategoryDto> CreateCategory(HttpClient client, string name)
+    private static async Task<CategoryDto> CreateCategory(HttpClient client, string name, Guid? parentId = null)
     {
-        var response = await client.PostAsJsonAsync("/api/v1/categories", new { name });
+        var response = await client.PostAsJsonAsync("/api/v1/categories", new { name, parentId });
         await Api.EnsureSuccess(response);
         return (await response.Content.ReadFromJsonAsync<CategoryDto>(Api.Json))!;
     }
@@ -42,8 +43,8 @@ public class CatalogTests(StorefrontFactory factory) : IClassFixture<StorefrontF
         var renamed = await client.PutAsJsonAsync($"/api/v1/categories/{tea.Id}", new { name = "Teas" });
         await Api.EnsureSuccess(renamed);
 
-        var list = await client.GetFromJsonAsync<List<CategoryDto>>("/api/v1/categories", Api.Json);
-        Assert.Equal(["Coffee", "Teas"], list!.Select(c => c.Name));
+        var list = await client.GetFromJsonAsync<List<CategoryDto>>("/api/v1/categories", Api.Json) ?? [];
+        Assert.Equal(["Coffee", "Teas"], list.Select(c => c.Name));
         Assert.Equal([2, 0], list.Select(c => c.ProductCount));
     }
 
@@ -77,8 +78,8 @@ public class CatalogTests(StorefrontFactory factory) : IClassFixture<StorefrontF
         var moved = await client.DeleteAsync($"/api/v1/categories/{coffee.Id}?moveTo={drinks.Id}");
         Assert.Equal(HttpStatusCode.NoContent, moved.StatusCode);
 
-        var products = await client.GetFromJsonAsync<List<ProductDto>>($"/api/v1/products?categoryId={drinks.Id}", Api.Json);
-        Assert.Equal(["Water", "Latte", "Mocha"], products!.Select(p => p.Name));
+        var products = await client.GetFromJsonAsync<List<ProductDto>>($"/api/v1/products?categoryId={drinks.Id}", Api.Json) ?? [];
+        Assert.Equal(["Water", "Latte", "Mocha"], products.Select(p => p.Name));
         Assert.Equal([0, 1, 2], products.Select(p => p.SortOrder));
         Assert.Contains(products, p => p.Id == latte.Id);
     }
@@ -103,6 +104,86 @@ public class CatalogTests(StorefrontFactory factory) : IClassFixture<StorefrontF
         await CreateProduct(client, coffee.Id, "Latte");
         var response = await client.DeleteAsync($"/api/v1/categories/{coffee.Id}?moveTo={coffee.Id}");
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task Sub_categories_sit_under_a_main_category_and_put_moves_them_back()
+    {
+        var (client, _) = await OwnerAsync();
+        var drinks = await CreateCategory(client, "Drinks");
+        var coffee = await CreateCategory(client, "Coffee", drinks.Id);
+        Assert.Null(drinks.ParentId);
+        Assert.Equal(drinks.Id, coffee.ParentId);
+
+        var tea = await CreateCategory(client, "Tea");
+        var moved = await client.PutAsJsonAsync($"/api/v1/categories/{tea.Id}", new { name = "Tea", parentId = drinks.Id });
+        await Api.EnsureSuccess(moved);
+        Assert.Equal(drinks.Id, (await moved.Content.ReadFromJsonAsync<CategoryDto>(Api.Json))!.ParentId);
+
+        var list = await client.GetFromJsonAsync<List<CategoryDto>>("/api/v1/categories", Api.Json);
+        Assert.Equal([null, drinks.Id, drinks.Id], list!.Select(c => c.ParentId));
+
+        // PUT is a full update: leaving parentId out puts the category back at the top level.
+        var back = await client.PutAsJsonAsync($"/api/v1/categories/{coffee.Id}", new { name = "Coffee" });
+        await Api.EnsureSuccess(back);
+        Assert.Null((await back.Content.ReadFromJsonAsync<CategoryDto>(Api.Json))!.ParentId);
+
+        // Reordering still takes every category.
+        await Api.EnsureSuccess(await client.PutAsJsonAsync("/api/v1/categories/order", new[] { tea.Id, coffee.Id, drinks.Id }));
+    }
+
+    [Fact]
+    public async Task Sub_categories_are_one_level_deep()
+    {
+        var (client, _) = await OwnerAsync();
+        var drinks = await CreateCategory(client, "Drinks");
+        var coffee = await CreateCategory(client, "Coffee", drinks.Id);
+        var food = await CreateCategory(client, "Food");
+
+        async Task AssertParentError(HttpResponseMessage response, string code, string message)
+        {
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            var problem = await Api.ProblemAsync(response);
+            Assert.Equal(code, problem.GetProperty("code").GetString());
+            Assert.Equal(message, problem.GetProperty("errors").GetProperty("parentId")[0].GetString());
+        }
+
+        await AssertParentError(
+            await client.PostAsJsonAsync("/api/v1/categories", new { name = "Espresso", parentId = coffee.Id }),
+            "category.parent", "Choose a main category, not a sub-category.");
+        await AssertParentError(
+            await client.PostAsJsonAsync("/api/v1/categories", new { name = "Espresso", parentId = Guid.CreateVersion7() }),
+            "category.parentNotFound", "Choose a main category from your list.");
+        await AssertParentError(
+            await client.PutAsJsonAsync($"/api/v1/categories/{food.Id}", new { name = "Food", parentId = food.Id }),
+            "category.parentSelf", "A category can't go inside itself. Choose another main category.");
+        await AssertParentError(
+            await client.PutAsJsonAsync($"/api/v1/categories/{drinks.Id}", new { name = "Drinks", parentId = food.Id }),
+            "category.hasSubcategories", "This category has its own sub-categories, so it can't go inside another one. Move them out first.");
+
+        // Another business's category is not found.
+        var (other, _) = await OwnerAsync();
+        var theirs = await CreateCategory(other, "Theirs");
+        await AssertParentError(
+            await client.PostAsJsonAsync("/api/v1/categories", new { name = "Sneaky", parentId = theirs.Id }),
+            "category.parentNotFound", "Choose a main category from your list.");
+    }
+
+    [Fact]
+    public async Task Deleting_a_main_category_moves_its_sub_categories_to_the_top()
+    {
+        var (client, _) = await OwnerAsync();
+        var drinks = await CreateCategory(client, "Drinks");
+        var coffee = await CreateCategory(client, "Coffee", drinks.Id);
+        var tea = await CreateCategory(client, "Tea", drinks.Id);
+        await CreateProduct(client, coffee.Id, "Latte");
+
+        Assert.Equal(HttpStatusCode.NoContent, (await client.DeleteAsync($"/api/v1/categories/{drinks.Id}")).StatusCode);
+
+        var list = (await client.GetFromJsonAsync<List<CategoryDto>>("/api/v1/categories", Api.Json))!;
+        Assert.Equal([coffee.Id, tea.Id], list.Select(c => c.Id));
+        Assert.All(list, c => Assert.Null(c.ParentId));
+        Assert.Equal(1, list[0].ProductCount);
     }
 
     [Fact]
@@ -136,10 +217,10 @@ public class CatalogTests(StorefrontFactory factory) : IClassFixture<StorefrontF
         Assert.Equal(["Cortado"], (await client.GetFromJsonAsync<List<ProductDto>>("/api/v1/products?q=CARDAMOM", Api.Json))!.Select(p => p.Name));
         Assert.Empty((await client.GetFromJsonAsync<List<ProductDto>>("/api/v1/products?q=100%25", Api.Json))!);
 
-        var update = await client.PutAsJsonAsync($"/api/v1/products/{latte.Id}", new { categoryId = coffee.Id, name = "Vanilla latte", price = 3.755m, label = "Signature", isFeatured = true, isAvailable = true });
+        var update = await client.PutAsJsonAsync($"/api/v1/products/{latte.Id}", new { categoryId = coffee.Id, name = "Vanilla latte", price = 3.75m, label = "Signature", isFeatured = true, isAvailable = true });
         await Api.EnsureSuccess(update);
         var updated = (await update.Content.ReadFromJsonAsync<ProductDto>(Api.Json))!;
-        Assert.Equal(3.755m, updated.Price);
+        Assert.Equal(3.75m, updated.Price);
         Assert.True(updated.IsFeatured);
 
         var soldOut = await client.PatchAsJsonAsync($"/api/v1/products/{latte.Id}/availability", new { isAvailable = false });
@@ -165,6 +246,27 @@ public class CatalogTests(StorefrontFactory factory) : IClassFixture<StorefrontF
 
         var badLabel = await client.PostAsJsonAsync("/api/v1/products", new { categoryId = coffee.Id, name = "Latte", price = 3m, label = "Hot" });
         Assert.True((await Api.ProblemAsync(badLabel)).GetProperty("errors").TryGetProperty("label", out _));
+
+        var noText = await client.PostAsJsonAsync("/api/v1/products", new { categoryId = coffee.Id, name = "Latte", price = 3m, label = "Custom", customLabel = " " });
+        Assert.Equal("Type the label text.", (await Api.ProblemAsync(noText)).GetProperty("errors").GetProperty("customLabel")[0].GetString());
+
+        var tooLong = await client.PostAsJsonAsync("/api/v1/products", new { categoryId = coffee.Id, name = "Latte", price = 3m, label = "Custom", customLabelAr = new string('ح', 25) });
+        Assert.Equal("Labels can be up to 24 characters.", (await Api.ProblemAsync(tooLong)).GetProperty("errors").GetProperty("customLabelAr")[0].GetString());
+    }
+
+    [Fact]
+    public async Task Custom_labels_keep_their_text_in_both_languages()
+    {
+        var (client, _) = await OwnerAsync();
+        var coffee = await CreateCategory(client, "Coffee");
+        var created = await client.PostAsJsonAsync("/api/v1/products", new { categoryId = coffee.Id, name = "Latte", price = 3m, label = "Custom", customLabel = "  Chef's choice ", customLabelAr = "اختيار الشيف" });
+        await Api.EnsureSuccess(created);
+        var latte = (await created.Content.ReadFromJsonAsync<ProductDto>(Api.Json))!;
+        Assert.Equal(("Custom", "Chef's choice", "اختيار الشيف"), (latte.Label, latte.CustomLabel, latte.CustomLabelAr));
+
+        var update = await client.PutAsJsonAsync($"/api/v1/products/{latte.Id}", new { categoryId = coffee.Id, name = "Latte", price = 3m, label = "New", customLabel = "Chef's choice" });
+        var updated = (await update.Content.ReadFromJsonAsync<ProductDto>(Api.Json))!;
+        Assert.Equal(("New", (string?)null, (string?)null), (updated.Label, updated.CustomLabel, updated.CustomLabelAr));
     }
 
     [Fact]
@@ -205,16 +307,23 @@ public class CatalogTests(StorefrontFactory factory) : IClassFixture<StorefrontF
     }
 
     [Fact]
-    public async Task Image_upload_checks_type_by_signature_and_size()
+    public async Task Image_upload_checks_type_and_size_then_stores_a_compressed_copy()
     {
         var (client, _) = await OwnerAsync();
-        var png = new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, 0, 0, 0, 13, 1, 2, 3 };
+        var photo = ImageOptimizerTests.Photo(3000, 2000);
 
-        var ok = await client.PostAsync("/api/v1/media", Upload(png, "photo.png", "image/png"));
+        // Stored shrunk and compressed to WebP, whatever was uploaded.
+        var ok = await client.PostAsync("/api/v1/media", Upload(photo, "photo.jpg", "image/jpeg"));
         Assert.Equal(HttpStatusCode.Created, ok.StatusCode);
         var media = (await ok.Content.ReadFromJsonAsync<MediaDto>(Api.Json))!;
-        Assert.Equal("image/png", media.ContentType);
+        Assert.Equal("image/webp", media.ContentType);
+        Assert.EndsWith(".webp", media.Url);
+        Assert.True(media.SizeBytes <= MediaAsset.MaxBytes && media.SizeBytes < photo.Length);
         Assert.StartsWith("http://localhost/media/", media.Url);
+
+        var broken = new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, 0, 0, 0, 13, 1, 2, 3 };
+        var unreadable = await client.PostAsync("/api/v1/media", Upload(broken, "photo.png", "image/png"));
+        Assert.Equal("media.type", (await Api.ProblemAsync(unreadable)).GetProperty("code").GetString());
 
         var fake = await client.PostAsync("/api/v1/media", Upload("not an image at all"u8.ToArray(), "photo.jpg", "image/jpeg"));
         Assert.Equal("media.type", (await Api.ProblemAsync(fake)).GetProperty("code").GetString());

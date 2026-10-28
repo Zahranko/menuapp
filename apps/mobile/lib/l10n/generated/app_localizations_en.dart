@@ -35,7 +35,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get businessName => 'Business name';
 
   @override
-  String get businessNameHint => 'Vanilla Menu';
+  String get businessNameHint => 'Your Shop';
 
   @override
   String get linkAvailable => 'Available';
@@ -206,4 +206,1233 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get logOut => 'Log out';
+
+  @override
+  String get tabProducts => 'Products';
+
+  @override
+  String get tabCategories => 'Categories';
+
+  @override
+  String get tabSettings => 'Settings';
+
+  @override
+  String get viewSite => 'View site';
+
+  @override
+  String get savesGoLive => 'Saves go live instantly';
+
+  @override
+  String get addProduct => 'Add product';
+
+  @override
+  String get addCategory => 'Add category';
+
+  @override
+  String get tryAgain => 'Try again';
+
+  @override
+  String get statProducts => 'Products';
+
+  @override
+  String get statSoldOut => 'Sold out';
+
+  @override
+  String get statCategories => 'Categories';
+
+  @override
+  String get searchProducts => 'Search products';
+
+  @override
+  String get filterAll => 'All';
+
+  @override
+  String get noProductsTitle => 'No products yet';
+
+  @override
+  String get noProductsBody =>
+      'Tap Add product to put your first item on your website.';
+
+  @override
+  String get noMatchesTitle => 'No matches';
+
+  @override
+  String get noMatchesBody => 'Try another name, or clear the search.';
+
+  @override
+  String get noProductsInCategory => 'No products in this category yet.';
+
+  @override
+  String get soldOut => 'Sold out';
+
+  @override
+  String availableAgain(String name) {
+    return '$name is available again';
+  }
+
+  @override
+  String markedSoldOut(String name) {
+    return '$name marked sold out';
+  }
+
+  @override
+  String get labelSignature => 'Signature';
+
+  @override
+  String get labelNew => 'New';
+
+  @override
+  String get labelBestSeller => 'Best seller';
+
+  @override
+  String get labelVegan => 'Vegan';
+
+  @override
+  String get labelSpicy => 'Spicy';
+
+  @override
+  String priceIn(String price, String currency) {
+    return '$price $currency';
+  }
+
+  @override
+  String pricePrefixed(String price, String currency) {
+    return '$currency$price';
+  }
+
+  @override
+  String get errPriceWhole => 'Use whole numbers only, like 350.';
+
+  @override
+  String get currency => 'Currency';
+
+  @override
+  String get currencyHelp =>
+      'Your prices show in this currency. You can change it later in Settings.';
+
+  @override
+  String get chooseCurrency => 'Choose your currency';
+
+  @override
+  String get chooseCurrencySub =>
+      'Prices on your website show in this currency.';
+
+  @override
+  String get searchCurrencies => 'Search currencies';
+
+  @override
+  String get noCurrencyMatches => 'No currency matches that search.';
+
+  @override
+  String currencyChangeTitle(String currency) {
+    return 'Switch to $currency?';
+  }
+
+  @override
+  String currencyChangeBody(String before, String after) {
+    return 'Your prices keep their numbers and only the currency changes: for example, $before becomes $after. Nothing is converted.';
+  }
+
+  @override
+  String get currencyChangeConfirm => 'Change currency';
+
+  @override
+  String get currencyChanged => 'Currency changed · live on your website';
+
+  @override
+  String get whatsAppHint => '+XX XXX XXX XXXX';
+
+  @override
+  String get addCategoryFirst => 'Add a category first';
+
+  @override
+  String get errProductName => 'Enter a product name.';
+
+  @override
+  String get errPrice => 'Enter a price.';
+
+  @override
+  String errPriceFormat(int decimals) {
+    String _temp0 = intl.Intl.pluralLogic(
+      decimals,
+      locale: localeName,
+      other: '$decimals digits',
+      one: '1 digit',
+    );
+    return 'Use numbers only, like 3.50, with up to $_temp0 after the point.';
+  }
+
+  @override
+  String get savedLive => 'Saved · live on your website';
+
+  @override
+  String get addedLive => 'Added · live on your website';
+
+  @override
+  String get productDeleted => 'Product deleted';
+
+  @override
+  String get editProduct => 'Edit product';
+
+  @override
+  String get newProduct => 'New product';
+
+  @override
+  String get editProductSub =>
+      'Changes show on your website as soon as you save.';
+
+  @override
+  String get newProductSub =>
+      'It appears on your website right after you save.';
+
+  @override
+  String get uploading => 'Uploading';
+
+  @override
+  String get uploadPhoto => 'Upload photo';
+
+  @override
+  String get changePhoto => 'Change photo';
+
+  @override
+  String get remove => 'Remove';
+
+  @override
+  String get productName => 'Name';
+
+  @override
+  String get productNameHint => 'Pistachio croissant';
+
+  @override
+  String get descriptionOptional => 'Description (optional)';
+
+  @override
+  String get descriptionHint => 'What\'s in it, size, how it\'s served';
+
+  @override
+  String get price => 'Price';
+
+  @override
+  String get category => 'Category';
+
+  @override
+  String get label => 'Label';
+
+  @override
+  String get noLabel => 'No label';
+
+  @override
+  String get available => 'Available';
+
+  @override
+  String get availableHelp => 'Turn off to show it as sold out';
+
+  @override
+  String get featureSignature => 'Feature in Signature picks';
+
+  @override
+  String get featureSignatureHelp => 'Shown large near the top of your website';
+
+  @override
+  String deleteProductTitle(String name) {
+    return 'Delete $name?';
+  }
+
+  @override
+  String get deleteProductBody =>
+      'It will be removed from your website. This can\'t be undone.';
+
+  @override
+  String get saveChanges => 'Save changes';
+
+  @override
+  String get saving => 'Saving';
+
+  @override
+  String get deleteProduct => 'Delete product';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get keepIt => 'Keep it';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get noCategoriesTitle => 'No categories yet';
+
+  @override
+  String get noCategoriesBody =>
+      'Categories group your products, like Coffee or Desserts.';
+
+  @override
+  String get categoriesHint =>
+      'Use the arrows to set the order your customers see. Categories with no products stay hidden on your website.';
+
+  @override
+  String productCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count products',
+      one: '1 product',
+      zero: 'No products',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get hiddenOnSite => 'Hidden on site';
+
+  @override
+  String moveUp(String name) {
+    return 'Move $name up';
+  }
+
+  @override
+  String moveDown(String name) {
+    return 'Move $name down';
+  }
+
+  @override
+  String get orderUpdated => 'Order updated on your website';
+
+  @override
+  String get errCategoryName => 'Enter a category name.';
+
+  @override
+  String get errCategoryTaken => 'You already have a category with that name.';
+
+  @override
+  String get categoryAdded => 'Category added. Add products to show it.';
+
+  @override
+  String get categoryRenamed => 'Renamed · live on your website';
+
+  @override
+  String get categoryDeleted => 'Category deleted';
+
+  @override
+  String categoryDeletedMoved(String name) {
+    return 'Deleted · products moved to $name';
+  }
+
+  @override
+  String get newCategory => 'New category';
+
+  @override
+  String get editCategory => 'Edit category';
+
+  @override
+  String get newCategorySub =>
+      'Group your products, like Coffee, Sandwiches or Gift boxes.';
+
+  @override
+  String productsInCategory(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count products in this category.',
+      one: '1 product in this category.',
+      zero: 'No products in this category.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get categoryName => 'Category name';
+
+  @override
+  String get categoryNameHint => 'Sandwiches';
+
+  @override
+  String deleteCategoryTitle(String name) {
+    return 'Delete $name?';
+  }
+
+  @override
+  String get deleteCategoryChoose => 'Choose where its products go first.';
+
+  @override
+  String get deleteCategoryEmpty =>
+      'It has no products, so nothing else changes.';
+
+  @override
+  String whatHappensToProducts(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'What happens to its $count products?',
+      one: 'What happens to its product?',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String moveTo(String name) {
+    return 'Move to $name';
+  }
+
+  @override
+  String get deleteThemToo => 'Delete them too';
+
+  @override
+  String get deleteCategory => 'Delete category';
+
+  @override
+  String get yourWebsite => 'Your website';
+
+  @override
+  String get live => 'Live';
+
+  @override
+  String get notPublished => 'Not published';
+
+  @override
+  String websiteTemplate(String link, String number, String name) {
+    return '$link · Template $number $name';
+  }
+
+  @override
+  String get editDesign => 'Edit design';
+
+  @override
+  String get chooseTemplateShort => 'Change template';
+
+  @override
+  String get copyLink => 'Copy link';
+
+  @override
+  String get linkCopied => 'Link copied';
+
+  @override
+  String get businessInfo => 'Business info';
+
+  @override
+  String get businessInfoSub =>
+      'Shown in your website header, contact section and footer.';
+
+  @override
+  String get errBusinessNameEmpty => 'Business name can\'t be empty';
+
+  @override
+  String get whatsApp => 'WhatsApp';
+
+  @override
+  String get address => 'Address';
+
+  @override
+  String get instagram => 'Instagram';
+
+  @override
+  String get account => 'Account';
+
+  @override
+  String get changePassword => 'Change password';
+
+  @override
+  String get passwordLinkSent =>
+      'We emailed you a link to change your password';
+
+  @override
+  String get plan => 'Plan';
+
+  @override
+  String get planBasic => 'Basic';
+
+  @override
+  String get planPro => 'Pro';
+
+  @override
+  String planCurrent(String name) {
+    return '$name · current';
+  }
+
+  @override
+  String get perMonth => '/mo';
+
+  @override
+  String get proDetail => 'Everything in Basic plus your own domain';
+
+  @override
+  String get testModeNote =>
+      'Test account: every feature is unlocked and nothing is charged.';
+
+  @override
+  String trialUntil(String date) {
+    return 'Free trial until $date';
+  }
+
+  @override
+  String get upgradeToPro => 'Upgrade to Pro';
+
+  @override
+  String get switchToBasic => 'Switch to Basic';
+
+  @override
+  String upgradeBody(String price) {
+    return '$price per month. You can request your own domain right after upgrading.';
+  }
+
+  @override
+  String downgradeBody(String price) {
+    return '$price per month from your next billing date.';
+  }
+
+  @override
+  String downgradeDomain(String domain) {
+    return 'Your domain request for $domain will be cancelled.';
+  }
+
+  @override
+  String upgradeFor(String price) {
+    return 'Upgrade for $price/month';
+  }
+
+  @override
+  String get notNow => 'Not now';
+
+  @override
+  String get nowOnPro => 'You\'re on Pro';
+
+  @override
+  String get nowOnBasic => 'You\'re on Basic';
+
+  @override
+  String get finishPayment =>
+      'Finish the payment in your browser to change plan';
+
+  @override
+  String get customDomain => 'Custom domain';
+
+  @override
+  String domainLocked(String example) {
+    return 'Connect your own domain, like $example. Available on Pro.';
+  }
+
+  @override
+  String get domainEnterBody =>
+      'Enter the domain you own. Our support team sets it up and emails you the DNS steps.';
+
+  @override
+  String get yourDomain => 'Your domain';
+
+  @override
+  String get errDomainEmpty => 'Enter your domain.';
+
+  @override
+  String get errDomainFormat =>
+      'Enter a domain like yourshop.com, without spaces.';
+
+  @override
+  String get sendToSupport => 'Send request to support';
+
+  @override
+  String get sending => 'Sending';
+
+  @override
+  String get domainRequestSent => 'Request sent to support';
+
+  @override
+  String get domainRequestCancelled => 'Domain request cancelled';
+
+  @override
+  String domainRequested(String domain, String date) {
+    return '$domain · request sent $date';
+  }
+
+  @override
+  String get domainStep1 => 'Request sent';
+
+  @override
+  String get domainStep2 => 'Support emails you DNS steps (within 24 hours)';
+
+  @override
+  String get domainStep3 => 'You add the DNS record at your domain provider';
+
+  @override
+  String domainStep4(String domain) {
+    return 'Live with SSL at $domain';
+  }
+
+  @override
+  String dnsHint(String target) {
+    return 'Point the www record (CNAME) of your domain to $target.';
+  }
+
+  @override
+  String get cancelRequest => 'Cancel request';
+
+  @override
+  String get openInBrowser => 'Open in browser';
+
+  @override
+  String get manageMenu => 'Manage your menu';
+
+  @override
+  String get siteOfflineTitle => 'This page isn\'t online yet';
+
+  @override
+  String get siteOfflineBody =>
+      'Your changes are saved. The page shows here once the websites are hosted.';
+
+  @override
+  String get chooseTemplate => 'Choose a template';
+
+  @override
+  String templatesSub(int count) {
+    return '$count designs. Each one shows your products its own way.';
+  }
+
+  @override
+  String filterAllCount(int count) {
+    return 'All $count';
+  }
+
+  @override
+  String get filterFood => 'Food and drinks';
+
+  @override
+  String get filterFashion => 'Fashion';
+
+  @override
+  String get filterShops => 'Shops';
+
+  @override
+  String get filterServices => 'Services';
+
+  @override
+  String replaceDesignTitle(String name) {
+    return 'Use $name?';
+  }
+
+  @override
+  String get replaceDesignBody =>
+      'Your design settings start fresh with this template. Products and prices stay the same. Your live site changes when you publish.';
+
+  @override
+  String get useTemplate => 'Use template';
+
+  @override
+  String get inUse => 'In use';
+
+  @override
+  String get ready => 'Ready';
+
+  @override
+  String get customize => 'Customize';
+
+  @override
+  String customizeTemplate(String number, String name) {
+    return '$number $name';
+  }
+
+  @override
+  String get resetTooltip => 'Reset to template defaults';
+
+  @override
+  String get resetTitle => 'Start over?';
+
+  @override
+  String resetBody(String name) {
+    return 'Every design setting goes back to $name\'s defaults. Products and prices stay the same.';
+  }
+
+  @override
+  String get reset => 'Reset';
+
+  @override
+  String get livePreview => 'Live preview';
+
+  @override
+  String get groupMore => 'More';
+
+  @override
+  String get menuItemsAndPrices => 'Menu items and prices';
+
+  @override
+  String get menuItemsElsewhere =>
+      'Products and prices are edited in My menu, and show in every template.';
+
+  @override
+  String get publish => 'Publish';
+
+  @override
+  String get publishChanges => 'Publish changes';
+
+  @override
+  String get publishing => 'Publishing your site';
+
+  @override
+  String get publishedTitle => 'Your site is live';
+
+  @override
+  String get publishedBody =>
+      'Customers see the new design now. Products and prices update by themselves when you change them.';
+
+  @override
+  String get photo => 'Photo';
+
+  @override
+  String get addPhotos => 'Add photos';
+
+  @override
+  String get closed => 'Closed';
+
+  @override
+  String get goToMenu => 'Go to my menu';
+
+  @override
+  String get onbItemsTitle => 'List your items and prices in minutes';
+
+  @override
+  String get onbItemsBody =>
+      'Add photos, prices and categories. Edit anything later and your site updates right away.';
+
+  @override
+  String get onbTemplatesTitle =>
+      'Pick one of 100 templates, then make it yours';
+
+  @override
+  String get onbTemplatesBody =>
+      'Each template shows your products its own way. Choose the hero image, colors and add your logo.';
+
+  @override
+  String get onbShareTitle => 'Share one link. Go custom on Pro.';
+
+  @override
+  String get onbShareBody =>
+      'Put the link on your Instagram, WhatsApp or a table QR code. Customers see your menu instantly.';
+
+  @override
+  String sampleCafe(String brandName) {
+    return '$brandName';
+  }
+
+  @override
+  String get sampleDrinks => 'Drinks';
+
+  @override
+  String get sampleItem1 => 'Vanilla latte';
+
+  @override
+  String get sampleItem1Note => 'Double shot, oat milk';
+
+  @override
+  String get sampleItem2 => 'Pistachio croissant';
+
+  @override
+  String get sampleItem2Note => 'Baked this morning';
+
+  @override
+  String get sampleItem3 => 'Saffron cake';
+
+  @override
+  String get sampleItem3Note => 'Slice, cardamom cream';
+
+  @override
+  String get addItem => 'Add item';
+
+  @override
+  String templateOf(String number) {
+    return 'Template $number / 100';
+  }
+
+  @override
+  String hello(String name) {
+    return 'Hello, $name';
+  }
+
+  @override
+  String get siteLive => 'Your site is live';
+
+  @override
+  String get quickActions => 'Quick actions';
+
+  @override
+  String get designSite => 'Design';
+
+  @override
+  String get shareSite => 'Share';
+
+  @override
+  String get allItems => 'All';
+
+  @override
+  String get skip => 'Skip';
+
+  @override
+  String get next => 'Next';
+
+  @override
+  String get getStarted => 'Get started';
+
+  @override
+  String get splashTagline => 'Your menu, beautifully served.';
+
+  @override
+  String get onbBasicPrice => '\$5';
+
+  @override
+  String get onbProPrice => '\$10';
+
+  @override
+  String onbBasicNote(String link) {
+    return 'Your site at $link';
+  }
+
+  @override
+  String get onbProNote => 'Your own domain, set up by our support team';
+
+  @override
+  String get onbHeroColor => 'Hero color';
+
+  @override
+  String get showInside => 'Show inside';
+
+  @override
+  String get showInsideHelp =>
+      'Put it inside a main category, like Hot drinks inside Coffee.';
+
+  @override
+  String get mainCategoryOption => 'None · main category';
+
+  @override
+  String get parentLockedHint =>
+      'It has sub-categories, so it stays a main category.';
+
+  @override
+  String subCategoryCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count sub-categories',
+      one: '1 sub-category',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String categoryPath(String parent, String child) {
+    return '$parent › $child';
+  }
+
+  @override
+  String get deleteCategorySubs => 'Its sub-categories become main categories.';
+
+  @override
+  String get proTemplateTitle => 'This template is part of the Pro plan';
+
+  @override
+  String proTemplateBody(String name) {
+    return 'Upgrade to Pro to use $name and every other Pro template. Your products and prices stay the same.';
+  }
+
+  @override
+  String get proTemplatesHint => 'Templates marked Pro come with the Pro plan.';
+
+  @override
+  String get appLanguage => 'App language';
+
+  @override
+  String get appLanguageSub =>
+      'The language of this app. Your website keeps its own language.';
+
+  @override
+  String get languageSystem => 'Same as phone';
+
+  @override
+  String get changeLanguage => 'Change language';
+
+  @override
+  String get phoneForCalls => 'Phone for calls';
+
+  @override
+  String get phoneForCallsHint => 'Leave empty to use your WhatsApp number';
+
+  @override
+  String get facebook => 'Facebook';
+
+  @override
+  String get facebookHint => 'facebook.com/yourshop';
+
+  @override
+  String get tikTok => 'TikTok';
+
+  @override
+  String get tikTokHint => '@yourshop';
+
+  @override
+  String get snapchat => 'Snapchat';
+
+  @override
+  String get snapchatHint => 'yourshop';
+
+  @override
+  String get socialAccounts => 'Social media and calls';
+
+  @override
+  String get socialAccountsSub =>
+      'Type your username or paste the link to your page. Choose which ones show on your website in Edit design, under Social media.';
+
+  @override
+  String get customColor => 'Your own color';
+
+  @override
+  String get customColorTitle => 'Pick your color';
+
+  @override
+  String get colorHue => 'Color';
+
+  @override
+  String get colorSaturation => 'Strength';
+
+  @override
+  String get colorBrightness => 'Brightness';
+
+  @override
+  String get colorHexLabel => 'Color code';
+
+  @override
+  String get colorHexInvalid => 'Use a code like #D9542C';
+
+  @override
+  String get colorReadableNote =>
+      'Your website keeps text readable on this color.';
+
+  @override
+  String get useColor => 'Use this color';
+
+  @override
+  String get accountMissing => 'Add it in Business info first';
+
+  @override
+  String get labelCustom => 'Custom';
+
+  @override
+  String get customLabelText => 'Label text';
+
+  @override
+  String get customLabelHelp =>
+      'Type it in one or both languages. Your website shows the one in its language.';
+
+  @override
+  String get customLabelEnglish => 'In English';
+
+  @override
+  String get customLabelArabic => 'In Arabic';
+
+  @override
+  String get customLabelHintEn => 'Chef\'s choice';
+
+  @override
+  String get customLabelHintAr => 'اختيار الشيف';
+
+  @override
+  String get errCustomLabel => 'Type the label text.';
+
+  @override
+  String get qrCode => 'QR code';
+
+  @override
+  String get qrTitle => 'Your QR code';
+
+  @override
+  String get qrSub =>
+      'Customers scan it with their phone camera to open your website.';
+
+  @override
+  String get qrColor => 'Code color';
+
+  @override
+  String get qrLogo => 'Logo in the middle';
+
+  @override
+  String get qrLogoHelp =>
+      'It still scans: the code makes up for the covered part.';
+
+  @override
+  String get qrSave => 'Save image';
+
+  @override
+  String get qrShare => 'Share';
+
+  @override
+  String get qrSaved => 'Saved to your photos';
+
+  @override
+  String get qrSaveFailed =>
+      'Couldn\'t save. Allow access to your photos and try again.';
+
+  @override
+  String get qrPoster => 'Poster to print';
+
+  @override
+  String get qrPosterSub =>
+      'Prints on A4 or A5. Put it on tables, the counter or the door.';
+
+  @override
+  String qrShareText(String url) {
+    return 'See our menu: $url';
+  }
+
+  @override
+  String get posterScan => 'Scan for our menu';
+
+  @override
+  String get posterScanHint => 'Point your phone camera at the code';
+
+  @override
+  String aiRemaining(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count AI uses left this month',
+      one: '1 AI use left this month',
+      zero: 'No AI uses left this month',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aiOff =>
+      'The AI helper isn\'t switched on yet. You can still change everything yourself.';
+
+  @override
+  String get aiUsedUp =>
+      'You\'ve used all your AI helper requests for this month. More arrive on the 1st.';
+
+  @override
+  String get aiTakePhoto => 'Take a photo';
+
+  @override
+  String get aiChoosePhoto => 'Choose from photos';
+
+  @override
+  String get aiReadingMenu => 'Reading your menu…';
+
+  @override
+  String get aiTakesAMoment => 'This can take up to a minute.';
+
+  @override
+  String get aiCheckBeforeUsing =>
+      'AI can make mistakes. Check before you use it.';
+
+  @override
+  String get aiMenuFromPhoto => 'Add from a menu photo';
+
+  @override
+  String get aiMenuFromPhotoSub =>
+      'Up to 3 photos of your menu, price list or shelf';
+
+  @override
+  String aiMenuPhotos(int count) {
+    return '$count of 3 photos';
+  }
+
+  @override
+  String get aiAddPhoto => 'Add a photo';
+
+  @override
+  String get aiRemovePhoto => 'Remove photo';
+
+  @override
+  String get aiReadMenu => 'Read my menu';
+
+  @override
+  String get aiReviewTitle => 'Check your menu';
+
+  @override
+  String get aiReviewSub =>
+      'Fix names and prices, untick anything you don\'t want, then add them.';
+
+  @override
+  String aiAddItems(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Add $count items',
+      one: 'Add 1 item',
+      zero: 'Choose items to add',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aiAdding => 'Adding…';
+
+  @override
+  String aiItemsAdded(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items added to your menu.',
+      one: '1 item added to your menu.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aiNewCategory => 'New category';
+
+  @override
+  String get aiExistingCategory => 'Adds to your category';
+
+  @override
+  String aiCurrencyDiffers(String menu, String yours) {
+    return 'The menu shows prices in $menu. Your prices are in $yours, so check them: they were not converted.';
+  }
+
+  @override
+  String get aiFixHighlighted =>
+      'Some items need a fix. Check the highlighted fields.';
+
+  @override
+  String get aiSelectItem => 'Add this item';
+
+  @override
+  String get aiSelectCategory => 'Add this category';
+
+  @override
+  String get aiWriteIn => 'Write in';
+
+  @override
+  String get aiAssistant => 'AI design assistant';
+
+  @override
+  String get aiAssistantSub =>
+      'Tell it what you\'d like: colors, sizes, layout or texts. It changes your draft and you see it in the preview right away.';
+
+  @override
+  String get aiChatOpen => 'Chat with the assistant';
+
+  @override
+  String get aiChatContinue => 'Continue the chat';
+
+  @override
+  String get aiChatOpenSub =>
+      'Like “Match my logo colors” or “Make the logo bigger”';
+
+  @override
+  String get aiChatWelcome =>
+      'Hi! Tell me what to change on your website and I\'ll do it in your draft. You can also send a photo of your logo or shop.';
+
+  @override
+  String get aiChatHint => 'Write a message…';
+
+  @override
+  String get aiChatSend => 'Send';
+
+  @override
+  String get aiChatWorking => 'Working on it…';
+
+  @override
+  String aiChatChanged(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Changed $count settings',
+      one: 'Changed 1 setting',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aiChatUndo => 'Undo';
+
+  @override
+  String get aiChatUndone => 'Changes undone';
+
+  @override
+  String get aiChatStartOver => 'Start over';
+
+  @override
+  String get aiChatPhotoMessage => 'Use this photo for my design.';
+
+  @override
+  String get aiChatSuggestLogo => 'Match my logo colors';
+
+  @override
+  String get aiChatSuggestTexts => 'Write my texts';
+
+  @override
+  String get aiChatSuggestLogoSize => 'Make the logo bigger';
+
+  @override
+  String get aiChatSuggestElegant => 'Darker, more elegant look';
+
+  @override
+  String get languageEnglish => 'English';
+
+  @override
+  String get languageArabic => 'العربية';
+
+  @override
+  String get sectionOrderHint =>
+      'The opening always stays at the top and the footer at the bottom.';
+
+  @override
+  String sectionMoveUp(String section) {
+    return 'Move $section up';
+  }
+
+  @override
+  String sectionMoveDown(String section) {
+    return 'Move $section down';
+  }
+
+  @override
+  String sectionPosition(String section, int position, int count) {
+    return '$section, $position of $count';
+  }
+
+  @override
+  String get aiChatSurprise => 'Surprise me';
+
+  @override
+  String get looksTitle => 'Looks';
+
+  @override
+  String get editorJumpTo => 'Jump to';
+
+  @override
+  String editorJumpToGroup(String group) {
+    return 'Go to $group';
+  }
+
+  @override
+  String get editorCollapseAll => 'Close all';
+
+  @override
+  String get editorExpandAll => 'Open all';
+
+  @override
+  String editorGroupCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count settings',
+      one: '1 setting',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get looksSubtitle =>
+      'Ready-made styles for this template. Tap one to try it.';
+
+  @override
+  String lookApply(String look) {
+    return 'Use the $look look';
+  }
+
+  @override
+  String lookApplied(String look) {
+    return '$look is on';
+  }
+
+  @override
+  String get lookUndone => 'Back to your design';
 }

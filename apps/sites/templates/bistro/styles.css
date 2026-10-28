@@ -1,5 +1,15 @@
 /* Template 010 "Bistro Card": a folded paper menu on a tablecloth. Cover page, courses inside, a clipped note for today's dish. */
 
+@import "../_kit/logo.css";
+@import "../_kit/options.css";
+@import "../_kit/cards.css";
+@import "../_kit/hero.css";
+@import "../_kit/layout.css";
+@import "../_kit/menu.css";
+@import "../_kit/sections.css";
+@import "../_kit/style.css";
+@import "./signature.css";
+
 .t-bistro {
   container: page / inline-size;
   font-size: 15.5px;
@@ -82,6 +92,11 @@
     color: var(--muted);
   }
 
+  /* A shared opening (Page layout) on a page of its own. */
+  .page.opening {
+    padding: 12px;
+  }
+
   /* cover */
   .cover {
     display: flex;
@@ -137,7 +152,7 @@
   .note {
     position: relative;
     width: min(100%, 300px);
-    margin-top: 28px;
+    margin-top: calc(28px * var(--kit-space, 1));
     padding: 22px 18px 18px;
     background: var(--surf);
     box-shadow: 0 10px 20px -12px #0006;
@@ -199,7 +214,7 @@
     scroll-margin-top: 10px;
   }
   .course {
-    padding: 8px 0 18px;
+    padding: calc(8px * var(--kit-space, 1)) 0 calc(18px * var(--kit-space, 1));
     scroll-margin-top: 10px;
   }
   .course + .course::before {
@@ -208,7 +223,7 @@
     text-align: center;
     letter-spacing: 6px;
     color: var(--acc-text);
-    margin-bottom: 18px;
+    margin-bottom: calc(18px * var(--kit-space, 1));
   }
   .course h3 {
     text-align: center;
@@ -273,7 +288,7 @@
   }
   .story {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: calc(30px * var(--kit-space, 1));
   }
   .story h2,
   .visit > h2 {
@@ -319,11 +334,20 @@
     color: var(--acc-ink);
   }
 
+  /* Social accounts the owner shows (_kit/options.css draws the round icon links). */
+  .foot-social {
+    justify-content: center;
+    margin-bottom: 16px;
+    color: var(--acc-text);
+  }
+  .foot-social a {
+    border-color: color-mix(in srgb, currentColor 40%, transparent);
+  }
   .foot {
     width: fit-content;
     max-width: 100%;
-    margin: 18px auto 0;
-    padding: 8px 16px;
+    margin: calc(18px * var(--kit-space, 1)) auto 0;
+    padding: calc(8px * var(--kit-space, 1)) 16px;
     background: var(--bg);
     color: var(--muted);
     box-shadow: 0 6px 14px -8px #0006;

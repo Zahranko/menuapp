@@ -35,7 +35,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get businessName => 'اسم النشاط';
 
   @override
-  String get businessNameHint => 'فانيلا منيو';
+  String get businessNameHint => 'متجرك';
 
   @override
   String get linkAvailable => 'متاح';
@@ -203,4 +203,1237 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get logOut => 'تسجيل الخروج';
+
+  @override
+  String get tabProducts => 'المنتجات';
+
+  @override
+  String get tabCategories => 'الأصناف';
+
+  @override
+  String get tabSettings => 'الإعدادات';
+
+  @override
+  String get viewSite => 'عرض الموقع';
+
+  @override
+  String get savesGoLive => 'التعديلات تظهر فورًا';
+
+  @override
+  String get addProduct => 'إضافة منتج';
+
+  @override
+  String get addCategory => 'إضافة صنف';
+
+  @override
+  String get tryAgain => 'حاول مرة أخرى';
+
+  @override
+  String get statProducts => 'منتجات';
+
+  @override
+  String get statSoldOut => 'نفدت';
+
+  @override
+  String get statCategories => 'أصناف';
+
+  @override
+  String get searchProducts => 'ابحث في المنتجات';
+
+  @override
+  String get filterAll => 'الكل';
+
+  @override
+  String get noProductsTitle => 'لا توجد منتجات بعد';
+
+  @override
+  String get noProductsBody => 'اضغط إضافة منتج لتضع أول منتج على موقعك.';
+
+  @override
+  String get noMatchesTitle => 'لا نتائج';
+
+  @override
+  String get noMatchesBody => 'جرّب اسمًا آخر، أو امسح البحث.';
+
+  @override
+  String get noProductsInCategory => 'لا توجد منتجات في هذا الصنف بعد.';
+
+  @override
+  String get soldOut => 'نفد';
+
+  @override
+  String availableAgain(String name) {
+    return '$name متوفر من جديد';
+  }
+
+  @override
+  String markedSoldOut(String name) {
+    return 'تم تعليم $name كنافد';
+  }
+
+  @override
+  String get labelSignature => 'مميز';
+
+  @override
+  String get labelNew => 'جديد';
+
+  @override
+  String get labelBestSeller => 'الأكثر مبيعًا';
+
+  @override
+  String get labelVegan => 'نباتي';
+
+  @override
+  String get labelSpicy => 'حار';
+
+  @override
+  String priceIn(String price, String currency) {
+    return '$price $currency';
+  }
+
+  @override
+  String pricePrefixed(String price, String currency) {
+    return '$price $currency';
+  }
+
+  @override
+  String get errPriceWhole => 'استخدم أرقامًا صحيحة فقط، مثل 350.';
+
+  @override
+  String get currency => 'العملة';
+
+  @override
+  String get currencyHelp =>
+      'تظهر أسعارك بهذه العملة. يمكنك تغييرها لاحقًا من الإعدادات.';
+
+  @override
+  String get chooseCurrency => 'اختر عملتك';
+
+  @override
+  String get chooseCurrencySub => 'تظهر الأسعار على موقعك بهذه العملة.';
+
+  @override
+  String get searchCurrencies => 'ابحث عن عملة';
+
+  @override
+  String get noCurrencyMatches => 'لا توجد عملة تطابق بحثك.';
+
+  @override
+  String currencyChangeTitle(String currency) {
+    return 'التحويل إلى $currency؟';
+  }
+
+  @override
+  String currencyChangeBody(String before, String after) {
+    return 'تبقى أرقام أسعارك كما هي وتتغير العملة فقط، فمثلًا $before يصبح $after. لا يتم تحويل أي سعر.';
+  }
+
+  @override
+  String get currencyChangeConfirm => 'غيّر العملة';
+
+  @override
+  String get currencyChanged => 'تم تغيير العملة · ظاهرة على موقعك';
+
+  @override
+  String get whatsAppHint => '+XX XXX XXX XXXX';
+
+  @override
+  String get addCategoryFirst => 'أضف صنفًا أولًا';
+
+  @override
+  String get errProductName => 'أدخل اسم المنتج.';
+
+  @override
+  String get errPrice => 'أدخل السعر.';
+
+  @override
+  String errPriceFormat(int decimals) {
+    String _temp0 = intl.Intl.pluralLogic(
+      decimals,
+      locale: localeName,
+      other: '$decimals أرقام',
+      two: 'رقمين',
+      one: 'رقم واحد',
+    );
+    return 'استخدم أرقامًا فقط، مثل 3.50، وبحد أقصى $_temp0 بعد الفاصلة.';
+  }
+
+  @override
+  String get savedLive => 'تم الحفظ · ظاهر على موقعك';
+
+  @override
+  String get addedLive => 'تمت الإضافة · ظاهر على موقعك';
+
+  @override
+  String get productDeleted => 'تم حذف المنتج';
+
+  @override
+  String get editProduct => 'تعديل المنتج';
+
+  @override
+  String get newProduct => 'منتج جديد';
+
+  @override
+  String get editProductSub => 'تظهر التعديلات على موقعك بمجرد الحفظ.';
+
+  @override
+  String get newProductSub => 'يظهر على موقعك مباشرة بعد الحفظ.';
+
+  @override
+  String get uploading => 'جارٍ الرفع';
+
+  @override
+  String get uploadPhoto => 'رفع صورة';
+
+  @override
+  String get changePhoto => 'تغيير الصورة';
+
+  @override
+  String get remove => 'إزالة';
+
+  @override
+  String get productName => 'الاسم';
+
+  @override
+  String get productNameHint => 'كرواسون بالفستق';
+
+  @override
+  String get descriptionOptional => 'الوصف (اختياري)';
+
+  @override
+  String get descriptionHint => 'المكونات، الحجم، طريقة التقديم';
+
+  @override
+  String get price => 'السعر';
+
+  @override
+  String get category => 'الصنف';
+
+  @override
+  String get label => 'الشارة';
+
+  @override
+  String get noLabel => 'بدون شارة';
+
+  @override
+  String get available => 'متوفر';
+
+  @override
+  String get availableHelp => 'أوقفه ليظهر كنافد';
+
+  @override
+  String get featureSignature => 'اعرضه ضمن الأطباق المميزة';
+
+  @override
+  String get featureSignatureHelp => 'يظهر بحجم كبير أعلى موقعك';
+
+  @override
+  String deleteProductTitle(String name) {
+    return 'حذف $name؟';
+  }
+
+  @override
+  String get deleteProductBody => 'سيُزال من موقعك. لا يمكن التراجع عن ذلك.';
+
+  @override
+  String get saveChanges => 'حفظ التعديلات';
+
+  @override
+  String get saving => 'جارٍ الحفظ';
+
+  @override
+  String get deleteProduct => 'حذف المنتج';
+
+  @override
+  String get cancel => 'إلغاء';
+
+  @override
+  String get keepIt => 'أبقِه';
+
+  @override
+  String get delete => 'حذف';
+
+  @override
+  String get noCategoriesTitle => 'لا توجد أصناف بعد';
+
+  @override
+  String get noCategoriesBody =>
+      'الأصناف تجمع منتجاتك، مثل القهوة أو الحلويات.';
+
+  @override
+  String get categoriesHint =>
+      'استخدم الأسهم لترتيب ما يراه زبائنك. الأصناف التي بلا منتجات تبقى مخفية على موقعك.';
+
+  @override
+  String productCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count منتج',
+      few: '$count منتجات',
+      two: 'منتجان',
+      one: 'منتج واحد',
+      zero: 'لا منتجات',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get hiddenOnSite => 'مخفي على الموقع';
+
+  @override
+  String moveUp(String name) {
+    return 'نقل $name للأعلى';
+  }
+
+  @override
+  String moveDown(String name) {
+    return 'نقل $name للأسفل';
+  }
+
+  @override
+  String get orderUpdated => 'تم تحديث الترتيب على موقعك';
+
+  @override
+  String get errCategoryName => 'أدخل اسم الصنف.';
+
+  @override
+  String get errCategoryTaken => 'لديك صنف بهذا الاسم.';
+
+  @override
+  String get categoryAdded => 'تمت إضافة الصنف. أضف منتجات ليظهر.';
+
+  @override
+  String get categoryRenamed => 'تمت إعادة التسمية · ظاهر على موقعك';
+
+  @override
+  String get categoryDeleted => 'تم حذف الصنف';
+
+  @override
+  String categoryDeletedMoved(String name) {
+    return 'تم الحذف · نُقلت المنتجات إلى $name';
+  }
+
+  @override
+  String get newCategory => 'صنف جديد';
+
+  @override
+  String get editCategory => 'تعديل الصنف';
+
+  @override
+  String get newCategorySub =>
+      'اجمع منتجاتك، مثل القهوة أو السندويشات أو علب الهدايا.';
+
+  @override
+  String productsInCategory(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count منتج في هذا الصنف.',
+      few: '$count منتجات في هذا الصنف.',
+      two: 'منتجان في هذا الصنف.',
+      one: 'منتج واحد في هذا الصنف.',
+      zero: 'لا منتجات في هذا الصنف.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get categoryName => 'اسم الصنف';
+
+  @override
+  String get categoryNameHint => 'سندويشات';
+
+  @override
+  String deleteCategoryTitle(String name) {
+    return 'حذف $name؟';
+  }
+
+  @override
+  String get deleteCategoryChoose => 'اختر أولًا أين تذهب منتجاته.';
+
+  @override
+  String get deleteCategoryEmpty => 'لا يحتوي على منتجات، فلن يتغير شيء آخر.';
+
+  @override
+  String whatHappensToProducts(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'ماذا يحدث لمنتجاته الـ$count؟',
+      one: 'ماذا يحدث لمنتجه؟',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String moveTo(String name) {
+    return 'نقل إلى $name';
+  }
+
+  @override
+  String get deleteThemToo => 'احذفها أيضًا';
+
+  @override
+  String get deleteCategory => 'حذف الصنف';
+
+  @override
+  String get yourWebsite => 'موقعك';
+
+  @override
+  String get live => 'منشور';
+
+  @override
+  String get notPublished => 'غير منشور';
+
+  @override
+  String websiteTemplate(String link, String number, String name) {
+    return '$link · القالب $number $name';
+  }
+
+  @override
+  String get editDesign => 'تعديل التصميم';
+
+  @override
+  String get chooseTemplateShort => 'تغيير القالب';
+
+  @override
+  String get copyLink => 'نسخ الرابط';
+
+  @override
+  String get linkCopied => 'تم نسخ الرابط';
+
+  @override
+  String get businessInfo => 'معلومات النشاط';
+
+  @override
+  String get businessInfoSub => 'تظهر في رأس موقعك وقسم التواصل والتذييل.';
+
+  @override
+  String get errBusinessNameEmpty => 'لا يمكن ترك اسم النشاط فارغًا';
+
+  @override
+  String get whatsApp => 'واتساب';
+
+  @override
+  String get address => 'العنوان';
+
+  @override
+  String get instagram => 'إنستغرام';
+
+  @override
+  String get account => 'الحساب';
+
+  @override
+  String get changePassword => 'تغيير كلمة المرور';
+
+  @override
+  String get passwordLinkSent => 'أرسلنا إلى بريدك رابطًا لتغيير كلمة المرور';
+
+  @override
+  String get plan => 'الباقة';
+
+  @override
+  String get planBasic => 'الأساسية';
+
+  @override
+  String get planPro => 'الاحترافية';
+
+  @override
+  String planCurrent(String name) {
+    return '$name · الحالية';
+  }
+
+  @override
+  String get perMonth => '/شهريًا';
+
+  @override
+  String get proDetail => 'كل ما في الأساسية مع نطاقك الخاص';
+
+  @override
+  String get testModeNote =>
+      'حساب تجريبي: كل الميزات مفتوحة ولا يتم خصم أي مبلغ.';
+
+  @override
+  String trialUntil(String date) {
+    return 'تجربة مجانية حتى $date';
+  }
+
+  @override
+  String get upgradeToPro => 'الترقية إلى الاحترافية';
+
+  @override
+  String get switchToBasic => 'التحويل إلى الأساسية';
+
+  @override
+  String upgradeBody(String price) {
+    return '$price شهريًا. يمكنك طلب نطاقك الخاص مباشرة بعد الترقية.';
+  }
+
+  @override
+  String downgradeBody(String price) {
+    return '$price شهريًا من موعد الفوترة القادم.';
+  }
+
+  @override
+  String downgradeDomain(String domain) {
+    return 'سيُلغى طلب النطاق $domain.';
+  }
+
+  @override
+  String upgradeFor(String price) {
+    return 'الترقية مقابل $price شهريًا';
+  }
+
+  @override
+  String get notNow => 'ليس الآن';
+
+  @override
+  String get nowOnPro => 'أنت الآن على الباقة الاحترافية';
+
+  @override
+  String get nowOnBasic => 'أنت الآن على الباقة الأساسية';
+
+  @override
+  String get finishPayment => 'أكمل الدفع في المتصفح لتغيير الباقة';
+
+  @override
+  String get customDomain => 'نطاق خاص';
+
+  @override
+  String domainLocked(String example) {
+    return 'اربط نطاقك الخاص، مثل $example. متاح في الباقة الاحترافية.';
+  }
+
+  @override
+  String get domainEnterBody =>
+      'أدخل النطاق الذي تملكه. فريق الدعم يجهزه ويرسل لك خطوات DNS بالبريد.';
+
+  @override
+  String get yourDomain => 'نطاقك';
+
+  @override
+  String get errDomainEmpty => 'أدخل نطاقك.';
+
+  @override
+  String get errDomainFormat => 'أدخل نطاقًا مثل yourshop.com بدون مسافات.';
+
+  @override
+  String get sendToSupport => 'إرسال الطلب للدعم';
+
+  @override
+  String get sending => 'جارٍ الإرسال';
+
+  @override
+  String get domainRequestSent => 'تم إرسال الطلب للدعم';
+
+  @override
+  String get domainRequestCancelled => 'تم إلغاء طلب النطاق';
+
+  @override
+  String domainRequested(String domain, String date) {
+    return '$domain · أُرسل الطلب $date';
+  }
+
+  @override
+  String get domainStep1 => 'تم إرسال الطلب';
+
+  @override
+  String get domainStep2 => 'يرسل لك الدعم خطوات DNS (خلال 24 ساعة)';
+
+  @override
+  String get domainStep3 => 'تضيف سجل DNS لدى مزود النطاق';
+
+  @override
+  String domainStep4(String domain) {
+    return 'موقعك يعمل بأمان على $domain';
+  }
+
+  @override
+  String dnsHint(String target) {
+    return 'وجّه سجل www (CNAME) لنطاقك إلى $target.';
+  }
+
+  @override
+  String get cancelRequest => 'إلغاء الطلب';
+
+  @override
+  String get openInBrowser => 'فتح في المتصفح';
+
+  @override
+  String get manageMenu => 'أدر قائمتك';
+
+  @override
+  String get siteOfflineTitle => 'هذه الصفحة غير متاحة بعد';
+
+  @override
+  String get siteOfflineBody =>
+      'تعديلاتك محفوظة. ستظهر الصفحة هنا عندما تُستضاف المواقع.';
+
+  @override
+  String get chooseTemplate => 'اختر قالبًا';
+
+  @override
+  String templatesSub(int count) {
+    return '$count تصميمًا. كل تصميم يعرض منتجاتك بطريقته.';
+  }
+
+  @override
+  String filterAllCount(int count) {
+    return 'الكل $count';
+  }
+
+  @override
+  String get filterFood => 'طعام ومشروبات';
+
+  @override
+  String get filterFashion => 'أزياء';
+
+  @override
+  String get filterShops => 'متاجر';
+
+  @override
+  String get filterServices => 'خدمات';
+
+  @override
+  String replaceDesignTitle(String name) {
+    return 'استخدام $name؟';
+  }
+
+  @override
+  String get replaceDesignBody =>
+      'تبدأ إعدادات التصميم من جديد مع هذا القالب. المنتجات والأسعار تبقى كما هي. يتغير موقعك المنشور عند النشر.';
+
+  @override
+  String get useTemplate => 'استخدم القالب';
+
+  @override
+  String get inUse => 'المستخدم';
+
+  @override
+  String get ready => 'جاهز';
+
+  @override
+  String get customize => 'التخصيص';
+
+  @override
+  String customizeTemplate(String number, String name) {
+    return '$number $name';
+  }
+
+  @override
+  String get resetTooltip => 'استعادة إعدادات القالب';
+
+  @override
+  String get resetTitle => 'البدء من جديد؟';
+
+  @override
+  String resetBody(String name) {
+    return 'تعود كل إعدادات التصميم إلى إعدادات $name الأصلية. المنتجات والأسعار تبقى كما هي.';
+  }
+
+  @override
+  String get reset => 'استعادة';
+
+  @override
+  String get livePreview => 'معاينة مباشرة';
+
+  @override
+  String get groupMore => 'المزيد';
+
+  @override
+  String get menuItemsAndPrices => 'المنتجات والأسعار';
+
+  @override
+  String get menuItemsElsewhere =>
+      'تُعدَّل المنتجات والأسعار من قائمتي، وتظهر في كل القوالب.';
+
+  @override
+  String get publish => 'نشر';
+
+  @override
+  String get publishChanges => 'نشر التعديلات';
+
+  @override
+  String get publishing => 'جارٍ نشر موقعك';
+
+  @override
+  String get publishedTitle => 'موقعك منشور';
+
+  @override
+  String get publishedBody =>
+      'يرى زبائنك التصميم الجديد الآن. تتحدث المنتجات والأسعار تلقائيًا عند تعديلها.';
+
+  @override
+  String get photo => 'صورة';
+
+  @override
+  String get addPhotos => 'إضافة صور';
+
+  @override
+  String get closed => 'مغلق';
+
+  @override
+  String get goToMenu => 'الذهاب إلى قائمتي';
+
+  @override
+  String get onbItemsTitle => 'أضف منتجاتك وأسعارك خلال دقائق';
+
+  @override
+  String get onbItemsBody =>
+      'أضف الصور والأسعار والفئات. عدّل أي شيء لاحقاً ويتحدّث موقعك فوراً.';
+
+  @override
+  String get onbTemplatesTitle => 'اختر قالباً من 100 قالب واجعله لك';
+
+  @override
+  String get onbTemplatesBody =>
+      'كل قالب يعرض منتجاتك بطريقته. اختر صورة الواجهة والألوان وأضف شعارك.';
+
+  @override
+  String get onbShareTitle => 'شارك رابطاً واحداً. ونطاقك الخاص مع Pro.';
+
+  @override
+  String get onbShareBody =>
+      'ضع الرابط على إنستغرام أو واتساب أو رمز QR على الطاولة. يرى زبائنك المنيو فوراً.';
+
+  @override
+  String sampleCafe(String brandName) {
+    return '$brandName';
+  }
+
+  @override
+  String get sampleDrinks => 'مشروبات';
+
+  @override
+  String get sampleItem1 => 'لاتيه فانيلا';
+
+  @override
+  String get sampleItem1Note => 'شوت مزدوج، حليب الشوفان';
+
+  @override
+  String get sampleItem2 => 'كرواسون فستق';
+
+  @override
+  String get sampleItem2Note => 'مخبوز هذا الصباح';
+
+  @override
+  String get sampleItem3 => 'كيكة زعفران';
+
+  @override
+  String get sampleItem3Note => 'شريحة مع كريمة الهيل';
+
+  @override
+  String get addItem => 'إضافة منتج';
+
+  @override
+  String templateOf(String number) {
+    return 'القالب $number / 100';
+  }
+
+  @override
+  String hello(String name) {
+    return 'مرحباً، $name';
+  }
+
+  @override
+  String get siteLive => 'موقعك منشور';
+
+  @override
+  String get quickActions => 'إجراءات سريعة';
+
+  @override
+  String get designSite => 'التصميم';
+
+  @override
+  String get shareSite => 'مشاركة';
+
+  @override
+  String get allItems => 'الكل';
+
+  @override
+  String get skip => 'تخطٍّ';
+
+  @override
+  String get next => 'التالي';
+
+  @override
+  String get getStarted => 'ابدأ الآن';
+
+  @override
+  String get splashTagline => 'قائمتك، مقدَّمة بأناقة.';
+
+  @override
+  String get onbBasicPrice => '5\$';
+
+  @override
+  String get onbProPrice => '10\$';
+
+  @override
+  String onbBasicNote(String link) {
+    return 'موقعك على $link';
+  }
+
+  @override
+  String get onbProNote => 'نطاقك الخاص، يجهّزه فريق الدعم';
+
+  @override
+  String get onbHeroColor => 'لون الواجهة';
+
+  @override
+  String get showInside => 'اعرضه داخل';
+
+  @override
+  String get showInsideHelp =>
+      'ضعه داخل صنف رئيسي، مثل المشروبات الساخنة داخل القهوة.';
+
+  @override
+  String get mainCategoryOption => 'لا شيء · صنف رئيسي';
+
+  @override
+  String get parentLockedHint => 'فيه أصناف فرعية، لذلك يبقى صنفًا رئيسيًا.';
+
+  @override
+  String subCategoryCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count صنف فرعي',
+      many: '$count صنفًا فرعيًا',
+      few: '$count أصناف فرعية',
+      two: 'صنفان فرعيان',
+      one: 'صنف فرعي واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String categoryPath(String parent, String child) {
+    return '$parent › $child';
+  }
+
+  @override
+  String get deleteCategorySubs => 'أصنافه الفرعية تصبح أصنافًا رئيسية.';
+
+  @override
+  String get proTemplateTitle => 'هذا القالب ضمن الباقة الاحترافية';
+
+  @override
+  String proTemplateBody(String name) {
+    return 'رقِّ إلى الباقة الاحترافية لتستخدم $name وكل القوالب الاحترافية الأخرى. منتجاتك وأسعارك تبقى كما هي.';
+  }
+
+  @override
+  String get proTemplatesHint =>
+      'القوالب المعلّمة بـ«الاحترافية» متاحة في الباقة الاحترافية.';
+
+  @override
+  String get appLanguage => 'لغة التطبيق';
+
+  @override
+  String get appLanguageSub => 'لغة هذا التطبيق. موقعك يحتفظ بلغته.';
+
+  @override
+  String get languageSystem => 'حسب لغة الهاتف';
+
+  @override
+  String get changeLanguage => 'تغيير اللغة';
+
+  @override
+  String get phoneForCalls => 'رقم الهاتف للاتصال';
+
+  @override
+  String get phoneForCallsHint => 'اتركه فارغًا لاستخدام رقم واتساب';
+
+  @override
+  String get facebook => 'فيسبوك';
+
+  @override
+  String get facebookHint => 'facebook.com/yourshop';
+
+  @override
+  String get tikTok => 'تيك توك';
+
+  @override
+  String get tikTokHint => '@yourshop';
+
+  @override
+  String get snapchat => 'سناب شات';
+
+  @override
+  String get snapchatHint => 'yourshop';
+
+  @override
+  String get socialAccounts => 'حسابات التواصل والاتصال';
+
+  @override
+  String get socialAccountsSub =>
+      'اكتب اسم المستخدم أو الصق رابط صفحتك. اختر ما يظهر منها في موقعك من تعديل التصميم، في قسم حسابات التواصل الاجتماعي.';
+
+  @override
+  String get customColor => 'لونك الخاص';
+
+  @override
+  String get customColorTitle => 'اختر لونك';
+
+  @override
+  String get colorHue => 'اللون';
+
+  @override
+  String get colorSaturation => 'قوة اللون';
+
+  @override
+  String get colorBrightness => 'السطوع';
+
+  @override
+  String get colorHexLabel => 'رمز اللون';
+
+  @override
+  String get colorHexInvalid => 'استخدم رمزًا مثل ‎#D9542C';
+
+  @override
+  String get colorReadableNote => 'يحافظ موقعك على وضوح النص فوق هذا اللون.';
+
+  @override
+  String get useColor => 'استخدم هذا اللون';
+
+  @override
+  String get accountMissing => 'أضفه أولًا في معلومات النشاط';
+
+  @override
+  String get labelCustom => 'مخصصة';
+
+  @override
+  String get customLabelText => 'نص الشارة';
+
+  @override
+  String get customLabelHelp =>
+      'اكتبه بلغة واحدة أو باللغتين. يعرض موقعك النص المكتوب بلغته.';
+
+  @override
+  String get customLabelEnglish => 'بالإنجليزية';
+
+  @override
+  String get customLabelArabic => 'بالعربية';
+
+  @override
+  String get customLabelHintEn => 'Chef\'s choice';
+
+  @override
+  String get customLabelHintAr => 'اختيار الشيف';
+
+  @override
+  String get errCustomLabel => 'اكتب نص الشارة.';
+
+  @override
+  String get qrCode => 'رمز QR';
+
+  @override
+  String get qrTitle => 'رمز QR لموقعك';
+
+  @override
+  String get qrSub => 'يمسحه زبائنك بكاميرا الهاتف لفتح موقعك.';
+
+  @override
+  String get qrColor => 'لون الرمز';
+
+  @override
+  String get qrLogo => 'الشعار في المنتصف';
+
+  @override
+  String get qrLogoHelp => 'يبقى قابلًا للمسح: الرمز يعوّض الجزء المغطّى.';
+
+  @override
+  String get qrSave => 'حفظ الصورة';
+
+  @override
+  String get qrShare => 'مشاركة';
+
+  @override
+  String get qrSaved => 'تم الحفظ في الصور';
+
+  @override
+  String get qrSaveFailed =>
+      'تعذّر الحفظ. اسمح بالوصول إلى الصور وحاول مرة أخرى.';
+
+  @override
+  String get qrPoster => 'ملصق للطباعة';
+
+  @override
+  String get qrPosterSub =>
+      'يُطبع على ورق A4 أو A5. ضعه على الطاولات أو عند المحاسبة أو على الباب.';
+
+  @override
+  String qrShareText(String url) {
+    return 'تصفح قائمتنا: $url';
+  }
+
+  @override
+  String get posterScan => 'امسح الرمز لتصفح قائمتنا';
+
+  @override
+  String get posterScanHint => 'وجّه كاميرا هاتفك نحو الرمز';
+
+  @override
+  String aiRemaining(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'بقي $count استخدامًا للمساعد هذا الشهر',
+      few: 'بقيت $count استخدامات للمساعد هذا الشهر',
+      two: 'بقي استخدامان للمساعد هذا الشهر',
+      one: 'بقي استخدام واحد للمساعد هذا الشهر',
+      zero: 'لم يبقَ أي استخدام للمساعد هذا الشهر',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aiOff =>
+      'المساعد الذكي غير مفعّل بعد. ما زال بإمكانك تعديل كل شيء بنفسك.';
+
+  @override
+  String get aiUsedUp =>
+      'استخدمت كل طلبات المساعد الذكي لهذا الشهر. تتجدد في أول الشهر.';
+
+  @override
+  String get aiTakePhoto => 'التقط صورة';
+
+  @override
+  String get aiChoosePhoto => 'اختر من الصور';
+
+  @override
+  String get aiReadingMenu => 'نقرأ قائمتك…';
+
+  @override
+  String get aiTakesAMoment => 'قد يستغرق هذا حتى دقيقة.';
+
+  @override
+  String get aiCheckBeforeUsing =>
+      'قد يخطئ الذكاء الاصطناعي. راجع قبل الاستخدام.';
+
+  @override
+  String get aiMenuFromPhoto => 'أضف من صورة القائمة';
+
+  @override
+  String get aiMenuFromPhotoSub =>
+      'حتى 3 صور لقائمتك أو قائمة الأسعار أو الرفوف';
+
+  @override
+  String aiMenuPhotos(int count) {
+    return '$count من 3 صور';
+  }
+
+  @override
+  String get aiAddPhoto => 'أضف صورة';
+
+  @override
+  String get aiRemovePhoto => 'احذف الصورة';
+
+  @override
+  String get aiReadMenu => 'اقرأ قائمتي';
+
+  @override
+  String get aiReviewTitle => 'راجع قائمتك';
+
+  @override
+  String get aiReviewSub =>
+      'صحّح الأسماء والأسعار، وألغِ تحديد ما لا تريده، ثم أضفها.';
+
+  @override
+  String aiAddItems(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'أضف $count عنصرًا',
+      few: 'أضف $count عناصر',
+      two: 'أضف عنصرين',
+      one: 'أضف عنصرًا واحدًا',
+      zero: 'اختر عناصر لإضافتها',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aiAdding => 'جارٍ الإضافة…';
+
+  @override
+  String aiItemsAdded(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'أُضيف $count عنصرًا إلى قائمتك.',
+      few: 'أُضيفت $count عناصر إلى قائمتك.',
+      two: 'أُضيف عنصران إلى قائمتك.',
+      one: 'أُضيف عنصر واحد إلى قائمتك.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aiNewCategory => 'صنف جديد';
+
+  @override
+  String get aiExistingCategory => 'يُضاف إلى صنفك';
+
+  @override
+  String aiCurrencyDiffers(String menu, String yours) {
+    return 'الأسعار في القائمة بعملة $menu، وأسعارك بعملة $yours. راجعها لأنها لم تُحوَّل.';
+  }
+
+  @override
+  String get aiFixHighlighted =>
+      'بعض العناصر تحتاج إلى تصحيح. راجع الحقول المحددة.';
+
+  @override
+  String get aiSelectItem => 'أضف هذا العنصر';
+
+  @override
+  String get aiSelectCategory => 'أضف هذا الصنف';
+
+  @override
+  String get aiWriteIn => 'لغة الكتابة';
+
+  @override
+  String get aiAssistant => 'مساعد التصميم الذكي';
+
+  @override
+  String get aiAssistantSub =>
+      'قل له ما تريد: الألوان أو الأحجام أو الترتيب أو النصوص. يعدّل المسودة وترى التغيير في المعاينة فورًا.';
+
+  @override
+  String get aiChatOpen => 'تحدّث مع المساعد';
+
+  @override
+  String get aiChatContinue => 'تابع المحادثة';
+
+  @override
+  String get aiChatOpenSub => 'مثل «طابِق ألوان شعاري» أو «كبّر الشعار»';
+
+  @override
+  String get aiChatWelcome =>
+      'أهلًا! أخبرني بما تريد تغييره في موقعك وسأعدّله في المسودة. يمكنك أيضًا إرسال صورة لشعارك أو محلك.';
+
+  @override
+  String get aiChatHint => 'اكتب رسالة…';
+
+  @override
+  String get aiChatSend => 'إرسال';
+
+  @override
+  String get aiChatWorking => 'أعمل على طلبك…';
+
+  @override
+  String aiChatChanged(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'تم تغيير $count إعدادًا',
+      few: 'تم تغيير $count إعدادات',
+      two: 'تم تغيير إعدادين',
+      one: 'تم تغيير إعداد واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get aiChatUndo => 'تراجع';
+
+  @override
+  String get aiChatUndone => 'تم التراجع عن التغييرات';
+
+  @override
+  String get aiChatStartOver => 'ابدأ من جديد';
+
+  @override
+  String get aiChatPhotoMessage => 'استخدم هذه الصورة لتصميمي.';
+
+  @override
+  String get aiChatSuggestLogo => 'طابِق ألوان شعاري';
+
+  @override
+  String get aiChatSuggestTexts => 'اكتب نصوص موقعي';
+
+  @override
+  String get aiChatSuggestLogoSize => 'كبّر الشعار';
+
+  @override
+  String get aiChatSuggestElegant => 'مظهر أغمق وأكثر أناقة';
+
+  @override
+  String get languageEnglish => 'English';
+
+  @override
+  String get languageArabic => 'العربية';
+
+  @override
+  String get sectionOrderHint =>
+      'تبقى الواجهة دائمًا في الأعلى والتذييل في الأسفل.';
+
+  @override
+  String sectionMoveUp(String section) {
+    return 'انقل $section للأعلى';
+  }
+
+  @override
+  String sectionMoveDown(String section) {
+    return 'انقل $section للأسفل';
+  }
+
+  @override
+  String sectionPosition(String section, int position, int count) {
+    return '$section، $position من $count';
+  }
+
+  @override
+  String get aiChatSurprise => 'فاجئني';
+
+  @override
+  String get looksTitle => 'الأنماط';
+
+  @override
+  String get editorJumpTo => 'انتقل إلى';
+
+  @override
+  String editorJumpToGroup(String group) {
+    return 'انتقل إلى $group';
+  }
+
+  @override
+  String get editorCollapseAll => 'إغلاق الكل';
+
+  @override
+  String get editorExpandAll => 'فتح الكل';
+
+  @override
+  String editorGroupCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count إعداد',
+      many: '$count إعدادًا',
+      few: '$count إعدادات',
+      two: 'إعدادان',
+      one: 'إعداد واحد',
+      zero: 'لا إعدادات',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get looksSubtitle =>
+      'أنماط جاهزة لهذا القالب. اضغط على أيٍّ منها لتجربته.';
+
+  @override
+  String lookApply(String look) {
+    return 'استخدم نمط $look';
+  }
+
+  @override
+  String lookApplied(String look) {
+    return 'تم تطبيق $look';
+  }
+
+  @override
+  String get lookUndone => 'عاد تصميمك كما كان';
 }

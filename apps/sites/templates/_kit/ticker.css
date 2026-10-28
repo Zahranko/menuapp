@@ -1,0 +1,216 @@
+/*
+ * The owner's moving strip (_kit/ticker-settings.json, ticker.ts), for the templates that have one; their styles.css
+ * imports this file after sections.css. ticker.ts puts one data attribute on the template's root per option the owner
+ * changed, and the template marks the parts of its strip only then, so nothing here applies to a strip left on "auto":
+ *   data-tk-style  the band's shape        data-tk-color  its colors (--tk-bg, --tk-ink, --tk-line from themeVars)
+ *   data-tk-sep    what goes between items data-tk-speed  how fast it moves      data-tk-edge  its top and bottom edges
+ * Marks: [data-k~="ticker"] the band, [data-k~="ticker-track"] the part that moves, [data-k~="ticker-item"] one item,
+ * [data-k~="ticker-sep"] the template's own separator, [data-k~="ticker-copy"] a repeat that only fills the loop.
+ * Text on the band uses --tk-ink (always 4.5:1 on --tk-bg); text straight on the page (outline, neon) uses --tk-line,
+ * or the template's contrast-safe accent text when the color is the template's own. The !important flags are owner
+ * overrides of each template's own strip, which is nested under the template's root class and so always more specific.
+ */
+
+[data-template] {
+  --tk-flames: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 40' preserveAspectRatio='none'%3E%3Cpath d='M0 40V28c6 2 9-8 8-16 6 6 9 14 8 20 4-4 6-12 4-22 8 8 12 18 10 26 4-2 7-8 6-16 6 6 8 12 7 18 4-4 5-10 3-18 9 9 12 18 9 26 5-2 8-9 7-17 7 7 9 15 7 21 3-3 5-8 4-14 6 6 8 12 7 16 3-2 5-6 5-10 3 4 5 9 4 12z'/%3E%3C/svg%3E");
+  --tk-zig-top: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 8' preserveAspectRatio='none'%3E%3Cpath d='M0 8L8 0l8 8z'/%3E%3C/svg%3E");
+  --tk-zig-bottom: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 8' preserveAspectRatio='none'%3E%3Cpath d='M0 0l8 8 8-8z'/%3E%3C/svg%3E");
+  --tk-wave-top: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 8' preserveAspectRatio='none'%3E%3Cpath d='M0 8V5q6-6 12 0t12 0v3z'/%3E%3C/svg%3E");
+  --tk-wave-bottom: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 8' preserveAspectRatio='none'%3E%3Cpath d='M0 0v3q6 6 12 0t12 0V0z'/%3E%3C/svg%3E");
+  --tk-torn-top: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 8' preserveAspectRatio='none'%3E%3Cpath d='M0 8V5l3-2 2 3 4-4 3 3 3-1 2 4 4-5 3 2 4-1 2 3 3-4 4 3 2-1 3 4 3-3 4 2 3-4 2 2v6z'/%3E%3C/svg%3E");
+  --tk-torn-bottom: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 8' preserveAspectRatio='none'%3E%3Cpath d='M0 0v3l4 2 2-3 3 4 4-3 2 2 4-1 3 4 3-4 4 2 2-2 4 4 3-3 3 1 4-3 2 3 3-2 4 2V0z'/%3E%3C/svg%3E");
+  --tk-sep-diamond: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M5 0l5 5-5 5-5-5z'/%3E%3C/svg%3E");
+  --tk-sep-star: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M5 0l1.4 3.4 3.6.3-2.7 2.4.8 3.6L5 7.8 1.9 9.7l.8-3.6L0 3.7l3.6-.3z'/%3E%3C/svg%3E");
+  --tk-sep-dot: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Ccircle cx='5' cy='5' r='3.2'/%3E%3C/svg%3E");
+  --tk-sep-flame: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 12'%3E%3Cpath d='M5 12C2.2 12 .8 10 1.2 7.6 1.5 5.8 3 5.2 3 3.4c1.3.8 1.6 2 1.4 3C5.4 5.2 5.6 2.6 4.6 0c3 1.4 5 4.4 4.6 7.6C8.9 10.2 7.4 12 5 12z'/%3E%3C/svg%3E");
+  --tk-sep-slash: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M6.6 0h2.2L3.4 10H1.2z'/%3E%3C/svg%3E");
+}
+
+/* ---------- colors ---------- */
+[data-tk-color] [data-k~="ticker"] {
+  border-color: var(--tk-ink) !important;
+  background: var(--tk-bg) !important;
+  color: var(--tk-ink) !important;
+}
+
+/* ---------- shapes ---------- */
+/* A plain band: no borders, shadow or tilt. */
+[data-tk-style="solid"] [data-k~="ticker"] {
+  border-block: 0 !important;
+  box-shadow: none !important;
+  rotate: none !important;
+}
+/* See-through, between two lines, the text in the page's colors. */
+[data-tk-style="outline"] [data-k~="ticker"] {
+  border-block: 3px solid currentColor !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--tk-line, var(--acc-text, var(--k-acc-text, currentColor))) !important;
+}
+/* Tilted across the page; the page clips its corners. */
+[data-template][data-tk-style="tilted"] {
+  overflow-x: clip;
+}
+[data-tk-style="tilted"] [data-k~="ticker"] {
+  rotate: -2.5deg !important;
+  margin-block: 18px !important;
+}
+[data-tk-style="tilted"] [data-k~="ticker"]:dir(rtl) {
+  rotate: 2.5deg !important;
+}
+/* Torn paper: ragged top and bottom edges. */
+[data-tk-style="torn"] [data-k~="ticker"] {
+  border-block: 0 !important;
+  box-shadow: none !important;
+  mask:
+    var(--tk-torn-top) top left / 60px 8px repeat-x,
+    var(--tk-torn-bottom) bottom left / 60px 8px repeat-x,
+    linear-gradient(#000 0 0) center / 100% calc(100% - 15px) no-repeat !important;
+}
+/* Each item on a label of its own, no band and no separators. */
+[data-tk-style="tags"] [data-k~="ticker"] {
+  border-block: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--tk-ink, var(--acc-ink, var(--k-acc-ink, currentColor))) !important;
+}
+[data-tk-style="tags"] [data-k~="ticker-item"] {
+  margin: 8px 6px !important;
+  padding: 7px 14px !important;
+  border-radius: 6px !important;
+  background: var(--tk-bg, var(--acc, var(--k-acc))) !important;
+  rotate: -1.5deg;
+}
+[data-tk-style="tags"] [data-k~="ticker-item"]:nth-child(even) {
+  rotate: 1.5deg;
+}
+/* A glowing line above and below, the text glowing on the page. */
+[data-tk-style="neon"] [data-k~="ticker"] {
+  border-block: 2px solid currentColor !important;
+  background: transparent !important;
+  box-shadow:
+    0 0 10px color-mix(in srgb, currentColor 55%, transparent),
+    inset 0 0 10px color-mix(in srgb, currentColor 35%, transparent) !important;
+  color: var(--tk-line, var(--acc-text, var(--k-acc-text, currentColor))) !important;
+  text-shadow: 0 0 9px color-mix(in srgb, currentColor 55%, transparent);
+}
+/* The band with two thin lines along each edge. */
+[data-tk-style="double"] [data-k~="ticker"] {
+  border-block: 7px double currentColor !important;
+  box-shadow: none !important;
+}
+
+/* ---------- edges ---------- */
+[data-tk-edge="none"] [data-k~="ticker"] {
+  border-block: 0 !important;
+  box-shadow: none !important;
+  mask: none !important;
+}
+[data-tk-edge="zigzag"] [data-k~="ticker"] {
+  border-block: 0 !important;
+  box-shadow: none !important;
+  mask:
+    var(--tk-zig-top) top left / 16px 8px repeat-x,
+    var(--tk-zig-bottom) bottom left / 16px 8px repeat-x,
+    linear-gradient(#000 0 0) center / 100% calc(100% - 15px) no-repeat !important;
+}
+[data-tk-edge="waves"] [data-k~="ticker"] {
+  border-block: 0 !important;
+  box-shadow: none !important;
+  mask:
+    var(--tk-wave-top) top left / 24px 8px repeat-x,
+    var(--tk-wave-bottom) bottom left / 24px 8px repeat-x,
+    linear-gradient(#000 0 0) center / 100% calc(100% - 15px) no-repeat !important;
+}
+/* Flames rising from the top edge, in the accent color fading to a light flame. */
+[data-tk-edge="flames"] [data-k~="ticker"] {
+  border-top: 26px solid var(--acc, var(--k-acc)) !important;
+  border-image: linear-gradient(to top, var(--acc, var(--k-acc)), color-mix(in srgb, var(--acc, var(--k-acc)) 55%, #fff)) 1 0 0 0 / 26px 0 0 0 !important;
+  box-shadow: none !important;
+  mask:
+    var(--tk-flames) top left / 120px 26px repeat-x,
+    linear-gradient(#000 0 0) bottom / 100% calc(100% - 25px) no-repeat !important;
+}
+
+/* ---------- separators ---------- */
+[data-tk-sep] [data-k~="ticker-sep"] {
+  display: none !important;
+}
+[data-tk-sep] [data-k~="ticker-item"]::before {
+  content: none !important;
+}
+[data-tk-sep]:not([data-tk-sep="none"]) [data-k~="ticker-item"]::after {
+  content: "" !important;
+  display: inline-block !important;
+  flex: none !important;
+  align-self: center !important;
+  width: 0.5em !important;
+  height: 0.5em !important;
+  margin: 0 0 0 0.9em !important;
+  margin-inline: 0.9em 0 !important;
+  border: 0 !important;
+  background: currentColor !important;
+  clip-path: none !important;
+  rotate: none !important;
+  mask: var(--tk-sep) center / contain no-repeat !important;
+}
+[data-tk-sep="none"] [data-k~="ticker-item"]::after {
+  content: none !important;
+}
+[data-tk-sep="diamond"] {
+  --tk-sep: var(--tk-sep-diamond);
+}
+[data-tk-sep="star"] {
+  --tk-sep: var(--tk-sep-star);
+}
+[data-tk-sep="dot"] {
+  --tk-sep: var(--tk-sep-dot);
+}
+[data-tk-sep="flame"] {
+  --tk-sep: var(--tk-sep-flame);
+}
+[data-tk-sep="slash"] {
+  --tk-sep: var(--tk-sep-slash);
+}
+
+/* Labels need no separators between them (written after the separators, so it wins over them). */
+[data-template][data-tk-style="tags"] [data-k~="ticker-item"]::before,
+[data-template][data-tk-style="tags"] [data-k~="ticker-item"]::after,
+[data-template][data-tk-style="tags"] [data-k~="ticker-sep"] {
+  display: none !important;
+}
+
+/* ---------- speed ---------- */
+/* Only how long one loop takes: a strip that doesn't move (reduced motion, the template's own switch) stays still. */
+[data-tk-speed="slow"] [data-k~="ticker-track"] {
+  animation-duration: 64s !important;
+}
+[data-tk-speed="normal"] [data-k~="ticker-track"] {
+  animation-duration: 34s !important;
+}
+[data-tk-speed="fast"] [data-k~="ticker-track"] {
+  animation-duration: 16s !important;
+}
+/* Still: the items stand in the middle, once, wrapping onto more lines when they need to. */
+[data-tk-speed="still"] [data-k~="ticker-track"] {
+  width: auto !important;
+  animation: none !important;
+  transform: none !important;
+}
+[data-tk-speed="still"] :is([data-k~="ticker-track"], [data-k~="ticker-track"] > *) {
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  white-space: normal !important;
+}
+[data-tk-speed="still"] [data-k~="ticker-track"] > * {
+  flex: 1 1 auto !important;
+}
+[data-tk-speed="still"] [data-k~="ticker-item"] {
+  max-width: 100% !important;
+  white-space: normal !important;
+}
+[data-tk-speed="still"] [data-k~="ticker-copy"] {
+  display: none !important;
+}

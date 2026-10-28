@@ -18,6 +18,8 @@ public class StorefrontFactory : WebApplicationFactory<Program>, IAsyncLifetime
 
     public string MediaRoot { get; } = Path.Combine(Path.GetTempPath(), "storefront-tests", Guid.NewGuid().ToString("N"));
 
+    public string KeysRoot { get; } = Path.Combine(Path.GetTempPath(), "storefront-tests", Guid.NewGuid().ToString("N"));
+
     /// <summary>Overrides for one fixture, applied after the defaults below.</summary>
     protected virtual IDictionary<string, string?> ExtraSettings => new Dictionary<string, string?>();
 
@@ -27,9 +29,12 @@ public class StorefrontFactory : WebApplicationFactory<Program>, IAsyncLifetime
     {
         await base.DisposeAsync();
         await Database.DisposeAsync();
-        if (Directory.Exists(MediaRoot))
+        foreach (var folder in new[] { MediaRoot, KeysRoot })
         {
-            Directory.Delete(MediaRoot, recursive: true);
+            if (Directory.Exists(folder))
+            {
+                Directory.Delete(folder, recursive: true);
+            }
         }
     }
 
@@ -45,12 +50,15 @@ public class StorefrontFactory : WebApplicationFactory<Program>, IAsyncLifetime
             ["RateLimits:AuthPerMinute"] = "10000",
             ["RateLimits:SlugCheckPerMinute"] = "10000",
             ["RateLimits:PublicPerMinute"] = "10000",
+            ["RateLimits:UploadPerMinute"] = "10000",
+            ["RateLimits:AiPerMinute"] = "10000",
             ["RateLimits:GlobalPerMinute"] = "100000",
             ["RateLimits:OwnerPerMinute"] = "100000",
             ["Security:RequireHttps"] = "false",
             ["Outbox:Enabled"] = "false",
             ["Storage:LocalRoot"] = MediaRoot,
             ["Storage:PublicBaseUrl"] = "http://localhost/media",
+            ["DataProtection:KeysPath"] = KeysRoot,
         }).AddInMemoryCollection(ExtraSettings));
         builder.ConfigureTestServices(services =>
         {

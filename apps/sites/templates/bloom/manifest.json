@@ -1,0 +1,362 @@
+{
+  "id": "bloom",
+  "number": 26,
+  "name": "Bloom",
+  "category": "Bakery and sweets",
+  "description": "A dreamy pastel patisserie site: cakes on lace doilies, floating category bubbles, a carousel of today's bakes and a scrapbook gallery.",
+  "ar": {
+    "name": "بلوم",
+    "category": "مخابز وحلويات",
+    "description": "موقع حالم بألوان الباستيل للمخابز والحلويات: كيك على مفارش دانتيل، وأقسام كفقاعات طائرة، وشريط لمخبوزات اليوم، ومعرض صور كدفتر ذكريات."
+  },
+  "version": 2,
+  "heroSlider": { "kind": "panel", "source": "hero.images" },
+  "pageStyle": { "skip": ["style.motion"] },
+  "tier": "pro",
+  "thumbnail": "/templates/bloom/thumbnail.png",
+  "sample": "bloom",
+  "sectionsLayout": { "order": ["menu", "best", "story", "gallery", "reviews", "visit"] },
+  "signature": {
+    "menu.layout": [
+      {"id":"doily","base":"grid","label":"Lace doilies","labelAr":"مفارش الدانتيل","preview":"/templates/bloom/previews/menu-doily.svg"}
+    ],
+    "hero.variant": [
+      {"id":"cakestand","base":"circle","label":"Cake stand","labelAr":"حامل الكيك","preview":"/templates/bloom/previews/hero-cakestand.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"strawberry","label":{"en":"Strawberry","ar":"فراولة"},"values":{"theme":"strawberry","accent":"#D6467A","font":"soft","hero.variant":"cakestand","menu.layout":"doily","header.layout":"classic"}},
+    {"id":"pistachio","label":{"en":"Pistachio","ar":"فستق"},"values":{"theme":"pistachio","accent":"#4E9A5B","font":"soft","hero.variant":"cakestand","menu.layout":"doily"}},
+    {"id":"lavender","label":{"en":"Lavender","ar":"لافندر"},"values":{"theme":"lavender","accent":"#8159D1","font":"round","hero.variant":"cakestand","menu.layout":"doily","style.buttons":"pill"}},
+    {"id":"vanilla","label":{"en":"Vanilla","ar":"فانيلا"},"values":{"theme":"vanilla","accent":"#E07A3F","font":"classic","hero.variant":"circle","menu.layout":"doily","style.dividers":"wave"}},
+    {"id":"party","label":{"en":"Party box","ar":"علبة الحفلة"},"values":{"theme":"strawberry","accent":"#8159D1","font":"round","hero.variant":"collage","menu.layout":"doily","cards.style":"tinted"}}
+  ],
+  "schema": [
+    {
+      "key": "font",
+      "type": "choice",
+      "label": "Font style",
+      "group": "Brand",
+      "options": ["soft", "round", "classic"],
+      "optionLabels": {
+        "soft": "Soft serif",
+        "round": "Friendly",
+        "classic": "Classic serif"
+      },
+      "optionLabelsAr": {
+        "soft": "مذيّل ناعم",
+        "round": "ودود",
+        "classic": "مذيّل كلاسيكي"
+      }
+    },
+    {
+      "key": "logo",
+      "type": "image",
+      "label": "Logo",
+      "group": "Brand"
+    },
+    {
+      "key": "theme",
+      "type": "palette",
+      "label": "Color theme",
+      "group": "Brand",
+      "options": ["strawberry", "pistachio", "lavender", "vanilla"],
+      "optionLabels": {
+        "strawberry": "Strawberry milk",
+        "pistachio": "Pistachio",
+        "lavender": "Lavender",
+        "vanilla": "Vanilla"
+      },
+      "optionLabelsAr": {
+        "strawberry": "حليب الفراولة",
+        "pistachio": "فستق",
+        "lavender": "لافندر",
+        "vanilla": "فانيلا"
+      },
+      "swatches": {
+        "strawberry": "#FFD1DC",
+        "pistachio": "#D3EBC4",
+        "lavender": "#E1D3FA",
+        "vanilla": "#FFEFC2"
+      }
+    },
+    {
+      "key": "accent",
+      "type": "color",
+      "label": "Accent color",
+      "group": "Brand",
+      "options": ["#D6467A", "#4E9A5B", "#8159D1", "#E07A3F"]
+    },
+    {
+      "key": "doodles",
+      "type": "toggle",
+      "label": "Sprinkles and doodles",
+      "labelAr": "رشّات ورسومات صغيرة",
+      "group": "Brand"
+    },
+    {
+      "key": "cta.label",
+      "type": "text",
+      "label": "Order button text",
+      "group": "Navigation",
+      "max": 30
+    },
+    {
+      "key": "hero.layout",
+      "type": "choice",
+      "label": "Layout",
+      "group": "Hero header",
+      "options": ["blob", "slider", "bubbles", "text"],
+      "optionLabels": {
+        "blob": "Photo in a soft shape",
+        "slider": "Photos taking turns in a soft shape",
+        "bubbles": "Round photo bubbles",
+        "text": "Text only"
+      },
+      "optionLabelsAr": {
+        "blob": "صورة بشكل ناعم",
+        "slider": "صور تتناوب بشكل ناعم",
+        "bubbles": "فقاعات صور دائرية",
+        "text": "نص فقط"
+      }
+    },
+    {
+      "key": "hero.images",
+      "type": "images",
+      "label": "Hero photos (bubbles use up to three)",
+      "labelAr": "صور الواجهة (الفقاعات تستخدم حتى ثلاث)",
+      "group": "Hero header",
+      "max": 3,
+      "presets": ["blossom", "sprinkles", "marble", "counter", "shelf", "pour", "tiles", "leaves", "arches", "loft"]
+    },
+    {
+      "key": "hero.eyebrow",
+      "type": "text",
+      "label": "Small line above the headline",
+      "group": "Hero header",
+      "max": 40
+    },
+    {
+      "key": "hero.title",
+      "type": "text",
+      "label": "Headline",
+      "group": "Hero header",
+      "max": 70
+    },
+    {
+      "key": "hero.subtitle",
+      "type": "textarea",
+      "label": "Subtext",
+      "group": "Hero header",
+      "max": 180
+    },
+    {
+      "key": "motion",
+      "type": "toggle",
+      "label": "Animations",
+      "group": "Layout"
+    },
+    {
+      "key": "carousel.autoplay",
+      "type": "toggle",
+      "label": "Slide today's bakes by themselves",
+      "labelAr": "تحريك مخبوزات اليوم تلقائيًا",
+      "group": "Layout"
+    },
+    {
+      "key": "sections",
+      "type": "toggles",
+      "label": "Home page sections",
+      "group": "Sections",
+      "options": ["announcement", "best", "story", "gallery", "reviews", "visit"],
+      "optionLabels": {
+        "announcement": "Announcement bar",
+        "best": "Today's bakes",
+        "story": "About us",
+        "gallery": "Gallery",
+        "reviews": "Reviews",
+        "visit": "Hours and contact"
+      },
+      "optionLabelsAr": {
+        "announcement": "شريط الإعلان",
+        "best": "مخبوزات اليوم",
+        "story": "من نحن",
+        "gallery": "معرض الصور",
+        "reviews": "آراء الزبائن",
+        "visit": "أوقات العمل والتواصل"
+      }
+    },
+    {
+      "key": "announcement",
+      "type": "text",
+      "label": "Announcement",
+      "group": "Sections",
+      "max": 80
+    },
+    {
+      "key": "categories.title",
+      "type": "text",
+      "label": "Categories headline",
+      "group": "Headlines",
+      "max": 60
+    },
+    {
+      "key": "best.title",
+      "type": "text",
+      "label": "Today's bakes headline",
+      "labelAr": "عنوان مخبوزات اليوم",
+      "group": "Headlines",
+      "max": 60
+    },
+    {
+      "key": "gallery.title",
+      "type": "text",
+      "label": "Gallery headline",
+      "group": "Headlines",
+      "max": 60
+    },
+    {
+      "key": "story.title",
+      "type": "text",
+      "label": "About headline",
+      "group": "About us",
+      "max": 70
+    },
+    {
+      "key": "story.text",
+      "type": "textarea",
+      "label": "About us",
+      "group": "About us",
+      "max": 600
+    },
+    {
+      "key": "story.image",
+      "type": "image",
+      "label": "About photo",
+      "group": "About us",
+      "presets": ["blossom", "sprinkles", "marble", "counter", "shelf", "pour", "tiles", "leaves", "arches", "loft"]
+    },
+    {
+      "key": "gallery",
+      "type": "images",
+      "label": "Gallery photos",
+      "group": "Gallery",
+      "max": 12
+    },
+    {
+      "key": "gallery.products",
+      "type": "toggle",
+      "label": "Add product photos to the gallery",
+      "group": "Gallery"
+    },
+    {
+      "key": "reviews.1.quote",
+      "type": "textarea",
+      "label": "Review 1",
+      "group": "Reviews",
+      "max": 220
+    },
+    {
+      "key": "reviews.1.name",
+      "type": "text",
+      "label": "Review 1 by",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "reviews.2.quote",
+      "type": "textarea",
+      "label": "Review 2",
+      "group": "Reviews",
+      "max": 220
+    },
+    {
+      "key": "reviews.2.name",
+      "type": "text",
+      "label": "Review 2 by",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "reviews.3.quote",
+      "type": "textarea",
+      "label": "Review 3",
+      "group": "Reviews",
+      "max": 220
+    },
+    {
+      "key": "reviews.3.name",
+      "type": "text",
+      "label": "Review 3 by",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "footer.text",
+      "type": "textarea",
+      "label": "Line in the footer",
+      "group": "Footer",
+      "max": 140
+    },
+    {
+      "key": "hours",
+      "type": "hours",
+      "label": "Opening hours",
+      "group": "Visit us"
+    }
+  ],
+  "defaults": {
+    "social.show": ["instagram", "whatsapp"],
+    "font": "soft",
+    "logo": "",
+    "theme": "strawberry",
+    "accent": "#D6467A",
+    "doodles": true,
+    "cta.label": "",
+    "hero.layout": "blob",
+    "hero.images": ["preset:blossom", "preset:sprinkles"],
+    "hero.eyebrow": "Baked fresh every morning",
+    "hero.title": "Little cakes, big happiness.",
+    "hero.subtitle": "Celebration cakes, cinnamon rolls and cupcakes, made by hand with real butter and lots of love.",
+    "motion": true,
+    "carousel.autoplay": true,
+    "sections": ["announcement", "best", "story", "gallery", "reviews", "visit"],
+    "announcement": "Order birthday cakes two days ahead on WhatsApp",
+    "categories.title": "What are you craving?",
+    "best.title": "Today's bakes",
+    "gallery.title": "Our little scrapbook",
+    "story.title": "From our oven to your table",
+    "story.text": "Bloom began in a home kitchen with one oven and a lot of sprinkles. We still bake everything ourselves, in small batches, every single morning.",
+    "story.image": "preset:sprinkles",
+    "gallery": [],
+    "gallery.products": true,
+    "reviews.1.quote": "",
+    "reviews.1.name": "",
+    "reviews.2.quote": "",
+    "reviews.2.name": "",
+    "reviews.3.quote": "",
+    "reviews.3.name": "",
+    "footer.text": "Custom cakes for birthdays, weddings and every little win.",
+    "hours": {
+      "sat": "07:30-22:00",
+      "sun": "07:30-22:00",
+      "mon": "07:30-22:00",
+      "tue": "07:30-22:00",
+      "wed": "07:30-22:00",
+      "thu": "07:30-23:00",
+      "fri": "09:00-23:00"
+    }
+  },
+  "defaultsAr": {
+    "hero.eyebrow": "مخبوز طازجًا كل صباح",
+    "hero.title": "كيكات صغيرة، وسعادة كبيرة.",
+    "hero.subtitle": "كيك للمناسبات، ولفائف القرفة، وكب كيك، نصنعها بأيدينا بزبدة حقيقية وكثير من الحب.",
+    "announcement": "اطلب كيك أعياد الميلاد قبل يومين على واتساب",
+    "categories.title": "ماذا تشتهي اليوم؟",
+    "best.title": "مخبوزات اليوم",
+    "gallery.title": "دفتر ذكرياتنا الصغير",
+    "story.title": "من فرننا إلى طاولتك",
+    "story.text": "بدأت بلوم في مطبخ بيتي بفرن واحد وكثير من الرشّات الملوّنة. وما زلنا نخبز كل شيء بأنفسنا، على دفعات صغيرة، كل صباح.",
+    "footer.text": "كيك حسب الطلب لأعياد الميلاد والأعراس وكل فرحة صغيرة."
+  }
+}

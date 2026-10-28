@@ -1,0 +1,89 @@
+/*
+ * Ember's own layout options (manifest "signature", _kit/signatures.ts):
+ *   hero.variant "flame"  a grill poster: flames rising along the bottom edge, the headline glowing like coals (base: "poster")
+ *   menu.layout  "burst"  burger cards with the price in a starburst stamped on the photo (base: "grid")
+ */
+[data-template="ember"] {
+  --sig-flames: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 40' preserveAspectRatio='none'%3E%3Cpath d='M0 40V28c6 2 9-8 8-16 6 6 9 14 8 20 4-4 6-12 4-22 8 8 12 18 10 26 4-2 7-8 6-16 6 6 8 12 7 18 4-4 5-10 3-18 9 9 12 18 9 26 5-2 8-9 7-17 7 7 9 15 7 21 3-3 5-8 4-14 6 6 8 12 7 16 3-2 5-6 5-10 3 4 5 9 4 12z'/%3E%3C/svg%3E");
+  --sig-burst: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,0 58,16 75,7 76,26 95,25 87,42 100,50 87,58 95,75 76,74 75,93 58,84 50,100 42,84 25,93 24,74 5,75 13,58 0,50 13,42 5,25 24,26 25,7 42,16'/%3E%3C/svg%3E");
+}
+
+/* ---------- flame poster ---------- */
+[data-template="ember"] .kit-hv.kit-hv[data-sig~="flame"] {
+  position: relative;
+  padding-bottom: 54px;
+  & > .kit-sig-art {
+    position: absolute;
+    inset: auto 0 0;
+    height: 64px;
+    background: linear-gradient(to top, var(--k-acc), color-mix(in srgb, var(--k-acc) 55%, #ffc21a));
+    mask: var(--sig-flames) 0 100% / 240px 100% repeat-x;
+    pointer-events: none;
+  }
+  & .kit-hv-in {
+    border-bottom: 0;
+  }
+  & .kit-hv-title {
+    text-transform: uppercase;
+    text-shadow: 0 0 22px color-mix(in srgb, var(--k-acc) 45%, transparent);
+  }
+  & .kit-hv-eyebrow {
+    border-bottom-color: var(--k-acc);
+  }
+  & .kit-hv-media,
+  & .kit-hv-mono {
+    border: 4px solid var(--k-ink);
+    box-shadow: 0 0 0 4px var(--k-acc), 0 18px 34px -18px var(--k-acc);
+  }
+}
+
+/* The flames belong to the specials strip under the poster: once the owner gives the strip edges of its own, they go. */
+[data-template="ember"][data-tk-edge] .kit-hv.kit-hv[data-sig~="flame"] > .kit-sig-art {
+  display: none;
+}
+
+/* ---------- starburst prices ---------- */
+[data-template="ember"] .kit-mn.kit-mn.kit-mn[data-sig~="burst"] {
+  & .kit-mn-item {
+    position: relative;
+    overflow: visible;
+  }
+  & .kit-mn-head {
+    display: block;
+  }
+  & .kit-mn-dots {
+    display: none;
+  }
+  & .kit-mn-head .kit-mn-price {
+    position: absolute;
+    inset-block-start: -10px;
+    inset-inline-end: -8px;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 74px;
+    aspect-ratio: 1;
+    padding: 10px;
+    background: var(--k-acc);
+    color: var(--k-acc-ink);
+    mask: var(--sig-burst) center / contain no-repeat;
+    font-family: var(--k-fd);
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1;
+    text-align: center;
+    rotate: 10deg;
+  }
+  & .kit-mn-head .kit-mn-price small {
+    display: block;
+    font-size: 9px;
+  }
+  & .kit-mn-name {
+    text-transform: uppercase;
+    font-family: var(--k-fd);
+    letter-spacing: 0.01em;
+  }
+  & .kit-mn-media {
+    border-radius: 4px;
+  }
+}

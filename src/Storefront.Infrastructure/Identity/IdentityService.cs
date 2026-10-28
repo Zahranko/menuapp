@@ -7,6 +7,9 @@ namespace Storefront.Infrastructure.Identity;
 
 internal sealed class IdentityService(UserManager<AppUser> users, IClock clock) : IIdentityService
 {
+    /// <summary>A hash of a random password, made with the same hasher (and work factor) as real ones.</summary>
+    private static string? dummyHash;
+
     public async Task<Result<UserAccount>> CreateUserAsync(string email, string phone, string password, CancellationToken ct)
     {
         var fields = new Dictionary<string, string[]>();
@@ -26,7 +29,17 @@ internal sealed class IdentityService(UserManager<AppUser> users, IClock clock) 
         }
 
         var user = new AppUser { UserName = email, Email = email, PhoneNumber = phone, CreatedAt = clock.UtcNow };
-        var result = await users.CreateAsync(user, password);
+        IdentityResult result;
+        try
+        {
+            result = await users.CreateAsync(user, password);
+        }
+        catch (DbUpdateException)
+        {
+            // Two sign-ups with the same email or phone at the same moment: the unique index stops the second one.
+            return new Error("account.exists", "An account already exists.", ErrorType.Conflict);
+        }
+
         if (!result.Succeeded)
         {
             var messages = result.Errors.Select(e => e.Description).ToArray();
@@ -56,6 +69,7 @@ internal sealed class IdentityService(UserManager<AppUser> users, IClock clock) 
         var user = await users.FindByIdAsync(userId.ToString());
         if (user is null)
         {
+            CheckPasswordOfNoOne(password);
             return PasswordCheck.Wrong;
         }
 
@@ -72,6 +86,13 @@ internal sealed class IdentityService(UserManager<AppUser> users, IClock clock) 
 
         await users.AccessFailedAsync(user);
         return await users.IsLockedOutAsync(user) ? PasswordCheck.LockedOut : PasswordCheck.Wrong;
+    }
+
+    public void CheckPasswordOfNoOne(string password)
+    {
+        var nobody = new AppUser();
+        dummyHash ??= users.PasswordHasher.HashPassword(nobody, Convert.ToBase64String(System.Security.Cryptography.RandomNumberGenerator.GetBytes(16)));
+        users.PasswordHasher.VerifyHashedPassword(nobody, dummyHash, password);
     }
 
     public async Task<string> CreatePasswordResetTokenAsync(Guid userId, CancellationToken ct)
@@ -106,7 +127,7 @@ internal sealed class IdentityService(UserManager<AppUser> users, IClock clock) 
     }
 }
 
-/// <summary>Identity's password messages in the prototype's words.</summary>
+/// <summary>Identity's messages in the prototype's words (the API translates them by wording, see Messages).</summary>
 internal sealed class FriendlyIdentityErrors : IdentityErrorDescriber
 {
     public override IdentityError PasswordTooShort(int length) => new() { Code = nameof(PasswordTooShort), Description = $"Password needs at least {length} characters." };
@@ -118,4 +139,8 @@ internal sealed class FriendlyIdentityErrors : IdentityErrorDescriber
     public override IdentityError DuplicateEmail(string email) => new() { Code = nameof(DuplicateEmail), Description = "An account with this email already exists. Log in instead." };
 
     public override IdentityError DuplicateUserName(string userName) => new() { Code = nameof(DuplicateUserName), Description = "An account with this email already exists. Log in instead." };
+
+    public override IdentityError InvalidEmail(string? email) => new() { Code = nameof(InvalidEmail), Description = "Check the email format, like name@business.com." };
+
+    public override IdentityError InvalidUserName(string? userName) => new() { Code = nameof(InvalidUserName), Description = "Check the email format, like name@business.com." };
 }

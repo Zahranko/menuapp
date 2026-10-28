@@ -4,9 +4,31 @@
   "name": "Chalk Board",
   "category": "Café",
   "description": "A café blackboard: hand lettering, a daily special and boxed menu sections.",
+  "ar": {
+    "name": "لوح الطباشير",
+    "category": "مقهى",
+    "description": "سبّورة مقهى: كتابة بخط اليد، وطبق اليوم، وأقسام منيو داخل إطارات."
+  },
   "version": 1,
+  "heroSlider": { "kind": "band" },
   "thumbnail": "/templates/chalkboard/thumbnail.png",
   "sample": "cafe",
+  "sectionsLayout": { "order": ["special", "menu", "story", "visit"] },
+  "signature": {
+    "hero.variant": [
+      {"id":"board","base":"type","label":"Chalkboard sign","labelAr":"لوح طباشير","preview":"/templates/chalkboard/previews/hero-board.svg"}
+    ],
+    "menu.layout": [
+      {"id":"chalk","base":"compact","label":"Chalked up in boxes","labelAr":"مكتوبة بالطباشير","preview":"/templates/chalkboard/previews/menu-chalk.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"cafe","label":{"en":"Café board","ar":"سبورة المقهى"},"values":{"theme":"board","accent":"#F2C14E","font":"hand","hero.variant":"board","menu.layout":"chalk","header.layout":"centered"}},
+    {"id":"slate","label":{"en":"Slate bistro","ar":"لوح أردوازي"},"values":{"theme":"slate","accent":"#F29A9A","font":"round","hero.variant":"board","menu.layout":"chalk","menu.categoryNav":"tabs","header.layout":"classic","story.layout":"letter","style.dividers":"dots"}},
+    {"id":"kraft","label":{"en":"Kraft paper","ar":"ورق كرافت"},"values":{"theme":"kraft","accent":"#8E1B2C","font":"hand","hero.variant":"framed","menu.layout":"list","menu.photos":"none","header.layout":"centered","cards.style":"outlined","style.texture":"paper","footer.layout":"centered"}},
+    {"id":"night","label":{"en":"After dark","ar":"بعد المغيب"},"values":{"theme":"black","accent":"#8FD3C1","font":"condensed","hero.variant":"poster","menu.layout":"chalk","header.layout":"big","style.headings":"uppercase","visit.layout":"cards"}},
+    {"id":"special","label":{"en":"Daily special","ar":"طبق اليوم"},"values":{"theme":"board","accent":"#F0644A","font":"round","hero.variant":"menu","menu.layout":"chalk","header.layout":"minimal","style.buttons":"outline"}}
+  ],
   "schema": [
     {
       "key": "font",
@@ -167,5 +189,13 @@
       "thu": "07:00-00:00",
       "fri": "14:00-00:00"
     }
+  },
+  "defaultsAr": {
+    "hero.title": "قهوة وكيك وأحاديث حلوة",
+    "announcement": "كرواسون طازج كل صباح من الساعة 7",
+    "special.title": "طبق اليوم",
+    "special.note": "اسألونا عنه، نحن نحبه كثيرًا",
+    "story.title": "أهلًا وسهلًا!",
+    "story.text": "نحن مقهى صغير بسبّورة كبيرة. يتغيّر المنيو مع المواسم، فلا تتأخروا علينا."
   }
 }

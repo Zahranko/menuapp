@@ -1,0 +1,430 @@
+{
+  "id": "maison",
+  "number": 22,
+  "name": "Maison",
+  "category": "Fine dining",
+  "description": "A cinematic fine-dining site: a full-screen opening shot, a full-screen menu, numbered chapters and a menu set like a printed carte.",
+  "ar": {
+    "name": "ميزون",
+    "category": "مطعم راقٍ",
+    "description": "موقع مطعم راقٍ بطابع سينمائي: صورة افتتاحية بملء الشاشة، وقائمة تنقّل بملء الشاشة، وفصول مرقّمة، ومنيو مطبوع بأناقة."
+  },
+  "version": 2,
+  "heroSlider": { "kind": "backdrop", "source": "hero.images", "skip": ["hero.overlay", "hero.height", "hero.textPosition"], "defaults": { "hero.transition": "fade", "hero.controls": [] } },
+  "pageStyle": { "skip": ["style.motion"] },
+  "tier": "pro",
+  "thumbnail": "/templates/maison/thumbnail.png",
+  "sample": "maison",
+  "menu": { "own": ["carte.style"] },
+  "sectionsLayout": { "order": ["menu", "best", "story", "gallery", "reviews", "visit"] },
+  "signature": {
+    "menu.layout": [
+      {"id":"engraved","base":"compact","label":"Engraved menu card","labelAr":"بطاقة قائمة محفورة","preview":"/templates/maison/previews/menu-engraved.svg"}
+    ],
+    "hero.variant": [
+      {"id":"cinema","base":"full","label":"Cinema screen","labelAr":"شاشة سينما","preview":"/templates/maison/previews/hero-cinema.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"noir","label":{"en":"Gold noir","ar":"أسود ذهبي"},"values":{"theme":"noir","accent":"#C9A45C","font":"elegant","hero.variant":"cinema","menu.layout":"engraved","header.layout":"centered"}},
+    {"id":"bordeaux","label":{"en":"Bordeaux","ar":"بوردو"},"values":{"theme":"bordeaux","accent":"#D8B98A","font":"elegant","hero.variant":"cinema","menu.layout":"engraved","style.tracking":"wide"}},
+    {"id":"nuit","label":{"en":"Midnight","ar":"منتصف الليل"},"values":{"theme":"nuit","accent":"#C9A45C","font":"classic","hero.variant":"full","menu.layout":"engraved","header.layout":"minimal"}},
+    {"id":"olive","label":{"en":"Olive grove","ar":"بستان الزيتون"},"values":{"theme":"olive","accent":"#D8B98A","font":"classic","hero.variant":"framed","menu.layout":"engraved","style.photos":"arch"}},
+    {"id":"ivory","label":{"en":"Ivory table","ar":"طاولة عاجية"},"values":{"theme":"ivory","accent":"#8E1B2C","font":"elegant","hero.variant":"cinema","menu.layout":"list","header.layout":"centered"}}
+  ],
+  "schema": [
+    {
+      "key": "font",
+      "type": "choice",
+      "label": "Font style",
+      "group": "Brand",
+      "options": [
+        "elegant",
+        "classic",
+        "naskh"
+      ],
+      "optionLabels": {
+        "elegant": "Elegant",
+        "classic": "Classic",
+        "naskh": "Naskh"
+      }
+    },
+    {
+      "key": "logo",
+      "type": "image",
+      "label": "Logo",
+      "group": "Brand"
+    },
+    {
+      "key": "theme",
+      "type": "palette",
+      "label": "Color theme",
+      "group": "Brand",
+      "options": [
+        "noir",
+        "bordeaux",
+        "nuit",
+        "olive",
+        "ivory"
+      ],
+      "swatches": {
+        "noir": "#0D0C0B",
+        "bordeaux": "#170B0E",
+        "nuit": "#0B0F16",
+        "olive": "#11150F",
+        "ivory": "#F3EEE5"
+      }
+    },
+    {
+      "key": "accent",
+      "type": "color",
+      "label": "Gold color",
+      "group": "Brand",
+      "options": [
+        "#C9A45C",
+        "#D8B98A",
+        "#B5523B",
+        "#8FA57A"
+      ]
+    },
+    {
+      "key": "cta.label",
+      "type": "text",
+      "label": "Reserve button text",
+      "group": "Navigation",
+      "max": 30,
+      "labelAr": "نص زر الحجز"
+    },
+    {
+      "key": "hero.layout",
+      "type": "choice",
+      "label": "Layout",
+      "group": "Hero header",
+      "options": [
+        "cover",
+        "slides",
+        "split",
+        "text"
+      ],
+      "optionLabels": {
+        "cover": "Full screen photo",
+        "slides": "Slideshow",
+        "split": "Framed photo",
+        "text": "Name only"
+      },
+      "optionLabelsAr": {
+        "cover": "صورة بملء الشاشة",
+        "slides": "عرض شرائح",
+        "split": "صورة داخل إطار",
+        "text": "الاسم فقط"
+      }
+    },
+    {
+      "key": "hero.images",
+      "type": "images",
+      "label": "Hero photos (slideshow uses all)",
+      "group": "Hero header",
+      "max": 6,
+      "presets": [
+        "noir",
+        "loft",
+        "shelf",
+        "embers",
+        "blossom",
+        "marble",
+        "counter",
+        "arches",
+        "pour",
+        "beans",
+        "flames",
+        "leaves",
+        "sprinkles",
+        "tiles",
+        "dunes"
+      ]
+    },
+    {
+      "key": "hero.shade",
+      "type": "range",
+      "label": "Image darkness",
+      "group": "Hero header",
+      "min": 0,
+      "max": 90,
+      "step": 5
+    },
+    {
+      "key": "hero.eyebrow",
+      "type": "text",
+      "label": "Small line above the headline",
+      "group": "Hero header",
+      "max": 40
+    },
+    {
+      "key": "hero.title",
+      "type": "text",
+      "label": "Line under the name",
+      "group": "Hero header",
+      "max": 70,
+      "labelAr": "سطر تحت الاسم"
+    },
+    {
+      "key": "hero.subtitle",
+      "type": "textarea",
+      "label": "Opening paragraph",
+      "group": "Hero header",
+      "max": 180,
+      "labelAr": "الفقرة الافتتاحية"
+    },
+    {
+      "key": "carte.style",
+      "type": "choice",
+      "label": "Menu style",
+      "labelAr": "شكل القائمة",
+      "group": "Layout",
+      "options": [
+        "leaders",
+        "pictures",
+        "centered"
+      ],
+      "optionLabels": {
+        "leaders": "Dotted lines to prices",
+        "pictures": "With dish photos",
+        "centered": "Centred, like a printed menu"
+      },
+      "optionLabelsAr": {
+        "leaders": "نقاط حتى السعر",
+        "pictures": "مع صور الأطباق",
+        "centered": "في المنتصف كقائمة مطبوعة"
+      }
+    },
+    {
+      "key": "motion",
+      "type": "toggle",
+      "label": "Animations",
+      "group": "Layout"
+    },
+    {
+      "key": "sections",
+      "type": "toggles",
+      "label": "Home page sections",
+      "group": "Sections",
+      "options": [
+        "announcement",
+        "best",
+        "story",
+        "gallery",
+        "reviews",
+        "visit"
+      ],
+      "optionLabels": {
+        "announcement": "Announcement bar",
+        "best": "Best sellers",
+        "story": "About us",
+        "gallery": "Gallery",
+        "reviews": "Reviews",
+        "visit": "Hours and contact"
+      }
+    },
+    {
+      "key": "announcement",
+      "type": "text",
+      "label": "Announcement",
+      "group": "Sections",
+      "max": 80
+    },
+    {
+      "key": "categories.title",
+      "type": "text",
+      "label": "Menu headline",
+      "group": "Headlines",
+      "max": 60,
+      "labelAr": "عنوان القائمة"
+    },
+    {
+      "key": "best.title",
+      "type": "text",
+      "label": "Best sellers headline",
+      "group": "Headlines",
+      "max": 60
+    },
+    {
+      "key": "gallery.title",
+      "type": "text",
+      "label": "Gallery headline",
+      "group": "Headlines",
+      "max": 60
+    },
+    {
+      "key": "story.title",
+      "type": "text",
+      "label": "About headline",
+      "group": "About us",
+      "max": 70
+    },
+    {
+      "key": "story.text",
+      "type": "textarea",
+      "label": "About us",
+      "group": "About us",
+      "max": 600
+    },
+    {
+      "key": "story.image",
+      "type": "image",
+      "label": "About photo",
+      "group": "About us",
+      "presets": [
+        "noir",
+        "loft",
+        "shelf",
+        "embers",
+        "blossom",
+        "marble",
+        "counter",
+        "arches",
+        "pour",
+        "beans",
+        "flames",
+        "leaves",
+        "sprinkles",
+        "tiles",
+        "dunes"
+      ]
+    },
+    {
+      "key": "gallery",
+      "type": "images",
+      "label": "Gallery photos",
+      "group": "Gallery",
+      "max": 12
+    },
+    {
+      "key": "gallery.products",
+      "type": "toggle",
+      "label": "Add product photos to the gallery",
+      "group": "Gallery"
+    },
+    {
+      "key": "reviews.1.quote",
+      "type": "textarea",
+      "label": "Review 1",
+      "group": "Reviews",
+      "max": 220
+    },
+    {
+      "key": "reviews.1.name",
+      "type": "text",
+      "label": "Review 1 by",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "reviews.2.quote",
+      "type": "textarea",
+      "label": "Review 2",
+      "group": "Reviews",
+      "max": 220
+    },
+    {
+      "key": "reviews.2.name",
+      "type": "text",
+      "label": "Review 2 by",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "reviews.3.quote",
+      "type": "textarea",
+      "label": "Review 3",
+      "group": "Reviews",
+      "max": 220
+    },
+    {
+      "key": "reviews.3.name",
+      "type": "text",
+      "label": "Review 3 by",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "footer.text",
+      "type": "textarea",
+      "label": "Line in the footer",
+      "group": "Footer",
+      "max": 140
+    },
+    {
+      "key": "hours",
+      "type": "hours",
+      "label": "Opening hours",
+      "group": "Visit us"
+    }
+  ],
+  "defaults": {
+    "font": "elegant",
+    "logo": "",
+    "theme": "noir",
+    "accent": "#C9A45C",
+    "cta.label": "Reserve a table",
+    "hero.layout": "cover",
+    "hero.images": [
+      "preset:noir",
+      "preset:marble"
+    ],
+    "hero.shade": 40,
+    "hero.eyebrow": "Modern Levantine kitchen",
+    "hero.title": "An evening worth dressing up for.",
+    "hero.subtitle": "Seasonal tasting plates, a wood-fired grill and a quiet room above the city. Book a table or browse tonight's menu.",
+    "carte.style": "leaders",
+    "motion": true,
+    "sections": [
+      "announcement",
+      "best",
+      "story",
+      "gallery",
+      "reviews",
+      "visit"
+    ],
+    "announcement": "Now taking bookings for the weekend",
+    "categories.title": "Tonight's menu",
+    "best.title": "The signatures",
+    "gallery.title": "",
+    "story.title": "A kitchen built around fire, season and patience",
+    "story.text": "Maison Noor opened as a twelve-seat counter. Today the menu still changes with the market: fish from the coast, lamb from local farms and herbs from our own rooftop.",
+    "story.image": "preset:marble",
+    "gallery": [],
+    "gallery.products": true,
+    "reviews.1.quote": "",
+    "reviews.1.name": "",
+    "reviews.2.quote": "",
+    "reviews.2.name": "",
+    "reviews.3.quote": "",
+    "reviews.3.name": "",
+    "footer.text": "Dinner from noon until late. Private dining for up to twenty guests.",
+    "hours": {
+      "sat": "12:00-23:30",
+      "sun": "12:00-23:30",
+      "mon": "12:00-23:30",
+      "tue": "12:00-23:30",
+      "wed": "12:00-23:30",
+      "thu": "12:00-00:30",
+      "fri": "13:00-00:30"
+    },
+    "social.show": [
+      "instagram",
+      "whatsapp"
+    ]
+  },
+  "defaultsAr": {
+    "cta.label": "احجز طاولتك",
+    "hero.eyebrow": "مطبخ شامي عصري",
+    "hero.title": "أمسية تستحق أن تتأنق لها.",
+    "hero.subtitle": "أطباق تذوّق موسمية، وشواية على الحطب، وقاعة هادئة تطل على المدينة. احجز طاولتك أو تصفّح منيو الليلة.",
+    "announcement": "نستقبل الآن حجوزات نهاية الأسبوع",
+    "categories.title": "قائمة الليلة",
+    "best.title": "أطباقنا المميزة",
+    "story.title": "مطبخ قائم على النار والموسم والصبر",
+    "story.text": "بدأ ميزون نور كاونترًا باثني عشر مقعدًا. واليوم ما زال المنيو يتغيّر مع السوق: سمك من الساحل، ولحم من مزارع محلية، وأعشاب من سطحنا.",
+    "footer.text": "العشاء من الظهر حتى وقت متأخر. غرفة خاصة تتسع لعشرين ضيفًا."
+  }
+}

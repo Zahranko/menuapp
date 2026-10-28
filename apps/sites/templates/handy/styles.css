@@ -1,5 +1,15 @@
 /* Template 021 "Handy": a friendly home-services site. Service picker in the hero, trust badges, cards with a Request button, areas, sticky request bar. */
 
+@import "../_kit/logo.css";
+@import "../_kit/options.css";
+@import "../_kit/cards.css";
+@import "../_kit/hero.css";
+@import "../_kit/layout.css";
+@import "../_kit/menu.css";
+@import "../_kit/sections.css";
+@import "../_kit/style.css";
+@import "./signature.css";
+
 .t-handy {
   container: page / inline-size;
   font-size: 15.5px;
@@ -254,11 +264,11 @@
 
   /* services */
   .services {
-    padding: 56px 16px 20px;
+    padding: calc(56px * var(--kit-space, 1)) 16px calc(20px * var(--kit-space, 1));
     scroll-margin-top: 64px;
   }
   .group {
-    padding-top: 26px;
+    padding-top: calc(26px * var(--kit-space, 1));
     scroll-margin-top: 74px;
   }
   .group h3 {
@@ -367,8 +377,8 @@
 
   /* areas */
   .areas {
-    margin: 40px 16px 0;
-    padding: 26px 20px;
+    margin: calc(40px * var(--kit-space, 1)) 16px 0;
+    padding: calc(26px * var(--kit-space, 1)) 20px;
     border-radius: var(--r);
     background: var(--acc);
     color: var(--acc-ink);
@@ -393,14 +403,15 @@
   .area-list li {
     padding: 6px 14px;
     border-radius: 999px;
-    background: color-mix(in srgb, var(--acc-ink) 14%, transparent);
+    /* An outline, not a tint: a tint lightens the accent behind the text, and some accents stop being readable. */
+    box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--acc-ink) 50%, transparent);
     font-size: 14px;
     font-weight: 700;
   }
 
   /* steps */
   .how {
-    padding: 60px 16px 20px;
+    padding: calc(60px * var(--kit-space, 1)) 16px calc(20px * var(--kit-space, 1));
     scroll-margin-top: 64px;
   }
   .steps {
@@ -445,7 +456,7 @@
 
   /* reviews */
   .reviews {
-    padding: 60px 16px 20px;
+    padding: calc(60px * var(--kit-space, 1)) 16px calc(20px * var(--kit-space, 1));
   }
   .review-list {
     display: grid;
@@ -473,7 +484,7 @@
 
   /* faq */
   .faq {
-    padding: 60px 16px 20px;
+    padding: calc(60px * var(--kit-space, 1)) 16px calc(20px * var(--kit-space, 1));
     scroll-margin-top: 64px;
   }
   .faq-list {
@@ -529,7 +540,7 @@
 
   /* visit */
   .visit {
-    padding: 60px 16px 30px;
+    padding: calc(60px * var(--kit-space, 1)) 16px calc(30px * var(--kit-space, 1));
     scroll-margin-top: 64px;
   }
   .visit-grid {
@@ -549,12 +560,22 @@
   }
 
   .foot {
-    padding: 22px 16px 30px;
+    padding: calc(22px * var(--kit-space, 1)) 16px calc(30px * var(--kit-space, 1));
     color: var(--muted);
     border-top: 1px solid var(--line);
   }
   &.has-bar .foot {
     padding-bottom: 100px;
+  }
+
+  /* Social accounts the owner shows (_kit/options.css draws the round icon links). */
+  .foot-social {
+    justify-content: flex-start;
+    margin-bottom: 14px;
+    color: var(--acc-text);
+  }
+  .foot-social a {
+    border-color: color-mix(in srgb, currentColor 40%, transparent);
   }
 
   /* sticky request bar */
@@ -589,6 +610,14 @@
     flex: none;
     min-height: 46px;
     margin-inline-start: auto;
+  }
+  /* The owner's button shape: a rounded bar around a rounded button, or a slim bar around a round one. */
+  &[data-order-shape="rounded"] .bar {
+    border-radius: 22px;
+  }
+  &[data-order-shape="circle"] .bar .btn {
+    width: 48px !important;
+    height: 48px !important;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -646,7 +675,7 @@
       font-size: calc(44px * var(--fs));
     }
     .services {
-      padding-top: 80px;
+      padding-top: calc(80px * var(--kit-space, 1));
     }
     .cards {
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -656,15 +685,15 @@
       display: flex;
       align-items: center;
       gap: 30px;
-      margin: 60px max(32px, calc((100cqi - 1180px) / 2)) 0;
-      padding: 34px 40px;
+      margin: calc(60px * var(--kit-space, 1)) max(32px, calc((100cqi - 1180px) / 2)) 0;
+      padding: calc(34px * var(--kit-space, 1)) 40px;
     }
     .areas h2 {
       flex: none;
       margin: 0;
     }
     .how {
-      padding-top: 90px;
+      padding-top: calc(90px * var(--kit-space, 1));
     }
     .steps {
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));

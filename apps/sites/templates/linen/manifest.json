@@ -4,9 +4,32 @@
   "name": "Linen List",
   "category": "Restaurant",
   "description": "A printed menu on linen paper: text only, dotted lines to the prices, one or two columns.",
+  "ar": {
+    "name": "لينن",
+    "category": "مطعم",
+    "description": "منيو مطبوع على ورق كتّان: نص فقط، ونقاط تمتد إلى الأسعار، بعمود أو عمودين."
+  },
   "version": 1,
+  "heroSlider": { "kind": "band" },
   "thumbnail": "/templates/linen/thumbnail.png",
   "sample": "restaurant",
+  "menu": { "own": ["columns"] },
+  "sectionsLayout": { "order": ["menu", "story", "visit"] },
+  "signature": {
+    "menu.layout": [
+      {"id":"ledger","base":"compact","label":"Letterpress menu","labelAr":"قائمة مطبوعة بالحروف","preview":"/templates/linen/previews/menu-ledger.svg"}
+    ],
+    "hero.variant": [
+      {"id":"letterpress","base":"type","label":"Printed title page","labelAr":"صفحة عنوان مطبوعة","preview":"/templates/linen/previews/hero-letterpress.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"printed","label":{"en":"Printed menu","ar":"القائمة المطبوعة"},"values":{"theme":"linen","accent":"#8C2F39","font":"classic","hero.variant":"letterpress","menu.layout":"ledger","header.layout":"centered"}},
+    {"id":"ivory","label":{"en":"Ivory dinner","ar":"عشاء عاجي"},"values":{"theme":"ivory","accent":"#9A5B1E","font":"elegant","hero.variant":"letterpress","menu.layout":"ledger","menu.columns":"two","footer.layout":"centered","style.tracking":"wide"}},
+    {"id":"slate","label":{"en":"Slate evening","ar":"مساء أردوازي"},"values":{"theme":"slate","accent":"#1F3A5F","font":"elegant","hero.variant":"type","menu.layout":"ledger","header.layout":"classic","story.layout":"quote"}},
+    {"id":"ink","label":{"en":"Ink and paper","ar":"حبر وورق"},"values":{"theme":"ink","accent":"#C9A45C","font":"classic","hero.variant":"letterpress","menu.layout":"compact","header.layout":"big","style.headings":"uppercase","style.tracking":"wide"}},
+    {"id":"lunch","label":{"en":"Garden lunch","ar":"غداء في الحديقة"},"values":{"theme":"linen","accent":"#2B4D3D","font":"soft","hero.variant":"stacked","menu.layout":"list","menu.photos":"side","header.layout":"classic","visit.layout":"cards"}}
+  ],
   "schema": [
     {
       "key": "font",
@@ -175,5 +198,13 @@
       "thu": "12:00-24:00",
       "fri": "13:00-24:00"
     }
+  },
+  "defaultsAr": {
+    "note": "الأسعار شاملة الضريبة. أخبرونا عن أي حساسية من الطعام.",
+    "hero.title": "طبخ بيتي، مثلما كانت تطبخ جدّاتنا.",
+    "hero.subtitle": "مقبلات للمشاركة، وخبز طازج من الفرن، وأطباق مطبوخة على مهل من وصفات العائلة. تعالوا جائعين.",
+    "announcement": "غداء عائلي كل جمعة من الساعة 1 ظهرًا",
+    "story.title": "مطبخنا",
+    "story.text": "كل وصفة في هذا المنيو جاءت من مطبخ عائلي. ونطبخ بالطريقة نفسها: طازج كل صباح، على مهل، وبزيت زيتون أكثر مما تتوقع."
   }
 }

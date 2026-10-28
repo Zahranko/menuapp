@@ -1,5 +1,15 @@
 /* Template 006 "Chalk Board": a café blackboard. Hand lettering, chalk dust, a daily special and hand-drawn boxes. */
 
+@import "../_kit/logo.css";
+@import "../_kit/options.css";
+@import "../_kit/cards.css";
+@import "../_kit/hero.css";
+@import "../_kit/layout.css";
+@import "../_kit/menu.css";
+@import "../_kit/sections.css";
+@import "../_kit/style.css";
+@import "./signature.css";
+
 .t-chalk {
   container: page / inline-size;
   --chalk: color-mix(in srgb, var(--ink) 72%, transparent);
@@ -21,6 +31,12 @@
   .board {
     position: relative;
     padding: 0 18px 10px;
+    /* The board itself, also without chalk dust (on a desktop the wall around it is the frame color). */
+    background: var(--bg);
+  }
+  /* The shared header and opening (Page layout) reach the edges of the board. */
+  .board > :is(.kit-hd.kit-hd.kit-hd, .kit-hv.kit-hv.kit-hv) {
+    margin-inline: -18px;
   }
   &.dust .board {
     background:
@@ -101,7 +117,7 @@
   /* today's special */
   .special {
     position: relative;
-    margin: 30px 0 10px;
+    margin: calc(30px * var(--kit-space, 1)) 0 calc(10px * var(--kit-space, 1));
     text-align: center;
   }
   .special h2 {
@@ -195,7 +211,7 @@
 
   /* menu */
   .menu {
-    padding-top: 30px;
+    padding-top: calc(30px * var(--kit-space, 1));
     scroll-margin-top: 10px;
   }
   .menu-title {
@@ -303,7 +319,7 @@
     flex-direction: column;
     align-items: center;
     max-width: 52ch;
-    margin: 44px auto 0;
+    margin: calc(44px * var(--kit-space, 1)) auto 0;
     text-align: center;
     scroll-margin-top: 10px;
   }
@@ -318,7 +334,7 @@
 
   /* visit */
   .visit {
-    margin-top: 44px;
+    margin-top: calc(44px * var(--kit-space, 1));
     scroll-margin-top: 10px;
   }
   .visit > h2 {
@@ -355,9 +371,18 @@
     color: var(--ink);
   }
 
+  /* Social accounts the owner shows (_kit/options.css draws the round icon links). */
+  .foot-social {
+    justify-content: center;
+    margin-bottom: 16px;
+    color: var(--acc-text);
+  }
+  .foot-social a {
+    border-color: color-mix(in srgb, currentColor 40%, transparent);
+  }
   .foot {
-    margin-top: 40px;
-    padding: 18px 0 20px;
+    margin-top: calc(40px * var(--kit-space, 1));
+    padding: calc(18px * var(--kit-space, 1)) 0 calc(20px * var(--kit-space, 1));
     border-top: 1.5px dashed var(--chalk);
     color: var(--muted);
     text-align: center;
@@ -380,6 +405,9 @@
         inset 0 0 0 2px #0003,
         inset 0 0 60px #0004,
         0 30px 60px -30px #000c;
+    }
+    .board > :is(.kit-hd.kit-hd.kit-hd, .kit-hv.kit-hv.kit-hv) {
+      margin-inline: -56px;
     }
     .head h1 {
       font-size: calc(84px * var(--fs));

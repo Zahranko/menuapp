@@ -4,12 +4,14 @@ import 'package:dio/dio.dart';
 
 import '../auth/token_store.dart';
 
-/// Builds the app's HTTP client: JSON, the bearer token on every call, and one silent token refresh
-/// when the API answers 401. When the refresh fails too, the tokens are cleared and [onSignedOut] runs.
+/// Builds the app's HTTP client: JSON, the app's language in Accept-Language, the bearer token on every call,
+/// and one silent token refresh when the API answers 401. When the refresh fails too, the tokens are cleared
+/// and [onSignedOut] runs.
 Dio createApiClient({
   required String baseUrl,
   required TokenStore tokens,
   required void Function() onSignedOut,
+  String Function()? language,
   HttpClientAdapter? adapter,
 }) {
   BaseOptions options() => BaseOptions(
@@ -27,8 +29,26 @@ Dio createApiClient({
     dio.httpClientAdapter = adapter;
     bare.httpClientAdapter = adapter;
   }
+  if (language != null) {
+    dio.interceptors.add(LanguageInterceptor(language));
+    bare.interceptors.add(LanguageInterceptor(language));
+  }
   dio.interceptors.add(AuthInterceptor(refreshClient: bare, tokens: tokens, onSignedOut: onSignedOut));
   return dio;
+}
+
+/// Sends the language the app shows now ("ar" or "en"), read per request so a switch applies at once.
+/// The API answers its messages (errors, validation) in that language.
+class LanguageInterceptor extends Interceptor {
+  LanguageInterceptor(this.language);
+
+  final String Function() language;
+
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    options.headers['Accept-Language'] = language();
+    handler.next(options);
+  }
 }
 
 /// Queued, so parallel 401s wait for one refresh instead of each spending the refresh token
@@ -75,9 +95,14 @@ class AuthInterceptor extends QueuedInterceptor {
       await tokens.save(access: access, refresh: body['refreshToken'] as String);
       await _retry(request, access, handler, err);
       return;
-    } on DioException {
-      await tokens.clear();
-      onSignedOut();
+    } on DioException catch (e) {
+      // Only a refused refresh ends the session. A timeout, no network or a server error
+      // (for example while the server wakes up) keeps the tokens for the next try.
+      final status = e.response?.statusCode;
+      if (status == 400 || status == 401 || status == 403) {
+        await tokens.clear();
+        onSignedOut();
+      }
       return handler.next(err);
     }
   }
@@ -98,5 +123,6 @@ class AuthInterceptor extends QueuedInterceptor {
       path.contains('/auth/register') ||
       path.contains('/auth/refresh') ||
       path.contains('/auth/forgot-password') ||
-      path.contains('/auth/slug-availability');
+      path.contains('/auth/slug-availability') ||
+      path.contains('/auth/account-availability');
 }

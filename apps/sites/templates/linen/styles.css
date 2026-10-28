@@ -1,5 +1,15 @@
 /* Template 002 "Linen List": a printed menu card. Text only, dotted leaders, one or two columns. */
 
+@import "../_kit/logo.css";
+@import "../_kit/options.css";
+@import "../_kit/cards.css";
+@import "../_kit/hero.css";
+@import "../_kit/layout.css";
+@import "../_kit/menu.css";
+@import "../_kit/sections.css";
+@import "../_kit/style.css";
+@import "./signature.css";
+
 .t-linen {
   container: page / inline-size;
   background:
@@ -86,7 +96,7 @@
 
   .intro {
     max-width: 52ch;
-    margin: 32px auto 0;
+    margin: calc(32px * var(--kit-space, 1)) auto 0;
     text-align: center;
     color: var(--muted);
     font-size: 17px;
@@ -94,7 +104,7 @@
 
   /* menu */
   .menu {
-    padding-top: 36px;
+    padding-top: calc(36px * var(--kit-space, 1));
     scroll-margin-top: 10px;
   }
   .menu-title {
@@ -231,8 +241,8 @@
 
   /* story */
   .story {
-    margin: 44px auto 0;
-    padding-top: 10px;
+    margin: calc(44px * var(--kit-space, 1)) auto 0;
+    padding-top: calc(10px * var(--kit-space, 1));
     max-width: 58ch;
     text-align: center;
     border-top: 3px double var(--line);
@@ -249,8 +259,8 @@
 
   /* visit */
   .visit {
-    margin-top: 48px;
-    padding-top: 28px;
+    margin-top: calc(48px * var(--kit-space, 1));
+    padding-top: calc(28px * var(--kit-space, 1));
     border-top: 3px double var(--line);
     scroll-margin-top: 10px;
   }
@@ -299,9 +309,18 @@
     border-color: var(--line);
   }
 
+  /* Social accounts the owner shows (_kit/options.css draws the round icon links). */
+  .foot-social {
+    justify-content: flex-start;
+    margin-bottom: 16px;
+    color: var(--acc-text);
+  }
+  .foot-social a {
+    border-color: color-mix(in srgb, currentColor 40%, transparent);
+  }
   .foot {
-    margin-top: 44px;
-    padding-top: 6px;
+    margin-top: calc(44px * var(--kit-space, 1));
+    padding-top: calc(6px * var(--kit-space, 1));
     border-top: 1px solid var(--line);
     color: var(--muted);
   }

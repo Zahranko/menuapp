@@ -1,0 +1,221 @@
+{
+  "group": "Moving strip",
+  "groupAr": "الشريط المتحرك",
+  "fields": [
+    {
+      "key": "ticker.style",
+      "type": "choice",
+      "label": "Strip shape",
+      "labelAr": "شكل الشريط",
+      "options": [
+        "auto",
+        "solid",
+        "outline",
+        "tilted",
+        "torn",
+        "tags",
+        "neon",
+        "double"
+      ],
+      "optionLabels": {
+        "auto": "Template default",
+        "solid": "Solid band",
+        "outline": "Outline",
+        "tilted": "Tilted",
+        "torn": "Torn paper",
+        "tags": "Label tags",
+        "neon": "Neon line",
+        "double": "Double lines"
+      },
+      "optionLabelsAr": {
+        "auto": "كما في القالب",
+        "solid": "شريط ممتلئ",
+        "outline": "إطار فقط",
+        "tilted": "مائل",
+        "torn": "ورق ممزّق",
+        "tags": "ملصقات منفصلة",
+        "neon": "خط نيون",
+        "double": "خطوط مزدوجة"
+      },
+      "previews": {
+        "auto": "/kit/previews/auto.svg",
+        "solid": "/kit/previews/ticker-solid.svg",
+        "outline": "/kit/previews/ticker-outline.svg",
+        "tilted": "/kit/previews/ticker-tilted.svg",
+        "torn": "/kit/previews/ticker-torn.svg",
+        "tags": "/kit/previews/ticker-tags.svg",
+        "neon": "/kit/previews/ticker-neon.svg",
+        "double": "/kit/previews/ticker-double.svg"
+      }
+    },
+    {
+      "key": "ticker.color",
+      "type": "choice",
+      "label": "Strip color",
+      "labelAr": "لون الشريط",
+      "options": [
+        "auto",
+        "accent",
+        "ink",
+        "paper",
+        "custom"
+      ],
+      "optionLabels": {
+        "auto": "Template default",
+        "accent": "Accent color",
+        "ink": "Dark",
+        "paper": "Light",
+        "custom": "My own color"
+      },
+      "optionLabelsAr": {
+        "auto": "كما في القالب",
+        "accent": "اللون المميز",
+        "ink": "داكن",
+        "paper": "فاتح",
+        "custom": "لوني الخاص"
+      },
+      "previews": {
+        "auto": "/kit/previews/auto.svg",
+        "accent": "/kit/previews/tickercolor-accent.svg",
+        "ink": "/kit/previews/tickercolor-ink.svg",
+        "paper": "/kit/previews/tickercolor-paper.svg",
+        "custom": "/kit/previews/tickercolor-custom.svg"
+      }
+    },
+    {
+      "key": "ticker.bg",
+      "type": "color",
+      "label": "My own strip color",
+      "labelAr": "لون الشريط الخاص",
+      "options": [
+        "#E5281E",
+        "#FFC21A",
+        "#FF5A1F",
+        "#2F8F4E",
+        "#1F6FEB",
+        "#7B2D6E",
+        "#D6336C",
+        "#141110"
+      ],
+      "custom": true
+    },
+    {
+      "key": "ticker.separator",
+      "type": "choice",
+      "label": "Between the specials",
+      "labelAr": "الفاصل بين العروض",
+      "options": [
+        "auto",
+        "diamond",
+        "star",
+        "dot",
+        "flame",
+        "slash",
+        "none"
+      ],
+      "optionLabels": {
+        "auto": "Template default",
+        "diamond": "Diamonds",
+        "star": "Stars",
+        "dot": "Dots",
+        "flame": "Flames",
+        "slash": "Slashes",
+        "none": "Nothing"
+      },
+      "optionLabelsAr": {
+        "auto": "كما في القالب",
+        "diamond": "معيّنات",
+        "star": "نجوم",
+        "dot": "نقاط",
+        "flame": "لهب",
+        "slash": "خطوط مائلة",
+        "none": "بلا فاصل"
+      },
+      "previews": {
+        "auto": "/kit/previews/auto.svg",
+        "diamond": "/kit/previews/tickersep-diamond.svg",
+        "star": "/kit/previews/tickersep-star.svg",
+        "dot": "/kit/previews/tickersep-dot.svg",
+        "flame": "/kit/previews/tickersep-flame.svg",
+        "slash": "/kit/previews/tickersep-slash.svg",
+        "none": "/kit/previews/tickersep-none.svg"
+      }
+    },
+    {
+      "key": "ticker.speed",
+      "type": "choice",
+      "label": "Speed",
+      "labelAr": "السرعة",
+      "options": [
+        "auto",
+        "slow",
+        "normal",
+        "fast",
+        "still"
+      ],
+      "optionLabels": {
+        "auto": "Template default",
+        "slow": "Slow",
+        "normal": "Normal",
+        "fast": "Fast",
+        "still": "Still"
+      },
+      "optionLabelsAr": {
+        "auto": "كما في القالب",
+        "slow": "بطيئة",
+        "normal": "عادية",
+        "fast": "سريعة",
+        "still": "ثابت لا يتحرك"
+      },
+      "previews": {
+        "auto": "/kit/previews/auto.svg",
+        "slow": "/kit/previews/tickerspeed-slow.svg",
+        "normal": "/kit/previews/tickerspeed-normal.svg",
+        "fast": "/kit/previews/tickerspeed-fast.svg",
+        "still": "/kit/previews/tickerspeed-still.svg"
+      }
+    },
+    {
+      "key": "ticker.edge",
+      "type": "choice",
+      "label": "Edges",
+      "labelAr": "الحواف",
+      "options": [
+        "auto",
+        "flames",
+        "none",
+        "zigzag",
+        "waves"
+      ],
+      "optionLabels": {
+        "auto": "Template default",
+        "flames": "Flames",
+        "none": "Straight",
+        "zigzag": "Zigzag",
+        "waves": "Waves"
+      },
+      "optionLabelsAr": {
+        "auto": "كما في القالب",
+        "flames": "لهب",
+        "none": "مستقيمة",
+        "zigzag": "متعرّجة",
+        "waves": "أمواج"
+      },
+      "previews": {
+        "auto": "/kit/previews/auto.svg",
+        "flames": "/kit/previews/tickeredge-flames.svg",
+        "none": "/kit/previews/tickeredge-none.svg",
+        "zigzag": "/kit/previews/tickeredge-zigzag.svg",
+        "waves": "/kit/previews/tickeredge-waves.svg"
+      }
+    }
+  ],
+  "defaults": {
+    "ticker.style": "auto",
+    "ticker.color": "auto",
+    "ticker.bg": "#E5281E",
+    "ticker.separator": "auto",
+    "ticker.speed": "auto",
+    "ticker.edge": "auto"
+  }
+}

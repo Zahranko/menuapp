@@ -4,9 +4,31 @@
   "name": "Pizzeria",
   "category": "Pizza",
   "description": "A wood-fired pizza place: round photo cutouts on colored bands, one per category.",
+  "ar": {
+    "name": "بيتزيريا",
+    "category": "بيتزا",
+    "description": "مطعم بيتزا على الحطب: صور دائرية على شرائط ملوّنة، شريط لكل قسم."
+  },
   "version": 1,
+  "heroSlider": { "kind": "band" },
   "thumbnail": "/templates/pizzeria/thumbnail.png",
   "sample": "pizza",
+  "sectionsLayout": { "order": ["menu", "story", "visit"] },
+  "signature": {
+    "menu.layout": [
+      {"id":"peel","base":"grid","label":"Pies on wooden peels","labelAr":"فطائر على ألواح خشبية","preview":"/templates/pizzeria/previews/menu-peel.svg"}
+    ],
+    "hero.variant": [
+      {"id":"oven","base":"arch","label":"Brick oven","labelAr":"فرن الحطب","preview":"/templates/pizzeria/previews/hero-oven.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"napoli","label":{"en":"Napoli","ar":"نابولي"},"values":{"theme":"napoli","accent":"#C8102E","font":"classic","menu.layout":"peel","hero.variant":"oven","header.layout":"classic"}},
+    {"id":"basil","label":{"en":"Basil garden","ar":"حديقة الريحان"},"values":{"theme":"basil","accent":"#2E7D32","font":"hand","menu.layout":"peel","hero.variant":"oven","header.layout":"centered","style.dividers":"wave"}},
+    {"id":"crust","label":{"en":"Golden crust","ar":"القشرة الذهبية"},"values":{"theme":"crust","accent":"#E07A1F","font":"bold","menu.layout":"peel","hero.variant":"circle","style.headings":"uppercase","visit.layout":"banner"}},
+    {"id":"night","label":{"en":"Pizza night","ar":"ليلة البيتزا"},"values":{"theme":"night","accent":"#E07A1F","font":"bold","menu.layout":"carousel","hero.variant":"oven","header.layout":"minimal"}},
+    {"id":"slice","label":{"en":"Slice shop","ar":"محل الشرائح"},"values":{"theme":"napoli","accent":"#1D3557","font":"bold","menu.layout":"list","hero.variant":"poster","header.layout":"pill","cards.style":"outlined","style.buttons":"square"}}
+  ],
   "schema": [
     {
       "key": "font",
@@ -138,7 +160,7 @@
       "story",
       "visit"
     ],
-    "announcement": "Two pizzas and a salad for 15 JD, every Monday",
+    "announcement": "Two pizzas and a free salad, every Monday",
     "story.title": "From our oven",
     "story.text": "Our oven was built by hand and burns oak at 450 degrees. A pizza takes ninety seconds, which is just enough time to choose the next one.",
     "hours": {
@@ -150,5 +172,13 @@
       "thu": "12:00-00:30",
       "fri": "13:00-00:30"
     }
+  },
+  "defaultsAr": {
+    "hero.title": "على الحطب، تسعون ثانية، وجاهزة",
+    "hero.subtitle": "عجينة ترتاح 48 ساعة، وبندورة من إيطاليا، وزعتر من جبالنا.",
+    "stamp": "على الحطب",
+    "announcement": "بيتزاتان وسلطة مجانًا، كل يوم اثنين",
+    "story.title": "من فرننا",
+    "story.text": "بُني فرننا باليد ويشتعل بخشب السنديان على 450 درجة. تنضج البيتزا في تسعين ثانية، وهي مدة تكفي بالضبط لتختار التالية."
   }
 }

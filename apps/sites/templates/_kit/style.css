@@ -1,0 +1,445 @@
+/*
+ * The owner's page style, shared by every template (each styles.css imports this file after cards.css and hero.css).
+ * templates/_kit/style.ts puts a data attribute on the template's root only for an option that differs from "Template
+ * default", so nothing here applies to a site that never changed them:
+ *   data-ps-text    text size (smaller, larger, big)              data-ps-head   heading style
+ *   data-ps-track   letter spacing in headings                    data-ps-space  space between sections (--kit-space)
+ *   data-ps-btn     buttons ([data-k~="btn"])                      data-ps-photo  photo shape ([data-k~="photo"], product photos)
+ *   data-ps-div     dividers between sections                     data-ps-tex    background texture
+ *   data-ps-motion  motion on scroll (CSS scroll-driven animations; nothing moves for visitors who prefer less motion)
+ * "Sections" below are the page's top-level [data-section] parts other than the header, the opening, the footer and the
+ * strips around them. Colors come from the template's own tokens (cards.css: --kc-ink, --kc-acc), so text keeps the
+ * contrast the template checks. The !important flags are owner overrides of each template's own styles, which are
+ * nested under the template's root class and so always more specific.
+ */
+
+/* ---------- text size ---------- */
+/* Zoom keeps each template's own proportions: the text and what sits around it grow together, and blocks still fit the screen. */
+[data-ps-text="smaller"] {
+  --kit-text: 0.92;
+}
+[data-ps-text="larger"] {
+  --kit-text: 1.1;
+}
+[data-ps-text="big"] {
+  --kit-text: 1.2;
+}
+[data-ps-text]
+  :is(h1, h2, h3, h4, p, dd, dt, blockquote, address, figcaption, .kit-card, .kit-cat):not(
+    :is(h1, h2, h3, h4, p, dd, dt, blockquote, address, figcaption, .kit-card, .kit-cat, [data-section="header"], dialog, .kit-order, .kit-fab) *
+  ) {
+  zoom: var(--kit-text);
+}
+/* Opening headlines are already set large: they grow or shrink half as much. */
+[data-ps-text] h1:not(:is(p, dd, dt, blockquote, address, figcaption, .kit-card, .kit-cat, [data-section="header"], dialog) *) {
+  zoom: calc(1 + (var(--kit-text) - 1) / 2);
+}
+
+/* On a phone, headings are already as large as the screen allows: larger and big text grows the rest of the page, not
+ * the headings, so their words still fit on a line. Capitals are wider than small letters, so capital display headings
+ * are set a little smaller there. */
+@media (max-width: 560px) {
+  [data-ps-head="uppercase"]:not(:lang(ar)) {
+    --kit-caps: 0.88;
+  }
+  :is([data-ps-text], [data-ps-head="uppercase"])
+    :is(h2, h3):not(:is(p, dd, dt, blockquote, address, figcaption, .kit-card, .kit-cat, [data-section="header"], dialog) *) {
+    zoom: calc(min(var(--kit-text, 1), 1) * var(--kit-caps, 1)) !important;
+  }
+  :is([data-ps-text], [data-ps-head="uppercase"]) h1:not(:is(p, dd, dt, blockquote, address, figcaption, .kit-card, .kit-cat, [data-section="header"], dialog) *) {
+    zoom: calc(min(1 + (var(--kit-text, 1) - 1) / 2, 1) * var(--kit-caps, 1)) !important;
+  }
+}
+
+/* ---------- headings ---------- */
+/* Words in display headings are never cut in the middle ("STRONGE R"): they wrap between words, hyphenate only where the
+ * text has a soft hyphen, and only a smaller heading breaks a word that is longer than the whole line. */
+:is([data-ps-text], [data-ps-head], [data-ps-track]) :is(h1, h2) {
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+  hyphens: manual !important;
+}
+/* A business name can be one made-up word longer than the screen: in a name heading only that word breaks. */
+:is([data-ps-text], [data-ps-head], [data-ps-track]) :is(h1, h2):is(.kit-name, [data-k~="name"]) {
+  overflow-wrap: break-word !important;
+}
+:is([data-ps-text], [data-ps-head], [data-ps-track]) h3 {
+  overflow-wrap: break-word;
+}
+[data-ps-head="normal"] :is(h1, h2, h3) {
+  font-style: normal !important;
+  text-transform: none !important;
+}
+[data-ps-head="uppercase"] :is(h1, h2, h3) {
+  font-style: normal !important;
+  text-transform: uppercase !important;
+}
+/* Arabic has no italics; its headings stay upright. */
+[data-ps-head="italic"] :is(h1, h2, h3):not(:lang(ar)) {
+  font-style: italic !important;
+}
+/* A tall, narrow display face (Bebas Neue, capitals only); Arabic letters fall back to the template's own heading font. */
+[data-ps-head="condensed"] :is(h1, h2):not(:lang(ar)) {
+  font-family: var(--f-bebas), var(--fd, var(--sdisp, sans-serif)) !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 0.98 !important;
+  text-transform: uppercase !important;
+}
+/* Outlined: only display headings, the opening headline and section titles. Small headings stay solid: titles in the
+ * header, footer and highlight strip, and those a template marks data-k="label" (under 26px on a phone). Arabic letters
+ * are joined and fine-stroked, hollow they are hard to read: Arabic headings stay solid (like italic). The letters keep
+ * their color for the outline (and for contrast checks); only their inside is see-through. Section titles keep a light
+ * tint inside. */
+[data-ps-head="outlined"]
+  :is(h1, h2):not(:lang(ar), [data-k~="label"], .sr-only, :is([data-section="header"], [data-section="footer"], [data-section="highlights"], dialog, .kit-card, .kit-cat) *) {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: max(1.2px, 0.035em) currentColor;
+  paint-order: stroke fill;
+}
+[data-ps-head="outlined"]
+  h2:not(:lang(ar), [data-k~="label"], .sr-only, :is([data-section="header"], [data-section="footer"], [data-section="highlights"], dialog, .kit-card, .kit-cat) *) {
+  -webkit-text-fill-color: color-mix(in srgb, currentColor 22%, transparent);
+}
+
+/* ---------- letter spacing in headings ---------- */
+/* Arabic letters join, so spacing them apart would break the words: Arabic headings keep normal spacing. */
+[data-ps-track="tight"] :is(h1, h2, h3):not(:lang(ar)) {
+  letter-spacing: -0.03em !important;
+}
+[data-ps-track="normal"] :is(h1, h2, h3) {
+  letter-spacing: 0 !important;
+}
+[data-ps-track="wide"] :is(h1, h2, h3):not(:lang(ar)) {
+  letter-spacing: 0.06em !important;
+}
+/* Capitals already read wide: on a phone they get only a little extra spacing, so long words still fit. */
+@media (max-width: 560px) {
+  [data-ps-head="uppercase"][data-ps-track="wide"] :is(h1, h2, h3):not(:lang(ar)) {
+    letter-spacing: 0.02em !important;
+  }
+}
+/* With larger or big text, wide spacing would push long words in display headings past a phone's edge: they keep
+ * normal spacing there; smaller headings stay wide. */
+:is([data-ps-text="larger"], [data-ps-text="big"])[data-ps-track="wide"] :is(h1, h2) {
+  letter-spacing: 0 !important;
+}
+
+/* ---------- line spacing in headings ---------- */
+/* As specific as the "Tall and narrow" heading style and written after it, so the owner's line spacing wins over its own. */
+[data-template][data-ps-lh="tight"] :is(h1, h2, h3) {
+  line-height: 0.98 !important;
+}
+[data-template][data-ps-lh="normal"] :is(h1, h2, h3) {
+  line-height: 1.15 !important;
+}
+[data-template][data-ps-lh="relaxed"] :is(h1, h2, h3) {
+  line-height: 1.35 !important;
+}
+
+/* ---------- Arabic headings never run into each other ---------- */
+/* Arabic letters rise and fall much further than Latin capitals (dots, hamzas, tails below the line), so a display heading
+ * set as tight as a Latin poster face lets its lines crash into each other. Whatever the template, heading style, font or
+ * line spacing, Arabic headings and names keep at least 1.3 line height and no letter spacing (it would pull the joined
+ * letters apart); "Relaxed" opens them up further.
+ * A site in English whose owner wrote Arabic (data-ar-text, from _kit/options.ts, says where) draws it in the browser's
+ * fallback Arabic face, which is taller still: the opening's headings ("hero") and the business name ("name") get 1.45
+ * and no letter spacing; other headings ("titles") get the Arabic minimum. */
+[data-template] :is(h1, h2, h3, .kit-name, .kit-foot-name):lang(ar),
+[data-template][data-ar-text~="titles"] :is(h2, h3) {
+  line-height: 1.3 !important;
+  letter-spacing: normal !important;
+}
+[data-template][data-ar-text~="hero"] :is([data-section="hero"], .kit-hv) :is(h1, h2),
+[data-template][data-ar-text~="name"] :is(.kit-name, .kit-foot-name, [data-section="hero"] h1, .kit-hv-title) {
+  line-height: 1.45 !important;
+  letter-spacing: normal !important;
+}
+[data-template][data-ps-lh="relaxed"] :is(h1, h2, h3, .kit-name, .kit-foot-name):lang(ar),
+[data-template][data-ps-lh="relaxed"][data-ar-text~="titles"] :is(h2, h3) {
+  line-height: 1.5 !important;
+}
+[data-template][data-ps-lh="relaxed"][data-ar-text~="hero"] :is([data-section="hero"], .kit-hv) :is(h1, h2),
+[data-template][data-ps-lh="relaxed"][data-ar-text~="name"] :is(.kit-name, .kit-foot-name, [data-section="hero"] h1, .kit-hv-title) {
+  line-height: 1.6 !important;
+}
+
+/* ---------- space between sections ---------- */
+/* Templates multiply the vertical padding and margins of their sections by --kit-space (1 when unset). */
+[data-ps-space="compact"] {
+  --kit-space: 0.55;
+}
+[data-ps-space="airy"] {
+  --kit-space: 1.6;
+}
+
+/* ---------- buttons ---------- */
+[data-template][data-ps-btn="pill"] [data-k~="btn"] {
+  border-radius: 999px !important;
+}
+[data-template][data-ps-btn="rounded"] [data-k~="btn"] {
+  border-radius: 10px !important;
+}
+[data-template][data-ps-btn="square"] [data-k~="btn"] {
+  border-radius: 0 !important;
+}
+/* [data-template] makes these win over a template's own !important colors. Outline and underline drop the fill and take the color of the text around them, which the template keeps readable. */
+[data-template][data-ps-btn="outline"] [data-k~="btn"] {
+  border: 2px solid currentColor !important;
+  border-radius: 10px;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: inherit !important;
+}
+[data-template][data-ps-btn="underline"] [data-k~="btn"] {
+  min-height: 0 !important;
+  padding: 6px 2px !important;
+  border: 0 !important;
+  border-bottom: 2px solid currentColor !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: inherit !important;
+}
+[data-template][data-ps-btn="shadow"] [data-k~="btn"] {
+  box-shadow: 4px 4px 0 var(--kc-ink) !important;
+}
+[data-template][data-ps-btn="shadow"] [data-k~="btn"]:dir(rtl) {
+  box-shadow: -4px 4px 0 var(--kc-ink) !important;
+}
+
+/* ---------- photo shape ---------- */
+/* Section photos ([data-k~="photo"]) and, unless the owner set the card photo shape, product and category photos. The
+ * shape is given to the box and its picture rather than clipping the box, so labels on a photo's corner stay whole. */
+[data-ps-photo="rounded"] {
+  --kit-ps-r: 14px;
+}
+[data-ps-photo="square"] {
+  --kit-ps-r: 0;
+}
+[data-ps-photo="soft"] {
+  --kit-ps-r: 32px;
+}
+/* An arch: the top corners as round as half the width. */
+[data-ps-photo="arch"] {
+  --kit-ps-r: 999px 999px 0 0;
+}
+[data-ps-photo="blob"] {
+  --kit-ps-r: 58% 42% 55% 45% / 46% 54% 46% 54%;
+}
+[data-ps-photo="circle"] {
+  --kit-ps-r: 50%;
+}
+/* A photo with text laid over it ([data-k~="overlay"]) keeps a full box: it takes very rounded corners instead of a cut-out shape. */
+:is([data-ps-photo="arch"], [data-ps-photo="circle"], [data-ps-photo="blob"]) [data-k~="overlay"] {
+  --kit-ps-r: 32px;
+}
+[data-ps-photo] [data-k~="photo"],
+[data-ps-photo]:not([data-card-photo]) :is(.kit-card-media, .kit-cat-media) {
+  overflow: visible !important;
+  border-radius: var(--kit-ps-r) !important;
+
+  & :is(img, picture, svg, .kit-ps-fill),
+  &::before,
+  &::after {
+    border-radius: var(--kit-ps-r) !important;
+  }
+}
+
+/* A circle: a thumbnail beside the text just turns round; a photo across the top of a card (.kit-flush) or a section photo
+ * becomes a round plate in the middle. Gallery tiles ([data-k~="fill"]) keep their place in the grid and turn round or oval. */
+[data-ps-photo="circle"]:not([data-card-photo]) :is(.kit-card-media, .kit-cat-media).kit-flush:not([data-k~="overlay"]),
+[data-ps-photo="circle"] [data-k~="photo"]:not([data-k~="fill"], [data-k~="overlay"]) {
+  flex: none !important;
+  align-self: center !important;
+  justify-self: center !important;
+  width: min(100%, var(--kit-circle, 240px)) !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  aspect-ratio: 1 / 1 !important;
+  margin-inline: auto !important;
+}
+/* Other product photos (side thumbnails, grid tiles) keep their width, up to the plate size, and become as tall as wide. */
+[data-ps-photo="circle"]:not([data-card-photo]) :is(.kit-card-media, .kit-cat-media):not(.kit-flush, [data-k~="overlay"]) {
+  align-self: center !important;
+  flex-grow: 0 !important;
+  flex-basis: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  max-width: var(--kit-circle, 240px) !important;
+  aspect-ratio: 1 / 1 !important;
+}
+[data-ps-photo="circle"]:not([data-card-photo]) :is(.kit-card, .kit-cat) > :is(.kit-card-media, .kit-cat-media).kit-flush {
+  margin-top: 14px !important;
+}
+
+/* ---------- dividers between sections ---------- */
+/* The divider sits in a band at the top of each section (a transparent top border, so the section's own color shows). */
+[data-ps-div]
+  [data-section]:not(
+    [data-section="header"],
+    [data-section="hero"],
+    [data-section="announcement"],
+    [data-section="footer"],
+    [data-section="highlights"],
+    [data-section="ticker"],
+    [data-section="marquee"],
+    [data-section="order"],
+    [data-section="hero-photos"],
+    [data-section="social"],
+    [data-section] [data-section],
+    [data-k~="boxed"]
+  ) {
+  border-top: 0 !important;
+}
+[data-ps-div]:not([data-ps-div="none"])
+  [data-section]:not(
+    [data-section="header"],
+    [data-section="hero"],
+    [data-section="announcement"],
+    [data-section="footer"],
+    [data-section="highlights"],
+    [data-section="ticker"],
+    [data-section="marquee"],
+    [data-section="order"],
+    [data-section="hero-photos"],
+    [data-section="social"],
+    [data-section] [data-section],
+    [data-k~="boxed"]
+  ) {
+  --kit-div-h: 22px;
+  position: relative;
+  border-top: var(--kit-div-h) solid transparent !important;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: calc(-1 * var(--kit-div-h));
+    inset-inline: max(18px, calc((100% - 1160px) / 2));
+    height: var(--kit-div-h);
+    background: var(--kit-div-bg);
+    -webkit-mask: var(--kit-div-mask, none) center / 28px 14px repeat-x;
+    mask: var(--kit-div-mask, none) center / 28px 14px repeat-x;
+    pointer-events: none;
+  }
+}
+/* The shapes, as variables on the root (only the sections above draw them). */
+[data-ps-div] {
+  --kit-div-c: color-mix(in srgb, var(--kc-ink) 42%, transparent);
+}
+[data-ps-div="line"] {
+  --kit-div-bg: linear-gradient(var(--kit-div-c), var(--kit-div-c)) center / 100% 1.5px no-repeat;
+}
+[data-ps-div="dots"] {
+  --kit-div-bg: radial-gradient(circle, var(--kit-div-c) 0 2px, transparent 2.5px) center / 16px 16px repeat-x;
+}
+[data-ps-div="slant"] {
+  --kit-div-bg: linear-gradient(to top right, transparent calc(50% - 1.2px), var(--kit-div-c) calc(50% - 1px), var(--kit-div-c) calc(50% + 1px), transparent calc(50% + 1.2px));
+}
+[data-ps-div="slant"]:dir(rtl) {
+  --kit-div-bg: linear-gradient(to top left, transparent calc(50% - 1.2px), var(--kit-div-c) calc(50% - 1px), var(--kit-div-c) calc(50% + 1px), transparent calc(50% + 1.2px));
+}
+[data-ps-div="wave"] {
+  --kit-div-bg: var(--kit-div-c);
+  --kit-div-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='14' viewBox='0 0 28 14'%3E%3Cpath d='M0 7 Q7 1 14 7 T28 7' fill='none' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E");
+}
+[data-ps-div="zigzag"] {
+  --kit-div-bg: var(--kit-div-c);
+  --kit-div-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='14' viewBox='0 0 28 14'%3E%3Cpath d='M0 10 L7 4 L14 10 L21 4 L28 10' fill='none' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E");
+}
+
+/* ---------- background texture ---------- */
+/* Drawn on the page itself, under every section: panels and bands keep their plain color, so text over them is untouched. */
+[data-ps-tex="none"] {
+  background-image: none !important;
+}
+[data-ps-tex="dots"] {
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--kc-ink) 16%, transparent) 0 1.1px, transparent 1.6px) !important;
+  background-size: 18px 18px !important;
+}
+[data-ps-tex="grid"] {
+  background-image: linear-gradient(color-mix(in srgb, var(--kc-ink) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--kc-ink) 7%, transparent) 1px, transparent 1px) !important;
+  background-size: 26px 26px !important;
+}
+[data-ps-tex="stripes"] {
+  background-image: repeating-linear-gradient(135deg, color-mix(in srgb, var(--kc-ink) 6%, transparent) 0 2px, transparent 2px 14px) !important;
+  background-size: auto !important;
+}
+[data-ps-tex="grain"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0.9 0 0 0 -0.32'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") !important;
+  background-size: 180px 180px !important;
+}
+[data-ps-tex="paper"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.03 0.5' numOctaves='2' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.4 0 0 0 0 0.32 0.32 0 0 0 -0.12'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E"),
+    radial-gradient(120% 90% at 50% 0%, color-mix(in srgb, #fff 6%, transparent), transparent 70%) !important;
+  background-size:
+    320px 320px,
+    100% 100% !important;
+}
+
+/* On a dark theme (the template sets color-scheme: dark on its root), paper fibres read as streaks: it becomes a plain,
+ * barely visible fine grain of light specks. */
+[data-ps-tex="paper"][style*="color-scheme:dark"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='1' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0.35 0 0 0 -0.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E") !important;
+  background-size: 160px 160px !important;
+}
+
+/* On a dark theme the gray grain lightens the page enough to cost light and colored text its contrast (accent text set
+ * at 4.5:1 on the plain page fell to 4.4:1): it is fainter. */
+[data-ps-tex="grain"][style*="color-scheme:dark"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0.3 0 0 0 -0.11'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") !important;
+}
+
+/* ---------- motion on scroll ---------- */
+/* "No motion" stops the template's own animations in its sections. */
+[data-ps-motion="none"] [data-section] :is(*, *::before, *::after) {
+  animation: none !important;
+}
+/* Fade, rise and playful: headings, cards, photos and paragraphs of each section come in as they scroll into view.
+ * Only the starting state is set, so each element ends exactly as the template drew it. Browsers without scroll-driven
+ * animations show the page still. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    :is([data-ps-motion="fade"], [data-ps-motion="rise"], [data-ps-motion="playful"])
+      [data-section]:not([data-section="header"], [data-section="hero"], [data-section="announcement"], [data-section="ticker"], [data-section="marquee"], [data-section="order"])
+      :is(h2, .kit-card, .kit-cat, [data-k~="photo"], blockquote, p):not(:is(.kit-card, .kit-cat, blockquote, [data-k~="photo"], dialog) *) {
+      animation: kit-ps-fade linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 70%;
+    }
+    [data-ps-motion="rise"] [data-section] :is(h2, .kit-card, .kit-cat, [data-k~="photo"], blockquote, p) {
+      animation-name: kit-ps-rise;
+    }
+    [data-ps-motion="playful"] [data-section] :is(h2, .kit-card, .kit-cat, [data-k~="photo"], blockquote, p) {
+      animation-name: kit-ps-playful;
+      animation-range: entry 0% entry 85%;
+    }
+  }
+}
+
+@keyframes kit-ps-fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes kit-ps-rise {
+  from {
+    opacity: 0;
+    translate: 0 36px;
+  }
+}
+@keyframes kit-ps-playful {
+  from {
+    opacity: 0;
+    translate: 0 44px;
+    scale: 0.86;
+    rotate: -4deg;
+  }
+  60% {
+    scale: 1.03;
+    rotate: 1deg;
+  }
+}

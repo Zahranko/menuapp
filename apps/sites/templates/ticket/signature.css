@@ -1,0 +1,118 @@
+/*
+ * Ticket's own layout options (manifest "signature", _kit/signatures.ts):
+ *   hero.variant "stub"     the opening as an admission ticket: punched notches, a perforated stub, a barcode (base: "poster")
+ *   menu.layout  "tickets"  every item a tear-off ticket, the price on its stub behind a perforation (base: "list")
+ */
+[data-template="ticket"] {
+  --sig-notch: radial-gradient(circle 11px at 0 50%, #0000 97%, #000) 0 0 / 51% 100% no-repeat, radial-gradient(circle 11px at 100% 50%, #0000 97%, #000) 100% 0 / 51% 100% no-repeat;
+}
+
+/* ---------- ticket stub ---------- */
+[data-template="ticket"] .kit-hv.kit-hv[data-sig~="stub"] {
+  overflow: visible;
+  & .kit-hv-in {
+    margin: 10px 0 18px;
+    padding: 24px 22px 54px;
+    border-radius: 10px;
+    background: var(--k-acc);
+    color: var(--k-acc-ink);
+    mask: var(--sig-notch);
+  }
+  & .kit-hv-in::after {
+    content: "";
+    position: absolute;
+    inset: auto 22px 18px;
+    height: 22px;
+    background: repeating-linear-gradient(90deg, currentColor 0 2px, transparent 2px 4px, currentColor 4px 5px, transparent 5px 8px, currentColor 8px 11px, transparent 11px 13px);
+    opacity: 0.85;
+  }
+  & :is(.kit-hv-title, .kit-hv-eyebrow, .kit-hv-lede, .kit-hv-meta) {
+    color: inherit;
+  }
+  & .kit-hv-title {
+    text-transform: uppercase;
+  }
+  & .kit-hv-media {
+    border-radius: 6px;
+    outline: 2px dashed currentColor;
+    outline-offset: 5px;
+    rotate: 0deg;
+  }
+  & .kit-hv-btn {
+    border-color: var(--k-acc-ink);
+    background: var(--k-acc-ink);
+    color: var(--k-acc);
+    border-radius: 4px;
+  }
+  & .kit-hv-btn.is-second {
+    background: transparent;
+    color: var(--k-acc-ink);
+  }
+  & :is(.kit-hv-btn, .kit-hv-pick):focus-visible {
+    outline-color: var(--k-acc-ink);
+  }
+}
+
+/* ---------- tear-off tickets ---------- */
+[data-template="ticket"] .kit-mn.kit-mn.kit-mn[data-sig~="tickets"] {
+  & .kit-mn-list {
+    gap: 10px;
+  }
+  & .kit-mn-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: stretch;
+    gap: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    background: var(--k-surf);
+    box-shadow: none;
+    mask: var(--sig-notch);
+  }
+  & .kit-mn-item:focus-visible {
+    outline: 2px solid var(--k-acc-text);
+    outline-offset: -5px;
+  }
+  & .kit-mn-media {
+    display: none;
+  }
+  & .kit-mn-text {
+    padding: 14px 18px;
+    padding-inline-start: 22px;
+  }
+  & .kit-mn-head {
+    display: block;
+  }
+  & .kit-mn-head .kit-mn-price {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-end: 0;
+    display: grid;
+    place-items: center;
+    width: 84px;
+    border-inline-start: 2px dashed var(--k-bg);
+    background: var(--k-acc);
+    color: var(--k-acc-ink);
+    font-weight: 800;
+  }
+  & .kit-mn-item {
+    position: relative;
+    padding-inline-end: 84px;
+  }
+  & .kit-mn-dots {
+    display: none;
+  }
+  & .kit-mn-name {
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  & .kit-mn-title {
+    border-bottom: 2px dashed var(--k-line);
+  }
+}
+
+/* The kit pulls the first row of a list up; a tickets row keeps its own top padding. */
+[data-template="ticket"] .kit-mn.kit-mn.kit-mn[data-sig~="tickets"] .kit-mn-li:first-child .kit-mn-item {
+  padding-top: 0;
+}

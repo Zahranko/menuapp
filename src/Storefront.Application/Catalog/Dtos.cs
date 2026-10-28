@@ -2,9 +2,10 @@ using Storefront.Domain.Catalog;
 
 namespace Storefront.Application.Catalog;
 
-public sealed record CategoryDto(Guid Id, string Name, int SortOrder, int ProductCount)
+/// <summary>A category. <see cref="ParentId"/> is the main category it sits under, or null for a main category (one level deep).</summary>
+public sealed record CategoryDto(Guid Id, string Name, Guid? ParentId, int SortOrder, int ProductCount)
 {
-    public static CategoryDto From(Category c, int productCount) => new(c.Id, c.Name, c.SortOrder, productCount);
+    public static CategoryDto From(Category c, int productCount) => new(c.Id, c.Name, c.ParentId, c.SortOrder, productCount);
 }
 
 public sealed record ProductDto(
@@ -18,10 +19,13 @@ public sealed record ProductDto(
     bool IsAvailable,
     bool IsFeatured,
     int SortOrder,
-    DateTimeOffset UpdatedAt)
+    DateTimeOffset UpdatedAt,
+    string? CustomLabel,
+    string? CustomLabelAr)
 {
     public static ProductDto From(Product p) =>
-        new(p.Id, p.CategoryId, p.Name, p.Description, p.Price, p.ImageUrl, p.Label, p.IsAvailable, p.IsFeatured, p.SortOrder, p.UpdatedAt);
+        new(p.Id, p.CategoryId, p.Name, p.Description, p.Price, p.ImageUrl, p.Label, p.IsAvailable, p.IsFeatured, p.SortOrder, p.UpdatedAt,
+            p.CustomLabel, p.CustomLabelAr);
 }
 
 internal static class CatalogErrors

@@ -25,6 +25,9 @@ public interface IIdentityService
     /// <summary>Counts failures and locks the account after too many.</summary>
     Task<PasswordCheck> CheckPasswordAsync(Guid userId, string password, CancellationToken ct);
 
+    /// <summary>Hashes the password against a throwaway hash, so a login for an unknown account takes as long as a real check.</summary>
+    void CheckPasswordOfNoOne(string password);
+
     Task<string> CreatePasswordResetTokenAsync(Guid userId, CancellationToken ct);
 
     Task<Result> ResetPasswordAsync(string email, string token, string newPassword, CancellationToken ct);
@@ -49,6 +52,12 @@ public interface ITokenService
 public interface IRefreshTokenRepository
 {
     Task<Domain.Accounts.RefreshToken?> FindByHashAsync(string hash, CancellationToken ct);
+
+    /// <summary>
+    /// Revokes the token in one conditional database update, so of two requests racing with the same token only one wins.
+    /// False when it was already revoked (or does not exist).
+    /// </summary>
+    Task<bool> TryRevokeAsync(Guid tokenId, DateTimeOffset now, CancellationToken ct);
 
     Task<IReadOnlyList<Domain.Accounts.RefreshToken>> ListForUserAsync(Guid userId, CancellationToken ct);
 

@@ -1,0 +1,333 @@
+{
+  "id": "couture",
+  "number": 29,
+  "name": "Couture",
+  "category": "Fashion boutique",
+  "description": "A luxury boutique with its own pages: a full-screen lookbook opening, tall collection tiles, the edit, most-loved pieces, a photo lookbook and private appointments on WhatsApp.",
+  "ar": {
+    "name": "كوتور",
+    "category": "بوتيك أزياء",
+    "description": "بوتيك فاخر بصفحات خاصة: افتتاحية بصورة بملء الشاشة، ومربعات طويلة للمجموعات، ومختاراتنا، والقطع الأكثر طلبًا، ومعرض إطلالات، ومواعيد خاصة عبر واتساب."
+  },
+  "version": 1,
+  "heroSlider": { "kind": "backdrop", "source": "hero.image" },
+  "pageStyle": { "skip": ["style.motion"] },
+  "tier": "pro",
+  "thumbnail": "/templates/couture/thumbnail.png",
+  "sample": "couture",
+  "sectionsLayout": { "order": ["menu", "story", "best", "gallery", "reviews", "visit"] },
+  "signature": {
+    "hero.variant": [
+      {"id":"runway","base":"full","label":"Runway","labelAr":"منصة العرض","preview":"/templates/couture/previews/hero-runway.svg"}
+    ],
+    "menu.layout": [
+      {"id":"edit","base":"large","label":"The edit","labelAr":"المختارات","preview":"/templates/couture/previews/menu-edit.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"ivory","label":{"en":"Ivory runway","ar":"منصة عاجية"},"values":{"theme":"ivory","accent":"#9A7445","font":"elegant","hero.variant":"runway","menu.layout":"edit","header.layout":"centered"}},
+    {"id":"noir","label":{"en":"Noir","ar":"أسود"},"values":{"theme":"noir","accent":"#9A7445","font":"elegant","hero.variant":"runway","menu.layout":"edit","style.tracking":"wide"}},
+    {"id":"blush","label":{"en":"Blush atelier","ar":"مشغل وردي"},"values":{"theme":"blush","accent":"#6E1F2B","font":"classic","hero.variant":"runway","menu.layout":"edit","style.photos":"arch"}},
+    {"id":"sage","label":{"en":"Sage salon","ar":"صالون المريمية"},"values":{"theme":"sage","accent":"#2F4A3A","font":"elegant","hero.variant":"split","menu.layout":"edit"}},
+    {"id":"classic","label":{"en":"Tailor","ar":"خيّاط"},"values":{"theme":"ivory","accent":"#1B1712","font":"classic","hero.variant":"runway","menu.layout":"magazine","header.layout":"minimal","style.buttons":"square"}}
+  ],
+  "schema": [
+    {
+      "key": "font",
+      "type": "choice",
+      "label": "Font style",
+      "group": "Brand",
+      "options": ["elegant", "classic", "naskh"],
+      "optionLabels": {
+        "elegant": "Elegant",
+        "classic": "Classic",
+        "naskh": "Naskh"
+      }
+    },
+    {
+      "key": "logo",
+      "type": "image",
+      "label": "Logo",
+      "group": "Brand"
+    },
+    {
+      "key": "theme",
+      "type": "palette",
+      "label": "Color theme",
+      "group": "Brand",
+      "options": ["ivory", "noir", "blush", "sage"],
+      "optionLabels": {
+        "ivory": "Ivory",
+        "noir": "Noir",
+        "blush": "Blush",
+        "sage": "Sage"
+      },
+      "optionLabelsAr": {
+        "ivory": "عاجي",
+        "noir": "أسود",
+        "blush": "وردي فاتح",
+        "sage": "أخضر مريمي"
+      },
+      "swatches": {
+        "ivory": "#F7F3EC",
+        "noir": "#0F0E0C",
+        "blush": "#F4E9E4",
+        "sage": "#E8EAE2"
+      }
+    },
+    {
+      "key": "accent",
+      "type": "color",
+      "label": "Accent color",
+      "group": "Brand",
+      "options": ["#9A7445", "#6E1F2B", "#1B1712", "#2F4A3A"]
+    },
+    {
+      "key": "cta.label",
+      "type": "text",
+      "label": "Order button text",
+      "group": "Navigation",
+      "max": 30
+    },
+    {
+      "key": "announcement",
+      "type": "text",
+      "label": "Announcement",
+      "group": "Navigation",
+      "max": 80
+    },
+    {
+      "key": "hero.image",
+      "type": "image",
+      "label": "Hero image",
+      "group": "Hero header",
+      "presets": ["drape", "fitting", "rail", "marble", "arches", "noir", "loft", "concrete"]
+    },
+    {
+      "key": "hero.eyebrow",
+      "type": "text",
+      "label": "Small line above the headline",
+      "group": "Hero header",
+      "max": 40
+    },
+    {
+      "key": "hero.title",
+      "type": "text",
+      "label": "Headline",
+      "group": "Hero header",
+      "max": 60
+    },
+    {
+      "key": "hero.subtitle",
+      "type": "textarea",
+      "label": "Subtext",
+      "group": "Hero header",
+      "max": 140
+    },
+    {
+      "key": "motion",
+      "type": "toggle",
+      "label": "Animations",
+      "group": "Layout"
+    },
+    {
+      "key": "sections",
+      "type": "toggles",
+      "label": "Home page sections",
+      "group": "Sections",
+      "options": ["announcement", "edit", "story", "best", "gallery", "reviews", "visit"],
+      "optionLabels": {
+        "announcement": "Announcement bar",
+        "edit": "The edit (new and featured)",
+        "story": "About us",
+        "best": "Most loved",
+        "gallery": "Lookbook",
+        "reviews": "Reviews",
+        "visit": "Appointments, hours and contact"
+      },
+      "optionLabelsAr": {
+        "announcement": "شريط الإعلان",
+        "edit": "مختاراتنا (الجديد والمميز)",
+        "story": "من نحن",
+        "best": "الأكثر طلبًا",
+        "gallery": "معرض الإطلالات",
+        "reviews": "آراء الزبائن",
+        "visit": "المواعيد والأوقات والتواصل"
+      }
+    },
+    {
+      "key": "categories.title",
+      "type": "text",
+      "label": "Collections headline",
+      "labelAr": "عنوان المجموعات",
+      "group": "Headlines",
+      "max": 50
+    },
+    {
+      "key": "edit.title",
+      "type": "text",
+      "label": "Featured pieces headline",
+      "labelAr": "عنوان القطع المميزة",
+      "group": "Headlines",
+      "max": 50
+    },
+    {
+      "key": "best.title",
+      "type": "text",
+      "label": "Best sellers headline",
+      "group": "Headlines",
+      "max": 50
+    },
+    {
+      "key": "gallery.title",
+      "type": "text",
+      "label": "Lookbook headline",
+      "labelAr": "عنوان معرض الإطلالات",
+      "group": "Headlines",
+      "max": 50
+    },
+    {
+      "key": "story.title",
+      "type": "text",
+      "label": "About headline",
+      "group": "About us",
+      "max": 70
+    },
+    {
+      "key": "story.text",
+      "type": "textarea",
+      "label": "About us",
+      "group": "About us",
+      "max": 400
+    },
+    {
+      "key": "story.image",
+      "type": "image",
+      "label": "About photo",
+      "group": "About us",
+      "presets": ["fitting", "drape", "rail", "marble", "arches", "loft"]
+    },
+    {
+      "key": "gallery",
+      "type": "images",
+      "label": "Lookbook photos",
+      "labelAr": "صور معرض الإطلالات",
+      "group": "Lookbook",
+      "groupAr": "معرض الإطلالات",
+      "max": 12
+    },
+    {
+      "key": "gallery.products",
+      "type": "toggle",
+      "label": "Add product photos to the gallery",
+      "group": "Lookbook",
+      "groupAr": "معرض الإطلالات"
+    },
+    {
+      "key": "reviews.1.quote",
+      "type": "textarea",
+      "label": "Review 1",
+      "group": "Reviews",
+      "max": 200
+    },
+    {
+      "key": "reviews.1.name",
+      "type": "text",
+      "label": "Review 1 by",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "reviews.2.quote",
+      "type": "textarea",
+      "label": "Review 2",
+      "group": "Reviews",
+      "max": 200
+    },
+    {
+      "key": "reviews.2.name",
+      "type": "text",
+      "label": "Review 2 by",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "reviews.3.quote",
+      "type": "textarea",
+      "label": "Review 3",
+      "group": "Reviews",
+      "max": 200
+    },
+    {
+      "key": "reviews.3.name",
+      "type": "text",
+      "label": "Review 3 by",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "footer.text",
+      "type": "textarea",
+      "label": "Line in the footer",
+      "group": "Footer",
+      "max": 140
+    },
+    {
+      "key": "hours",
+      "type": "hours",
+      "label": "Opening hours",
+      "group": "Visit us"
+    }
+  ],
+  "defaults": {
+    "font": "elegant",
+    "logo": "",
+    "theme": "ivory",
+    "accent": "#9A7445",
+    "cta.label": "",
+    "announcement": "Complimentary alterations and gift wrapping on every piece",
+    "hero.image": "preset:drape",
+    "hero.eyebrow": "Autumn · Winter",
+    "hero.title": "The art of dressing slowly",
+    "hero.subtitle": "Silk, cashmere and hand-finished tailoring, chosen piece by piece for our boutique.",
+    "motion": true,
+    "sections": ["announcement", "edit", "story", "best", "gallery", "reviews", "visit"],
+    "categories.title": "The collections",
+    "edit.title": "The edit",
+    "best.title": "",
+    "gallery.title": "",
+    "story.title": "A house of quiet luxury",
+    "story.text": "Every piece in our boutique is chosen by hand, from small ateliers we know by name. We alter, wrap and deliver each one ourselves, and we are always happy to help you find the right size.",
+    "story.image": "preset:fitting",
+    "gallery": [],
+    "gallery.products": true,
+    "reviews.1.quote": "",
+    "reviews.1.name": "",
+    "reviews.2.quote": "",
+    "reviews.2.name": "",
+    "reviews.3.quote": "",
+    "reviews.3.name": "",
+    "footer.text": "Private appointments, alterations and delivery. Write to us on WhatsApp.",
+    "hours": {
+      "sat": "10:00-22:00",
+      "sun": "10:00-22:00",
+      "mon": "10:00-22:00",
+      "tue": "10:00-22:00",
+      "wed": "10:00-22:00",
+      "thu": "10:00-23:00",
+      "fri": "16:00-22:00"
+    },
+    "social.show": ["instagram", "whatsapp"]
+  },
+  "defaultsAr": {
+    "announcement": "تعديلات مجانية وتغليف هدايا مع كل قطعة",
+    "hero.eyebrow": "خريف · شتاء",
+    "hero.title": "فن الأناقة الهادئة",
+    "hero.subtitle": "حرير وكشمير وخياطة مشغولة باليد، نختارها قطعة قطعة لبوتيكنا.",
+    "categories.title": "المجموعات",
+    "edit.title": "مختاراتنا",
+    "story.title": "دار للفخامة الهادئة",
+    "story.text": "كل قطعة في بوتيكنا مختارة باليد من مشاغل صغيرة نعرفها بالاسم. نعدّل كل قطعة ونغلّفها ونوصلها بأنفسنا، ويسعدنا دائمًا أن نساعدكم في اختيار المقاس المناسب.",
+    "footer.text": "مواعيد خاصة وتعديلات وتوصيل. راسلونا على واتساب."
+  }
+}

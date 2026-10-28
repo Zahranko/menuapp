@@ -1,0 +1,234 @@
+{
+  "souq": {
+    "header.layout": {
+      "awning": "classic"
+    },
+    "hero.variant": {
+      "stall": "framed"
+    }
+  },
+  "linen": {
+    "menu.layout": {
+      "ledger": "compact"
+    },
+    "hero.variant": {
+      "letterpress": "type"
+    }
+  },
+  "nightmarket": {
+    "hero.variant": {
+      "lanterns": "poster"
+    },
+    "menu.layout": {
+      "stalls": "carousel"
+    }
+  },
+  "archstory": {
+    "hero.variant": {
+      "doorway": "arch"
+    },
+    "story.layout": {
+      "chapter": "letter"
+    }
+  },
+  "pocket": {
+    "menu.layout": {
+      "shelf": "grid"
+    },
+    "header.layout": {
+      "folder": "classic"
+    }
+  },
+  "chalkboard": {
+    "hero.variant": {
+      "board": "type"
+    },
+    "menu.layout": {
+      "chalk": "compact"
+    }
+  },
+  "bento": {
+    "menu.layout": {
+      "bentobox": "tiles"
+    },
+    "hero.variant": {
+      "lunchbox": "collage"
+    }
+  },
+  "neondiner": {
+    "header.layout": {
+      "neonsign": "big"
+    },
+    "hero.variant": {
+      "neon": "type"
+    }
+  },
+  "zen": {
+    "menu.layout": {
+      "brush": "list"
+    },
+    "hero.variant": {
+      "enso": "circle"
+    }
+  },
+  "bistro": {
+    "hero.variant": {
+      "tablecloth": "framed"
+    },
+    "menu.layout": {
+      "folded": "list"
+    }
+  },
+  "pizzeria": {
+    "menu.layout": {
+      "peel": "grid"
+    },
+    "hero.variant": {
+      "oven": "arch"
+    }
+  },
+  "ticket": {
+    "hero.variant": {
+      "stub": "poster"
+    },
+    "menu.layout": {
+      "tickets": "list"
+    }
+  },
+  "garden": {
+    "hero.variant": {
+      "leaf": "circle"
+    },
+    "menu.layout": {
+      "seeds": "grid"
+    }
+  },
+  "monogrid": {
+    "menu.layout": {
+      "index": "list"
+    },
+    "hero.variant": {
+      "swiss": "split"
+    }
+  },
+  "spiceroute": {
+    "story.layout": {
+      "route": "timeline"
+    },
+    "hero.variant": {
+      "mashrabiya": "arch"
+    }
+  },
+  "polaroid": {
+    "menu.layout": {
+      "pinned": "masonry"
+    },
+    "hero.variant": {
+      "pinboard": "collage"
+    }
+  },
+  "atelier": {
+    "hero.variant": {
+      "editorial": "split"
+    },
+    "menu.layout": {
+      "pricelist": "compact"
+    }
+  },
+  "clinic": {
+    "menu.layout": {
+      "care": "list"
+    },
+    "hero.variant": {
+      "calm": "circle"
+    }
+  },
+  "agency": {
+    "hero.variant": {
+      "manifesto": "type"
+    },
+    "menu.layout": {
+      "services": "list"
+    }
+  },
+  "pulse": {
+    "menu.layout": {
+      "plans": "large"
+    },
+    "hero.variant": {
+      "scoreboard": "poster"
+    }
+  },
+  "handy": {
+    "header.layout": {
+      "toolbar": "classic"
+    },
+    "menu.layout": {
+      "workorder": "list"
+    }
+  },
+  "maison": {
+    "menu.layout": {
+      "engraved": "compact"
+    },
+    "hero.variant": {
+      "cinema": "full"
+    }
+  },
+  "lumen": {
+    "hero.variant": {
+      "sticker": "poster"
+    },
+    "menu.layout": {
+      "blocks": "tiles"
+    }
+  },
+  "atlas": {
+    "hero.variant": {
+      "shopwindow": "split"
+    },
+    "menu.layout": {
+      "storefront": "grid"
+    }
+  },
+  "ember": {
+    "hero.variant": {
+      "flame": "poster"
+    },
+    "menu.layout": {
+      "burst": "grid"
+    }
+  },
+  "bloom": {
+    "menu.layout": {
+      "doily": "grid"
+    },
+    "hero.variant": {
+      "cakestand": "circle"
+    }
+  },
+  "folio": {
+    "hero.variant": {
+      "cover": "poster"
+    },
+    "menu.layout": {
+      "lookbook": "large"
+    }
+  },
+  "drop": {
+    "hero.variant": {
+      "dropposter": "poster"
+    },
+    "menu.layout": {
+      "hangtags": "grid"
+    }
+  },
+  "couture": {
+    "hero.variant": {
+      "runway": "full"
+    },
+    "menu.layout": {
+      "edit": "large"
+    }
+  }
+}

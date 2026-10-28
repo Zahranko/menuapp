@@ -4,9 +4,32 @@
   "name": "Agency",
   "category": "Creative studio, freelancer",
   "description": "A bold, dark website for a studio or freelancer: numbered services, selected work, process and a big call to talk.",
+  "ar": {
+    "name": "وكالة",
+    "category": "استوديو إبداعي أو عمل حر",
+    "description": "موقع جريء وداكن لاستوديو أو مستقل: خدمات مرقّمة، وأعمال مختارة، ومراحل العمل، ودعوة كبيرة للتواصل."
+  },
   "version": 1,
+  "heroSlider": { "kind": "panel", "source": "hero.image" },
   "thumbnail": "/templates/agency/thumbnail.png",
   "sample": "studio",
+  "ticker": true,
+  "sectionsLayout": { "order": ["marquee", "highlights", "menu", "gallery", "steps", "reviews", "faq", "visit"] },
+  "signature": {
+    "hero.variant": [
+      {"id":"manifesto","base":"type","label":"Manifesto","labelAr":"بيان","preview":"/templates/agency/previews/hero-manifesto.svg"}
+    ],
+    "menu.layout": [
+      {"id":"services","base":"list","label":"Numbered services","labelAr":"خدمات مرقّمة","preview":"/templates/agency/previews/menu-services.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"lime","label":{"en":"Lime manifesto","ar":"بيان الليموني"},"values":{"theme":"ink","accent":"#D7FF3A","font":"bold","hero.variant":"manifesto","menu.layout":"services","header.layout":"classic"}},
+    {"id":"cobalt","label":{"en":"Cobalt studio","ar":"استوديو الكوبالت"},"values":{"theme":"cobalt","accent":"#FFB800","font":"grotesk","hero.variant":"manifesto","menu.layout":"services","style.headings":"uppercase"}},
+    {"id":"paper","label":{"en":"Paper press","ar":"مطبعة الورق"},"values":{"theme":"paper","accent":"#FF4D2E","font":"condensed","hero.variant":"manifesto","menu.layout":"services","style.texture":"grain"}},
+    {"id":"plum","label":{"en":"Plum night","ar":"ليلة البرقوق"},"values":{"theme":"plum","accent":"#FF8BD1","font":"modern","hero.variant":"poster","menu.layout":"services","header.layout":"minimal"}},
+    {"id":"grid","label":{"en":"Grid portfolio","ar":"معرض الشبكة"},"values":{"theme":"paper","accent":"#2447D9","font":"grotesk","hero.variant":"split","menu.layout":"services","style.buttons":"square","cards.style":"outlined"}}
+  ],
   "schema": [
     {
       "key": "font",
@@ -444,7 +467,7 @@
     "faq.1.a": "A brand identity takes about three weeks and a website four to six. We agree the dates before we start.",
     "faq.2.q": "How do payments work?",
     "faq.2.a": "Half when we start and half at launch. Bigger projects can be split into monthly payments.",
-    "faq.3.q": "Do you work with businesses outside Amman?",
+    "faq.3.q": "Do you work with businesses in other cities?",
     "faq.3.a": "Yes. Most of our work happens online, and we travel for photo shoots when needed.",
     "faq.4.q": "",
     "faq.4.a": "",
@@ -458,5 +481,36 @@
       "thu": "10:00-18:00",
       "fri": ""
     }
+  },
+  "defaultsAr": {
+    "hero.eyebrow": "استوديو هوية ومواقع ومحتوى",
+    "hero.title": "نجعل العلامات الصغيرة تبدو كبيرة",
+    "hero.subtitle": "هوية بصرية ومواقع ومحتوى للأعمال التي تريد أن تتميز. فريق صغير واحد من أول رسمة حتى الإطلاق.",
+    "book.message": "مرحبًا! أود أن نتحدث عن مشروع:",
+    "services.title": "ماذا نقدّم",
+    "announcement": "نستقبل مشاريع الشهر القادم",
+    "highlights.1.title": "+120",
+    "highlights.1.text": "علامة تجارية أطلقناها",
+    "highlights.2.title": "9 سنوات",
+    "highlights.2.text": "من العمل مع الأعمال الصغيرة",
+    "highlights.3.title": "4.9",
+    "highlights.3.text": "متوسط تقييم عملائنا",
+    "work.title": "أعمال مختارة",
+    "steps.title": "كيف نعمل",
+    "steps.1.title": "نتحدث",
+    "steps.1.text": "مكالمة قصيرة عن عملك وزبائنك وما تحتاجه.",
+    "steps.2.title": "نخطط",
+    "steps.2.text": "عرض واضح بالسعر والمواعيد. بلا مفاجآت لاحقًا.",
+    "steps.3.title": "ننفّذ",
+    "steps.3.text": "نصمم ونشاركك التقدم كل أسبوع. تعلّق أنت، ونحسّن نحن.",
+    "steps.4.title": "نطلق",
+    "steps.4.text": "نسلّمك كل شيء ونساعدك لمدة شهر بعد الإطلاق.",
+    "faq.1.q": "كم يستغرق المشروع؟",
+    "faq.1.a": "الهوية البصرية تستغرق نحو ثلاثة أسابيع، والموقع من أربعة إلى ستة أسابيع. نتفق على المواعيد قبل أن نبدأ.",
+    "faq.2.q": "كيف تتم الدفعات؟",
+    "faq.2.a": "النصف عند البدء والنصف عند الإطلاق. ويمكن تقسيم المشاريع الكبيرة على دفعات شهرية.",
+    "faq.3.q": "هل تعملون مع أعمال في مدن أخرى؟",
+    "faq.3.a": "نعم. معظم عملنا يتم عبر الإنترنت، ونسافر لجلسات التصوير عند الحاجة.",
+    "cta.text": "هل لديك مشروع في بالك؟"
   }
 }

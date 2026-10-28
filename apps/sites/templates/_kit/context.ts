@@ -1,6 +1,8 @@
 import { strings } from "@/lib/i18n";
 import { image, list, sectionOn, text } from "@/lib/settings";
 import type { PublicSite } from "@/lib/types";
+import { logoOptions, type LogoOptions } from "./logo";
+import { signatureSite } from "./signatures";
 import { contact, featured, hoursRows, menu, todayLine, type Contact, type HoursRow, type MenuItem, type MenuSection } from "./site-data";
 
 /** What every template works from, computed once per render. Templates add their own copy on top. */
@@ -22,11 +24,15 @@ export type SiteContext = {
   gallery: string[];
   /** Filled-in reviews from reviews.<n>.quote / reviews.<n>.name. */
   reviews: { quote: string; name: string }[];
+  /** The owner's logo options (frame, size, position, show name); see _kit/logo.ts. */
+  logo: LogoOptions;
   /** The time of this render (tests pass a fixed one). */
   now: Date;
 };
 
-export function siteContext(site: PublicSite, now: Date = new Date()): SiteContext {
+export function siteContext(raw: PublicSite, now: Date = new Date()): SiteContext {
+  // The template's own ("signature") layout options read as the shared option they build on (_kit/signatures.ts).
+  const site = signatureSite(raw);
   const hours = hoursRows(site, now);
   const sections = menu(site);
   const read = (key: string) => text(site.settings, key).trim();
@@ -46,6 +52,7 @@ export function siteContext(site: PublicSite, now: Date = new Date()): SiteConte
     image: (key) => image(site.settings[key]),
     gallery: list(site.settings, "gallery").slice(0, 12),
     reviews: [1, 2, 3, 4, 5, 6].map((n) => ({ quote: read(`reviews.${n}.quote`), name: read(`reviews.${n}.name`) })).filter((r) => r.quote),
+    logo: logoOptions(site.settings),
     now,
   };
 }

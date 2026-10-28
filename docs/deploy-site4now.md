@@ -7,6 +7,8 @@ The API (`src/Storefront.Web`) runs on a site4now Windows/IIS site with a site4n
 
 - Every push to `main`.
 - A push to the `deploy` branch, which ships a branch before it is merged: `git push origin HEAD:deploy --force`.
+- A push to the `test` branch. It works like `deploy` and also turns on billing test mode: every account,
+  new or existing, is on an active Pro plan, so every feature can be tried without paying.
 - By hand: GitHub, **Actions**, **Deploy API (site4now)**, **Run workflow**. This button only appears once the workflow is on `main`.
 
 ## One-time setup
@@ -20,6 +22,9 @@ In GitHub, open **Settings**, then **Secrets and variables**, then **Actions**.
 | `FTP_PASSWORD` | The FTP password from the site4now control panel |
 | `DB_PASSWORD` | The SQL Server database user's password |
 | `JWT_SIGNING_KEY` | Any random text of 32 or more characters. Keep it stable: changing it signs everyone out |
+| `REVALIDATE_SECRET` | Optional. The same value as on the websites host (`docs/deploy-vercel.md`), so saves refresh the websites at once |
+| `DEEPSEEK_API_KEY` | Optional. A DeepSeek platform key (platform.deepseek.com, with balance on the account). Switches the AI helper on (colors and texts from a photo, menu from a photo, write my text) and takes priority over `GEMINI_API_KEY`. Written to `web.config` as `Ai__DeepSeek__ApiKey` only when set |
+| `GEMINI_API_KEY` | Optional, the fallback when `DEEPSEEK_API_KEY` is not set. A Google AI Studio (Gemini API) key. Switches the AI helper on (colors and texts from a photo, menu from a photo, write my text). Without it the helper stays off: its endpoints answer 503 and the app hides its buttons. Written to `web.config` as `Ai__Gemini__ApiKey` only when set |
 
 **Variables** (tab *Variables*, all optional):
 
@@ -29,6 +34,10 @@ In GitHub, open **Settings**, then **Secrets and variables**, then **Actions**.
 | `FTP_SERVER` / `FTP_USERNAME` | the current site4now account | Change these when the hosting account changes |
 | `FTP_DIR` | `/TestMobileApp` | The site's own folder as the FTP login sees it. The login's top folder holds other sites, so the deploy refuses `/` |
 | `DB_SERVER` / `DB_NAME` / `DB_USER` | the current site4now database | Same |
+| `SITES_URL` | empty (the brand domain); on `test`, `https://www.katlio.com` (the www address, since katlio.com redirects there) | Where the owners' websites (`apps/sites`) are hosted, like `https://sites.example.vercel.app`. Used for each site's link and the editor preview |
+| `BILLING_TEST_MODE` | `true` on the `test` branch, otherwise `false` | Puts every account on an active Pro plan. Only for test servers |
+| `DEEPSEEK_MODEL` | `deepseek-flash` | The DeepSeek model id (`Ai__DeepSeek__Model`). It must accept photos. Only used when `DEEPSEEK_API_KEY` is set |
+| `GEMINI_MODEL` | `gemini-3.6-flash` | The Gemini model id the AI helper uses (`Ai__Gemini__Model`). Only used when `GEMINI_API_KEY` is set |
 
 ## What a deploy does
 
@@ -39,7 +48,7 @@ In GitHub, open **Settings**, then **Secrets and variables**, then **Actions**.
    `Storefront__MigrateOnStartup=true` (the database schema is created or updated when the app starts) and storage under `App_Data/media`.
    IIS never serves `web.config`.
 4. Uploads `app_offline.htm` so IIS stops the app, uploads only the changed files, then removes `app_offline.htm`.
-   `App_Data/` (uploaded photos) and `logs/` on the server are never touched.
+   `App_Data/` (uploaded photos, and the keys that sign password reset links in `App_Data/keys`) and `logs/` on the server are never touched.
 5. When `API_URL` is set, waits for `/health` to answer.
 
 ## When something goes wrong
@@ -52,4 +61,4 @@ In GitHub, open **Settings**, then **Secrets and variables**, then **Actions**.
 - IIS stops an idle app after about 20 minutes. The first request after that is slow, and the outbox (site refresh
   messages) only runs while the app is awake.
 - Photos are stored on the site's disk (`App_Data/media`). Back that folder up, or switch `Storage__Provider` to `s3` later.
-- Only the API is deployed here. The Next.js sites (`apps/sites`) need a Node.js host.
+- Only the API is deployed here. The Next.js sites (`apps/sites`) run on Vercel: `docs/deploy-vercel.md`.

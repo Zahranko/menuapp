@@ -1,0 +1,84 @@
+/*
+ * Night Market's own layout options (manifest "signature", _kit/signatures.ts):
+ *   hero.variant "lanterns"  a string of glowing lanterns over glowing poster type (base: "poster")
+ *   menu.layout  "stalls"    each category a lit stall sign over its row of cards, prices on glowing tags (base: "carousel")
+ */
+[data-template="nightmarket"] {
+  --sig-glow: color-mix(in srgb, var(--k-acc) 70%, transparent);
+  --sig-bulbs:
+    radial-gradient(circle at 50% 70%, var(--k-acc) 0 5px, color-mix(in srgb, var(--k-acc) 35%, transparent) 6px, transparent 13px) 0 0 / 44px 30px repeat-x,
+    linear-gradient(color-mix(in srgb, var(--k-ink) 30%, transparent) 0 0) 0 9px / 100% 1px no-repeat;
+}
+
+/* ---------- lanterns ---------- */
+[data-template="nightmarket"] .kit-hv.kit-hv[data-sig~="lanterns"] {
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, color-mix(in srgb, var(--k-acc) 16%, transparent), transparent 70%);
+  & > .kit-sig-art {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 30px;
+    background: var(--sig-bulbs);
+    pointer-events: none;
+  }
+  & .kit-hv-in {
+    padding-top: 52px;
+  }
+  & .kit-hv-title {
+    text-transform: uppercase;
+    text-shadow: 0 0 18px var(--sig-glow), 0 0 2px var(--sig-glow);
+  }
+  & .kit-hv-eyebrow {
+    justify-self: start;
+    width: fit-content;
+    display: inline-block;
+    padding: 4px 10px;
+    border: 1.5px solid var(--k-acc);
+    border-radius: 4px;
+    box-shadow: 0 0 12px var(--sig-glow), inset 0 0 8px var(--sig-glow);
+  }
+  & .kit-hv-media {
+    border: 3px solid var(--k-acc);
+    box-shadow: 0 0 24px var(--sig-glow);
+    rotate: 3deg;
+  }
+}
+
+/* ---------- stall signs ---------- */
+[data-template="nightmarket"] .kit-mn.kit-mn.kit-mn[data-sig~="stalls"] {
+  & .kit-mn-cats {
+    gap: 34px;
+  }
+  & .kit-mn-title {
+    position: relative;
+    justify-content: center;
+    width: fit-content;
+    max-width: 100%;
+    margin-inline: auto;
+    padding: 30px 22px 10px;
+    border: 0;
+    background: var(--sig-bulbs);
+  }
+  & .kit-mn-h {
+    padding: 8px 18px;
+    border: 2px solid var(--k-acc);
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--k-acc) 14%, var(--k-bg));
+    box-shadow: 0 0 18px var(--sig-glow), inset 0 0 10px color-mix(in srgb, var(--k-acc) 30%, transparent);
+    font-size: 24px;
+    text-transform: uppercase;
+  }
+  & .kit-mn-count {
+    display: none;
+  }
+  & .kit-mn-price {
+    padding: 3px 9px;
+    border-radius: 5px;
+    background: var(--k-acc);
+    color: var(--k-acc-ink);
+    box-shadow: 0 0 12px var(--sig-glow);
+    font-weight: 800;
+  }
+  & .kit-mn-item {
+    border: 1px solid color-mix(in srgb, var(--k-acc) 35%, var(--k-line));
+  }
+}

@@ -1,10 +1,14 @@
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Storefront.Application.Abstractions;
+using Storefront.Application.Ai;
 using Storefront.Application.Common;
 using Storefront.Application.PublicSites;
+using Storefront.Infrastructure.Ai;
 using Storefront.Infrastructure.Email;
 using Storefront.Infrastructure.Identity;
 using Storefront.Infrastructure.Outbox;
@@ -23,6 +27,8 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<StorefrontOptions>(configuration.GetSection(StorefrontOptions.SectionName));
+        services.Configure<BillingOptions>(configuration.GetSection(BillingOptions.SectionName));
+        services.AddScoped<IPaymentProvider, Billing.FakePaymentProvider>();
 
         services.AddSingleton<DomainEventsInterceptor>();
         // Read the connection string when the context is built, so test hosts can override configuration.
@@ -45,6 +51,7 @@ public static class DependencyInjection
         services.AddScoped<IBillingRepository, BillingRepository>();
         services.AddScoped<IDomainRepository, DomainRepository>();
         services.AddScoped<IMediaRepository, MediaRepository>();
+        services.AddScoped<IAiUsageRepository, AiUsageRepository>();
 
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
@@ -66,6 +73,15 @@ public static class DependencyInjection
             .AddErrorDescriber<FriendlyIdentityErrors>()
             .AddDefaultTokenProviders();
         services.Configure<DataProtectionTokenProviderOptions>(o => o.TokenLifespan = TimeSpan.FromHours(24));
+        // Reset links are signed with Data Protection keys. Kept on disk (not in memory) so links survive app pool recycles
+        // and restarts. "DataProtection:KeysPath" overrides the folder; the default sits under App_Data, which is gitignored,
+        // never served (only wwwroot and the media folder are) and left alone by the deploy.
+        var keysPath = configuration["DataProtection:KeysPath"] is { Length: > 0 } configured
+            ? configured
+            : Path.Combine(configuration["contentRoot"] ?? AppContext.BaseDirectory, "App_Data", "keys");
+        services.AddDataProtection()
+            .SetApplicationName("Storefront")
+            .PersistKeysToFileSystem(new DirectoryInfo(Path.GetFullPath(keysPath)));
         services.AddScoped<IIdentityService, IdentityService>();
         services.AddSingleton<ITokenService, TokenService>();
         services.AddSingleton<IPreviewTokens, PreviewTokens>();
@@ -78,10 +94,12 @@ public static class DependencyInjection
             string.IsNullOrWhiteSpace(sp.GetRequiredService<IConfiguration>()[$"{SmtpOptions.SectionName}:Host"])
                 ? sp.GetRequiredService<LogEmailSender>()
                 : sp.GetRequiredService<SmtpEmailSender>());
+        services.AddHostedService<EmailConfigurationCheck>();
 
         services.AddScoped<IAuditLog, EfAuditLog>();
 
         services.Configure<StorageOptions>(configuration.GetSection(StorageOptions.SectionName));
+        services.AddSingleton<IImageOptimizer, Media.SkiaImageOptimizer>();
         services.AddSingleton<LocalFileStorage>();
         services.AddSingleton<S3FileStorage>();
         services.AddSingleton<IFileStorage>(sp =>
@@ -95,7 +113,25 @@ public static class DependencyInjection
         services.AddScoped<OutboxProcessor>();
         services.AddHostedService<OutboxDispatcher>();
 
+        // The AI helper: DeepSeek when "Ai:DeepSeek:ApiKey" is set, else Gemini when "Ai:Gemini:ApiKey" is set, otherwise
+        // switched off. Keys are read when resolved, so test hosts can override them.
+        services.Configure<AiOptions>(configuration.GetSection(AiOptions.SectionName));
+        services.Configure<DeepSeekOptions>(configuration.GetSection(DeepSeekOptions.SectionName));
+        services.AddHttpClient<DeepSeekAssistant>((sp, c) =>
+                c.Timeout = TimeSpan.FromSeconds(Math.Clamp(sp.GetRequiredService<IOptions<DeepSeekOptions>>().Value.TimeoutSeconds, 5, 120)))
+            .RedactLoggedHeaders(["Authorization"]);
+        services.Configure<GeminiOptions>(configuration.GetSection(GeminiOptions.SectionName));
+        services.AddHttpClient<GeminiAssistant>((sp, c) =>
+                c.Timeout = TimeSpan.FromSeconds(Math.Clamp(sp.GetRequiredService<IOptions<GeminiOptions>>().Value.TimeoutSeconds, 5, 120)))
+            .RedactLoggedHeaders([GeminiAssistant.KeyHeader]);
+        services.AddSingleton<DisabledAiAssistant>();
+        services.AddScoped<IAiAssistant>(sp =>
+            !string.IsNullOrWhiteSpace(sp.GetRequiredService<IOptions<DeepSeekOptions>>().Value.ApiKey) ? sp.GetRequiredService<DeepSeekAssistant>()
+            : !string.IsNullOrWhiteSpace(sp.GetRequiredService<IOptions<GeminiOptions>>().Value.ApiKey) ? sp.GetRequiredService<GeminiAssistant>()
+            : sp.GetRequiredService<DisabledAiAssistant>());
+
         services.AddScoped<TemplateRegistryImporter>();
+        services.AddScoped<ReferenceDataSeeder>();
         services.AddScoped<DevelopmentSeeder>();
         return services;
     }

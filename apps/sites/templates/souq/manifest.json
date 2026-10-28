@@ -4,8 +4,30 @@
   "name": "Souq",
   "category": "Café",
   "description": "Warm café site with a big hero, signature picks and a searchable menu with photos.",
+  "ar": {
+    "name": "سوق",
+    "category": "مقهى",
+    "description": "موقع دافئ لمقهى بواجهة كبيرة واختيارات مميزة ومنيو بالصور يسهل البحث فيه."
+  },
   "version": 1,
+  "heroSlider": { "kind": "backdrop", "source": "hero.image", "skip": ["hero.overlay"] },
   "thumbnail": "/templates/souq/thumbnail.png",
+  "sectionsLayout": { "order": ["highlights", "signature", "menu", "story", "gallery", "reviews", "visit"] },
+  "signature": {
+    "header.layout": [
+      {"id":"awning","base":"classic","label":"Market awning","labelAr":"مظلة السوق","preview":"/templates/souq/previews/header-awning.svg"}
+    ],
+    "hero.variant": [
+      {"id":"stall","base":"framed","label":"Market stall","labelAr":"بسطة السوق","preview":"/templates/souq/previews/hero-stall.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"morning","label":{"en":"Morning market","ar":"سوق الصباح"},"values":{"theme":"cream","accent":"#D9542C","font":"modern","header.layout":"awning","hero.variant":"stall","menu.layout":"grid","highlights.layout":"icons","style.dividers":"wave"}},
+    {"id":"night","label":{"en":"Night souq","ar":"سوق الليل"},"values":{"theme":"night","accent":"#F2B22E","font":"bold","header.layout":"awning","hero.variant":"full","menu.layout":"carousel","gallery.layout":"strip","style.texture":"grain"}},
+    {"id":"minimal","label":{"en":"Minimal stall","ar":"بسطة بسيطة"},"values":{"theme":"sage","accent":"#2B6B4F","font":"modern","header.layout":"minimal","hero.variant":"split","menu.layout":"list","cards.style":"minimal","style.spacing":"airy","style.dividers":"none"}},
+    {"id":"spice","label":{"en":"Spice stall","ar":"بسطة البهارات"},"values":{"theme":"blush","accent":"#7A3E6E","font":"elegant","header.layout":"awning","hero.variant":"stall","menu.layout":"tiles","reviews.layout":"quote","style.buttons":"pill"}},
+    {"id":"bazaar","label":{"en":"Weekend bazaar","ar":"بازار العطلة"},"values":{"theme":"cream","accent":"#F2B22E","font":"bold","header.layout":"centered","hero.variant":"collage","menu.layout":"masonry","gallery.layout":"polaroid","style.motion":"playful"}}
+  ],
   "schema": [
     {
       "key": "font",
@@ -345,6 +367,23 @@
       "wed": "08:00-23:00",
       "thu": "08:00-24:00",
       "fri": "13:00-24:00"
-    }
+    },
+    "social.show": [
+      "instagram",
+      "whatsapp"
+    ]
+  },
+  "defaultsAr": {
+    "hero.title": "قهوة تستحق أن تعبر المدينة من أجلها.",
+    "hero.subtitle": "قهوة مختصة نحمّصها بأنفسنا، ومخبوزات طازجة كل صباح، وركن هادئ تجلس فيه على راحتك.",
+    "announcement": "نفتح الآن حتى منتصف الليل يومي الخميس والجمعة",
+    "highlights.1.title": "نحمّصها بأنفسنا",
+    "highlights.1.text": "دفعات صغيرة كل أسبوع، من محصول واحد أو بخلطة البيت.",
+    "highlights.2.title": "نخبز قبل الشروق",
+    "highlights.2.text": "كرواسون وكوكيز وكيك نحضّرها يوميًا من الصفر.",
+    "highlights.3.title": "نسهر معك",
+    "highlights.3.text": "ابقَ لفنجان آخر. أوقات عملنا في الأسفل.",
+    "story.title": "كاونتر صغير صار ملتقى الحي",
+    "story.text": "بدأنا بماكينة واحدة وكاونتر صغير. اليوم نحمّص حبوبنا كل أسبوع، ونخبز من الصفر قبل الشروق، وما زلنا نعرف معظم زبائننا بأسمائهم."
   }
 }
