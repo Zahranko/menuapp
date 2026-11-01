@@ -21,7 +21,8 @@
   overflow-x: clip;
   font-size: 15px;
   line-height: 1.65;
-  background: radial-gradient(120% 70% at 50% 0%, color-mix(in srgb, var(--surf) 70%, var(--bg)) 0%, var(--bg) 60%);
+  background-color: var(--bg);
+  background-image: radial-gradient(120% 70% at 50% 0%, color-mix(in srgb, var(--surf) 70%, var(--bg)) 0%, var(--bg) 60%);
 
   h1,
   h2,
@@ -477,11 +478,12 @@
       display: flex;
     }
     .hero {
-      padding: calc(88px * var(--kit-space, 1)) 48px calc(104px * var(--kit-space, 1));
-      gap: 20px;
+      padding: calc(48px * var(--kit-space, 1)) 48px calc(56px * var(--kit-space, 1));
+      gap: 16px;
     }
     .hero h1 {
-      font-size: calc(68px * var(--fs));
+      max-width: 20ch;
+      font-size: calc(64px * var(--fs));
     }
     .mb-gold {
       width: 380px;
