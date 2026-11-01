@@ -1,0 +1,112 @@
+{
+  "group": "Hero slider",
+  "kinds": {
+    "backdrop": "The text sits on the photo: every option.",
+    "panel": "The photo has its own frame next to or under the text: the photos and how they change.",
+    "band": "No photo at the top before: a strip of photos under the opening text, shown once the owner adds photos."
+  },
+  "slides": {
+    "key": "hero.slides",
+    "type": "images",
+    "label": "More photos for the top (they take turns)",
+    "max": 5
+  },
+  "bandSlides": {
+    "key": "hero.slides",
+    "type": "images",
+    "label": "Photos at the top (two or more take turns)",
+    "max": 6
+  },
+  "fields": [
+    {
+      "key": "hero.transition",
+      "type": "choice",
+      "label": "How the photos change",
+      "kinds": ["backdrop", "panel", "band"],
+      "options": ["slide", "fade", "zoom"],
+      "optionLabels": {
+        "slide": "Slide",
+        "fade": "Fade",
+        "zoom": "Fade with a slow zoom"
+      }
+    },
+    {
+      "key": "hero.autoplay",
+      "type": "toggle",
+      "label": "Change photos automatically",
+      "kinds": ["backdrop", "panel", "band"]
+    },
+    {
+      "key": "hero.speed",
+      "type": "choice",
+      "label": "Time on each photo",
+      "kinds": ["backdrop", "panel", "band"],
+      "options": ["slow", "normal", "fast"],
+      "optionLabels": {
+        "slow": "Long (8 seconds)",
+        "normal": "Normal (5 seconds)",
+        "fast": "Short (3 seconds)"
+      }
+    },
+    {
+      "key": "hero.controls",
+      "type": "toggles",
+      "label": "Buttons on the photos",
+      "kinds": ["backdrop", "panel", "band"],
+      "options": ["dots", "arrows"],
+      "optionLabels": {
+        "dots": "Dots",
+        "arrows": "Arrows"
+      }
+    },
+    {
+      "key": "hero.height",
+      "type": "choice",
+      "label": "Height of the top",
+      "kinds": ["backdrop", "band"],
+      "options": ["auto", "short", "medium", "full"],
+      "optionLabels": {
+        "auto": "Template default",
+        "short": "Short",
+        "medium": "Medium",
+        "full": "Full screen"
+      }
+    },
+    {
+      "key": "hero.overlay",
+      "type": "choice",
+      "label": "Darken the photos (easier to read the text)",
+      "kinds": ["backdrop"],
+      "options": ["auto", "light", "medium", "strong"],
+      "optionLabels": {
+        "auto": "Template default",
+        "light": "A little",
+        "medium": "Medium",
+        "strong": "A lot"
+      }
+    },
+    {
+      "key": "hero.textPosition",
+      "type": "choice",
+      "label": "Text position",
+      "kinds": ["backdrop"],
+      "options": ["auto", "start", "center", "bottom"],
+      "optionLabels": {
+        "auto": "Template default",
+        "start": "Side",
+        "center": "Center",
+        "bottom": "Bottom"
+      }
+    }
+  ],
+  "defaults": {
+    "hero.slides": [],
+    "hero.transition": "slide",
+    "hero.autoplay": true,
+    "hero.speed": "normal",
+    "hero.controls": ["dots", "arrows"],
+    "hero.height": "auto",
+    "hero.overlay": "auto",
+    "hero.textPosition": "auto"
+  }
+}

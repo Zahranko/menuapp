@@ -32,7 +32,7 @@ workflows:
       <<: *flutter_env
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.sufrly.app
+        bundle_identifier: com.katlio.app
     scripts:
       - *pub_get
       - *analyze_test

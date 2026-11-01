@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Threading.RateLimiting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
+using Storefront.Web.Configuration;
 
 namespace Storefront.Web.Auth;
 
@@ -10,9 +11,11 @@ public static class RateLimits
     public const string Auth = "auth";
     public const string SlugCheck = "slug-check";
     public const string Public = "public";
+    public const string Upload = "upload";
+    public const string Ai = "ai";
 
     /// <summary>
-    /// Named policies are per client IP. On top, every request counts against a global per-IP limit and,
+    /// Named policies are per client IP, except uploads and AI helper calls, which are per owner. On top, every request counts against a global per-IP limit and,
     /// when signed in, a per-owner limit, so one leaked token or one busy client cannot flood the API.
     /// Limits come from "RateLimits:*PerMinute" so tests and load checks can raise them.
     /// </summary>
@@ -26,6 +29,12 @@ public static class RateLimits
             Add(o, Auth, section.GetValue("AuthPerMinute", 10));
             Add(o, SlugCheck, section.GetValue("SlugCheckPerMinute", 60));
             Add(o, Public, section.GetValue("PublicPerMinute", 600));
+            // Photo processing is the heaviest work an owner can trigger, so uploads get their own, smaller budget per owner.
+            var uploads = section.GetValue("UploadPerMinute", 20);
+            o.AddPolicy(Upload, context => PerMinute($"{Upload}:{context.User.FindFirst("sub")?.Value ?? ClientIp(context)}", uploads));
+            // Each AI answer costs money and seconds of model time; the monthly allowance is checked separately (AiQuotaChecker).
+            var ai = section.GetValue("AiPerMinute", 10);
+            o.AddPolicy(Ai, context => PerMinute($"{Ai}:{context.User.FindFirst("sub")?.Value ?? ClientIp(context)}", ai));
 
             var perIp = section.GetValue("GlobalPerMinute", 1200);
             var perOwner = section.GetValue("OwnerPerMinute", 300);
@@ -61,7 +70,7 @@ public static class RateLimits
             new ProblemDetails
             {
                 Status = StatusCodes.Status429TooManyRequests,
-                Title = "Too many requests. Wait a minute and try again.",
+                Title = ApiLocalization.Text("Too many requests. Wait a minute and try again."),
                 Type = "https://tools.ietf.org/html/rfc6585#section-4",
             },
             options: null,

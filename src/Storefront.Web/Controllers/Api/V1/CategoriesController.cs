@@ -14,6 +14,7 @@ public sealed class CategoriesController : ApiController
     public async Task<ActionResult<IReadOnlyList<CategoryDto>>> List([FromServices] ListCategoriesHandler handler, CancellationToken ct) =>
         Ok(await handler.Handle(ct));
 
+    /// <summary>Create a category. Pass parentId (a main category) to make it a sub-category.</summary>
     [HttpPost]
     [ProducesResponseType<CategoryDto>(StatusCodes.Status201Created)]
     [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status400BadRequest)]
@@ -24,13 +25,15 @@ public sealed class CategoriesController : ApiController
         return result.IsSuccess ? Created($"/api/v1/categories/{result.Value.Id}", result.Value) : Problem(result.Error!);
     }
 
+    /// <summary>Full update: name and parentId (null or absent puts the category at the top level).</summary>
     [HttpPut("{id:guid}")]
     [ProducesResponseType<CategoryDto>(StatusCodes.Status200OK)]
+    [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status400BadRequest)]
     [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status409Conflict)]
     public async Task<ActionResult<CategoryDto>> Rename(Guid id, SaveCategory request, [FromServices] RenameCategoryHandler handler, CancellationToken ct) =>
         From(await handler.Handle(id, request, ct));
 
-    /// <summary>A category with products needs <c>moveTo</c> (another category) or <c>deleteProducts=true</c>.</summary>
+    /// <summary>A category with products needs <c>moveTo</c> (another category) or <c>deleteProducts=true</c>. Its sub-categories move to the top level.</summary>
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status400BadRequest)]

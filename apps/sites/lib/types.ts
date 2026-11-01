@@ -2,8 +2,14 @@ import type { components } from "./api-types";
 
 type Schemas = components["schemas"];
 
-export type PublicProduct = Omit<Schemas["PublicProductDto"], "price"> & { price: number };
-export type PublicCategory = Omit<Schemas["PublicCategoryDto"], "products"> & { products: PublicProduct[] };
+/** A product. `label` "Custom" shows `customLabel` / `customLabelAr` (older payloads and fixtures may leave them out). */
+export type PublicProduct = Omit<Schemas["PublicProductDto"], "price" | "customLabel" | "customLabelAr"> & {
+  price: number;
+  customLabel?: string | null;
+  customLabelAr?: string | null;
+};
+/** A category; `parentId` is set on a sub-category (one level deep). */
+export type PublicCategory = Omit<Schemas["PublicCategoryDto"], "products" | "parentId"> & { products: PublicProduct[]; parentId?: string | null };
 export type PublicBusiness = Schemas["PublicBusinessDto"];
 
 /** A site as the public API returns it, with settings as a flat key → value object. */
@@ -21,4 +27,8 @@ export type TemplateProps = {
   site: PublicSite;
   /** The draft shown in the editor's preview. */
   preview: boolean;
+  /** Pro templates have more than one page: the path after the site's home ([] on the home page). */
+  path?: string[];
+  /** Public address of the site's home page, for links between pages: "/<slug>", "/_preview/<token>" or "" on a custom domain. */
+  base?: string;
 };

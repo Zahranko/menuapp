@@ -1,0 +1,118 @@
+/*
+ * Agency's own layout options (manifest "signature", _kit/signatures.ts):
+ *   hero.variant "manifesto"  a typographic manifesto: giant tight headline on a marker highlight, a spinning asterisk (base: "type")
+ *   menu.layout  "services"   a numbered service index: big (01) numbers, hairline rows, an arrow on every row (base: "list")
+ */
+
+/* ---------- manifesto ---------- */
+[data-template="agency"] .kit-hv.kit-hv[data-sig~="manifesto"] {
+  position: relative;
+  & > .kit-sig-art {
+    position: absolute;
+    inset-block-start: 22px;
+    inset-inline-end: 18px;
+    width: 64px;
+    height: 64px;
+    background: var(--k-acc);
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cg stroke='%23000' stroke-width='9' stroke-linecap='round'%3E%3Cpath d='M32 6v52M6 32h52M13.6 13.6l36.8 36.8M50.4 13.6L13.6 50.4'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
+    animation: agency-spin 14s linear infinite;
+  }
+  & .kit-hv-letter {
+    display: none;
+  }
+  & .kit-hv-eyebrow {
+    padding-inline-end: 80px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+  }
+  & .kit-hv-title {
+    letter-spacing: -0.045em;
+    line-height: 0.92;
+  }
+  & .kit-hv-lede {
+    max-width: 30ch;
+    padding-inline-start: 14px;
+    border-inline-start: 4px solid var(--k-acc);
+  }
+  & .kit-hv-btn {
+    border-radius: 999px;
+  }
+}
+@keyframes agency-spin {
+  to {
+    rotate: 360deg;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-template="agency"] .kit-hv.kit-hv[data-sig~="manifesto"] > .kit-sig-art {
+    animation: none;
+  }
+}
+
+/* ---------- service index ---------- */
+[data-template="agency"] .kit-mn.kit-mn.kit-mn[data-sig~="services"] {
+  & .kit-mn-title {
+    border-bottom: 2px solid var(--k-ink);
+    padding-bottom: 8px;
+  }
+  & .kit-mn-h {
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+  & .kit-mn-list {
+    counter-reset: ag-item;
+    gap: 0;
+  }
+  & .kit-mn-li {
+    counter-increment: ag-item;
+  }
+  & .kit-mn-item {
+    position: relative;
+    align-items: start;
+    gap: 14px;
+    padding: 18px 0;
+    padding-inline-end: 40px;
+    border: 0;
+    border-bottom: 1px solid var(--k-line);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+  & .kit-mn-item::before {
+    content: "(" counter(ag-item, decimal-leading-zero) ")";
+    flex: none;
+    min-width: 2.6em;
+    color: var(--k-acc-text);
+    font: 700 14px/1.6 var(--k-fb);
+    font-variant-numeric: tabular-nums;
+  }
+  & .kit-mn-item::after {
+    content: "";
+    position: absolute;
+    inset-block-start: 20px;
+    inset-inline-end: 4px;
+    width: 22px;
+    height: 22px;
+    background: var(--k-ink);
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 18L18 6M8 6h10v10' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  }
+  &:dir(rtl) .kit-mn-item::after {
+    scale: -1 1;
+  }
+  & .kit-mn-media {
+    display: none;
+  }
+  & .kit-mn-name {
+    font-family: var(--k-fd);
+    font-size: 1.25em;
+    line-height: 1.1;
+  }
+  & .kit-mn-dots {
+    display: none;
+  }
+}
+
+/* The kit pulls the first row of a list up; a services row keeps its own top padding. */
+[data-template="agency"] .kit-mn.kit-mn.kit-mn[data-sig~="services"] .kit-mn-li:first-child .kit-mn-item {
+  padding-top: 18px;
+}

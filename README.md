@@ -1,6 +1,6 @@
 # Storefront
 
-Working code name for the product. The customer-facing name (currently **Sufrly**, a test name) lives only in `brand.json`, so it can change at any time.
+Working code name for the product. The customer-facing name (currently **Katlio**) lives only in `brand.json`, so it can change at any time.
 
 Menu and catalog websites for small businesses, built and managed from a phone.
 

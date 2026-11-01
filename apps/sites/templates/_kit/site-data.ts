@@ -1,5 +1,5 @@
 import { formatPrice, instagramLink, mapsLink, whatsappLink } from "@/lib/format";
-import { label, strings } from "@/lib/i18n";
+import { productLabel, strings } from "@/lib/i18n";
 import { hours as hoursSetting, type Hours } from "@/lib/settings";
 import type { PublicCategory, PublicProduct, PublicSite } from "@/lib/types";
 
@@ -53,19 +53,24 @@ export function todayLine(site: PublicSite, rows: HoursRow[]): string | null {
 export type MenuItem = PublicProduct & { priceText: string; labelText: string | null; search: string };
 export type MenuSection = Omit<PublicCategory, "products"> & { products: MenuItem[]; anchor: string };
 
-export function menu(site: PublicSite): MenuSection[] {
+/** A product with its price and label in the site's language. */
+export function menuItem(site: PublicSite, category: PublicCategory, p: PublicProduct): MenuItem {
   const { locale, currencyCode } = site.business;
+  return {
+    ...p,
+    priceText: formatPrice(p.price, currencyCode, locale),
+    labelText: productLabel(p, locale),
+    search: `${p.name} ${p.description ?? ""} ${category.name}`.toLowerCase(),
+  };
+}
+
+export function menu(site: PublicSite): MenuSection[] {
   return site.categories
     .filter((c) => c.products.length > 0)
     .map((c, i) => ({
       ...c,
       anchor: `cat-${i + 1}`,
-      products: c.products.map((p) => ({
-        ...p,
-        priceText: formatPrice(p.price, currencyCode, locale),
-        labelText: p.label ? label(p.label, locale) : null,
-        search: `${p.name} ${p.description ?? ""} ${c.name}`.toLowerCase(),
-      })),
+      products: c.products.map((p) => menuItem(site, c, p)),
     }));
 }
 

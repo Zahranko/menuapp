@@ -1,10 +1,19 @@
 import type { TemplateProps } from "@/lib/types";
-import { ContactList, Credits, HoursList, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { ContactList, Credits, HoursList, Logo, logoRoot, optionRoot, OrderFab, ProductPicture, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
+import { heroPhotos } from "../_kit/hero";
+import { HeroBand } from "../_kit/HeroPhotos";
 import { fontVariables } from "../_kit/fonts";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
+import { basicLinks, orderCta, pageTop, SiteHero, SiteMasthead } from "../_kit/Top";
+import { SiteMenu } from "../_kit/Menu";
+import { ordered, SiteFooter, SiteStory, SiteVisit, together } from "../_kit/Sections";
+
+/** The sections in the order the template draws them (manifest "sectionsLayout.order"). */
+const ORDER = ["menu", "story", "visit"];
 
 const copy = {
   en: { index: "Index", items: "Items", info: "Information", hours: "Hours", contact: "Contact", about: "About", menu: "Catalog" },
@@ -23,104 +32,159 @@ const pad = (n: number, size = 3) => String(n).padStart(size, "0");
 /** Template 014 "Mono Grid": a Swiss-style catalog. Hairline grid, index numbers, one accent color. */
 export default function MonoGridTemplate({ site, now }: TemplateProps & { now?: Date }) {
   const ctx = siteContext(site, now);
+  const grouped = together(ctx, ORDER, ["story", "visit"]);
   const c = copy[ctx.locale];
   const story = ctx.on("story") && ctx.text("story.text");
   const numbers = new Map(ctx.sections.flatMap((s) => s.products).map((p, i) => [p.id, i + 1]));
 
+  const order = orderButton(site);
+  const top = pageTop(ctx, { photos: heroPhotos(site.settings, null) });
   return (
-    <div data-template="monogrid" className={cx("t-mono", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["grotesk", "modern", "mono"], defaultAccent: "#FF3B00", radius: { rounded: "0px", sharp: "0px" } })}>
+    <div data-template="monogrid" {...logoRoot(ctx)} {...optionRoot(ctx, order)} className={cx("t-mono", fontVariables)} style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["grotesk", "modern", "mono"], defaultAccent: "#FF3B00", radius: { rounded: "0px", sharp: "0px" } })}>
       <TemplateStyles id="monogrid" />
       <TopBars ctx={ctx} />
-      <header className="head" data-section="header">
-        <div className="meta">
-          <span>{site.business.address}</span>
-          {ctx.today && <span>{ctx.today}</span>}
-        </div>
-        <h1 className="name">{site.business.name}</h1>
-        {ctx.text("hero.title") && <p className="lede">{ctx.text("hero.title")}</p>}
-      </header>
+      <SiteMasthead ctx={ctx} top={top} links={basicLinks(ctx, { story })} cta={orderCta(order)} fallback="classic">
+        <header className="head" data-section="header" data-k="masthead">
+          <div className="meta">
+            <span>{site.business.address}</span>
+            {ctx.today && <span>{ctx.today}</span>}
+          </div>
+          {ctx.image("logo") && <Logo ctx={ctx} className="logo" sizes="64px" />}
+          <h1 className="name kit-name">{site.business.name}</h1>
+          {ctx.text("hero.title") && <p className="lede">{ctx.text("hero.title")}</p>}
+          <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} />
+        </header>
+      </SiteMasthead>
+      <SiteHero ctx={ctx} top={top} title={site.business.name} subtitle={ctx.text("hero.title")} />
 
       <main>
-        <section id="menu" className="catalog" data-section="menu" aria-label={c.menu}>
-          {ctx.sections.length > 1 && (
-            <nav className="index" aria-label={c.index}>
-              <h2 className="label">{c.index}</h2>
-              <ol className="plain">
-                {ctx.sections.map((s, i) => (
-                  <li key={s.id}>
-                    <a href={`#${s.anchor}`}>
-                      <span className="num">{pad(i + 1, 2)}</span>
-                      <span className="index-name">{s.name}</span>
-                      <span className="num">({s.products.length})</span>
-                    </a>
-                  </li>
-                ))}
-              </ol>
-            </nav>
-          )}
-          {ctx.sections.map((section, si) => (
-            <section key={section.id} id={section.anchor} className="block" aria-labelledby={`${section.anchor}-h`}>
-              <h2 id={`${section.anchor}-h`} className="block-head">
-                <span className="num">{pad(si + 1, 2)}</span>
-                <span>{section.name}</span>
-              </h2>
-              <ul className="plain grid">
-                {section.products.map((item) => (
-                  <li key={item.id}>
-                    <button type="button" className={cx("cell", !item.isAvailable && "out")} data-item-id={item.id}>
-                      <span className="cell-top">
-                        <span className="num">{pad(numbers.get(item.id) ?? 0)}</span>
-                        {item.labelText && <span className="flag">{item.labelText}</span>}
-                        {!item.isAvailable && <span className="flag flag-out">{ctx.t.soldOut}</span>}
-                      </span>
-                      <span className="cell-media">
-                        <ProductPicture item={item} sizes="(min-width: 760px) 25vw, 50vw" />
-                      </span>
-                      <span className="cell-bottom">
-                        <span className="cell-name">{item.name}</span>
-                        <span className="cell-price">{item.priceText}</span>
-                      </span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
+        {ordered(ctx, {
+          menu: (
+            <section id="menu" className="catalog" data-section="menu" aria-label={c.menu}>
+              <SiteMenu ctx={ctx} like="grid" level={2}>
+              {ctx.sections.length > 1 && (
+                <nav className="index" aria-label={c.index}>
+                  <h2 data-k="label" className="label">{c.index}</h2>
+                  <ol className="plain">
+                    {ctx.sections.map((s, i) => (
+                      <li key={s.id}>
+                        <a href={`#${s.anchor}`}>
+                          <span className="num">{pad(i + 1, 2)}</span>
+                          <span className="index-name">{s.name}</span>
+                          <span className="num">({s.products.length})</span>
+                        </a>
+                      </li>
+                    ))}
+                  </ol>
+                </nav>
+              )}
+              {ctx.sections.map((section, si) => (
+                <section key={section.id} id={section.anchor} className="block" aria-labelledby={`${section.anchor}-h`}>
+                  <h2 id={`${section.anchor}-h`} className="block-head">
+                    <span className="num">{pad(si + 1, 2)}</span>
+                    <span>{section.name}</span>
+                  </h2>
+                  <ul className="plain grid kit-cards">
+                    {section.products.map((item) => (
+                      <li key={item.id}>
+                        <button type="button" className={cx("cell kit-card", !item.isAvailable && "out")} data-item-id={item.id}>
+                          <span className="cell-top">
+                            <span className="num">{pad(numbers.get(item.id) ?? 0)}</span>
+                            {item.labelText && <span className="flag">{item.labelText}</span>}
+                            {!item.isAvailable && <span className="flag flag-out">{ctx.t.soldOut}</span>}
+                          </span>
+                          <span className="cell-media kit-card-media">
+                            <ProductPicture item={item} sizes="(min-width: 760px) 25vw, 50vw" />
+                          </span>
+                          <span className="cell-bottom">
+                            <span className="cell-name">{item.name}</span>
+                            <span className="cell-price">{item.priceText}</span>
+                          </span>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              ))}
+              </SiteMenu>
             </section>
-          ))}
-        </section>
-
-        {(story || ctx.on("visit")) && (
-          <section id="visit" className="info" data-section="visit" aria-labelledby="info-title">
-            <h2 id="info-title" className="block-head">
-              <span className="num">{pad(ctx.sections.length + 1, 2)}</span>
-              <span>{c.info}</span>
-            </h2>
-            <div className="info-grid">
-              {story && (
-                <div id="story" className="info-cell" data-section="story">
-                  <h3 className="label">{ctx.text("story.title") || c.about}</h3>
-                  <p>{story}</p>
+          ),
+          // The story is a cell of the visit section while the owner keeps them where they are.
+          story: grouped
+            ? (story || ctx.on("visit")) && (
+                <section id="visit" className="info" data-section="visit" aria-labelledby="info-title">
+                  <h2 id="info-title" className="block-head">
+                    <span className="num">{pad(ctx.sections.length + 1, 2)}</span>
+                    <span>{c.info}</span>
+                  </h2>
+                  <div className="info-grid">
+                    {story && (
+                      <div id="story" className="info-cell" data-section="story">
+                        <h3 className="label">{ctx.text("story.title") || c.about}</h3>
+                        <p>{story}</p>
+                      </div>
+                    )}
+                    {ctx.on("visit") && hasHours(ctx.hours) && (
+                      <div className="info-cell">
+                        <h3 className="label">{c.hours}</h3>
+                        <HoursList ctx={ctx} />
+                      </div>
+                    )}
+                    {ctx.on("visit") && (
+                      <div className="info-cell">
+                        <h3 className="label">{c.contact}</h3>
+                        <ContactList ctx={ctx} />
+                      </div>
+                    )}
+                  </div>
+                </section>
+              )
+            : story && (
+                <SiteStory ctx={ctx} title={ctx.text("story.title") || c.about}>
+                  <section id="story" className="info" data-section="story" aria-labelledby="story-title">
+                    <h2 id="story-title" className="block-head">
+                      <span>{ctx.text("story.title") || c.about}</span>
+                    </h2>
+                    <div className="info-grid">
+                      <div className="info-cell">
+                        <p>{story}</p>
+                      </div>
+                    </div>
+                  </section>
+                </SiteStory>
+              ),
+          visit: !grouped && ctx.on("visit") && (
+            <SiteVisit ctx={ctx} title={c.info}>
+              <section id="visit" className="info" data-section="visit" aria-labelledby="info-title">
+                <h2 id="info-title" className="block-head">
+                  <span className="num">{pad(ctx.sections.length + 1, 2)}</span>
+                  <span>{c.info}</span>
+                </h2>
+                <div className="info-grid">
+                  {hasHours(ctx.hours) && (
+                    <div className="info-cell">
+                      <h3 className="label">{c.hours}</h3>
+                      <HoursList ctx={ctx} />
+                    </div>
+                  )}
+                  <div className="info-cell">
+                    <h3 className="label">{c.contact}</h3>
+                    <ContactList ctx={ctx} />
+                  </div>
                 </div>
-              )}
-              {ctx.on("visit") && hasHours(ctx.hours) && (
-                <div className="info-cell">
-                  <h3 className="label">{c.hours}</h3>
-                  <HoursList ctx={ctx} />
-                </div>
-              )}
-              {ctx.on("visit") && (
-                <div className="info-cell">
-                  <h3 className="label">{c.contact}</h3>
-                  <ContactList ctx={ctx} />
-                </div>
-              )}
-            </div>
-          </section>
-        )}
+              </section>
+            </SiteVisit>
+          ),
+        })}
       </main>
 
-      <footer className="foot" data-section="footer">
-        <Credits ctx={ctx} />
-      </footer>
+      <SiteFooter ctx={ctx} links={basicLinks(ctx, { story })}>
+        <footer className="foot" data-section="footer">
+          <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
+          <Credits ctx={ctx} />
+        </footer>
+      </SiteFooter>
+      <OrderFab order={order} />
       <ProductSheet ctx={ctx} />
     </div>
   );

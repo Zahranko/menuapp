@@ -1,0 +1,88 @@
+/*
+ * Arch Story's own layout options (manifest "signature", _kit/signatures.ts):
+ *   hero.variant "doorway"  the photo in a double arch, like a shop door, the words under it (base: "arch")
+ *   story.layout "chapter"  the story as a book chapter: a big first letter, an arched photo and a rule (base: "letter")
+ */
+
+/* ---------- doorway ---------- */
+[data-template="archstory"] .kit-hv.kit-hv[data-sig~="doorway"] {
+  & .kit-hv-media,
+  & .kit-hv-mono {
+    border-radius: 999px 999px 4px 4px;
+    box-shadow:
+      0 0 0 10px var(--k-bg),
+      0 0 0 12px var(--k-acc),
+      0 0 0 22px var(--k-bg),
+      0 0 0 23px var(--k-line);
+    margin-top: 26px;
+  }
+  & .kit-hv-in::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 100%;
+    background: radial-gradient(ellipse 60% 40% at 50% 30%, color-mix(in srgb, var(--k-acc) 12%, transparent), transparent 70%);
+    z-index: -1;
+  }
+  & .kit-hv-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  & .kit-hv-eyebrow::before,
+  & .kit-hv-eyebrow::after {
+    content: "";
+    width: 26px;
+    height: 1px;
+    background: currentColor;
+  }
+  & .kit-hv-title {
+    font-style: italic;
+  }
+}
+
+/* ---------- chapter ---------- */
+[data-template="archstory"] .kit-sc[data-sig~="chapter"] {
+  & .kit-sc-head {
+    text-align: center;
+  }
+  & .kit-sc-head::after {
+    content: "";
+    display: block;
+    width: 64px;
+    height: 7px;
+    margin: 14px auto 0;
+    background: radial-gradient(circle, var(--k-acc) 0 3px, transparent 3.5px) center / 21px 7px repeat-x;
+  }
+  & .kit-sc-letter {
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    max-width: 62ch;
+    margin-inline: auto;
+  }
+  & .kit-sc-letter .kit-sc-story-pic {
+    width: min(240px, 70%);
+    height: auto;
+    aspect-ratio: 3 / 4;
+    margin: 6px auto 26px;
+    border-radius: 999px 999px 8px 8px;
+    box-shadow: 0 0 0 8px var(--k-bg), 0 0 0 9px var(--k-acc);
+  }
+  & .kit-sc-letter > p:not(.kit-sc-sign):first-of-type::first-letter {
+    font-size: 4.2em;
+    font-style: italic;
+  }
+  & .kit-sc-letter > p:not(.kit-sc-sign):last-of-type::after {
+    content: "";
+    display: block;
+    width: 40%;
+    height: 1px;
+    margin: 22px auto 0;
+    background: var(--k-line);
+  }
+  & .kit-sc-sign {
+    font-family: var(--k-fd);
+    font-style: italic;
+  }
+}

@@ -34,7 +34,7 @@ public sealed class SlugAvailabilityHandler(IBusinessRepository businesses, IRes
 
         if (reserved.All.Contains(slug) || await businesses.SlugExistsAsync(slug, ct))
         {
-            return $"That link is taken. Try adding your city, like {Fit(slug, "amman")}.";
+            return $"That link is taken. Try adding your area, like {Fit(slug, "downtown")}.";
         }
 
         return null;

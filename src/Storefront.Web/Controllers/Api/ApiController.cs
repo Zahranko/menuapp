@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Storefront.Application.Common;
+using Storefront.Web.Configuration;
 
 namespace Storefront.Web.Controllers.Api;
 
@@ -7,7 +8,10 @@ namespace Storefront.Web.Controllers.Api;
 [Produces("application/json")]
 public abstract class ApiController : ControllerBase
 {
-    /// <summary>Maps an expected failure to RFC 7807 ProblemDetails with "code" and a field-keyed "errors" dictionary.</summary>
+    /// <summary>
+    /// Maps an expected failure to RFC 7807 ProblemDetails with "code" and a field-keyed "errors" dictionary,
+    /// with messages in the request's language (Accept-Language).
+    /// </summary>
     protected ActionResult Problem(Error error)
     {
         var status = error.Type switch
@@ -17,6 +21,9 @@ public abstract class ApiController : ControllerBase
             ErrorType.Conflict => StatusCodes.Status409Conflict,
             ErrorType.Unauthorized => StatusCodes.Status401Unauthorized,
             ErrorType.Forbidden => StatusCodes.Status403Forbidden,
+            ErrorType.LimitReached => StatusCodes.Status429TooManyRequests,
+            ErrorType.Unavailable => StatusCodes.Status503ServiceUnavailable,
+            ErrorType.Upstream => StatusCodes.Status502BadGateway,
             _ => StatusCodes.Status400BadRequest,
         };
 
@@ -27,6 +34,7 @@ public abstract class ApiController : ControllerBase
             Type = $"https://httpstatuses.io/{status}",
         };
         problem.Extensions["code"] = error.Code;
+        ApiLocalization.Localize(problem, error.Code);
         return new ObjectResult(problem) { StatusCode = status, ContentTypes = { "application/problem+json" } };
     }
 

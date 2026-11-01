@@ -1,0 +1,110 @@
+/*
+ * Folio's own layout options (manifest "signature", _kit/signatures.ts):
+ *   hero.variant "cover"     a fashion magazine cover: an issue line over the masthead, wide-set caps, a barcode in the corner (base: "poster")
+ *   menu.layout  "lookbook"  a lookbook: big photos numbered "Look 01", "Look 02" with quiet captions (base: "large")
+ */
+
+/* ---------- magazine cover ---------- */
+[data-template="folio"] .kit-hv.kit-hv[data-sig~="cover"] {
+  & .kit-hv-in {
+    position: relative;
+    padding-bottom: 46px;
+  }
+  & .kit-hv-in::after {
+    content: "";
+    position: absolute;
+    inset-block-end: 12px;
+    inset-inline-end: 0;
+    width: 64px;
+    height: 24px;
+    background: repeating-linear-gradient(90deg, var(--k-ink) 0 1px, transparent 1px 3px, var(--k-ink) 3px 5px, transparent 5px 6px, var(--k-ink) 6px 7px, transparent 7px 10px);
+  }
+  & .kit-hv-eyebrow {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    border-bottom-width: 1px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+  }
+  & .kit-hv-eyebrow::after {
+    content: "N\00B0  01" / "";
+    letter-spacing: 0.1em;
+  }
+  & .kit-hv-title {
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 0.95;
+  }
+  & .kit-hv-media,
+  & .kit-hv-mono {
+    rotate: 0deg;
+    border-radius: 0;
+    box-shadow: none;
+    outline: 1px solid var(--k-ink);
+    outline-offset: 5px;
+  }
+  &:dir(rtl) :is(.kit-hv-media, .kit-hv-mono) {
+    rotate: 0deg;
+  }
+  & .kit-hv-btn {
+    border-radius: 0;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+}
+
+/* ---------- lookbook ---------- */
+[data-template="folio"] .kit-mn.kit-mn.kit-mn[data-sig~="lookbook"] {
+  & .kit-mn-list {
+    counter-reset: folio-look;
+    gap: 34px;
+  }
+  & .kit-mn-li {
+    counter-increment: folio-look;
+  }
+  & .kit-mn-item {
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+  }
+  & .kit-mn-media {
+    border-radius: 0;
+  }
+  & .kit-mn-text {
+    padding: 12px 0 0;
+  }
+  & .kit-mn-text::before {
+    content: "Look " counter(folio-look, decimal-leading-zero);
+    display: block;
+    margin-bottom: 4px;
+    color: var(--k-muted);
+    font: 500 11px/1.4 var(--k-fb);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+  &:lang(ar) .kit-mn-text::before {
+    content: "إطلالة " counter(folio-look, arabic-indic);
+    letter-spacing: 0;
+  }
+  & .kit-mn-head {
+    align-items: baseline;
+    border-top: 1px solid var(--k-ink);
+    padding-top: 8px;
+  }
+  & .kit-mn-name {
+    font-family: var(--k-fd);
+    font-weight: 400;
+    font-size: 1.2em;
+  }
+  & .kit-mn-price {
+    font-weight: 400;
+  }
+  & .kit-mn-dots {
+    display: none;
+  }
+}

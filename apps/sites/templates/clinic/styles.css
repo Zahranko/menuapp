@@ -1,5 +1,15 @@
 /* Template 018 "Clinic": a calm, trustworthy practice website. Split hero with a floating info card, service cards, steps, FAQ, CTA band. */
 
+@import "../_kit/logo.css";
+@import "../_kit/options.css";
+@import "../_kit/cards.css";
+@import "../_kit/hero.css";
+@import "../_kit/layout.css";
+@import "../_kit/menu.css";
+@import "../_kit/sections.css";
+@import "../_kit/style.css";
+@import "./signature.css";
+
 .t-clinic {
   container: page / inline-size;
   font-size: 15.5px;
@@ -122,6 +132,11 @@
     justify-content: center;
     font-weight: 800;
   }
+  /* The booking button keeps its one line; a very long business name gives way instead. */
+  .head > .btn {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
   .head nav {
     display: none;
     gap: 6px;
@@ -222,7 +237,7 @@
 
   /* services */
   .services {
-    padding: 64px 18px 40px;
+    padding: calc(64px * var(--kit-space, 1)) 18px calc(40px * var(--kit-space, 1));
     scroll-margin-top: 64px;
   }
   .section-head {
@@ -268,7 +283,7 @@
     color: var(--ink);
   }
   .group {
-    padding-top: 30px;
+    padding-top: calc(30px * var(--kit-space, 1));
     scroll-margin-top: 74px;
   }
   .group h3 {
@@ -356,8 +371,8 @@
 
   /* steps */
   .how {
-    margin: 30px 0 0;
-    padding: 60px 18px;
+    margin: calc(30px * var(--kit-space, 1)) 0 0;
+    padding: calc(60px * var(--kit-space, 1)) 18px;
     background: var(--soft);
     scroll-margin-top: 64px;
   }
@@ -398,7 +413,7 @@
 
   /* reviews */
   .reviews {
-    padding: 64px 18px 30px;
+    padding: calc(64px * var(--kit-space, 1)) 18px calc(30px * var(--kit-space, 1));
   }
   .reviews h2 {
     text-align: center;
@@ -432,7 +447,7 @@
 
   /* faq */
   .faq {
-    padding: 50px 18px 30px;
+    padding: calc(50px * var(--kit-space, 1)) 18px calc(30px * var(--kit-space, 1));
     scroll-margin-top: 64px;
   }
   .faq h2 {
@@ -491,7 +506,7 @@
 
   /* visit */
   .visit {
-    padding: 40px 18px 50px;
+    padding: calc(40px * var(--kit-space, 1)) 18px calc(50px * var(--kit-space, 1));
     scroll-margin-top: 64px;
   }
   .cta {
@@ -529,8 +544,17 @@
     margin-bottom: 10px;
   }
 
+  /* Social accounts the owner shows (_kit/options.css draws the round icon links). */
+  .foot-social {
+    justify-content: flex-start;
+    margin-bottom: 16px;
+    color: var(--acc-text);
+  }
+  .foot-social a {
+    border-color: color-mix(in srgb, currentColor 40%, transparent);
+  }
   .foot {
-    padding: 20px 18px 30px;
+    padding: calc(20px * var(--kit-space, 1)) 18px calc(30px * var(--kit-space, 1));
     border-top: 1px solid var(--line);
     color: var(--muted);
   }
@@ -571,7 +595,7 @@
       padding-inline: max(32px, calc((100cqi - 1180px) / 2));
     }
     .services {
-      padding-top: 90px;
+      padding-top: calc(90px * var(--kit-space, 1));
       scroll-margin-top: 74px;
     }
     .section-head h2,
@@ -585,7 +609,7 @@
       gap: 16px;
     }
     .how {
-      padding: 90px max(32px, calc((100cqi - 1180px) / 2));
+      padding: calc(90px * var(--kit-space, 1)) max(32px, calc((100cqi - 1180px) / 2));
     }
     .steps {
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));

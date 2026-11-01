@@ -1,8 +1,13 @@
-import { brand } from "@/lib/brand";
 import { madeWith } from "@/lib/i18n";
-import { Instagram, Mail, WhatsApp } from "../../_kit/icons";
+import { Mail } from "../../_kit/icons";
 import type { SouqContext } from "../context";
+import { FootName, SocialIcons } from "../../_kit/blocks";
+import { socialAccounts } from "../../_kit/options";
 import { Logo, navLinks } from "./Header";
+import { MadeWithLink } from "@/components/brand/logo-mark";
+
+/** What Souq's footer showed before the owner could choose: Instagram and WhatsApp (also its manifest's default). */
+export const SOUQ_SOCIAL = ["instagram", "whatsapp"] as const;
 
 export function Footer({ ctx }: { ctx: SouqContext }) {
   const { business } = ctx.site;
@@ -15,20 +20,11 @@ export function Footer({ ctx }: { ctx: SouqContext }) {
           <div>
             <div className="brand">
               <Logo ctx={ctx} />
-              <span className="brandName">{business.name}</span>
+              <FootName ctx={ctx} as="span" className="brandName kit-name" />
             </div>
             {ctx.text("hero.subtitle") && <p>{ctx.text("hero.subtitle")}</p>}
             <div className="soc">
-              {contact.instagram && (
-                <a href={contact.instagram} rel="noopener" target="_blank" aria-label={t.instagram}>
-                  <Instagram />
-                </a>
-              )}
-              {contact.whatsapp && (
-                <a href={contact.whatsapp} rel="noopener" target="_blank" aria-label={c.whatsapp}>
-                  <WhatsApp />
-                </a>
-              )}
+              <SocialIcons accounts={socialAccounts(ctx.site, SOUQ_SOCIAL)} />
               {contact.email && (
                 <a href={contact.email} aria-label={c.email}>
                   <Mail />
@@ -59,7 +55,7 @@ export function Footer({ ctx }: { ctx: SouqContext }) {
                 <form className="news" action={`mailto:${business.email}`} method="get">
                   <input type="hidden" name="subject" value={c.newsletter} />
                   <input type="email" name="body" required placeholder={t.yourEmail} aria-label={t.yourEmail} />
-                  <button type="submit" className={`btn pri`}>
+                  <button data-k="btn" type="submit" className={`btn pri`}>
                     {c.join}
                   </button>
                 </form>
@@ -68,10 +64,10 @@ export function Footer({ ctx }: { ctx: SouqContext }) {
           </div>
         </div>
         <div className="footBot">
-          <span>
+          <span className="kit-credits-text">
             © {year} {business.name}. {c.rights}
           </span>
-          <a href={`https://${brand.domain}`}>{madeWith(business.locale)}</a>
+          <MadeWithLink label={madeWith(business.locale)} />
         </div>
       </div>
     </footer>

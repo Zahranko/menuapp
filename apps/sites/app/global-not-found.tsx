@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { LogoMark } from "@/components/brand/logo-mark";
 import { brand } from "@/lib/brand";
 import "./globals.css";
 
@@ -12,6 +13,7 @@ export default function GlobalNotFound() {
     <html lang="en">
       <body className="nf">
         <main>
+          <LogoMark size={48} title={brand.brandName} />
           <p className="nf-code">404</p>
           <h1>We couldn’t find that page</h1>
           <p>The link may be mistyped, or this menu has moved.</p>

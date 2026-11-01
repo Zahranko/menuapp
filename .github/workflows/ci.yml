@@ -42,7 +42,8 @@ jobs:
       - run: dotnet test Storefront.sln --no-build --logger GitHubActions
 
   sites:
-    runs-on: ubuntu-latest
+    # Pinned: ubuntu-latest moved to 26.04, where Playwright 1.56 can't install Chromium.
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: apps/sites

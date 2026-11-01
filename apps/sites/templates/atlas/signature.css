@@ -1,0 +1,110 @@
+/*
+ * Atlas's own layout options (manifest "signature", _kit/signatures.ts):
+ *   hero.variant "shopwindow"  the photo behind a shop window: a painted frame, glazing bars and an OPEN sign on a cord (base: "split")
+ *   menu.layout  "storefront"  product cards with a paper price tag tied to the corner of each photo (base: "grid")
+ */
+
+/* ---------- shop window ---------- */
+[data-template="atlas"] .kit-hv.kit-hv[data-sig~="shopwindow"] {
+  & .kit-hv-media,
+  & .kit-hv-mono {
+    border: 10px solid var(--k-ink);
+    border-bottom-width: 18px;
+    border-radius: 6px 6px 2px 2px;
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.2), 0 18px 30px -24px rgb(0 0 0 / 0.6);
+  }
+  & .kit-hv-media::after,
+  & .kit-hv-mono::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background:
+      linear-gradient(var(--k-ink) 0 0) 50% 0 / 6px 100% no-repeat,
+      linear-gradient(var(--k-ink) 0 0) 0 38% / 100% 6px no-repeat,
+      linear-gradient(115deg, transparent 30%, rgb(255 255 255 / 0.22) 38%, transparent 46%);
+    pointer-events: none;
+  }
+  & .kit-hv-media::before,
+  & .kit-hv-mono::before {
+    content: "OPEN" / "";
+    position: absolute;
+    inset-block-start: 14%;
+    inset-inline-start: 50%;
+    z-index: 3;
+    translate: -50% 0;
+    padding: 4px 10px;
+    border: 2px solid var(--k-ink);
+    border-radius: 4px;
+    background: var(--k-acc);
+    color: var(--k-acc-ink);
+    font: 800 11px/1 var(--k-fb);
+    letter-spacing: 0.14em;
+    rotate: -4deg;
+  }
+  &:dir(rtl) :is(.kit-hv-media, .kit-hv-mono)::before {
+    translate: 50% 0;
+  }
+  &:lang(ar) :is(.kit-hv-media, .kit-hv-mono)::before {
+    content: "مفتوح" / "";
+    letter-spacing: 0;
+    font-size: 12px;
+  }
+  & .kit-hv-eyebrow::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-inline-end: 8px;
+    border-radius: 50%;
+    background: var(--k-acc);
+    vertical-align: 1px;
+  }
+}
+
+/* ---------- storefront price tags ---------- */
+[data-template="atlas"] .kit-mn.kit-mn.kit-mn[data-sig~="storefront"] {
+  & .kit-mn-item {
+    position: relative;
+    overflow: visible;
+  }
+  & .kit-mn-media {
+    border-radius: 6px;
+  }
+  & .kit-mn-head {
+    display: block;
+  }
+  & .kit-mn-dots {
+    display: none;
+  }
+  & .kit-mn-head .kit-mn-price {
+    position: absolute;
+    inset-block-start: 10px;
+    inset-inline-end: 10px;
+    z-index: 2;
+    padding: 4px 10px;
+    padding-inline-start: 18px;
+    border: 1.5px solid var(--k-ink);
+    border-radius: 3px;
+    background:
+      radial-gradient(circle at 8px 50%, var(--k-ink) 0 2px, transparent 2.6px),
+      var(--k-surf);
+    color: var(--k-ink);
+    font-size: 13px;
+    font-weight: 700;
+    rotate: 4deg;
+    box-shadow: 0 4px 8px -4px rgb(0 0 0 / 0.4);
+    clip-path: polygon(10px 0, 100% 0, 100% 100%, 10px 100%, 0 50%);
+  }
+  &:dir(rtl) .kit-mn-head .kit-mn-price {
+    rotate: -4deg;
+    padding-inline: 10px 18px;
+    background:
+      radial-gradient(circle at calc(100% - 8px) 50%, var(--k-ink) 0 2px, transparent 2.6px),
+      var(--k-surf);
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
+  }
+  & .kit-mn-name {
+    font-weight: 600;
+  }
+}

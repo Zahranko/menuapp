@@ -9,6 +9,7 @@ using Storefront.Application.PublicSites;
 using Storefront.Application.Sites;
 using Storefront.Application.Templates;
 using Storefront.Domain.Domains;
+using Storefront.Domain.Templates;
 using Storefront.Infrastructure.Persistence;
 
 namespace Storefront.Web.IntegrationTests;
@@ -32,8 +33,32 @@ public class SitesTests(StorefrontFactory factory) : IClassFixture<StorefrontFac
         var templates = await factory.CreateClient().GetFromJsonAsync<List<TemplateDto>>("/api/v1/templates", Api.Json);
         var souq = Assert.Single(templates!, t => t.Id == "souq");
         Assert.Equal(1, souq.Number);
+        Assert.Equal("basic", souq.Tier);
         Assert.Equal(JsonValueKind.Array, souq.Schema.ValueKind);
         Assert.Equal("modern", souq.Defaults.GetProperty("font").GetString());
+        Assert.Equal("lite", Assert.Single(templates!, t => t.Id == "linen").Tier);
+
+        // Lite menu sheets come first, then Basic, then Pro.
+        var ranks = templates!.Select(t => t.Tier switch { "lite" => 0, "pro" => 2, _ => 1 }).ToList();
+        Assert.Equal(ranks.Order(), ranks);
+    }
+
+    [Fact]
+    public async Task Lite_owners_use_menu_sheets_but_not_basic_templates()
+    {
+        var (client, _, _) = await OwnerWithMenuAsync();
+        await Api.EnsureSuccess(await client.PostAsJsonAsync("/api/v1/subscription/change", new { planCode = "lite" }));
+
+        var blocked = await client.PostAsync("/api/v1/site/publish", null);
+        Assert.Equal(HttpStatusCode.Forbidden, blocked.StatusCode);
+        Assert.Equal("template.basic", (await Api.ProblemAsync(blocked)).GetProperty("code").GetString());
+        Assert.Equal(HttpStatusCode.Forbidden, (await client.PutAsJsonAsync("/api/v1/site/template", new { templateId = "pocket" })).StatusCode);
+
+        await Api.EnsureSuccess(await client.PutAsJsonAsync("/api/v1/site/template", new { templateId = "linen" }));
+        await Api.EnsureSuccess(await client.PostAsync("/api/v1/site/publish", null));
+
+        var status = await client.GetFromJsonAsync<JsonElement>("/api/v1/ai/status", Api.Json);
+        Assert.Equal(10, status.GetProperty("monthlyLimit").GetInt32());
     }
 
     [Fact]
@@ -203,6 +228,98 @@ public class SitesTests(StorefrontFactory factory) : IClassFixture<StorefrontFac
         var response = await client.PutAsJsonAsync("/api/v1/site/template", new { templateId = "doesnotexist" });
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         await Api.EnsureSuccess(await client.PutAsJsonAsync("/api/v1/site/template", new { templateId = "SOUQ" }));
+    }
+
+    [Fact]
+    public async Task Public_site_keeps_a_main_category_whose_sub_categories_have_products()
+    {
+        var (client, slug, _) = await OwnerWithMenuAsync();
+        var drinks = (await (await client.PostAsJsonAsync("/api/v1/categories", new { name = "Drinks" })).Content.ReadFromJsonAsync<CategoryDto>(Api.Json))!;
+        var juice = (await (await client.PostAsJsonAsync("/api/v1/categories", new { name = "Juice", parentId = drinks.Id })).Content.ReadFromJsonAsync<CategoryDto>(Api.Json))!;
+        await client.PostAsJsonAsync("/api/v1/categories", new { name = "Empty child", parentId = drinks.Id });
+        await Api.EnsureSuccess(await client.PostAsJsonAsync("/api/v1/products", new { categoryId = juice.Id, name = "Orange", price = 2m }));
+        await Api.EnsureSuccess(await client.PostAsync("/api/v1/site/publish", null));
+
+        var site = await factory.CreateClient().GetFromJsonAsync<PublicSiteDto>($"/api/public/v1/sites/by-slug/{slug}", Api.Json);
+        Assert.Equal(["Coffee", "Drinks", "Juice"], site!.Categories.Select(c => c.Name));
+        Assert.Equal([null, null, drinks.Id], site.Categories.Select(c => c.ParentId));
+        Assert.Empty(site.Categories[1].Products);
+        Assert.Equal("Orange", Assert.Single(site.Categories[2].Products).Name);
+    }
+
+    private const string ProTemplateId = "protestonly";
+
+    /// <summary>The committed registry may have no pro template yet, so tests add one (a copy of souq) straight to the database.</summary>
+    private async Task EnsureProTemplateAsync()
+    {
+        await using var scope = factory.Services.CreateAsyncScope();
+        var db = scope.ServiceProvider.GetRequiredService<StorefrontDbContext>();
+        var existing = await db.Templates.FirstOrDefaultAsync(t => t.Id == ProTemplateId);
+        if (existing is not null)
+        {
+            existing.Activate();
+        }
+        else
+        {
+            var souq = await db.Templates.FirstAsync(t => t.Id == "souq");
+            db.Templates.Add(Template.Create(ProTemplateId, 999, "Pro test", souq.Category, null, null, souq.SettingsSchema, souq.DefaultSettings, 1, TemplateTier.Pro));
+        }
+
+        await db.SaveChangesAsync();
+    }
+
+    private static async Task AssertNeedsPro(HttpResponseMessage response)
+    {
+        Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
+        var problem = await Api.ProblemAsync(response);
+        Assert.Equal("template.pro", problem.GetProperty("code").GetString());
+        Assert.Equal("This template is part of the Pro plan. Upgrade to Pro to use it.", problem.GetProperty("title").GetString());
+    }
+
+    [Fact]
+    public async Task Pro_templates_are_listed_with_their_tier()
+    {
+        await EnsureProTemplateAsync();
+        var templates = await factory.CreateClient().GetFromJsonAsync<List<TemplateDto>>("/api/v1/templates", Api.Json);
+        Assert.Equal("pro", Assert.Single(templates!, t => t.Id == ProTemplateId).Tier);
+    }
+
+    [Fact]
+    public async Task Basic_owners_cannot_choose_or_publish_a_pro_template()
+    {
+        await EnsureProTemplateAsync();
+        var (client, _, businessId) = await OwnerWithMenuAsync();
+        await AssertNeedsPro(await client.PutAsJsonAsync("/api/v1/site/template", new { templateId = ProTemplateId }));
+        Assert.Equal("souq", (await client.GetFromJsonAsync<SiteDto>("/api/v1/site", Api.Json))!.TemplateId);
+
+        // A draft already on a pro template (for example chosen while on Pro) cannot be published on Basic.
+        await using (var scope = factory.Services.CreateAsyncScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<StorefrontDbContext>();
+            var site = await db.Sites.IgnoreQueryFilters().FirstAsync(x => x.BusinessId == businessId);
+            var template = await db.Templates.FirstAsync(t => t.Id == ProTemplateId);
+            site.ChangeTemplate(template.Id, template.DefaultSettings, DateTimeOffset.UtcNow);
+            await db.SaveChangesAsync();
+        }
+
+        await AssertNeedsPro(await client.PostAsync("/api/v1/site/publish", null));
+    }
+
+    [Fact]
+    public async Task Pro_owners_use_pro_templates_and_the_live_site_survives_a_downgrade()
+    {
+        await EnsureProTemplateAsync();
+        var (client, slug, _) = await OwnerWithMenuAsync();
+        await Api.EnsureSuccess(await client.PostAsJsonAsync("/api/v1/subscription/change", new { planCode = "pro" }));
+        await Api.EnsureSuccess(await client.PutAsJsonAsync("/api/v1/site/template", new { templateId = ProTemplateId }));
+        await Api.EnsureSuccess(await client.PostAsync("/api/v1/site/publish", null));
+
+        await Api.EnsureSuccess(await client.PostAsJsonAsync("/api/v1/subscription/change", new { planCode = "basic" }));
+        var live = await factory.CreateClient().GetFromJsonAsync<PublicSiteDto>($"/api/public/v1/sites/by-slug/{slug}", Api.Json);
+        Assert.Equal(ProTemplateId, live!.TemplateId);
+
+        await AssertNeedsPro(await client.PostAsync("/api/v1/site/publish", null));
+        await Api.EnsureSuccess(await client.PutAsJsonAsync("/api/v1/site/template", new { templateId = "souq" }));
     }
 
     [Fact]

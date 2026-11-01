@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 
 /// A failed API call. [fieldErrors] holds the RFC 7807 `errors` dictionary, keyed by request field.
 class ApiError implements Exception {
-  const ApiError({this.status, this.message, this.fieldErrors = const {}, this.isNetwork = false});
+  const ApiError({this.status, this.code, this.message, this.fieldErrors = const {}, this.isNetwork = false});
 
   /// Reads a ProblemDetails body; anything else becomes a general or network error.
   factory ApiError.from(Object error) {
@@ -13,6 +13,7 @@ class ApiError implements Exception {
       final data = response.data;
       final fields = <String, String>{};
       String? message;
+      String? code;
       if (data is Map) {
         final errors = data['errors'];
         if (errors is Map) {
@@ -22,13 +23,17 @@ class ApiError implements Exception {
           });
         }
         message = (data['detail'] ?? data['title'])?.toString();
+        code = data['code']?.toString();
       }
-      return ApiError(status: response.statusCode, message: message, fieldErrors: fields);
+      return ApiError(status: response.statusCode, code: code, message: message, fieldErrors: fields);
     }
     return const ApiError();
   }
 
   final int? status;
+
+  /// The ProblemDetails `code`, like "template.pro".
+  final String? code;
   final String? message;
   final Map<String, String> fieldErrors;
   final bool isNetwork;
@@ -42,5 +47,5 @@ class ApiError implements Exception {
   static String _fieldKey(String key) => key.toLowerCase();
 
   @override
-  String toString() => 'ApiError($status, $message, $fieldErrors)';
+  String toString() => 'ApiError($status, $code, $message, $fieldErrors)';
 }

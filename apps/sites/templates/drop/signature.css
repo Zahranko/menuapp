@@ -1,0 +1,136 @@
+/*
+ * Drop's own layout options (manifest "signature", _kit/signatures.ts):
+ *   hero.variant "dropposter"  a wheat-paste drop poster: taped photo, a diagonal caution tape band across the corner (base: "poster")
+ *   menu.layout  "hangtags"    every product with a hang tag: the price on a punched tag hanging from a string (base: "grid")
+ */
+
+/* ---------- drop poster ---------- */
+[data-template="drop"] .kit-hv.kit-hv[data-sig~="dropposter"] {
+  position: relative;
+  overflow: hidden;
+  & > .kit-sig-art {
+    position: absolute;
+    inset-block-start: 26px;
+    inset-inline-end: -70px;
+    z-index: 0;
+    width: 260px;
+    height: 26px;
+    rotate: 35deg;
+    background: repeating-linear-gradient(-45deg, var(--k-acc) 0 14px, var(--k-ink) 14px 28px);
+    opacity: 0.9;
+    pointer-events: none;
+  }
+  &:dir(rtl) > .kit-sig-art {
+    rotate: -35deg;
+  }
+  & .kit-hv-in {
+    position: relative;
+    z-index: 1;
+  }
+  & .kit-hv-eyebrow {
+    justify-self: start;
+    width: fit-content;
+    padding: 4px 10px;
+    border: 0;
+    background: var(--k-acc);
+    color: var(--k-acc-ink);
+    text-transform: uppercase;
+    font-weight: 800;
+    rotate: -2deg;
+  }
+  & .kit-hv-title {
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+  }
+  & .kit-hv-media,
+  & .kit-hv-mono {
+    overflow: visible;
+    rotate: -3deg;
+    border-radius: 0;
+    filter: contrast(1.05);
+  }
+  & .kit-hv-media::before,
+  & .kit-hv-media::after,
+  & .kit-hv-mono::before,
+  & .kit-hv-mono::after {
+    content: "";
+    position: absolute;
+    z-index: 3;
+    width: 54px;
+    height: 18px;
+    background: color-mix(in srgb, var(--k-bg) 40%, rgb(255 255 255 / 0.55));
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.2);
+  }
+  & :is(.kit-hv-media, .kit-hv-mono)::before {
+    inset-block-start: -8px;
+    inset-inline-start: -14px;
+    rotate: -35deg;
+  }
+  & :is(.kit-hv-media, .kit-hv-mono)::after {
+    inset-block-end: -8px;
+    inset-inline-end: -14px;
+    rotate: -35deg;
+  }
+  & .kit-hv-btn {
+    border-radius: 0;
+    text-transform: uppercase;
+  }
+}
+
+/* ---------- hang tags ---------- */
+[data-template="drop"] .kit-mn.kit-mn.kit-mn[data-sig~="hangtags"] {
+  & .kit-mn-item {
+    position: relative;
+    overflow: visible;
+    border-radius: 0;
+  }
+  & .kit-mn-media {
+    border-radius: 0;
+  }
+  & .kit-mn-head {
+    display: block;
+  }
+  & .kit-mn-dots {
+    display: none;
+  }
+  & .kit-mn-head .kit-mn-price {
+    position: absolute;
+    inset-block-start: 26px;
+    inset-inline-end: 10px;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    min-width: 58px;
+    padding: 16px 8px 8px;
+    border-radius: 4px 4px 6px 6px;
+    background:
+      radial-gradient(circle at 50% 8px, var(--k-ink) 0 3px, var(--k-acc) 3.5px);
+    color: var(--k-acc-ink);
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.1;
+    text-align: center;
+    clip-path: polygon(22% 0, 78% 0, 100% 16%, 100% 100%, 0 100%, 0 16%);
+    rotate: 6deg;
+    transform-origin: 50% 0;
+  }
+  & .kit-mn-head .kit-mn-price small {
+    display: block;
+    font-size: 9px;
+  }
+  & .kit-mn-head::before {
+    content: "";
+    position: absolute;
+    inset-block-start: 6px;
+    inset-inline-end: 38px;
+    z-index: 2;
+    width: 2px;
+    height: 24px;
+    background: var(--k-ink);
+    rotate: -24deg;
+  }
+  & .kit-mn-name {
+    text-transform: uppercase;
+    font-weight: 800;
+  }
+}

@@ -1,19 +1,22 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Storefront.Application.Media;
 using Storefront.Domain.Media;
+using Storefront.Web.Auth;
 
 namespace Storefront.Web.Controllers.Api.V1;
 
 [Route("api/v1/media")]
 [Authorize]
+[EnableRateLimiting(RateLimits.Upload)]
 public sealed class MediaController : ApiController
 {
-    /// <summary>Upload one image (form field "file"): JPEG, PNG or WebP, up to 5 MB.</summary>
+    /// <summary>Upload one image (form field "file"): JPEG, PNG or WebP, up to 5 MB. It is stored shrunk to 1600 px and compressed to WebP.</summary>
     [HttpPost]
     [Consumes("multipart/form-data")]
-    [RequestSizeLimit(MediaAsset.MaxBytes + 64 * 1024)]
-    [RequestFormLimits(MultipartBodyLengthLimit = MediaAsset.MaxBytes + 64 * 1024)]
+    [RequestSizeLimit(MediaAsset.MaxUploadBytes + 64 * 1024)]
+    [RequestFormLimits(MultipartBodyLengthLimit = MediaAsset.MaxUploadBytes + 64 * 1024)]
     [ProducesResponseType<MediaDto>(StatusCodes.Status201Created)]
     [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<MediaDto>> Upload(IFormFile? file, [FromServices] UploadImageHandler handler, CancellationToken ct)

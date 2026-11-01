@@ -5,6 +5,8 @@ namespace Storefront.Domain.Businesses;
 public sealed class Business : AggregateRoot
 {
     public const int NameMax = 60;
+    public const string DefaultTimeZone = "UTC";
+    public const string TimeZoneMessage = "Choose a time zone from the list.";
     public static readonly IReadOnlySet<string> Locales = new HashSet<string> { "en", "ar" };
 
     private Business()
@@ -18,13 +20,19 @@ public sealed class Business : AggregateRoot
     public string? Email { get; private set; }
     public string? Address { get; private set; }
     public string? Instagram { get; private set; }
-    public string CurrencyCode { get; private set; } = "JOD";
+    /// <summary>The number customers call; when empty, the site's "Call us" uses the WhatsApp number.</summary>
+    public PhoneNumber? Phone { get; private set; }
+    /// <summary>Facebook page name, or "profile.php?id=…" (see <see cref="SocialAccounts"/>).</summary>
+    public string? Facebook { get; private set; }
+    public string? TikTok { get; private set; }
+    public string? Snapchat { get; private set; }
+    public string CurrencyCode { get; private set; } = Currencies.Default;
     public string Locale { get; private set; } = "en";
     /// <summary>IANA time zone, used to highlight today's opening hours on the site.</summary>
-    public string TimeZone { get; private set; } = "Asia/Amman";
+    public string TimeZone { get; private set; } = DefaultTimeZone;
     public DateTimeOffset CreatedAt { get; private set; }
 
-    public static Business Create(Guid ownerUserId, string name, Slug slug, DateTimeOffset now, string locale = "en", string currencyCode = "JOD")
+    public static Business Create(Guid ownerUserId, string name, Slug slug, DateTimeOffset now, string locale = "en", string currencyCode = Currencies.Default, string timeZone = DefaultTimeZone)
     {
         var business = new Business
         {
@@ -35,6 +43,7 @@ public sealed class Business : AggregateRoot
         };
         business.SetLocale(locale);
         business.SetCurrency(currencyCode);
+        business.SetTimeZone(timeZone);
         return business;
     }
 
@@ -44,7 +53,20 @@ public sealed class Business : AggregateRoot
         WhatsApp = whatsApp;
         Email = Guard.OptionalText(email, "email", 254, "business.email");
         Address = Guard.OptionalText(address, "address", 200, "business.address");
-        Instagram = Guard.OptionalText(instagram?.TrimStart('@'), "instagram", 30, "business.instagram");
+        Instagram = SocialAccounts.Instagram(instagram);
+        Raise(new BusinessChanged(Id, now));
+    }
+
+    /// <summary>
+    /// The phone number for calls and the Facebook, TikTok and Snapchat accounts. Each takes a username or a profile link
+    /// and is stored as the username; empty clears it. Which ones the site shows is a design setting.
+    /// </summary>
+    public void UpdateContactAccounts(PhoneNumber? phone, string? facebook, string? tikTok, string? snapchat, DateTimeOffset now)
+    {
+        Phone = phone;
+        Facebook = SocialAccounts.Facebook(facebook);
+        TikTok = SocialAccounts.TikTok(tikTok);
+        Snapchat = SocialAccounts.Snapchat(snapchat);
         Raise(new BusinessChanged(Id, now));
     }
 
@@ -58,15 +80,26 @@ public sealed class Business : AggregateRoot
         Locale = locale;
     }
 
+    /// <summary>Sets the currency of the business's prices. Only codes in <see cref="Currencies.All"/> are allowed.</summary>
     public void SetCurrency(string currencyCode)
     {
-        CurrencyCode = new Money(0, currencyCode).Currency;
+        CurrencyCode = Currencies.Normalize(currencyCode);
     }
 
+    /// <summary>An IANA time zone id such as "Europe/London" or "UTC".</summary>
     public void SetTimeZone(string timeZone)
     {
-        TimeZone = Guard.Text(timeZone, "timeZone", 1, 64, "business.timezone");
+        var id = Guard.Text(timeZone, "timeZone", 1, 64, "business.timezone");
+        if (!IsTimeZone(id))
+        {
+            throw new DomainException("business.timezone", TimeZoneMessage, "timeZone");
+        }
+
+        TimeZone = id;
     }
+
+    public static bool IsTimeZone(string? id) =>
+        !string.IsNullOrWhiteSpace(id) && TimeZoneInfo.TryFindSystemTimeZoneById(id.Trim(), out _);
 
     public void ChangeSlug(Slug slug, DateTimeOffset now)
     {

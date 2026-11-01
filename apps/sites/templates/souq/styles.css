@@ -1,6 +1,16 @@
 /* Template 001 "Souq", ported from the prototype's .w-* styles. Colors, fonts and radius come from souqVars().
    Everything is nested under .t-souq so it cannot affect other templates; scripts/build-styles.mjs compiles it. */
 
+@import "../_kit/logo.css";
+@import "../_kit/options.css";
+@import "../_kit/cards.css";
+@import "../_kit/hero.css";
+@import "../_kit/layout.css";
+@import "../_kit/menu.css";
+@import "../_kit/sections.css";
+@import "../_kit/style.css";
+@import "./signature.css";
+
 .t-souq {
   container: site / inline-size;
   min-height: 100vh;
@@ -230,6 +240,21 @@
     justify-content: center;
     color: var(--sink);
   }
+  /* Logo centered on phones: the menu button stays on the logo's row, at the end. */
+  @container site (max-width: 759.98px) {
+    &[data-logo-pos="center"] .navIn {
+      position: relative;
+    }
+    &[data-logo-pos="center"] .burger {
+      position: absolute;
+      top: 12px;
+      inset-inline-end: 18px;
+    }
+    &[data-logo-pos="center"] .brand {
+      min-height: 44px;
+      padding-inline: 56px;
+    }
+  }
   .drawer {
     flex-basis: 100%;
     display: flex;
@@ -277,6 +302,20 @@
     flex-direction: column;
     gap: 16px;
     width: 100%;
+  }
+  /* A soft dark cloud right behind the words: they stay readable on a light photo, however short the opening. */
+  .hero:not(.split) .heroIn {
+    isolation: isolate;
+  }
+  .hero:not(.split) .heroIn::before {
+    content: "";
+    position: absolute;
+    inset: 12px 0 12px;
+    z-index: -1;
+    border-radius: 48px;
+    background: rgb(0 0 0 / 0.5);
+    filter: blur(28px);
+    pointer-events: none;
   }
   .hero .eyebrow {
     color: #fff;
@@ -386,7 +425,7 @@
 
   /* sections */
   .block {
-    padding: 64px 20px;
+    padding: calc(64px * var(--kit-space, 1)) 20px;
     scroll-margin-top: 70px;
   }
   .alt {
@@ -417,6 +456,9 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    /* A heading with the business name in it ("Inside …") wraps a very long name. */
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 
   /* signature */
@@ -896,7 +938,7 @@
   .foot {
     background: var(--sfoot);
     color: var(--sfootink);
-    padding: 56px 20px 28px;
+    padding: calc(56px * var(--kit-space, 1)) 20px calc(28px * var(--kit-space, 1));
   }
   .footTop {
     display: grid;
@@ -904,6 +946,11 @@
   }
   .foot .brandName {
     color: var(--sfootink);
+    white-space: normal;
+    overflow: visible;
+  }
+  .footTop > div {
+    min-width: 0;
   }
   .foot p {
     font-size: 14px;
@@ -913,6 +960,7 @@
   }
   .soc {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
     margin-top: 18px;
   }
@@ -1125,8 +1173,8 @@
       border-inline-start: 1px solid var(--sline);
     }
     .block {
-      padding-top: 110px;
-      padding-bottom: 110px;
+      padding-top: calc(110px * var(--kit-space, 1));
+      padding-bottom: calc(110px * var(--kit-space, 1));
     }
     .head {
       margin-bottom: 40px;
@@ -1178,7 +1226,7 @@
       min-height: 100%;
     }
     .footTop {
-      grid-template-columns: 1.3fr 2fr;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 2fr);
       gap: 60px;
     }
     .cols {

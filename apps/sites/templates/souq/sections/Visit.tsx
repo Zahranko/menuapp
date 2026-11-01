@@ -74,13 +74,13 @@ export function Visit({ ctx }: { ctx: SouqContext }) {
               {(contact.maps || contact.whatsapp) && (
                 <div className="btns" style={{ marginTop: 16 }}>
                   {contact.maps && (
-                    <a className={`btn pri`} href={contact.maps} rel="noopener" target="_blank">
+                    <a data-k="btn" className={`btn pri`} href={contact.maps} rel="noopener" target="_blank">
                       <Pin />
                       {c.getDirections}
                     </a>
                   )}
                   {contact.whatsapp && (
-                    <a className={`btn dark`} href={contact.whatsapp} rel="noopener" target="_blank">
+                    <a data-k="btn" className={`btn dark`} href={contact.whatsapp} rel="noopener" target="_blank">
                       <WhatsApp />
                       {c.whatsapp}
                     </a>

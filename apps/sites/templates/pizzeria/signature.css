@@ -1,0 +1,87 @@
+/*
+ * Pizzeria's own layout options (manifest "signature", _kit/signatures.ts):
+ *   menu.layout  "peel"  every pie round on a wooden peel, the crust around the photo, the price stamped on (base: "grid")
+ *   hero.variant "oven"  the photo glowing in a brick oven's arch (base: "arch")
+ */
+[data-template="pizzeria"] {
+  --sig-wood: linear-gradient(90deg, #c08a52, #d9a56b 30%, #b9814a 60%, #d4a066);
+}
+
+/* ---------- peels ---------- */
+[data-template="pizzeria"] .kit-mn.kit-mn.kit-mn[data-sig~="peel"] {
+  & .kit-mn-item {
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    text-align: center;
+  }
+  & .kit-mn-media {
+    position: relative;
+    aspect-ratio: 1;
+    width: 86%;
+    margin: 6px auto 34px;
+    overflow: visible;
+    border-radius: 50%;
+    background: var(--sig-wood);
+    box-shadow: 0 0 0 7px #d9a56b, 0 0 0 8px #a87342, 0 14px 22px -14px rgb(0 0 0 / 0.5);
+  }
+  & .kit-mn-media::after {
+    content: "";
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 50%;
+    width: 18%;
+    height: 30px;
+    translate: -50% 0;
+    border-radius: 0 0 6px 6px;
+    background: var(--sig-wood);
+  }
+  & .kit-mn-media :is(img, .kit-pic) {
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 8px #e9b97c;
+  }
+  & .kit-mn-head {
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+  & .kit-mn-price {
+    padding: 4px 12px;
+    border: 2px solid var(--k-acc);
+    border-radius: 999px;
+    color: var(--k-acc-text);
+    font-weight: 800;
+    rotate: -4deg;
+  }
+  & .kit-mn-tags {
+    justify-content: center;
+  }
+  & .kit-mn-title {
+    justify-content: center;
+    border: 0;
+  }
+}
+
+/* ---------- brick oven ---------- */
+[data-template="pizzeria"] .kit-hv.kit-hv[data-sig~="oven"] {
+  & .kit-hv-media,
+  & .kit-hv-mono {
+    border-radius: 999px 999px 8px 8px;
+    box-shadow:
+      0 0 0 14px #b5452c,
+      0 0 0 16px color-mix(in srgb, var(--k-ink) 40%, #b5452c),
+      0 0 60px 10px color-mix(in srgb, #ff8a1f 45%, transparent);
+    margin-top: 22px;
+  }
+  & .kit-hv-media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: radial-gradient(ellipse 80% 40% at 50% 100%, rgb(255 140 40 / 0.45), transparent 70%);
+    pointer-events: none;
+  }
+  & .kit-hv-title {
+    font-style: italic;
+  }
+}

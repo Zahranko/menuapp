@@ -4,9 +4,31 @@
   "name": "Handy",
   "category": "Home services, repairs",
   "description": "A friendly site for home services: trust badges, the areas you cover, a request button on every service, steps and a sticky request bar.",
+  "ar": {
+    "name": "هاندي",
+    "category": "خدمات منزلية وصيانة",
+    "description": "موقع ودود للخدمات المنزلية: شارات ثقة، والمناطق التي تخدمها، وزر طلب لكل خدمة، وخطوات، وشريط طلب ثابت."
+  },
   "version": 1,
+  "heroSlider": { "kind": "panel", "source": "hero.image" },
   "thumbnail": "/templates/handy/thumbnail.png",
   "sample": "home",
+  "sectionsLayout": { "order": ["highlights", "menu", "areas", "steps", "reviews", "faq", "visit"] },
+  "signature": {
+    "header.layout": [
+      {"id":"toolbar","base":"classic","label":"Toolbox stripe","labelAr":"شريط صندوق العُدّة","preview":"/templates/handy/previews/header-toolbar.svg"}
+    ],
+    "menu.layout": [
+      {"id":"workorder","base":"list","label":"Work orders","labelAr":"أوامر العمل","preview":"/templates/handy/previews/menu-workorder.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"toolbox","label":{"en":"Toolbox","ar":"صندوق العُدّة"},"values":{"theme":"clean","accent":"#1E5BB8","font":"round","header.layout":"toolbar","menu.layout":"workorder","hero.variant":"auto"}},
+    {"id":"sunny","label":{"en":"Sunny crew","ar":"فريق مشمس"},"values":{"theme":"sunny","accent":"#E8572A","font":"round","header.layout":"toolbar","menu.layout":"workorder","style.buttons":"rounded"}},
+    {"id":"garden","label":{"en":"Garden care","ar":"عناية الحدائق"},"values":{"theme":"sage","accent":"#118A5C","font":"modern","header.layout":"classic","menu.layout":"workorder","hero.variant":"split"}},
+    {"id":"navy","label":{"en":"Night service","ar":"خدمة ليلية"},"values":{"theme":"navy","accent":"#F6C21A","font":"grotesk","header.layout":"toolbar","menu.layout":"workorder","style.headings":"uppercase"}},
+    {"id":"pro","label":{"en":"Pro team","ar":"فريق محترف"},"values":{"theme":"clean","accent":"#6B4EE6","font":"grotesk","header.layout":"toolbar","menu.layout":"list","hero.variant":"poster","style.buttons":"square"}}
+  ],
   "schema": [
     {
       "key": "font",
@@ -362,7 +384,7 @@
     "accent": "#1E5BB8",
     "corners": "rounded",
     "hero.title": "Home repairs and cleaning, done right",
-    "hero.subtitle": "Trusted technicians for AC, plumbing, painting and deep cleaning. Fixed prices and visits on time, all over Amman.",
+    "hero.subtitle": "Trusted technicians for AC, plumbing, painting and deep cleaning. Fixed prices and visits on time, all over the city.",
     "hero.image": "preset:blueprint",
     "book.message": "Hello! I would like to request a visit for:",
     "prices.from": true,
@@ -383,7 +405,7 @@
     "highlights.2.text": "Message before noon, we come today",
     "highlights.3.title": "6-month guarantee",
     "highlights.3.text": "If it breaks again, we fix it free",
-    "areas": "Abdoun, Sweifieh, Khalda, Dabouq, Jabal Amman, Shmeisani, Tla' Al-Ali, Marj Al-Hamam",
+    "areas": "Downtown, Old Town, Riverside, Hillside, University District, Business Bay, North Gardens, West End",
     "steps.title": "How it works",
     "steps.1.title": "Message us",
     "steps.1.text": "Tell us what needs fixing and send a photo if you can.",
@@ -414,5 +436,32 @@
       "thu": "08:00-18:00",
       "fri": ""
     }
+  },
+  "defaultsAr": {
+    "hero.title": "صيانة وتنظيف المنازل، على أصولها",
+    "hero.subtitle": "فنيون موثوقون للمكيفات والسباكة والدهان والتنظيف العميق. أسعار ثابتة وزيارات في موعدها، في كل أنحاء المدينة.",
+    "book.message": "مرحبًا! أود أن أطلب زيارة من أجل:",
+    "services.title": "خدماتنا",
+    "announcement": "فحص المكيفات الصيفي: خصم 20 بالمئة حتى نهاية الشهر",
+    "highlights.1.title": "مرخّصون ومؤمَّنون",
+    "highlights.1.text": "كل فني تم التحقق منه وتدريبه",
+    "highlights.2.title": "زيارات في اليوم نفسه",
+    "highlights.2.text": "راسلنا قبل الظهر، ونأتيك اليوم",
+    "highlights.3.title": "كفالة 6 أشهر",
+    "highlights.3.text": "إذا تعطّل مجددًا، نصلحه مجانًا",
+    "areas": "وسط البلد، البلدة القديمة، ضفة النهر، التلال، حي الجامعة، الحي التجاري، الحدائق الشمالية، الحي الغربي",
+    "steps.title": "كيف نعمل",
+    "steps.1.title": "راسلنا",
+    "steps.1.text": "أخبرنا بما يحتاج إلى إصلاح وأرسل صورة إن أمكن.",
+    "steps.2.title": "احصل على سعر ثابت",
+    "steps.2.text": "نؤكد لك السعر وموعدًا يناسبك قبل أن نأتي.",
+    "steps.3.title": "نصلحه",
+    "steps.3.text": "يصل الفني في موعده، وينظّف بعد العمل، وتدفع حين تكون راضيًا.",
+    "faq.1.q": "هل تحضرون المواد معكم؟",
+    "faq.1.a": "نعم. الأسعار تشمل المواد الأساسية. أما القطع مثل سخان جديد فنرسل لك سعرها أولًا.",
+    "faq.2.q": "كيف أدفع؟",
+    "faq.2.a": "نقدًا أو عبر CliQ بعد إنجاز العمل.",
+    "faq.3.q": "هل تعملون يوم الجمعة؟",
+    "faq.3.a": "للحالات الطارئة فقط. راسلنا وسنخبرك بمن هو متاح."
   }
 }

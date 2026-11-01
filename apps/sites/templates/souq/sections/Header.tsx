@@ -1,7 +1,6 @@
 import { Burger, Close, WhatsApp } from "../../_kit/icons";
 import { Drawer } from "../../_kit/Drawer";
-import { Picture } from "../../_kit/Picture";
-import { initial } from "@/lib/format";
+import { BrandName, Logo as KitLogo } from "../../_kit/blocks";
 import type { SouqContext } from "../context";
 
 export function navLinks(ctx: SouqContext): [string, string][] {
@@ -13,24 +12,23 @@ export function navLinks(ctx: SouqContext): [string, string][] {
 }
 
 export function Logo({ ctx }: { ctx: SouqContext }) {
-  const logo = ctx.image("logo");
-  return <span className="logo">{logo ? <Picture src={logo} sizes="40px" /> : initial(ctx.site.business.name)}</span>;
+  return <KitLogo ctx={ctx} sizes="40px" />;
 }
 
 export function Header({ ctx }: { ctx: SouqContext }) {
   const links = navLinks(ctx);
   const order = ctx.contact.whatsapp && (
-    <a className={`btn pri navCta`} href={ctx.contact.whatsapp} rel="noopener" target="_blank">
+    <a data-k="btn" className={`btn pri navCta`} href={ctx.contact.whatsapp} rel="noopener" target="_blank">
       <WhatsApp />
       {ctx.t.whatsapp}
     </a>
   );
   return (
     <header className="nav" data-section="header">
-      <div className="navIn">
-        <a className="brand" href="#top">
+      <div className="navIn kit-head">
+        <a className="brand kit-lockup" href="#top">
           <Logo ctx={ctx} />
-          <span className="brandName">{ctx.site.business.name}</span>
+          <BrandName ctx={ctx} className="brandName" />
         </a>
         <nav className="links" aria-label={ctx.c.mainNav}>
           {links.map(([href, label]) => (
@@ -47,7 +45,7 @@ export function Header({ ctx }: { ctx: SouqContext }) {
             </a>
           ))}
           {ctx.contact.whatsapp && (
-            <a className={`btn pri`} href={ctx.contact.whatsapp} rel="noopener" target="_blank">
+            <a data-k="btn" className={`btn pri`} href={ctx.contact.whatsapp} rel="noopener" target="_blank">
               <WhatsApp />
               {ctx.t.whatsapp}
             </a>

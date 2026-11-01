@@ -4,9 +4,31 @@
   "name": "Night Market",
   "category": "Street food",
   "description": "Dark and loud: big photo cards you swipe through, one row per category.",
+  "ar": {
+    "name": "سوق الليل",
+    "category": "أكل الشارع",
+    "description": "داكن وجريء: بطاقات صور كبيرة تمررها بإصبعك، صف لكل قسم."
+  },
   "version": 1,
+  "heroSlider": { "kind": "backdrop", "source": "hero.image" },
   "thumbnail": "/templates/nightmarket/thumbnail.png",
   "sample": "fastfood",
+  "sectionsLayout": { "order": ["picks", "menu", "gallery", "visit"] },
+  "signature": {
+    "hero.variant": [
+      {"id":"lanterns","base":"poster","label":"Lantern string","labelAr":"حبل الفوانيس","preview":"/templates/nightmarket/previews/hero-lanterns.svg"}
+    ],
+    "menu.layout": [
+      {"id":"stalls","base":"carousel","label":"Lit stall signs","labelAr":"لافتات البسطات","preview":"/templates/nightmarket/previews/menu-stalls.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"lanterns","label":{"en":"Lantern night","ar":"ليلة الفوانيس"},"values":{"theme":"midnight","accent":"#FFD23F","font":"condensed","hero.variant":"lanterns","menu.layout":"stalls","header.layout":"classic"}},
+    {"id":"neon","label":{"en":"Neon alley","ar":"زقاق النيون"},"values":{"theme":"charcoal","accent":"#FF4F9A","font":"bold","hero.variant":"lanterns","menu.layout":"stalls","header.layout":"pill","style.headings":"uppercase","gallery.layout":"strip"}},
+    {"id":"grill","label":{"en":"Charcoal grill","ar":"شواء الفحم"},"values":{"theme":"ember","accent":"#FFD23F","font":"condensed","hero.variant":"full","header.style":"transparent","menu.layout":"stalls","style.texture":"grain"}},
+    {"id":"daylight","label":{"en":"Day market","ar":"سوق النهار"},"values":{"theme":"concrete","accent":"#22D3EE","font":"grotesk","hero.variant":"collage","menu.layout":"grid","header.layout":"classic","cards.style":"outlined","cards.border":"thick"}},
+    {"id":"fresh","label":{"en":"Fresh street","ar":"شارع منعش"},"values":{"theme":"midnight","accent":"#A3E635","font":"grotesk","hero.variant":"menu","menu.layout":"carousel","header.layout":"minimal","visit.layout":"banner"}}
+  ],
   "schema": [
     {
       "key": "font",
@@ -172,5 +194,11 @@
       "thu": "16:00-24:00",
       "fri": "14:00-24:00"
     }
+  },
+  "defaultsAr": {
+    "hero.title": "مضغوط. متراكم. يُقدَّم ساخنًا.",
+    "hero.subtitle": "برغر وبيتزا وبطاطا محمّلة حتى وقت متأخر. اطلب مسبقًا على واتساب ووفّر وقت الانتظار.",
+    "hero.sticker": "نسهر لوقت متأخر",
+    "announcement": "بطاطا مجانية مع كل دبل يوم الثلاثاء"
   }
 }

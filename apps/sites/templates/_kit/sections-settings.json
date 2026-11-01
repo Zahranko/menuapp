@@ -1,0 +1,255 @@
+{
+  "group": "Sections",
+  "groupAr": "الأقسام",
+  "order": {
+    "key": "sections.order",
+    "type": "order",
+    "label": "Order of the sections",
+    "labelAr": "ترتيب الأقسام",
+    "labels": {
+      "menu": "Menu",
+      "highlights": "Highlights",
+      "special": "Today's special",
+      "signature": "Signature picks",
+      "picks": "Our picks",
+      "best": "Best sellers",
+      "steps": "How it works",
+      "areas": "Areas we serve",
+      "marquee": "Moving strip",
+      "story": "Our story",
+      "gallery": "Photos",
+      "reviews": "Reviews",
+      "faq": "Questions",
+      "join": "Join band",
+      "visit": "Visit and hours"
+    },
+    "labelsAr": {
+      "menu": "القائمة",
+      "highlights": "المميزات",
+      "special": "طبق اليوم",
+      "signature": "اختياراتنا المميزة",
+      "picks": "اختياراتنا",
+      "best": "الأكثر طلبًا",
+      "steps": "كيف نعمل",
+      "areas": "المناطق التي نخدمها",
+      "marquee": "الشريط المتحرك",
+      "story": "قصتنا",
+      "gallery": "الصور",
+      "reviews": "الآراء",
+      "faq": "الأسئلة",
+      "join": "شريط الاشتراك",
+      "visit": "الزيارة والمواعيد"
+    }
+  },
+  "fields": [
+    {
+      "key": "highlights.layout",
+      "section": "highlights",
+      "type": "choice",
+      "label": "Highlights",
+      "labelAr": "المميزات",
+      "options": ["auto", "icons", "cards", "numbered", "statement", "alternating", "marquee"],
+      "optionLabels": {
+        "auto": "Template default",
+        "icons": "Icons in a row",
+        "cards": "Cards",
+        "numbered": "Numbered list",
+        "statement": "One big statement",
+        "alternating": "Side by side with photos",
+        "marquee": "Moving strip"
+      },
+      "optionLabelsAr": {
+        "auto": "كما في القالب",
+        "icons": "أيقونات في صف",
+        "cards": "بطاقات",
+        "numbered": "قائمة مرقّمة",
+        "statement": "عبارة كبيرة",
+        "alternating": "جنبًا إلى جنب مع الصور",
+        "marquee": "شريط متحرك"
+      },
+      "previews": {
+        "auto": "/kit/previews/auto.svg",
+        "icons": "/kit/previews/highlights-icons.svg",
+        "cards": "/kit/previews/highlights-cards.svg",
+        "numbered": "/kit/previews/highlights-numbered.svg",
+        "statement": "/kit/previews/highlights-statement.svg",
+        "alternating": "/kit/previews/highlights-alternating.svg",
+        "marquee": "/kit/previews/highlights-marquee.svg"
+      }
+    },
+    {
+      "key": "story.layout",
+      "section": "story",
+      "type": "choice",
+      "label": "Our story",
+      "labelAr": "قصتنا",
+      "options": ["auto", "beside", "behind", "quote", "timeline", "columns", "letter"],
+      "optionLabels": {
+        "auto": "Template default",
+        "beside": "Photo beside the text",
+        "behind": "Photo behind the text",
+        "quote": "A big quote",
+        "timeline": "Timeline",
+        "columns": "Two columns",
+        "letter": "Centered letter"
+      },
+      "optionLabelsAr": {
+        "auto": "كما في القالب",
+        "beside": "الصورة بجانب النص",
+        "behind": "الصورة خلف النص",
+        "quote": "اقتباس كبير",
+        "timeline": "خط زمني",
+        "columns": "عمودان",
+        "letter": "رسالة في المنتصف"
+      },
+      "previews": {
+        "auto": "/kit/previews/auto.svg",
+        "beside": "/kit/previews/story-beside.svg",
+        "behind": "/kit/previews/story-behind.svg",
+        "quote": "/kit/previews/story-quote.svg",
+        "timeline": "/kit/previews/story-timeline.svg",
+        "columns": "/kit/previews/story-columns.svg",
+        "letter": "/kit/previews/story-letter.svg"
+      }
+    },
+    {
+      "key": "gallery.layout",
+      "section": "gallery",
+      "type": "choice",
+      "label": "Photos",
+      "labelAr": "الصور",
+      "options": ["auto", "grid", "masonry", "carousel", "polaroid", "feature", "strip"],
+      "optionLabels": {
+        "auto": "Template default",
+        "grid": "Grid",
+        "masonry": "Mosaic",
+        "carousel": "Slider",
+        "polaroid": "Polaroid stack",
+        "feature": "One big and small ones",
+        "strip": "Full-width strip"
+      },
+      "optionLabelsAr": {
+        "auto": "كما في القالب",
+        "grid": "شبكة",
+        "masonry": "فسيفساء",
+        "carousel": "شريط صور يمرَّر",
+        "polaroid": "صور بولارويد",
+        "feature": "صورة كبيرة وصور صغيرة",
+        "strip": "شريط بعرض الصفحة"
+      },
+      "previews": {
+        "auto": "/kit/previews/auto.svg",
+        "grid": "/kit/previews/gallery-grid.svg",
+        "masonry": "/kit/previews/gallery-masonry.svg",
+        "carousel": "/kit/previews/gallery-carousel.svg",
+        "polaroid": "/kit/previews/gallery-polaroid.svg",
+        "feature": "/kit/previews/gallery-feature.svg",
+        "strip": "/kit/previews/gallery-strip.svg"
+      }
+    },
+    {
+      "key": "reviews.layout",
+      "section": "reviews",
+      "type": "choice",
+      "label": "Reviews",
+      "labelAr": "الآراء",
+      "options": ["auto", "cards", "quote", "carousel", "wall", "summary"],
+      "optionLabels": {
+        "auto": "Template default",
+        "cards": "Cards",
+        "quote": "One big quote",
+        "carousel": "Slider",
+        "wall": "Wall of notes",
+        "summary": "Stars and short quotes"
+      },
+      "optionLabelsAr": {
+        "auto": "كما في القالب",
+        "cards": "بطاقات",
+        "quote": "اقتباس واحد كبير",
+        "carousel": "شريط يمرَّر",
+        "wall": "جدار ملاحظات",
+        "summary": "نجوم واقتباسات قصيرة"
+      },
+      "previews": {
+        "auto": "/kit/previews/auto.svg",
+        "cards": "/kit/previews/reviews-cards.svg",
+        "quote": "/kit/previews/reviews-quote.svg",
+        "carousel": "/kit/previews/reviews-carousel.svg",
+        "wall": "/kit/previews/reviews-wall.svg",
+        "summary": "/kit/previews/reviews-summary.svg"
+      }
+    },
+    {
+      "key": "visit.layout",
+      "section": "visit",
+      "type": "choice",
+      "label": "Visit and hours",
+      "labelAr": "الزيارة والمواعيد",
+      "options": ["auto", "map", "cards", "table", "centered", "banner"],
+      "optionLabels": {
+        "auto": "Template default",
+        "map": "Map beside",
+        "cards": "Cards for hours, address and contact",
+        "table": "Big hours table",
+        "centered": "Centered",
+        "banner": "Banner"
+      },
+      "optionLabelsAr": {
+        "auto": "كما في القالب",
+        "map": "خريطة بجانب المعلومات",
+        "cards": "بطاقات للمواعيد والعنوان والتواصل",
+        "table": "جدول مواعيد كبير",
+        "centered": "في المنتصف",
+        "banner": "شريط عريض"
+      },
+      "previews": {
+        "auto": "/kit/previews/auto.svg",
+        "map": "/kit/previews/visit-map.svg",
+        "cards": "/kit/previews/visit-cards.svg",
+        "table": "/kit/previews/visit-table.svg",
+        "centered": "/kit/previews/visit-centered.svg",
+        "banner": "/kit/previews/visit-banner.svg"
+      }
+    },
+    {
+      "key": "footer.layout",
+      "section": "footer",
+      "type": "choice",
+      "label": "Footer layout",
+      "labelAr": "تخطيط التذييل",
+      "options": ["auto", "simple", "columns", "big", "centered", "minimal"],
+      "optionLabels": {
+        "auto": "Template default",
+        "simple": "Simple",
+        "columns": "Columns",
+        "big": "Big name",
+        "centered": "Centered",
+        "minimal": "One line"
+      },
+      "optionLabelsAr": {
+        "auto": "كما في القالب",
+        "simple": "بسيط",
+        "columns": "أعمدة",
+        "big": "اسم كبير",
+        "centered": "في المنتصف",
+        "minimal": "سطر واحد"
+      },
+      "previews": {
+        "auto": "/kit/previews/auto.svg",
+        "simple": "/kit/previews/footer-simple.svg",
+        "columns": "/kit/previews/footer-columns.svg",
+        "big": "/kit/previews/footer-big.svg",
+        "centered": "/kit/previews/footer-centered.svg",
+        "minimal": "/kit/previews/footer-minimal.svg"
+      }
+    }
+  ],
+  "defaults": {
+    "highlights.layout": "auto",
+    "story.layout": "auto",
+    "gallery.layout": "auto",
+    "reviews.layout": "auto",
+    "visit.layout": "auto",
+    "footer.layout": "auto"
+  }
+}

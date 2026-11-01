@@ -1,5 +1,15 @@
 /* Template 012 "Ticket": a till receipt on a counter. Monospace lines, dashed rules, punched edges, a stamp and a barcode. */
 
+@import "../_kit/logo.css";
+@import "../_kit/options.css";
+@import "../_kit/cards.css";
+@import "../_kit/hero.css";
+@import "../_kit/layout.css";
+@import "../_kit/menu.css";
+@import "../_kit/sections.css";
+@import "../_kit/style.css";
+@import "./signature.css";
+
 .t-ticket {
   container: page / inline-size;
   font-family: var(--fb);
@@ -24,6 +34,8 @@
   }
   .receipt {
     position: relative;
+    /* Shared parts inside the slip lay out for its width, not the page's. */
+    container-type: inline-size;
     max-width: 460px;
     margin: 0 auto;
     padding: 34px 22px 30px;
@@ -55,6 +67,17 @@
     letter-spacing: 2px;
     color: var(--muted);
   }
+  /* The owner's logo, only when one is uploaded: a small round stamp above the name. */
+  .logo {
+    position: relative;
+    display: block;
+    width: 52px;
+    height: 52px;
+    margin: 10px auto 2px;
+    overflow: hidden;
+    border: 1.5px dashed var(--muted);
+    border-radius: 50%;
+  }
   .head h1 {
     margin: 6px 0;
     font-size: calc(30px * var(--fs));
@@ -80,7 +103,6 @@
     letter-spacing: 2px;
     text-transform: uppercase;
     rotate: 12deg;
-    opacity: 0.9;
   }
   .jump {
     display: flex;
@@ -104,7 +126,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    margin: 22px 0 10px;
+    margin: calc(22px * var(--kit-space, 1)) 0 calc(10px * var(--kit-space, 1));
     font-size: calc(15px * var(--fs));
     letter-spacing: 2px;
   }
@@ -225,9 +247,18 @@
   }
 
   /* footer */
+  /* Social accounts the owner shows (_kit/options.css draws the round icon links). */
+  .foot-social {
+    justify-content: center;
+    margin-bottom: 16px;
+    color: var(--acc-text);
+  }
+  .foot-social a {
+    border-color: color-mix(in srgb, currentColor 40%, transparent);
+  }
   .foot {
-    margin-top: 26px;
-    padding-top: 16px;
+    margin-top: calc(26px * var(--kit-space, 1));
+    padding-top: calc(16px * var(--kit-space, 1));
     border-top: 1.5px dashed var(--ink);
     text-align: center;
     color: var(--muted);

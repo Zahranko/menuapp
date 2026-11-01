@@ -38,6 +38,14 @@ public interface IAuditLog
 
 public sealed record StoredFile(string Key, string Url);
 
+public sealed record OptimizedImage(byte[] Bytes, string ContentType, int Width, int Height);
+
+/// <summary>Turns an uploaded photo into a web-ready one: upright, no larger than a set size, compressed, without camera metadata.</summary>
+public interface IImageOptimizer
+{
+    Common.Result<OptimizedImage> Optimize(ReadOnlyMemory<byte> image, int maxSide, long maxBytes);
+}
+
 /// <summary>Public file storage (S3-compatible in production, local disk in development).</summary>
 public interface IFileStorage
 {
@@ -57,4 +65,19 @@ public interface IPreviewTokens
 
     /// <summary>The business id, or null when the token is forged or expired.</summary>
     Guid? Read(string token, DateTimeOffset now);
+}
+
+/// <summary>What happened when a plan change was sent to the payment provider.</summary>
+/// <param name="CheckoutUrl">Set when the owner must pay on the provider's page first; the change applies from its webhook.</param>
+public sealed record PlanChangeResult(string? CheckoutUrl, string? ProviderRef, DateTimeOffset? CurrentPeriodEnd);
+
+/// <summary>
+/// The payment provider (decisions D5 and D8 are open). Infrastructure has a fake that applies changes at once.
+/// A real adapter also needs a webhook endpoint that updates the subscription.
+/// </summary>
+public interface IPaymentProvider
+{
+    string Name { get; }
+
+    Task<PlanChangeResult> ChangePlanAsync(Guid businessId, string planCode, CancellationToken ct);
 }

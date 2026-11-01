@@ -1,0 +1,1445 @@
+/*
+ * The owner's page layout, shared by every template (each styles.css imports this file after hero.css):
+ *   .kit-hd  the shared header (_kit/Top.tsx KitHeader), data-hd = its layout, data-hd-style = its look
+ *   .kit-hv  the shared opening (KitHero), data-hv = its layout
+ * They take the template's own colors, fonts and corners from its variables, so they read as part of it.
+ * The root's data attributes (_kit/layout.ts) also restyle a template's own header ("Template default" layout) for the
+ * header look and the header while scrolling. Rules repeat the class (.kit-hd.kit-hd) to win over a template's broad
+ * rules (`.t-x header`, `.t-x nav a`) without !important.
+ */
+
+[data-template] {
+  --k-bg: var(--bg, var(--sbg, #fff));
+  --k-surf: var(--surf, var(--ssurf, #f3f3f3));
+  --k-ink: var(--ink, var(--sink, #141414));
+  --k-muted: var(--muted, var(--smuted, #5a5a5a));
+  --k-line: var(--line, var(--sline, #dcdcdc));
+  --k-acc: var(--acc, var(--sacc, #141414));
+  --k-acc-ink: var(--acc-ink, var(--saccink, #fff));
+  --k-acc-text: var(--acc-text, var(--sacctext, #141414));
+  --k-acc-soft: var(--acc-soft, var(--saccsoft, #ececec));
+  --k-fd: var(--fd, var(--sdisp));
+  --k-fb: var(--fb, var(--sbody));
+  --k-fw: var(--fw, var(--sdw, 700));
+  --k-ft: var(--ft, var(--sdls, 0));
+  --k-r: var(--r, var(--srad, 12px));
+  --k-rs: min(var(--k-r), 22px);
+}
+/* How far a header that lies over the top photo reaches into it (the opening keeps its text and buttons clear of it). */
+[data-template]:has(.kit-hd[data-over]) {
+  --kit-hd-over: 64px;
+}
+[data-template]:has(.kit-hd[data-over][data-hd="pill"]) {
+  --kit-hd-over: 68px;
+}
+[data-template]:has(.kit-hd[data-over]) .kit-slider.is-corner .kit-slider-bar {
+  top: calc(var(--kit-hd-over) + 12px);
+}
+
+/* ---------- shared header ---------- */
+
+.kit-hd.kit-hd {
+  --kit-hd-h: 64px;
+  position: relative;
+  inset: auto;
+  z-index: 40;
+  isolation: isolate;
+  display: block;
+  width: auto;
+  height: auto;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid var(--k-line);
+  background: var(--k-bg);
+  box-shadow: none;
+  color: var(--k-ink);
+  font-family: var(--k-fb);
+  text-align: start;
+  transform: none;
+
+  &[data-stick] {
+    position: sticky;
+    top: 0;
+  }
+  & .kit-hd-in {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 1200px;
+    min-height: var(--kit-hd-h);
+    margin-inline: auto;
+    padding: 0 16px;
+  }
+  & .kit-hd-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    flex: 1 1 auto;
+    color: inherit;
+    text-decoration: none;
+  }
+  & .kit-hd-logo {
+    position: relative;
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    border-radius: min(var(--k-r), 12px);
+    background: var(--k-acc);
+    color: var(--k-acc-ink);
+    font: var(--k-fw) 19px/1 var(--k-fd);
+  }
+  & .kit-hd-name {
+    min-width: 0;
+    font-family: var(--k-fd);
+    font-weight: var(--k-fw);
+    font-size: 19px;
+    line-height: 1.1;
+    letter-spacing: var(--k-ft);
+    overflow-wrap: anywhere;
+  }
+  & .kit-hd-nav {
+    display: none;
+  }
+  & .kit-hd-link {
+    position: relative;
+    padding: 8px 2px;
+    color: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  & .kit-hd-nav .kit-hd-link::after {
+    content: "";
+    position: absolute;
+    inset-inline: 2px;
+    bottom: 2px;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  & .kit-hd-nav .kit-hd-link:is(:hover, [aria-current="page"])::after {
+    opacity: 0.8;
+  }
+  & .kit-hd-tools {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: none;
+  }
+  & .kit-hd-cta {
+    display: none;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 42px;
+    padding: 0 18px;
+    border: 0;
+    border-radius: min(var(--k-r), 999px);
+    background: var(--k-acc);
+    color: var(--k-acc-ink);
+    font: 700 14px/1.1 var(--k-fb);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  & .kit-hd-cta svg {
+    width: 18px;
+    height: 18px;
+    flex: none;
+  }
+  & .kit-hd-burger {
+    position: relative;
+    z-index: 2;
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    padding: 0;
+    border: 1px solid color-mix(in srgb, currentColor 28%, transparent);
+    border-radius: 999px;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+  }
+  & .kit-hd-burger svg {
+    width: 20px;
+    height: 20px;
+  }
+  & :is(.kit-hd-link, .kit-hd-brand, .kit-hd-cta, .kit-hd-burger):focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+  & .kit-hd-today {
+    display: none;
+  }
+
+  /* The links panel under the header (phones, and the minimal header everywhere). */
+  & .kit-hd-drawer {
+    position: absolute;
+    top: calc(100% + 8px);
+    inset-inline: 12px;
+    z-index: 1;
+    display: grid;
+    gap: 2px;
+    max-height: calc(100svh - 120px);
+    overflow: auto;
+    padding: 10px;
+    border: 1px solid var(--k-line);
+    border-radius: var(--k-rs);
+    background: var(--k-bg);
+    box-shadow: 0 22px 60px -18px rgb(0 0 0 / 0.35);
+    color: var(--k-ink);
+    text-align: start;
+  }
+  & .kit-hd-drawer[hidden] {
+    display: none;
+  }
+  & .kit-hd-drawer-nav {
+    display: grid;
+    gap: 2px;
+  }
+  & .kit-hd-drawer .kit-hd-link {
+    display: block;
+    padding: 12px 14px;
+    border-radius: min(var(--k-r), 12px);
+    font-family: var(--k-fd);
+    font-weight: var(--k-fw);
+    font-size: 20px;
+    white-space: normal;
+  }
+  & .kit-hd-drawer .kit-hd-link:is(:hover, [aria-current="page"]) {
+    background: var(--k-surf);
+  }
+  & .kit-hd-drawer .kit-hd-cta {
+    display: flex;
+    min-height: 48px;
+    margin: 8px 4px 4px;
+    font-size: 15px;
+  }
+  & .kit-hd-drawer-today {
+    margin: 6px 14px 4px;
+    color: var(--k-muted);
+    font-size: 14px;
+  }
+}
+@container (min-width: 760px) {
+  .kit-hd.kit-hd {
+    & .kit-hd-in {
+      gap: 18px;
+      padding: 0 32px;
+    }
+    & .kit-hd-nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 2px 22px;
+    }
+    & .kit-hd-cta {
+      display: inline-flex;
+    }
+    & .kit-hd-burger {
+      display: none;
+    }
+    & .kit-hd-drawer {
+      inset-inline: auto 24px;
+      width: 340px;
+    }
+  }
+}
+
+/* Classic and floating: the logo at the start, links and the button at the end. */
+@container (min-width: 760px) {
+  .kit-hd.kit-hd:is([data-hd="classic"], [data-hd="pill"]) .kit-hd-brand {
+    flex: 0 1 auto;
+    margin-inline-end: auto;
+  }
+}
+
+/* Floating: a rounded bar with a gap around it. */
+.kit-hd.kit-hd[data-hd="pill"] {
+  --kit-hd-h: 56px;
+  padding: 10px 10px 0;
+  border: 0;
+  background: transparent;
+
+  & .kit-hd-in {
+    max-width: 1100px;
+    padding: 0 6px 0 8px;
+    border: 1px solid var(--k-line);
+    border-radius: 999px;
+    background: var(--k-surf);
+    box-shadow: 0 14px 34px -18px rgb(0 0 0 / 0.4);
+  }
+  & .kit-hd-logo {
+    border-radius: 999px;
+  }
+  & .kit-hd-cta {
+    border-radius: 999px;
+  }
+}
+@container (min-width: 760px) {
+  .kit-hd.kit-hd[data-hd="pill"] {
+    padding: 14px 24px 0;
+    & .kit-hd-in {
+      padding: 0 8px 0 10px;
+    }
+  }
+}
+
+/* Logo in the middle, and links around the logo: phones show the logo centered and the menu button at the end. */
+.kit-hd.kit-hd:is([data-hd="centered"], [data-hd="split"]) {
+  & .kit-hd-in {
+    display: grid;
+    grid-template-columns: minmax(44px, 1fr) auto minmax(44px, 1fr);
+  }
+  & .kit-hd-brand {
+    grid-column: 2;
+    grid-row: 1;
+    justify-content: center;
+    text-align: center;
+  }
+  & .kit-hd-burger {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+  }
+  & .kit-hd-tools {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
+  }
+}
+@container (min-width: 760px) {
+  .kit-hd.kit-hd[data-hd="centered"] {
+    & .kit-hd-in {
+      row-gap: 0;
+      padding-block: 12px 4px;
+    }
+    & .kit-hd-name {
+      font-size: 24px;
+    }
+    & .kit-hd-cta {
+      grid-column: 3;
+      grid-row: 1;
+      justify-self: end;
+    }
+    & .kit-hd-nav {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      justify-content: center;
+      padding-block: 6px 4px;
+    }
+  }
+  .kit-hd.kit-hd[data-hd="split"] {
+    --kit-hd-h: 84px;
+    & .kit-hd-name {
+      font-size: 24px;
+    }
+    & .kit-hd-brand {
+      flex-direction: column;
+      gap: 4px;
+      padding-inline: 18px;
+    }
+    & .kit-hd-nav-a {
+      grid-column: 1;
+      grid-row: 1;
+      justify-content: flex-end;
+    }
+    & .kit-hd-nav-b {
+      grid-column: 3;
+      grid-row: 1;
+      justify-content: flex-start;
+    }
+    /* A button would tip the balance: it stays in the menu panel and the floating order button. */
+    & > .kit-hd-in > .kit-hd-cta {
+      display: none;
+    }
+  }
+}
+
+/* Big name: a tall header with the name set large. */
+.kit-hd.kit-hd[data-hd="big"] {
+  & .kit-hd-in {
+    padding-block: 14px;
+  }
+  & .kit-hd-logo {
+    width: 52px;
+    height: 52px;
+    font-size: 24px;
+  }
+  & .kit-hd-name {
+    font-size: clamp(28px, 8.6vw, 44px);
+    line-height: 1;
+    overflow-wrap: break-word;
+  }
+}
+@container (min-width: 760px) {
+  .kit-hd.kit-hd[data-hd="big"] {
+    & .kit-hd-in {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      row-gap: 10px;
+      padding-block: 16px 10px;
+    }
+    & .kit-hd-today {
+      display: inline-flex;
+      grid-column: 1;
+      grid-row: 1;
+      align-items: center;
+      gap: 6px;
+      margin: 0;
+      color: var(--k-muted);
+      font-size: 14px;
+    }
+    & .kit-hd-today svg {
+      width: 16px;
+      height: 16px;
+    }
+    & .kit-hd-cta {
+      grid-column: 3;
+      grid-row: 1;
+      justify-self: end;
+    }
+    & .kit-hd-tools {
+      grid-column: 3;
+      grid-row: 1;
+      justify-self: end;
+      margin-inline-end: 190px;
+    }
+    & .kit-hd-brand {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+      text-align: center;
+    }
+    & .kit-hd-logo {
+      width: 72px;
+      height: 72px;
+      font-size: 32px;
+    }
+    & .kit-hd-name {
+      max-width: 18ch;
+      font-size: clamp(48px, 7.4cqi, 104px);
+      text-wrap: balance;
+    }
+    & .kit-hd-nav {
+      grid-column: 1 / -1;
+      grid-row: 3;
+      justify-content: center;
+      padding-top: 10px;
+      border-top: 1px solid var(--k-line);
+    }
+  }
+}
+
+/* On a wide screen the big header is a few hundred pixels tall: pinned (sticky "on") it would hide half the page, so
+ * there it scrolls away with the page. */
+@container (min-width: 760px) {
+  .kit-hd.kit-hd[data-hd="big"][data-stick] {
+    position: relative !important;
+  }
+}
+
+/* Logo and menu button: the links stay in the panel at every width. */
+@container (min-width: 760px) {
+  .kit-hd.kit-hd[data-hd="minimal"] {
+    & .kit-hd-burger {
+      display: inline-grid;
+    }
+    & .kit-hd-brand .kit-hd-name {
+      font-size: 21px;
+    }
+  }
+}
+
+/* Side menu: the menu button first; the links open as a panel from the side of the screen. */
+.kit-hd.kit-hd[data-hd="drawer"] {
+  & .kit-hd-brand {
+    flex: 1 1 auto;
+  }
+  & .kit-hd-drawer {
+    position: fixed;
+    inset-block: 0;
+    inset-inline: 0 auto;
+    top: 0;
+    z-index: 1;
+    width: min(86vw, 380px);
+    max-height: none;
+    align-content: start;
+    padding: 84px 18px 24px;
+    border: 0;
+    border-inline-end: 1px solid var(--k-line);
+    border-radius: 0;
+    box-shadow: 0 0 0 100vmax rgb(0 0 0 / 0.45);
+  }
+  & .kit-hd-drawer .kit-hd-link {
+    font-size: 26px;
+    padding-block: 10px;
+  }
+}
+@container (min-width: 760px) {
+  .kit-hd.kit-hd[data-hd="drawer"] {
+    & .kit-hd-burger {
+      display: inline-grid;
+    }
+    & .kit-hd-drawer {
+      inset-inline: 0 auto;
+      width: 380px;
+    }
+  }
+}
+
+/* ---------- header looks ---------- */
+
+.kit-hd.kit-hd[data-hd-style="solid"] {
+  background: var(--k-bg);
+}
+.kit-hd.kit-hd[data-hd-style="transparent"] {
+  border-color: transparent;
+  background: transparent;
+}
+.kit-hd.kit-hd[data-hd-style="glass"]:not([data-hd="pill"]) {
+  background: transparent;
+  border-color: color-mix(in srgb, var(--k-line) 70%, transparent);
+}
+/* The blur sits on a layer of its own: a filter on the header itself would trap the side menu inside the header. */
+.kit-hd.kit-hd[data-hd-style="glass"]:not([data-hd="pill"])::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: color-mix(in srgb, var(--k-bg) 76%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(1.3);
+  backdrop-filter: blur(14px) saturate(1.3);
+}
+.kit-hd.kit-hd[data-hd="pill"][data-hd-style="solid"] .kit-hd-in {
+  background: var(--k-bg);
+}
+.kit-hd.kit-hd[data-hd="pill"][data-hd-style="glass"] .kit-hd-in {
+  background: color-mix(in srgb, var(--k-bg) 76%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(1.3);
+  backdrop-filter: blur(14px) saturate(1.3);
+}
+.kit-hd.kit-hd[data-hd="pill"][data-hd-style="transparent"] .kit-hd-in {
+  background: transparent;
+  box-shadow: none;
+}
+.kit-hd.kit-hd[data-hd-style="accent"],
+.kit-hd.kit-hd[data-hd="pill"][data-hd-style="accent"] .kit-hd-in {
+  border-color: transparent;
+  background: var(--k-acc);
+  color: var(--k-acc-ink);
+}
+.kit-hd.kit-hd[data-hd="pill"][data-hd-style="accent"] {
+  background: transparent;
+}
+/* On the accent color the softer gray of "today" would fade: it takes the header's own type color. */
+.kit-hd.kit-hd[data-hd-style="accent"] .kit-hd-in .kit-hd-today {
+  color: inherit;
+}
+.kit-hd.kit-hd[data-hd-style="accent"] > .kit-hd-in {
+  & > .kit-hd-cta {
+    background: var(--k-acc-ink);
+    color: var(--k-acc);
+  }
+  & .kit-hd-logo {
+    background: var(--k-acc-ink);
+    color: var(--k-acc);
+  }
+}
+
+/* Over the top photo: the header lies on the photo (the opening starts under it) in light type. */
+.kit-hd.kit-hd[data-over] {
+  margin-bottom: calc(-1 * var(--kit-hd-over, 64px));
+}
+.kit-hd.kit-hd[data-over][data-hd-style="transparent"],
+.kit-hd.kit-hd[data-over][data-hd="pill"]:is([data-hd-style="transparent"], [data-hd-style="auto"]) .kit-hd-in {
+  background: transparent;
+  color: #fff;
+}
+.kit-hd.kit-hd[data-over][data-hd="pill"]:is([data-hd-style="transparent"], [data-hd-style="auto"]) .kit-hd-in {
+  border-color: rgb(255 255 255 / 0.35);
+  background: rgb(16 16 16 / 0.42);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+.kit-hd.kit-hd[data-over][data-hd-style="transparent"]:not([data-hd="pill"])::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 -28px;
+  z-index: -1;
+  background: linear-gradient(rgb(0 0 0 / 0.55), rgb(0 0 0 / 0.22) 70%, transparent);
+  pointer-events: none;
+}
+.kit-hd.kit-hd[data-over] .kit-hd-name {
+  text-shadow: 0 1px 10px rgb(0 0 0 / 0.25);
+}
+.kit-hd.kit-hd[data-hd-style="glass"][data-over] .kit-hd-name {
+  text-shadow: none;
+}
+.kit-hd.kit-hd[data-over] .kit-hd-drawer {
+  color: var(--k-ink);
+  text-shadow: none;
+}
+/* A see-through header stays on screen only where the browser can turn it solid while the page scrolls. */
+.kit-hd.kit-hd[data-hd-style="transparent"]:not([data-hd="pill"])[data-stick] {
+  position: relative;
+}
+@supports (animation-timeline: scroll()) {
+  .kit-hd.kit-hd[data-hd-style="transparent"]:not([data-hd="pill"])[data-stick] {
+    position: sticky;
+    animation: kit-hd-solid linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 45vh;
+  }
+  .kit-hd.kit-hd[data-hd-style="transparent"]:not([data-hd="pill"])[data-stick]::before {
+    animation: kit-hd-fade linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 45vh;
+  }
+  /* Turning solid follows the scroll position and moves nothing, so it stays with reduced motion and with "No motion"
+   * (which stop every other animation): otherwise the stuck header would stay see-through over the page. */
+  [data-ps-motion="none"] .kit-hd.kit-hd[data-hd-style="transparent"]:not([data-hd="pill"])[data-stick] {
+    animation: kit-hd-solid linear both !important;
+    animation-timeline: scroll(root) !important;
+    animation-range: 0 45vh !important;
+  }
+  [data-ps-motion="none"] .kit-hd.kit-hd[data-hd-style="transparent"]:not([data-hd="pill"])[data-stick]::before {
+    animation: kit-hd-fade linear both !important;
+    animation-timeline: scroll(root) !important;
+    animation-range: 0 45vh !important;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .kit-hd.kit-hd[data-hd-style="transparent"]:not([data-hd="pill"])[data-stick] {
+      animation: kit-hd-solid linear both !important;
+      animation-timeline: scroll(root) !important;
+      animation-range: 0 45vh !important;
+    }
+    .kit-hd.kit-hd[data-hd-style="transparent"]:not([data-hd="pill"])[data-stick]::before {
+      animation: kit-hd-fade linear both !important;
+      animation-timeline: scroll(root) !important;
+      animation-range: 0 45vh !important;
+    }
+  }
+}
+@keyframes kit-hd-solid {
+  80%,
+  to {
+    border-color: var(--k-line);
+    background-color: var(--k-bg);
+    color: var(--k-ink);
+  }
+}
+@keyframes kit-hd-fade {
+  80%,
+  to {
+    opacity: 0;
+  }
+}
+
+/* ---------- the template's own header ("Template default" layout) ---------- */
+
+[data-ly-sticky="on"] [data-section="header"]:not(.kit-hd, [data-k~="masthead"]) {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 40 !important;
+}
+[data-ly-sticky="off"] [data-section="header"]:not(.kit-hd) {
+  position: relative !important;
+  top: auto !important;
+}
+[data-ly-sticky="off"] .kit-hd.kit-hd {
+  position: relative;
+  animation: none;
+}
+[data-ly-hstyle] [data-section="header"]:not(.kit-hd, [data-k~="masthead"]) {
+  transition: none !important;
+}
+[data-ly-hstyle="solid"] [data-section="header"]:not(.kit-hd, [data-k~="masthead"]) {
+  background: var(--k-bg) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+[data-ly-hstyle="glass"] [data-section="header"]:not(.kit-hd, [data-k~="masthead"]) {
+  background: color-mix(in srgb, var(--k-bg) 78%, transparent) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(1.3) !important;
+  backdrop-filter: blur(14px) saturate(1.3) !important;
+}
+/* Solid and glass lay the page color under a header that may have been dark: its type follows, in the page's ink.
+ * A control drawn on a fill of its own (data-k="filled", like Ember's "Menu" pill) keeps its colors: its text in the
+ * page's ink would vanish on a fill of the same ink. A bar of the header that floats at the foot of a phone's screen
+ * (data-k="bar") is drawn by the rule after the accent header's. */
+[data-ly-hstyle]:is([data-ly-hstyle="solid"], [data-ly-hstyle="glass"]) [data-section="header"]:not(.kit-hd, [data-k~="masthead"]) {
+  color: var(--k-ink) !important;
+
+  & :is(a, span, p, button, nav, .kit-name):not([data-k~="btn"], [data-k~="btn"] *, [data-k~="filled"], [data-k~="filled"] *, [data-k~="bar"], .kit-logo, .kit-logo *, [id="site-drawer"], [id="site-drawer"] *, dialog *) {
+    color: inherit !important;
+  }
+}
+[data-ly-hstyle="transparent"] [data-section="header"]:not(.kit-hd, [data-k~="masthead"]) {
+  border-color: transparent !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+[data-ly-hstyle="accent"] [data-section="header"]:not(.kit-hd, [data-k~="masthead"]) {
+  border-color: transparent !important;
+  background: var(--k-acc) !important;
+  color: var(--k-acc-ink) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+
+  & :is(a, span, p, button, nav, .kit-name):not([data-k~="btn"], [data-k~="btn"] *, [data-k~="bar"], .kit-logo, .kit-logo *, [id="site-drawer"], [id="site-drawer"] *, dialog *) {
+    border-color: color-mix(in srgb, currentColor 30%, transparent) !important;
+    background-color: transparent !important;
+    color: inherit !important;
+  }
+  & [data-k~="btn"] {
+    border-color: transparent !important;
+    background: var(--k-acc-ink) !important;
+    color: var(--k-acc) !important;
+  }
+  /* The letter mark is drawn in reverse, like the header's own: in the accent it would vanish on the accent. */
+  & .kit-logo:not(.kit-logo-bare) {
+    border-color: transparent !important;
+    background-color: var(--k-acc-ink) !important;
+    color: var(--k-acc) !important;
+    box-shadow: 0 0 0 2px var(--k-acc-ink) !important;
+  }
+}
+/* A bar of the header that leaves it on phones to float at the foot of the screen (data-k="bar": Lumen's tabs, Bloom's
+ * dock) is not over the header's color there, so with any header look it keeps the fill and text the template gives it
+ * while it floats (--k-bar-bg, --k-bar-ink). Where the bar sits in the header (wider screens) the template leaves both
+ * unset: the bar is then see-through and its text takes the header's color, like the rest of the header. */
+[data-ly-hstyle] [data-section="header"] [data-k~="bar"] {
+  background: var(--k-bar-bg) !important;
+  color: var(--k-bar-ink) !important;
+}
+
+/* ---------- shared opening ---------- */
+
+.kit-hv.kit-hv {
+  position: relative;
+  isolation: isolate;
+  display: block;
+  height: auto;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+  color: var(--k-ink);
+  text-align: start;
+
+  & .kit-hv-in {
+    position: relative;
+    display: grid;
+    gap: 24px;
+    max-width: 1160px;
+    margin-inline: auto;
+    padding: 28px 18px 44px;
+  }
+  & .kit-hv-text {
+    display: grid;
+    /* One column no wider than the text box, so a word longer than the line breaks instead of widening the column. */
+    grid-template-columns: minmax(0, 1fr);
+    align-content: center;
+    justify-items: start;
+    gap: 14px;
+    min-width: 0;
+  }
+  & .kit-hv-eyebrow {
+    margin: 0;
+    color: var(--k-acc-text);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    line-height: 1.3;
+    text-transform: uppercase;
+  }
+  /* Each opening sets the headline's size in --kit-hv-fs; it shrinks so the longest word (--kit-hv-word letters, set by
+   * Top.tsx) fits the text column (--kit-hv-col of the page) even in a wide font, and a word longer than the whole line
+   * (a long business name) breaks instead of running off the screen. */
+  & .kit-hv-title {
+    max-width: 100%;
+    margin: 0;
+    --kit-hv-fs: clamp(40px, 11vw, 76px);
+    font-size: min(var(--kit-hv-fs), calc((min(100cqi, 1160px) - 48px) * var(--kit-hv-col, 1) / (var(--kit-hv-word, 1) * 0.9)));
+    line-height: 1.02;
+    overflow-wrap: break-word !important;
+    text-wrap: balance;
+  }
+  &[data-len="long"] .kit-hv-title {
+    --kit-hv-fs: clamp(34px, 8.6vw, 60px);
+  }
+  &[data-len="longer"] .kit-hv-title {
+    --kit-hv-fs: clamp(28px, 7vw, 46px);
+  }
+  & .kit-hv-lede {
+    max-width: 46ch;
+    margin: 0;
+    color: var(--k-muted);
+    font-size: 17px;
+    line-height: 1.55;
+  }
+  & .kit-hv-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 6px;
+  }
+  & .kit-hv-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 0 22px;
+    border: 2px solid var(--k-acc);
+    border-radius: min(var(--k-r), 999px);
+    background: var(--k-acc);
+    color: var(--k-acc-ink);
+    font: 700 15px/1.1 var(--k-fb);
+    text-decoration: none;
+  }
+  & .kit-hv-btn.is-second {
+    border-color: color-mix(in srgb, currentColor 40%, transparent);
+    background: transparent;
+    color: var(--k-ink);
+  }
+  & .kit-hv-btn svg {
+    width: 18px;
+    height: 18px;
+    flex: none;
+  }
+  & .kit-hv-btn:focus-visible,
+  & .kit-hv-pick:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+  & .kit-hv-arrow {
+    width: 16px;
+    height: 16px;
+  }
+  &:dir(rtl) .kit-hv-arrow {
+    transform: scaleX(-1);
+  }
+  & .kit-hv-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    margin: 4px 0 0;
+    padding: 0;
+    color: var(--k-muted);
+    font-size: 14px;
+    list-style: none;
+  }
+  & .kit-hv-meta li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  & .kit-hv-meta svg {
+    width: 16px;
+    height: 16px;
+    flex: none;
+  }
+  & .kit-hv-media {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--k-rs);
+    background: var(--k-surf);
+  }
+
+  /* No photo: a tile with the business's first letter. */
+  & .kit-hv-mono {
+    display: grid;
+    place-items: center;
+    background:
+      repeating-linear-gradient(135deg, color-mix(in srgb, var(--k-acc) 12%, transparent) 0 2px, transparent 2px 16px),
+      var(--k-acc-soft);
+    color: var(--k-acc-text);
+  }
+  & .kit-hv-mono > span {
+    font-family: var(--k-fd);
+    font-weight: var(--k-fw);
+    font-size: clamp(88px, 28vw, 220px);
+    line-height: 1;
+  }
+}
+@container (min-width: 760px) {
+  .kit-hv.kit-hv {
+    & .kit-hv-in {
+      gap: 48px;
+      padding: 56px 40px 76px;
+    }
+    & .kit-hv-lede {
+      font-size: 19px;
+    }
+  }
+}
+
+/* Full photo: the photo fills the top and the text lies on it, at the bottom. */
+.kit-hv.kit-hv[data-hv="full"] {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: clamp(520px, 86svh, 820px);
+  background: #161616;
+  color: #fff;
+
+  & > .kit-hv-media {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    border-radius: 0;
+  }
+  & .kit-hv-shade {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(to top, rgb(0 0 0 / 0.82), rgb(0 0 0 / 0.55) 38%, rgb(0 0 0 / 0.1) 72%, rgb(0 0 0 / 0.32));
+    pointer-events: none;
+  }
+  & .kit-hv-in {
+    width: 100%;
+    padding-top: calc(var(--kit-hd-over, 0px) + 64px);
+  }
+  & .kit-hv-text {
+    max-width: 760px;
+  }
+  & :is(.kit-hv-eyebrow, .kit-hv-lede, .kit-hv-meta) {
+    color: rgb(255 255 255 / 0.9);
+  }
+  & .kit-hv-title {
+    color: #fff;
+    text-shadow: 0 2px 24px rgb(0 0 0 / 0.25);
+  }
+  & .kit-hv-btn.is-second {
+    border-color: rgb(255 255 255 / 0.7);
+    color: #fff;
+  }
+}
+/* A soft dark cloud right behind the words, so they stay readable on a light photo whatever its height, the darkening
+ * and the place of the text: the shade above follows the photo, this one follows the text. */
+.kit-hv.kit-hv[data-hv="full"][data-photo] .kit-hv-text {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -20px -28px;
+    z-index: -1;
+    border-radius: 48px;
+    background: rgb(0 0 0 / 0.62);
+    filter: blur(26px);
+    pointer-events: none;
+  }
+}
+
+/* No photo at all: the accent's soft tint with a large ring, and the template's own colors. */
+.kit-hv.kit-hv[data-hv="full"]:not([data-photo]) {
+  min-height: clamp(420px, 64svh, 640px);
+  background:
+    radial-gradient(circle at 88% 18%, transparent 0 22%, color-mix(in srgb, var(--k-acc) 22%, transparent) 22.2% 22.8%, transparent 23%),
+    var(--k-acc-soft);
+  color: var(--k-ink);
+
+  & :is(.kit-hv-lede, .kit-hv-meta) {
+    color: var(--k-muted);
+  }
+  & .kit-hv-eyebrow {
+    color: var(--k-acc-text);
+  }
+  & .kit-hv-title {
+    color: var(--k-ink);
+    text-shadow: none;
+  }
+  & .kit-hv-btn.is-second {
+    border-color: color-mix(in srgb, var(--k-ink) 40%, transparent);
+    color: var(--k-ink);
+  }
+}
+[data-hero-height="short"] .kit-hv.kit-hv[data-hv="full"] {
+  min-height: clamp(360px, 52svh, 520px);
+}
+[data-hero-height="medium"] .kit-hv.kit-hv[data-hv="full"] {
+  min-height: clamp(460px, 70svh, 760px);
+}
+[data-hero-height="full"] .kit-hv.kit-hv[data-hv="full"] {
+  min-height: 100svh;
+}
+[data-hero-overlay="light"] .kit-hv.kit-hv .kit-hv-shade {
+  opacity: 0.75;
+}
+[data-hero-overlay="strong"] .kit-hv.kit-hv .kit-hv-shade {
+  background: linear-gradient(to top, rgb(0 0 0 / 0.86), rgb(0 0 0 / 0.55));
+}
+[data-hero-text="center"] .kit-hv.kit-hv[data-hv="full"] {
+  justify-content: center;
+  text-align: center;
+  & .kit-hv-shade {
+    background: radial-gradient(ellipse at 50% 55%, rgb(0 0 0 / 0.62), rgb(0 0 0 / 0.38));
+  }
+  & .kit-hv-text {
+    justify-items: center;
+    margin-inline: auto;
+  }
+  & :is(.kit-hv-actions, .kit-hv-meta) {
+    justify-content: center;
+  }
+}
+[data-hero-text="start"] .kit-hv.kit-hv[data-hv="full"] {
+  justify-content: center;
+  & .kit-hv-shade {
+    background: linear-gradient(to right, rgb(0 0 0 / 0.72), rgb(0 0 0 / 0.25));
+  }
+  &:dir(rtl) .kit-hv-shade {
+    background: linear-gradient(to left, rgb(0 0 0 / 0.72), rgb(0 0 0 / 0.25));
+  }
+}
+
+/* Photo beside the text: the photo at the end (under the text on phones). */
+.kit-hv.kit-hv[data-hv="split"] {
+  & .kit-hv-media {
+    order: 2;
+    aspect-ratio: 4 / 3;
+  }
+}
+@container (min-width: 760px) {
+  .kit-hv.kit-hv[data-hv="split"] {
+    & .kit-hv-in {
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+      align-items: center;
+    }
+    & .kit-hv-media {
+      aspect-ratio: 4 / 5;
+      max-height: 640px;
+    }
+  }
+}
+
+/* Framed photo: a wide photo in a thick frame, the text on a card over its lower edge. */
+.kit-hv.kit-hv[data-hv="framed"] {
+  & .kit-hv-in {
+    gap: 0;
+  }
+  & .kit-hv-media {
+    aspect-ratio: 4 / 3;
+    border: 10px solid var(--k-surf);
+    outline: 1px solid var(--k-line);
+    box-shadow: 0 30px 60px -34px rgb(0 0 0 / 0.45);
+  }
+  & .kit-hv-text {
+    position: relative;
+    z-index: 1;
+    margin: -48px 12px 0;
+    padding: 22px 20px;
+    border: 1px solid var(--k-line);
+    border-radius: var(--k-rs);
+    background: var(--k-bg);
+    box-shadow: 0 18px 40px -26px rgb(0 0 0 / 0.4);
+  }
+}
+@container (min-width: 760px) {
+  .kit-hv.kit-hv[data-hv="framed"] {
+    & .kit-hv-media {
+      aspect-ratio: 16 / 8;
+      border-width: 14px;
+    }
+    & .kit-hv-text {
+      width: min(600px, 62%);
+      margin: -150px 0 0 48px;
+      margin-inline: 48px 0;
+      padding: 32px 34px;
+    }
+  }
+}
+
+/* Poster: huge type, a small photo tucked beside the words. The photo's column follows the width the opening has
+ * (cqi), not the screen's: in a narrow column on a wide screen (Ticket's receipt) a screen-sized photo covered the words. */
+.kit-hv.kit-hv[data-hv="poster"] {
+  & .kit-hv-in {
+    grid-template-columns: minmax(0, 1fr) clamp(104px, 30cqi, 300px);
+    grid-template-areas:
+      "eyebrow eyebrow"
+      "title title"
+      "lede media"
+      "actions actions"
+      "meta meta";
+    align-items: start;
+    gap: 14px 18px;
+    border-bottom: 1px solid var(--k-line);
+  }
+  & .kit-hv-text {
+    display: contents;
+  }
+  & .kit-hv-eyebrow {
+    grid-area: eyebrow;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--k-ink);
+  }
+  & .kit-hv-title {
+    grid-area: title;
+    --kit-hv-fs: clamp(60px, 18vw, 184px);
+    line-height: 0.9;
+  }
+  &[data-len="long"] .kit-hv-title {
+    --kit-hv-fs: clamp(46px, 12.5vw, 136px);
+  }
+  &[data-len="longer"] .kit-hv-title {
+    --kit-hv-fs: clamp(34px, 9vw, 96px);
+  }
+  & .kit-hv-lede {
+    grid-area: lede;
+  }
+  & .kit-hv-actions {
+    grid-area: actions;
+  }
+  & .kit-hv-meta {
+    grid-area: meta;
+  }
+  & .kit-hv-media {
+    grid-area: media;
+    aspect-ratio: 3 / 4;
+    rotate: 3deg;
+    box-shadow: 0 16px 34px -20px rgb(0 0 0 / 0.5);
+  }
+  &:dir(rtl) .kit-hv-media {
+    rotate: -3deg;
+  }
+}
+/* Without an eyebrow, the poster's top rule goes over the title. */
+.kit-hv.kit-hv[data-hv="poster"] .kit-hv-in:not(:has(.kit-hv-eyebrow)) {
+  border-top: 3px solid var(--k-ink);
+  margin-top: 20px;
+  padding-top: 20px;
+}
+@container (min-width: 760px) {
+  .kit-hv.kit-hv[data-hv="poster"] .kit-hv-in {
+    grid-template-areas:
+      "eyebrow eyebrow"
+      "title title"
+      "lede media"
+      "actions media"
+      "meta media";
+    column-gap: 48px;
+  }
+  .kit-hv.kit-hv[data-hv="poster"] .kit-hv-media {
+    margin-top: -40px;
+  }
+}
+
+/* Three photos: one large and two small, beside the text (above it on phones). */
+.kit-hv.kit-hv[data-hv="collage"] {
+  & .kit-hv-collage {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+    height: clamp(280px, 82vw, 440px);
+  }
+  & .kit-hv-tile {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--k-rs);
+    background: var(--k-surf);
+  }
+  & .kit-hv-tile:first-child {
+    grid-row: 1 / 3;
+  }
+  & .kit-hv-tile:nth-child(3) {
+    margin-inline-end: 14%;
+  }
+  & .kit-hv-tile.kit-hv-mono:nth-child(2) {
+    background: var(--k-surf);
+  }
+  & .kit-hv-tile.kit-hv-mono > span {
+    font-size: clamp(48px, 14vw, 110px);
+  }
+}
+@container (min-width: 760px) {
+  .kit-hv.kit-hv[data-hv="collage"] {
+    & .kit-hv-in {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      align-items: center;
+    }
+    & .kit-hv-collage {
+      order: 2;
+      height: 540px;
+    }
+  }
+}
+
+/* Arch window: the photo in an arch with a thin ring around it. */
+.kit-hv.kit-hv[data-hv="arch"] {
+  & .kit-hv-in {
+    justify-items: center;
+    text-align: center;
+  }
+  & .kit-hv-text {
+    justify-items: center;
+  }
+  & :is(.kit-hv-actions, .kit-hv-meta) {
+    justify-content: center;
+  }
+  & .kit-hv-media {
+    width: min(76%, 340px);
+    aspect-ratio: 3 / 4;
+    margin-top: 8px;
+    border-radius: 999px 999px var(--k-rs) var(--k-rs);
+    box-shadow:
+      0 0 0 8px var(--k-bg),
+      0 0 0 9px var(--k-line);
+  }
+}
+@container (min-width: 760px) {
+  .kit-hv.kit-hv[data-hv="arch"] {
+    & .kit-hv-in {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+      justify-items: start;
+      align-items: center;
+      text-align: start;
+    }
+    & .kit-hv-text {
+      justify-items: start;
+    }
+    & :is(.kit-hv-actions, .kit-hv-meta) {
+      justify-content: flex-start;
+    }
+    & .kit-hv-media {
+      order: 2;
+      justify-self: center;
+      width: min(100%, 420px);
+    }
+  }
+}
+
+/* Photo under the text: centered words, a wide photo below them. */
+.kit-hv.kit-hv[data-hv="stacked"] {
+  & .kit-hv-in {
+    text-align: center;
+  }
+  & .kit-hv-text {
+    justify-items: center;
+    max-width: 780px;
+    margin-inline: auto;
+  }
+  & :is(.kit-hv-actions, .kit-hv-meta) {
+    justify-content: center;
+  }
+  & .kit-hv-lede {
+    margin-inline: auto;
+  }
+  & .kit-hv-media {
+    order: 2;
+    aspect-ratio: 4 / 3;
+  }
+}
+@container (min-width: 760px) {
+  .kit-hv.kit-hv[data-hv="stacked"] {
+    & .kit-hv-in {
+      gap: 40px;
+    }
+    & .kit-hv-media {
+      aspect-ratio: 21 / 9;
+    }
+  }
+}
+
+/* Menu first: a short title, then featured products right away. */
+.kit-hv.kit-hv[data-hv="menu"] {
+  & .kit-hv-in {
+    gap: 20px;
+    padding-block: 24px 36px;
+  }
+  & .kit-hv-title {
+    --kit-hv-fs: clamp(32px, 8.4vw, 56px);
+  }
+  &[data-len="longer"] .kit-hv-title {
+    --kit-hv-fs: clamp(26px, 6.6vw, 42px);
+  }
+  & .kit-hv-actions {
+    order: 3;
+  }
+  & .kit-hv-picks {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  & .kit-hv-pick {
+    display: grid;
+    gap: 6px;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 8px 8px 12px;
+    border: 1px solid var(--k-line);
+    border-radius: var(--k-rs);
+    background: var(--k-surf);
+    color: var(--k-ink);
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+    align-content: start;
+  }
+  & .kit-hv-pick-media {
+    position: relative;
+    display: block;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: calc(var(--k-rs) * 0.7);
+    background: var(--k-bg);
+  }
+  & .kit-hv-pick-name {
+    padding-inline: 4px;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 1.25;
+  }
+  & .kit-hv-pick-price {
+    padding-inline: 4px;
+    color: var(--k-acc-text);
+    font-weight: 700;
+    font-size: 14px;
+  }
+}
+@container (min-width: 760px) {
+  .kit-hv.kit-hv[data-hv="menu"] {
+    & .kit-hv-in {
+      padding-block: 44px 56px;
+    }
+    & .kit-hv-picks {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+  }
+}
+
+/* Text only: big type with the business's first letter drawn large behind it. */
+.kit-hv.kit-hv[data-hv="type"] {
+  background: radial-gradient(circle at 0% 0%, var(--k-acc-soft), transparent 55%);
+
+  & .kit-hv-in {
+    min-height: clamp(320px, 44svh, 620px);
+    align-content: center;
+    padding-block: 44px;
+  }
+  @container (min-width: 760px) {
+    & .kit-hv-in {
+      min-height: clamp(380px, 60svh, 620px);
+      padding-block: 56px;
+    }
+  }
+  & .kit-hv-title {
+    --kit-hv-fs: clamp(54px, 15vw, 150px);
+    line-height: 0.94;
+  }
+  &[data-len="long"] .kit-hv-title {
+    --kit-hv-fs: clamp(42px, 11vw, 112px);
+  }
+  &[data-len="longer"] .kit-hv-title {
+    --kit-hv-fs: clamp(32px, 8vw, 80px);
+  }
+  & .kit-hv-letter {
+    position: absolute;
+    inset-inline-end: -0.06em;
+    top: 50%;
+    z-index: -1;
+    translate: 0 -50%;
+    color: transparent;
+    font-family: var(--k-fd);
+    font-weight: var(--k-fw);
+    font-size: clamp(300px, 92vw, 680px);
+    line-height: 0.8;
+    pointer-events: none;
+    -webkit-text-stroke: 2px color-mix(in srgb, var(--k-acc) 28%, transparent);
+  }
+}
+
+/* Round photo: a circle with a soft ring, at the start of the text (above it on phones). */
+.kit-hv.kit-hv[data-hv="circle"] {
+  & .kit-hv-in {
+    justify-items: center;
+    text-align: center;
+  }
+  & .kit-hv-text {
+    justify-items: center;
+  }
+  & :is(.kit-hv-actions, .kit-hv-meta) {
+    justify-content: center;
+  }
+  & .kit-hv-media {
+    width: min(74%, 320px);
+    aspect-ratio: 1;
+    margin: 10px 0 4px;
+    border-radius: 50%;
+    box-shadow:
+      0 0 0 10px var(--k-acc-soft),
+      0 0 0 11px color-mix(in srgb, var(--k-acc) 30%, transparent);
+  }
+}
+@container (min-width: 760px) {
+  .kit-hv.kit-hv[data-hv="circle"] {
+    & .kit-hv-in {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+      justify-items: start;
+      align-items: center;
+      text-align: start;
+    }
+    & .kit-hv-text {
+      justify-items: start;
+    }
+    & :is(.kit-hv-actions, .kit-hv-meta) {
+      justify-content: flex-start;
+    }
+    & .kit-hv-media {
+      justify-self: center;
+      width: min(100%, 440px);
+    }
+  }
+}
+
+/* Arabic: no capitals or letter spacing to undo, and lines a little taller for the letters. */
+.kit-hv.kit-hv:lang(ar) {
+  & .kit-hv-eyebrow {
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  & .kit-hv-title {
+    line-height: 1.2;
+  }
+}
+.kit-hd.kit-hd:lang(ar) .kit-hd-name {
+  line-height: 1.3;
+}
+
+/* The width of the headline's column on a desktop, as a share of the page, for the headline size above. */
+@container (min-width: 760px) {
+  .kit-hv.kit-hv:is([data-hv="split"], [data-hv="collage"], [data-hv="arch"], [data-hv="circle"]) {
+    --kit-hv-col: 0.5;
+  }
+  .kit-hv.kit-hv[data-hv="framed"] {
+    --kit-hv-col: 0.6;
+  }
+}

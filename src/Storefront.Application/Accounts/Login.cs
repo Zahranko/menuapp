@@ -45,6 +45,8 @@ public sealed class LoginHandler(IValidator<LogIn> validator, IIdentityService i
         var user = await identity.FindByLoginAsync(login, ct);
         if (user is null)
         {
+            // Spend the same hashing time as a real check, so response times don't reveal which emails and phones have accounts.
+            identity.CheckPasswordOfNoOne(cmd.Password);
             return WrongCredentials;
         }
 

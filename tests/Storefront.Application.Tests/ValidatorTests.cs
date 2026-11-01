@@ -1,4 +1,5 @@
 using Storefront.Application.Accounts;
+using Storefront.Application.Catalog.Products;
 using Storefront.Application.Common;
 
 namespace Storefront.Application.Tests;
@@ -25,6 +26,29 @@ public class ValidatorTests
     {
         var error = await new RegisterValidator().CheckAsync(new Register("", "", "", ""), CancellationToken.None);
         Assert.Equal(["businessName", "email", "password", "phone"], error!.Fields!.Keys.Order());
+    }
+
+    [Theory]
+    [InlineData("Custom", "Chef's choice", null, null)]
+    [InlineData("Custom", null, "اختيار الشيف", null)]
+    [InlineData("Custom", " ", null, "Type the label text.")]
+    [InlineData("Custom", "1234567890123456789012345", null, "Labels can be up to 24 characters.")]
+    [InlineData("Custom", "Two\nlines", null, "Keep the label on one line.")]
+    [InlineData("New", null, null, null)]
+    [InlineData("Hot", null, null, "Choose a label: Signature, New, Best seller, Vegan, Spicy, Custom.")]
+    public async Task Product_custom_label_is_checked(string label, string? text, string? textAr, string? message)
+    {
+        var cmd = new SaveProduct(Guid.CreateVersion7(), "Latte", null, 1, label, CustomLabel: text, CustomLabelAr: textAr);
+        var error = await new SaveProductValidator().CheckAsync(cmd, CancellationToken.None);
+        Assert.Equal(message, error?.Fields!.Values.SelectMany(v => v).Single());
+    }
+
+    [Fact]
+    public async Task Long_Arabic_custom_label_is_keyed_by_its_field()
+    {
+        var cmd = new SaveProduct(Guid.CreateVersion7(), "Latte", null, 1, "Custom", CustomLabel: "Halal", CustomLabelAr: new string('ح', 25));
+        var error = await new SaveProductValidator().CheckAsync(cmd, CancellationToken.None);
+        Assert.Equal(["customLabelAr"], error!.Fields!.Keys);
     }
 
     [Fact]

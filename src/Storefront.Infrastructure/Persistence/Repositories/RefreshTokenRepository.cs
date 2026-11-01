@@ -8,6 +8,11 @@ internal sealed class RefreshTokenRepository(StorefrontDbContext db) : IRefreshT
 {
     public Task<RefreshToken?> FindByHashAsync(string hash, CancellationToken ct) => db.RefreshTokens.FirstOrDefaultAsync(t => t.TokenHash == hash, ct);
 
+    public async Task<bool> TryRevokeAsync(Guid tokenId, DateTimeOffset now, CancellationToken ct) =>
+        await db.RefreshTokens
+            .Where(t => t.Id == tokenId && t.RevokedAt == null)
+            .ExecuteUpdateAsync(u => u.SetProperty(t => t.RevokedAt, now), ct) == 1;
+
     public async Task<IReadOnlyList<RefreshToken>> ListForUserAsync(Guid userId, CancellationToken ct) =>
         await db.RefreshTokens.Where(t => t.UserId == userId).ToListAsync(ct);
 

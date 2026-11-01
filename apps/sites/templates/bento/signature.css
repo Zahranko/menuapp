@@ -1,0 +1,79 @@
+/*
+ * Bento's own layout options (manifest "signature", _kit/signatures.ts):
+ *   menu.layout  "bentobox"  each category one bento box: compartments in a tray, the first pick in the big one (base: "tiles")
+ *   hero.variant "lunchbox"  the three photos packed into a lunch box with a lid line (base: "collage")
+ */
+[data-template="bento"] {
+  --sig-tray: color-mix(in srgb, var(--k-ink) 86%, var(--k-acc));
+}
+
+/* ---------- bento boxes ---------- */
+[data-template="bento"] .kit-mn.kit-mn.kit-mn[data-sig~="bentobox"] {
+  & .kit-mn-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-flow: dense;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 28px;
+    background: var(--sig-tray);
+    box-shadow: inset 0 0 0 3px color-mix(in srgb, #fff 10%, transparent), 0 18px 30px -22px rgb(0 0 0 / 0.6);
+  }
+  & .kit-mn-li:first-child {
+    grid-column: span 2;
+  }
+  & .kit-mn-item {
+    border-radius: 20px;
+  }
+  & .kit-mn-title {
+    border: 0;
+  }
+  & .kit-mn-h {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  & .kit-mn-h::before {
+    content: "";
+    width: 18px;
+    height: 18px;
+    flex: none;
+    border-radius: 6px;
+    background:
+      linear-gradient(var(--k-bg) 0 0) 50% 0 / 2px 100% no-repeat,
+      linear-gradient(var(--k-bg) 0 0) 0 50% / 100% 2px no-repeat,
+      var(--k-acc);
+  }
+}
+@container kmenu (min-width: 640px) {
+  [data-template="bento"] .kit-mn.kit-mn.kit-mn[data-sig~="bentobox"] {
+    & .kit-mn-list {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    & .kit-mn-li:first-child {
+      grid-row: span 2;
+    }
+  }
+}
+
+/* ---------- lunch box ---------- */
+[data-template="bento"] .kit-hv.kit-hv[data-sig~="lunchbox"] {
+  & .kit-hv-collage {
+    gap: 8px;
+    padding: 8px;
+    border-radius: 30px;
+    background: var(--sig-tray);
+    box-shadow: 0 -10px 0 -4px color-mix(in srgb, var(--k-acc) 70%, var(--sig-tray)), 0 22px 34px -24px rgb(0 0 0 / 0.65);
+  }
+  & .kit-hv-tile {
+    border-radius: 22px;
+  }
+  & .kit-hv-title {
+    letter-spacing: -0.02em;
+  }
+  & .kit-hv-eyebrow {
+    justify-self: start;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--k-acc-soft);
+  }
+}

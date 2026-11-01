@@ -7,7 +7,7 @@ using Storefront.Domain.Businesses;
 namespace Storefront.Application.Accounts;
 
 /// <summary>Creates an access token and a new refresh token for a device.</summary>
-public sealed class SessionIssuer(ITokenService tokens, IRefreshTokenRepository refreshTokens, IUnitOfWork uow, IClock clock, IOptions<BrandOptions> brand)
+public sealed class SessionIssuer(ITokenService tokens, IRefreshTokenRepository refreshTokens, IUnitOfWork uow, IClock clock, SiteLinks links)
 {
     public async Task<AuthResponse> IssueAsync(UserAccount user, Business business, string? deviceName, CancellationToken ct, RefreshToken? replacing = null)
     {
@@ -19,6 +19,6 @@ public sealed class SessionIssuer(ITokenService tokens, IRefreshTokenRepository 
         await uow.SaveChangesAsync(ct);
 
         var access = tokens.CreateAccessToken(user.Id, business.Id, user.Email);
-        return new AuthResponse(access.Token, access.ExpiresAt, raw, refresh.ExpiresAt, BusinessDto.From(business, brand.Value.Domain));
+        return new AuthResponse(access.Token, access.ExpiresAt, raw, refresh.ExpiresAt, BusinessDto.From(business, links));
     }
 }

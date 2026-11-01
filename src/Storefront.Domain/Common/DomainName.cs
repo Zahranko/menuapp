@@ -18,7 +18,7 @@ public sealed partial record DomainName
 
         if (value.Length is 0 or > 253 || !Pattern().IsMatch(value))
         {
-            throw new DomainException("domain.invalid", "Enter a domain like vanillamenu.com, without spaces.", "domain");
+            throw new DomainException("domain.invalid", "Enter a domain like yourshop.com, without spaces.", "domain");
         }
 
         return new DomainName(value);

@@ -1,6 +1,6 @@
 namespace Storefront.Domain.Common;
 
-/// <summary>An amount in a currency, rounded to that currency's minor units (JOD has 3 decimals).</summary>
+/// <summary>An amount in a currency, rounded to that currency's minor units (for example 3 decimals for KWD, 0 for JPY, 2 for most).</summary>
 public readonly record struct Money
 {
     private static readonly Dictionary<string, int> Decimals = new(StringComparer.OrdinalIgnoreCase)

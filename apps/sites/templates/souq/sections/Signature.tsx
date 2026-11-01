@@ -15,7 +15,7 @@ export function Signature({ ctx }: { ctx: SouqContext }) {
         <div className="sigRow">
           {picks.map((item, k) => (
             <button key={item.id} type="button" className="sig" data-item-id={item.id}>
-              <span className="sigIm" style={thumbStyle(item)}>
+              <span data-k="photo" className="sigIm" style={thumbStyle(item)}>
                 <span className="num">0{k + 1}</span>
                 <Thumb item={item} sizes="(min-width: 760px) 33vw, 80vw" />
               </span>

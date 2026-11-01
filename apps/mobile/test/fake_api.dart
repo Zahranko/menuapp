@@ -29,15 +29,16 @@ class FakeApi implements HttpClientAdapter {
   void close({bool force = false}) {}
 }
 
-Map<String, Object?> authBody({String access = 'access-1', String refresh = 'refresh-1', String name = 'Vanilla Menu'}) => {
+Map<String, Object?> authBody({String access = 'access-1', String refresh = 'refresh-1', String name = 'Vanilla Menu', String currencyCode = 'USD', String timeZone = 'UTC'}) => {
       'accessToken': access,
       'accessTokenExpiresAt': '2030-01-01T00:00:00Z',
       'refreshToken': refresh,
       'refreshTokenExpiresAt': '2030-01-01T00:00:00Z',
-      'business': business(name: name),
+      'business': business(name: name, currencyCode: currencyCode, timeZone: timeZone),
     };
 
-Map<String, Object?> business({String name = 'Vanilla Menu'}) => {
+/// A `BusinessDto`. New businesses price in US dollars on UTC unless sign-up says otherwise.
+Map<String, Object?> business({String name = 'Vanilla Menu', String currencyCode = 'USD', String timeZone = 'UTC'}) => {
       'id': '0190a000-0000-7000-8000-000000000001',
       'name': name,
       'slug': 'vanillamenu',
@@ -46,7 +47,11 @@ Map<String, Object?> business({String name = 'Vanilla Menu'}) => {
       'email': 'hello@vanillamenu.test',
       'address': null,
       'instagram': null,
+      'phone': null,
+      'facebook': null,
+      'tikTok': null,
+      'snapchat': null,
       'locale': 'en',
-      'currencyCode': 'JOD',
-      'timeZone': 'Asia/Amman',
+      'currencyCode': currencyCode,
+      'timeZone': timeZone,
     };

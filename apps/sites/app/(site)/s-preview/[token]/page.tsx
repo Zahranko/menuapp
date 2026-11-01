@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import { getPreview } from "@/lib/api";
-import { SiteTemplate } from "@/templates/registry";
+import { SitePage } from "../../site-page";
 
 export const dynamic = "force-dynamic";
 
@@ -11,7 +10,6 @@ export const metadata: Metadata = {
 };
 
 export default async function PreviewPage({ params }: { params: Promise<{ token: string }> }) {
-  const site = await getPreview((await params).token);
-  if (!site) notFound();
-  return <SiteTemplate site={site} preview />;
+  const { token } = await params;
+  return <SitePage site={await getPreview(token)} path={[]} preview fallbackBase={`/_preview/${encodeURIComponent(token)}`} />;
 }

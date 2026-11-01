@@ -1,0 +1,100 @@
+/*
+ * Polaroid's own layout options (manifest "signature", _kit/signatures.ts):
+ *   menu.layout  "pinned"    every treat an instant photo pinned to the wall, tilted, captioned by hand (base: "masonry")
+ *   hero.variant "pinboard"  three instant photos taped and pinned over the words (base: "collage")
+ */
+[data-template="polaroid"] {
+  --sig-pin: radial-gradient(circle at 40% 35%, color-mix(in srgb, #fff 60%, var(--k-acc)) 0 2px, var(--k-acc) 3px 6px, transparent 6.5px);
+}
+
+/* ---------- pinned photos ---------- */
+[data-template="polaroid"] .kit-mn.kit-mn.kit-mn[data-sig~="pinned"] {
+  & .kit-mn-list {
+    gap: 22px 16px;
+  }
+  & .kit-mn-item {
+    position: relative;
+    padding: 10px 10px 16px;
+    border: 0;
+    border-radius: 2px;
+    background: var(--k-surf);
+    box-shadow: 0 12px 20px -12px rgb(0 0 0 / 0.45);
+    rotate: -2deg;
+  }
+  & .kit-mn-li:nth-child(even) .kit-mn-item {
+    rotate: 2.5deg;
+  }
+  & .kit-mn-li:nth-child(3n) .kit-mn-item {
+    rotate: -0.5deg;
+  }
+  & .kit-mn-item::before {
+    content: "";
+    position: absolute;
+    top: -7px;
+    left: 50%;
+    z-index: 2;
+    width: 14px;
+    height: 14px;
+    translate: -50% 0;
+    background: var(--sig-pin);
+    filter: drop-shadow(0 2px 1px rgb(0 0 0 / 0.3));
+  }
+  & .kit-mn-media {
+    border-radius: 0;
+  }
+  & .kit-mn-name {
+    font-family: var(--k-fd);
+    font-size: 20px;
+  }
+  & .kit-mn-price {
+    font-family: var(--k-fd);
+    color: var(--k-acc-text);
+  }
+}
+
+/* ---------- pinboard ---------- */
+[data-template="polaroid"] .kit-hv.kit-hv[data-sig~="pinboard"] {
+  & .kit-hv-collage {
+    gap: 18px;
+    padding: 16px 6px;
+  }
+  & .kit-hv-tile {
+    overflow: visible;
+    padding: 8px 8px 26px;
+    border-radius: 2px;
+    background: var(--k-surf);
+    box-shadow: 0 14px 24px -14px rgb(0 0 0 / 0.5);
+    rotate: -3deg;
+  }
+  & .kit-hv-tile:nth-child(2) {
+    rotate: 4deg;
+  }
+  & .kit-hv-tile:nth-child(3) {
+    rotate: -1.5deg;
+  }
+  & .kit-hv-tile::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    z-index: 2;
+    width: 64px;
+    height: 20px;
+    translate: -50% 0;
+    rotate: -4deg;
+    background: color-mix(in srgb, var(--tape, #f4e3b5) 85%, transparent);
+  }
+  & .kit-hv-tile:nth-child(2)::before {
+    width: 14px;
+    height: 14px;
+    top: -6px;
+    rotate: 0deg;
+    background: var(--sig-pin);
+  }
+  & .kit-hv-tile :is(img, .kit-pic, picture) {
+    border-radius: 0;
+  }
+  & .kit-hv-title {
+    font-family: var(--k-fd);
+  }
+}

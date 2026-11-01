@@ -7,9 +7,14 @@ import 'package:go_router/go_router.dart';
 import '../../../core/api/api_error.dart';
 import '../../../core/api/models.dart';
 import '../../../core/brand.dart';
+import '../../../core/currency.dart';
 import '../../../core/providers.dart';
+import '../../../core/region.dart';
 import '../../../core/theme.dart';
+import '../../../core/widgets/currency_picker.dart';
 import '../../../core/widgets/form_widgets.dart';
+import '../../../core/widgets/language_picker.dart';
+import '../../../core/widgets/logo_mark.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../auth_controller.dart';
 
@@ -37,17 +42,26 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
   final _email = TextEditingController();
   final _phone = TextEditingController();
   final _password = TextEditingController();
-  String _code = countryCodes.first;
+  String _code = defaultDialCode();
+
+  /// What prices show in; starts as the phone's region's currency.
+  String _currency = currencyForCountry(deviceCountry());
   bool _terms = true;
   bool _busy = false;
   Map<String, String?> _errors = {};
   SlugAvailability? _slug;
   Timer? _debounce;
   int _slugRequest = 0;
+  Timer? _accountDebounce;
+  int _accountRequest = 0;
+
+  /// The "already has an account" messages the live check put under the email and phone, so it can take them back.
+  final Map<String, String> _taken = {};
 
   @override
   void dispose() {
     _debounce?.cancel();
+    _accountDebounce?.cancel();
     for (final c in [_name, _email, _phone, _password]) {
       c.dispose();
     }
@@ -56,6 +70,41 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
 
   void _clear(String field) {
     if (_errors[field] != null) setState(() => _errors = {..._errors, field: null});
+  }
+
+  /// Checks 600 ms after typing stops whether the email or phone already has an account, so the owner can log in
+  /// instead of filling in the rest of the form. Only the latest answer is shown; the server checks again on sign-up.
+  void _onAccountField(String field) {
+    _clear(field);
+    _accountDebounce?.cancel();
+    final email = _email.text.trim();
+    final digits = _phone.text.replaceAll(RegExp(r'\D'), '');
+    final checkEmail = _emailPattern.hasMatch(email);
+    final checkPhone = digits.length >= 7 && digits.length <= 12;
+    if (!checkEmail && !checkPhone) return;
+    _accountDebounce = Timer(const Duration(milliseconds: 600), () async {
+      final request = ++_accountRequest;
+      try {
+        final result = await ref.read(authRepositoryProvider).accountAvailability(
+              email: checkEmail ? email : null,
+              phone: checkPhone ? PhoneField.e164(_code, _phone.text) : null,
+            );
+        if (!mounted || request != _accountRequest) return;
+        setState(() {
+          final errors = {..._errors};
+          for (final (key, message, checked) in [('email', result.email, checkEmail), ('phone', result.phone, checkPhone)]) {
+            if (message != null) {
+              errors[key] = _taken[key] = message;
+            } else if (checked && _taken.containsKey(key) && errors[key] == _taken.remove(key)) {
+              errors[key] = null;
+            }
+          }
+          _errors = errors;
+        });
+      } on ApiError {
+        // The check is only a help: sign-up still refuses a used email or phone.
+      }
+    });
   }
 
   /// Checks the link 400 ms after typing stops; only the latest answer is shown.
@@ -103,6 +152,8 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
             phone: PhoneField.e164(_code, _phone.text),
             password: _password.text,
             locale: Localizations.localeOf(context).languageCode,
+            currencyCode: _currency,
+            timeZone: deviceTimeZone(),
           );
     } on ApiError catch (e) {
       if (!mounted) return;
@@ -111,6 +162,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
         'email': e.field('email'),
         'phone': e.field('phone'),
         'password': e.field('password'),
+        'currencyCode': e.field('currencyCode'),
       };
       setState(() => _errors = fields);
       if (fields.values.every((v) => v == null)) {
@@ -131,11 +183,11 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
         : [t.strengthTooShort, t.strengthWeak, t.strengthOkay, t.strengthGood, t.strengthStrong][strength];
 
     return Scaffold(
-      appBar: AppBar(leading: BackButton(onPressed: () => context.go('/'))),
+      appBar: AuthHeader(onBack: () => context.go('/'), wordmark: const BrandLockup(size: 20), action: const LanguageToggle()),
       body: SafeArea(
         child: AutofillGroup(
           child: ListView(
-            padding: const EdgeInsets.fromLTRB(24, 8, 24, 32),
+            padding: const EdgeInsets.fromLTRB(24, 18, 24, 32),
             children: [
               FormTitle(title: t.signupTitle, subtitle: t.signupSubtitle),
               const SizedBox(height: 24),
@@ -146,22 +198,37 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 hint: t.businessNameHint,
                 error: _errors['businessName'],
                 autofillHints: const [AutofillHints.organizationName],
+                icon: Icons.storefront_outlined,
                 onChanged: _onName,
               ),
               if (_slug != null) ...[
-                const SizedBox(height: 6),
-                Row(children: [
-                  Expanded(
-                    child: Text('${Brand.domain}/${_slug!.slug}',
-                        textDirection: TextDirection.ltr, style: TextStyle(color: BrandColors.muted), overflow: TextOverflow.ellipsis),
+                const SizedBox(height: 8),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: (_slug!.available ? BrandColors.live : BrandColors.highlight).withValues(alpha: 0.08),
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  Text(
-                    _slug!.available ? t.linkAvailable : t.linkTaken,
-                    style: TextStyle(fontWeight: FontWeight.w600, color: _slug!.available ? BrandColors.primary2 : BrandColors.highlight),
-                  ),
-                ]),
+                  child: Row(children: [
+                    Icon(Icons.link_rounded, size: 17, color: BrandColors.muted),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text('${Brand.domain}/${_slug!.slug}',
+                          textDirection: TextDirection.ltr,
+                          style: TextStyle(color: BrandColors.ink, fontWeight: FontWeight.w600, fontSize: 13.5),
+                          overflow: TextOverflow.ellipsis),
+                    ),
+                    Icon(_slug!.available ? Icons.check_circle_rounded : Icons.cancel_rounded,
+                        size: 16, color: _slug!.available ? BrandColors.live : BrandColors.highlight),
+                    const SizedBox(width: 4),
+                    Text(
+                      _slug!.available ? t.linkAvailable : t.linkTaken,
+                      style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13, color: _slug!.available ? BrandColors.live : BrandColors.highlight),
+                    ),
+                  ]),
+                ),
                 if (!_slug!.available && _slug!.message != null)
-                  Padding(padding: const EdgeInsets.only(top: 4), child: Text(_slug!.message!, style: TextStyle(color: BrandColors.highlight, fontSize: 13))),
+                  Padding(padding: const EdgeInsets.only(top: 6), child: Text(_slug!.message!, style: TextStyle(color: BrandColors.highlight, fontSize: 13))),
               ],
               const SizedBox(height: 16),
               LabeledField(
@@ -172,16 +239,34 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 error: _errors['email'],
                 keyboardType: TextInputType.emailAddress,
                 autofillHints: const [AutofillHints.email],
-                onChanged: (_) => _clear('email'),
+                icon: Icons.mail_outline_rounded,
+                onChanged: (_) => _onAccountField('email'),
               ),
               const SizedBox(height: 16),
               PhoneField(
                 label: t.phone,
                 controller: _phone,
                 code: _code,
-                onCode: (c) => setState(() => _code = c),
+                onCode: (c) {
+                  setState(() => _code = c);
+                  _onAccountField('phone');
+                },
                 error: _errors['phone'],
-                onChanged: (_) => _clear('phone'),
+                onChanged: (_) => _onAccountField('phone'),
+              ),
+              const SizedBox(height: 16),
+              CurrencyRow(
+                code: _currency,
+                help: t.currencyHelp,
+                error: _errors['currencyCode'],
+                onTap: () async {
+                  final picked = await showCurrencyPicker(context, selected: _currency);
+                  if (picked == null || !mounted) return;
+                  setState(() {
+                    _currency = picked;
+                    _errors = {..._errors, 'currencyCode': null};
+                  });
+                },
               ),
               const SizedBox(height: 16),
               PasswordField(
@@ -197,8 +282,8 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 for (var i = 0; i < 4; i++)
                   Expanded(
                     child: Container(
-                      height: 4,
-                      margin: EdgeInsetsDirectional.only(end: i < 3 ? 5 : 0),
+                      height: 5,
+                      margin: EdgeInsetsDirectional.only(end: i < 3 ? 6 : 0),
                       decoration: BoxDecoration(
                         color: i < strength ? strengthColors[strength] : BrandColors.line,
                         borderRadius: BorderRadius.circular(4),

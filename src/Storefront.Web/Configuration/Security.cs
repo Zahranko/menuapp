@@ -123,7 +123,7 @@ public static class Security
         // Redirecting a POST would send the password or token over plain HTTP a second time; refuse instead.
         context.Response.StatusCode = StatusCodes.Status400BadRequest;
         await context.Response.WriteAsJsonAsync(
-            new ProblemDetails { Status = StatusCodes.Status400BadRequest, Title = "Use HTTPS." },
+            new ProblemDetails { Status = StatusCodes.Status400BadRequest, Title = ApiLocalization.Text("Use HTTPS.") },
             options: null,
             contentType: "application/problem+json");
     }

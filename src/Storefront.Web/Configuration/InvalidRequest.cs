@@ -14,6 +14,8 @@ public static class InvalidRequest
             Type = "https://httpstatuses.io/400",
         };
         problem.Extensions["code"] = "request.invalid";
+        // Model-binding messages are written for developers; Arabic owners get a plain "check this value" instead.
+        ApiLocalization.Localize(problem, "request.invalid", unknownFieldMessage: "Check this value.");
         return new BadRequestObjectResult(problem) { ContentTypes = { "application/problem+json" } };
     }
 }

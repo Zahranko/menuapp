@@ -1,0 +1,107 @@
+/*
+ * Couture's own layout options (manifest "signature", _kit/signatures.ts):
+ *   hero.variant "runway"  a runway: a spotlight from above, a fine center line and the words set wide and centered (base: "full")
+ *   menu.layout  "edit"    an editorial edit: large photos numbered in Roman numerals with italic serif captions (base: "large")
+ */
+
+/* ---------- runway ---------- */
+[data-template="couture"] .kit-hv.kit-hv[data-sig~="runway"] {
+  text-align: center;
+  & > .kit-sig-art {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+      linear-gradient(color-mix(in srgb, var(--k-acc) 70%, #fff) 0 0) 50% 0 / 1px 34% no-repeat,
+      radial-gradient(ellipse 60% 46% at 50% 0, rgb(255 255 255 / 0.28), transparent 70%);
+    pointer-events: none;
+  }
+  & .kit-hv-in {
+    position: relative;
+    z-index: 1;
+  }
+  & .kit-hv-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-inline: auto;
+    text-align: center;
+  }
+  & :is(.kit-hv-title, .kit-hv-eyebrow) {
+    text-align: center;
+  }
+  & .kit-hv-eyebrow {
+    justify-content: center;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+  }
+  & .kit-hv-title {
+    font-weight: 400;
+    letter-spacing: 0.04em;
+  }
+  & .kit-hv-lede {
+    margin-inline: auto;
+  }
+  & :is(.kit-hv-actions, .kit-hv-meta) {
+    justify-content: center;
+  }
+  & .kit-hv-btn {
+    border-radius: 0;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+}
+
+/* ---------- the edit ---------- */
+[data-template="couture"] .kit-mn.kit-mn.kit-mn[data-sig~="edit"] {
+  & .kit-mn-list {
+    counter-reset: couture-edit;
+    gap: 38px;
+  }
+  & .kit-mn-li {
+    counter-increment: couture-edit;
+  }
+  & .kit-mn-item {
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+    text-align: center;
+  }
+  & .kit-mn-item .kit-mn-media {
+    overflow: hidden;
+    border-radius: 999px 999px 0 0;
+  }
+  & .kit-mn-text {
+    padding-top: 14px;
+  }
+  & .kit-mn-text::before {
+    content: counter(couture-edit, upper-roman);
+    display: block;
+    color: var(--k-acc-text);
+    font: italic 400 18px/1.2 var(--k-fd);
+  }
+  & .kit-mn-head {
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  & .kit-mn-dots {
+    display: none;
+  }
+  & .kit-mn-name {
+    font-family: var(--k-fd);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.3em;
+  }
+  & .kit-mn-price {
+    font-weight: 400;
+    letter-spacing: 0.12em;
+  }
+  & .kit-mn-tags {
+    justify-content: center;
+  }
+}

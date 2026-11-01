@@ -2,9 +2,11 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using Microsoft.Extensions.Options;
 using Storefront.Application.Abstractions;
+using Storefront.Application.Billing;
 using Storefront.Application.Common;
 using Storefront.Application.Templates;
 using Storefront.Domain.Sites;
+using Storefront.Domain.Templates;
 
 namespace Storefront.Application.Sites;
 
@@ -33,16 +35,31 @@ internal static class SiteErrors
 {
     public static readonly Error NotFound = Error.NotFound("site.notFound", "Site not found.");
     public static readonly Error TemplateNotFound = Error.Validation("template.notFound", "Choose a template from the gallery.", "templateId");
+    public static readonly Error TemplateNeedsPro = Error.Forbidden("template.pro", "This template is part of the Pro plan. Upgrade to Pro to use it.");
+    public static readonly Error TemplateNeedsBasic = Error.Forbidden("template.basic", "This template is part of the Basic plan. Upgrade to Basic to use it.");
+
+    /// <summary>Why the business's plan can't use <paramref name="template"/>, or null when it can.</summary>
+    public static async Task<Error?> PlanBlocksAsync(Template template, PlanChecker plans, ICurrentUser user, CancellationToken ct) =>
+        user.BusinessId is { } businessId && await plans.CanUseTemplateAsync(businessId, template, ct)
+            ? null
+            : template.IsPro ? TemplateNeedsPro : TemplateNeedsBasic;
 }
 
 /// <summary>Shared lookups for the site handlers.</summary>
-public sealed class SiteContext(ISiteRepository sites, IBusinessRepository businesses, ICurrentUser user, IOptions<BrandOptions> brand)
+public sealed class SiteContext(ISiteRepository sites, IBusinessRepository businesses, ICurrentUser user, SiteLinks links)
 {
     public async Task<(Site? Site, string SiteUrl)> LoadAsync(CancellationToken ct)
     {
+        var (site, url, _) = await LoadWithLocaleAsync(ct);
+        return (site, url);
+    }
+
+    /// <summary>Also the business's language, which picks the Arabic or English template defaults.</summary>
+    public async Task<(Site? Site, string SiteUrl, string Locale)> LoadWithLocaleAsync(CancellationToken ct)
+    {
         var site = await sites.GetForCurrentBusinessAsync(ct);
         var business = user.BusinessId is { } id ? await businesses.GetAsync(id, ct) : null;
-        return (site, business is null ? "" : $"https://{brand.Value.Domain}/{business.Slug.Value}");
+        return (site, business is null ? "" : links.Site(business.Slug.Value), business?.Locale ?? "en");
     }
 }
 
@@ -57,12 +74,15 @@ public sealed class GetSiteHandler(SiteContext context)
 
 public sealed record ChangeTemplate(string TemplateId);
 
-/// <summary>Switching template resets the draft to that template's defaults; the live site changes only on publish.</summary>
-public sealed class ChangeTemplateHandler(SiteContext context, ITemplateRepository templates, IUnitOfWork uow, IAuditLog audit, IClock clock)
+/// <summary>
+/// Switching template resets the draft to that template's defaults (with its Arabic texts for an Arabic business);
+/// the live site changes only on publish. Pro templates need a live Pro plan; Basic templates are closed to the Lite plan.
+/// </summary>
+public sealed class ChangeTemplateHandler(SiteContext context, ITemplateRepository templates, PlanChecker plans, ICurrentUser user, IUnitOfWork uow, IAuditLog audit, IClock clock)
 {
     public async Task<Result<SiteDto>> Handle(ChangeTemplate cmd, CancellationToken ct)
     {
-        var (site, url) = await context.LoadAsync(ct);
+        var (site, url, locale) = await context.LoadWithLocaleAsync(ct);
         if (site is null)
         {
             return SiteErrors.NotFound;
@@ -74,7 +94,12 @@ public sealed class ChangeTemplateHandler(SiteContext context, ITemplateReposito
             return SiteErrors.TemplateNotFound;
         }
 
-        site.ChangeTemplate(template.Id, template.DefaultSettings, clock.UtcNow);
+        if (await SiteErrors.PlanBlocksAsync(template, plans, user, ct) is { } blocked)
+        {
+            return blocked;
+        }
+
+        site.ChangeTemplate(template.Id, TemplateDefaults.JsonFor(template, locale), clock.UtcNow);
         audit.Record("template", nameof(Site), template.Id);
         await uow.SaveChangesAsync(ct);
         return SiteDto.From(site, url);
@@ -87,7 +112,7 @@ public sealed class SaveDraftHandler(SiteContext context, ITemplateRepository te
 {
     public async Task<Result<SiteDto>> Handle(SaveDraft cmd, CancellationToken ct)
     {
-        var (site, url) = await context.LoadAsync(ct);
+        var (site, url, locale) = await context.LoadWithLocaleAsync(ct);
         if (site is null || user.BusinessId is not { } businessId)
         {
             return SiteErrors.NotFound;
@@ -104,7 +129,8 @@ public sealed class SaveDraftHandler(SiteContext context, ITemplateRepository te
             return SiteErrors.TemplateNotFound;
         }
 
-        var defaults = (JsonObject)JsonNode.Parse(template.DefaultSettings)!;
+        // Missing keys take the defaults the business started with (Arabic texts for an Arabic business).
+        var defaults = TemplateDefaults.For(template, locale);
         var (valid, errors) = await TemplateSchema.Parse(template.SettingsSchema)
             .ValidateAsync(settings, defaults, imageUrl => media.UrlBelongsToBusinessAsync(businessId, imageUrl, ct));
         if (valid is null)
@@ -118,7 +144,11 @@ public sealed class SaveDraftHandler(SiteContext context, ITemplateRepository te
     }
 }
 
-public sealed class PublishSiteHandler(SiteContext context, IUnitOfWork uow, IAuditLog audit, IClock clock)
+/// <summary>
+/// Makes the draft live. A template above the business's plan can't be published; a site already live on one keeps rendering
+/// if the business later moves to a smaller plan (only choosing and publishing are blocked).
+/// </summary>
+public sealed class PublishSiteHandler(SiteContext context, ITemplateRepository templates, PlanChecker plans, ICurrentUser user, IUnitOfWork uow, IAuditLog audit, IClock clock)
 {
     public async Task<Result<SiteDto>> Handle(CancellationToken ct)
     {
@@ -126,6 +156,12 @@ public sealed class PublishSiteHandler(SiteContext context, IUnitOfWork uow, IAu
         if (site is null)
         {
             return SiteErrors.NotFound;
+        }
+
+        var template = await templates.GetAsync(site.TemplateId, ct);
+        if (template is not null && await SiteErrors.PlanBlocksAsync(template, plans, user, ct) is { } blocked)
+        {
+            return blocked;
         }
 
         site.Publish(clock.UtcNow);
@@ -137,7 +173,7 @@ public sealed class PublishSiteHandler(SiteContext context, IUnitOfWork uow, IAu
 
 public sealed record PreviewLink(string Token, string PreviewUrl, DateTimeOffset ExpiresAt);
 
-public sealed class CreatePreviewTokenHandler(IPreviewTokens tokens, ICurrentUser user, IClock clock, IOptions<BrandOptions> brand)
+public sealed class CreatePreviewTokenHandler(IPreviewTokens tokens, ICurrentUser user, IClock clock, SiteLinks links)
 {
     public static readonly TimeSpan Lifetime = TimeSpan.FromMinutes(30);
 
@@ -150,6 +186,6 @@ public sealed class CreatePreviewTokenHandler(IPreviewTokens tokens, ICurrentUse
 
         var expires = clock.UtcNow + Lifetime;
         var token = tokens.Create(businessId, expires);
-        return new PreviewLink(token, $"https://{brand.Value.Domain}/_preview/{token}", expires);
+        return new PreviewLink(token, links.Preview(token), expires);
     }
 }

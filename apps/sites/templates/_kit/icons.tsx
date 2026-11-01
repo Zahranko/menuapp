@@ -40,6 +40,29 @@ export const Instagram = (p: P) => (
     <circle cx="13" cy="5" r=".8" fill="currentColor" />
   </svg>
 );
+/* Social networks, in the same line style as Instagram and WhatsApp (brand marks drawn as outlines). */
+export const Facebook = (p: P) => (
+  <svg {...base(18)} strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" {...p}>
+    <circle cx="9" cy="9" r="7.5" />
+    <path d="M11.7 5.7h-1.2a2 2 0 0 0-2 2v8.7M6.4 9.7h4.8" />
+  </svg>
+);
+export const TikTok = (p: P) => (
+  <svg {...base(18)} strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" {...p}>
+    <path d="M10 2.5v8.8a2.8 2.8 0 1 1-2.8-2.8" />
+    <path d="M10 2.5c.3 2.1 1.8 3.6 4 3.8" />
+  </svg>
+);
+export const Snapchat = (p: P) => (
+  <svg {...base(18)} strokeWidth={1.6} strokeLinejoin="round" {...p}>
+    <path d="M9 2.4c-2.5 0-4 1.9-4 4.3v1.7l-1.3.4c-.4.2-.4.7.1.8l1 .3c-.4 1.2-1.4 2.3-2.6 2.8-.3.1-.2.5.1.6.7.2 1.3.3 1.5.7l.2.7c.1.2.3.3.5.2.6-.1 1.4-.2 2.1.2.8.5 1.3 1.1 2.4 1.1s1.6-.6 2.4-1.1c.7-.4 1.5-.3 2.1-.2.2.1.4 0 .5-.2l.2-.7c.2-.4.8-.5 1.5-.7.3-.1.4-.5.1-.6-1.2-.5-2.2-1.6-2.6-2.8l1-.3c.5-.1.5-.6.1-.8L13 8.4V6.7c0-2.4-1.5-4.3-4-4.3z" />
+  </svg>
+);
+export const Phone = (p: P) => (
+  <svg {...base(18)} strokeWidth={1.7} strokeLinejoin="round" {...p}>
+    <path d="M4.6 2.5h2.5l1.3 3.3-1.6 1a8 8 0 0 0 4.4 4.4l1-1.6 3.3 1.3v2.5a1.6 1.6 0 0 1-1.7 1.6A12.6 12.6 0 0 1 3 4.2a1.6 1.6 0 0 1 1.6-1.7z" />
+  </svg>
+);
 export const Mail = (p: P) => (
   <svg {...base(18)} strokeWidth={1.7} {...p}>
     <rect x="2" y="4" width="14" height="10" rx="2" />
@@ -65,5 +88,31 @@ export const Close = (p: P) => (
 export const Arrow = (p: P) => (
   <svg {...base(16)} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" {...p}>
     <path d="M3 8h10M9 4l4 4-4 4" />
+  </svg>
+);
+export const Spark = (p: P) => (
+  <svg {...base(20)} strokeWidth={1.7} strokeLinejoin="round" {...p}>
+    <path d="M10 2.5l1.9 5.6 5.6 1.9-5.6 1.9L10 17.5l-1.9-5.6L2.5 10l5.6-1.9z" />
+  </svg>
+);
+export const Heart = (p: P) => (
+  <svg {...base(20)} strokeWidth={1.7} strokeLinejoin="round" {...p}>
+    <path d="M10 16.5S3 12.2 3 7.6A3.6 3.6 0 0 1 10 6a3.6 3.6 0 0 1 7 1.6c0 4.6-7 8.9-7 8.9z" />
+  </svg>
+);
+export const Leaf = (p: P) => (
+  <svg {...base(20)} strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" {...p}>
+    <path d="M4 16c0-7 5-12 12-12 0 7-5 12-12 12zM4 16l7-7" />
+  </svg>
+);
+export const Check = (p: P) => (
+  <svg {...base(20)} strokeWidth={1.9} strokeLinecap="round" strokeLinejoin="round" {...p}>
+    <circle cx="10" cy="10" r="7.5" />
+    <path d="M6.8 10.2l2.2 2.2 4.2-4.6" />
+  </svg>
+);
+export const Star = (p: P) => (
+  <svg {...base(20)} strokeWidth={1.5} strokeLinejoin="round" {...p}>
+    <path d="M10 2.6l2.3 4.7 5.2.8-3.8 3.6.9 5.1L10 14.4l-4.6 2.4.9-5.1L2.5 8.1l5.2-.8z" fill="currentColor" />
   </svg>
 );

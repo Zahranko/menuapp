@@ -10,7 +10,7 @@ export function Story({ ctx }: { ctx: SouqContext }) {
     <section className="block" id="story" data-section="story" aria-labelledby="story-title">
       <div className={`wrap about`}>
         {picture && (
-          <div className="aboutMedia">
+          <div data-k="photo" className="aboutMedia">
             <Picture src={picture} sizes="(min-width: 760px) 50vw, 100vw" />
             {since && (
               <div className="since">

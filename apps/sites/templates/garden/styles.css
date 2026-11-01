@@ -1,5 +1,15 @@
 /* Template 013 "Garden": soft blobs, leaves and waves. Cards lead with diet tags so people find what they can eat. */
 
+@import "../_kit/logo.css";
+@import "../_kit/options.css";
+@import "../_kit/cards.css";
+@import "../_kit/hero.css";
+@import "../_kit/layout.css";
+@import "../_kit/menu.css";
+@import "../_kit/sections.css";
+@import "../_kit/style.css";
+@import "./signature.css";
+
 .t-garden {
   container: page / inline-size;
   font-size: 15.5px;
@@ -146,7 +156,7 @@
     margin-bottom: -1px;
   }
   .menu-inner {
-    padding: 14px 18px 40px;
+    padding: calc(14px * var(--kit-space, 1)) 18px calc(40px * var(--kit-space, 1));
     background: var(--blob);
   }
   .chips {
@@ -268,7 +278,7 @@
   /* story */
   .story {
     position: relative;
-    padding: 60px 24px;
+    padding: calc(60px * var(--kit-space, 1)) 24px;
     text-align: center;
     scroll-margin-top: 10px;
   }
@@ -286,7 +296,7 @@
 
   /* visit */
   .visit {
-    padding: 10px 18px 40px;
+    padding: calc(10px * var(--kit-space, 1)) 18px calc(40px * var(--kit-space, 1));
     scroll-margin-top: 10px;
   }
   .visit > h2 {
@@ -311,8 +321,17 @@
     margin-top: 18px;
   }
 
+  /* Social accounts the owner shows (_kit/options.css draws the round icon links). */
+  .foot-social {
+    justify-content: flex-start;
+    margin-bottom: 16px;
+    color: var(--acc-text);
+  }
+  .foot-social a {
+    border-color: color-mix(in srgb, currentColor 40%, transparent);
+  }
   .foot {
-    padding: 20px 18px 30px;
+    padding: calc(20px * var(--kit-space, 1)) 18px calc(30px * var(--kit-space, 1));
     color: var(--muted);
   }
 
@@ -342,7 +361,7 @@
       height: 60px;
     }
     .menu-inner {
-      padding: 20px max(36px, calc((100cqi - 1160px) / 2)) 64px;
+      padding: calc(20px * var(--kit-space, 1)) max(36px, calc((100cqi - 1160px) / 2)) calc(64px * var(--kit-space, 1));
     }
     .chips {
       justify-content: center;

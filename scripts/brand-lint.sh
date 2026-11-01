@@ -10,7 +10,7 @@ dirs=()
 for d in src apps tests; do [ -d "$d" ] && dirs+=("$d"); done
 if [ ${#dirs[@]} -eq 0 ]; then echo "brand-lint: no source folders yet, nothing to check"; exit 0; fi
 
-# Unique, case-insensitive terms; a term that contains a shorter one (sufrly.com contains sufrly) is covered by it.
+# Unique, case-insensitive terms; a term that contains a shorter one (example.com contains example) is covered by it.
 mapfile -t terms < <(python3 -c '
 import json
 b=json.load(open("brand.json"))

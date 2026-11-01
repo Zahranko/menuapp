@@ -1,5 +1,6 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
+import { brand } from "@/lib/brand";
 import { fixtureFor } from "@/lib/fixtures";
 import type { PublicSite } from "@/lib/types";
 import { contrast } from "../_kit/color";
@@ -7,7 +8,7 @@ import SouqTemplate from "./Template";
 import { THEME_NAMES, souqVars } from "./theme";
 import manifest from "./manifest.json";
 
-const now = new Date("2026-10-07T09:00:00Z"); // a Wednesday in Amman
+const now = new Date("2026-10-07T09:00:00Z"); // a Wednesday morning in UTC, still Tuesday night in Honolulu
 
 function render(settings: Record<string, unknown> = {}, overrides: Partial<PublicSite> = {}) {
   const site = fixtureFor("souq", overrides);
@@ -23,7 +24,7 @@ describe("Souq", () => {
     "renders the sample site in %s / %s / %s",
     (theme, font, layout) => {
       const html = render({ theme, font, "hero.layout": layout });
-      expect(html).toContain("Vanilla Menu");
+      expect(html).toContain(brand.brandName);
       expect(html).toContain("Kunafa cheesecake");
     },
   );
@@ -48,6 +49,11 @@ describe("Souq", () => {
 
   it("highlights today in the business's time zone", () => {
     expect(render()).toMatch(/Wednesday<span[^>]*>Today<\/span>/);
+    const site = fixtureFor("souq");
+    site.business.timeZone = "Pacific/Honolulu";
+    const html = renderToStaticMarkup(<SouqTemplate site={site} preview={false} now={now} />);
+    expect(html).toMatch(/Tuesday<span[^>]*>Today<\/span>/);
+    expect(html).not.toMatch(/Wednesday<span[^>]*>Today<\/span>/);
   });
 
   it("speaks Arabic for Arabic businesses", () => {
@@ -55,7 +61,7 @@ describe("Souq", () => {
     site.business.locale = "ar";
     const html = renderToStaticMarkup(<SouqTemplate site={site} preview={false} now={now} />);
     expect(html).toContain("القائمة والأسعار");
-    expect(html).toContain("د.أ");
+    expect(html).toContain("$3.50");
   });
 
   it("marks previews", () => {

@@ -1,0 +1,255 @@
+/*
+ * The hero slider and the owner's hero options, shared by every template (each styles.css imports this file).
+ * HeroSlider (.kit-slider) fills the template's own positioned photo box, so the box keeps its size and shape (an arch,
+ * a blob, a full-screen backdrop) and nothing moves when photos change. Templates mark:
+ *   .kit-hero        the opening section;   .kit-hero-text  its text block;   .kit-hero-media  its photo box
+ *   .kit-hero-band   the photo strip of templates that had no photo at the top (HeroBand)
+ * The root's data attributes (templates/_kit/hero.ts) switch on height, darkening and text position only when the owner
+ * changed them, and only templates whose text sits on the photo ("backdrop") offer darkening and text position.
+ */
+
+/* ---------- slider ---------- */
+.kit-slider {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  touch-action: pan-y;
+}
+.kit-slider .kit-slides {
+  position: absolute;
+  inset: 0;
+  /* Its own layer, so the photo on top (z-index below) never covers the template's text over the photos. */
+  isolation: isolate;
+}
+.kit-slider .kit-slide {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+/* Slide: a row of photos that moves along (the other way on right-to-left pages, --kit-dir: -1). */
+.kit-slider[data-transition="slide"] .kit-slides {
+  display: flex;
+  transform: translate3d(calc(var(--kit-i) * -100% * var(--kit-dir)), 0, 0);
+  transition: transform 0.75s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.kit-slider[data-transition="slide"] .kit-slide {
+  position: relative;
+  inset: auto;
+  flex: 0 0 100%;
+  height: 100%;
+}
+/* Fade (and fade with a slow zoom): the photos lie on top of each other and the next one fades in. */
+.kit-slider:is([data-transition="fade"], [data-transition="zoom"]) .kit-slide {
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    opacity 1.1s ease,
+    visibility 0s 1.1s;
+}
+.kit-slider:is([data-transition="fade"], [data-transition="zoom"]) .kit-slide.is-active {
+  z-index: 1;
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 1.1s ease;
+}
+.kit-slider[data-transition="zoom"] .kit-slide.is-active img {
+  animation: kit-kenburns calc(var(--kit-interval, 5000ms) + 1500ms) ease-out both;
+}
+.kit-slider[data-transition="zoom"] .kit-slide:nth-child(even) img {
+  --kit-kb-x: 2%;
+  transform-origin: 30% 60%;
+}
+@keyframes kit-kenburns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.12) translate3d(var(--kit-kb-x, -2%), -1%, 0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .kit-slider .kit-slides,
+  .kit-slider .kit-slide {
+    transition: none !important;
+  }
+  .kit-slider .kit-slide img {
+    animation: none !important;
+  }
+}
+
+/* The buttons: one dark pill, centered at the foot of a framed photo, or in the top corner of a photo with text on it. */
+.kit-slider .kit-slider-bar {
+  position: absolute;
+  z-index: 3;
+  bottom: 12px;
+  inset-inline: 0;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  width: max-content;
+  max-width: calc(100% - 24px);
+  margin-inline: auto;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgb(14 14 14 / 0.62);
+  color: #fff;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+/* Text on the photo usually sits low, so there the buttons go to the top corner. */
+.kit-slider.is-corner .kit-slider-bar {
+  top: 16px;
+  bottom: auto;
+  inset-inline: auto 16px;
+  margin: 0;
+}
+.kit-slider .kit-slider-bar .kit-slider-btn,
+.kit-slider .kit-slider-bar .kit-slider-dot {
+  display: inline-grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  box-shadow: none;
+  color: inherit;
+  cursor: pointer;
+}
+.kit-slider .kit-slider-bar .kit-slider-btn {
+  width: 36px;
+  height: 36px;
+}
+.kit-slider .kit-slider-bar .kit-slider-btn:hover {
+  background: rgb(255 255 255 / 0.18);
+}
+.kit-slider .kit-slider-bar .kit-slider-btn svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+/* The chevron points to the start of the line: "next" turns it round, and right-to-left pages mirror both. */
+.kit-slider .kit-slider-next svg {
+  transform: scaleX(-1);
+}
+.kit-slider:dir(rtl) .kit-slider-prev svg {
+  transform: scaleX(-1);
+}
+.kit-slider:dir(rtl) .kit-slider-next svg {
+  transform: none;
+}
+.kit-slider .kit-slider-dots {
+  display: flex;
+  align-items: center;
+}
+.kit-slider .kit-slider-bar .kit-slider-dot {
+  width: 24px;
+  height: 24px;
+}
+.kit-slider .kit-slider-dot::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.62);
+  transition: width 0.3s ease;
+}
+.kit-slider .kit-slider-dot[aria-current="true"]::before {
+  width: 18px;
+  background: #fff;
+}
+.kit-slider .kit-slider-bar :is(.kit-slider-btn, .kit-slider-dot):focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: -2px;
+  box-shadow: 0 0 0 3px rgb(0 0 0 / 0.7);
+}
+
+/* ---------- photo strip (templates that had no photo at the top) ---------- */
+.kit-hero-band {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  max-width: 1040px;
+  height: clamp(220px, 46vw, 440px);
+  margin: 22px auto 6px;
+  overflow: hidden;
+  border-radius: var(--kit-band-r, 14px);
+}
+.kit-hero-band > img {
+  border-radius: inherit;
+}
+[data-hero-height="short"] .kit-hero-band {
+  height: clamp(170px, 28vw, 280px);
+}
+[data-hero-height="medium"] .kit-hero-band {
+  height: clamp(260px, 56vw, 540px);
+}
+[data-hero-height="full"] .kit-hero-band {
+  height: max(320px, calc(100svh - 96px));
+}
+
+/* ---------- height (text on the photo) ---------- */
+[data-hero-height="short"] .kit-hero {
+  height: auto !important;
+  min-height: clamp(320px, 48svh, 480px) !important;
+}
+[data-hero-height="medium"] .kit-hero {
+  height: auto !important;
+  min-height: clamp(440px, 70svh, 760px) !important;
+}
+[data-hero-height="full"] .kit-hero {
+  height: auto !important;
+  min-height: 100svh !important;
+}
+
+/* ---------- darkening ---------- */
+[data-hero-overlay="light"] {
+  --kit-shade: 0.25;
+}
+[data-hero-overlay="medium"] {
+  --kit-shade: 0.45;
+}
+[data-hero-overlay="strong"] {
+  --kit-shade: 0.65;
+}
+/* The photos themselves get darker; the template's own shading (a gradient under the text) stays on top of them. */
+[data-hero-overlay] .kit-hero .kit-hero-media img {
+  filter: brightness(calc(1 - var(--kit-shade)));
+}
+
+/* ---------- text position ---------- */
+[data-hero-text] .kit-hero {
+  display: flex !important;
+  flex-direction: column !important;
+}
+[data-hero-text] .kit-hero .kit-hero-text {
+  width: 100%;
+  max-width: min(100%, 760px);
+}
+[data-hero-text="start"] .kit-hero {
+  justify-content: center !important;
+  align-items: flex-start !important;
+  text-align: start !important;
+}
+[data-hero-text="center"] .kit-hero {
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+}
+[data-hero-text="center"] .kit-hero .kit-hero-text {
+  margin-inline: auto !important;
+}
+[data-hero-text="center"] .kit-hero .kit-hero-text :is(h1, p) {
+  margin-inline: auto;
+}
+[data-hero-text="center"] .kit-hero .kit-hero-text > :is(div, nav, ul) {
+  justify-content: center;
+}
+[data-hero-text="bottom"] .kit-hero {
+  justify-content: flex-end !important;
+  align-items: flex-start !important;
+  text-align: start !important;
+}
