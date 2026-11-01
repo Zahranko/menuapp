@@ -58,7 +58,7 @@ public sealed record RequestDomain(string Domain);
 /// <summary>Pro owners ask for their own domain; support sends the DNS steps (see the back office).</summary>
 public sealed class RequestDomainHandler(
     IDomainRepository domains,
-    ProPlanChecker plans,
+    PlanChecker plans,
     IBusinessRepository businesses,
     IEmailSender email,
     ICurrentUser user,

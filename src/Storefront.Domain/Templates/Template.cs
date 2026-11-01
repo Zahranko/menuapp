@@ -32,7 +32,10 @@ public sealed class Template
     public string Looks { get; private set; } = "[]";
     public int Version { get; private set; }
     public bool IsActive { get; private set; } = true;
-    /// <summary><see cref="TemplateTier.Basic"/> (every plan) or <see cref="TemplateTier.Pro"/> (Pro plan only).</summary>
+    /// <summary>
+    /// <see cref="TemplateTier.Lite"/> (every plan, the menu sheets), <see cref="TemplateTier.Basic"/> (Basic and Pro)
+    /// or <see cref="TemplateTier.Pro"/> (Pro plan only).
+    /// </summary>
     public string Tier { get; private set; } = TemplateTier.Basic;
 
     public bool IsPro => Tier == TemplateTier.Pro;
@@ -82,19 +85,29 @@ public sealed class Template
 
 public static class TemplateTier
 {
+    public const string Lite = "lite";
     public const string Basic = "basic";
     public const string Pro = "pro";
     public const int MaxLength = 10;
 
-    /// <summary>Missing means basic; anything other than basic or pro is a broken manifest.</summary>
+    /// <summary>Missing means basic; anything other than lite, basic or pro is a broken manifest.</summary>
     public static string Normalize(string? tier)
     {
         var value = (tier ?? "").Trim().ToLowerInvariant();
         return value switch
         {
             "" or Basic => Basic,
+            Lite => Lite,
             Pro => Pro,
-            _ => throw new DomainException("template.tier", "Template tier must be basic or pro.", "tier"),
+            _ => throw new DomainException("template.tier", "Template tier must be lite, basic or pro.", "tier"),
         };
     }
+
+    /// <summary>Lite 0, Basic 1, Pro 2: the same ranks as the plans, so a plan opens every tier up to its own.</summary>
+    public static int RankOf(string tier) => tier switch
+    {
+        Lite => 0,
+        Pro => 2,
+        _ => 1,
+    };
 }

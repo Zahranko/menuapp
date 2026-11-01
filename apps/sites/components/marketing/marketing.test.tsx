@@ -53,13 +53,14 @@ describe.each(LANGS)("home page (%s)", (lang) => {
     }
   });
 
-  it("shows both plans with their prices", () => {
+  it("shows the three plans with their prices", () => {
     render(page(lang, "home"));
     const plans = document.querySelectorAll("[data-plan]");
-    expect([...plans].map((p) => p.getAttribute("data-plan"))).toEqual(["basic", "pro"]);
-    expect(plans[0].textContent).toContain(lang === "ar" ? "5$" : "$5");
-    expect(plans[1].textContent).toContain(lang === "ar" ? "10$" : "$10");
-    expect(plans[0].textContent).toContain(`${brand.domain}/yourname`);
+    expect([...plans].map((p) => p.getAttribute("data-plan"))).toEqual(["lite", "basic", "pro"]);
+    expect(plans[0].textContent).toContain(lang === "ar" ? "2$" : "$2");
+    expect(plans[1].textContent).toContain(lang === "ar" ? "5$" : "$5");
+    expect(plans[2].textContent).toContain(lang === "ar" ? "10$" : "$10");
+    expect(plans[1].textContent).toContain(`${brand.domain}/yourname`);
   });
 
   it("links to the same page in the other language", () => {

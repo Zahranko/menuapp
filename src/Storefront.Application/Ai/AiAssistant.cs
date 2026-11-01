@@ -44,10 +44,11 @@ public interface IAiAssistant
 public sealed class AiOptions
 {
     public const string SectionName = "Ai";
+    public const int DefaultLiteLimit = 10;
     public const int DefaultBasicLimit = 30;
     public const int DefaultProLimit = 100;
 
-    /// <summary>Successful AI answers per business and calendar month, keyed by plan code ("basic", "pro").</summary>
+    /// <summary>Successful AI answers per business and calendar month, keyed by plan code ("lite", "basic", "pro").</summary>
     public Dictionary<string, int> MonthlyLimit { get; set; } = new(StringComparer.OrdinalIgnoreCase);
 }
 

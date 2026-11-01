@@ -10,7 +10,7 @@ namespace Storefront.Application.Ai;
 public sealed record AiStatusDto(bool Available, int RemainingThisMonth, int MonthlyLimit);
 
 /// <summary>
-/// The monthly allowance of AI answers per business. Trials and Basic get the Basic allowance; a live (not trialing) Pro plan gets Pro's.
+/// The monthly allowance of AI answers per business. Trials and Basic get the Basic allowance; a live (not trialing) Lite or Pro plan gets its own (10 and 100 by default).
 /// Only successful answers are counted (<see cref="RecordAsync"/> after the answer is checked).
 /// </summary>
 public sealed class AiQuotaChecker(IAiAssistant assistant, IAiUsageRepository usage, IBillingRepository billing, ICurrentUser user, IOptions<AiOptions> options, IClock clock)
@@ -20,12 +20,18 @@ public sealed class AiQuotaChecker(IAiAssistant assistant, IAiUsageRepository us
         var subscription = await billing.GetSubscriptionAsync(businessId, ct);
         var plan = subscription is { IsLive: true } && subscription.Status != SubscriptionStatus.Trialing ? subscription.PlanCode : Plan.Basic;
         var limits = options.Value.MonthlyLimit;
-        if (limits.TryGetValue(plan, out var limit) || limits.TryGetValue(Plan.Basic, out limit))
+        if (limits.TryGetValue(plan, out var limit))
         {
             return Math.Max(0, limit);
         }
 
-        return plan == Plan.Pro ? AiOptions.DefaultProLimit : AiOptions.DefaultBasicLimit;
+        // Lite and Pro have their own defaults; any other unlisted plan gets the Basic allowance.
+        return plan switch
+        {
+            Plan.Pro => AiOptions.DefaultProLimit,
+            Plan.Lite => AiOptions.DefaultLiteLimit,
+            _ => limits.TryGetValue(Plan.Basic, out limit) ? Math.Max(0, limit) : AiOptions.DefaultBasicLimit,
+        };
     }
 
     public async Task<int> RemainingAsync(Guid businessId, CancellationToken ct)

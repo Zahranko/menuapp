@@ -836,5 +836,50 @@
       }
     }
   },
-  "lookUndone": "Back to your design"
+  "lookUndone": "Back to your design",
+  "planLite": "Lite",
+  "liteDetail": "Menu sheets and 10 AI uses a month",
+  "basicDetail": "Every Basic template and 30 AI uses a month",
+  "nowOnLite": "You're on Lite",
+  "upgradeToPlan": "Upgrade to {name}",
+  "@upgradeToPlan": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "switchToPlan": "Switch to {name}",
+  "@switchToPlan": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "upgradeBodyBasic": "{price} per month. Every Basic template opens, and you get 30 AI uses a month.",
+  "@upgradeBodyBasic": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "downgradeLite": "On Lite you can use the menu sheets. Your live site stays as it is, but pick a menu sheet before you publish again.",
+  "basicTemplateTitle": "This template is part of the Basic plan",
+  "basicTemplateBody": "Upgrade to Basic to use {name} and every other Basic template. Your products and prices stay the same.",
+  "@basicTemplateBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "filterSheets": "Menu sheets",
+  "liteTemplatesHint": "On Lite you can use the menu sheets. The other templates come with Basic and Pro.",
+  "aiPhotoTip": "Lay the menu flat in good light, with the whole page in the photo.",
+  "aiReadStepLook": "Looking at your photos",
+  "aiReadStepSections": "Finding your categories",
+  "aiReadStepPrices": "Reading names and prices",
+  "aiReadStepReady": "Putting your menu together"
 }

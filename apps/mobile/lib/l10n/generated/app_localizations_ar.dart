@@ -1436,4 +1436,67 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get lookUndone => 'عاد تصميمك كما كان';
+
+  @override
+  String get planLite => 'لايت';
+
+  @override
+  String get liteDetail => 'قوالب المنيو و10 استخدامات للذكاء الاصطناعي شهريًا';
+
+  @override
+  String get basicDetail =>
+      'كل القوالب الأساسية و30 استخدامًا للذكاء الاصطناعي شهريًا';
+
+  @override
+  String get nowOnLite => 'أنت الآن على باقة لايت';
+
+  @override
+  String upgradeToPlan(String name) {
+    return 'الترقية إلى $name';
+  }
+
+  @override
+  String switchToPlan(String name) {
+    return 'التحويل إلى $name';
+  }
+
+  @override
+  String upgradeBodyBasic(String price) {
+    return '$price شهريًا. تُفتح لك كل القوالب الأساسية و30 استخدامًا للذكاء الاصطناعي شهريًا.';
+  }
+
+  @override
+  String get downgradeLite =>
+      'في باقة لايت تستطيع استخدام قوالب المنيو. موقعك المنشور يبقى كما هو، لكن اختر قالب منيو قبل أن تنشر من جديد.';
+
+  @override
+  String get basicTemplateTitle => 'هذا القالب ضمن الباقة الأساسية';
+
+  @override
+  String basicTemplateBody(String name) {
+    return 'رقِّ إلى الباقة الأساسية لتستخدم $name وكل القوالب الأساسية الأخرى. منتجاتك وأسعارك تبقى كما هي.';
+  }
+
+  @override
+  String get filterSheets => 'قوالب المنيو';
+
+  @override
+  String get liteTemplatesHint =>
+      'في باقة لايت تستطيع استخدام قوالب المنيو. باقي القوالب متاحة في الأساسية والاحترافية.';
+
+  @override
+  String get aiPhotoTip =>
+      'ضع المنيو بشكل مستوٍ في إضاءة جيدة، وخلّي الصفحة كاملة داخل الصورة.';
+
+  @override
+  String get aiReadStepLook => 'نتفحّص صورك';
+
+  @override
+  String get aiReadStepSections => 'نحدّد الأقسام';
+
+  @override
+  String get aiReadStepPrices => 'نقرأ الأسماء والأسعار';
+
+  @override
+  String get aiReadStepReady => 'نجهّز قائمتك';
 }

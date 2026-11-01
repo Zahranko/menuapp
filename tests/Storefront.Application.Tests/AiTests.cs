@@ -792,6 +792,15 @@ public class WriteTextHandlerTests
     }
 
     [Fact]
+    public async Task Lite_gets_ten_answers_a_month_unless_settings_say_otherwise()
+    {
+        var f = new Fixture();
+        f.Usage.Count = 9;
+        Assert.True((await f.Handler(Plan.Lite).Handle(new WriteText(null), CancellationToken.None)).IsSuccess);
+        Assert.Equal("ai.limit", (await f.Handler(Plan.Lite).Handle(new WriteText(null), CancellationToken.None)).Error?.Code);
+    }
+
+    [Fact]
     public async Task Switched_off_means_503_without_asking_the_model()
     {
         var f = new Fixture();

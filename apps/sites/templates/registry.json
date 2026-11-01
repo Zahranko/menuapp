@@ -2405,6 +2405,7 @@
         "description": "منيو مطبوع على ورق كتّان: نص فقط، ونقاط تمتد إلى الأسعار، بعمود أو عمودين."
       },
       "version": 1,
+      "tier": "lite",
       "thumbnail": "/templates/linen/thumbnail.png",
       "sample": "restaurant",
       "looks": [
@@ -10434,6 +10435,7 @@
         "description": "سبّورة مقهى: كتابة بخط اليد، وطبق اليوم، وأقسام منيو داخل إطارات."
       },
       "version": 1,
+      "tier": "lite",
       "thumbnail": "/templates/chalkboard/thumbnail.png",
       "sample": "cafe",
       "looks": [
@@ -16306,6 +16308,7 @@
         "description": "منيو هادئ وبسيط بأرقام كبيرة وخطوط رفيعة وصور مربعة صغيرة."
       },
       "version": 1,
+      "tier": "lite",
       "thumbnail": "/templates/zen/thumbnail.png",
       "sample": "asian",
       "looks": [
@@ -18246,6 +18249,7 @@
         "description": "بطاقة منيو مطوية على مفرش طاولة: الغلاف لطبق اليوم، والأطباق في الداخل."
       },
       "version": 1,
+      "tier": "lite",
       "thumbnail": "/templates/bistro/thumbnail.png",
       "sample": "restaurant",
       "looks": [
@@ -22134,6 +22138,7 @@
         "description": "منيو مطبوع كإيصال صندوق: سطور بخط الآلة الكاتبة، وحواف متعرجة، وباركود."
       },
       "version": 1,
+      "tier": "lite",
       "thumbnail": "/templates/ticket/thumbnail.png",
       "sample": "cafe",
       "looks": [

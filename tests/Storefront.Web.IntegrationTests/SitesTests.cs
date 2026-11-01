@@ -36,6 +36,29 @@ public class SitesTests(StorefrontFactory factory) : IClassFixture<StorefrontFac
         Assert.Equal("basic", souq.Tier);
         Assert.Equal(JsonValueKind.Array, souq.Schema.ValueKind);
         Assert.Equal("modern", souq.Defaults.GetProperty("font").GetString());
+        Assert.Equal("lite", Assert.Single(templates!, t => t.Id == "linen").Tier);
+
+        // Lite menu sheets come first, then Basic, then Pro.
+        var ranks = templates!.Select(t => t.Tier switch { "lite" => 0, "pro" => 2, _ => 1 }).ToList();
+        Assert.Equal(ranks.Order(), ranks);
+    }
+
+    [Fact]
+    public async Task Lite_owners_use_menu_sheets_but_not_basic_templates()
+    {
+        var (client, _, _) = await OwnerWithMenuAsync();
+        await Api.EnsureSuccess(await client.PostAsJsonAsync("/api/v1/subscription/change", new { planCode = "lite" }));
+
+        var blocked = await client.PostAsync("/api/v1/site/publish", null);
+        Assert.Equal(HttpStatusCode.Forbidden, blocked.StatusCode);
+        Assert.Equal("template.basic", (await Api.ProblemAsync(blocked)).GetProperty("code").GetString());
+        Assert.Equal(HttpStatusCode.Forbidden, (await client.PutAsJsonAsync("/api/v1/site/template", new { templateId = "pocket" })).StatusCode);
+
+        await Api.EnsureSuccess(await client.PutAsJsonAsync("/api/v1/site/template", new { templateId = "linen" }));
+        await Api.EnsureSuccess(await client.PostAsync("/api/v1/site/publish", null));
+
+        var status = await client.GetFromJsonAsync<JsonElement>("/api/v1/ai/status", Api.Json);
+        Assert.Equal(10, status.GetProperty("monthlyLimit").GetInt32());
     }
 
     [Fact]

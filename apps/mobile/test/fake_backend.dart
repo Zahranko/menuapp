@@ -223,6 +223,20 @@ class FakeBackend {
 
   static final templates = [
     {
+      'id': 'linen',
+      'number': 2,
+      'name': 'Linen',
+      'category': 'Restaurant',
+      'description': 'A printed menu sheet',
+      'thumbnailUrl': '/templates/linen/thumbnail.png',
+      'tier': 'lite',
+      'version': 1,
+      'schema': [
+        {'key': 'hero.title', 'type': 'text', 'label': 'Headline', 'group': 'Hero header', 'max': 60},
+      ],
+      'defaults': {'hero.title': 'Our menu'},
+    },
+    {
       'id': 'souq',
       'number': 1,
       'name': 'Souq',
@@ -303,7 +317,19 @@ class FakeBackend {
     body: {'title': 'This template is part of the Pro plan.', 'status': 403, 'code': 'template.pro'},
   );
 
-  bool _isProTemplate(String id) => templates.any((t) => t['id'] == id && t['tier'] == 'pro');
+  /// The 403 the API sends for a Basic template on the Lite plan.
+  static const FakeResponse basicTemplateRefused = (
+    status: 403,
+    body: {'title': 'This template is part of the Basic plan.', 'status': 403, 'code': 'template.basic'},
+  );
+
+  /// Why the current plan can't use template [id], or null when it can.
+  FakeResponse? _refuse(String id) {
+    final tier = templates.firstWhere((t) => t['id'] == id, orElse: () => const {})['tier'] ?? 'basic';
+    if (tier == 'pro' && plan != 'pro') return proTemplateRefused;
+    if (tier == 'basic' && plan == 'lite') return basicTemplateRefused;
+    return null;
+  }
 
   Map<String, Object?> get _site => {
         'templateId': templateId,
@@ -373,8 +399,8 @@ class FakeBackend {
       case 'GET /api/v1/site':
         return (status: 200, body: _site);
       case 'PUT /api/v1/site/template':
-        if (plan != 'pro' && _isProTemplate(body!['templateId'] as String)) return proTemplateRefused;
-        templateId = body!['templateId'] as String;
+        if (_refuse(body!['templateId'] as String) case final refused?) return refused;
+        templateId = body['templateId'] as String;
         draft = Map.of(templates.firstWhere((t) => t['id'] == templateId)['defaults'] as Map<String, Object?>);
         return (status: 200, body: _site);
       case 'PUT /api/v1/site/draft':
@@ -382,13 +408,14 @@ class FakeBackend {
         drafts.add(draft);
         return (status: 200, body: _site);
       case 'POST /api/v1/site/publish':
-        if (plan != 'pro' && _isProTemplate(templateId)) return proTemplateRefused;
+        if (_refuse(templateId) case final refused?) return refused;
         publishedAt = DateTime.utc(2026, 1, 2);
         return (status: 200, body: _site);
       case 'POST /api/v1/site/preview-token':
         return (status: 200, body: {'token': 't', 'previewUrl': 'https://example.test/_preview/t', 'expiresAt': '2030-01-01T00:00:00Z'});
       case 'GET /api/v1/plans':
         return (status: 200, body: [
+          {'code': 'lite', 'name': 'Lite', 'priceUsd': 2, 'allowsCustomDomain': false},
           {'code': 'basic', 'name': 'Basic', 'priceUsd': 5, 'allowsCustomDomain': false},
           {'code': 'pro', 'name': 'Pro', 'priceUsd': 10, 'allowsCustomDomain': true},
         ]);
@@ -487,8 +514,8 @@ class FakeBackend {
 
   Map<String, Object?> get _subscription => {
         'planCode': plan,
-        'status': plan == 'pro' ? 'active' : 'trialing',
-        'currentPeriodEnd': plan == 'pro' ? null : '2026-03-20T00:00:00Z',
+        'status': plan == 'basic' ? 'trialing' : 'active',
+        'currentPeriodEnd': plan == 'basic' ? '2026-03-20T00:00:00Z' : null,
         'allowsCustomDomain': plan == 'pro',
         'testMode': testMode,
       };

@@ -1435,4 +1435,66 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lookUndone => 'Back to your design';
+
+  @override
+  String get planLite => 'Lite';
+
+  @override
+  String get liteDetail => 'Menu sheets and 10 AI uses a month';
+
+  @override
+  String get basicDetail => 'Every Basic template and 30 AI uses a month';
+
+  @override
+  String get nowOnLite => 'You\'re on Lite';
+
+  @override
+  String upgradeToPlan(String name) {
+    return 'Upgrade to $name';
+  }
+
+  @override
+  String switchToPlan(String name) {
+    return 'Switch to $name';
+  }
+
+  @override
+  String upgradeBodyBasic(String price) {
+    return '$price per month. Every Basic template opens, and you get 30 AI uses a month.';
+  }
+
+  @override
+  String get downgradeLite =>
+      'On Lite you can use the menu sheets. Your live site stays as it is, but pick a menu sheet before you publish again.';
+
+  @override
+  String get basicTemplateTitle => 'This template is part of the Basic plan';
+
+  @override
+  String basicTemplateBody(String name) {
+    return 'Upgrade to Basic to use $name and every other Basic template. Your products and prices stay the same.';
+  }
+
+  @override
+  String get filterSheets => 'Menu sheets';
+
+  @override
+  String get liteTemplatesHint =>
+      'On Lite you can use the menu sheets. The other templates come with Basic and Pro.';
+
+  @override
+  String get aiPhotoTip =>
+      'Lay the menu flat in good light, with the whole page in the photo.';
+
+  @override
+  String get aiReadStepLook => 'Looking at your photos';
+
+  @override
+  String get aiReadStepSections => 'Finding your categories';
+
+  @override
+  String get aiReadStepPrices => 'Reading names and prices';
+
+  @override
+  String get aiReadStepReady => 'Putting your menu together';
 }

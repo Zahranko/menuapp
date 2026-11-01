@@ -63,7 +63,7 @@ Rules:
 
 | Who | What they do |
 |---|---|
-| Business owner (mobile app) | Signs up with business name, email, phone and password. Picks a template, customizes the design once, then manages products and categories from the **My menu** dashboard without touching the design again. Chooses Basic ($5) or Pro ($10). On Pro, requests a custom domain. |
+| Business owner (mobile app) | Signs up with business name, email, phone and password. Picks a template, customizes the design once, then manages products and categories from the **My menu** dashboard without touching the design again. Chooses Lite ($2), Basic ($5) or Pro ($10). On Pro, requests a custom domain. |
 | Customer (website) | Opens `{domain}/<slug>` or the custom domain. Browses the menu, searches, taps an item for details, contacts the business on WhatsApp, gets directions. |
 | Support staff (back office) | Handles custom domain requests, looks up businesses and subscriptions, manages templates. |
 
@@ -143,10 +143,10 @@ Integration tests prove that business A can never read or change business B's da
 | `Businesses` | Id, OwnerUserId, Name, Slug, WhatsApp, Email, Address, Instagram, CurrencyCode (`JOD`), Locale (`ar`/`en`), CreatedAt | Slug unique, case-insensitive |
 | `Categories` | Id, BusinessId, Name, ParentId (nullable), SortOrder | Unique (BusinessId, lower(Name)). Sub-categories one level deep: ParentId points to a main category (FK, no cascade) |
 | `Products` | Id, BusinessId, CategoryId, Name, Description, Price `decimal(12,3)`, ImageUrl, Label (`Signature`, `New`, `Best seller`, `Vegan`, `Spicy` or null), IsAvailable, IsFeatured, SortOrder, CreatedAt, UpdatedAt | Sold out = `IsAvailable = false`. Featured = shown in "Signature picks" |
-| `Templates` | Id (`souq`), Number (1–100), Name, Category, ThumbnailUrl, SettingsSchema `jsonb`, DefaultSettings `jsonb`, Version, Tier (`basic`, `pro`), IsActive | Seeded from `apps/sites/templates/registry.json`. Manifest `"tier": "pro"` marks a Pro-only template (absent = basic) |
+| `Templates` | Id (`souq`), Number (1–100), Name, Category, ThumbnailUrl, SettingsSchema `jsonb`, DefaultSettings `jsonb`, Version, Tier (`lite`, `basic`, `pro`), IsActive | Seeded from `apps/sites/templates/registry.json`. Manifest `"tier": "lite"` marks a menu sheet open to every plan, `"tier": "pro"` a Pro-only template (absent = basic) |
 | `Sites` | Id, BusinessId (1:1), TemplateId, DraftSettings `jsonb`, PublishedSettings `jsonb`, PublishedAt | Design only. Content comes from Products and Categories |
 | `MediaAssets` | Id, BusinessId, Url, ContentType, SizeBytes, CreatedAt | Images up to 5 MB: jpeg, png, webp |
-| `Plans` | Code (`basic`, `pro`), PriceUsd, AllowsCustomDomain | Seeded |
+| `Plans` | Code (`lite`, `basic`, `pro`), PriceUsd, AllowsCustomDomain | Seeded: Lite $2, Basic $5, Pro $10 |
 | `Subscriptions` | Id, BusinessId, PlanCode, Status (`trialing`, `active`, `past_due`, `canceled`), Provider, ProviderRef, CurrentPeriodEnd | |
 | `DomainRequests` | Id, BusinessId, Domain, Status (`Requested`, `AwaitingDns`, `Verifying`, `Active`, `Rejected`, `Cancelled`), StaffNote, HandledBy, timestamps | |
 | `CustomDomains` | Domain (PK), BusinessId, ActivatedAt | Active mappings only. Read by Caddy check and Next.js host lookup |
@@ -164,9 +164,14 @@ parent, and a category cannot be its own parent (400 on field `parentId`, codes 
 main category moves its sub-categories to the top level. `SortOrder` stays one integer; clients order siblings by it.
 The public API keeps a flat list with `parentId`; a main category is kept when only its sub-categories have products.
 
-**Pro templates:** templates with tier `pro` can only be chosen (`PUT /site/template`) or published (`POST /site/publish`)
-by a business with a live Pro plan (same check as custom domains, `ProPlanChecker`); otherwise 403 with code `template.pro`.
-A site already live on a Pro template keeps rendering after a downgrade. `Billing:TestMode` makes everyone Pro.
+**Template tiers:** plans and template tiers share ranks (Lite 0, Basic 1, Pro 2), and a plan opens every tier up to its own.
+Lite templates (the menu sheets: Linen, Chalkboard, Ticket, Bistro, Zen) are open to every plan. Basic templates are closed only
+to a live Lite plan (403 `template.basic`). Pro templates need a live Pro plan (same check as custom domains, `PlanChecker`;
+otherwise 403 `template.pro`). Both checks run on choosing (`PUT /site/template`) and publishing (`POST /site/publish`).
+A site already live on a template keeps rendering after a downgrade. Trials count as Basic. `Billing:TestMode` makes everyone Pro.
+The gallery (`GET /templates`) lists Lite templates first, then Basic, then Pro, each by number.
+
+**AI allowance:** `Ai:MonthlyLimit` per plan code: Lite 10, Basic 30 (also trials), Pro 100.
 
 ## 5. API surface (v1)
 
@@ -296,7 +301,7 @@ When a business whose locale is `ar` signs up or chooses a template, its draft s
 - Each template renders all sections from the prototype's "Souq" site: announcement bar, sticky header with mobile drawer, hero (full or split), highlights, signature picks, menu with search and sticky category tabs, item detail sheet, story, gallery, reviews, visit (map, hours with today highlighted, contact), footer with newsletter field.
 - SEO: `generateMetadata` per site, schema.org JSON-LD (`Restaurant` or `CafeOrCoffeeShop` with `hasMenu`), sitemap and robots per host, Open Graph image.
 - `next/image` with the storage domain in `remotePatterns`. The site's language and direction come from the business locale.
-- Marketing pages at the root: landing, pricing ($5 / $10), links to the app stores.
+- Marketing pages at the root: landing, pricing ($2 / $5 / $10), links to the app stores.
 
 ## 10. Testing
 

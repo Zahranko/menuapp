@@ -2497,6 +2497,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Back to your design'**
   String get lookUndone;
+
+  /// No description provided for @planLite.
+  ///
+  /// In en, this message translates to:
+  /// **'Lite'**
+  String get planLite;
+
+  /// No description provided for @liteDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Menu sheets and 10 AI uses a month'**
+  String get liteDetail;
+
+  /// No description provided for @basicDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Every Basic template and 30 AI uses a month'**
+  String get basicDetail;
+
+  /// No description provided for @nowOnLite.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re on Lite'**
+  String get nowOnLite;
+
+  /// No description provided for @upgradeToPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrade to {name}'**
+  String upgradeToPlan(String name);
+
+  /// No description provided for @switchToPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to {name}'**
+  String switchToPlan(String name);
+
+  /// No description provided for @upgradeBodyBasic.
+  ///
+  /// In en, this message translates to:
+  /// **'{price} per month. Every Basic template opens, and you get 30 AI uses a month.'**
+  String upgradeBodyBasic(String price);
+
+  /// No description provided for @downgradeLite.
+  ///
+  /// In en, this message translates to:
+  /// **'On Lite you can use the menu sheets. Your live site stays as it is, but pick a menu sheet before you publish again.'**
+  String get downgradeLite;
+
+  /// No description provided for @basicTemplateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This template is part of the Basic plan'**
+  String get basicTemplateTitle;
+
+  /// No description provided for @basicTemplateBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrade to Basic to use {name} and every other Basic template. Your products and prices stay the same.'**
+  String basicTemplateBody(String name);
+
+  /// No description provided for @filterSheets.
+  ///
+  /// In en, this message translates to:
+  /// **'Menu sheets'**
+  String get filterSheets;
+
+  /// No description provided for @liteTemplatesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'On Lite you can use the menu sheets. The other templates come with Basic and Pro.'**
+  String get liteTemplatesHint;
+
+  /// No description provided for @aiPhotoTip.
+  ///
+  /// In en, this message translates to:
+  /// **'Lay the menu flat in good light, with the whole page in the photo.'**
+  String get aiPhotoTip;
+
+  /// No description provided for @aiReadStepLook.
+  ///
+  /// In en, this message translates to:
+  /// **'Looking at your photos'**
+  String get aiReadStepLook;
+
+  /// No description provided for @aiReadStepSections.
+  ///
+  /// In en, this message translates to:
+  /// **'Finding your categories'**
+  String get aiReadStepSections;
+
+  /// No description provided for @aiReadStepPrices.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading names and prices'**
+  String get aiReadStepPrices;
+
+  /// No description provided for @aiReadStepReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Putting your menu together'**
+  String get aiReadStepReady;
 }
 
 class _AppLocalizationsDelegate

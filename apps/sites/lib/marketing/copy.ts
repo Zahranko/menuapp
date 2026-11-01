@@ -26,7 +26,7 @@ export function fill(text: string, lang: Lang): string {
 
 type Step = { title: string; body: string };
 type Feature = { title: string; body: string };
-type Plan = { name: string; price: string; per: string; note: string; points: string[] };
+type Plan = { code: "lite" | "basic" | "pro"; name: string; price: string; per: string; note: string; points: string[] };
 type Section = { title: string; body: string[]; list?: string[] };
 
 const en = {
@@ -46,7 +46,7 @@ const en = {
     titleMark: "from your phone",
     titleEnd: ".",
     lead: "Pick one of 100 templates, add your products and prices, and share one link. No laptop, no designer, no code.",
-    proof: ["Arabic and English", "QR code included", "From $5 a month"],
+    proof: ["Arabic and English", "QR code included", "From $2 a month"],
     appCaption: "The {brandName} app",
     siteCaption: "Your website",
     live: "Your site is live",
@@ -96,13 +96,23 @@ const en = {
     popular: "Your own domain",
     list: [
       {
+        code: "lite",
+        name: "Lite",
+        price: "$2",
+        per: "/month",
+        note: "A menu sheet at {domain}/yourname",
+        points: ["Menu-sheet templates: printed, chalkboard, receipt and more", "Products and prices you edit from your phone", "QR code for your tables and windows", "10 AI helper uses a month"],
+      },
+      {
+        code: "basic",
         name: "Basic",
         price: "$5",
         per: "/month",
         note: "Your site at {domain}/yourname",
-        points: ["Products, categories and prices you edit from your phone", "Arabic or English website", "QR code for your tables and windows", "AI helper for photos and text"],
+        points: ["Every Basic template, plus the menu sheets", "Arabic or English website", "QR code for your tables and windows", "30 AI helper uses a month"],
       },
       {
+        code: "pro",
         name: "Pro",
         price: "$10",
         per: "/month",
@@ -234,7 +244,7 @@ const ar: Copy = {
     titleMark: "من هاتفك",
     titleEnd: ".",
     lead: "اختر قالبًا من 100 قالب، أضف منتجاتك وأسعارك، وشارك رابطًا واحدًا. بلا حاسوب، بلا مصمم، بلا برمجة.",
-    proof: ["عربي وإنجليزي", "رمز QR جاهز", "من 5$ شهريًا"],
+    proof: ["عربي وإنجليزي", "رمز QR جاهز", "من 2$ شهريًا"],
     appCaption: "تطبيق {brandName}",
     siteCaption: "موقعك",
     live: "موقعك أصبح متاحًا",
@@ -284,13 +294,23 @@ const ar: Copy = {
     popular: "نطاقك الخاص",
     list: [
       {
+        code: "lite",
+        name: "لايت",
+        price: "2$",
+        per: "/شهريًا",
+        note: "منيو على {domain}/yourname",
+        points: ["قوالب المنيو: مطبوع، سبورة، فاتورة وغيرها", "منتجات وأسعار تعدّلها من هاتفك", "رمز QR لطاولاتك وواجهتك", "10 استخدامات للمساعد الذكي شهريًا"],
+      },
+      {
+        code: "basic",
         name: "الأساسية",
         price: "5$",
         per: "/شهريًا",
         note: "موقعك على {domain}/yourname",
-        points: ["منتجات وفئات وأسعار تعدّلها من هاتفك", "موقع بالعربية أو الإنجليزية", "رمز QR لطاولاتك وواجهتك", "المساعد الذكي للصور والنصوص"],
+        points: ["كل القوالب الأساسية مع قوالب المنيو", "موقع بالعربية أو الإنجليزية", "رمز QR لطاولاتك وواجهتك", "30 استخدامًا للمساعد الذكي شهريًا"],
       },
       {
+        code: "pro",
         name: "الاحترافية",
         price: "10$",
         per: "/شهريًا",

@@ -67,26 +67,23 @@ class AiActionRow extends StatelessWidget {
   }
 }
 
-/// A spinner with what the helper is doing; answers can take up to a minute.
-class AiWorking extends StatelessWidget {
-  const AiWorking({super.key, required this.label});
+/// The helper's mark on a deep brand gradient, for the top of AI sheets.
+class AiBadge extends StatelessWidget {
+  const AiBadge({super.key, this.size = 46});
 
-  final String label;
+  final double size;
 
   @override
-  Widget build(BuildContext context) {
-    final t = AppLocalizations.of(context);
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 36),
-      child: Column(children: [
-        SizedBox.square(dimension: 36, child: CircularProgressIndicator(strokeWidth: 3, color: BrandColors.primary)),
-        const SizedBox(height: 18),
-        Text(label, textAlign: TextAlign.center, style: Ui.display(context, 18, weight: FontWeight.w700)),
-        const SizedBox(height: 6),
-        Text(t.aiTakesAMoment, textAlign: TextAlign.center, style: TextStyle(color: BrandColors.muted, fontSize: 13.5)),
-      ]),
-    );
-  }
+  Widget build(BuildContext context) => Container(
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(size * 0.32),
+          gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [BrandColors.primary2, BrandColors.primary]),
+          boxShadow: [BoxShadow(color: BrandColors.primary.withValues(alpha: 0.25), blurRadius: 12, offset: const Offset(0, 5))],
+        ),
+        child: Icon(aiIcon, size: size * 0.5, color: BrandColors.accent),
+      );
 }
 
 /// A small note on a tinted background, like "AI can make mistakes".

@@ -12,15 +12,20 @@ import '../auth/auth_controller.dart';
 import 'plan_controller.dart';
 import 'plan_models.dart';
 
-/// Basic and Pro side by side; tapping the other plan opens the upgrade or downgrade sheet.
+/// The plan's name in the app's language.
+String planName(AppLocalizations t, String code) => switch (code) {
+      'lite' => t.planLite,
+      'pro' => t.planPro,
+      _ => t.planBasic,
+    };
+
+/// Lite, Basic and Pro side by side; tapping another plan opens the upgrade or downgrade sheet.
 class PlanCard extends ConsumerWidget {
   const PlanCard({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final t = AppLocalizations.of(context);
-    final auth = ref.watch(authControllerProvider);
-    final link = auth is SignedIn ? auth.business.displayUrl : '';
     return ref.watch(planProvider).when(
           loading: () => SectionCard(title: t.plan, icon: Icons.workspace_premium_outlined, children: const [LinearProgressIndicator()]),
           error: (e, _) => SectionCard(title: t.plan, icon: Icons.workspace_premium_outlined, children: [
@@ -37,12 +42,12 @@ class PlanCard extends ConsumerWidget {
               children: [
                 Row(children: [
                   for (final (i, plan) in state.plans.indexed) ...[
-                    if (i > 0) const SizedBox(width: 10),
+                    if (i > 0) const SizedBox(width: 8),
                     Expanded(
                       child: _PlanTile(
                         plan: plan,
                         current: plan.code == sub.planCode,
-                        detail: plan.allowsCustomDomain ? t.proDetail : link,
+                        detail: plan.allowsCustomDomain ? t.proDetail : (plan.code == 'lite' ? t.liteDetail : t.basicDetail),
                         onTap: plan.code == sub.planCode ? null : () => openPlanSheet(context, plan, state.domainRequest),
                       ),
                     ),
@@ -68,7 +73,7 @@ class _PlanTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
-    final name = plan.code == 'pro' ? t.planPro : t.planBasic;
+    final name = planName(t, plan.code);
     return Semantics(
       button: onTap != null,
       selected: current,
@@ -77,7 +82,8 @@ class _PlanTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(18),
         onTap: onTap,
         child: Container(
-          padding: const EdgeInsets.all(14),
+          padding: const EdgeInsets.all(12),
+          constraints: const BoxConstraints(minHeight: 132),
           decoration: BoxDecoration(
             color: current ? null : Colors.white,
             gradient: current
@@ -90,11 +96,11 @@ class _PlanTile extends StatelessWidget {
             Text(current ? t.planCurrent(name) : name, style: TextStyle(color: current ? BrandColors.accent : BrandColors.muted, fontSize: 12.5, fontWeight: FontWeight.w600)),
             const SizedBox(height: 4),
             Text.rich(TextSpan(children: [
-              TextSpan(text: plan.price, style: Ui.display(context, 28, color: current ? Colors.white : BrandColors.ink)),
+              TextSpan(text: plan.price, style: Ui.display(context, 26, color: current ? Colors.white : BrandColors.ink)),
               TextSpan(text: ' ${t.perMonth}', style: TextStyle(color: current ? Colors.white70 : BrandColors.muted)),
             ])),
             const SizedBox(height: 4),
-            Text(detail, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12, color: current ? Colors.white70 : BrandColors.muted)),
+            Text(detail, maxLines: 4, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 11.5, height: 1.3, color: current ? Colors.white70 : BrandColors.muted)),
           ]),
         ),
       ),
@@ -131,7 +137,7 @@ class _PlanSheetState extends ConsumerState<_PlanSheet> {
         if (mounted) Navigator.pop(context, t.finishPayment);
         return;
       }
-      if (mounted) Navigator.pop(context, widget.plan.code == 'pro' ? t.nowOnPro : t.nowOnBasic);
+      if (mounted) Navigator.pop(context, switch (widget.plan.code) { 'pro' => t.nowOnPro, 'lite' => t.nowOnLite, _ => t.nowOnBasic });
     } catch (e) {
       if (mounted) showMessage(context, errorText(t, e));
     } finally {
@@ -142,12 +148,15 @@ class _PlanSheetState extends ConsumerState<_PlanSheet> {
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
-    final up = widget.plan.allowsCustomDomain;
+    final current = ref.read(planProvider).value?.subscription;
+    final up = widget.plan.rank > (current == null ? 1 : planRank(current.planCode));
+    final name = planName(t, widget.plan.code);
     final price = widget.plan.price;
-    var body = up ? t.upgradeBody(price) : t.downgradeBody(price);
-    if (!up && widget.domain != null) body = '$body ${t.downgradeDomain(widget.domain!.domain)}';
+    var body = up ? (widget.plan.allowsCustomDomain ? t.upgradeBody(price) : t.upgradeBodyBasic(price)) : t.downgradeBody(price);
+    if (!up && widget.plan.code == 'lite') body = '$body ${t.downgradeLite}';
+    if (!widget.plan.allowsCustomDomain && widget.domain != null) body = '$body ${t.downgradeDomain(widget.domain!.domain)}';
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Text(up ? t.upgradeToPro : t.switchToBasic, style: Ui.display(context, 26)),
+      Text(up ? t.upgradeToPlan(name) : t.switchToPlan(name), style: Ui.display(context, 26)),
       const SizedBox(height: 6),
       Text(body, style: TextStyle(color: BrandColors.muted, height: 1.4)),
       const SizedBox(height: 18),
@@ -155,7 +164,7 @@ class _PlanSheetState extends ConsumerState<_PlanSheet> {
         key: const Key('confirmPlan'),
         style: up ? FilledButton.styleFrom(backgroundColor: BrandColors.accent, foregroundColor: BrandColors.primary) : null,
         onPressed: _busy ? null : _confirm,
-        child: _busy ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2)) : Text(up ? t.upgradeFor(price) : t.switchToBasic),
+        child: _busy ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2)) : Text(up ? t.upgradeFor(price) : t.switchToPlan(name)),
       ),
       const SizedBox(height: 10),
       LightButton(label: t.notNow, onPressed: () => Navigator.pop(context)),
@@ -163,8 +172,9 @@ class _PlanSheetState extends ConsumerState<_PlanSheet> {
   }
 }
 
-/// Explains that [templateName] needs the Pro plan and offers the upgrade. Returns true when the business is on Pro afterwards.
-Future<bool> openProTemplateSheet(BuildContext context, String templateName) async {
+/// Explains that [templateName] needs a bigger plan (Basic or Pro, from its [tier]) and offers the upgrade.
+/// Returns true when the business's plan opens the template afterwards.
+Future<bool> openTemplatePlanSheet(BuildContext context, String templateName, String tier) async {
   final container = ProviderScope.containerOf(context);
   PlanState? state;
   try {
@@ -173,35 +183,36 @@ Future<bool> openProTemplateSheet(BuildContext context, String templateName) asy
     state = null;
   }
   if (!context.mounted) return false;
-  final proPlan = state?.plans.where((p) => p.allowsCustomDomain || p.code == 'pro').firstOrNull;
-  final upgrade = await showFormSheet<bool>(context, (_) => _ProTemplateSheet(templateName: templateName, canUpgrade: proPlan != null));
-  if (upgrade != true || proPlan == null || !context.mounted) return false;
-  await openPlanSheet(context, proPlan, state?.domainRequest);
-  return container.read(planProvider).value?.subscription.isPro ?? false;
+  final pro = tier == 'pro';
+  final target = state?.plans.where((p) => pro ? (p.allowsCustomDomain || p.code == 'pro') : p.code == 'basic').firstOrNull;
+  final upgrade = await showFormSheet<bool>(context, (_) => _TemplatePlanSheet(templateName: templateName, pro: pro, canUpgrade: target != null));
+  if (upgrade != true || target == null || !context.mounted) return false;
+  await openPlanSheet(context, target, state?.domainRequest);
+  return container.read(planProvider).value?.subscription.opens(tier) ?? false;
 }
 
-class _ProTemplateSheet extends StatelessWidget {
-  const _ProTemplateSheet({required this.templateName, required this.canUpgrade});
+class _TemplatePlanSheet extends StatelessWidget {
+  const _TemplatePlanSheet({required this.templateName, required this.pro, required this.canUpgrade});
 
   final String templateName;
+  final bool pro;
   final bool canUpgrade;
 
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Align(alignment: AlignmentDirectional.centerStart, child: ProBadge(large: true)),
-      const SizedBox(height: 12),
-      Text(t.proTemplateTitle, style: Ui.display(context, 26)),
+      if (pro) ...[Align(alignment: AlignmentDirectional.centerStart, child: ProBadge(large: true)), const SizedBox(height: 12)],
+      Text(pro ? t.proTemplateTitle : t.basicTemplateTitle, style: Ui.display(context, 26)),
       const SizedBox(height: 6),
-      Text(t.proTemplateBody(templateName), style: TextStyle(color: BrandColors.muted, height: 1.4)),
+      Text(pro ? t.proTemplateBody(templateName) : t.basicTemplateBody(templateName), style: TextStyle(color: BrandColors.muted, height: 1.4)),
       const SizedBox(height: 18),
       if (canUpgrade) ...[
         FilledButton(
           key: const Key('proTemplateUpgrade'),
           style: FilledButton.styleFrom(backgroundColor: BrandColors.accent, foregroundColor: BrandColors.primary),
           onPressed: () => Navigator.pop(context, true),
-          child: Text(t.upgradeToPro),
+          child: Text(pro ? t.upgradeToPro : t.upgradeToPlan(t.planBasic)),
         ),
         const SizedBox(height: 10),
       ],

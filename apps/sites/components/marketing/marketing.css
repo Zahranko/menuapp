@@ -1096,7 +1096,7 @@ body.mk {
 .mk-plans {
   display: grid;
   gap: 18px;
-  max-width: 920px;
+  max-width: 1180px;
   margin-inline: auto;
 }
 .mk-plan {
@@ -1196,7 +1196,12 @@ body.mk {
     gap: 22px;
   }
   .mk-plan {
-    padding: 36px 36px 40px;
+    padding: 36px 32px 40px;
+  }
+}
+@media (min-width: 1040px) {
+  .mk-plans {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 

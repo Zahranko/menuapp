@@ -1,4 +1,4 @@
-/// A plan (`PlanDto`): Basic or Pro.
+/// A plan (`PlanDto`): Lite, Basic or Pro.
 class PlanInfo {
   const PlanInfo({required this.code, required this.name, required this.priceUsd, required this.allowsCustomDomain});
 
@@ -13,6 +13,9 @@ class PlanInfo {
   final String name;
   final double priceUsd;
   final bool allowsCustomDomain;
+
+  /// Lite 0, Basic 1, Pro 2; an unknown code counts as Basic.
+  int get rank => planRank(code);
 
   String get price => priceUsd == priceUsd.roundToDouble() ? '\$${priceUsd.toStringAsFixed(0)}' : '\$${priceUsd.toStringAsFixed(2)}';
 }
@@ -39,7 +42,20 @@ class SubscriptionInfo {
 
   /// Pro features (custom domain, Pro templates) are unlocked.
   bool get isPro => planCode == 'pro' || allowsCustomDomain;
+
+  /// What the plan opens: Lite 0, Basic 1 (also trials), Pro 2. A canceled plan counts as Basic, as on the server.
+  int get rank => isPro ? 2 : (status == 'canceled' ? 1 : planRank(planCode));
+
+  /// Whether a template of [tier] ("lite", "basic" or "pro") can be chosen and published.
+  bool opens(String tier) => planRank(tier) <= rank;
 }
+
+/// Lite 0, Basic 1, Pro 2, for plan codes and template tiers alike.
+int planRank(String code) => switch (code) {
+      'lite' => 0,
+      'pro' => 2,
+      _ => 1,
+    };
 
 /// A custom domain request (`DomainRequestDto`).
 class DomainRequestInfo {

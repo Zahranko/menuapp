@@ -95,7 +95,7 @@ public class TemplateArabicTests
         var handler = new ChangeTemplateHandler(
             new SiteContext(new FakeSites(site), new FakeBusinesses(business), user, links),
             new FakeTemplates(NewTemplate()),
-            new ProPlanChecker(new FakeBilling()),
+            new PlanChecker(new FakeBilling()),
             user,
             new FakeUnitOfWork(),
             new FakeAudit(),

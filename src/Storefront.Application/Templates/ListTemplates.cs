@@ -5,7 +5,8 @@ using Storefront.Domain.Templates;
 namespace Storefront.Application.Templates;
 
 /// <summary>
-/// A gallery template. <see cref="Tier"/> is "basic" (every plan) or "pro" (Pro plan only).
+/// A gallery template. <see cref="Tier"/> is "lite" (every plan), "basic" (Basic and Pro) or "pro" (Pro plan only).
+/// The gallery lists Lite templates first, then Basic, then Pro, each by number.
 /// <see cref="Ar"/> holds the Arabic gallery texts (null when the template has no Arabic name); <see cref="DefaultsAr"/> holds Arabic
 /// text values that replace top-level keys of <see cref="Defaults"/> for Arabic businesses ({} when none).
 /// Schema fields may carry labelAr, groupAr and optionLabelsAr; the schema is returned exactly as the registry has it.
@@ -42,5 +43,9 @@ public sealed record TemplateArabicDto(string Name, string Category, string Desc
 public sealed class ListTemplatesHandler(ITemplateRepository templates)
 {
     public async Task<IReadOnlyList<TemplateDto>> Handle(CancellationToken ct) =>
-        (await templates.ListAsync(activeOnly: true, ct)).Select(TemplateDto.From).ToList();
+        (await templates.ListAsync(activeOnly: true, ct))
+            .OrderBy(t => TemplateTier.RankOf(t.Tier))
+            .ThenBy(t => t.Number)
+            .Select(TemplateDto.From)
+            .ToList();
 }

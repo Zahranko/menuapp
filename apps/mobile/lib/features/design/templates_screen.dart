@@ -14,10 +14,11 @@ import '../plan/plan_controller.dart';
 import 'design_controller.dart';
 import 'design_models.dart';
 
-enum _Kind { all, food, fashion, shops, services, pro }
+enum _Kind { all, sheets, food, fashion, shops, services, pro }
 
 bool _inKind(TemplateInfo t, _Kind kind) => switch (kind) {
       _Kind.all => true,
+      _Kind.sheets => t.isLite,
       _Kind.pro => t.isPro,
       _ => _kindOf(t) == kind,
     };
@@ -41,8 +42,8 @@ class _TemplatesScreenState extends ConsumerState<TemplatesScreen> {
   _Kind _kind = _Kind.all;
   String? _busyId;
 
-  /// False only when the plan is known and is not Pro; while it loads, the API decides.
-  bool get _hasPro => ref.read(planProvider).value?.subscription.isPro ?? true;
+  /// False only when the plan is known and doesn't open [template]; while it loads, the API decides.
+  bool _opens(TemplateInfo template) => ref.read(planProvider).value?.subscription.opens(template.tier) ?? true;
 
   Future<void> _choose(TemplateInfo template) async {
     final t = AppLocalizations.of(context);
@@ -51,9 +52,9 @@ class _TemplatesScreenState extends ConsumerState<TemplatesScreen> {
       context.push('/design');
       return;
     }
-    if (template.isPro && !_hasPro) {
-      // Don't ask the API: explain the Pro plan, and carry on if the owner upgrades.
-      if (!await openProTemplateSheet(context, template.nameFor(context)) || !mounted) return;
+    if (!_opens(template)) {
+      // Don't ask the API: explain the plan it needs, and carry on if the owner upgrades.
+      if (!await openTemplatePlanSheet(context, template.nameFor(context), template.tier) || !mounted) return;
     }
     if (site != null && (site.isPublished || site.hasUnpublishedChanges)) {
       final ok = await showDialog<bool>(
@@ -79,11 +80,11 @@ class _TemplatesScreenState extends ConsumerState<TemplatesScreen> {
       if (mounted) context.push('/design');
     } catch (e) {
       if (!mounted) return;
-      if (e is ApiError && e.code == 'template.pro') {
+      if (e is ApiError && (e.code == 'template.pro' || e.code == 'template.basic')) {
         // The plan changed since it loaded: reload it and explain.
         ref.invalidate(planProvider);
         setState(() => _busyId = null);
-        await openProTemplateSheet(context, template.nameFor(context));
+        await openTemplatePlanSheet(context, template.nameFor(context), e.code == 'template.pro' ? 'pro' : 'basic');
       } else {
         showMessage(context, errorText(t, e));
       }
@@ -97,7 +98,9 @@ class _TemplatesScreenState extends ConsumerState<TemplatesScreen> {
     final t = AppLocalizations.of(context);
     final templates = ref.watch(templatesProvider);
     final current = ref.watch(siteProvider).value?.templateId;
-    final locked = ref.watch(planProvider).value?.subscription.isPro == false;
+    final subscription = ref.watch(planProvider).value?.subscription;
+    bool locked(TemplateInfo x) => subscription != null && !subscription.opens(x.tier);
+    final onLite = subscription != null && subscription.rank == 0;
     return Scaffold(
       appBar: AuthHeader(onBack: () => context.canPop() ? context.pop() : context.go('/menu'), wordmark: const BrandLockup(size: 20)),
       body: templates.when(
@@ -108,7 +111,7 @@ class _TemplatesScreenState extends ConsumerState<TemplatesScreen> {
             for (final x in all)
               if (_inKind(x, _kind)) x,
           ];
-          final labels = {_Kind.all: t.filterAllCount(all.length), _Kind.food: t.filterFood, _Kind.fashion: t.filterFashion, _Kind.shops: t.filterShops, _Kind.services: t.filterServices, _Kind.pro: t.planPro};
+          final labels = {_Kind.all: t.filterAllCount(all.length), _Kind.sheets: t.filterSheets, _Kind.food: t.filterFood, _Kind.fashion: t.filterFashion, _Kind.shops: t.filterShops, _Kind.services: t.filterServices, _Kind.pro: t.planPro};
           return CustomScrollView(
             slivers: [
               SliverPadding(
@@ -120,12 +123,12 @@ class _TemplatesScreenState extends ConsumerState<TemplatesScreen> {
                       Text(t.chooseTemplate, style: Ui.display(context, 32)),
                       const SizedBox(height: 10),
                       Text(t.templatesSub(all.length), style: TextStyle(color: BrandColors.muted, fontSize: 15.5, height: 1.45)),
-                      if (locked && all.any((x) => x.isPro)) ...[
+                      if (all.any(locked)) ...[
                         const SizedBox(height: 10),
                         Row(children: [
                           Icon(Icons.workspace_premium_outlined, size: 18, color: BrandColors.muted),
                           const SizedBox(width: 8),
-                          Expanded(child: Text(t.proTemplatesHint, style: TextStyle(color: BrandColors.muted, fontSize: 13.5, height: 1.4))),
+                          Expanded(child: Text(onLite ? t.liteTemplatesHint : t.proTemplatesHint, style: TextStyle(color: BrandColors.muted, fontSize: 13.5, height: 1.4))),
                         ]),
                       ],
                       const SizedBox(height: 18),
@@ -137,9 +140,11 @@ class _TemplatesScreenState extends ConsumerState<TemplatesScreen> {
                             if (k == _Kind.all || all.any((x) => _inKind(x, k)))
                               ChoiceChip(
                                 key: Key('templateFilter-${k.name}'),
-                                avatar: k == _Kind.pro
-                                    ? Icon(Icons.workspace_premium_rounded, size: 16, color: _kind == k ? BrandColors.accent : BrandColors.primary)
-                                    : null,
+                                avatar: switch (k) {
+                                  _Kind.pro => Icon(Icons.workspace_premium_rounded, size: 16, color: _kind == k ? BrandColors.accent : BrandColors.primary),
+                                  _Kind.sheets => Icon(Icons.receipt_long_rounded, size: 16, color: _kind == k ? BrandColors.accent : BrandColors.primary),
+                                  _ => null,
+                                },
                                 label: Text(labels[k]!),
                                 selected: _kind == k,
                                 side: BorderSide(color: _kind == k ? BrandColors.primary : BrandColors.line),
@@ -165,7 +170,7 @@ class _TemplatesScreenState extends ConsumerState<TemplatesScreen> {
                   itemBuilder: (context, i) => _TemplateCard(
                     template: shown[i],
                     current: shown[i].id == current,
-                    locked: locked && shown[i].isPro,
+                    locked: locked(shown[i]),
                     busy: _busyId == shown[i].id,
                     onTap: _busyId == null ? () => _choose(shown[i]) : null,
                   ),
@@ -186,7 +191,7 @@ class _TemplateCard extends StatelessWidget {
   final bool current;
   final bool busy;
 
-  /// A Pro template while the business is on Basic: tapping it explains the Pro plan.
+  /// A template above the business's plan (Pro on Basic, Basic on Lite): tapping it explains the plan it needs.
   final bool locked;
   final VoidCallback? onTap;
 

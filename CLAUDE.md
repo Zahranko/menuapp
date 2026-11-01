@@ -8,7 +8,7 @@ The owner signs up, picks one of 100 templates, customizes it (hero, colors, log
 products and categories from a simple dashboard. Sites live at `{domain}/<slug>`. Pro owners can
 request their own domain, which support sets up.
 
-Plans: **Basic $5/month** (site at `{domain}/<slug>`), **Pro $10/month** (Basic + custom domain on request).
+Plans: **Lite $2/month** (the menu-sheet templates, 10 AI uses a month), **Basic $5/month** (site at `{domain}/<slug>`, every Basic template), **Pro $10/month** (Basic + Pro templates + custom domain on request).
 
 The full plan is in `docs/PLAN.md`. The clickable design prototype is `docs/prototype/app-prototype.html`.
 Open it in a browser. It is the reference for every screen's layout, copy, colors and behavior.

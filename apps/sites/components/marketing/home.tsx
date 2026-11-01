@@ -198,9 +198,9 @@ export function HomePage({ lang }: { lang: Lang }) {
             <p className="mk-section-lead">{t.plans.lead}</p>
           </header>
           <div className="mk-plans">
-            {t.plans.list.map((plan, i) => (
-              <article key={plan.name} className={`mk-plan ${i === 1 ? "mk-plan-pro" : ""}`} data-plan={i === 1 ? "pro" : "basic"}>
-                {i === 1 && <p className="mk-plan-tag">{t.plans.popular}</p>}
+            {t.plans.list.map((plan) => (
+              <article key={plan.code} className={`mk-plan ${plan.code === "pro" ? "mk-plan-pro" : ""}`} data-plan={plan.code}>
+                {plan.code === "pro" && <p className="mk-plan-tag">{t.plans.popular}</p>}
                 <h3>{plan.name}</h3>
                 <p className="mk-price">
                   <span className="mk-price-num">{plan.price}</span>

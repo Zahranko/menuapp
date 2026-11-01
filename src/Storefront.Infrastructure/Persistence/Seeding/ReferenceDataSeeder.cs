@@ -7,7 +7,7 @@ using Storefront.Domain.Billing;
 namespace Storefront.Infrastructure.Persistence.Seeding;
 
 /// <summary>
-/// Data every environment needs: the two plans. With Billing:TestMode on, it also moves every business to an
+/// Data every environment needs: the three plans. With Billing:TestMode on, it also moves every business to an
 /// active Pro plan so test accounts can use every feature. Safe to run any number of times.
 /// </summary>
 public sealed class ReferenceDataSeeder(StorefrontDbContext db, IOptions<BillingOptions> billing, ILogger<ReferenceDataSeeder> logger)
@@ -24,6 +24,7 @@ public sealed class ReferenceDataSeeder(StorefrontDbContext db, IOptions<Billing
     private async Task SeedPlansAsync(CancellationToken ct)
     {
         var plans = await db.Plans.ToDictionaryAsync(p => p.Code, ct);
+        Upsert(Plan.Lite, "Lite", 2m, false);
         Upsert(Plan.Basic, "Basic", 5m, false);
         Upsert(Plan.Pro, "Pro", 10m, true);
         await db.SaveChangesAsync(ct);

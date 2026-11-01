@@ -6,6 +6,7 @@ using Storefront.Application.Billing;
 using Storefront.Application.Common;
 using Storefront.Application.Templates;
 using Storefront.Domain.Sites;
+using Storefront.Domain.Templates;
 
 namespace Storefront.Application.Sites;
 
@@ -35,6 +36,13 @@ internal static class SiteErrors
     public static readonly Error NotFound = Error.NotFound("site.notFound", "Site not found.");
     public static readonly Error TemplateNotFound = Error.Validation("template.notFound", "Choose a template from the gallery.", "templateId");
     public static readonly Error TemplateNeedsPro = Error.Forbidden("template.pro", "This template is part of the Pro plan. Upgrade to Pro to use it.");
+    public static readonly Error TemplateNeedsBasic = Error.Forbidden("template.basic", "This template is part of the Basic plan. Upgrade to Basic to use it.");
+
+    /// <summary>Why the business's plan can't use <paramref name="template"/>, or null when it can.</summary>
+    public static async Task<Error?> PlanBlocksAsync(Template template, PlanChecker plans, ICurrentUser user, CancellationToken ct) =>
+        user.BusinessId is { } businessId && await plans.CanUseTemplateAsync(businessId, template, ct)
+            ? null
+            : template.IsPro ? TemplateNeedsPro : TemplateNeedsBasic;
 }
 
 /// <summary>Shared lookups for the site handlers.</summary>
@@ -68,9 +76,9 @@ public sealed record ChangeTemplate(string TemplateId);
 
 /// <summary>
 /// Switching template resets the draft to that template's defaults (with its Arabic texts for an Arabic business);
-/// the live site changes only on publish. Pro templates need a live Pro plan.
+/// the live site changes only on publish. Pro templates need a live Pro plan; Basic templates are closed to the Lite plan.
 /// </summary>
-public sealed class ChangeTemplateHandler(SiteContext context, ITemplateRepository templates, ProPlanChecker plans, ICurrentUser user, IUnitOfWork uow, IAuditLog audit, IClock clock)
+public sealed class ChangeTemplateHandler(SiteContext context, ITemplateRepository templates, PlanChecker plans, ICurrentUser user, IUnitOfWork uow, IAuditLog audit, IClock clock)
 {
     public async Task<Result<SiteDto>> Handle(ChangeTemplate cmd, CancellationToken ct)
     {
@@ -86,9 +94,9 @@ public sealed class ChangeTemplateHandler(SiteContext context, ITemplateReposito
             return SiteErrors.TemplateNotFound;
         }
 
-        if (template.IsPro && (user.BusinessId is not { } businessId || !await plans.IsProAsync(businessId, ct)))
+        if (await SiteErrors.PlanBlocksAsync(template, plans, user, ct) is { } blocked)
         {
-            return SiteErrors.TemplateNeedsPro;
+            return blocked;
         }
 
         site.ChangeTemplate(template.Id, TemplateDefaults.JsonFor(template, locale), clock.UtcNow);
@@ -137,10 +145,10 @@ public sealed class SaveDraftHandler(SiteContext context, ITemplateRepository te
 }
 
 /// <summary>
-/// Makes the draft live. A Pro template needs a live Pro plan to publish; a site already live on one keeps rendering
-/// if the business later leaves Pro (only choosing and publishing are blocked).
+/// Makes the draft live. A template above the business's plan can't be published; a site already live on one keeps rendering
+/// if the business later moves to a smaller plan (only choosing and publishing are blocked).
 /// </summary>
-public sealed class PublishSiteHandler(SiteContext context, ITemplateRepository templates, ProPlanChecker plans, ICurrentUser user, IUnitOfWork uow, IAuditLog audit, IClock clock)
+public sealed class PublishSiteHandler(SiteContext context, ITemplateRepository templates, PlanChecker plans, ICurrentUser user, IUnitOfWork uow, IAuditLog audit, IClock clock)
 {
     public async Task<Result<SiteDto>> Handle(CancellationToken ct)
     {
@@ -151,9 +159,9 @@ public sealed class PublishSiteHandler(SiteContext context, ITemplateRepository 
         }
 
         var template = await templates.GetAsync(site.TemplateId, ct);
-        if (template is { IsPro: true } && (user.BusinessId is not { } businessId || !await plans.IsProAsync(businessId, ct)))
+        if (template is not null && await SiteErrors.PlanBlocksAsync(template, plans, user, ct) is { } blocked)
         {
-            return SiteErrors.TemplateNeedsPro;
+            return blocked;
         }
 
         site.Publish(clock.UtcNow);

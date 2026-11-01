@@ -12,6 +12,7 @@ public class TemplateTests
     [InlineData("", "basic", false)]
     [InlineData("basic", "basic", false)]
     [InlineData(" PRO ", "pro", true)]
+    [InlineData("Lite", "lite", false)]
     public void Tier_defaults_to_basic(string? tier, string expected, bool isPro)
     {
         var template = Create(tier);

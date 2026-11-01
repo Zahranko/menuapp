@@ -27,7 +27,7 @@ internal static class BillingErrors
 {
     public static readonly Error NoBusiness = Error.Unauthorized("auth.required", "Log in to continue.");
     public static readonly Error NotFound = Error.NotFound("subscription.notFound", "No plan found for this business.");
-    public static readonly Error UnknownPlan = Error.Validation("plan.unknown", "Choose Basic or Pro.", "planCode");
+    public static readonly Error UnknownPlan = Error.Validation("plan.unknown", "Choose Lite, Basic or Pro.", "planCode");
 }
 
 public sealed class ListPlansHandler(IBillingRepository billing)

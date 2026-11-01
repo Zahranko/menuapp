@@ -12,8 +12,9 @@ public class BillingTests(StorefrontFactory factory) : IClassFixture<StorefrontF
     public async Task Plans_are_listed_without_login()
     {
         var plans = await factory.CreateClient().GetFromJsonAsync<List<PlanDto>>("/api/v1/plans", Api.Json) ?? [];
-        Assert.Equal(["basic", "pro"], plans.Select(p => p.Code));
-        Assert.True(plans[1].AllowsCustomDomain);
+        Assert.Equal(["lite", "basic", "pro"], plans.Select(p => p.Code));
+        Assert.Equal([2m, 5m, 10m], plans.Select(p => p.PriceUsd));
+        Assert.True(plans[2].AllowsCustomDomain);
     }
 
     [Fact]

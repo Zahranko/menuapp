@@ -202,6 +202,9 @@ class TemplateInfo {
 
   bool get isPro => tier == 'pro';
 
+  /// A Lite menu sheet, open on every plan.
+  bool get isLite => tier == 'lite';
+
   String get numberLabel => number.toString().padLeft(3, '0');
 
   String? get thumbnail => thumbnailUrl == null || thumbnailUrl!.isEmpty ? null : AppConfig.asset(thumbnailUrl!);

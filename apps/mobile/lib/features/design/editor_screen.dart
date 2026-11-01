@@ -209,12 +209,12 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
       );
     } catch (e) {
       if (!mounted) return;
-      if (e is ApiError && e.code == 'template.pro') {
-        // A Pro template on the Basic plan: explain and offer the upgrade instead of a bare error.
+      if (e is ApiError && (e.code == 'template.pro' || e.code == 'template.basic')) {
+        // A template above the plan (Pro on Basic, or Basic on Lite): explain and offer the upgrade instead of a bare error.
         setState(() => _publishing = false);
         ref.invalidate(planProvider);
         final name = ref.read(templatesProvider).value?.where((x) => x.id == ref.read(siteProvider).value?.templateId).firstOrNull?.nameFor(context);
-        await openProTemplateSheet(context, name ?? t.customize);
+        await openTemplatePlanSheet(context, name ?? t.customize, e.code == 'template.pro' ? 'pro' : 'basic');
       } else {
         showMessage(context, errorText(t, e));
       }

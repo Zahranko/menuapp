@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:storefront_app/features/ai/ai_menu_import.dart';
 import 'package:storefront_app/features/ai/ai_repository.dart';
+import 'package:storefront_app/l10n/generated/app_localizations.dart';
 
 import 'dashboard_test.dart' show openTab, pumpSignedIn, scrollTo, tapIn;
 import 'fake_backend.dart';
@@ -151,6 +153,30 @@ void main() {
     expect(find.text('Turkish coffee'), findsOneWidget);
     await scrollTo(tester, find.text('Knafeh'));
     expect(find.text('Knafeh'), findsOneWidget);
+  });
+
+  testWidgets('while the menu is read, the photos are scanned and the steps tick off one by one', (tester) async {
+    await tester.pumpWidget(MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: Scaffold(body: SingleChildScrollView(child: MenuReading(photos: [(bytes: _png, name: 'a.png'), (bytes: _png, name: 'b.png')]))),
+    ));
+    await tester.pump();
+    expect(find.text('Reading your menu…'), findsOneWidget);
+    for (final step in ['Looking at your photos', 'Finding your categories', 'Reading names and prices', 'Putting your menu together']) {
+      expect(find.text(step), findsOneWidget);
+    }
+    expect(find.byIcon(Icons.check_rounded), findsNothing);
+
+    await tester.pump(const Duration(milliseconds: 2700));
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(find.byIcon(Icons.check_rounded), findsOneWidget);
+
+    // The last step keeps working until the answer arrives; it never shows done on a clock.
+    await tester.pump(const Duration(seconds: 20));
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(find.byIcon(Icons.check_rounded), findsNWidgets(3));
+    await tester.pumpWidget(const SizedBox());
   });
 
   testWidgets('an Arabic website gets the Arabic names, right to left', (tester) async {

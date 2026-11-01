@@ -317,6 +317,47 @@ void main() {
     expect(backend.templateId, 'noir');
   });
 
+  testWidgets('on Lite, only the menu sheets are open and a Basic template offers the Basic plan', (tester) async {
+    final backend = FakeBackend(plan: 'lite', testMode: false)..templateId = 'linen';
+    await pumpSignedIn(tester, backend);
+    await openTab(tester, 'Settings');
+    await tester.tap(find.text('Change template'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('On Lite you can use the menu sheets. The other templates come with Basic and Pro.'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('templateFilter-sheets')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('template-linen')), findsOneWidget);
+    expect(find.byKey(const Key('template-souq')), findsNothing);
+    await tester.tap(find.byKey(const Key('templateFilter-all')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const Key('template-souq')));
+    await tester.pumpAndSettle();
+    expect(find.text('This template is part of the Basic plan'), findsOneWidget);
+    expect(backend.requests, isNot(contains('PUT /api/v1/site/template')));
+
+    await tapIn(tester, find.byKey(const Key('proTemplateUpgrade')));
+    expect(find.text('Upgrade to Basic'), findsOneWidget);
+    await tapIn(tester, find.byKey(const Key('confirmPlan')));
+    expect(backend.plan, 'basic');
+  });
+
+  testWidgets('Settings shows Lite, Basic and Pro with what each one gives', (tester) async {
+    final backend = FakeBackend(plan: 'lite', testMode: false);
+    await pumpSignedIn(tester, backend);
+    await openTab(tester, 'Settings');
+    await scrollTo(tester, find.text('Lite · current'));
+    expect(find.textContaining('\$2', findRichText: true), findsOneWidget);
+    expect(find.text('Menu sheets and 10 AI uses a month'), findsOneWidget);
+    expect(find.text('Every Basic template and 30 AI uses a month'), findsOneWidget);
+
+    await tapIn(tester, find.byKey(const Key('plan-basic')));
+    expect(find.text('Upgrade to Basic'), findsOneWidget);
+    await tester.tap(find.text('Not now'));
+    await tester.pumpAndSettle();
+  });
+
   testWidgets('publishing a Pro template on Basic explains the Pro plan', (tester) async {
     final backend = FakeBackend(plan: 'basic', testMode: false)
       ..templateId = 'noir'
@@ -764,20 +805,20 @@ void main() {
   });
 
   test('a color field parses whether it takes the owner\'s own color', () {
-    final souq = TemplateInfo.fromJson(Map<String, dynamic>.from(FakeBackend.templates[0]));
+    final souq = TemplateInfo.fromJson(Map<String, dynamic>.from(FakeBackend.templates.firstWhere((t) => t['id'] == 'souq')));
     expect(souq.fields.firstWhere((f) => f.key == 'accent').custom, isTrue);
     expect(souq.fields.firstWhere((f) => f.key == 'font').custom, isFalse);
     expect(souq.defaultsFor('en')['order.action'], 'auto');
   });
 
   test('templates parse Arabic texts, and missing ones fall back to English', () {
-    final souq = TemplateInfo.fromJson(Map<String, dynamic>.from(FakeBackend.templates[0]));
+    final souq = TemplateInfo.fromJson(Map<String, dynamic>.from(FakeBackend.templates.firstWhere((t) => t['id'] == 'souq')));
     expect(souq.ar?.name, 'سوق');
     expect(souq.fields.first.optionLabelsAr['elegant'], 'أنيق');
     expect(souq.defaultsFor('ar')['hero.title'], 'قهوة تستحق المشوار.');
     expect(souq.defaultsFor('ar')['font'], 'modern');
     expect(souq.defaultsFor('en')['hero.title'], 'Coffee worth crossing the city for.');
-    final atelier = TemplateInfo.fromJson(Map<String, dynamic>.from(FakeBackend.templates[1]));
+    final atelier = TemplateInfo.fromJson(Map<String, dynamic>.from(FakeBackend.templates.firstWhere((t) => t['id'] == 'atelier')));
     expect(atelier.ar, isNull);
     expect(atelier.defaultsFor('ar'), atelier.defaults);
   });
