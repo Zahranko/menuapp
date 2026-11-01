@@ -31,6 +31,7 @@ import SouqTemplate from "./souq/Template";
 import SpiceRouteTemplate from "./spiceroute/Template";
 import TicketTemplate from "./ticket/Template";
 import ZenTemplate from "./zen/Template";
+import MarbleTemplate from "./marble/Template";
 
 /**
  * Template id → component. Every folder with a manifest.json must be listed here
@@ -66,6 +67,7 @@ export const templates: Record<string, ComponentType<TemplateProps>> = {
   folio: FolioTemplate,
   drop: DropTemplate,
   couture: CoutureTemplate,
+  marble: MarbleTemplate,
 };
 
 /** Pro templates with more than one page (category, best sellers, gallery, visit). Every other template is one page. */
