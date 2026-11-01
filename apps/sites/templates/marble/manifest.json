@@ -1,0 +1,105 @@
+{
+  "id": "marble",
+  "number": 30,
+  "name": "Marble",
+  "category": "Desserts and chocolate",
+  "description": "A dark, polished site for dessert and chocolate houses: veined marble, a gold line that draws itself in, and a menu of categories with item counts and starting prices that open with a smooth reveal.",
+  "ar": {
+    "name": "رخام",
+    "category": "حلويات وشوكولاتة",
+    "description": "موقع داكن وأنيق لمحلات الحلويات والشوكولاتة: رخام بعروق ناعمة، وخط ذهبي يرسم نفسه، ومنيو أقسام يعرض عدد الأصناف وأقل سعر وينفتح بحركة ناعمة."
+  },
+  "version": 1,
+  "heroSlider": { "kind": "band" },
+  "thumbnail": "/templates/marble/thumbnail.png",
+  "sample": "sweets",
+  "sectionsLayout": { "order": ["menu", "story", "visit"] },
+  "signature": {
+    "menu.layout": [
+      {"id":"slabs","base":"list","label":"Marble slabs","labelAr":"ألواح رخام","preview":"/templates/marble/previews/menu-slabs.svg"}
+    ],
+    "hero.variant": [
+      {"id":"vein","base":"type","label":"Gold vein","labelAr":"عرق ذهبي","preview":"/templates/marble/previews/hero-vein.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"noir","label":{"en":"Black marble","ar":"رخام أسود"},"values":{"theme":"noir","accent":"#C9A45C","font":"elegant","hero.variant":"auto","menu.layout":"auto","header.layout":"auto"}},
+    {"id":"carrara","label":{"en":"White marble","ar":"رخام أبيض"},"values":{"theme":"carrara","accent":"#8A6A2F","font":"elegant","hero.variant":"auto","menu.layout":"auto","header.layout":"auto"}},
+    {"id":"emerald","label":{"en":"Green onyx","ar":"عقيق أخضر"},"values":{"theme":"emerald","accent":"#D8B46A","font":"modern","hero.variant":"vein","menu.layout":"slabs","header.layout":"centered"}},
+    {"id":"cocoa","label":{"en":"Cocoa stone","ar":"حجر الكاكاو"},"values":{"theme":"cocoa","accent":"#E3B98A","font":"elegant","hero.variant":"type","menu.layout":"list","header.layout":"minimal"}},
+    {"id":"gallery","label":{"en":"Showcase","ar":"واجهة عرض"},"values":{"theme":"noir","accent":"#C9A45C","font":"modern","hero.variant":"vein","menu.layout":"grid","header.layout":"classic"}}
+  ],
+  "schema": [
+    {
+      "key": "font",
+      "type": "choice",
+      "label": "Font style",
+      "group": "Brand",
+      "options": ["elegant", "modern", "bold"],
+      "optionLabels": { "elegant": "Elegant", "modern": "Modern", "bold": "Bold" }
+    },
+    { "key": "logo", "type": "image", "label": "Logo", "group": "Brand" },
+    {
+      "key": "theme",
+      "type": "palette",
+      "label": "Color theme",
+      "group": "Brand",
+      "options": ["noir", "carrara", "emerald", "cocoa"],
+      "swatches": { "noir": "#111012", "carrara": "#F1EEEA", "emerald": "#0E1F1A", "cocoa": "#1E1411" }
+    },
+    {
+      "key": "accent",
+      "type": "color",
+      "label": "Gold color",
+      "group": "Brand",
+      "options": ["#C9A45C", "#D8B46A", "#8A6A2F", "#E3B98A"]
+    },
+    { "key": "photos", "type": "toggle", "label": "Small photos", "group": "Brand" },
+    { "key": "hero.eyebrow", "type": "text", "label": "Small line above the headline", "group": "Top", "max": 40 },
+    { "key": "hero.title", "type": "text", "label": "Headline", "group": "Top", "max": 60 },
+    { "key": "hero.subtitle", "type": "textarea", "label": "Text under the headline", "group": "Top", "max": 160 },
+    {
+      "key": "sections",
+      "type": "toggles",
+      "label": "Sections",
+      "group": "Sections",
+      "options": ["announcement", "story", "visit"],
+      "optionLabels": { "announcement": "Announcement bar", "story": "Our story", "visit": "Hours and contact" }
+    },
+    { "key": "announcement", "type": "text", "label": "Announcement", "group": "Sections", "max": 80 },
+    { "key": "story.title", "type": "text", "label": "Story headline", "group": "Our story", "max": 60 },
+    { "key": "story.text", "type": "textarea", "label": "Our story", "group": "Our story", "max": 400 },
+    { "key": "hours", "type": "hours", "label": "Opening hours", "group": "Visit and contact" }
+  ],
+  "defaults": {
+    "font": "elegant",
+    "logo": "",
+    "theme": "noir",
+    "accent": "#C9A45C",
+    "photos": true,
+    "hero.eyebrow": "Handmade every morning",
+    "hero.title": "Sweet things, finished by hand",
+    "hero.subtitle": "Chocolate tempered in small batches, cakes layered to order and ice cream churned fresh. Pick a category to see what is on the counter today.",
+    "sections": ["story", "visit"],
+    "announcement": "Order a whole cake a day ahead and we will write your message on it",
+    "story.title": "Made slowly, on purpose",
+    "story.text": "Everything starts on a cold stone counter: the chocolate is worked until it shines, the creams are whipped by hand and nothing leaves the kitchen until it looks as good as it tastes.",
+    "hours": {
+      "sat": "10:00-00:00",
+      "sun": "10:00-00:00",
+      "mon": "10:00-00:00",
+      "tue": "10:00-00:00",
+      "wed": "10:00-00:00",
+      "thu": "10:00-01:00",
+      "fri": "13:00-01:00"
+    }
+  },
+  "defaultsAr": {
+    "hero.eyebrow": "مصنوعة يدويًا كل صباح",
+    "hero.title": "حلويات تُنهى باليد",
+    "hero.subtitle": "شوكولاتة نحضّرها بكميات صغيرة، وكيك يُرتّب حسب الطلب، وبوظة طازجة كل يوم. اختر قسمًا لترى ما هو جاهز اليوم.",
+    "announcement": "اطلب كيكة كاملة قبل يوم ونكتب عليها رسالتك",
+    "story.title": "نصنعها على مهل، عن قصد",
+    "story.text": "كل شيء يبدأ على سطح حجري بارد: نشتغل الشوكولاتة حتى تلمع، ونخفق الكريمة باليد، ولا يخرج شيء من المطبخ حتى يكون شكله بجمال طعمه."
+  }
+}

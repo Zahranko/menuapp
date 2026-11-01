@@ -230,5 +230,13 @@
     "menu.layout": {
       "edit": "large"
     }
+  },
+  "marble": {
+    "menu.layout": {
+      "slabs": "list"
+    },
+    "hero.variant": {
+      "vein": "type"
+    }
   }
 }
