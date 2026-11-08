@@ -4,9 +4,31 @@
   "name": "Pulse",
   "category": "Gym, fitness studio",
   "description": "A high-energy site for a gym or studio: pricing cards with a most popular plan, a class list, first-week steps and a big join call.",
+  "ar": {
+    "name": "نبض",
+    "category": "نادٍ رياضي أو استوديو لياقة",
+    "description": "موقع مليء بالحيوية لنادٍ رياضي أو استوديو: بطاقات اشتراكات مع الأكثر طلبًا، وقائمة حصص، وخطوات الأسبوع الأول، ودعوة كبيرة للاشتراك."
+  },
   "version": 1,
+  "heroSlider": { "kind": "backdrop", "source": "hero.image" },
   "thumbnail": "/templates/pulse/thumbnail.png",
   "sample": "gym",
+  "sectionsLayout": { "order": ["highlights", "menu", "steps", "gallery", "reviews", "faq", "join", "visit"] },
+  "signature": {
+    "menu.layout": [
+      {"id":"plans","base":"large","label":"Membership plans","labelAr":"باقات الاشتراك","preview":"/templates/pulse/previews/menu-plans.svg"}
+    ],
+    "hero.variant": [
+      {"id":"scoreboard","base":"poster","label":"Scoreboard","labelAr":"لوحة النتائج","preview":"/templates/pulse/previews/hero-scoreboard.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"carbon","label":{"en":"Carbon gym","ar":"نادي الكربون"},"values":{"theme":"carbon","accent":"#FF4D1C","font":"condensed","hero.variant":"scoreboard","menu.layout":"plans","header.layout":"classic"}},
+    {"id":"volt","label":{"en":"Volt","ar":"فولت"},"values":{"theme":"volt","accent":"#C6FF00","font":"grotesk","hero.variant":"scoreboard","menu.layout":"plans","style.headings":"uppercase"}},
+    {"id":"chalk","label":{"en":"Chalk box","ar":"صندوق الطباشير"},"values":{"theme":"chalk","accent":"#E63946","font":"condensed","hero.variant":"poster","menu.layout":"plans","style.texture":"grain"}},
+    {"id":"steel","label":{"en":"Steel club","ar":"نادي الفولاذ"},"values":{"theme":"steel","accent":"#2EC4B6","font":"grotesk","hero.variant":"scoreboard","menu.layout":"list","style.buttons":"square"}},
+    {"id":"sprint","label":{"en":"Sprint","ar":"انطلاقة"},"values":{"theme":"carbon","accent":"#FFD60A","font":"condensed","hero.variant":"type","menu.layout":"plans","header.layout":"big","style.tracking":"tight"}}
+  ],
   "schema": [
     {
       "key": "font",
@@ -380,7 +402,7 @@
     "highlights.1.text": "Open early, every day",
     "highlights.2.title": "30+",
     "highlights.2.text": "Group classes a week",
-    "highlights.3.title": "0 JD",
+    "highlights.3.title": "Free",
     "highlights.3.text": "Joining fee",
     "steps.title": "Your first week",
     "steps.1.title": "Free tour",
@@ -414,5 +436,32 @@
       "thu": "06:00-23:00",
       "fri": "10:00-20:00"
     }
+  },
+  "defaultsAr": {
+    "hero.title": "أقوى كل أسبوع",
+    "hero.subtitle": "نادٍ مفتوح، و30 حصة جماعية في الأسبوع، ومدربون يعرفونك بالاسم. بلا عقود، وألغِ متى شئت.",
+    "book.message": "مرحبًا! أود أن أشترك:",
+    "services.title": "الاشتراكات والحصص",
+    "announcement": "للأعضاء الجدد: الحصة الأولى مجانًا هذا الشهر",
+    "highlights.1.title": "6 صباحًا",
+    "highlights.1.text": "نفتح باكرًا، كل يوم",
+    "highlights.2.title": "+30",
+    "highlights.2.text": "حصة جماعية في الأسبوع",
+    "highlights.3.title": "مجانًا",
+    "highlights.3.text": "رسوم الانتساب",
+    "steps.title": "أسبوعك الأول",
+    "steps.1.title": "جولة مجانية",
+    "steps.1.text": "تعال وشاهد النادي وتعرّف على أحد المدربين. بلا أي ضغط للاشتراك.",
+    "steps.2.title": "فحص الجسم",
+    "steps.2.text": "فحص سريع وحديث قصير عن أهدافك.",
+    "steps.3.title": "خطتك",
+    "steps.3.text": "احصل على خطة بسيطة لصالة التمارين واختر الحصص التي ستستمتع بها.",
+    "faq.1.q": "هل أحتاج إلى توقيع عقد؟",
+    "faq.1.a": "لا. ادفع شهرًا بشهر وتوقف متى شئت.",
+    "faq.2.q": "هل توجد أوقات مخصصة للسيدات؟",
+    "faq.2.a": "نعم، يوميًا من 10 صباحًا حتى 2 ظهرًا، مع مدربة في الصالة.",
+    "faq.3.q": "هل يتوفر موقف للسيارات؟",
+    "faq.3.a": "موقف مجاني للأعضاء في المبنى، والمدخل من الشارع الجانبي.",
+    "cta.title": "حصتك الأولى علينا"
   }
 }

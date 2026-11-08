@@ -1,12 +1,13 @@
 import { expect, test } from "@playwright/test";
+import { brand, demoSlug } from "../lib/brand";
 
 test("the sample site shows every section and works on this screen size", async ({ page }, info) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
 
-  await page.goto("/vanillamenu");
-  await expect(page).toHaveTitle(/Vanilla Menu/);
+  await page.goto(`/${demoSlug}`);
+  await expect(page).toHaveTitle(new RegExp(brand.brandName));
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Coffee worth crossing the city for.");
   for (const id of ["signature", "menu", "story", "gallery", "reviews", "visit"]) {
     await expect(page.locator(`#${id}`)).toBeVisible();
@@ -25,7 +26,7 @@ test("the sample site shows every section and works on this screen size", async 
   await page.locator("#menu-list").getByRole("button", { name: /Karak chai/ }).click();
   const dialog = page.getByRole("dialog");
   await expect(dialog).toContainText("Karak chai");
-  await expect(dialog).toContainText("2.50 JD");
+  await expect(dialog).toContainText("$2.50");
   await dialog.getByRole("button", { name: "Close" }).click();
   await expect(dialog).toBeHidden();
 
@@ -45,7 +46,7 @@ test("the sample site shows every section and works on this screen size", async 
   // Structured data is valid JSON with prices.
   const ld = JSON.parse((await page.locator('script[type="application/ld+json"]').textContent()) ?? "{}");
   expect(ld["@type"]).toBe("CafeOrCoffeeShop");
-  expect(ld.hasMenu.hasMenuSection[0].hasMenuItem[0].offers.price).toBe("3.50");
+  expect(ld.hasMenu.hasMenuSection[0].hasMenuItem[0].offers.price).toBe("3.5");
 
   await page.screenshot({ path: `test-results/souq-${info.project.name}.png`, fullPage: true });
   expect(errors).toEqual([]);

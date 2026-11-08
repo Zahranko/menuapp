@@ -6,8 +6,13 @@ namespace Storefront.Application.Media;
 
 public sealed record MediaDto(Guid Id, string Url, string ContentType, long SizeBytes);
 
-/// <summary>Stores a JPEG, PNG or WebP image up to 5 MB. The type is read from the file's first bytes, not trusted from the client.</summary>
-public sealed class UploadImageHandler(IFileStorage storage, IMediaRepository media, ICurrentUser user, IUnitOfWork uow, IAuditLog audit, IClock clock)
+/// <summary>
+/// Takes a JPEG, PNG or WebP photo up to 5 MB and stores a web-ready copy: at most 1600 px on its longest side,
+/// compressed to WebP (1 MB at most, usually far less) and stripped of camera metadata such as location.
+/// The type is read from the file's first bytes, not trusted from the client.
+/// </summary>
+public sealed class UploadImageHandler(
+    IFileStorage storage, IImageOptimizer optimizer, IMediaRepository media, ICurrentUser user, IUnitOfWork uow, IAuditLog audit, IClock clock)
 {
     public async Task<Result<MediaDto>> Handle(Stream content, long length, CancellationToken ct)
     {
@@ -16,20 +21,50 @@ public sealed class UploadImageHandler(IFileStorage storage, IMediaRepository me
             return Error.Unauthorized("auth.required", "Log in to continue.");
         }
 
+        var read = await PhotoUpload.ReadAsync(content, length, ct);
+        if (!read.IsSuccess)
+        {
+            return read.Error!;
+        }
+
+        var optimized = optimizer.Optimize(read.Value, MediaAsset.MaxSide, MediaAsset.MaxBytes);
+        if (!optimized.IsSuccess)
+        {
+            return optimized.Error!;
+        }
+
+        var image = optimized.Value;
+        var id = Guid.CreateVersion7();
+        var key = $"{businessId:N}/{id:N}{ImageSignature.Extension(image.ContentType)}";
+        using var output = new MemoryStream(image.Bytes, writable: false);
+        var stored = await storage.SaveAsync(key, output, image.ContentType, ct);
+
+        var asset = MediaAsset.Create(businessId, stored.Url, image.ContentType, image.Bytes.Length, clock.UtcNow);
+        media.Add(asset);
+        audit.Record("upload", nameof(MediaAsset), asset.Id.ToString());
+        await uow.SaveChangesAsync(ct);
+        return new MediaDto(asset.Id, asset.Url, asset.ContentType, asset.SizeBytes);
+    }
+}
+
+/// <summary>Reads an uploaded photo for any feature that takes one: JPEG, PNG or WebP (by its first bytes, not the client's word), up to 5 MB.</summary>
+public static class PhotoUpload
+{
+    public static async Task<Result<ReadOnlyMemory<byte>>> ReadAsync(Stream content, long length, CancellationToken ct)
+    {
         if (length <= 0)
         {
             return Error.Validation("media.empty", "Choose a photo to upload.", "file");
         }
 
-        if (length > MediaAsset.MaxBytes)
+        if (length > MediaAsset.MaxUploadBytes)
         {
             return Error.Validation("media.size", "Images can be up to 5 MB.", "file");
         }
 
         var header = new byte[12];
         var read = await content.ReadAtLeastAsync(header, header.Length, throwOnEndOfStream: false, ct);
-        var contentType = ImageSignature.Detect(header.AsSpan(0, read));
-        if (contentType is null)
+        if (ImageSignature.Detect(header.AsSpan(0, read)) is null)
         {
             return Error.Validation("media.type", "Upload a JPEG, PNG or WebP image.", "file");
         }
@@ -37,21 +72,12 @@ public sealed class UploadImageHandler(IFileStorage storage, IMediaRepository me
         var buffer = new MemoryStream();
         buffer.Write(header, 0, read);
         await content.CopyToAsync(buffer, ct);
-        if (buffer.Length > MediaAsset.MaxBytes)
+        if (buffer.Length > MediaAsset.MaxUploadBytes)
         {
             return Error.Validation("media.size", "Images can be up to 5 MB.", "file");
         }
 
-        buffer.Position = 0;
-        var id = Guid.CreateVersion7();
-        var key = $"{businessId:N}/{id:N}{ImageSignature.Extension(contentType)}";
-        var stored = await storage.SaveAsync(key, buffer, contentType, ct);
-
-        var asset = MediaAsset.Create(businessId, stored.Url, contentType, buffer.Length, clock.UtcNow);
-        media.Add(asset);
-        audit.Record("upload", nameof(MediaAsset), asset.Id.ToString());
-        await uow.SaveChangesAsync(ct);
-        return new MediaDto(asset.Id, asset.Url, asset.ContentType, asset.SizeBytes);
+        return (ReadOnlyMemory<byte>)buffer.GetBuffer().AsMemory(0, (int)buffer.Length);
     }
 }
 

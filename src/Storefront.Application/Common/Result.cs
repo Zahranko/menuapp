@@ -9,6 +9,15 @@ public enum ErrorType
     Conflict,
     Unauthorized,
     Forbidden,
+
+    /// <summary>A monthly allowance is used up (429).</summary>
+    LimitReached,
+
+    /// <summary>A feature that is switched off or an outside service that is busy (503).</summary>
+    Unavailable,
+
+    /// <summary>An outside service failed or answered with something unusable (502).</summary>
+    Upstream,
 }
 
 /// <summary>An expected failure. <see cref="Code"/> is stable for clients; <see cref="Fields"/> maps input names to messages.</summary>
@@ -28,6 +37,12 @@ public sealed record Error(string Code, string Message, ErrorType Type, IReadOnl
     public static Error Unauthorized(string code, string message) => new(code, message, ErrorType.Unauthorized);
 
     public static Error Forbidden(string code, string message) => new(code, message, ErrorType.Forbidden);
+
+    public static Error LimitReached(string code, string message) => new(code, message, ErrorType.LimitReached);
+
+    public static Error Unavailable(string code, string message) => new(code, message, ErrorType.Unavailable);
+
+    public static Error Upstream(string code, string message) => new(code, message, ErrorType.Upstream);
 
     public static Error FromDomain(DomainException ex) => Validation(ex.Code, ex.Message, ex.Field);
 }

@@ -1,5 +1,15 @@
 /* Template 004 "Arch Story": a sweet-shop magazine. Arched pictures, menu chapters, cards you swipe. */
 
+@import "../_kit/logo.css";
+@import "../_kit/options.css";
+@import "../_kit/cards.css";
+@import "../_kit/hero.css";
+@import "../_kit/layout.css";
+@import "../_kit/menu.css";
+@import "../_kit/sections.css";
+@import "../_kit/style.css";
+@import "./signature.css";
+
 .t-arch {
   container: page / inline-size;
   font-size: 15.5px;
@@ -138,7 +148,7 @@
 
   /* picks: swipe cards */
   .picks {
-    padding: 30px 0 20px;
+    padding: calc(30px * var(--kit-space, 1)) 0 calc(20px * var(--kit-space, 1));
     text-align: center;
   }
   .picks h2 {
@@ -202,10 +212,10 @@
 
   /* chapters */
   .chapters {
-    padding: 20px 18px 10px;
+    padding: calc(20px * var(--kit-space, 1)) 18px calc(10px * var(--kit-space, 1));
   }
   .chapter {
-    padding: 34px 0 10px;
+    padding: calc(34px * var(--kit-space, 1)) 0 calc(10px * var(--kit-space, 1));
     border-top: 1px solid var(--line);
     scroll-margin-top: 12px;
   }
@@ -281,8 +291,8 @@
     display: grid;
     gap: 26px;
     align-items: center;
-    margin: 40px 0 0;
-    padding: 48px 18px;
+    margin: calc(40px * var(--kit-space, 1)) 0 0;
+    padding: calc(48px * var(--kit-space, 1)) 18px;
     background: var(--surf);
     scroll-margin-top: 12px;
   }
@@ -303,7 +313,7 @@
 
   /* reviews */
   .reviews {
-    padding: 48px 0 20px;
+    padding: calc(48px * var(--kit-space, 1)) 0 calc(20px * var(--kit-space, 1));
     text-align: center;
   }
   .quotes {
@@ -333,7 +343,7 @@
 
   /* visit */
   .visit {
-    padding: 48px 18px 20px;
+    padding: calc(48px * var(--kit-space, 1)) 18px calc(20px * var(--kit-space, 1));
     scroll-margin-top: 12px;
   }
   .visit > h2 {
@@ -363,8 +373,17 @@
     margin-top: 18px;
   }
 
+  /* Social accounts the owner shows (_kit/options.css draws the round icon links). */
+  .foot-social {
+    justify-content: center;
+    margin-bottom: 16px;
+    color: var(--acc-text);
+  }
+  .foot-social a {
+    border-color: color-mix(in srgb, currentColor 40%, transparent);
+  }
   .foot {
-    padding: 50px 18px 26px;
+    padding: calc(50px * var(--kit-space, 1)) 18px calc(26px * var(--kit-space, 1));
     color: var(--muted);
     text-align: center;
   }
@@ -405,13 +424,13 @@
       gap: 32px;
     }
     .chapters {
-      padding: 30px max(40px, calc((100cqi - 1180px) / 2));
+      padding: calc(30px * var(--kit-space, 1)) max(40px, calc((100cqi - 1180px) / 2));
     }
     .chapter {
       display: grid;
       grid-template-columns: 280px 1fr;
       gap: 48px;
-      padding: 56px 0 30px;
+      padding: calc(56px * var(--kit-space, 1)) 0 calc(30px * var(--kit-space, 1));
     }
     .chapter-head {
       position: sticky;
@@ -428,7 +447,7 @@
     .story {
       grid-template-columns: 0.8fr 1fr;
       gap: 70px;
-      padding: 80px max(40px, calc((100cqi - 1180px) / 2));
+      padding: calc(80px * var(--kit-space, 1)) max(40px, calc((100cqi - 1180px) / 2));
     }
     .story-arch {
       width: 100%;

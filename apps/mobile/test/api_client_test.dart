@@ -43,6 +43,21 @@ void main() {
       expect(api.requests.map((r) => r.path), ['/api/v1/me', '/api/v1/auth/refresh']);
     });
 
+    test('a refresh the server cannot answer keeps the tokens', () async {
+      final tokens = MemoryTokenStore();
+      await tokens.save(access: 'old', refresh: 'refresh-old');
+      var signedOut = false;
+      final api = FakeApi((r) => r.path == '/api/v1/auth/refresh'
+          ? (status: 503, body: {'title': 'Service Unavailable'})
+          : (status: 401, body: {'title': 'Unauthorized'}));
+      final dio = createApiClient(baseUrl: 'https://api.test', tokens: tokens, adapter: api, onSignedOut: () => signedOut = true);
+
+      await expectLater(dio.get<void>('/api/v1/me'), throwsA(isA<DioException>()));
+
+      expect(await tokens.read(), (access: 'old', refresh: 'refresh-old'));
+      expect(signedOut, isFalse);
+    });
+
     test('parallel 401s share one refresh', () async {
       final tokens = MemoryTokenStore();
       await tokens.save(access: 'old', refresh: 'refresh-old');

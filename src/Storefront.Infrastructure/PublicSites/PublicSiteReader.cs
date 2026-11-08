@@ -56,18 +56,22 @@ internal sealed class PublicSiteReader(StorefrontDbContext db) : IPublicSiteRead
             .Where(p => p.BusinessId == business.Id).OrderBy(p => p.SortOrder).ThenBy(p => p.CreatedAt).ToListAsync(ct);
         var domains = await db.CustomDomains.AsNoTracking().Where(d => d.BusinessId == business.Id).Select(d => d.Domain).ToListAsync(ct);
 
+        // Flat list in SortOrder. Empty categories are hidden, but a main category stays when any of its
+        // sub-categories has products (templates with category pages link from it to the sub-category pages).
         var byCategory = products.ToLookup(p => p.CategoryId);
+        var parentsWithProducts = categories.Where(c => c.ParentId is not null && byCategory[c.Id].Any()).Select(c => c.ParentId!.Value).ToHashSet();
         var visible = categories
-            .Where(c => byCategory[c.Id].Any())
-            .Select(c => new PublicCategoryDto(c.Id, c.Name, byCategory[c.Id]
-                .Select(p => new PublicProductDto(p.Id, p.Name, p.Description, p.Price, p.ImageUrl, p.Label, p.IsAvailable, p.IsFeatured))
+            .Where(c => byCategory[c.Id].Any() || parentsWithProducts.Contains(c.Id))
+            .Select(c => new PublicCategoryDto(c.Id, c.Name, c.ParentId, byCategory[c.Id]
+                .Select(p => new PublicProductDto(p.Id, p.Name, p.Description, p.Price, p.ImageUrl, p.Label, p.IsAvailable, p.IsFeatured, p.CustomLabel, p.CustomLabelAr))
                 .ToList()))
             .ToList();
 
         var settingsJson = draft ? site.DraftSettings : site.PublishedSettings!;
         return new PublicSiteDto(
             new PublicBusinessDto(business.Name, business.Slug.Value, business.WhatsApp?.Value, business.Email, business.Address, business.Instagram,
-                business.Locale, business.CurrencyCode, business.TimeZone, domains),
+                business.Locale, business.CurrencyCode, business.TimeZone, domains,
+                business.Phone?.Value, business.Facebook, business.TikTok, business.Snapchat),
             draft ? site.TemplateId : site.PublishedTemplateId ?? site.TemplateId,
             JsonDocument.Parse(settingsJson).RootElement.Clone(),
             visible,

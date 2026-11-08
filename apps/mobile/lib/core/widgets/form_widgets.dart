@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../l10n/generated/app_localizations.dart';
+import '../region.dart';
 import '../theme.dart';
 
 /// A label above a text field, with the error shown under it.
@@ -19,6 +20,7 @@ class LabeledField extends StatelessWidget {
     this.onChanged,
     this.textInputAction = TextInputAction.next,
     this.fieldKey,
+    this.icon,
   });
 
   final String label;
@@ -34,13 +36,22 @@ class LabeledField extends StatelessWidget {
   final TextInputAction textInputAction;
   final Key? fieldKey;
 
+  /// A small icon at the start of the field, when there is no [prefix].
+  final IconData? icon;
+
+  /// Phone numbers, emails and links are typed left to right even in Arabic, so "079 123 4567"
+  /// keeps its digit groups in order; in a right-to-left layout they still sit on the right.
+  static const _ltrTypes = [TextInputType.phone, TextInputType.emailAddress, TextInputType.url];
+
   @override
   Widget build(BuildContext context) {
+    final ltr = _ltrTypes.contains(keyboardType);
+    final rtlLayout = Directionality.of(context) == TextDirection.rtl;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(label, style: TextStyle(fontWeight: FontWeight.w600, color: BrandColors.ink)),
-        const SizedBox(height: 6),
+        Text(label, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13.5, color: BrandColors.ink)),
+        const SizedBox(height: 8),
         TextField(
           key: fieldKey,
           controller: controller,
@@ -49,7 +60,16 @@ class LabeledField extends StatelessWidget {
           autofillHints: autofillHints,
           textInputAction: textInputAction,
           onChanged: onChanged,
-          decoration: InputDecoration(hintText: hint, errorText: error, errorMaxLines: 3, suffixIcon: suffix, prefixIcon: prefix),
+          textDirection: ltr ? TextDirection.ltr : null,
+          textAlign: ltr && rtlLayout ? TextAlign.end : TextAlign.start,
+          decoration: InputDecoration(
+            hintTextDirection: ltr ? TextDirection.ltr : null,
+            hintText: hint,
+            errorText: error,
+            errorMaxLines: 3,
+            suffixIcon: suffix,
+            prefixIcon: prefix ?? (icon == null ? null : Icon(icon, size: 20, color: BrandColors.muted)),
+          ),
         ),
       ],
     );
@@ -87,17 +107,15 @@ class _PasswordFieldState extends State<PasswordField> {
       onChanged: widget.onChanged,
       textInputAction: TextInputAction.done,
       autofillHints: [widget.newPassword ? AutofillHints.newPassword : AutofillHints.password],
+      icon: Icons.lock_outline_rounded,
       suffix: IconButton(
         tooltip: _shown ? t.hidePassword : t.showPassword,
-        icon: Icon(_shown ? Icons.visibility_off_outlined : Icons.visibility_outlined),
+        icon: Icon(_shown ? Icons.visibility_off_outlined : Icons.visibility_outlined, size: 20, color: BrandColors.muted),
         onPressed: () => setState(() => _shown = !_shown),
       ),
     );
   }
 }
-
-/// Country codes offered in the prototype; Jordan first.
-const countryCodes = ['+962', '+966', '+971', '+974', '+965', '+20', '+1', '+44'];
 
 /// Country code picker and local number. [e164] joins them the way the API expects.
 class PhoneField extends StatelessWidget {
@@ -110,7 +128,7 @@ class PhoneField extends StatelessWidget {
   final String? error;
   final ValueChanged<String>? onChanged;
 
-  /// "+962" and "079 123 4567" become "+962791234567".
+  /// "+44" and "07911 123456" become "+447911123456".
   static String e164(String code, String local) => '$code${local.replaceAll(RegExp(r'\D'), '').replaceFirst(RegExp(r'^0+'), '')}';
 
   @override
@@ -159,7 +177,7 @@ class BusyButton extends StatelessWidget {
           ? Row(mainAxisSize: MainAxisSize.min, children: [
               const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white)),
               const SizedBox(width: 10),
-              Text(busyLabel),
+              Flexible(child: Text(busyLabel, overflow: TextOverflow.ellipsis)),
             ])
           : Text(label),
     );
@@ -176,10 +194,69 @@ class FormTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text(title, style: TextStyle(fontSize: 30, fontWeight: FontWeight.w800, color: BrandColors.ink, height: 1.1)),
-      const SizedBox(height: 8),
-      Text(subtitle, style: TextStyle(fontSize: 15, color: BrandColors.muted)),
+      Text(title, style: Ui.display(context, 32)),
+      const SizedBox(height: 10),
+      Text(subtitle, style: TextStyle(fontSize: 15.5, height: 1.45, color: BrandColors.muted)),
     ]);
+  }
+}
+
+/// The top of the sign-up and log-in screens: a round back button, an optional [action] and the brand wordmark.
+class AuthHeader extends StatelessWidget implements PreferredSizeWidget {
+  const AuthHeader({super.key, required this.onBack, required this.wordmark, this.action});
+
+  final VoidCallback onBack;
+  final Widget wordmark;
+
+  /// Shown before the wordmark, like the language switch.
+  final Widget? action;
+
+  @override
+  Size get preferredSize => const Size.fromHeight(64);
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      bottom: false,
+      child: Padding(
+        padding: const EdgeInsetsDirectional.fromSTEB(16, 10, 24, 6),
+        child: Row(children: [
+          RoundIconButton(icon: Icons.arrow_back_rounded, tooltip: MaterialLocalizations.of(context).backButtonTooltip, onPressed: onBack),
+          Expanded(
+            child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+              if (action != null) ...[action!, const SizedBox(width: 6)],
+              // Shrinks rather than overflows on narrow phones or with long language labels.
+              Flexible(child: FittedBox(fit: BoxFit.scaleDown, alignment: AlignmentDirectional.centerEnd, child: wordmark)),
+            ]),
+          ),
+        ]),
+      ),
+    );
+  }
+}
+
+/// A white circular icon button with a hairline border, used for back and refresh.
+class RoundIconButton extends StatelessWidget {
+  const RoundIconButton({super.key, required this.icon, required this.onPressed, this.tooltip, this.dark = false});
+
+  final IconData icon;
+  final VoidCallback? onPressed;
+  final String? tooltip;
+  final bool dark;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      tooltip: tooltip,
+      onPressed: onPressed,
+      style: IconButton.styleFrom(
+        fixedSize: const Size(44, 44),
+        backgroundColor: dark ? Colors.white.withValues(alpha: 0.1) : Colors.white,
+        foregroundColor: dark ? Colors.white : BrandColors.ink,
+        side: BorderSide(color: dark ? Colors.white.withValues(alpha: 0.18) : BrandColors.line),
+      ),
+      icon: Icon(icon, size: 21, textDirection: Directionality.of(context)),
+    );
   }
 }
 

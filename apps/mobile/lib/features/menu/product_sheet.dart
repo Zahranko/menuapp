@@ -1,0 +1,395 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../core/api/api_error.dart';
+import '../../core/currency.dart';
+import '../../core/providers.dart';
+import '../../core/theme.dart';
+import '../../core/widgets/form_widgets.dart';
+import '../../core/widgets/ui.dart';
+import '../../l10n/generated/app_localizations.dart';
+import '../auth/auth_controller.dart';
+import 'catalog_controller.dart';
+import 'category_sheet.dart';
+import 'menu_models.dart';
+import 'products_tab.dart';
+
+/// Opens the add or edit product sheet. With no categories yet, asks for one first.
+Future<void> openProductSheet(BuildContext context, Product? product) async {
+  final container = ProviderScope.containerOf(context);
+  final catalog = container.read(catalogProvider).value;
+  if (catalog == null) return;
+  final t = AppLocalizations.of(context);
+  if (catalog.categories.isEmpty) {
+    showMessage(context, t.addCategoryFirst);
+    await openCategorySheet(context, null);
+    return;
+  }
+  final message = await showFormSheet<String>(context, (_) => ProductSheet(product: product, categories: catalog.categories));
+  if (message != null && context.mounted) showMessage(context, message);
+}
+
+/// Photo, name, description, price, category, label, availability and Signature picks. Validates like the API.
+class ProductSheet extends ConsumerStatefulWidget {
+  const ProductSheet({super.key, this.product, required this.categories});
+
+  final Product? product;
+  final List<Category> categories;
+
+  @override
+  ConsumerState<ProductSheet> createState() => _ProductSheetState();
+}
+
+class _ProductSheetState extends ConsumerState<ProductSheet> {
+  late final _name = TextEditingController(text: widget.product?.name ?? '');
+  late final _description = TextEditingController(text: widget.product?.description ?? '');
+  late final _price = TextEditingController(text: widget.product == null ? '' : _currency.inputText(widget.product!.price));
+  late String _categoryId = widget.product?.categoryId ?? widget.categories.inDisplayOrder.first.id;
+  late String? _label = widget.product?.label;
+  late final _customLabel = TextEditingController(text: widget.product?.customLabel ?? '');
+  late final _customLabelAr = TextEditingController(text: widget.product?.customLabelAr ?? '');
+  late bool _available = widget.product?.isAvailable ?? true;
+  late bool _featured = widget.product?.isFeatured ?? false;
+  late String? _imageUrl = widget.product?.imageUrl;
+  Map<String, String> _errors = {};
+  bool _busy = false;
+  bool _uploading = false;
+  bool _confirmDelete = false;
+
+  bool get _editing => widget.product != null;
+
+  /// The business currency: its sign shows in the price field and its decimals limit what can be typed.
+  Currency get _currency => currencyFor(switch (ref.read(authControllerProvider)) {
+        SignedIn(:final business) => business.currencyCode,
+        _ => defaultCurrencyCode,
+      });
+
+  @override
+  void dispose() {
+    _name.dispose();
+    _description.dispose();
+    _price.dispose();
+    _customLabel.dispose();
+    _customLabelAr.dispose();
+    super.dispose();
+  }
+
+  /// Checks the name, price and custom label the same way the API does, so most mistakes show without a round trip.
+  static Map<String, String> validate(AppLocalizations t, String name, String price, Currency currency,
+      {String? label, String customLabel = '', String customLabelAr = ''}) {
+    final errors = <String, String>{};
+    if (label == customLabelKey && normalizeCustomLabel(customLabel) == null && normalizeCustomLabel(customLabelAr) == null) {
+      errors['customLabel'] = t.errCustomLabel;
+    }
+    if (name.trim().isEmpty) errors['name'] = t.errProductName;
+    final p = price.trim().replaceAll(',', '.');
+    if (p.isEmpty) {
+      errors['price'] = t.errPrice;
+    } else if (!currency.acceptsPrice(p)) {
+      errors['price'] = currency.decimals == 0 ? t.errPriceWhole : t.errPriceFormat(currency.decimals);
+    }
+    return errors;
+  }
+
+  Future<void> _pickPhoto() async {
+    final t = AppLocalizations.of(context);
+    final photo = await pickPhoto();
+    if (photo == null) return;
+    setState(() => _uploading = true);
+    try {
+      final url = await ref.read(menuRepositoryProvider).uploadImage(photo.bytes, photo.name);
+      if (mounted) setState(() => _imageUrl = url);
+    } catch (e) {
+      if (mounted) showMessage(context, errorText(t, e));
+    } finally {
+      if (mounted) setState(() => _uploading = false);
+    }
+  }
+
+  Future<void> _save() async {
+    final t = AppLocalizations.of(context);
+    final errors = validate(t, _name.text, _price.text, _currency, label: _label, customLabel: _customLabel.text, customLabelAr: _customLabelAr.text);
+    setState(() => _errors = errors);
+    if (errors.isNotEmpty) return;
+    setState(() => _busy = true);
+    try {
+      await ref.read(catalogProvider.notifier).saveProduct(
+            widget.product?.id,
+            ProductInput(
+              categoryId: _categoryId,
+              name: _name.text.trim(),
+              description: _description.text.trim().isEmpty ? null : _description.text.trim(),
+              price: _price.text.trim().replaceAll(',', '.'),
+              label: _label,
+              customLabel: _customLabel.text,
+              customLabelAr: _customLabelAr.text,
+              isAvailable: _available,
+              isFeatured: _featured,
+              imageUrl: _imageUrl,
+            ),
+          );
+      if (mounted) Navigator.pop(context, _editing ? t.savedLive : t.addedLive);
+    } on ApiError catch (e) {
+      if (!mounted) return;
+      setState(() => _errors = {
+            if (e.field('name') != null) 'name': e.field('name')!,
+            if (e.field('price') != null) 'price': e.field('price')!,
+            if (e.field('customLabel') != null) 'customLabel': e.field('customLabel')!,
+            if (e.field('customLabelAr') != null) 'customLabelAr': e.field('customLabelAr')!,
+          });
+      if (_errors.isEmpty) showMessage(context, errorText(t, e));
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  Future<void> _delete() async {
+    final t = AppLocalizations.of(context);
+    setState(() => _busy = true);
+    try {
+      await ref.read(catalogProvider.notifier).deleteProduct(widget.product!.id);
+      if (mounted) Navigator.pop(context, t.productDeleted);
+    } catch (e) {
+      if (mounted) showMessage(context, errorText(t, e));
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
+    ref.watch(authControllerProvider);
+    final currency = _currency;
+    final ordered = widget.categories.inDisplayOrder;
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      Text(_editing ? t.editProduct : t.newProduct, style: Ui.display(context, 26)),
+      const SizedBox(height: 6),
+      Text(_editing ? t.editProductSub : t.newProductSub, style: TextStyle(color: BrandColors.muted, fontSize: 14.5)),
+      const SizedBox(height: 18),
+      Row(children: [
+        GestureDetector(
+          onTap: _uploading ? null : _pickPhoto,
+          child: ProductThumb(name: _name.text, imageUrl: _imageUrl, size: 84, radius: 20),
+        ),
+        const SizedBox(width: 14),
+        Expanded(
+          child: Wrap(spacing: 8, runSpacing: 8, children: [
+            LightButton(
+              label: _uploading ? t.uploading : (_imageUrl == null ? t.uploadPhoto : t.changePhoto),
+              icon: Icons.photo_outlined,
+              onPressed: _uploading ? null : _pickPhoto,
+            ),
+            if (_imageUrl != null) LightButton(label: t.remove, onPressed: () => setState(() => _imageUrl = null)),
+          ]),
+        ),
+      ]),
+      const SizedBox(height: 14),
+      LabeledField(fieldKey: const Key('productName'), label: t.productName, hint: t.productNameHint, controller: _name, error: _errors['name'],
+          onChanged: (_) => setState(() => _errors.remove('name'))),
+      const SizedBox(height: 12),
+      Text(t.descriptionOptional, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13.5, color: BrandColors.ink)),
+      const SizedBox(height: 8),
+      TextField(controller: _description, maxLines: 2, maxLength: 140, decoration: InputDecoration(hintText: t.descriptionHint)),
+      const SizedBox(height: 4),
+      Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Expanded(
+          child: LabeledField(
+            fieldKey: const Key('productPrice'),
+            label: t.price,
+            hint: currency.hint,
+            controller: _price,
+            error: _errors['price'],
+            keyboardType: TextInputType.numberWithOptions(decimal: currency.decimals > 0),
+            suffix: Padding(padding: const EdgeInsets.all(14), child: Text(currency.symbolFor(context), style: TextStyle(color: BrandColors.muted))),
+            onChanged: (_) => setState(() => _errors.remove('price')),
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            Text(t.category, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13.5, color: BrandColors.ink)),
+            const SizedBox(height: 8),
+            DropdownButtonFormField<String>(
+              key: const Key('productCategory'),
+              initialValue: _categoryId,
+              isExpanded: true,
+              // In the list, sub-categories sit indented under their main category; once chosen they read "Coffee › Hot drinks".
+              selectedItemBuilder: (context) => [
+                for (final c in ordered) Text(categoryLabel(t, c, widget.categories), maxLines: 1, overflow: TextOverflow.ellipsis),
+              ],
+              items: [
+                for (final c in ordered)
+                  DropdownMenuItem(
+                    value: c.id,
+                    child: c.isSub && widget.categories.parentOf(c) != null
+                        ? Padding(
+                            padding: const EdgeInsetsDirectional.only(start: 14),
+                            child: Row(children: [
+                              // This icon doesn't mirror by itself: point it the reading way.
+                              Icon(
+                                Directionality.of(context) == TextDirection.rtl ? Icons.subdirectory_arrow_left_rounded : Icons.subdirectory_arrow_right_rounded,
+                                size: 16,
+                                color: BrandColors.muted,
+                              ),
+                              const SizedBox(width: 6),
+                              Expanded(child: Text(c.name, overflow: TextOverflow.ellipsis)),
+                            ]),
+                          )
+                        : Text(c.name, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.w600)),
+                  ),
+              ],
+              onChanged: (v) => setState(() => _categoryId = v ?? _categoryId),
+            ),
+          ]),
+        ),
+      ]),
+      const SizedBox(height: 12),
+      Text(t.label, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13.5, color: BrandColors.ink)),
+      const SizedBox(height: 8),
+      Wrap(spacing: 8, runSpacing: 8, children: [
+        for (final l in [null, ...productLabels])
+          ChoiceChip(
+            key: Key('label-${l ?? 'none'}'),
+            label: Text(l == null ? t.noLabel : productLabelText(t, l)),
+            avatar: l == customLabelKey ? const Icon(Icons.edit_outlined, size: 16) : null,
+            selected: _label == l,
+            showCheckmark: false,
+            onSelected: (_) => setState(() {
+              _label = l;
+              _errors.remove('customLabel');
+            }),
+          ),
+      ]),
+      if (_label == customLabelKey) ...[
+        const SizedBox(height: 12),
+        _CustomLabelFields(english: _customLabel, arabic: _customLabelAr, error: _errors['customLabel'], errorAr: _errors['customLabelAr'],
+            onChanged: () => setState(() => _errors..remove('customLabel')..remove('customLabelAr'))),
+      ],
+      const SizedBox(height: 16),
+      AppCard(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        child: Column(children: [
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            title: Text(t.available),
+            subtitle: Text(t.availableHelp),
+            value: _available,
+            onChanged: (v) => setState(() => _available = v),
+          ),
+          const Divider(),
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            title: Text(t.featureSignature),
+            subtitle: Text(t.featureSignatureHelp),
+            value: _featured,
+            onChanged: (v) => setState(() => _featured = v),
+          ),
+        ]),
+      ),
+      const SizedBox(height: 18),
+      if (_confirmDelete)
+        ConfirmBox(
+          title: t.deleteProductTitle(widget.product!.name),
+          body: t.deleteProductBody,
+          busy: _busy,
+          onKeep: () => setState(() => _confirmDelete = false),
+          onDelete: _delete,
+        )
+      else ...[
+        BusyButton(label: _editing ? t.saveChanges : t.addProduct, busyLabel: t.saving, busy: _busy || _uploading, onPressed: _save),
+        const SizedBox(height: 10),
+        _editing
+            ? LightButton(label: t.deleteProduct, danger: true, onPressed: () => setState(() => _confirmDelete = true))
+            : LightButton(label: t.cancel, onPressed: () => Navigator.pop(context)),
+      ],
+    ]);
+  }
+}
+
+/// The text of a custom label, in English and in Arabic (each typed in its own direction), up to 24 characters.
+class _CustomLabelFields extends StatelessWidget {
+  const _CustomLabelFields({required this.english, required this.arabic, required this.onChanged, this.error, this.errorAr});
+
+  final TextEditingController english;
+  final TextEditingController arabic;
+  final VoidCallback onChanged;
+  final String? error;
+  final String? errorAr;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
+    Widget field(Key key, String label, String hint, TextEditingController c, TextDirection dir, String? error) => Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(label, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: BrandColors.muted)),
+            const SizedBox(height: 6),
+            TextField(
+              key: key,
+              controller: c,
+              maxLength: customLabelMax,
+              textDirection: dir,
+              textInputAction: TextInputAction.next,
+              // One line: the badge never wraps a typed line break.
+              inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'[\n\r\t]'))],
+              decoration: InputDecoration(hintText: hint, hintTextDirection: dir, errorText: error),
+              onChanged: (_) => onChanged(),
+            ),
+          ],
+        );
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      Text(t.customLabelText, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13.5, color: BrandColors.ink)),
+      const SizedBox(height: 4),
+      Text(t.customLabelHelp, style: TextStyle(color: BrandColors.muted, fontSize: 13)),
+      const SizedBox(height: 10),
+      field(const Key('customLabel'), t.customLabelEnglish, t.customLabelHintEn, english, TextDirection.ltr, error),
+      field(const Key('customLabelAr'), t.customLabelArabic, t.customLabelHintAr, arabic, TextDirection.rtl, errorAr),
+    ]);
+  }
+}
+
+/// The inline "Delete …?" step with Keep it and Delete, shared by the product and category sheets.
+class ConfirmBox extends StatelessWidget {
+  const ConfirmBox({super.key, required this.title, required this.body, required this.busy, required this.onKeep, required this.onDelete, this.child});
+
+  final String title;
+  final String body;
+  final bool busy;
+  final VoidCallback onKeep;
+  final VoidCallback onDelete;
+  final Widget? child;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: BrandColors.highlight.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: BrandColors.highlight.withValues(alpha: 0.35)),
+      ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Text(title, style: TextStyle(fontWeight: FontWeight.w800, color: BrandColors.ink, fontSize: 16)),
+        if (child != null) ...[const SizedBox(height: 10), child!],
+        const SizedBox(height: 6),
+        Text(body, style: TextStyle(color: BrandColors.muted)),
+        const SizedBox(height: 12),
+        Row(children: [
+          Expanded(child: LightButton(label: t.keepIt, onPressed: busy ? null : onKeep)),
+          const SizedBox(width: 10),
+          Expanded(
+            child: FilledButton(
+              key: const Key('confirmDelete'),
+              style: FilledButton.styleFrom(backgroundColor: BrandColors.highlight, minimumSize: const Size(0, 46)),
+              onPressed: busy ? null : onDelete,
+              child: Text(t.delete),
+            ),
+          ),
+        ]),
+      ]),
+    );
+  }
+}

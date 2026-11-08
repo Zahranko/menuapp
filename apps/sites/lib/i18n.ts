@@ -105,6 +105,19 @@ export function label(value: string, locale: string): string {
   return locale === "ar" ? (labelsAr[value] ?? value) : value;
 }
 
+type Labelled = { label?: string | null; customLabel?: string | null; customLabelAr?: string | null };
+
+/**
+ * A product's badge text in the site's language, or null for no badge. A "Custom" label shows the owner's text as typed:
+ * Arabic sites prefer the Arabic text, English sites the English one, each falling back to the other.
+ */
+export function productLabel(p: Labelled, locale: string): string | null {
+  if (!p.label) return null;
+  if (p.label !== "Custom") return label(p.label, locale);
+  const [first, second] = locale === "ar" ? [p.customLabelAr, p.customLabel] : [p.customLabel, p.customLabelAr];
+  return first?.trim() || second?.trim() || null;
+}
+
 export function madeWith(locale: string): string {
   return withBrand(strings(locale).madeWith);
 }

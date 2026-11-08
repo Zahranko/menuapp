@@ -1,0 +1,84 @@
+/*
+ * Marble's own layout options (manifest "signature", _kit/signatures.ts):
+ *   menu.layout  "slabs"  the shared list on marble slabs: each category a framed panel, gold prices (base: "list")
+ *   hero.variant "vein"   the shared type opening with a gold line that draws itself under the headline (base: "type")
+ */
+
+/* ---------- marble slabs ---------- */
+[data-template="marble"] .kit-mn.kit-mn.kit-mn[data-sig~="slabs"] {
+  & .kit-mn-cats {
+    gap: 14px;
+  }
+  & .kit-mn-cat {
+    padding: 18px 18px 6px;
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    background: color-mix(in srgb, var(--surf) 82%, transparent);
+    transition: border-color 0.5s ease;
+  }
+  & .kit-mn-cat:hover {
+    border-color: color-mix(in srgb, var(--acc) 45%, transparent);
+  }
+  & .kit-mn-title {
+    border: 0;
+    padding-bottom: 6px;
+    font-family: var(--k-fd);
+  }
+  & .kit-mn-item {
+    border: 0;
+    border-top: 1px solid var(--k-line);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+  & .kit-mn-media {
+    border-radius: 50%;
+  }
+  & .kit-mn-name {
+    font-family: var(--k-fd);
+  }
+  & .kit-mn-price {
+    color: var(--k-acc-text);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* ---------- gold vein ---------- */
+[data-template="marble"] .kit-hv.kit-hv[data-sig~="vein"] {
+  & .kit-hv-eyebrow {
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--k-acc-text);
+  }
+  & .kit-hv-title {
+    font-family: var(--k-fd);
+    font-weight: 400;
+  }
+  & .kit-hv-title::after {
+    content: "";
+    display: block;
+    width: min(260px, 60%);
+    height: 1px;
+    margin: 18px auto 0;
+    margin-inline-start: 0;
+    background: linear-gradient(90deg, transparent, var(--k-acc), transparent);
+    transform-origin: 0 50%;
+  }
+  &[data-align="center"] .kit-hv-title::after,
+  & .kit-hv-text[style*="center"] .kit-hv-title::after {
+    margin-inline: auto;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-template="marble"]:not([data-ps-motion="none"]) .kit-hv.kit-hv[data-sig~="vein"] .kit-hv-title::after {
+    animation: mb-vein 1.6s cubic-bezier(0.22, 0.61, 0.36, 1) 0.5s both;
+  }
+}
+
+@keyframes mb-vein {
+  from {
+    scale: 0 1;
+    opacity: 0;
+  }
+}

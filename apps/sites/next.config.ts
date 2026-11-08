@@ -19,6 +19,21 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: imageHosts.map((hostname) => ({ hostname })),
   },
+  // Every site shares this origin, so pages may not be framed elsewhere or have their file types guessed.
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "Content-Security-Policy", value: "frame-ancestors 'self'; object-src 'none'; base-uri 'self'" },
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "Strict-Transport-Security", value: "max-age=31536000" },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;

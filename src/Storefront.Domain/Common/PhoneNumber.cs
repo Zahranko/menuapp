@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 
 namespace Storefront.Domain.Common;
 
-/// <summary>A phone number in E.164 form, for example +962790000000.</summary>
+/// <summary>A phone number in E.164 form, for example +15550000000.</summary>
 public sealed partial record PhoneNumber
 {
     private PhoneNumber(string value) => Value = value;
@@ -19,7 +19,7 @@ public sealed partial record PhoneNumber
 
         if (!E164().IsMatch(digits))
         {
-            throw new DomainException("phone.invalid", "Enter the number with its country code, like +962 79 000 0000.", field);
+            throw new DomainException("phone.invalid", "Enter the number with its country code, starting with +.", field);
         }
 
         return new PhoneNumber(digits);

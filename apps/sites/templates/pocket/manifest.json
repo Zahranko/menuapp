@@ -4,9 +4,31 @@
   "name": "Pocket Catalog",
   "category": "Shop",
   "description": "A shop catalog: filter by category, sort by price and ask about any item on WhatsApp.",
+  "ar": {
+    "name": "كتالوج الجيب",
+    "category": "متجر",
+    "description": "كتالوج لمتجرك: تصفية حسب القسم، وترتيب حسب السعر، والسؤال عن أي منتج على واتساب."
+  },
   "version": 1,
+  "heroSlider": { "kind": "panel", "source": "hero.image" },
   "thumbnail": "/templates/pocket/thumbnail.png",
   "sample": "shop",
+  "sectionsLayout": { "order": ["menu", "story", "visit"] },
+  "signature": {
+    "menu.layout": [
+      {"id":"shelf","base":"grid","label":"Shop shelves","labelAr":"رفوف المتجر","preview":"/templates/pocket/previews/menu-shelf.svg"}
+    ],
+    "header.layout": [
+      {"id":"folder","base":"classic","label":"Catalog folder tab","labelAr":"لسان ملف الكتالوج","preview":"/templates/pocket/previews/header-folder.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"shelves","label":{"en":"On the shelves","ar":"على الرفوف"},"values":{"theme":"paper","accent":"#1F3A5F","font":"grotesk","menu.layout":"shelf","header.layout":"folder","hero.variant":"auto"}},
+    {"id":"studio","label":{"en":"Clay studio","ar":"مشغل الفخار"},"values":{"theme":"paper","accent":"#D9542C","font":"modern","menu.layout":"shelf","header.layout":"folder","hero.variant":"split","style.photos":"soft"}},
+    {"id":"cloud","label":{"en":"Cloud catalog","ar":"كتالوج هادئ"},"values":{"theme":"cloud","accent":"#1F3A5F","font":"modern","menu.layout":"grid","header.layout":"pill","hero.variant":"stacked","cards.style":"raised"}},
+    {"id":"mint","label":{"en":"Mint market","ar":"سوق النعناع"},"values":{"theme":"mint","accent":"#2B6B4F","font":"bold","menu.layout":"shelf","header.layout":"folder","hero.variant":"collage","style.buttons":"pill"}},
+    {"id":"graphite","label":{"en":"Graphite store","ar":"متجر الجرافيت"},"values":{"theme":"graphite","accent":"#D9542C","font":"grotesk","menu.layout":"tiles","header.layout":"classic","hero.variant":"poster","style.headings":"uppercase"}}
+  ],
   "schema": [
     {
       "key": "font",
@@ -160,7 +182,7 @@
     "accent": "#1F3A5F",
     "corners": "rounded",
     "hero.title": "Things for slow mornings at home",
-    "hero.subtitle": "Handmade candles, mugs, soaps and plants from small makers in Amman. Ask about any item on WhatsApp.",
+    "hero.subtitle": "Handmade candles, mugs, soaps and plants from small local makers. Ask about any item on WhatsApp.",
     "hero.image": "preset:leaves",
     "ask": "Hello! I would like to order:",
     "sections": [
@@ -169,7 +191,7 @@
       "story",
       "visit"
     ],
-    "announcement": "Free delivery in Amman over 25 JD",
+    "announcement": "Free delivery on larger orders",
     "story.title": "Made by people we know",
     "story.text": "Every product in our shop comes from a maker we have met in person. We keep the list small and change it with the seasons.",
     "hours": {
@@ -181,5 +203,13 @@
       "thu": "10:00-22:00",
       "fri": ""
     }
+  },
+  "defaultsAr": {
+    "hero.title": "أشياء لصباحات هادئة في البيت",
+    "hero.subtitle": "شموع وأكواب وصابون ونباتات مصنوعة يدويًا من حرفيين محليين صغار. اسألنا عن أي منتج على واتساب.",
+    "ask": "مرحبًا! أود أن أطلب:",
+    "announcement": "توصيل مجاني للطلبات الكبيرة",
+    "story.title": "من صنع أناس نعرفهم",
+    "story.text": "كل منتج في متجرنا يأتي من حرفي التقينا به شخصيًا. نُبقي القائمة صغيرة ونغيّرها مع المواسم."
   }
 }

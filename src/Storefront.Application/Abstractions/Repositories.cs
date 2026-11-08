@@ -1,3 +1,4 @@
+using Storefront.Domain.Ai;
 using Storefront.Domain.Billing;
 using Storefront.Domain.Businesses;
 using Storefront.Domain.Catalog;
@@ -28,6 +29,9 @@ public interface ICatalogRepository
     Task<IReadOnlyList<Category>> ListCategoriesAsync(CancellationToken ct);
 
     Task<Category?> GetCategoryAsync(Guid id, CancellationToken ct);
+
+    /// <summary>The sub-categories directly under <paramref name="parentId"/>.</summary>
+    Task<IReadOnlyList<Category>> ListSubcategoriesAsync(Guid parentId, CancellationToken ct);
 
     Task<bool> CategoryNameExistsAsync(string name, Guid? exceptId, CancellationToken ct);
 
@@ -110,4 +114,13 @@ public interface IMediaRepository
     Task<bool> UrlBelongsToBusinessAsync(Guid businessId, string url, CancellationToken ct);
 
     void Add(MediaAsset asset);
+}
+
+/// <summary>Monthly AI helper use per business (<see cref="AiUsage"/>).</summary>
+public interface IAiUsageRepository
+{
+    Task<int> CountAsync(Guid businessId, string period, CancellationToken ct);
+
+    /// <summary>Adds one use to the month at once, outside the unit of work, so two answers finishing together both count.</summary>
+    Task IncrementAsync(Guid businessId, string period, DateTimeOffset now, CancellationToken ct);
 }

@@ -1,5 +1,7 @@
 using System.Net;
 using System.Net.Mail;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Storefront.Application.Abstractions;
@@ -7,7 +9,7 @@ using Storefront.Application.Common;
 
 namespace Storefront.Infrastructure.Email;
 
-/// <summary>Settings under "Email:Smtp". When Host is empty, emails are written to the log instead.</summary>
+/// <summary>Settings under "Email:Smtp". When Host is empty, emails are not sent: only who they were for is logged.</summary>
 public sealed class SmtpOptions
 {
     public const string SectionName = "Email:Smtp";
@@ -19,13 +21,33 @@ public sealed class SmtpOptions
     public bool EnableSsl { get; set; } = true;
 }
 
+/// <summary>
+/// Stand-in while no SMTP server is set. Logs only the recipient and subject: bodies carry password reset links,
+/// which must never reach the logs. Tests read emails through their own capturing sender.
+/// </summary>
 internal sealed class LogEmailSender(ILogger<LogEmailSender> logger) : IEmailSender
 {
     public Task SendAsync(EmailMessage message, CancellationToken ct)
     {
-        logger.LogInformation("Email to {To}: {Subject}\n{Text}", message.To, message.Subject, message.Text);
+        logger.LogInformation("Email not sent (no SMTP server set) to {To}: {Subject}", message.To, message.Subject);
         return Task.CompletedTask;
     }
+}
+
+/// <summary>Warns once at startup, outside Development, that emails (password resets, domain notices) are not being sent.</summary>
+internal sealed class EmailConfigurationCheck(IConfiguration configuration, IHostEnvironment environment, ILogger<EmailConfigurationCheck> logger) : IHostedService
+{
+    public Task StartAsync(CancellationToken ct)
+    {
+        if (!environment.IsDevelopment() && string.IsNullOrWhiteSpace(configuration[$"{SmtpOptions.SectionName}:Host"]))
+        {
+            logger.LogWarning("Email is not configured (Email:Smtp:Host is empty). Password reset and other emails are not being sent.");
+        }
+
+        return Task.CompletedTask;
+    }
+
+    public Task StopAsync(CancellationToken ct) => Task.CompletedTask;
 }
 
 internal sealed class SmtpEmailSender(IOptions<SmtpOptions> smtp, IOptions<BrandOptions> brand) : IEmailSender

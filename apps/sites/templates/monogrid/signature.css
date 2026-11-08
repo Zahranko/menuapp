@@ -1,0 +1,108 @@
+/*
+ * Mono Grid's own layout options (manifest "signature", _kit/signatures.ts):
+ *   menu.layout  "index"  a Swiss index table: running numbers, hairline rows, prices in their own column (base: "list")
+ *   hero.variant "swiss"  the opening on a visible column grid with one signal-color block (base: "split")
+ */
+[data-template="monogrid"] {
+  --sig-cols: repeating-linear-gradient(90deg, color-mix(in srgb, var(--k-line) 60%, transparent) 0 1px, transparent 1px calc(100% / 6));
+}
+
+/* ---------- index table ---------- */
+[data-template="monogrid"] .kit-mn.kit-mn.kit-mn[data-sig~="index"] {
+  counter-reset: mono-cat;
+  & .kit-mn-cats {
+    gap: 36px;
+  }
+  & .kit-mn-cat {
+    counter-increment: mono-cat;
+  }
+  & .kit-mn-title {
+    align-items: baseline;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--k-ink);
+  }
+  & .kit-mn-h {
+    text-transform: uppercase;
+  }
+  & .kit-mn-h::before {
+    content: counter(mono-cat, decimal-leading-zero) "\2002" / "";
+    color: var(--k-acc-text);
+  }
+  & .kit-mn-list {
+    counter-reset: mono-item;
+    gap: 0;
+  }
+  & .kit-mn-li {
+    counter-increment: mono-item;
+  }
+  & .kit-mn-item {
+    align-items: start;
+    gap: 12px;
+    padding: 12px 0;
+    border: 0;
+    border-bottom: 1px solid var(--k-line);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+  & .kit-mn-item::before {
+    content: counter(mono-cat) "." counter(mono-item, decimal-leading-zero);
+    flex: none;
+    width: 3.4em;
+    color: var(--k-muted);
+    font: 500 12px/1.7 var(--k-fb);
+    font-variant-numeric: tabular-nums;
+  }
+  & .kit-mn-media {
+    width: 52px;
+    border-radius: 0;
+  }
+  & .kit-mn-name {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  & .kit-mn-price {
+    font-variant-numeric: tabular-nums;
+  }
+  & .kit-mn-tag {
+    border-radius: 0;
+  }
+}
+
+/* ---------- Swiss grid opening ---------- */
+[data-template="monogrid"] .kit-hv.kit-hv[data-sig~="swiss"] {
+  border-bottom: 2px solid var(--k-ink);
+  background: var(--sig-cols);
+  & .kit-hv-title {
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    line-height: 0.92;
+  }
+  & .kit-hv-eyebrow {
+    color: var(--k-ink);
+    font-variant-numeric: tabular-nums;
+  }
+  & .kit-hv-eyebrow::before {
+    content: "";
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-inline-end: 10px;
+    background: var(--k-acc);
+    vertical-align: -1px;
+  }
+  & .kit-hv-media,
+  & .kit-hv-mono {
+    border-radius: 0;
+    box-shadow: 12px 12px 0 var(--k-acc);
+  }
+  & .kit-hv-btn {
+    border-radius: 0;
+  }
+}
+
+/* The kit pulls the first row of a list up; a index row keeps its own top padding. */
+[data-template="monogrid"] .kit-mn.kit-mn.kit-mn[data-sig~="index"] .kit-mn-li:first-child .kit-mn-item {
+  padding-top: 12px;
+}

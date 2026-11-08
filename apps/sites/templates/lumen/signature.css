@@ -1,0 +1,89 @@
+/*
+ * Lumen's own layout options (manifest "signature", _kit/signatures.ts):
+ *   hero.variant "sticker"  a sticker sheet: the words on a thick-outlined card with a hard shadow, a tilted sticker photo (base: "poster")
+ *   menu.layout  "blocks"   chunky color blocks: outlined tiles in turns of the accent and soft colors, hard shadows (base: "tiles")
+ */
+
+/* ---------- sticker sheet ---------- */
+[data-template="lumen"] .kit-hv.kit-hv[data-sig~="sticker"] {
+  & .kit-hv-in {
+    width: auto;
+    margin: 14px 14px 22px;
+    padding: 20px 18px;
+    border: 3px solid var(--k-ink);
+    border-radius: 26px;
+    background: var(--k-surf);
+    box-shadow: 7px 7px 0 var(--k-ink);
+  }
+  &:dir(rtl) .kit-hv-in {
+    box-shadow: -7px 7px 0 var(--k-ink);
+  }
+  & .kit-hv-eyebrow {
+    justify-self: start;
+    width: fit-content;
+    padding: 4px 12px;
+    border: 2px solid var(--k-ink);
+    border-bottom-width: 2px;
+    border-radius: 999px;
+    background: var(--k-acc);
+    color: var(--k-acc-ink);
+    rotate: -3deg;
+  }
+  & .kit-hv-title {
+    letter-spacing: -0.03em;
+  }
+  & .kit-hv-media,
+  & .kit-hv-mono {
+    border: 5px solid #fff;
+    border-radius: 20px;
+    outline: 3px solid var(--k-ink);
+    box-shadow: 4px 5px 0 var(--k-ink);
+  }
+  & .kit-hv-btn {
+    border: 2px solid var(--k-ink);
+    border-radius: 999px;
+    box-shadow: 3px 3px 0 var(--k-ink);
+  }
+  &:dir(rtl) .kit-hv-btn {
+    box-shadow: -3px 3px 0 var(--k-ink);
+  }
+}
+
+/* ---------- color blocks ---------- */
+[data-template="lumen"] .kit-mn.kit-mn.kit-mn[data-sig~="blocks"] {
+  & .kit-mn-list {
+    gap: 14px;
+  }
+  & .kit-mn-item {
+    border: 3px solid var(--k-ink);
+    border-radius: 22px;
+    background: var(--k-acc-soft);
+    box-shadow: 5px 5px 0 var(--k-ink);
+  }
+  &:dir(rtl) .kit-mn-item {
+    box-shadow: -5px 5px 0 var(--k-ink);
+  }
+  & .kit-mn-li:nth-child(3n + 2) .kit-mn-item {
+    background: var(--k-acc);
+    color: var(--k-acc-ink);
+    & :is(.kit-mn-name, .kit-mn-price, .kit-mn-desc) {
+      color: inherit;
+    }
+  }
+  & .kit-mn-li:nth-child(3n) .kit-mn-item {
+    background: var(--k-surf);
+  }
+  & .kit-mn-media {
+    border: 2px solid var(--k-ink);
+    border-radius: 16px;
+  }
+  & .kit-mn-name {
+    font-weight: 800;
+  }
+  & .kit-mn-price {
+    font-weight: 800;
+  }
+  & .kit-mn-title {
+    border-bottom: 3px solid var(--k-ink);
+  }
+}

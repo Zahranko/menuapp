@@ -4,9 +4,31 @@
   "name": "Spice Route",
   "category": "Middle Eastern restaurant",
   "description": "Geometric star borders, an arched window and centered courses. Looks its best in Arabic.",
+  "ar": {
+    "name": "طريق البهارات",
+    "category": "مطعم شرقي",
+    "description": "حواف نجمية هندسية، ونافذة مقوّسة، وأطباق في الوسط. يبدو في أجمل حالاته بالعربية."
+  },
   "version": 1,
+  "heroSlider": { "kind": "panel", "source": "hero.image" },
   "thumbnail": "/templates/spiceroute/thumbnail.png",
   "sample": "restaurant",
+  "sectionsLayout": { "order": ["menu", "story", "visit"] },
+  "signature": {
+    "story.layout": [
+      {"id":"route","base":"timeline","label":"Along the spice route","labelAr":"على طريق التوابل","preview":"/templates/spiceroute/previews/story-route.svg"}
+    ],
+    "hero.variant": [
+      {"id":"mashrabiya","base":"arch","label":"Mashrabiya window","labelAr":"نافذة مشربية","preview":"/templates/spiceroute/previews/hero-mashrabiya.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"saffron","label":{"en":"Saffron road","ar":"طريق الزعفران"},"values":{"theme":"saffron","accent":"#1F5F5B","font":"naskh","hero.variant":"mashrabiya","story.layout":"route","menu.layout":"auto"}},
+    {"id":"rose","label":{"en":"Rose courtyard","ar":"فناء الورد"},"values":{"theme":"rose","accent":"#9B2C2C","font":"elegant","hero.variant":"mashrabiya","story.layout":"route","menu.layout":"compact","menu.categoryTitle":"ornament"}},
+    {"id":"olive","label":{"en":"Olive grove","ar":"بستان الزيتون"},"values":{"theme":"olive","accent":"#B7791F","font":"classic","hero.variant":"arch","story.layout":"route","menu.layout":"list","visit.layout":"cards"}},
+    {"id":"indigo","label":{"en":"Indigo night","ar":"ليلة نيلية"},"values":{"theme":"indigo","accent":"#B7791F","font":"naskh","hero.variant":"mashrabiya","story.layout":"quote","menu.layout":"compact","header.layout":"centered"}},
+    {"id":"feast","label":{"en":"Family feast","ar":"وليمة العائلة"},"values":{"theme":"saffron","accent":"#9B2C2C","font":"naskh","hero.variant":"full","header.style":"transparent","story.layout":"route","menu.layout":"magazine"}}
+  ],
   "schema": [
     {
       "key": "font",
@@ -161,5 +183,11 @@
       "thu": "12:00-00:30",
       "fri": "13:00-00:30"
     }
+  },
+  "defaultsAr": {
+    "hero.title": "وصفات من مطابخ بلاد الشام، على سفرة كبيرة تجمعنا",
+    "announcement": "صواني عائلية لأربعة أشخاص كل جمعة",
+    "story.title": "قصتنا",
+    "story.text": "ثلاثة أجيال من الطهاة، وسفرة واحدة طويلة. نطحن بهاراتنا بأيدينا، ونخبز الخبز في فرن حجري، ونقدّم كل المقبلات للمشاركة."
   }
 }

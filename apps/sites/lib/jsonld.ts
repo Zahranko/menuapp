@@ -23,6 +23,7 @@ const TYPES: [RegExp, string][] = [
   [/gym|fitness|yoga/i, "ExerciseGym"],
   [/agency|studio|design|freelanc|consult/i, "ProfessionalService"],
   [/home services|cleaning|repair|plumb/i, "HomeAndConstructionBusiness"],
+  [/clothing|fashion|streetwear/i, "ClothingStore"],
   [/shop|store|boutique/i, "Store"],
 ];
 const FOOD = new Set(["CafeOrCoffeeShop", "Restaurant"]);
@@ -58,7 +59,7 @@ export function siteJsonLd(site: PublicSite): Record<string, unknown> {
   const sections = site.categories.filter((c) => c.products.length);
   const offer = (p: PublicSite["categories"][number]["products"][number]) => ({
     "@type": "Offer",
-    price: p.price.toFixed(3).replace(/0$/, ""),
+    price: String(p.price),
     priceCurrency: business.currencyCode,
     availability: p.isAvailable
       ? "https://schema.org/InStock"

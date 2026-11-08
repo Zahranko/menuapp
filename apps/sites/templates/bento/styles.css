@@ -1,5 +1,15 @@
 /* Template 007 "Bento": everything is a tile. Mixed tile sizes, pastel colors, featured drinks take the big tiles. */
 
+@import "../_kit/logo.css";
+@import "../_kit/options.css";
+@import "../_kit/cards.css";
+@import "../_kit/hero.css";
+@import "../_kit/layout.css";
+@import "../_kit/menu.css";
+@import "../_kit/sections.css";
+@import "../_kit/style.css";
+@import "./signature.css";
+
 .t-bento {
   container: page / inline-size;
   font-size: 15px;
@@ -137,7 +147,7 @@
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-auto-flow: row dense;
-    gap: var(--gap);
+    gap: calc(var(--gap) * var(--kit-space, 1));
   }
   .intro,
   .outro {
@@ -237,7 +247,7 @@
 
   /* menu */
   .menu {
-    padding: 4px 14px 10px;
+    padding: calc(4px * var(--kit-space, 1)) 14px calc(10px * var(--kit-space, 1));
     scroll-margin-top: 10px;
   }
   .cats {
@@ -383,8 +393,17 @@
     color: var(--muted);
   }
 
+  /* Social accounts the owner shows (_kit/options.css draws the round icon links). */
+  .foot-social {
+    justify-content: flex-start;
+    margin-bottom: 16px;
+    color: var(--acc-text);
+  }
+  .foot-social a {
+    border-color: color-mix(in srgb, currentColor 40%, transparent);
+  }
   .foot {
-    padding: 18px 14px 28px;
+    padding: calc(18px * var(--kit-space, 1)) 14px calc(28px * var(--kit-space, 1));
     color: var(--muted);
   }
 
@@ -403,7 +422,7 @@
     }
     .bento {
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: var(--gap);
+      gap: calc(var(--gap) * var(--kit-space, 1));
     }
     .tile-hero {
       grid-row: span 2;

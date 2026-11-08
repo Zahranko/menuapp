@@ -2,6 +2,7 @@ import { ImageResponse } from "next/og";
 import { getSiteBySlug } from "@/lib/api";
 import { text } from "@/lib/settings";
 import { accentTokens } from "@/templates/_kit/color";
+import { accentColor } from "@/templates/_kit/theme";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -16,7 +17,7 @@ export default async function OpenGraphImage({ params }: { params: Promise<{ slu
   const dark = site?.settings.theme === "night";
   const bg = dark ? "#121714" : "#FBF7EE";
   const ink = dark ? "#F2EFE6" : "#1E1A14";
-  const accent = accentTokens(site ? text(site.settings, "accent", "#D9542C") : "#D9542C", bg, bg, ink);
+  const accent = accentTokens(site ? accentColor(site.settings, "#D9542C") : "#D9542C", bg, bg, ink);
 
   return new ImageResponse(
     (

@@ -3,9 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../features/auth/auth_controller.dart';
 import '../features/auth/auth_repository.dart';
+import '../features/design/design_repository.dart';
+import '../features/menu/menu_repository.dart';
+import '../features/plan/plan_repository.dart';
 import 'api/api_client.dart';
 import 'auth/token_store.dart';
 import 'config.dart';
+import 'l10n/app_language.dart';
 
 final tokenStoreProvider = Provider<TokenStore>((ref) => SecureTokenStore());
 
@@ -16,6 +20,8 @@ final dioProvider = Provider<Dio>((ref) => createApiClient(
       baseUrl: AppConfig.apiBaseUrl,
       tokens: ref.watch(tokenStoreProvider),
       adapter: ref.watch(httpAdapterProvider),
+      // Read, not watched: a language switch must not rebuild the client (and every repository).
+      language: () => ref.read(appLanguageProvider.notifier).languageCode,
       // A refresh that fails means the session is over everywhere in the app.
       onSignedOut: () => ref.read(authControllerProvider.notifier).sessionExpired(),
     ));
@@ -23,3 +29,9 @@ final dioProvider = Provider<Dio>((ref) => createApiClient(
 final authRepositoryProvider = Provider<AuthRepository>(
   (ref) => AuthRepository(ref.watch(dioProvider), ref.watch(tokenStoreProvider)),
 );
+
+final menuRepositoryProvider = Provider<MenuRepository>((ref) => MenuRepository(ref.watch(dioProvider)));
+
+final designRepositoryProvider = Provider<DesignRepository>((ref) => DesignRepository(ref.watch(dioProvider)));
+
+final planRepositoryProvider = Provider<PlanRepository>((ref) => PlanRepository(ref.watch(dioProvider)));

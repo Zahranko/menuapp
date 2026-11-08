@@ -1,14 +1,20 @@
 import { CategoryTabs } from "../_kit/CategoryTabs";
-import { ContactList, Credits, HoursList, Logo, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { BrandName, ContactList, Credits, FootName, HoursList, Logo, logoRoot, optionRoot, OrderContent, orderLink, ProductPicture, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
 import { fontVariables } from "../_kit/fonts";
 import { Arrow, Clock, WhatsApp } from "../_kit/icons";
+import { heroPhotos } from "../_kit/hero";
+import { HeroPhotos } from "../_kit/HeroPhotos";
 import { Picture } from "../_kit/Picture";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
 import { itemCount } from "@/lib/i18n";
 import type { TemplateProps } from "@/lib/types";
+import { basicLinks, orderCta, pageTop, SiteHeader, SiteHero } from "../_kit/Top";
+import { SiteMenu } from "../_kit/Menu";
+import { SiteFooter, SiteGallery, SiteVisit, ordered } from "../_kit/Sections";
 
 const copy = {
   en: { picks: "Tonight's favorites", menu: "The menu", findUs: "Find us", order: "Order on WhatsApp", photos: "From the grill", swipe: "Swipe for more", hours: "Hours" },
@@ -26,161 +32,178 @@ const PALETTES = {
 export default function NightMarketTemplate({ site, now }: TemplateProps & { now?: Date }) {
   const ctx = siteContext(site, now);
   const c = copy[ctx.locale];
-  const hero = ctx.image("hero.image");
+  const heroPics = heroPhotos(site.settings, "hero.image");
+  const hero = heroPics[0] ?? null;
   const sticker = ctx.text("hero.sticker");
   const [lead, ...rest] = ctx.picks;
+  const order = orderButton(site, { label: c.order });
+  const top = pageTop(ctx, { photos: heroPics, backdrop: true });
 
   return (
     <div
-      data-template="nightmarket"
-      className={cx("t-night", fontVariables, ctx.contact.whatsapp && "has-order")}
+      data-template="nightmarket" {...logoRoot(ctx)} {...optionRoot(ctx, order, true)}
+      className={cx("t-night", fontVariables, order && "has-order")}
       style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["condensed", "bold", "grotesk"], defaultAccent: "#FFD23F", radius: { rounded: "20px", sharp: "0px" } })}
     >
       <TemplateStyles id="nightmarket" />
       <TopBars ctx={ctx} />
-      <header className="bar" data-section="header">
-        <a href="#top" className="brand">
-          <Logo ctx={ctx} />
-          <span>{site.business.name}</span>
-        </a>
-        {ctx.today && (
-          <span className="open">
-            <Clock /> {ctx.today}
-          </span>
-        )}
-      </header>
+      <SiteHeader ctx={ctx} top={top} links={basicLinks(ctx)} cta={orderCta(order)}>
+        <header className="bar kit-head" data-section="header">
+          <a href="#top" className="brand kit-lockup">
+            <Logo ctx={ctx} />
+            <BrandName ctx={ctx} />
+          </a>
+          {ctx.today && (
+            <span className="open">
+              <Clock /> {ctx.today}
+            </span>
+          )}
+        </header>
+      </SiteHeader>
 
       <main>
-        <section className="hero" id="top" data-section="hero" aria-labelledby="hero-title">
-          {hero && (
-            <div className="hero-media">
-              <Picture src={hero} sizes="100vw" priority />
-            </div>
-          )}
-          <div className="hero-in">
-            {sticker && <span className="sticker">{sticker}</span>}
-            <h1 id="hero-title">{ctx.text("hero.title") || site.business.name}</h1>
-            {ctx.text("hero.subtitle") && <p>{ctx.text("hero.subtitle")}</p>}
-            <div className="hero-actions">
-              <a className="btn" href="#menu">
-                {ctx.t.viewMenu} <Arrow className="flip" />
-              </a>
-              {ctx.contact.whatsapp && (
-                <a className="btn ghost" href={ctx.contact.whatsapp} rel="noopener" target="_blank">
-                  <WhatsApp /> {c.order}
-                </a>
-              )}
-            </div>
-          </div>
-        </section>
-
-        {ctx.on("picks") && lead && (
-          <section className="picks" data-section="picks" aria-labelledby="picks-title">
-            <h2 id="picks-title" className="kicker">
-              {c.picks}
-            </h2>
-            <div className={cx("picks-grid", rest.length === 0 && "single")}>
-              {[lead, ...rest].map((item, i) => (
-                <button key={item.id} type="button" className={cx("pick", i === 0 && "lead")} data-item-id={item.id}>
-                  <span className="pick-media">
-                    <ProductPicture item={item} sizes={i === 0 ? "(min-width: 760px) 60vw, 100vw" : "(min-width: 760px) 30vw, 50vw"} />
-                  </span>
-                  <span className="pick-info">
-                    {item.labelText && <span className="tag">{item.labelText}</span>}
-                    <span className="pick-name">{item.name}</span>
-                    <span className="price-sticker">{item.priceText}</span>
-                  </span>
-                </button>
-              ))}
-            </div>
-          </section>
-        )}
-
-        <section id="menu" className="menu" data-section="menu" aria-labelledby="menu-title">
-          <h2 id="menu-title" className="kicker">
-            {c.menu}
-          </h2>
-          {ctx.sections.length > 1 && (
-            <CategoryTabs categories={ctx.sections.map(({ anchor, name }) => ({ anchor, name }))} label={ctx.t.categories} className="chips" tabClassName="chip" activeClassName="on" />
-          )}
-          {ctx.sections.map((section) => (
-            <section key={section.id} id={section.anchor} className="row" aria-labelledby={`${section.anchor}-h`}>
-              <div className="row-head">
-                <h3 id={`${section.anchor}-h`}>{section.name}</h3>
-                <span>{itemCount(section.products.length, ctx.locale)}</span>
+        <SiteHero ctx={ctx} top={top} eyebrow={sticker}>
+          <section className="hero kit-hero" id="top" data-section="hero" aria-labelledby="hero-title">
+            {hero && (
+              <div className="hero-media kit-hero-media">
+                <HeroPhotos ctx={ctx} photos={heroPics} sizes="100vw" placement="corner" />
               </div>
-              <ul className="plain cards" tabIndex={0} aria-label={`${section.name}. ${c.swipe}`}>
-                {section.products.map((item) => (
-                  <li key={item.id}>
-                    <button type="button" className={cx("card", !item.isAvailable && "out")} data-item-id={item.id}>
-                      <span className="card-media">
-                        <ProductPicture item={item} sizes="(min-width: 760px) 25vw, 70vw" />
-                      </span>
-                      <span className="card-body">
-                        <span className="card-tags">
-                          {item.labelText && <span className="tag">{item.labelText}</span>}
-                          {!item.isAvailable && <span className="tag tag-out">{ctx.t.soldOut}</span>}
-                        </span>
-                        <span className="card-name">{item.name}</span>
-                        {item.description && <span className="card-desc">{item.description}</span>}
-                        <span className="card-price">{item.priceText}</span>
-                      </span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ))}
-        </section>
-
-        {ctx.on("gallery") && ctx.gallery.length > 0 && (
-          <section className="strip" data-section="gallery" aria-labelledby="strip-title">
-            <h2 id="strip-title" className="kicker">
-              {c.photos}
-            </h2>
-            <ul className="plain strip-row" tabIndex={0} aria-labelledby="strip-title">
-              {ctx.gallery.map((src, i) => (
-                <li key={src + i}>
-                  <Picture src={src} alt={ctx.t.photoOf.replace("{n}", String(i + 1)).replace("{name}", site.business.name)} sizes="(min-width: 760px) 22vw, 60vw" />
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
-
-        {ctx.on("visit") && (
-          <section id="visit" className="visit" data-section="visit" aria-labelledby="visit-title">
-            <h2 id="visit-title" className="big">
-              {c.findUs}
-            </h2>
-            <div className="visit-grid">
-              <div className="panel">
-                <ContactList ctx={ctx} />
-                {ctx.contact.maps && (
-                  <a className="btn" href={ctx.contact.maps} rel="noopener" target="_blank">
-                    {ctx.t.directions} <Arrow className="flip" />
+            )}
+            <div className="hero-in kit-hero-text">
+              {sticker && <span className="sticker">{sticker}</span>}
+              <h1 id="hero-title">{ctx.text("hero.title") || site.business.name}</h1>
+              {ctx.text("hero.subtitle") && <p>{ctx.text("hero.subtitle")}</p>}
+              <div className="hero-actions">
+                <a data-k="btn" className="btn" href="#menu">
+                  {ctx.t.viewMenu} <Arrow className="flip" />
+                </a>
+                {ctx.contact.whatsapp && (
+                  <a data-k="btn" className="btn ghost" href={ctx.contact.whatsapp} rel="noopener" target="_blank">
+                    <WhatsApp /> {c.order}
                   </a>
                 )}
               </div>
-              {hasHours(ctx.hours) && (
-                <div className="panel">
-                  <h3>{c.hours}</h3>
-                  <HoursList ctx={ctx} />
-                </div>
-              )}
             </div>
           </section>
-        )}
+        </SiteHero>
+
+        {ordered(ctx, {
+          picks: ctx.on("picks") && lead && (
+            <section className="picks" data-section="picks" aria-labelledby="picks-title">
+              <h2 id="picks-title" className="kicker">
+                {c.picks}
+              </h2>
+              <div className={cx("picks-grid", rest.length === 0 && "single")}>
+                {[lead, ...rest].map((item, i) => (
+                  <button key={item.id} type="button" className={cx("pick", i === 0 && "lead")} data-item-id={item.id}>
+                    <span data-k="photo overlay" className="pick-media">
+                      <ProductPicture item={item} sizes={i === 0 ? "(min-width: 760px) 60vw, 100vw" : "(min-width: 760px) 30vw, 50vw"} />
+                    </span>
+                    <span className="pick-info">
+                      {item.labelText && <span className="tag">{item.labelText}</span>}
+                      <span className="pick-name">{item.name}</span>
+                      <span className="price-sticker">{item.priceText}</span>
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </section>
+          ),
+          menu: (
+            <section id="menu" className="menu" data-section="menu" aria-labelledby="menu-title">
+              <h2 id="menu-title" className="kicker">
+                {c.menu}
+              </h2>
+              <SiteMenu ctx={ctx} like="carousel">
+              {ctx.sections.length > 1 && (
+                <CategoryTabs categories={ctx.sections.map(({ anchor, name }) => ({ anchor, name }))} label={ctx.t.categories} className="chips" tabClassName="chip" activeClassName="on" />
+              )}
+              {ctx.sections.map((section) => (
+                <section key={section.id} id={section.anchor} className="row" aria-labelledby={`${section.anchor}-h`}>
+                  <div className="row-head">
+                    <h3 id={`${section.anchor}-h`}>{section.name}</h3>
+                    <span>{itemCount(section.products.length, ctx.locale)}</span>
+                  </div>
+                  <ul className="plain cards kit-cards" tabIndex={0} aria-label={`${section.name}. ${c.swipe}`}>
+                    {section.products.map((item) => (
+                      <li key={item.id}>
+                        <button type="button" className={cx("card kit-card", !item.isAvailable && "out")} data-item-id={item.id}>
+                          <span className="card-media kit-card-media kit-flush">
+                            <ProductPicture item={item} sizes="(min-width: 760px) 25vw, 70vw" />
+                          </span>
+                          <span className="card-body">
+                            <span className="card-tags">
+                              {item.labelText && <span className="tag">{item.labelText}</span>}
+                              {!item.isAvailable && <span className="tag tag-out">{ctx.t.soldOut}</span>}
+                            </span>
+                            <span className="card-name">{item.name}</span>
+                            {item.description && <span className="card-desc">{item.description}</span>}
+                            <span className="card-price">{item.priceText}</span>
+                          </span>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              ))}
+              </SiteMenu>
+            </section>
+          ),
+          gallery: ctx.on("gallery") && ctx.gallery.length > 0 && (
+            <SiteGallery ctx={ctx} title={c.photos}>
+              <section className="strip" data-section="gallery" aria-labelledby="strip-title">
+                <h2 id="strip-title" className="kicker">
+                  {c.photos}
+                </h2>
+                <ul className="plain strip-row" data-gallery tabIndex={0} aria-labelledby="strip-title">
+                  {ctx.gallery.map((src, i) => (
+                    <li key={src + i} data-k="photo fill">
+                      <Picture src={src} alt={ctx.t.photoOf.replace("{n}", String(i + 1)).replace("{name}", site.business.name)} sizes="(min-width: 760px) 22vw, 60vw" />
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            </SiteGallery>
+          ),
+          visit: ctx.on("visit") && (
+            <SiteVisit ctx={ctx} title={c.findUs} cta={ctx.contact.whatsapp ? { href: ctx.contact.whatsapp, label: c.order } : null}>
+              <section id="visit" className="visit" data-section="visit" aria-labelledby="visit-title">
+                <h2 id="visit-title" className="big">
+                  {c.findUs}
+                </h2>
+                <div className="visit-grid">
+                  <div className="panel">
+                    <ContactList ctx={ctx} />
+                    {ctx.contact.maps && (
+                      <a data-k="btn" className="btn" href={ctx.contact.maps} rel="noopener" target="_blank">
+                        {ctx.t.directions} <Arrow className="flip" />
+                      </a>
+                    )}
+                  </div>
+                  {hasHours(ctx.hours) && (
+                    <div className="panel">
+                      <h3>{c.hours}</h3>
+                      <HoursList ctx={ctx} />
+                    </div>
+                  )}
+                </div>
+              </section>
+            </SiteVisit>
+          ),
+        })}
       </main>
 
-      <footer className="foot" data-section="footer">
-        <span className="foot-name">{site.business.name}</span>
-        <Credits ctx={ctx} />
-      </footer>
+      <SiteFooter ctx={ctx} links={basicLinks(ctx)}>
+        <footer className="foot" data-section="footer">
+          <FootName ctx={ctx} as="span" className="foot-name" />
+          <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
+          <Credits ctx={ctx} />
+        </footer>
+      </SiteFooter>
 
-      {ctx.contact.whatsapp && (
-        <a className="order-bar" href={ctx.contact.whatsapp} rel="noopener" target="_blank">
-          <WhatsApp /> {c.order}
+      {order && (
+        <a className="order-bar kit-order" data-k="float" {...orderLink(order)}>
+          <OrderContent order={order} icon />
         </a>
       )}
       <ProductSheet ctx={ctx} />

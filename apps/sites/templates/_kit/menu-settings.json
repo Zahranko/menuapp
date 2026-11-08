@@ -1,0 +1,273 @@
+{
+  "group": "Menu layout",
+  "groupAr": "تخطيط القائمة",
+  "fields": [
+    {
+      "key": "menu.layout",
+      "type": "choice",
+      "label": "Menu layout",
+      "labelAr": "تخطيط القائمة",
+      "options": [
+        "auto",
+        "grid",
+        "list",
+        "compact",
+        "large",
+        "magazine",
+        "masonry",
+        "carousel",
+        "tiles"
+      ],
+      "optionLabels": {
+        "auto": "Template default",
+        "grid": "Cards in a grid",
+        "list": "List with prices",
+        "compact": "Printed menu",
+        "large": "Big photos",
+        "magazine": "Magazine",
+        "masonry": "Mosaic",
+        "carousel": "Rows that scroll sideways",
+        "tiles": "Photo tiles"
+      },
+      "optionLabelsAr": {
+        "auto": "كما في القالب",
+        "grid": "بطاقات في شبكة",
+        "list": "قائمة بالأسعار",
+        "compact": "قائمة مطبوعة",
+        "large": "صور كبيرة",
+        "magazine": "مجلة",
+        "masonry": "فسيفساء",
+        "carousel": "صفوف تمرَّر جانبيًا",
+        "tiles": "مربعات بالصور"
+      },
+      "previews": {
+        "auto": "/kit/previews/auto.svg",
+        "grid": "/kit/previews/menu-grid.svg",
+        "list": "/kit/previews/menu-list.svg",
+        "compact": "/kit/previews/menu-compact.svg",
+        "large": "/kit/previews/menu-large.svg",
+        "magazine": "/kit/previews/menu-magazine.svg",
+        "masonry": "/kit/previews/menu-masonry.svg",
+        "carousel": "/kit/previews/menu-carousel.svg",
+        "tiles": "/kit/previews/menu-tiles.svg"
+      }
+    },
+    {
+      "key": "menu.columns",
+      "type": "choice",
+      "label": "Columns on big screens",
+      "labelAr": "الأعمدة على الشاشات الكبيرة",
+      "options": [
+        "auto",
+        "one",
+        "two",
+        "three",
+        "four"
+      ],
+      "optionLabels": {
+        "auto": "Template default",
+        "one": "One",
+        "two": "Two",
+        "three": "Three",
+        "four": "Four"
+      },
+      "optionLabelsAr": {
+        "auto": "كما في القالب",
+        "one": "عمود واحد",
+        "two": "عمودان",
+        "three": "ثلاثة أعمدة",
+        "four": "أربعة أعمدة"
+      },
+      "previews": {
+        "auto": "/kit/previews/auto.svg",
+        "one": "/kit/previews/menucols-one.svg",
+        "two": "/kit/previews/menucols-two.svg",
+        "three": "/kit/previews/menucols-three.svg",
+        "four": "/kit/previews/menucols-four.svg"
+      }
+    },
+    {
+      "key": "menu.photos",
+      "type": "choice",
+      "label": "Product photos",
+      "labelAr": "صور المنتجات",
+      "options": [
+        "auto",
+        "top",
+        "side",
+        "none"
+      ],
+      "optionLabels": {
+        "auto": "Template default",
+        "top": "Above the text",
+        "side": "Beside the text",
+        "none": "No photos"
+      },
+      "optionLabelsAr": {
+        "auto": "كما في القالب",
+        "top": "فوق النص",
+        "side": "بجانب النص",
+        "none": "بدون صور"
+      },
+      "previews": {
+        "auto": "/kit/previews/auto.svg",
+        "top": "/kit/previews/menuphotos-top.svg",
+        "side": "/kit/previews/menuphotos-side.svg",
+        "none": "/kit/previews/menuphotos-none.svg"
+      }
+    },
+    {
+      "key": "menu.photoShape",
+      "type": "choice",
+      "label": "Photo proportions",
+      "labelAr": "أبعاد الصور",
+      "options": [
+        "auto",
+        "square",
+        "wide",
+        "tall"
+      ],
+      "optionLabels": {
+        "auto": "Template default",
+        "square": "Square",
+        "wide": "Wide",
+        "tall": "Tall"
+      },
+      "optionLabelsAr": {
+        "auto": "كما في القالب",
+        "square": "مربعة",
+        "wide": "عريضة",
+        "tall": "طويلة"
+      },
+      "previews": {
+        "auto": "/kit/previews/auto.svg",
+        "square": "/kit/previews/menushape-square.svg",
+        "wide": "/kit/previews/menushape-wide.svg",
+        "tall": "/kit/previews/menushape-tall.svg"
+      }
+    },
+    {
+      "key": "menu.price",
+      "type": "choice",
+      "label": "Prices",
+      "labelAr": "الأسعار",
+      "options": [
+        "auto",
+        "inline",
+        "badge",
+        "corner",
+        "under",
+        "large"
+      ],
+      "optionLabels": {
+        "auto": "Template default",
+        "inline": "Next to the name",
+        "badge": "In a pill",
+        "corner": "On the photo's corner",
+        "under": "Under the name",
+        "large": "Large"
+      },
+      "optionLabelsAr": {
+        "auto": "كما في القالب",
+        "inline": "بجانب الاسم",
+        "badge": "داخل كبسولة",
+        "corner": "على زاوية الصورة",
+        "under": "تحت الاسم",
+        "large": "كبيرة"
+      },
+      "previews": {
+        "auto": "/kit/previews/auto.svg",
+        "inline": "/kit/previews/menuprice-inline.svg",
+        "badge": "/kit/previews/menuprice-badge.svg",
+        "corner": "/kit/previews/menuprice-corner.svg",
+        "under": "/kit/previews/menuprice-under.svg",
+        "large": "/kit/previews/menuprice-large.svg"
+      }
+    },
+    {
+      "key": "menu.categoryNav",
+      "type": "choice",
+      "label": "Category links",
+      "labelAr": "روابط الأقسام",
+      "options": [
+        "auto",
+        "chips",
+        "tabs",
+        "sidebar",
+        "dropdown",
+        "none"
+      ],
+      "optionLabels": {
+        "auto": "Template default",
+        "chips": "Scrolling buttons",
+        "tabs": "Tabs",
+        "sidebar": "Side list on big screens",
+        "dropdown": "Drop-down list",
+        "none": "None"
+      },
+      "optionLabelsAr": {
+        "auto": "كما في القالب",
+        "chips": "أزرار تمرَّر",
+        "tabs": "تبويبات",
+        "sidebar": "قائمة جانبية على الشاشات الكبيرة",
+        "dropdown": "قائمة منسدلة",
+        "none": "بدون"
+      },
+      "previews": {
+        "auto": "/kit/previews/auto.svg",
+        "chips": "/kit/previews/menunav-chips.svg",
+        "tabs": "/kit/previews/menunav-tabs.svg",
+        "sidebar": "/kit/previews/menunav-sidebar.svg",
+        "dropdown": "/kit/previews/menunav-dropdown.svg",
+        "none": "/kit/previews/menunav-none.svg"
+      }
+    },
+    {
+      "key": "menu.categoryTitle",
+      "type": "choice",
+      "label": "Category titles",
+      "labelAr": "عناوين الأقسام",
+      "options": [
+        "auto",
+        "simple",
+        "line",
+        "number",
+        "banner",
+        "ornament"
+      ],
+      "optionLabels": {
+        "auto": "Template default",
+        "simple": "Simple",
+        "line": "With a line",
+        "number": "Numbered",
+        "banner": "Banner",
+        "ornament": "Centered with ornaments"
+      },
+      "optionLabelsAr": {
+        "auto": "كما في القالب",
+        "simple": "بسيطة",
+        "line": "مع خط",
+        "number": "مرقّمة",
+        "banner": "شريط عريض",
+        "ornament": "في المنتصف مع زخارف"
+      },
+      "previews": {
+        "auto": "/kit/previews/auto.svg",
+        "simple": "/kit/previews/menutitle-simple.svg",
+        "line": "/kit/previews/menutitle-line.svg",
+        "number": "/kit/previews/menutitle-number.svg",
+        "banner": "/kit/previews/menutitle-banner.svg",
+        "ornament": "/kit/previews/menutitle-ornament.svg"
+      }
+    }
+  ],
+  "defaults": {
+    "menu.layout": "auto",
+    "menu.columns": "auto",
+    "menu.photos": "auto",
+    "menu.photoShape": "auto",
+    "menu.price": "auto",
+    "menu.categoryNav": "auto",
+    "menu.categoryTitle": "auto"
+  }
+}

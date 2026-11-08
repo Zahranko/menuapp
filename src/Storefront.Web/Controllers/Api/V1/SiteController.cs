@@ -20,11 +20,12 @@ public sealed class SiteController : ApiController
     public async Task<ActionResult<SiteDto>> Get([FromServices] GetSiteHandler handler, CancellationToken ct) =>
         From(await handler.Handle(ct));
 
-    /// <summary>Choose a template. The draft resets to its defaults; the live site changes when you publish.</summary>
+    /// <summary>Choose a template. The draft resets to its defaults; the live site changes when you publish. Pro templates need the Pro plan (403, code template.pro).</summary>
     [HttpPut("site/template")]
     [Authorize]
     [ProducesResponseType<SiteDto>(StatusCodes.Status200OK)]
     [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status403Forbidden)]
     public async Task<ActionResult<SiteDto>> ChangeTemplate(ChangeTemplate request, [FromServices] ChangeTemplateHandler handler, CancellationToken ct) =>
         From(await handler.Handle(request, ct));
 
@@ -36,8 +37,11 @@ public sealed class SiteController : ApiController
     public async Task<ActionResult<SiteDto>> SaveDraft(SaveDraft request, [FromServices] SaveDraftHandler handler, CancellationToken ct) =>
         From(await handler.Handle(request, ct));
 
+    /// <summary>Make the draft live. A Pro template needs the Pro plan (403, code template.pro).</summary>
     [HttpPost("site/publish")]
     [Authorize]
+    [ProducesResponseType<SiteDto>(StatusCodes.Status200OK)]
+    [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status403Forbidden)]
     public async Task<ActionResult<SiteDto>> Publish([FromServices] PublishSiteHandler handler, CancellationToken ct) =>
         From(await handler.Handle(ct));
 

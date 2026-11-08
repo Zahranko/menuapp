@@ -15,7 +15,8 @@ public sealed class ListCategoriesHandler(ICatalogRepository catalog)
     }
 }
 
-public sealed record SaveCategory(string Name);
+/// <summary>Create or fully update a category. <see cref="ParentId"/> puts it under a main category; null or absent keeps it at the top level.</summary>
+public sealed record SaveCategory(string Name, Guid? ParentId = null);
 
 public sealed class SaveCategoryValidator : AbstractValidator<SaveCategory>
 {
@@ -43,7 +44,13 @@ public sealed class CreateCategoryHandler(IValidator<SaveCategory> validator, IC
             return CategoryErrors.Duplicate;
         }
 
-        var category = Category.Create(businessId, cmd.Name, await catalog.NextCategorySortOrderAsync(ct), clock.UtcNow);
+        var (parent, parentError) = await CategoryParents.ResolveAsync(catalog, cmd.ParentId, null, ct);
+        if (parentError is not null)
+        {
+            return parentError;
+        }
+
+        var category = Category.Create(businessId, cmd.Name, await catalog.NextCategorySortOrderAsync(ct), clock.UtcNow, parent);
         catalog.Add(category);
         audit.Record("create", nameof(Category), category.Id.ToString());
         await uow.SaveChangesAsync(ct);
@@ -51,6 +58,7 @@ public sealed class CreateCategoryHandler(IValidator<SaveCategory> validator, IC
     }
 }
 
+/// <summary>Full update (PUT): name and parent. A missing or null parentId moves the category to the top level.</summary>
 public sealed class RenameCategoryHandler(IValidator<SaveCategory> validator, ICatalogRepository catalog, IUnitOfWork uow, IAuditLog audit, IClock clock)
 {
     public async Task<Result<CategoryDto>> Handle(Guid id, SaveCategory cmd, CancellationToken ct)
@@ -71,14 +79,25 @@ public sealed class RenameCategoryHandler(IValidator<SaveCategory> validator, IC
             return CategoryErrors.Duplicate;
         }
 
-        category.Rename(cmd.Name, clock.UtcNow);
+        var (parent, parentError) = await CategoryParents.ResolveAsync(catalog, cmd.ParentId, category, ct);
+        if (parentError is not null)
+        {
+            return parentError;
+        }
+
+        var now = clock.UtcNow;
+        category.Rename(cmd.Name, now);
+        category.SetParent(parent, now);
         audit.Record("update", nameof(Category), id.ToString());
         await uow.SaveChangesAsync(ct);
         return CategoryDto.From(category, await catalog.CountProductsAsync(id, ct));
     }
 }
 
-/// <summary>A category with products can only be deleted after choosing: move them (<see cref="MoveTo"/>) or delete them too.</summary>
+/// <summary>
+/// A category with products can only be deleted after choosing: move them (<see cref="MoveTo"/>) or delete them too.
+/// Its sub-categories (and their products) stay and move to the top level.
+/// </summary>
 public sealed record DeleteCategory(Guid Id, Guid? MoveTo, bool DeleteProducts);
 
 public sealed class DeleteCategoryHandler(ICatalogRepository catalog, IUnitOfWork uow, IAuditLog audit, IClock clock)
@@ -125,6 +144,11 @@ public sealed class DeleteCategoryHandler(ICatalogRepository catalog, IUnitOfWor
             }
         }
 
+        foreach (var child in await catalog.ListSubcategoriesAsync(cmd.Id, ct))
+        {
+            child.SetParent(null, now);
+        }
+
         category.MarkDeleted(now);
         catalog.Remove(category);
         audit.Record("delete", nameof(Category), cmd.Id.ToString());
@@ -162,6 +186,46 @@ public sealed class ReorderCategoriesHandler(ICatalogRepository catalog, IUnitOf
 internal static class CategoryErrors
 {
     public static readonly Error Duplicate = Error.Conflict("category.duplicate", "You already have a category with that name.", "name");
+    public static readonly Error ParentSelf = Error.Validation(CategoryRules.ParentSelf, CategoryRules.ParentSelfMessage, "parentId");
+    public static readonly Error ParentNotFound = Error.Validation(CategoryRules.ParentNotFound, CategoryRules.ParentNotFoundMessage, "parentId");
+    public static readonly Error ParentNotTopLevel = Error.Validation(CategoryRules.ParentNotTopLevel, CategoryRules.ParentNotTopLevelMessage, "parentId");
+    public static readonly Error HasSubcategories = Error.Validation(CategoryRules.HasSubcategories, CategoryRules.HasSubcategoriesMessage, "parentId");
+}
+
+/// <summary>Sub-category rules that need the database: the parent exists in this business, is a main category, and the moved category has no sub-categories.</summary>
+internal static class CategoryParents
+{
+    public static async Task<(Category? Parent, Error? Error)> ResolveAsync(ICatalogRepository catalog, Guid? parentId, Category? self, CancellationToken ct)
+    {
+        if (parentId is not { } id)
+        {
+            return (null, null);
+        }
+
+        if (self is not null && id == self.Id)
+        {
+            return (null, CategoryErrors.ParentSelf);
+        }
+
+        // Tenant-filtered: another business's category is simply not found.
+        var parent = await catalog.GetCategoryAsync(id, ct);
+        if (parent is null)
+        {
+            return (null, CategoryErrors.ParentNotFound);
+        }
+
+        if (parent.ParentId is not null)
+        {
+            return (null, CategoryErrors.ParentNotTopLevel);
+        }
+
+        if (self is not null && (await catalog.ListSubcategoriesAsync(self.Id, ct)).Count > 0)
+        {
+            return (null, CategoryErrors.HasSubcategories);
+        }
+
+        return (parent, null);
+    }
 }
 
 internal static class Ordering

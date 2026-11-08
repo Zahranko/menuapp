@@ -4,9 +4,31 @@
   "name": "Polaroid",
   "category": "Desserts, sweets",
   "description": "A wall of instant photos, slightly tilted, taped up and captioned by hand.",
+  "ar": {
+    "name": "بولارويد",
+    "category": "حلويات",
+    "description": "جدار من الصور الفورية، مائلة قليلًا، ملصقة بشريط ومكتوب تحتها بخط اليد."
+  },
   "version": 1,
+  "heroSlider": { "kind": "band" },
   "thumbnail": "/templates/polaroid/thumbnail.png",
   "sample": "sweets",
+  "sectionsLayout": { "order": ["menu", "story", "visit"] },
+  "signature": {
+    "menu.layout": [
+      {"id":"pinned","base":"masonry","label":"Pinned instant photos","labelAr":"صور فورية مثبتة","preview":"/templates/polaroid/previews/menu-pinned.svg"}
+    ],
+    "hero.variant": [
+      {"id":"pinboard","base":"collage","label":"Pinboard","labelAr":"لوحة التثبيت","preview":"/templates/polaroid/previews/hero-pinboard.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"pastel","label":{"en":"Pastel wall","ar":"جدار باستيل"},"values":{"theme":"pastel","accent":"#E0457B","font":"hand","menu.layout":"pinned","hero.variant":"pinboard"}},
+    {"id":"cork","label":{"en":"Cork board","ar":"لوح الفلين"},"values":{"theme":"cork","accent":"#E76F51","font":"hand","menu.layout":"pinned","hero.variant":"pinboard","header.layout":"centered"}},
+    {"id":"mint","label":{"en":"Mint scrapbook","ar":"دفتر نعناعي"},"values":{"theme":"mint","accent":"#2A9D8F","font":"round","menu.layout":"pinned","hero.variant":"circle","style.photos":"soft","story.layout":"letter"}},
+    {"id":"night","label":{"en":"Photo booth","ar":"كشك الصور"},"values":{"theme":"night","accent":"#E0457B","font":"soft","menu.layout":"pinned","hero.variant":"pinboard","header.layout":"minimal"}},
+    {"id":"party","label":{"en":"Party table","ar":"طاولة الحفلة"},"values":{"theme":"pastel","accent":"#6D4BC4","font":"round","menu.layout":"grid","hero.variant":"collage","style.motion":"playful","style.buttons":"pill"}}
+  ],
   "schema": [
     {
       "key": "font",
@@ -134,5 +156,11 @@
       "thu": "12:00-01:00",
       "fri": "14:00-01:00"
     }
+  },
+  "defaultsAr": {
+    "hero.title": "بوظة ودونات وكيك، محضّرة اليوم",
+    "announcement": "رشّة ملوّنة مجانية على كل كرة بوظة هذا الأسبوع",
+    "story.title": "سلام منّا",
+    "story.text": "نحن محل حلويات صغير بثلاجة كبيرة. كل شيء يُحضَّر في مطبخنا صباحًا ويُباع حتى ينفد."
   }
 }

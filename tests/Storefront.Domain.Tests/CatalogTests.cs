@@ -25,6 +25,55 @@ public class CatalogTests
     }
 
     [Fact]
+    public void Category_can_go_under_a_main_category_and_back()
+    {
+        var parent = Category.Create(Biz, "Drinks", 0, Now);
+        var child = Category.Create(Biz, "Coffee", 1, Now);
+        child.ClearDomainEvents();
+
+        child.SetParent(parent, Now);
+        Assert.Equal(parent.Id, child.ParentId);
+        Assert.Equal(ChangeKind.Updated, Assert.IsType<CategoryChanged>(Assert.Single(child.DomainEvents)).Kind);
+
+        child.SetParent(parent, Now);
+        Assert.Single(child.DomainEvents);
+
+        child.SetParent(null, Now);
+        Assert.Null(child.ParentId);
+        Assert.Equal(2, child.DomainEvents.Count);
+    }
+
+    [Fact]
+    public void Category_cannot_be_its_own_parent()
+    {
+        var category = Category.Create(Biz, "Drinks", 0, Now);
+        var ex = Assert.Throws<DomainException>(() => category.SetParent(category, Now));
+        Assert.Equal(CategoryRules.ParentSelf, ex.Code);
+        Assert.Equal("parentId", ex.Field);
+    }
+
+    [Fact]
+    public void Category_parent_must_be_a_main_category()
+    {
+        var top = Category.Create(Biz, "Drinks", 0, Now);
+        var middle = Category.Create(Biz, "Coffee", 1, Now);
+        var leaf = Category.Create(Biz, "Espresso", 2, Now);
+        middle.SetParent(top, Now);
+
+        var ex = Assert.Throws<DomainException>(() => leaf.SetParent(middle, Now));
+        Assert.Equal(CategoryRules.ParentNotTopLevel, ex.Code);
+        Assert.Null(leaf.ParentId);
+    }
+
+    [Fact]
+    public void Category_parent_must_belong_to_the_same_business()
+    {
+        var other = Category.Create(Guid.CreateVersion7(), "Drinks", 0, Now);
+        var category = Category.Create(Biz, "Coffee", 0, Now);
+        Assert.Equal(CategoryRules.ParentNotFound, Assert.Throws<DomainException>(() => category.SetParent(other, Now)).Code);
+    }
+
+    [Fact]
     public void Product_price_is_rounded_to_currency()
     {
         var product = Product.Create(Biz, Guid.CreateVersion7(), new ProductDetails("Latte", null, 3.4567m), "JOD", 0, Now);
@@ -54,6 +103,60 @@ public class CatalogTests
     [InlineData(null)]
     public void Product_accepts_fixed_labels(string? label) =>
         Assert.Equal(label, Product.Create(Biz, Guid.CreateVersion7(), new ProductDetails("Latte", null, 1, label), "JOD", 0, Now).Label);
+
+    private static Product WithLabel(string? label, string? text, string? textAr = null) =>
+        Product.Create(Biz, Guid.CreateVersion7(), new ProductDetails("Latte", null, 1, label, CustomLabel: text, CustomLabelAr: textAr), "JOD", 0, Now);
+
+    [Fact]
+    public void Custom_label_keeps_trimmed_text_in_both_languages()
+    {
+        var product = WithLabel(ProductLabel.Custom, "  Chef's   choice ", " اختيار  الشيف ");
+        Assert.Equal("Custom", product.Label);
+        Assert.Equal("Chef's choice", product.CustomLabel);
+        Assert.Equal("اختيار الشيف", product.CustomLabelAr);
+    }
+
+    [Theory]
+    [InlineData("Gluten free", null)]
+    [InlineData(null, "خالٍ من الغلوتين")]
+    [InlineData("  ", "حلال")]
+    public void Custom_label_needs_text_in_one_language(string? text, string? textAr)
+    {
+        var product = WithLabel(ProductLabel.Custom, text, textAr);
+        Assert.Equal(string.IsNullOrWhiteSpace(text) ? null : text, product.CustomLabel);
+        Assert.Equal(textAr, product.CustomLabelAr);
+    }
+
+    [Theory]
+    [InlineData(null, null)]
+    [InlineData("  ", " ")]
+    [InlineData("1234567890123456789012345", null)]
+    [InlineData(null, "١٢٣٤٥٦٧٨٩٠١٢٣٤٥٦٧٨٩٠١٢٣٤٥")]
+    [InlineData("Two\nlines", null)]
+    [InlineData("Tab\there", null)]
+    public void Custom_label_rejects_empty_long_or_multiline_text(string? text, string? textAr)
+    {
+        var ex = Assert.Throws<DomainException>(() => WithLabel(ProductLabel.Custom, text, textAr));
+        Assert.Equal("product.customLabel", ex.Code);
+    }
+
+    [Fact]
+    public void Custom_label_allows_exactly_24_characters()
+    {
+        var text = new string('x', ProductLabel.CustomTextMax);
+        Assert.Equal(text, WithLabel(ProductLabel.Custom, text).CustomLabel);
+    }
+
+    [Fact]
+    public void Fixed_labels_clear_custom_text()
+    {
+        var product = WithLabel(ProductLabel.Custom, "Halal");
+        product.Update(product.CategoryId, new ProductDetails("Latte", null, 1, ProductLabel.New, CustomLabel: "Halal", CustomLabelAr: "حلال"), "JOD", Now);
+        Assert.Equal("New", product.Label);
+        Assert.Null(product.CustomLabel);
+        Assert.Null(product.CustomLabelAr);
+        Assert.Null(WithLabel(null, "Ignored").CustomLabel);
+    }
 
     [Fact]
     public void Marking_sold_out_records_a_change()

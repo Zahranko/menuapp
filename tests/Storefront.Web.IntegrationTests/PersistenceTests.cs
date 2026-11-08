@@ -153,7 +153,7 @@ public class PersistenceTests : IAsyncLifetime
 
         await using var check = _services.CreateAsyncScope();
         var db = check.ServiceProvider.GetRequiredService<StorefrontDbContext>();
-        Assert.Equal(2, await db.Plans.CountAsync());
+        Assert.Equal(3, await db.Plans.CountAsync());
         Assert.True(await db.Templates.AnyAsync(t => t.Id == "souq"));
         Assert.Equal(1, await db.Businesses.CountAsync(b => b.Slug == Slug.FromStorage(DevelopmentSeeder.SampleSlug)));
         Assert.Equal(11, await db.Products.IgnoreQueryFilters().CountAsync());

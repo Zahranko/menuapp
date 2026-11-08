@@ -1,7 +1,8 @@
 import { formatPrice } from "@/lib/format";
-import { label, madeWith, strings } from "@/lib/i18n";
+import { madeWith, productLabel, strings } from "@/lib/i18n";
 import type { TemplateProps } from "@/lib/types";
 import styles from "./fallback.module.css";
+import { MadeWithLink } from "@/components/brand/logo-mark";
 
 /** A plain, readable menu used when a site's template has no component (for example a template removed from the app). */
 export default function FallbackTemplate({ site }: TemplateProps) {
@@ -21,7 +22,7 @@ export default function FallbackTemplate({ site }: TemplateProps) {
               <li key={product.id} className={product.isAvailable ? undefined : styles.out}>
                 <div>
                   <strong>{product.name}</strong>
-                  {product.label && <span className={styles.tag}>{label(product.label, business.locale)}</span>}
+                  {product.label && <span className={styles.tag}>{productLabel(product, business.locale)}</span>}
                   {!product.isAvailable && <span className={styles.tag}>{t.soldOut}</span>}
                   {product.description && <p>{product.description}</p>}
                 </div>
@@ -31,7 +32,9 @@ export default function FallbackTemplate({ site }: TemplateProps) {
           </ul>
         </section>
       ))}
-      <footer className={styles.footer}>{madeWith(business.locale)}</footer>
+      <footer className={styles.footer}>
+        <MadeWithLink label={madeWith(business.locale)} />
+      </footer>
     </main>
   );
 }

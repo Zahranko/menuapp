@@ -1,0 +1,1101 @@
+/*
+ * The owner's menu layout, shared by every template (each styles.css imports this file after layout.css):
+ *   .kit-mn  the shared menu (_kit/Menu.tsx), with the worked-out options as data attributes (_kit/menu.ts):
+ *            data-mn (layout), data-mn-cols, data-mn-photos, data-mn-shape, data-mn-price, data-mn-nav, data-mn-title
+ * It only shows once the owner changed a menu option, so nothing here touches a template's own menu. It takes the
+ * template's own colors, fonts and corners from the --k-* variables of layout.css (the template's --bg --surf --ink
+ * --muted --line --acc --acc-ink --acc-text --acc-soft --fd --fb --fw --r), so it reads as part of the template. Products
+ * are .kit-card and their photos .kit-card-media: the card options (cards.css) and photo shapes (style.css) restyle them
+ * with !important, over the looks here. Rules repeat the class (.kit-mn.kit-mn.kit-mn) to win over a template's broad
+ * rules (`.t-x .menu button`, `.t-x h3`) without !important. The menu is its own size container ("kmenu"), so it fits the
+ * column the template gives it: phone rules first, wider ones in container queries.
+ */
+
+.kit-mn.kit-mn.kit-mn {
+  --km-gap: 14px;
+  --km-r: var(--kit-cr, var(--k-rs, 12px));
+  --km-surf: var(--kc-surf, var(--k-surf));
+  --km-cols: 3;
+  --km-ar: 4 / 3;
+  container: kmenu / inline-size;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  margin: 0;
+  /* A template whose menu section has no side space of its own gives the shared menu some (--kit-mn-pad). */
+  padding: var(--kit-mn-pad, 0);
+  color: var(--k-ink);
+  font-family: var(--k-fb);
+  text-align: start;
+
+  &[data-mn-cols="one"] {
+    --km-cols: 1;
+  }
+  &[data-mn-cols="two"] {
+    --km-cols: 2;
+  }
+  &[data-mn-cols="four"] {
+    --km-cols: 4;
+  }
+  &[data-mn-shape="square"] {
+    --km-ar: 1 / 1;
+  }
+  &[data-mn-shape="tall"] {
+    --km-ar: 3 / 4;
+  }
+
+  &.kit-mn-page {
+    max-width: 1200px;
+    margin-inline: auto;
+    padding: 28px 16px 64px;
+  }
+
+  & *,
+  & *::before,
+  & *::after {
+    box-sizing: border-box;
+  }
+  & [hidden] {
+    display: none !important;
+  }
+
+  & .kit-mn-frame {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+    min-width: 0;
+  }
+
+  /* ---------- category links ---------- */
+  & .kit-mn-nav {
+    position: sticky;
+    top: calc(var(--kit-mn-top, 0px) + 8px);
+    z-index: 6;
+    min-width: 0;
+    margin: 0;
+    padding: 6px;
+    border: 1px solid var(--k-line);
+    border-radius: calc(var(--k-rs) + 6px);
+    background: var(--k-bg);
+    box-shadow: 0 8px 22px -14px rgb(0 0 0 / 0.35);
+    font-family: var(--k-fb);
+  }
+  & .kit-mn-links {
+    display: flex;
+    gap: 6px;
+    min-width: 0;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  & .kit-mn-link {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    margin: 0;
+    padding: 6px 14px;
+    border: 1.5px solid transparent;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--k-ink);
+    font: 600 14px/1.2 var(--k-fb);
+    letter-spacing: 0;
+    text-decoration: none;
+    text-transform: none;
+    white-space: nowrap;
+    scroll-snap-align: start;
+    &:hover {
+      border-color: var(--k-line);
+    }
+    &:focus-visible {
+      outline: 2px solid var(--k-acc-text);
+      outline-offset: -3px;
+    }
+    &[aria-current] {
+      border-color: var(--k-acc);
+      background: var(--k-acc);
+      color: var(--k-acc-ink);
+    }
+  }
+  /* Tabs: a row of words with a bar under the current one. */
+  & .kit-mn-nav[data-nav="tabs"] {
+    padding: 0;
+    border-width: 0 0 1px;
+    border-radius: 0;
+    box-shadow: none;
+    & .kit-mn-links {
+      gap: 2px;
+    }
+    & .kit-mn-link {
+      min-height: 46px;
+      padding-inline: 12px;
+      border: 0;
+      border-bottom: 3px solid transparent;
+      border-radius: 0;
+      &:hover {
+        border-bottom-color: var(--k-line);
+      }
+      &[aria-current] {
+        border-bottom-color: var(--k-acc);
+        background: transparent;
+        color: var(--k-ink);
+        font-weight: 800;
+      }
+    }
+  }
+  /* A drop-down list: one button that opens the categories. */
+  & .kit-mn-nav[data-nav="dropdown"] {
+    justify-self: start;
+    max-width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+  & .kit-mn-drop {
+    position: relative;
+    max-width: 100%;
+  }
+  & .kit-mn-drop-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 100%;
+    min-height: 44px;
+    padding: 8px 16px;
+    border: 1.5px solid var(--k-line);
+    border-radius: 999px;
+    background: var(--k-bg);
+    color: var(--k-ink);
+    font: 700 14px/1.2 var(--k-fb);
+    list-style: none;
+    cursor: pointer;
+    box-shadow: 0 8px 22px -14px rgb(0 0 0 / 0.35);
+    &::-webkit-details-marker {
+      display: none;
+    }
+    &:focus-visible {
+      outline: 2px solid var(--k-acc-text);
+      outline-offset: 2px;
+    }
+    & svg {
+      flex: none;
+      transition: transform 0.2s;
+    }
+  }
+  & .kit-mn-drop[open] .kit-mn-drop-btn svg {
+    transform: rotate(180deg);
+  }
+  & .kit-mn-drop .kit-mn-links {
+    position: absolute;
+    inset-inline-start: 0;
+    top: calc(100% + 6px);
+    flex-direction: column;
+    gap: 0;
+    width: max-content;
+    min-width: 220px;
+    max-width: min(320px, 86vw);
+    max-height: 60vh;
+    padding: 6px;
+    overflow: auto;
+    border: 1px solid var(--k-line);
+    border-radius: calc(var(--k-rs) + 4px);
+    background: var(--k-bg);
+    box-shadow: 0 18px 40px -18px rgb(0 0 0 / 0.45);
+  }
+  & .kit-mn-drop .kit-mn-link {
+    justify-content: flex-start;
+    border-radius: var(--k-rs);
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  /* ---------- categories ---------- */
+  & .kit-mn-cats {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 36px;
+    min-width: 0;
+  }
+  & .kit-mn-cat,
+  & .kit-mn-sub {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    scroll-margin-top: calc(var(--kit-mn-top, 0px) + 76px);
+  }
+  /* A category emptied by the template's own filter buttons (CatalogControls) hides with its title. */
+  & .kit-mn-cat:not(:has(.kit-mn-li:not([hidden]))),
+  & .kit-mn-sub:not(:has(.kit-mn-li:not([hidden]))) {
+    display: none;
+  }
+  & .kit-mn-sub {
+    margin-top: 26px;
+  }
+  & .kit-mn-subtitle {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 2px 10px;
+    margin: 0 0 12px;
+  }
+  & .kit-mn-subh {
+    margin: 0;
+    min-width: 0;
+    color: var(--k-ink);
+    font: var(--k-fw) 18px/1.25 var(--k-fd);
+    overflow-wrap: break-word;
+    & a {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 4px;
+    }
+  }
+  & .kit-mn-empty {
+    margin: 0;
+    padding: 24px 0;
+    color: var(--k-muted);
+    text-align: center;
+  }
+
+  /* ---------- category titles ---------- */
+  & .kit-mn-title {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 12px;
+    min-width: 0;
+    margin: 0 0 16px;
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+  & .kit-mn-h {
+    order: 1;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    min-width: 0;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--k-ink);
+    font-family: var(--k-fd);
+    font-size: 24px;
+    font-weight: var(--k-fw);
+    line-height: 1.15;
+    letter-spacing: var(--k-ft);
+    text-align: start;
+    overflow-wrap: break-word;
+    &::before,
+    &::after {
+      content: none;
+    }
+  }
+  & .kit-mn-h:lang(ar) {
+    letter-spacing: 0;
+  }
+  & .kit-mn-cat-name {
+    min-width: 0;
+  }
+  & .kit-mn-count {
+    order: 3;
+    color: var(--k-muted);
+    font: 500 13px/1.3 var(--k-fb);
+    white-space: nowrap;
+  }
+  & .kit-mn-more {
+    order: 4;
+    margin-inline-start: auto;
+    color: var(--k-acc-text);
+    font: 700 14px/1.3 var(--k-fb);
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 4px;
+    &:focus-visible {
+      outline: 2px solid var(--k-acc-text);
+      outline-offset: 3px;
+    }
+  }
+  & .kit-mn-title[data-t="line"] {
+    &::after {
+      content: "";
+      order: 2;
+      flex: 1 1 32px;
+      align-self: center;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--k-line);
+    }
+  }
+  & .kit-mn-title[data-t="number"] {
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--k-line);
+    & .kit-mn-num {
+      flex: none;
+      color: var(--k-acc-text);
+      font-size: 1.7em;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+  }
+  & .kit-mn-title[data-t="banner"] {
+    align-items: flex-end;
+    min-height: 116px;
+    padding: 18px 18px 16px;
+    overflow: hidden;
+    border-radius: var(--km-r);
+    background: var(--k-acc);
+    & .kit-mn-h,
+    & .kit-mn-count,
+    & .kit-mn-more {
+      position: relative;
+      color: var(--k-acc-ink);
+    }
+    & .kit-mn-more:focus-visible {
+      outline-color: var(--k-acc-ink);
+    }
+  }
+  /* Over a photo, the words sit on the page color so they stay readable whatever the photo. */
+  & .kit-mn-title[data-t="banner"][data-photo] {
+    min-height: 150px;
+    background: var(--k-surf);
+    & .kit-mn-h,
+    & .kit-mn-count,
+    & .kit-mn-more {
+      padding: 6px 12px;
+      border-radius: var(--k-rs);
+      background: var(--k-bg);
+      color: var(--k-ink);
+    }
+    & .kit-mn-count {
+      color: var(--k-muted);
+    }
+    & .kit-mn-more {
+      color: var(--k-acc-text);
+    }
+    & .kit-mn-more:focus-visible {
+      outline-color: var(--k-acc-text);
+    }
+  }
+  & .kit-mn-banner {
+    position: absolute;
+    inset: 0;
+    display: block;
+    & img {
+      object-fit: cover;
+    }
+  }
+  & .kit-mn-title[data-t="ornament"] {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+    & .kit-mn-h {
+      align-items: center;
+      justify-content: center;
+      max-width: 100%;
+      text-align: center;
+      &::before,
+      &::after {
+        content: "";
+        flex: none;
+        width: 34px;
+        height: 12px;
+        background: var(--k-acc-text);
+        -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 12'%3E%3Cpath d='M0 5.3h22v1.4H0z'/%3E%3Cpath d='M28 1l5 5-5 5-5-5z'/%3E%3C/svg%3E")
+          center / contain no-repeat;
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 12'%3E%3Cpath d='M0 5.3h22v1.4H0z'/%3E%3Cpath d='M28 1l5 5-5 5-5-5z'/%3E%3C/svg%3E")
+          center / contain no-repeat;
+      }
+      &::after {
+        transform: scaleX(-1);
+      }
+    }
+    & .kit-mn-cat-name {
+      text-align: center;
+    }
+    & .kit-mn-more {
+      margin-inline-start: 0;
+    }
+  }
+
+  /* ---------- products ---------- */
+  & .kit-mn-list {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--km-gap);
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: none;
+  }
+  & .kit-mn-li {
+    display: flex;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    &::before {
+      content: none;
+    }
+  }
+  /* The template's own button for a product (Ask on WhatsApp, Book), under the product. */
+  & .kit-mn-li[data-act] {
+    flex-direction: column;
+    gap: calc(8px * var(--kit-space, 1));
+  }
+  & .kit-mn-act {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    align-self: flex-start;
+    min-height: 40px;
+    padding: 8px 16px;
+    border: 1px solid var(--k-acc);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--k-acc-text, var(--k-ink));
+    font-family: var(--k-fb);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+    & svg {
+      width: 16px;
+      height: 16px;
+      flex: none;
+    }
+    &:hover {
+      background: var(--k-acc);
+      color: var(--k-acc-ink);
+    }
+    &:focus-visible {
+      outline: 2px solid var(--k-acc);
+      outline-offset: 2px;
+    }
+  }
+  & .kit-mn-item {
+    appearance: none;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    border: 0;
+    border-radius: var(--km-r);
+    background: transparent;
+    box-shadow: none;
+    color: var(--k-ink);
+    font: 400 15px/1.4 var(--k-fb);
+    letter-spacing: normal;
+    text-align: start;
+    text-transform: none;
+    text-decoration: none;
+    opacity: 1;
+    transform: none;
+    cursor: pointer;
+    &::before,
+    &::after {
+      content: none;
+    }
+    &:focus-visible {
+      outline: 2px solid var(--k-acc-text);
+      outline-offset: 3px;
+    }
+  }
+  & .kit-mn-media {
+    position: relative;
+    display: block;
+    flex: none;
+    width: 100%;
+    height: auto;
+    aspect-ratio: var(--km-ar);
+    margin: 0;
+    overflow: hidden;
+    border-radius: var(--km-r);
+    background: var(--k-surf);
+    & img {
+      object-fit: cover;
+      transition: transform 0.35s ease;
+    }
+    & .no-photo {
+      color: rgb(30 26 20 / 0.7);
+      font-family: var(--k-fd);
+      font-size: 2.2em;
+    }
+  }
+  & .kit-mn-media[data-r="tall"] {
+    aspect-ratio: 3 / 4;
+  }
+  & .kit-mn-media[data-r="square"] {
+    aspect-ratio: 1 / 1;
+  }
+  & .kit-mn-media[data-r="wide"] {
+    aspect-ratio: 4 / 3;
+  }
+  & .kit-mn-item:hover .kit-mn-media img {
+    transform: scale(1.04);
+  }
+  & .kit-mn-item[data-out] .kit-mn-media img {
+    filter: grayscale(1);
+    opacity: 0.75;
+  }
+  & .kit-mn-text {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 0;
+  }
+  & .kit-mn-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 2px 10px;
+    min-width: 0;
+  }
+  & .kit-mn-name {
+    flex: 0 1 auto;
+    min-width: 0;
+    color: var(--k-ink);
+    font: 700 16px/1.3 var(--k-fb);
+    overflow-wrap: anywhere;
+  }
+  & .kit-mn-price {
+    flex: none;
+    color: var(--k-ink);
+    font: 700 15px/1.3 var(--k-fb);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    & small {
+      color: var(--k-muted);
+      font-size: 0.8em;
+      font-weight: 600;
+    }
+  }
+  & .kit-mn-desc {
+    display: -webkit-box;
+    overflow: hidden;
+    color: var(--k-muted);
+    font-size: 14px;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+  & .kit-mn-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    min-width: 0;
+  }
+  & .kit-mn-tag {
+    max-width: 100%;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: var(--k-acc-soft);
+    color: var(--k-ink);
+    font: 700 11.5px/1.3 var(--k-fb);
+    letter-spacing: 0;
+    text-transform: none;
+    overflow-wrap: anywhere;
+  }
+  & .kit-mn-tag.is-out {
+    background: var(--k-ink);
+    color: var(--k-bg);
+  }
+
+  /* ---------- prices ---------- */
+  /* A pill sets its fill and its text together, over any color a template or a look gives prices (!important), so the
+   * two always match. */
+  &[data-mn-price="badge"] .kit-mn-price,
+  &[data-mn-price="corner"] .kit-mn-price {
+    padding: 3px 11px;
+    border-radius: 999px;
+    background: var(--k-acc) !important;
+    color: var(--k-acc-ink) !important;
+    font-size: 14px;
+    & small {
+      color: inherit !important;
+    }
+  }
+  &[data-mn-price="corner"] .kit-mn-media .kit-mn-price {
+    position: absolute;
+    top: 10px;
+    inset-inline-end: 10px;
+    z-index: 1;
+    background: var(--k-bg) !important;
+    color: var(--k-ink) !important;
+    box-shadow: 0 4px 14px -6px rgb(0 0 0 / 0.5);
+  }
+  /* A small photo beside the text (lists, the magazine in narrow columns): the pill shrinks to stay on the photo. */
+  &[data-mn-price="corner"][data-mn-photos="side"] .kit-mn-media .kit-mn-price {
+    top: 6px;
+    inset-inline-end: 6px;
+    max-width: calc(100% - 12px);
+    padding: 2px 7px;
+    font-size: 12px;
+    line-height: 1.2;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  &[data-mn-price="under"] .kit-mn-price {
+    align-self: flex-start;
+  }
+  &[data-mn-price="large"] .kit-mn-price {
+    margin-top: auto;
+    padding-top: 6px;
+    font-family: var(--k-fd);
+    font-size: 24px;
+    font-weight: var(--k-fw);
+    line-height: 1.1;
+  }
+
+  /* ---------- cards: grid, large, mosaic, side-scrolling rows ---------- */
+  &:is([data-mn="grid"], [data-mn="large"], [data-mn="masonry"], [data-mn="carousel"]) .kit-mn-item {
+    overflow: hidden;
+    border: 1px solid var(--k-line);
+    background: var(--km-surf);
+    & .kit-mn-text {
+      padding: 12px 14px 14px;
+    }
+    & .kit-mn-media.kit-flush {
+      border-radius: 0;
+    }
+  }
+  &:is([data-mn="grid"], [data-mn="large"], [data-mn="masonry"], [data-mn="carousel"])[data-mn-photos="side"] .kit-mn-item {
+    flex-direction: row;
+    align-items: stretch;
+    & .kit-mn-media {
+      width: 36%;
+      max-width: 180px;
+      border-radius: 0;
+    }
+  }
+  &[data-mn="grid"] .kit-mn-list {
+    grid-template-columns: repeat(min(var(--km-cols), 2), minmax(0, 1fr));
+  }
+  &[data-mn="grid"][data-mn-photos="side"] .kit-mn-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  &[data-mn="grid"] .kit-mn-name {
+    font-size: 15px;
+  }
+  /* Two narrow cards side by side on a phone: the price goes under the name, the same in every card. */
+  &[data-mn="grid"]:not([data-mn-cols="one"], [data-mn-photos="side"]) .kit-mn-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  &[data-mn="large"] .kit-mn-list {
+    gap: 20px;
+  }
+  &[data-mn="large"] .kit-mn-item {
+    & .kit-mn-text {
+      gap: 7px;
+      padding: 16px 18px 18px;
+    }
+    & .kit-mn-name {
+      font-family: var(--k-fd);
+      font-size: 21px;
+      font-weight: var(--k-fw);
+      line-height: 1.2;
+    }
+    & .kit-mn-desc {
+      font-size: 15px;
+      -webkit-line-clamp: 4;
+    }
+  }
+
+  &[data-mn="masonry"] .kit-mn-list {
+    display: block;
+    columns: min(var(--km-cols), 2);
+    column-gap: var(--km-gap);
+  }
+  /* Photos beside the text need the whole width of a phone. */
+  &[data-mn="masonry"][data-mn-photos="side"] .kit-mn-list {
+    columns: 1;
+  }
+  &[data-mn="masonry"] .kit-mn-li {
+    display: block;
+    margin-bottom: var(--km-gap);
+    break-inside: avoid;
+  }
+  &[data-mn="masonry"] .kit-mn-name {
+    font-size: 15px;
+  }
+
+  &[data-mn="carousel"] .kit-mn-list {
+    display: flex;
+    gap: var(--km-gap);
+    padding: 4px 4px 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 4px;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--k-line) transparent;
+  }
+  &[data-mn="carousel"] .kit-mn-li {
+    flex: 0 0 min(78%, 300px);
+    scroll-snap-align: start;
+  }
+  &[data-mn="carousel"][data-mn-photos="side"] .kit-mn-li {
+    flex-basis: 88%;
+  }
+
+  /* ---------- rows: list and printed menu ---------- */
+  &:is([data-mn="list"], [data-mn="compact"]) .kit-mn-list {
+    gap: 0;
+  }
+  &:is([data-mn="list"], [data-mn="compact"]) .kit-mn-item {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 14px;
+    border-radius: 0;
+  }
+  &[data-mn="list"] .kit-mn-item {
+    padding-block: 14px;
+    border-bottom: 1px solid var(--k-line);
+  }
+  &[data-mn="list"] .kit-mn-li:first-child .kit-mn-item {
+    padding-top: 4px;
+  }
+  &:is([data-mn="list"], [data-mn="compact"])[data-mn-photos="side"] .kit-mn-media {
+    width: 84px;
+    border-radius: var(--k-rs);
+  }
+  &:is([data-mn="list"], [data-mn="compact"])[data-mn-photos="top"] .kit-mn-item {
+    flex-direction: column;
+    gap: 10px;
+    & .kit-mn-media {
+      max-height: 260px;
+      border-radius: var(--k-rs);
+    }
+  }
+  /* A tall photo across a phone's whole width would fill the screen before the name shows. */
+  &[data-mn-photos="top"]:not([data-mn="tiles"]) .kit-mn-media {
+    max-height: 420px;
+  }
+  &[data-mn="list"][data-mn-shape="tall"][data-mn-photos="side"] .kit-mn-media {
+    width: 72px;
+  }
+  &[data-mn="compact"] .kit-mn-item {
+    gap: 12px;
+    padding-block: 9px;
+  }
+  &[data-mn="compact"][data-mn-photos="side"] .kit-mn-media {
+    width: 56px;
+  }
+  &[data-mn="compact"] .kit-mn-head {
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+  &[data-mn="compact"] .kit-mn-name {
+    font-family: var(--k-fd);
+    font-size: 17px;
+    font-weight: var(--k-fw);
+    line-height: 1.25;
+  }
+  &[data-mn="compact"] .kit-mn-dots {
+    flex: 1 0 18px;
+    align-self: flex-end;
+    margin-bottom: 0.35em;
+    border-bottom: 2px dotted var(--k-muted);
+    opacity: 0.6;
+  }
+  &[data-mn="compact"] .kit-mn-desc {
+    font-size: 13.5px;
+    -webkit-line-clamp: 2;
+  }
+  &[data-mn="compact"]:not([data-mn-price="inline"]) .kit-mn-head {
+    flex-wrap: wrap;
+  }
+  &[data-mn="compact"] .kit-mn-tags {
+    order: 3;
+  }
+
+  /* ---------- magazine: photo and text side by side, the photo changing sides ---------- */
+  &[data-mn="magazine"] .kit-mn-list {
+    gap: 0;
+  }
+  &[data-mn="magazine"] .kit-mn-item {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    padding-block: 18px;
+    border-bottom: 1px solid var(--k-line);
+    border-radius: 0;
+    & .kit-mn-media {
+      width: 44%;
+    }
+    & .kit-mn-text {
+      gap: 7px;
+    }
+    & .kit-mn-name {
+      font-family: var(--k-fd);
+      font-size: 19px;
+      font-weight: var(--k-fw);
+      line-height: 1.2;
+    }
+    & .kit-mn-desc {
+      -webkit-line-clamp: 4;
+    }
+  }
+  &[data-mn="magazine"] .kit-mn-li:nth-child(even) .kit-mn-item {
+    flex-direction: row-reverse;
+  }
+  &[data-mn="magazine"] .kit-mn-li:first-child .kit-mn-item {
+    padding-top: 4px;
+  }
+
+  /* ---------- photo tiles: the name and price over the photo ---------- */
+  &[data-mn="tiles"] .kit-mn-list {
+    grid-template-columns: repeat(min(var(--km-cols), 2), minmax(0, 1fr));
+    gap: 10px;
+  }
+  &[data-mn="tiles"] .kit-mn-item {
+    justify-content: flex-end;
+    aspect-ratio: var(--km-ar);
+    /* A wide tile in two columns would leave no photo above the words. */
+    min-height: 168px;
+    max-height: 460px;
+    overflow: hidden;
+    background: var(--km-surf);
+    & .kit-mn-media {
+      position: absolute;
+      inset: 0;
+      width: auto;
+      height: auto;
+      aspect-ratio: auto;
+      border-radius: inherit;
+    }
+    & .kit-mn-text {
+      position: relative;
+      flex: none;
+      gap: 4px;
+      padding: 26px 12px 12px;
+    }
+    & .kit-mn-name {
+      display: -webkit-box;
+      overflow: hidden;
+      font-size: 15px;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+    }
+    & .kit-mn-desc {
+      display: none;
+    }
+  }
+  /* Over a photo, white words on a dark wash that keeps them readable whatever the photo. */
+  &[data-mn="tiles"] .kit-mn-item[data-pic="photo"] .kit-mn-text {
+    background: linear-gradient(to top, rgb(10 10 10 / 0.82), rgb(10 10 10 / 0.72) calc(100% - 26px), rgb(10 10 10 / 0));
+    & .kit-mn-name {
+      color: #fff;
+    }
+    & .kit-mn-price small {
+      color: inherit;
+    }
+  }
+  &[data-mn="tiles"]:is([data-mn-price="inline"], [data-mn-price="under"], [data-mn-price="large"]) .kit-mn-item[data-pic="photo"] .kit-mn-text .kit-mn-price {
+    color: #fff;
+  }
+  /* Without a photo the tile is a colored card; the words sit on the template's surface color. */
+  &[data-mn="tiles"] .kit-mn-item[data-pic="tint"] .kit-mn-text {
+    margin: 8px;
+    padding: 10px;
+    border-radius: calc(var(--km-r) * 0.7);
+    background: var(--k-bg);
+  }
+  &[data-mn="tiles"] .kit-mn-item:not([data-pic]) {
+    justify-content: flex-start;
+    aspect-ratio: auto;
+    min-height: 140px;
+    border: 1px solid var(--k-line);
+    & .kit-mn-text {
+      flex: 1 1 auto;
+      padding: 14px;
+    }
+    & .kit-mn-desc {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+    }
+  }
+  &[data-mn="tiles"][data-mn-price="large"] .kit-mn-item[data-pic] .kit-mn-price {
+    font-size: 20px;
+  }
+
+  /* ---------- the side list of categories ---------- */
+  @container kmenu (min-width: 860px) {
+    &[data-mn-nav="sidebar"] .kit-mn-frame {
+      grid-template-columns: minmax(150px, 210px) minmax(0, 1fr);
+      align-items: start;
+      gap: 32px;
+    }
+    & .kit-mn-nav[data-nav="sidebar"] {
+      padding: 10px;
+      & .kit-mn-links {
+        flex-direction: column;
+        gap: 2px;
+        max-height: calc(100vh - var(--kit-mn-top, 0px) - 40px);
+        overflow: auto;
+      }
+      & .kit-mn-link {
+        justify-content: flex-start;
+        border-radius: var(--k-rs);
+        white-space: normal;
+        overflow-wrap: anywhere;
+      }
+    }
+  }
+
+  /* ---------- wider columns ---------- */
+  @container kmenu (min-width: 560px) {
+    & .kit-mn-frame {
+      --km-gap: 18px;
+    }
+    &[data-mn="grid"] .kit-mn-head {
+      flex-direction: row !important;
+      align-items: baseline !important;
+    }
+    & .kit-mn-h {
+      font-size: 28px;
+    }
+    &[data-mn="list"] .kit-mn-item {
+      gap: 18px;
+    }
+    &:is([data-mn="list"], [data-mn="compact"])[data-mn-photos="side"] .kit-mn-media {
+      width: 104px;
+    }
+    &[data-mn="compact"][data-mn-photos="side"] .kit-mn-media {
+      width: 64px;
+    }
+    &[data-mn="magazine"] .kit-mn-item {
+      gap: 28px;
+      & .kit-mn-name {
+        font-size: 23px;
+      }
+    }
+    &[data-mn="grid"][data-mn-photos="side"] .kit-mn-list {
+      grid-template-columns: repeat(min(var(--km-cols), 2), minmax(0, 1fr));
+    }
+    &[data-mn="large"] .kit-mn-list {
+      grid-template-columns: repeat(min(var(--km-cols), 2), minmax(0, 1fr));
+    }
+    &[data-mn="tiles"] .kit-mn-list {
+      grid-template-columns: repeat(min(var(--km-cols), 3), minmax(0, 1fr));
+    }
+    &[data-mn="tiles"] .kit-mn-item .kit-mn-desc {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      color: rgb(255 255 255 / 0.88);
+    }
+    &[data-mn="tiles"] .kit-mn-item:not([data-pic="photo"]) .kit-mn-desc {
+      color: var(--k-muted);
+    }
+    &[data-mn="masonry"] .kit-mn-list {
+      columns: min(var(--km-cols), 3);
+    }
+    &[data-mn="masonry"][data-mn-photos="side"] .kit-mn-list {
+      columns: min(var(--km-cols), 2);
+    }
+    &[data-mn="carousel"] .kit-mn-li {
+      flex-basis: calc((100% - (min(var(--km-cols), 2) - 1) * var(--km-gap)) / (min(var(--km-cols), 2) + 0.25));
+    }
+  }
+  @container kmenu (min-width: 760px) {
+    & .kit-mn-frame {
+      --km-gap: 22px;
+    }
+    & .kit-mn-cats {
+      gap: 48px;
+    }
+    &:is([data-mn="grid"], [data-mn="large"], [data-mn="tiles"]) .kit-mn-list {
+      grid-template-columns: repeat(var(--km-cols), minmax(0, 1fr));
+    }
+    &[data-mn="grid"][data-mn-photos="side"] .kit-mn-list {
+      grid-template-columns: repeat(min(var(--km-cols), 3), minmax(0, 1fr));
+    }
+    &:is([data-mn="list"], [data-mn="compact"], [data-mn="magazine"]) .kit-mn-list {
+      grid-template-columns: repeat(var(--km-cols), minmax(0, 1fr));
+      column-gap: 44px;
+    }
+    &[data-mn="masonry"] .kit-mn-list {
+      columns: var(--km-cols);
+    }
+    &[data-mn="carousel"] .kit-mn-li {
+      flex-basis: calc((100% - (var(--km-cols) - 1) * var(--km-gap)) / (var(--km-cols) + 0.25));
+    }
+    &[data-mn="carousel"][data-mn-cols="one"] .kit-mn-li {
+      flex-basis: 82%;
+    }
+    &[data-mn="large"] .kit-mn-item .kit-mn-name {
+      font-size: 24px;
+    }
+    /* A list in two or more columns keeps the first row of each column level. */
+    &:is([data-mn="list"], [data-mn="magazine"]):not([data-mn-cols="one"]) .kit-mn-li:nth-child(-n + 4) .kit-mn-item {
+      padding-top: 4px;
+    }
+    &[data-mn="magazine"][data-mn-cols="one"] .kit-mn-item {
+      & .kit-mn-media {
+        width: 48%;
+        max-width: 560px;
+      }
+      & .kit-mn-name {
+        font-size: 28px;
+      }
+    }
+    &[data-mn="magazine"]:not([data-mn-cols="one"]) .kit-mn-li:nth-child(even) .kit-mn-item {
+      flex-direction: row;
+    }
+    &[data-mn="magazine"]:not([data-mn-cols="one"]) .kit-mn-li:nth-child(4n + 3) .kit-mn-item,
+    &[data-mn="magazine"]:not([data-mn-cols="one"]) .kit-mn-li:nth-child(4n + 4) .kit-mn-item {
+      flex-direction: row-reverse;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kit-mn.kit-mn.kit-mn .kit-mn-media img {
+    transition: none;
+  }
+  .kit-mn.kit-mn.kit-mn .kit-mn-item:hover .kit-mn-media img {
+    transform: none;
+  }
+}
+
+/* The shared menu takes the whole width of a template's menu section, even one laid out in columns. */
+[data-section="menu"] > .kit-mn.kit-mn.kit-mn,
+[data-section="menu"] > * > .kit-mn.kit-mn.kit-mn {
+  grid-column: 1 / -1;
+}
+
+/* A multi-page site's own category links (data-k="catnav") give way once the owner picks the shared ones. */
+[data-template]:has(.kit-mn-nav) [data-k~="catnav"] {
+  display: none !important;
+}

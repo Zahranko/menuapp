@@ -62,3 +62,27 @@ public class OwnerRateLimitTests(LowOwnerLimitFactory factory) : IClassFixture<L
         Assert.Equal(HttpStatusCode.OK, (await factory.CreateClient().Authorized(second.AccessToken).GetAsync("/api/v1/me")).StatusCode);
     }
 }
+
+public sealed class LowUploadLimitFactory : StorefrontFactory
+{
+    protected override IDictionary<string, string?> ExtraSettings => new Dictionary<string, string?> { ["RateLimits:UploadPerMinute"] = "2" };
+}
+
+public class UploadRateLimitTests(LowUploadLimitFactory factory) : IClassFixture<LowUploadLimitFactory>
+{
+    [Fact]
+    public async Task Photo_uploads_have_their_own_per_owner_limit()
+    {
+        var owner = await Api.RegisterAsync(factory.CreateClient());
+        var client = factory.CreateClient().Authorized(owner.AccessToken);
+        var statuses = new List<HttpStatusCode>();
+        for (var i = 0; i < 4; i++)
+        {
+            using var form = new MultipartFormDataContent { { new ByteArrayContent("not an image"u8.ToArray()), "file", "photo.jpg" } };
+            statuses.Add((await client.PostAsync("/api/v1/media", form)).StatusCode);
+        }
+
+        Assert.Contains(HttpStatusCode.TooManyRequests, statuses);
+        Assert.Equal(HttpStatusCode.OK, (await client.GetAsync("/api/v1/me")).StatusCode);
+    }
+}

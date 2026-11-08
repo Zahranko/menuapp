@@ -2,24 +2,24 @@
 
 ## 0. Brand configuration: the name is changeable
 
-The public name is a test name for now (**Sufrly**, domain `sufrly.com`). It will change, maybe more than once,
+The public name is **Katlio** (domain `katlio.com`). It will change, maybe more than once,
 so it lives in one file and nothing else. In this plan, `{brand}` means the brand name and `{domain}` the brand domain.
 
 `brand.json` at the repo root (flat keys, so Flutter can read it with `--dart-define-from-file`):
 
 ```json
 {
-  "brandName": "Sufrly",
-  "brandShortName": "sufrly",
-  "brandNameAr": "سُفرة",
+  "brandName": "Katlio",
+  "brandShortName": "katlio",
+  "brandNameAr": "كاتليو",
   "tagline": "Your menu, beautifully served.",
-  "domain": "sufrly.com",
-  "apiHost": "api.sufrly.com",
-  "adminHost": "admin.sufrly.com",
+  "domain": "katlio.com",
+  "apiHost": "api.katlio.com",
+  "adminHost": "admin.katlio.com",
   "customDomainTarget": "edge.storefront-infra.net",
-  "supportEmail": "support@sufrly.com",
-  "noReplyEmail": "no-reply@sufrly.com",
-  "appId": "com.sufrly.app",
+  "supportEmail": "support@katlio.com",
+  "noReplyEmail": "no-reply@katlio.com",
+  "appId": "com.katlio.app",
   "colorPrimary": "#15291F",
   "colorPrimary2": "#1F3A2E",
   "colorAccent": "#F2B22E",
@@ -30,7 +30,7 @@ so it lives in one file and nothing else. In this plan, `{brand}` means the bran
   "colorLine": "#DAD8C9",
   "fontDisplay": "Bricolage Grotesque",
   "fontBody": "DM Sans",
-  "fontArabic": "IBM Plex Sans Arabic"
+  "fontArabic": "Cairo"
 }
 ```
 
@@ -63,7 +63,7 @@ Rules:
 
 | Who | What they do |
 |---|---|
-| Business owner (mobile app) | Signs up with business name, email, phone and password. Picks a template, customizes the design once, then manages products and categories from the **My menu** dashboard without touching the design again. Chooses Basic ($5) or Pro ($10). On Pro, requests a custom domain. |
+| Business owner (mobile app) | Signs up with business name, email, phone and password. Picks a template, customizes the design once, then manages products and categories from the **My menu** dashboard without touching the design again. Chooses Lite ($2), Basic ($5) or Pro ($10). On Pro, requests a custom domain. |
 | Customer (website) | Opens `{domain}/<slug>` or the custom domain. Browses the menu, searches, taps an item for details, contacts the business on WhatsApp, gets directions. |
 | Support staff (back office) | Handles custom domain requests, looks up businesses and subscriptions, manages templates. |
 
@@ -141,12 +141,12 @@ Integration tests prove that business A can never read or change business B's da
 |---|---|---|
 | `AspNetUsers` (Identity) | Id, Email, PhoneNumber, PasswordHash | Email and phone unique |
 | `Businesses` | Id, OwnerUserId, Name, Slug, WhatsApp, Email, Address, Instagram, CurrencyCode (`JOD`), Locale (`ar`/`en`), CreatedAt | Slug unique, case-insensitive |
-| `Categories` | Id, BusinessId, Name, SortOrder | Unique (BusinessId, lower(Name)) |
+| `Categories` | Id, BusinessId, Name, ParentId (nullable), SortOrder | Unique (BusinessId, lower(Name)). Sub-categories one level deep: ParentId points to a main category (FK, no cascade) |
 | `Products` | Id, BusinessId, CategoryId, Name, Description, Price `decimal(12,3)`, ImageUrl, Label (`Signature`, `New`, `Best seller`, `Vegan`, `Spicy` or null), IsAvailable, IsFeatured, SortOrder, CreatedAt, UpdatedAt | Sold out = `IsAvailable = false`. Featured = shown in "Signature picks" |
-| `Templates` | Id (`souq`), Number (1–100), Name, Category, ThumbnailUrl, SettingsSchema `jsonb`, DefaultSettings `jsonb`, Version, IsActive | Seeded from `apps/sites/templates/registry.json` |
+| `Templates` | Id (`souq`), Number (1–100), Name, Category, ThumbnailUrl, SettingsSchema `jsonb`, DefaultSettings `jsonb`, Version, Tier (`lite`, `basic`, `pro`), IsActive | Seeded from `apps/sites/templates/registry.json`. Manifest `"tier": "lite"` marks a menu sheet open to every plan, `"tier": "pro"` a Pro-only template (absent = basic) |
 | `Sites` | Id, BusinessId (1:1), TemplateId, DraftSettings `jsonb`, PublishedSettings `jsonb`, PublishedAt | Design only. Content comes from Products and Categories |
 | `MediaAssets` | Id, BusinessId, Url, ContentType, SizeBytes, CreatedAt | Images up to 5 MB: jpeg, png, webp |
-| `Plans` | Code (`basic`, `pro`), PriceUsd, AllowsCustomDomain | Seeded |
+| `Plans` | Code (`lite`, `basic`, `pro`), PriceUsd, AllowsCustomDomain | Seeded: Lite $2, Basic $5, Pro $10 |
 | `Subscriptions` | Id, BusinessId, PlanCode, Status (`trialing`, `active`, `past_due`, `canceled`), Provider, ProviderRef, CurrentPeriodEnd | |
 | `DomainRequests` | Id, BusinessId, Domain, Status (`Requested`, `AwaitingDns`, `Verifying`, `Active`, `Rejected`, `Cancelled`), StaffNote, HandledBy, timestamps | |
 | `CustomDomains` | Domain (PK), BusinessId, ActivatedAt | Active mappings only. Read by Caddy check and Next.js host lookup |
@@ -156,6 +156,22 @@ Integration tests prove that business A can never read or change business B's da
 
 Deleting a category with products requires the caller to choose: `moveTo=<categoryId>` or `deleteProducts=true`
 (the prototype's confirm step). Categories without products are hidden on the public site.
+
+**Sub-categories** (for multi-page templates with category pages): one level deep. `POST`/`PUT /api/v1/categories` take an
+optional `parentId`; the parent must be a main category of the same business, a category with sub-categories cannot get a
+parent, and a category cannot be its own parent (400 on field `parentId`, codes `category.parent`, `category.parentNotFound`,
+`category.parentSelf`, `category.hasSubcategories`). `PUT` is a full update, so no `parentId` means top level. Deleting a
+main category moves its sub-categories to the top level. `SortOrder` stays one integer; clients order siblings by it.
+The public API keeps a flat list with `parentId`; a main category is kept when only its sub-categories have products.
+
+**Template tiers:** plans and template tiers share ranks (Lite 0, Basic 1, Pro 2), and a plan opens every tier up to its own.
+Lite templates (the menu sheets: Linen, Chalkboard, Ticket, Bistro, Zen) are open to every plan. Basic templates are closed only
+to a live Lite plan (403 `template.basic`). Pro templates need a live Pro plan (same check as custom domains, `PlanChecker`;
+otherwise 403 `template.pro`). Both checks run on choosing (`PUT /site/template`) and publishing (`POST /site/publish`).
+A site already live on a template keeps rendering after a downgrade. Trials count as Basic. `Billing:TestMode` makes everyone Pro.
+The gallery (`GET /templates`) lists Lite templates first, then Basic, then Pro, each by number.
+
+**AI allowance:** `Ai:MonthlyLimit` per plan code: Lite 10, Basic 30 (also trials), Pro 100.
 
 ## 5. API surface (v1)
 
@@ -235,6 +251,12 @@ The **settings schema** is a list of typed fields. The Flutter editor renders co
 `npm run templates:registry` builds `apps/sites/templates/registry.json` from all manifests. The backend seeds the
 `Templates` table from that file, so the backend and Next.js always agree.
 
+**Arabic:** a manifest may carry `"ar": { "name", "category", "description" }`, `"defaultsAr"` (Arabic text values that
+replace top-level keys of `defaults`) and, on schema fields, `labelAr`, `groupAr`, `optionLabelsAr`. The importer stores
+them (`Templates.NameAr`, `CategoryAr`, `DescriptionAr`, `DefaultSettingsAr`, checking `defaultsAr` against the schema and
+skipping keys that fail), the schema is returned untouched, and `GET /api/v1/templates` adds `ar` (or null) and `defaultsAr`.
+When a business whose locale is `ar` signs up or chooses a template, its draft starts from `defaults` merged with `defaultsAr`.
+
 **Editor preview:** the Flutter editor saves the draft (debounced), asks for a preview token and shows
 `https://{domain}/_preview/<token>` in a WebView. What the owner sees is the real template.
 
@@ -264,6 +286,11 @@ The **settings schema** is a list of typed fields. The Flutter editor renders co
 - State: Riverpod. Routing: go_router with an auth redirect. HTTP: dio with token refresh interceptor, using the generated client.
 - Secure storage for tokens (`flutter_secure_storage`). Images: `image_picker`, compressed before upload. Preview: `webview_flutter`.
 - Localization: ARB files for `ar` and `en`, follows the device language, with an in-app switch. Full RTL support.
+- API messages: the app sends `Accept-Language: ar` or `en` with every request. ProblemDetails `title` and every message in
+  `errors` (and the slug check's `message`) come back in that language; `code` values never change, so the app branches on codes.
+  Messages are raised in English in Domain/Application/Infrastructure and translated in Web (request localization, UI culture only)
+  through `Application/Common/Localization/Messages.cs`: exact English text, then sentences with placeholders, then the error code.
+  A unit test fails if any error code or message in `src/` has no Arabic. Emails to owners follow the business locale.
 - Theme colors and fonts come from `brand.json` (section 0), never from constants in Dart. Current values match the prototype.
   The font files for the current brand are bundled as assets; `rebrand.sh` swaps them if the brand fonts change.
 - Screens: splash, onboarding, sign up, log in, forgot password, welcome, template gallery, design editor, my site (WebView), My menu dashboard (Products, Categories, Settings), product and category sheets, plan change, domain request.
@@ -274,7 +301,7 @@ The **settings schema** is a list of typed fields. The Flutter editor renders co
 - Each template renders all sections from the prototype's "Souq" site: announcement bar, sticky header with mobile drawer, hero (full or split), highlights, signature picks, menu with search and sticky category tabs, item detail sheet, story, gallery, reviews, visit (map, hours with today highlighted, contact), footer with newsletter field.
 - SEO: `generateMetadata` per site, schema.org JSON-LD (`Restaurant` or `CafeOrCoffeeShop` with `hasMenu`), sitemap and robots per host, Open Graph image.
 - `next/image` with the storage domain in `remotePatterns`. The site's language and direction come from the business locale.
-- Marketing pages at the root: landing, pricing ($5 / $10), links to the app stores.
+- Marketing pages at the root: landing, pricing ($2 / $5 / $10), links to the app stores.
 
 ## 10. Testing
 

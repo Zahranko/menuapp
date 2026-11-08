@@ -1,5 +1,15 @@
 /* Template 003 "Night Market": dark, loud, big photo cards in a sideways row per category. */
 
+@import "../_kit/logo.css";
+@import "../_kit/options.css";
+@import "../_kit/cards.css";
+@import "../_kit/hero.css";
+@import "../_kit/layout.css";
+@import "../_kit/menu.css";
+@import "../_kit/sections.css";
+@import "../_kit/style.css";
+@import "./signature.css";
+
 .t-night {
   container: page / inline-size;
   font-size: 15px;
@@ -186,7 +196,7 @@
 
   /* picks */
   .picks {
-    padding: 44px 16px 10px;
+    padding: calc(44px * var(--kit-space, 1)) 16px calc(10px * var(--kit-space, 1));
   }
   .picks-grid {
     display: grid;
@@ -228,7 +238,7 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
-    background: linear-gradient(0deg, #000000d9, #0000);
+    background: linear-gradient(0deg, #000000e0, #000000a8 60%, #0000);
     color: #fff;
   }
   .pick-name {
@@ -253,11 +263,15 @@
 
   /* menu rows */
   .menu {
-    padding: 40px 0 8px;
+    padding: calc(40px * var(--kit-space, 1)) 0 calc(8px * var(--kit-space, 1));
     scroll-margin-top: 60px;
   }
   .menu > .kicker {
     padding: 0 16px;
+  }
+  /* The shared menu (_kit/menu.css) keeps the side space of the template's own rows. */
+  .menu {
+    --kit-mn-pad: 0 16px;
   }
   .chips {
     position: sticky;
@@ -290,7 +304,7 @@
     color: var(--acc-ink);
   }
   .row {
-    padding-top: 26px;
+    padding-top: calc(26px * var(--kit-space, 1));
     scroll-margin-top: 120px;
   }
   .row-head {
@@ -403,7 +417,7 @@
 
   /* gallery strip */
   .strip {
-    padding: 40px 0 0;
+    padding: calc(40px * var(--kit-space, 1)) 0 0;
   }
   .strip > .kicker {
     padding: 0 16px;
@@ -432,7 +446,7 @@
 
   /* visit */
   .visit {
-    padding: 56px 16px 20px;
+    padding: calc(56px * var(--kit-space, 1)) 16px calc(20px * var(--kit-space, 1));
     scroll-margin-top: 60px;
   }
   .big {
@@ -462,8 +476,8 @@
   }
 
   .foot {
-    margin-top: 40px;
-    padding: 28px 16px 24px;
+    margin-top: calc(40px * var(--kit-space, 1));
+    padding: calc(28px * var(--kit-space, 1)) 16px calc(24px * var(--kit-space, 1));
     border-top: 1px solid var(--line);
     color: var(--muted);
     display: flex;
@@ -474,6 +488,15 @@
     font: var(--fw) calc(40px * var(--fs)) / 1 var(--fd);
     text-transform: uppercase;
     color: var(--ink);
+  }
+
+  /* Social accounts the owner shows (_kit/options.css draws the round icon links). */
+  .foot-social {
+    justify-content: flex-start;
+    color: var(--acc-text);
+  }
+  .foot-social a {
+    border-color: color-mix(in srgb, currentColor 40%, transparent);
   }
 
   .order-bar {
@@ -502,6 +525,9 @@
   @container page (min-width: 760px) {
     .bar {
       padding: 12px 40px;
+    }
+    .menu {
+      --kit-mn-pad: 0 max(40px, calc((100cqi - 1200px) / 2));
     }
     .open {
       display: inline-flex;

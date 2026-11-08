@@ -1,12 +1,18 @@
 import { flag } from "@/lib/settings";
 import type { TemplateProps } from "@/lib/types";
-import { ContactList, Credits, HoursList, Logo, ProductPicture, ProductSheet, TopBars } from "../_kit/blocks";
+import { ContactList, Credits, HoursList, Logo, logoRoot, optionRoot, OrderFab, ProductPicture, ProductSheet, SocialLinks, TopBars } from "../_kit/blocks";
+import { orderButton, socialAccounts } from "../_kit/options";
 import { cx, siteContext } from "../_kit/context";
+import { heroPhotos } from "../_kit/hero";
+import { HeroBand } from "../_kit/HeroPhotos";
 import { fontVariables } from "../_kit/fonts";
 import { WhatsApp } from "../_kit/icons";
 import { hasHours } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { themeVars } from "../_kit/theme";
+import { basicLinks, orderCta, pageTop, SiteHero, SiteMasthead } from "../_kit/Top";
+import { SiteMenu } from "../_kit/Menu";
+import { SiteFooter, SiteStory, SiteVisit, ordered } from "../_kit/Sections";
 
 const copy = {
   en: { special: "Today's special", menu: "On the board", story: "Hello!", visit: "Come say hi", hours: "Hours", order: "Order on WhatsApp", jump: "Jump to" },
@@ -61,133 +67,161 @@ export default function ChalkBoardTemplate({ site, now }: TemplateProps & { now?
   const special = ctx.on("special") ? ctx.picks[0] : undefined;
   const story = ctx.on("story") && ctx.text("story.text");
 
+  const order = orderButton(site, { label: c.order });
+  const top = pageTop(ctx, { photos: heroPhotos(site.settings, null) });
   return (
     <div
-      data-template="chalkboard"
+      data-template="chalkboard" {...logoRoot(ctx)} {...optionRoot(ctx, order)}
       className={cx("t-chalk", dust && "dust", fontVariables)}
       style={themeVars(site.settings, ctx.locale, { palettes: PALETTES, fonts: ["hand", "round", "condensed"], defaultAccent: "#F2C14E" })}
     >
       <TemplateStyles id="chalkboard" />
       <TopBars ctx={ctx} />
       <div className="board">
-        <header className="head" data-section="header">
-          <Logo ctx={ctx} />
-          <h1>{site.business.name}</h1>
-          <Squiggle />
-          {ctx.text("hero.title") && <p className="tagline">{ctx.text("hero.title")}</p>}
-          {ctx.today && <p className="today">{ctx.today}</p>}
-        </header>
+        <SiteMasthead ctx={ctx} top={top} links={basicLinks(ctx, { story })} cta={orderCta(order)} fallback="centered">
+          <header className="head" data-section="header" data-k="masthead">
+            <Logo ctx={ctx} />
+            <h1 className="kit-name">{site.business.name}</h1>
+            <Squiggle />
+            {ctx.text("hero.title") && <p className="tagline">{ctx.text("hero.title")}</p>}
+            {ctx.today && <p className="today">{ctx.today}</p>}
+            <HeroBand ctx={ctx} photos={heroPhotos(site.settings, null)} />
+          </header>
+        </SiteMasthead>
+        <SiteHero
+          ctx={ctx}
+          top={top}
+          title={site.business.name}
+          subtitle={ctx.text("hero.title")}
+          art={
+            <>
+              <Doodle kind="star" />
+              <Doodle kind="cup" />
+            </>
+          }
+        />
 
         <main>
-          {special && (
-            <section className="special" data-section="special" aria-labelledby="special-title">
-              <h2 id="special-title">{ctx.text("special.title") || c.special}</h2>
-              <button type="button" className="special-card" data-item-id={special.id}>
-                <span className="special-photo">
-                  <ProductPicture item={special} sizes="(min-width: 760px) 320px, 70vw" />
-                </span>
-                <span className="special-text">
-                  <span className="special-name">{special.name}</span>
-                  {special.description && <span className="special-desc">{special.description}</span>}
-                  <span className="special-price">{special.priceText}</span>
-                </span>
-              </button>
-              {ctx.text("special.note") && (
-                <p className="special-note">
-                  <Arrow />
-                  <span>{ctx.text("special.note")}</span>
-                </p>
-              )}
-            </section>
-          )}
-
-          <section id="menu" className="menu" data-section="menu" aria-labelledby="menu-title">
-            <h2 id="menu-title" className="menu-title">
-              {c.menu}
-            </h2>
-            {ctx.sections.length > 1 && (
-              <nav className="jump" aria-label={c.jump}>
-                {ctx.sections.map((s) => (
-                  <a key={s.id} href={`#${s.anchor}`}>
-                    {s.name}
-                  </a>
-                ))}
-              </nav>
-            )}
-            <div className="boxes">
-              {ctx.sections.map((section, i) => (
-                <section key={section.id} id={section.anchor} className="box" aria-labelledby={`${section.anchor}-h`}>
-                  <h3 id={`${section.anchor}-h`}>
-                    {doodles && <Doodle kind={DOODLES[i % DOODLES.length]} />}
-                    <span>{section.name}</span>
-                  </h3>
-                  <ul className="plain">
-                    {section.products.map((item) => (
-                      <li key={item.id}>
-                        <button type="button" className={cx("line", !item.isAvailable && "out")} data-item-id={item.id}>
-                          <span className="line-top">
-                            <span className="line-name">{item.name}</span>
-                            <span className="line-price">{item.priceText}</span>
-                          </span>
-                          {(item.description || item.labelText || !item.isAvailable) && (
-                            <span className="line-desc">
-                              {item.labelText && <span className="tag">{item.labelText}</span>}
-                              {!item.isAvailable && <span className="tag tag-out">{ctx.t.soldOut}</span>}
-                              {item.description}
-                            </span>
-                          )}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              ))}
-            </div>
-          </section>
-
-          {story && (
-            <section id="story" className="story" data-section="story" aria-labelledby="story-title">
-              {doodles && <Doodle kind="heart" />}
-              <h2 id="story-title">{ctx.text("story.title") || c.story}</h2>
-              <p>{story}</p>
-            </section>
-          )}
-
-          {ctx.on("visit") && (
-            <section id="visit" className="visit" data-section="visit" aria-labelledby="visit-title">
-              <h2 id="visit-title">{c.visit}</h2>
-              <div className="visit-grid">
-                {hasHours(ctx.hours) && (
-                  <div className="box">
-                    <h3>{c.hours}</h3>
-                    <HoursList ctx={ctx} />
-                  </div>
+          {ordered(ctx, {
+            special: special && (
+              <section className="special" data-section="special" aria-labelledby="special-title">
+                <h2 id="special-title">{ctx.text("special.title") || c.special}</h2>
+                <button type="button" className="special-card" data-item-id={special.id}>
+                  <span data-k="photo" className="special-photo">
+                    <ProductPicture item={special} sizes="(min-width: 760px) 320px, 70vw" />
+                  </span>
+                  <span className="special-text">
+                    <span className="special-name">{special.name}</span>
+                    {special.description && <span className="special-desc">{special.description}</span>}
+                    <span className="special-price">{special.priceText}</span>
+                  </span>
+                </button>
+                {ctx.text("special.note") && (
+                  <p className="special-note">
+                    <Arrow />
+                    <span>{ctx.text("special.note")}</span>
+                  </p>
                 )}
-                <div className="box">
-                  <h3>{ctx.t.findUs}</h3>
-                  <ContactList ctx={ctx} />
-                  <div className="actions">
-                    {ctx.contact.whatsapp && (
-                      <a className="chalk-btn" href={ctx.contact.whatsapp} rel="noopener" target="_blank">
-                        <WhatsApp /> {c.order}
+              </section>
+            ),
+            menu: (
+              <section id="menu" className="menu" data-section="menu" aria-labelledby="menu-title">
+                <h2 id="menu-title" className="menu-title">
+                  {c.menu}
+                </h2>
+                <SiteMenu ctx={ctx} like="compact">
+                {ctx.sections.length > 1 && (
+                  <nav className="jump" aria-label={c.jump}>
+                    {ctx.sections.map((s) => (
+                      <a key={s.id} href={`#${s.anchor}`}>
+                        {s.name}
                       </a>
-                    )}
-                    {ctx.contact.maps && (
-                      <a className="chalk-btn ghost" href={ctx.contact.maps} rel="noopener" target="_blank">
-                        {ctx.t.directions}
-                      </a>
-                    )}
-                  </div>
+                    ))}
+                  </nav>
+                )}
+                <div className="boxes">
+                  {ctx.sections.map((section, i) => (
+                    <section key={section.id} id={section.anchor} className="box" aria-labelledby={`${section.anchor}-h`}>
+                      <h3 id={`${section.anchor}-h`}>
+                        {doodles && <Doodle kind={DOODLES[i % DOODLES.length]} />}
+                        <span>{section.name}</span>
+                      </h3>
+                      <ul className="plain kit-cards kit-rows">
+                        {section.products.map((item) => (
+                          <li key={item.id}>
+                            <button type="button" className={cx("line kit-card kit-card-pad", !item.isAvailable && "out")} data-item-id={item.id}>
+                              <span className="line-top">
+                                <span className="line-name">{item.name}</span>
+                                <span className="line-price">{item.priceText}</span>
+                              </span>
+                              {(item.description || item.labelText || !item.isAvailable) && (
+                                <span className="line-desc">
+                                  {item.labelText && <span className="tag">{item.labelText}</span>}
+                                  {!item.isAvailable && <span className="tag tag-out">{ctx.t.soldOut}</span>}
+                                  {item.description}
+                                </span>
+                              )}
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </section>
+                  ))}
                 </div>
-              </div>
-            </section>
-          )}
+                </SiteMenu>
+              </section>
+            ),
+            story: story && (
+              <SiteStory ctx={ctx} title={ctx.text("story.title") || c.story}>
+                <section id="story" className="story" data-section="story" aria-labelledby="story-title">
+                  {doodles && <Doodle kind="heart" />}
+                  <h2 id="story-title">{ctx.text("story.title") || c.story}</h2>
+                  <p>{story}</p>
+                </section>
+              </SiteStory>
+            ),
+            visit: ctx.on("visit") && (
+              <SiteVisit ctx={ctx} title={c.visit} cta={ctx.contact.whatsapp ? { href: ctx.contact.whatsapp, label: c.order } : null}>
+                <section id="visit" className="visit" data-section="visit" aria-labelledby="visit-title">
+                  <h2 id="visit-title">{c.visit}</h2>
+                  <div className="visit-grid">
+                    {hasHours(ctx.hours) && (
+                      <div className="box">
+                        <h3>{c.hours}</h3>
+                        <HoursList ctx={ctx} />
+                      </div>
+                    )}
+                    <div className="box">
+                      <h3>{ctx.t.findUs}</h3>
+                      <ContactList ctx={ctx} />
+                      <div className="actions">
+                        {ctx.contact.whatsapp && (
+                          <a data-k="btn" className="chalk-btn" href={ctx.contact.whatsapp} rel="noopener" target="_blank">
+                            <WhatsApp /> {c.order}
+                          </a>
+                        )}
+                        {ctx.contact.maps && (
+                          <a data-k="btn" className="chalk-btn ghost" href={ctx.contact.maps} rel="noopener" target="_blank">
+                            {ctx.t.directions}
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </SiteVisit>
+            ),
+          })}
         </main>
 
-        <footer className="foot" data-section="footer">
-          <Credits ctx={ctx} />
-        </footer>
+        <SiteFooter ctx={ctx} links={basicLinks(ctx, { story })}>
+          <footer className="foot" data-section="footer">
+            <SocialLinks accounts={socialAccounts(site)} className="foot-social" />
+            <Credits ctx={ctx} />
+          </footer>
+        </SiteFooter>
       </div>
+      <OrderFab order={order} />
       <ProductSheet ctx={ctx} />
     </div>
   );

@@ -1,0 +1,280 @@
+{
+  "id": "drop",
+  "number": 28,
+  "name": "Drop",
+  "category": "Streetwear store",
+  "description": "A loud streetwear store: a moving ticker, a full-screen drop poster, sticker labels, a filterable product grid with sizes and a street photo wall.",
+  "ar": {
+    "name": "دروب",
+    "category": "متجر ملابس شبابية",
+    "description": "متجر ملابس شبابية جريء: شريط متحرك، وملصق إصدار بملء الشاشة، وملصقات على المنتجات، وشبكة منتجات بفلاتر ومقاسات، وجدار صور من الشارع."
+  },
+  "version": 1,
+  "heroSlider": { "kind": "backdrop", "source": "hero.image" },
+  "thumbnail": "/templates/drop/thumbnail.png",
+  "sample": "drop",
+  "ticker": true,
+  "sectionsLayout": { "order": ["picks", "menu", "gallery", "story", "reviews", "visit"] },
+  "signature": {
+    "hero.variant": [
+      {"id":"dropposter","base":"poster","label":"Drop poster","labelAr":"ملصق الإصدار","preview":"/templates/drop/previews/hero-dropposter.svg"}
+    ],
+    "menu.layout": [
+      {"id":"hangtags","base":"grid","label":"Hang tags","labelAr":"بطاقات معلّقة","preview":"/templates/drop/previews/menu-hangtags.svg"}
+    ]
+  },
+  "looks": [
+    {"id":"volt","label":{"en":"Volt drop","ar":"إصدار فولت"},"values":{"theme":"black","accent":"#C6FF00","font":"condensed","hero.variant":"dropposter","menu.layout":"hangtags","header.layout":"classic"}},
+    {"id":"blaze","label":{"en":"Blaze","ar":"لهيب"},"values":{"theme":"black","accent":"#FF4D00","font":"condensed","hero.variant":"dropposter","menu.layout":"hangtags","style.headings":"uppercase"}},
+    {"id":"white","label":{"en":"White label","ar":"علامة بيضاء"},"values":{"theme":"white","accent":"#FF3EA5","font":"grotesk","hero.variant":"dropposter","menu.layout":"hangtags"}},
+    {"id":"concrete","label":{"en":"Concrete","ar":"خرسانة"},"values":{"theme":"concrete","accent":"#2F5BFF","font":"grotesk","hero.variant":"poster","menu.layout":"hangtags","style.texture":"grain"}},
+    {"id":"cobalt","label":{"en":"Cobalt","ar":"كوبالت"},"values":{"theme":"cobalt","accent":"#C6FF00","font":"condensed","hero.variant":"dropposter","menu.layout":"large","header.layout":"big"}}
+  ],
+  "schema": [
+    {
+      "key": "font",
+      "type": "choice",
+      "label": "Font style",
+      "group": "Brand",
+      "options": ["condensed", "bold", "grotesk"],
+      "optionLabels": {
+        "condensed": "Poster",
+        "bold": "Bold",
+        "grotesk": "Grotesk"
+      }
+    },
+    {
+      "key": "logo",
+      "type": "image",
+      "label": "Logo",
+      "group": "Brand"
+    },
+    {
+      "key": "theme",
+      "type": "palette",
+      "label": "Color theme",
+      "group": "Brand",
+      "options": ["black", "white", "concrete", "cobalt"],
+      "optionLabels": {
+        "black": "Black",
+        "white": "White",
+        "concrete": "Concrete",
+        "cobalt": "Cobalt"
+      },
+      "optionLabelsAr": {
+        "black": "أسود",
+        "white": "أبيض",
+        "concrete": "إسمنتي",
+        "cobalt": "أزرق كوبالت"
+      },
+      "swatches": {
+        "black": "#0E0E0E",
+        "white": "#F4F4F0",
+        "concrete": "#CFCFCB",
+        "cobalt": "#1433C9"
+      }
+    },
+    {
+      "key": "accent",
+      "type": "color",
+      "label": "Accent color",
+      "group": "Brand",
+      "options": ["#C6FF00", "#FF4D00", "#FF3EA5", "#2F5BFF"]
+    },
+    {
+      "key": "announcement",
+      "type": "text",
+      "label": "Announcement",
+      "group": "Navigation",
+      "max": 80
+    },
+    {
+      "key": "hero.image",
+      "type": "image",
+      "label": "Hero image",
+      "group": "Hero header",
+      "presets": ["concrete", "rail", "fitting", "drape", "neon", "noir", "loft"]
+    },
+    {
+      "key": "hero.eyebrow",
+      "type": "text",
+      "label": "Sticker text",
+      "labelAr": "نص الملصق",
+      "group": "Hero header",
+      "max": 24
+    },
+    {
+      "key": "hero.title",
+      "type": "text",
+      "label": "Headline",
+      "group": "Hero header",
+      "max": 40
+    },
+    {
+      "key": "hero.subtitle",
+      "type": "textarea",
+      "label": "Subtext",
+      "group": "Hero header",
+      "max": 140
+    },
+    {
+      "key": "sections",
+      "type": "toggles",
+      "label": "Sections",
+      "group": "Sections",
+      "options": ["announcement", "hot", "gallery", "story", "reviews", "visit"],
+      "optionLabels": {
+        "announcement": "Moving ticker",
+        "hot": "Hot right now (featured)",
+        "gallery": "Street photos",
+        "story": "About us",
+        "reviews": "Reviews",
+        "visit": "Hours and contact"
+      },
+      "optionLabelsAr": {
+        "announcement": "الشريط المتحرك",
+        "hot": "الأكثر رواجًا (المميز)",
+        "gallery": "صور من الشارع",
+        "story": "من نحن",
+        "reviews": "آراء الزبائن",
+        "visit": "أوقات العمل والتواصل"
+      }
+    },
+    {
+      "key": "hot.title",
+      "type": "text",
+      "label": "Featured headline",
+      "labelAr": "عنوان المنتجات المميزة",
+      "group": "Headlines",
+      "max": 40
+    },
+    {
+      "key": "menu.title",
+      "type": "text",
+      "label": "Shop headline",
+      "labelAr": "عنوان المتجر",
+      "group": "Headlines",
+      "max": 40
+    },
+    {
+      "key": "gallery.title",
+      "type": "text",
+      "label": "Gallery headline",
+      "group": "Headlines",
+      "max": 40
+    },
+    {
+      "key": "gallery",
+      "type": "images",
+      "label": "Gallery photos",
+      "group": "Gallery",
+      "max": 12
+    },
+    {
+      "key": "story.title",
+      "type": "text",
+      "label": "About headline",
+      "group": "About us",
+      "max": 60
+    },
+    {
+      "key": "story.text",
+      "type": "textarea",
+      "label": "About us",
+      "group": "About us",
+      "max": 400
+    },
+    {
+      "key": "reviews.1.quote",
+      "type": "textarea",
+      "label": "Review 1",
+      "group": "Reviews",
+      "max": 200
+    },
+    {
+      "key": "reviews.1.name",
+      "type": "text",
+      "label": "Review 1 by",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "reviews.2.quote",
+      "type": "textarea",
+      "label": "Review 2",
+      "group": "Reviews",
+      "max": 200
+    },
+    {
+      "key": "reviews.2.name",
+      "type": "text",
+      "label": "Review 2 by",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "reviews.3.quote",
+      "type": "textarea",
+      "label": "Review 3",
+      "group": "Reviews",
+      "max": 200
+    },
+    {
+      "key": "reviews.3.name",
+      "type": "text",
+      "label": "Review 3 by",
+      "group": "Reviews",
+      "max": 40
+    },
+    {
+      "key": "hours",
+      "type": "hours",
+      "label": "Opening hours",
+      "group": "Visit us"
+    }
+  ],
+  "defaults": {
+    "font": "condensed",
+    "logo": "",
+    "theme": "black",
+    "accent": "#C6FF00",
+    "announcement": "New drop every Friday. DM us on WhatsApp to hold your size.",
+    "hero.image": "preset:concrete",
+    "hero.eyebrow": "Drop 09",
+    "hero.title": "Out now. Limited run.",
+    "hero.subtitle": "Heavyweight basics, loud graphics and sneakers. When it's gone, it's gone.",
+    "sections": ["announcement", "hot", "gallery", "story", "reviews", "visit"],
+    "hot.title": "Hot right now",
+    "menu.title": "Shop the drop",
+    "gallery.title": "On the street",
+    "gallery": [],
+    "story.title": "Made in the city, for the city",
+    "story.text": "We started printing tees in a garage and never stopped. Every drop is small, every piece is checked by hand, and our crew answers on WhatsApp seven days a week.",
+    "reviews.1.quote": "",
+    "reviews.1.name": "",
+    "reviews.2.quote": "",
+    "reviews.2.name": "",
+    "reviews.3.quote": "",
+    "reviews.3.name": "",
+    "hours": {
+      "sat": "12:00-23:00",
+      "sun": "12:00-23:00",
+      "mon": "12:00-23:00",
+      "tue": "12:00-23:00",
+      "wed": "12:00-23:00",
+      "thu": "12:00-00:00",
+      "fri": "14:00-00:00"
+    }
+  },
+  "defaultsAr": {
+    "announcement": "إصدار جديد كل جمعة. راسلنا على واتساب لنحجز مقاسك.",
+    "hero.eyebrow": "الإصدار 09",
+    "hero.title": "متوفر الآن. كمية محدودة.",
+    "hero.subtitle": "أساسيات ثقيلة، وطبعات جريئة، وأحذية رياضية. عندما تنفد، تنفد.",
+    "hot.title": "الأكثر رواجًا الآن",
+    "menu.title": "تسوّق الإصدار",
+    "gallery.title": "من الشارع",
+    "story.title": "صُنع في المدينة، للمدينة",
+    "story.text": "بدأنا بطباعة التيشيرتات في كراج ولم نتوقف. كل إصدار صغير، وكل قطعة نفحصها باليد، وفريقنا يرد على واتساب طوال أيام الأسبوع."
+  }
+}

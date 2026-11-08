@@ -21,10 +21,22 @@ public sealed record PublicBusinessDto(
     string Locale,
     string CurrencyCode,
     string TimeZone,
-    IReadOnlyList<string> CustomDomains);
+    IReadOnlyList<string> CustomDomains,
+    string? Phone,
+    string? Facebook,
+    string? TikTok,
+    string? Snapchat);
 
-public sealed record PublicCategoryDto(Guid Id, string Name, IReadOnlyList<PublicProductDto> Products);
+/// <summary>
+/// A category with its products. <see cref="ParentId"/> is the main category it sits under (null for a main category).
+/// The list stays flat in display order; a main category with no products of its own is included when a sub-category has products.
+/// </summary>
+public sealed record PublicCategoryDto(Guid Id, string Name, Guid? ParentId, IReadOnlyList<PublicProductDto> Products);
 
+/// <summary>
+/// A product. <see cref="Label"/> is one of the fixed labels (the site translates it) or "Custom", whose text is
+/// <see cref="CustomLabel"/> and, for Arabic, <see cref="CustomLabelAr"/> (either may be null, never both).
+/// </summary>
 public sealed record PublicProductDto(
     Guid Id,
     string Name,
@@ -33,7 +45,9 @@ public sealed record PublicProductDto(
     string? ImageUrl,
     string? Label,
     bool IsAvailable,
-    bool IsFeatured);
+    bool IsFeatured,
+    string? CustomLabel,
+    string? CustomLabelAr);
 
 /// <summary>Cross-tenant reads for the public site (Infrastructure, no tenant filter).</summary>
 public interface IPublicSiteReader

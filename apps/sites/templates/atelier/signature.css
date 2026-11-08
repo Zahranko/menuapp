@@ -1,0 +1,129 @@
+/*
+ * Atelier's own layout options (manifest "signature", _kit/signatures.ts):
+ *   hero.variant "editorial"  a magazine cover: ruled issue line, large italic headline, the photo in a hairline double frame (base: "split")
+ *   menu.layout  "pricelist"  a salon price list: centered headings between hairlines, dotted leaders to every price (base: "compact")
+ */
+
+/* ---------- editorial cover ---------- */
+[data-template="atelier"] .kit-hv.kit-hv[data-sig~="editorial"] {
+  & .kit-hv-text {
+    padding-block: 18px;
+    border-block: 1px solid var(--k-ink);
+  }
+  & .kit-hv-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+  & .kit-hv-eyebrow::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.5;
+  }
+  & .kit-hv-title {
+    font-family: var(--k-fd);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 0.98;
+  }
+  & .kit-hv-lede {
+    font-family: var(--k-fd);
+    font-size: 1.05em;
+  }
+  & .kit-hv-media,
+  & .kit-hv-mono {
+    border-radius: 0;
+    outline: 1px solid var(--k-ink);
+    outline-offset: 7px;
+    box-shadow: 0 0 0 3px var(--k-bg), 0 0 0 4px var(--k-acc);
+    margin: 10px;
+  }
+  & .kit-hv-btn {
+    border-radius: 0;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 13px;
+  }
+}
+
+/* ---------- salon price list ---------- */
+[data-template="atelier"] .kit-mn.kit-mn.kit-mn[data-sig~="pricelist"] {
+  & .kit-mn-cats {
+    gap: 34px;
+  }
+  & .kit-mn-cat {
+    padding: 24px 18px 14px;
+    border: 1px solid var(--k-line);
+    outline: 1px solid var(--k-line);
+    outline-offset: -6px;
+    background: var(--k-surf);
+  }
+  & .kit-mn-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    text-align: center;
+    border: 0;
+    padding-bottom: 6px;
+  }
+  & .kit-mn-title[data-t="simple"]::before,
+  & .kit-mn-title[data-t="simple"]::after {
+    content: "";
+    order: 0;
+    flex: 1;
+    max-width: 64px;
+    height: 1px;
+    background: var(--k-acc);
+  }
+  & .kit-mn-title[data-t="simple"]::after {
+    order: 2;
+  }
+  & .kit-mn-h {
+    font-family: var(--k-fd);
+    font-style: italic;
+    font-weight: 400;
+  }
+  & .kit-mn-count {
+    display: none;
+  }
+  & .kit-mn-list {
+    gap: 0;
+  }
+  & .kit-mn-item {
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    padding: 10px 0;
+  }
+  & .kit-mn-media {
+    display: none;
+  }
+  & .kit-mn-head {
+    align-items: baseline;
+  }
+  & .kit-mn-dots {
+    display: block;
+    flex: 1;
+    min-width: 16px;
+    border-bottom: 1px dotted var(--k-muted);
+    translate: 0 -4px;
+  }
+  & .kit-mn-name {
+    font-family: var(--k-fd);
+    font-weight: 500;
+  }
+  & .kit-mn-price {
+    font-variant-numeric: tabular-nums;
+    color: var(--k-acc-text);
+  }
+  & .kit-mn-desc {
+    font-style: italic;
+  }
+}

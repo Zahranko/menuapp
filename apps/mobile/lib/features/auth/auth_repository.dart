@@ -27,6 +27,8 @@ class AuthRepository {
     required String phone,
     required String password,
     required String locale,
+    String? currencyCode,
+    String? timeZone,
   }) =>
       _signIn('/api/v1/auth/register', {
         'businessName': businessName,
@@ -35,6 +37,8 @@ class AuthRepository {
         'password': password,
         'deviceName': _device,
         'locale': locale,
+        'currencyCode': ?currencyCode,
+        'timeZone': ?timeZone,
       });
 
   Future<Business> logIn({required String login, required String password}) =>
@@ -43,6 +47,16 @@ class AuthRepository {
   Future<SlugAvailability> slugAvailability(String businessName) => _call(() async {
         final response = await _dio.get<Map<String, dynamic>>('/api/v1/auth/slug-availability', queryParameters: {'name': businessName});
         return SlugAvailability.fromJson(response.data!);
+      });
+
+  /// For each field, null when it can be used for a new account, otherwise the message to show under it.
+  Future<({String? email, String? phone})> accountAvailability({String? email, String? phone}) => _call(() async {
+        final response = await _dio.get<Map<String, dynamic>>('/api/v1/auth/account-availability', queryParameters: {
+          'email': ?email,
+          'phone': ?phone,
+        });
+        final body = response.data!;
+        return (email: body['email'] as String?, phone: body['phone'] as String?);
       });
 
   Future<void> forgotPassword(String email) => _call(() => _dio.post<void>('/api/v1/auth/forgot-password', data: {'email': email}));

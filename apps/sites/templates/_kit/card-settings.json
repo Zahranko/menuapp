@@ -1,0 +1,89 @@
+{
+  "group": "Cards",
+  "fields": [
+    {
+      "key": "cards.style",
+      "type": "choice",
+      "label": "Card style",
+      "options": ["auto", "flat", "outlined", "raised", "glass", "tinted", "minimal"],
+      "optionLabels": {
+        "auto": "Template default",
+        "flat": "Flat",
+        "outlined": "Outlined",
+        "raised": "Shadow",
+        "glass": "Glass",
+        "tinted": "Soft color",
+        "minimal": "Lines only"
+      }
+    },
+    {
+      "key": "cards.border",
+      "type": "choice",
+      "label": "Card border",
+      "options": ["auto", "none", "thin", "medium", "thick"],
+      "optionLabels": {
+        "auto": "Template default",
+        "none": "No border",
+        "thin": "Thin",
+        "medium": "Medium",
+        "thick": "Thick"
+      }
+    },
+    {
+      "key": "cards.borderColor",
+      "type": "color",
+      "label": "Border color",
+      "options": ["auto", "accent", "ink"],
+      "optionLabels": {
+        "auto": "Template default",
+        "accent": "Accent color",
+        "ink": "Text color"
+      },
+      "custom": true
+    },
+    {
+      "key": "cards.corners",
+      "type": "choice",
+      "label": "Card corners",
+      "options": ["auto", "square", "small", "medium", "large"],
+      "optionLabels": {
+        "auto": "Template default",
+        "square": "Square",
+        "small": "Slightly rounded",
+        "medium": "Rounded",
+        "large": "Very rounded"
+      }
+    },
+    {
+      "key": "cards.photo",
+      "type": "choice",
+      "label": "Photo shape",
+      "options": ["auto", "square", "rounded", "circle"],
+      "optionLabels": {
+        "auto": "Template default",
+        "square": "Square corners",
+        "rounded": "Rounded corners",
+        "circle": "Circle"
+      }
+    },
+    {
+      "key": "cards.spacing",
+      "type": "choice",
+      "label": "Space between cards",
+      "options": ["auto", "tight", "airy"],
+      "optionLabels": {
+        "auto": "Template default",
+        "tight": "Compact",
+        "airy": "Roomy"
+      }
+    }
+  ],
+  "defaults": {
+    "cards.style": "auto",
+    "cards.border": "auto",
+    "cards.borderColor": "auto",
+    "cards.corners": "auto",
+    "cards.photo": "auto",
+    "cards.spacing": "auto"
+  }
+}

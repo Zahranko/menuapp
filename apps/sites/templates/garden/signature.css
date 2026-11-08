@@ -1,0 +1,82 @@
+/*
+ * Garden's own layout options (manifest "signature", _kit/signatures.ts):
+ *   hero.variant "leaf"   the photo cut into a leaf, with a leaf vein and a sprout beside the words (base: "circle")
+ *   menu.layout  "seeds"  every dish a seed packet: a folded top, a punched hole, the photo in a window (base: "grid")
+ */
+
+/* ---------- leaf ---------- */
+[data-template="garden"] .kit-hv.kit-hv[data-sig~="leaf"] {
+  & .kit-hv-media,
+  & .kit-hv-mono {
+    border: 0;
+    border-radius: 0 78% 0 78%;
+    box-shadow: 14px 14px 0 -2px color-mix(in srgb, var(--k-acc) 28%, transparent);
+  }
+  & .kit-hv-media::after {
+    content: "";
+    position: absolute;
+    inset: 10% 10%;
+    z-index: 2;
+    background: linear-gradient(45deg, transparent calc(50% - 1px), color-mix(in srgb, #fff 55%, transparent) 50%, transparent calc(50% + 1px));
+    pointer-events: none;
+  }
+  & .kit-hv-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  & .kit-hv-eyebrow::before {
+    content: "";
+    width: 16px;
+    height: 16px;
+    border-radius: 0 80% 0 80%;
+    background: var(--k-acc);
+  }
+}
+
+/* ---------- seed packets ---------- */
+[data-template="garden"] .kit-mn.kit-mn.kit-mn[data-sig~="seeds"] {
+  & .kit-mn-list {
+    gap: 16px;
+  }
+  & .kit-mn-item {
+    position: relative;
+    padding: 30px 10px 12px;
+    border: 0;
+    border-radius: 4px 4px 14px 14px;
+    background:
+      linear-gradient(color-mix(in srgb, var(--k-acc) 55%, var(--k-surf)) 0 0) 0 0 / 100% 18px no-repeat,
+      var(--k-surf);
+    box-shadow: 0 1px 0 var(--k-line), 0 14px 22px -18px rgb(0 0 0 / 0.5);
+    mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% 0 / 12px 7px repeat-x, linear-gradient(#000 0 0) 0 6px / 100% calc(100% - 6px) no-repeat;
+  }
+  & .kit-mn-item::before {
+    content: "";
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    translate: -50% 0;
+    border-radius: 50%;
+    background: var(--k-bg);
+  }
+  & .kit-mn-item:focus-visible {
+    outline-offset: -4px;
+  }
+  & .kit-mn-media {
+    border: 2px solid var(--k-acc);
+    border-radius: 999px 999px 10px 10px;
+  }
+  & .kit-mn-price {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    background: var(--k-acc-soft);
+    color: var(--k-acc-text);
+    font-weight: 700;
+  }
+  & .kit-mn-tags {
+    order: -1;
+  }
+}

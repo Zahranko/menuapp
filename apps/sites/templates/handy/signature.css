@@ -1,0 +1,97 @@
+/*
+ * Handy's own layout options (manifest "signature", _kit/signatures.ts):
+ *   header.layout "toolbar"    the header on a toolbox: a safety stripe along its edge and a bold work badge (base: "classic")
+ *   menu.layout   "workorder"  every service a work order on a clipboard: a clip, an order number, dashed fields (base: "list")
+ */
+[data-template="handy"] {
+  --sig-hazard: repeating-linear-gradient(-45deg, #f6c21a 0 12px, #1d1d1b 12px 24px);
+}
+
+/* ---------- toolbar header ---------- */
+[data-template="handy"] .kit-hd.kit-hd[data-sig~="toolbar"] {
+  border-bottom: 0;
+  & > .kit-sig-art {
+    position: absolute;
+    inset: auto 0 0;
+    height: 7px;
+    background: var(--sig-hazard);
+    pointer-events: none;
+  }
+  & > .kit-hd-in {
+    padding-bottom: 7px;
+  }
+  & .kit-hd-name {
+    font-weight: 900;
+    letter-spacing: -0.01em;
+  }
+  & .kit-hd-logo {
+    border-radius: 8px;
+    box-shadow: 0 0 0 2px var(--k-bg), 0 0 0 4px #f6c21a;
+  }
+  & .kit-hd-cta {
+    border-radius: 8px;
+  }
+}
+
+/* ---------- work orders ---------- */
+[data-template="handy"] .kit-mn.kit-mn.kit-mn[data-sig~="workorder"] {
+  & .kit-mn-list {
+    counter-reset: handy-wo;
+    gap: 22px;
+  }
+  & .kit-mn-li {
+    counter-increment: handy-wo;
+  }
+  & .kit-mn-item {
+    position: relative;
+    --kit-card-pad: 30px 16px 16px;
+    margin-top: 10px;
+    padding: var(--kit-card-pad);
+    border: 2px solid var(--k-ink);
+    border-radius: 12px;
+    background: var(--k-surf);
+    box-shadow: 0 6px 0 -2px var(--k-line);
+  }
+  & .kit-mn-item::before {
+    content: "";
+    position: absolute;
+    inset-block-start: -11px;
+    inset-inline-start: 50%;
+    translate: -50% 0;
+    width: 74px;
+    height: 20px;
+    border-radius: 6px 6px 4px 4px;
+    background: linear-gradient(var(--k-bg) 0 0) center 6px / 26px 6px no-repeat, var(--k-ink);
+  }
+  &:dir(rtl) .kit-mn-item::before {
+    translate: 50% 0;
+  }
+  & .kit-mn-item::after {
+    content: "No. " counter(handy-wo, decimal-leading-zero);
+    position: absolute;
+    inset-block-start: 8px;
+    inset-inline-end: 14px;
+    color: var(--k-muted);
+    font: 700 11px/1 var(--k-fb);
+    letter-spacing: 0.08em;
+  }
+  & .kit-mn-media {
+    border-radius: 8px;
+  }
+  & .kit-mn-head {
+    padding-bottom: 6px;
+    border-bottom: 1.5px dashed var(--k-line);
+  }
+  & .kit-mn-dots {
+    display: none;
+  }
+  & .kit-mn-price {
+    font-weight: 800;
+    color: var(--k-acc-text);
+  }
+}
+
+/* The kit pulls the first row of a list up; a workorder row keeps its own top padding. */
+[data-template="handy"] .kit-mn.kit-mn.kit-mn[data-sig~="workorder"] .kit-mn-li:first-child .kit-mn-item {
+  padding-top: 30px;
+}

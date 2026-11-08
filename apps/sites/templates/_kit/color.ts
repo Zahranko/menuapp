@@ -55,9 +55,10 @@ export type AccentTokens = {
 
 /**
  * Accent colors for a page with background `bg`, surface `surf` and text color `ink`.
+ * `extraBackgrounds` are other panels (such as cards) that accent text also sits on.
  * The fill keeps the owner's color when either white or the ink reads well on it, otherwise it is darkened slightly.
  */
-export function accentTokens(accent: string, bg: string, surf: string, ink: string): AccentTokens {
+export function accentTokens(accent: string, bg: string, surf: string, ink: string, extraBackgrounds: string[] = []): AccentTokens {
   const dark = isDark(bg);
   const lightInk = dark ? ink : bg;
   const darkInk = dark ? bg : ink;
@@ -65,6 +66,6 @@ export function accentTokens(accent: string, bg: string, surf: string, ink: stri
   let fill = accent;
   for (let step = 0; step <= 20 && contrast(best(fill), fill) < 4.5; step++) fill = mix(accent, "#000000", step / 40);
   const soft = mix(bg, accent, dark ? 0.22 : 0.14);
-  const text = readable(accent, [bg, surf, soft], dark ? lightInk : darkInk);
+  const text = readable(accent, [bg, surf, soft, ...extraBackgrounds], dark ? lightInk : darkInk);
   return { fill, onFill: best(fill), text, soft };
 }

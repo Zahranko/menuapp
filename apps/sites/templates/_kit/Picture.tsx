@@ -43,3 +43,21 @@ export function Picture({ src, alt = "", sizes, priority, className }: Props) {
     />
   );
 }
+
+/**
+ * A picture at its own proportions (a logo shown without a frame): as tall as its box, as wide as the picture needs.
+ * The width and height only reserve a square until it loads; CSS (`_kit/logo.css`) sets the real size.
+ */
+export function NaturalPicture({ src, alt = "", className }: { src: string; alt?: string; className?: string }) {
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      width={640}
+      height={640}
+      unoptimized={!optimizable(src)}
+      className={className}
+      style={{ width: "auto", height: "100%", objectFit: "contain" }}
+    />
+  );
+}

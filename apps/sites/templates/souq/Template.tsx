@@ -1,11 +1,16 @@
 import type { TemplateProps } from "@/lib/types";
+import { logoRoot, OrderFab, optionRoot } from "../_kit/blocks";
+import { orderButton } from "../_kit/options";
 import { fontVariables } from "../_kit/fonts";
 import { ItemSheet, type SheetItem } from "../_kit/ItemSheet";
 import { tintFor } from "../_kit/site-data";
 import { TemplateStyles } from "../_kit/TemplateStyles";
 import { souqContext } from "./context";
+import { choice } from "@/lib/settings";
+import { heroPhotos } from "../_kit/hero";
+import { navOf, orderCta, pageTop, SiteHeader, SiteHero } from "../_kit/Top";
 import { Footer } from "./sections/Footer";
-import { Header } from "./sections/Header";
+import { Header, navLinks } from "./sections/Header";
 import { Hero } from "./sections/Hero";
 import { Highlights } from "./sections/Highlights";
 import { Menu } from "./sections/Menu";
@@ -15,11 +20,17 @@ import { Gallery } from "./sections/Gallery";
 import { Story } from "./sections/Story";
 import { Visit } from "./sections/Visit";
 import { dotted, souqVars } from "./theme";
+import { ordered, SiteFooter, SiteGallery, SiteHighlights, SiteReviews, SiteStory, SiteVisit } from "../_kit/Sections";
+import { socialAccounts } from "../_kit/options";
+import { SOUQ_SOCIAL } from "./sections/Footer";
 
 /** Template 001 "Souq": a warm café site with a big hero, signature picks and a searchable menu. */
 export default function SouqTemplate({ site, preview, now }: TemplateProps & { now?: Date }) {
   const ctx = souqContext(site, now);
   const announcement = ctx.text("announcement");
+  const order = orderButton(site);
+  const split = choice(site.settings, "hero.layout", ["full", "split"] as const, "full") === "split";
+  const top = pageTop(ctx, { photos: heroPhotos(site.settings, "hero.image"), backdrop: !split });
   const sheetItems: SheetItem[] = ctx.sections.flatMap((section) =>
     section.products.map((p) => ({
       id: p.id,
@@ -34,7 +45,7 @@ export default function SouqTemplate({ site, preview, now }: TemplateProps & { n
   );
 
   return (
-    <div data-template="souq" className={`t-souq ${fontVariables} ${dotted(site.settings) ? "pat" : ""}`} style={souqVars(site.settings, site.business.locale)}>
+    <div data-template="souq" {...logoRoot(ctx)} {...optionRoot(ctx, order)} className={`t-souq ${fontVariables} ${dotted(site.settings) ? "pat" : ""}`} style={souqVars(site.settings, site.business.locale)}>
       <TemplateStyles id="souq" />
       <a className="skip" href="#menu">
         {ctx.c.viewMenu}
@@ -45,18 +56,47 @@ export default function SouqTemplate({ site, preview, now }: TemplateProps & { n
           {announcement}
         </div>
       )}
-      <Header ctx={ctx} />
+      <SiteHeader ctx={ctx} top={top} links={navOf(navLinks(ctx))} cta={orderCta(order)}>
+        <Header ctx={ctx} />
+      </SiteHeader>
       <main>
-        <Hero ctx={ctx} />
-        {ctx.on("highlights") && <Highlights ctx={ctx} />}
-        {ctx.on("signature") && <Signature ctx={ctx} />}
-        <Menu ctx={ctx} />
-        {ctx.on("story") && <Story ctx={ctx} />}
-        {ctx.on("gallery") && <Gallery ctx={ctx} />}
-        {ctx.on("reviews") && <Reviews ctx={ctx} />}
-        {ctx.on("visit") && <Visit ctx={ctx} />}
+        <SiteHero ctx={ctx} top={top}>
+          <Hero ctx={ctx} />
+        </SiteHero>
+        {ordered(ctx, {
+          highlights: ctx.on("highlights") && (
+            <SiteHighlights ctx={ctx}>
+              <Highlights ctx={ctx} />
+            </SiteHighlights>
+          ),
+          signature: ctx.on("signature") && <Signature ctx={ctx} />,
+          menu: <Menu ctx={ctx} />,
+          story: ctx.on("story") && (
+            <SiteStory ctx={ctx} title={ctx.text("story.title") || ctx.t.story} eyebrow={ctx.c.storyEyebrow}>
+              <Story ctx={ctx} />
+            </SiteStory>
+          ),
+          gallery: ctx.on("gallery") && (
+            <SiteGallery ctx={ctx} title={ctx.c.galleryTitle.replace("{name}", site.business.name)} eyebrow={ctx.c.galleryEyebrow}>
+              <Gallery ctx={ctx} />
+            </SiteGallery>
+          ),
+          reviews: ctx.on("reviews") && (
+            <SiteReviews ctx={ctx} title={ctx.c.reviewsTitle} eyebrow={ctx.c.reviewsEyebrow} reviews={ctx.reviews.slice(0, 3)}>
+              <Reviews ctx={ctx} />
+            </SiteReviews>
+          ),
+          visit: ctx.on("visit") && (
+            <SiteVisit ctx={ctx} title={ctx.c.visitTitle} eyebrow={ctx.c.visitEyebrow}>
+              <Visit ctx={ctx} />
+            </SiteVisit>
+          ),
+        })}
       </main>
-      <Footer ctx={ctx} />
+      <SiteFooter ctx={ctx} links={navOf(navLinks(ctx))} social={socialAccounts(site, SOUQ_SOCIAL)} tagline={ctx.text("hero.subtitle")}>
+        <Footer ctx={ctx} />
+      </SiteFooter>
+      <OrderFab order={order} />
       <ItemSheet
         items={sheetItems}
         closeLabel={ctx.t.close}
