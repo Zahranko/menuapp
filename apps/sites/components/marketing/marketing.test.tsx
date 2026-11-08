@@ -36,7 +36,8 @@ describe.each(LANGS)("home page (%s)", (lang) => {
     expect(h1.textContent).toContain(lang === "ar" ? "أنشئ موقعك من هاتفك" : "Create your website from your phone");
     const srcs = [...document.querySelectorAll("img")].map((img) => decodeURIComponent(img.getAttribute("src") ?? ""));
     expect(srcs.some((s) => s.includes(`products-${lang}.webp`))).toBe(true);
-    expect(srcs.some((s) => s.includes(`site-${lang}.webp`))).toBe(true);
+    expect(srcs.some((s) => s.includes(`site-ember-${lang}.webp`))).toBe(true);
+    expect(srcs.some((s) => s.includes(`ai-reading-${lang}.webp`))).toBe(true);
     expect(document.body.textContent).toContain(lang === "ar" ? brand.brandNameAr : brand.brandName);
   });
 

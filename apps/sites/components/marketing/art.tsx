@@ -1,15 +1,53 @@
 import Image from "next/image";
 
-/** A phone drawn in CSS around a screenshot (780×1688), with the island over the screenshot's empty status bar. */
-export function Phone({ src, alt, className, priority = false, sizes }: { src: string; alt: string; className?: string; priority?: boolean; sizes: string }) {
+/**
+ * An iPhone drawn in CSS around a screenshot (780×1688, the top 118px left empty): titanium frame, thin black bezel,
+ * the Dynamic Island and a status bar. `tone` is the status bar's text color: "light" on dark screens.
+ */
+export function Phone({
+  src,
+  alt,
+  className,
+  priority = false,
+  sizes,
+  tone = "dark",
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+  priority?: boolean;
+  sizes: string;
+  tone?: "light" | "dark";
+}) {
   return (
     <div className={`mk-phone ${className ?? ""}`}>
+      <span className="mk-phone-key mk-phone-key-action" aria-hidden="true" />
+      <span className="mk-phone-key mk-phone-key-up" aria-hidden="true" />
+      <span className="mk-phone-key mk-phone-key-down" aria-hidden="true" />
+      <span className="mk-phone-key mk-phone-key-side" aria-hidden="true" />
       <div className="mk-phone-screen">
         <Image src={src} alt={alt} width={780} height={1688} sizes={sizes} priority={priority} />
+        <div className={`mk-phone-status mk-phone-status-${tone}`} aria-hidden="true">
+          <span className="mk-phone-time">9:41</span>
+          <span className="mk-phone-icons" dir="ltr">
+            <svg viewBox="0 0 18 12" className="mk-phone-signal">
+              <rect x="0" y="8" width="3" height="4" rx="1" />
+              <rect x="5" y="5.5" width="3" height="6.5" rx="1" />
+              <rect x="10" y="3" width="3" height="9" rx="1" />
+              <rect x="15" y="0" width="3" height="12" rx="1" />
+            </svg>
+            <svg viewBox="0 0 16 12" className="mk-phone-wifi">
+              <path d="M8 2.4c2.4 0 4.6.9 6.3 2.5l1.2-1.3A10.7 10.7 0 0 0 8 .6 10.7 10.7 0 0 0 .5 3.6l1.2 1.3A9 9 0 0 1 8 2.4zm0 3.6c1.4 0 2.7.5 3.7 1.4l1.2-1.3A7.2 7.2 0 0 0 8 4.2c-1.8 0-3.5.7-4.9 1.9l1.2 1.3C5.3 6.5 6.6 6 8 6zm0 3.4c-.7 0-1.3.3-1.8.7L8 12l1.8-1.9c-.5-.4-1.1-.7-1.8-.7z" />
+            </svg>
+            <svg viewBox="0 0 27 12" className="mk-phone-battery">
+              <rect x="0.5" y="0.5" width="23" height="11" rx="3.4" fill="none" stroke="currentColor" opacity="0.4" />
+              <rect x="2" y="2" width="20" height="8" rx="2" />
+              <path d="M25 4v4c.8-.3 1.4-1.1 1.4-2s-.6-1.7-1.4-2z" opacity="0.45" />
+            </svg>
+          </span>
+        </div>
+        <span className="mk-phone-island" aria-hidden="true" />
       </div>
-      <span className="mk-phone-island" aria-hidden="true" />
-      <span className="mk-phone-btn mk-phone-btn-a" aria-hidden="true" />
-      <span className="mk-phone-btn mk-phone-btn-b" aria-hidden="true" />
     </div>
   );
 }

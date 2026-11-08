@@ -65,6 +65,7 @@ export function MarketingShell({ lang, page, children }: { lang: Lang; page: Mar
           <nav className="mk-nav" aria-label={t.nav.main}>
             <a href={`${home}#how`}>{t.nav.how}</a>
             <a href={`${home}#features`}>{t.nav.features}</a>
+            <a href={`${home}#ai`}>{t.nav.ai}</a>
             <a href={`${home}#plans`}>{t.nav.plans}</a>
           </nav>
           <div className="mk-header-end">

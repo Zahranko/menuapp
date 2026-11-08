@@ -32,7 +32,7 @@ type Section = { title: string; body: string[]; list?: string[] };
 const en = {
   dir: "ltr" as "ltr" | "rtl",
   skip: "Skip to content",
-  nav: { how: "How it works", features: "Features", plans: "Plans", getApp: "Get the app", home: "Home", main: "Main" },
+  nav: { how: "How it works", features: "Features", ai: "AI helper", plans: "Plans", getApp: "Get the app", home: "Home", main: "Main" },
   switchTo: "عربي",
   switchLabel: "اقرأ هذه الصفحة بالعربية",
   meta: {
@@ -52,7 +52,7 @@ const en = {
     live: "Your site is live",
     link: "{domain}/yourcafe",
     appAlt: "The {brandName} app on a phone, listing a café's coffees with prices and sold-out switches",
-    siteAlt: "A café website made with a {brandName} template, open on a phone",
+    siteAlt: "A grill and burger website made with a {brandName} template, open on a phone",
     templatesAlt: "Template gallery in the {brandName} app",
   },
   stores: {
@@ -88,6 +88,20 @@ const en = {
     soldOut: "Sold out",
     available: "Available",
     aiSample: "Reading your menu photo…",
+  },
+  ai: {
+    kicker: "AI helper",
+    title: "An AI helper that does the typing for you.",
+    lead: "Built into the app, in Arabic and English. It does the slow parts, and you check everything before it goes on your site.",
+    phoneAlt: "The {brandName} app reading two photos of a paper menu, ticking off each step",
+    phoneCaption: "Reading a menu photo",
+    items: [
+      { title: "Menu from a photo", body: "Snap your paper menu or price list. It reads the names and prices and adds them as products for you to check." },
+      { title: "Design by chat", body: "Say what you want, like “make the logo bigger” or “warmer colors”. It changes your design, and you can undo any change." },
+      { title: "Writes your words", body: "Headlines, your story and product descriptions, written for your business in Arabic or English." },
+      { title: "Surprise me", body: "One tap tries a fresh look for your template: colors, fonts and layout that go together." },
+    ] as Feature[],
+    note: "Included in every plan: 10, 30 or 100 uses a month.",
   },
   plans: {
     kicker: "Plans",
@@ -230,7 +244,7 @@ export type Copy = typeof en;
 const ar: Copy = {
   dir: "rtl",
   skip: "انتقل إلى المحتوى",
-  nav: { how: "كيف يعمل", features: "المزايا", plans: "الباقات", getApp: "حمّل التطبيق", home: "الرئيسية", main: "الرئيسية" },
+  nav: { how: "كيف يعمل", features: "المزايا", ai: "المساعد الذكي", plans: "الباقات", getApp: "حمّل التطبيق", home: "الرئيسية", main: "الرئيسية" },
   switchTo: "EN",
   switchLabel: "Read this page in English",
   meta: {
@@ -250,7 +264,7 @@ const ar: Copy = {
     live: "موقعك أصبح متاحًا",
     link: "{domain}/yourcafe",
     appAlt: "تطبيق {brandName} على الهاتف، يعرض مشروبات مقهى بأسعارها ومفاتيح النفاد",
-    siteAlt: "موقع مقهى مصمّم بقالب من {brandName}، مفتوح على الهاتف",
+    siteAlt: "موقع مطعم مشاوي وبرغر مصمّم بقالب من {brandName}، مفتوح على الهاتف",
     templatesAlt: "معرض القوالب في تطبيق {brandName}",
   },
   stores: {
@@ -286,6 +300,20 @@ const ar: Copy = {
     soldOut: "نفد",
     available: "متاح",
     aiSample: "نقرأ صورة قائمتك…",
+  },
+  ai: {
+    kicker: "المساعد الذكي",
+    title: "مساعد ذكي يكتب عنك.",
+    lead: "موجود داخل التطبيق، بالعربية والإنجليزية. يتولى الأجزاء المتعبة، وأنت تراجع كل شيء قبل أن يظهر على موقعك.",
+    phoneAlt: "تطبيق {brandName} يقرأ صورتين لمنيو ورقي ويُنهي الخطوات واحدة تلو الأخرى",
+    phoneCaption: "قراءة صورة المنيو",
+    items: [
+      { title: "منيو من صورة", body: "صوّر قائمتك الورقية أو قائمة الأسعار. يقرأ الأسماء والأسعار ويضيفها منتجاتٍ لتراجعها." },
+      { title: "صمّم بالمحادثة", body: "قل له ما تريد، مثل «كبّر الشعار» أو «ألوان أدفأ». يغيّر تصميمك، وتستطيع التراجع عن أي تغيير." },
+      { title: "يكتب كلماتك", body: "العناوين وقصتك ووصف المنتجات، مكتوبة لنشاطك بالعربية أو الإنجليزية." },
+      { title: "فاجئني", body: "بضغطة واحدة يجرّب لقالبك شكلًا جديدًا: ألوان وخطوط وتصميم متناسقة." },
+    ],
+    note: "ضمن كل باقة: 10 أو 30 أو 100 استخدام شهريًا.",
   },
   plans: {
     kicker: "الباقات",

@@ -44,7 +44,7 @@ export function HomePage({ lang }: { lang: Lang }) {
               <span className="mk-stage-ring mk-stage-ring-2" />
             </div>
             <figure className="mk-hero-phone mk-hero-phone-site">
-              <Phone src={`/marketing/site-${lang}.webp`} alt={f(h.siteAlt)} sizes="(max-width: 900px) 46vw, 300px" priority />
+              <Phone src={`/marketing/site-ember-${lang}.webp`} alt={f(h.siteAlt)} sizes="(max-width: 900px) 46vw, 300px" priority tone="light" />
               <figcaption className="mk-caption">{h.siteCaption}</figcaption>
             </figure>
             <figure className="mk-hero-phone mk-hero-phone-app">
@@ -185,6 +185,37 @@ export function HomePage({ lang }: { lang: Lang }) {
               <p>{ft.edit.body}</p>
             </article>
           </div>
+        </div>
+      </section>
+
+      <section id="ai" className="mk-section mk-section-ai" aria-labelledby="ai-title">
+        <div className="mk-wrap mk-ai-grid">
+          <div className="mk-ai-copy">
+            <header className="mk-section-head">
+              <p className="mk-kicker">{t.ai.kicker}</p>
+              <h2 id="ai-title" className="mk-h2">
+                {t.ai.title}
+              </h2>
+              <p className="mk-section-lead">{t.ai.lead}</p>
+            </header>
+            <ul className="mk-ai-list">
+              {t.ai.items.map((item) => (
+                <li key={item.title} className="mk-ai-item">
+                  <Sparkle className="mk-ai-item-icon" />
+                  <div>
+                    <h3>{item.title}</h3>
+                    <p>{item.body}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <p className="mk-ai-note">{t.ai.note}</p>
+          </div>
+          <figure className="mk-ai-phone">
+            <span className="mk-ai-glow" aria-hidden="true" />
+            <Phone src={`/marketing/ai-reading-${lang}.webp`} alt={f(t.ai.phoneAlt)} sizes="(max-width: 900px) 64vw, 320px" tone="light" />
+            <figcaption className="mk-caption">{t.ai.phoneCaption}</figcaption>
+          </figure>
         </div>
       </section>
 
