@@ -1532,6 +1532,24 @@ abstract class AppLocalizations {
   /// **'Live preview'**
   String get livePreview;
 
+  /// No description provided for @studioPickOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to edit'**
+  String get studioPickOn;
+
+  /// No description provided for @studioPickHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap any part of the page to edit it'**
+  String get studioPickHint;
+
+  /// No description provided for @studioPickNoSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'This part has no settings yet'**
+  String get studioPickNoSettings;
+
   /// No description provided for @groupMore.
   ///
   /// In en, this message translates to:
