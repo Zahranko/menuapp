@@ -238,5 +238,13 @@
     "hero.variant": {
       "vein": "type"
     }
+  },
+  "studio": {
+    "menu.layout": {
+      "canvas": "list"
+    },
+    "hero.variant": {
+      "ring": "circle"
+    }
   }
 }
