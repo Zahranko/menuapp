@@ -839,6 +839,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get livePreview => 'معاينة مباشرة';
 
   @override
+  String get studioPickOn => 'اضغط للتعديل';
+
+  @override
+  String get studioPickHint => 'اضغط على أي جزء من الصفحة لتعديله';
+
+  @override
+  String get studioPickNoSettings => 'لا توجد إعدادات لهذا الجزء بعد';
+
+  @override
   String get groupMore => 'المزيد';
 
   @override

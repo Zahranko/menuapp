@@ -18,6 +18,7 @@ public class MenuLayoutTests
         ["linen"] = "columns",
         ["lumen"] = "cards",
         ["maison"] = "carte.style",
+        ["studio"] = "photos",
         ["zen"] = "photos",
     };
 

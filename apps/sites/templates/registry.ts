@@ -32,6 +32,7 @@ import SpiceRouteTemplate from "./spiceroute/Template";
 import TicketTemplate from "./ticket/Template";
 import ZenTemplate from "./zen/Template";
 import MarbleTemplate from "./marble/Template";
+import StudioTemplate from "./studio/Template";
 
 /**
  * Template id → component. Every folder with a manifest.json must be listed here
@@ -68,6 +69,7 @@ export const templates: Record<string, ComponentType<TemplateProps>> = {
   drop: DropTemplate,
   couture: CoutureTemplate,
   marble: MarbleTemplate,
+  studio: StudioTemplate,
 };
 
 /** Pro templates with more than one page (category, best sellers, gallery, visit). Every other template is one page. */

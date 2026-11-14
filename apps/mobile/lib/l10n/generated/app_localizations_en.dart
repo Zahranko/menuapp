@@ -847,6 +847,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get livePreview => 'Live preview';
 
   @override
+  String get studioPickOn => 'Tap to edit';
+
+  @override
+  String get studioPickHint => 'Tap any part of the page to edit it';
+
+  @override
+  String get studioPickNoSettings => 'This part has no settings yet';
+
+  @override
   String get groupMore => 'More';
 
   @override

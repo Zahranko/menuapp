@@ -105,3 +105,15 @@ public class PhoneNumberTests
     [InlineData("phone")]
     public void Rejects_numbers_without_country_code(string input) => Assert.Throws<DomainException>(() => PhoneNumber.Create(input));
 }
+
+public class AiUsagePeriodTests
+{
+    [Fact]
+    public void Studio_designs_count_in_their_own_row_of_the_month()
+    {
+        var now = new DateTimeOffset(2026, 11, 14, 23, 30, 0, TimeSpan.FromHours(-3));
+        Assert.Equal("2026-11", Storefront.Domain.Ai.AiUsage.PeriodOf(now));
+        Assert.Equal("S26-11", Storefront.Domain.Ai.AiUsage.StudioPeriodOf(now));
+        Assert.True(Storefront.Domain.Ai.AiUsage.StudioPeriodOf(now).Length <= 7);
+    }
+}

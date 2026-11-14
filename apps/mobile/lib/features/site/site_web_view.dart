@@ -5,6 +5,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../core/theme.dart';
 import '../../l10n/generated/app_localizations.dart';
+import 'studio_link.dart';
 
 /// Builds the web view for a page. Widget tests replace it, since platform web views don't run there.
 final webViewBuilderProvider = Provider<Widget Function(String url, int reloadKey)>(
@@ -36,11 +37,18 @@ class _SiteWebViewState extends State<SiteWebView> {
   bool _loading = true;
   bool _failed = false;
 
+  /// The editor's link to the preview page, when there is one (see [StudioScope]), and what the page was last told.
+  StudioLink? _studio;
+  bool _sentPicking = false;
+  int _sentRefreshes = 0;
+
   @override
   void initState() {
     super.initState();
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      // Preview pages answer the editor here (apps/sites/lib/studio.ts); live sites never use it.
+      ..addJavaScriptChannel('StudioBridge', onMessageReceived: (m) => _studio?.receive(m.message))
       ..setNavigationDelegate(NavigationDelegate(
         // The view only shows the owner's own site. Links to other places (social pages,
         // phone, WhatsApp) open in their own app instead of inside ours.
@@ -54,7 +62,11 @@ class _SiteWebViewState extends State<SiteWebView> {
           }
           return NavigationDecision.prevent;
         },
-        onPageStarted: (_) => _set(loading: true),
+        onPageStarted: (_) {
+          _studio?.pageStarted();
+          _sentPicking = false;
+          _set(loading: true);
+        },
         onPageFinished: (_) => _set(loading: false),
         onWebResourceError: (e) {
           if (e.isForMainFrame ?? true) _set(loading: false, failed: true);
@@ -64,6 +76,39 @@ class _SiteWebViewState extends State<SiteWebView> {
         },
       ));
     _load();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final link = StudioScope.maybeOf(context);
+    if (link == _studio) return;
+    _studio?.removeListener(_tellPage);
+    _studio = link;
+    if (link != null) {
+      _sentRefreshes = link.refreshes;
+      link.addListener(_tellPage);
+    }
+  }
+
+  @override
+  void dispose() {
+    _studio?.removeListener(_tellPage);
+    super.dispose();
+  }
+
+  /// Passes the editor's wishes to the page once it is ready: pick mode on or off, and refreshes.
+  void _tellPage() {
+    final link = _studio;
+    if (link == null || !link.ready) return;
+    if (link.picking != _sentPicking) {
+      _sentPicking = link.picking;
+      _controller.runJavaScript('window.studio && window.studio.pick(${link.picking})').catchError((_) {});
+    }
+    if (link.refreshes != _sentRefreshes) {
+      _sentRefreshes = link.refreshes;
+      _controller.runJavaScript('window.studio && window.studio.refresh()').catchError((_) {});
+    }
   }
 
   @override

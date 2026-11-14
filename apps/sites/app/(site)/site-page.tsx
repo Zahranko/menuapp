@@ -6,6 +6,7 @@ import { SITE_BASE_HEADER, siteBase } from "@/lib/routing";
 import { siteMetadata, siteUrl } from "@/lib/seo";
 import type { PublicSite } from "@/lib/types";
 import { pageOf, SiteTemplate, titleOf } from "@/templates/registry";
+import { StudioBridge } from "./studio-bridge";
 
 /** Shared by the published and preview routes, for the home page and the inner pages of Pro templates. */
 
@@ -29,6 +30,7 @@ export async function SitePage({ site, path, preview, fallbackBase }: { site: Pu
     <>
       {!preview && path.length === 0 && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(siteJsonLd(site)) }} />}
       <SiteTemplate site={site} preview={preview} path={path} base={base} />
+      {preview && <StudioBridge />}
     </>
   );
 }

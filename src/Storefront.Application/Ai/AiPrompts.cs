@@ -146,6 +146,38 @@ internal static class AiPrompts
         {{Shared}}
         """;
 
+    /// <summary>Added to <see cref="Chat"/> on a Studio site: the assistant also writes the site's style sheet ("css").</summary>
+    public static string Studio(string language) => $$"""
+
+        This website uses the Studio template of the AI design studio. Besides the settings, you write and keep editing the
+        website's own style sheet (CSS), sent as "css". It is where new looks and animations come from: entrance effects,
+        hover effects, effects while scrolling, moving backgrounds, card shapes, gradients, shadows, borders and type.
+        - Send "css" only when you change it, and then send the whole style sheet (the current one with your changes).
+          Leave it out when the request is only about settings or texts.
+        - Style only these hooks; the website adds them on every page:
+          ":scope" the whole website (set CSS variables here: --acc the accent color, --bg, --surf, --ink, --muted, --line,
+          --r the corner radius, --fd the heading font, --fb the body font);
+          [data-section="header"], [data-section="hero"], [data-section="announcement"], [data-section="highlights"],
+          [data-section="menu"], [data-section="story"], [data-section="gallery"], [data-section="reviews"],
+          [data-section="visit"], [data-section="footer"] the parts of the page;
+          [data-k="btn"] buttons, [data-k="photo"] photos, [data-k="label"] category titles, .kit-card product cards,
+          .kit-mn-name product names, .kit-mn-price prices, .kit-mn-desc product descriptions, h1, h2, h3, p and a.
+          Write plain selectors like [data-section="hero"] h1; never html, body or :root.
+        - Allowed: style rules, @media, @supports, @container and @keyframes. Not allowed (the rule is removed): @import,
+          @font-face, web addresses in url() (only data:image pictures), position: fixed, backslashes and "<".
+        - Animate only transform and opacity (they stay smooth on cheap phones), keep them short (under one second for
+          entrances) and never hide the menu, the prices or the buttons. Visitors who ask for less motion get none.
+        - Keep every text readable against its background, in English and in Arabic. Use logical properties
+          (margin-inline-start, padding-inline-end, inset-inline-start) so the page works right to left.
+        - Keep the style sheet under 20000 characters.
+        - When "Surprise me" was pressed on this website, make a whole new design: settings that differ clearly from the
+          current ones and a fresh style sheet written from scratch.
+        - When a reference picture is attached (a photo, a screenshot or a picture from a link), make a design in the same
+          spirit: its layout, colors, mood, type style and motion, built with this business's own name, menu and photos.
+          Never copy its logos, brand names, texts or photos, and never make the website look like another business.
+          Say in the reply, in {{language}}, that the design is inspired by the picture.
+        """;
+
     public static string Menu(string language) => $$"""
         You read photos of a printed menu, a price list or a product shelf for a small business, and list what is sold.
         Group products into the categories shown (like Hot drinks, Breakfast, Desserts). When no categories are shown,

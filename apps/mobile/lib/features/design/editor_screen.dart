@@ -17,6 +17,7 @@ import '../menu/dashboard_screen.dart';
 import '../plan/plan_cards.dart';
 import '../plan/plan_controller.dart';
 import '../site/site_web_view.dart';
+import '../site/studio_link.dart';
 import 'design_controller.dart';
 import 'design_models.dart';
 import 'field_widgets.dart';
@@ -62,6 +63,24 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
     });
   }
 
+  /// The preview's link to the page: "tap to edit" and refreshing in place.
+  late final StudioLink _studio = StudioLink(onPick: _onPick);
+
+  /// The owner tapped a part of the preview: open the settings for that part. A field belongs to a part when its key
+  /// starts with the part's name ("hero.variant" for "hero"); a few parts go by another name in the settings.
+  void _onPick(StudioPick pick) {
+    if (!mounted) return;
+    const aliases = {'hero-photos': 'hero', 'social': 'footer', 'marquee': 'highlights', 'ticker': 'highlights', 'picks': 'signature', 'best': 'signature'};
+    final names = {pick.section, ?aliases[pick.section]};
+    final field = _fields.where((f) => names.any((n) => f.key == n || f.key.startsWith('$n.'))).firstOrNull;
+    final group = field?.groupFor(context) ?? (field == null ? null : AppLocalizations.of(context).groupMore);
+    if (group == null) {
+      showMessage(context, AppLocalizations.of(context).studioPickNoSettings);
+      return;
+    }
+    _jumpTo(group);
+  }
+
   /// The AI assistant's conversation, kept while the editor is open.
   AiChatController? _chatState;
   AiChatController get _chat => _chatState ??= AiChatController(_siteLocale);
@@ -70,6 +89,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
   void dispose() {
     _debounce?.cancel();
     _chatState?.dispose();
+    _studio.dispose();
     super.dispose();
   }
 
@@ -139,6 +159,9 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
       if (_previewUrl == null || DateTime.now().difference(_previewAt!) > const Duration(minutes: 25)) {
         _previewUrl = await ref.read(designRepositoryProvider).previewUrl();
         _previewAt = DateTime.now();
+      } else if (_studio.refresh()) {
+        // The page shows the new draft in place, keeping its scroll position.
+        return;
       }
       if (mounted) setState(() => _reload++);
     } catch (_) {
@@ -349,7 +372,32 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
                                   color: Colors.white,
                                   child: _previewUrl == null
                                       ? const Center(child: CircularProgressIndicator())
-                                      : ref.watch(webViewBuilderProvider)(_previewUrl!, _reload),
+                                      : StudioScope(link: _studio, child: ref.watch(webViewBuilderProvider)(_previewUrl!, _reload)),
+                                ),
+                              ),
+                              PositionedDirectional(
+                                top: 6,
+                                end: 6,
+                                child: ListenableBuilder(
+                                  listenable: _studio,
+                                  builder: (context, _) => Tooltip(
+                                    message: t.studioPickHint,
+                                    child: FilterChip(
+                                      key: const Key('studioPick'),
+                                      avatar: Icon(Icons.touch_app_rounded, size: 18, color: _studio.picking ? Colors.white : BrandColors.primary),
+                                      label: Text(t.studioPickOn),
+                                      labelStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: _studio.picking ? Colors.white : BrandColors.primary),
+                                      showCheckmark: false,
+                                      selected: _studio.picking,
+                                      selectedColor: BrandColors.primary,
+                                      backgroundColor: Colors.white,
+                                      visualDensity: VisualDensity.compact,
+                                      onSelected: (on) {
+                                        _studio.picking = on;
+                                        if (on) showMessage(context, t.studioPickHint);
+                                      },
+                                    ),
+                                  ),
                                 ),
                               ),
                               PositionedDirectional(
@@ -402,7 +450,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
                           values: () => _settings ?? const {},
                           onApply: _applySuggestions,
                         ),
-                      AiDesignAssistant(chat: _chat, fields: fields, values: () => _settings ?? const {}, onApply: _applySuggestions),
+                      AiDesignAssistant(chat: _chat..studio = (template?.fields.any((f) => f.type == 'css') ?? false), fields: fields, values: () => _settings ?? const {}, onApply: _applySuggestions),
                       for (final entry in groups.entries)
                         _GroupCard(
                           key: _groupKey(entry.key),

@@ -351,6 +351,17 @@ public sealed partial class TemplateSchema
 
                 return field.Max is { } max && text.Length > max ? $"Use up to {max} characters." : null;
 
+            case "css":
+                // The AI design studio's style sheet (StudioCss); missing means none.
+                if (value is null)
+                {
+                    return null;
+                }
+
+                return value is JsonValue cssValue && cssValue.TryGetValue<string>(out var css)
+                    ? StudioCss.Check(css, field.Max)
+                    : "Enter a style sheet.";
+
             case "range":
                 if (value is not JsonValue rv || !rv.TryGetValue<double>(out var number))
                 {

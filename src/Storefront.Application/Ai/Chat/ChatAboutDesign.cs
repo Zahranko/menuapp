@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using FluentValidation;
 using Storefront.Application.Abstractions;
+using Storefront.Application.Ai.Studio;
 using Storefront.Application.Common;
 using Storefront.Application.Common.Localization;
 using Storefront.Application.Templates;
@@ -21,11 +22,15 @@ public sealed record AiChatMessage(string Role, string Text)
 /// The conversation so far, oldest first, ending with the owner's new message; the language the texts and the reply are written in
 /// ("en" or "ar"; the site's language when empty); an optional photo sent with the new message (a logo, the shop, the food); and
 /// <see cref="Surprise"/>, set by the editor's "Surprise me" button: the owner wants a fresh look picked for them.
+/// On a Studio site (the AI design studio, <see cref="StudioChecker"/>) the assistant also writes the site's style sheet,
+/// "Surprise me" makes a whole new design (counted against the month's new designs), and <see cref="ReferenceUrl"/> is a link
+/// to a picture or a web page the owner likes, used as a reference.
 /// </summary>
-public sealed record ChatAboutDesign(IReadOnlyList<AiChatMessage> Messages, string? Language = null, AiPhoto? Photo = null, bool Surprise = false)
+public sealed record ChatAboutDesign(IReadOnlyList<AiChatMessage> Messages, string? Language = null, AiPhoto? Photo = null, bool Surprise = false, string? ReferenceUrl = null)
 {
     public const int MaxMessages = 20;
     public const int MaxText = 1000;
+    public const int MaxUrl = 2000;
 
     /// <summary>
     /// Reads the "messages" form field: a JSON array of { role, text }. Text that isn't such an array is a validation error;
@@ -86,6 +91,9 @@ public sealed class ChatAboutDesignValidator : AbstractValidator<ChatAboutDesign
             .Must(m => m.All(x => (x.Text?.Length ?? 0) <= ChatAboutDesign.MaxText)).WithMessage("Keep each message under 1000 characters.")
             .Must(m => m.Count == 0 || (m[^1].Role == AiChatMessage.Owner && !string.IsNullOrWhiteSpace(m[^1].Text))).WithMessage("Write a message.");
         RuleFor(x => x.Language).Must(l => string.IsNullOrEmpty(l) || Business.Locales.Contains(l)).WithMessage("Language must be en or ar.");
+        RuleFor(x => x.ReferenceUrl)
+            .Must(u => string.IsNullOrWhiteSpace(u) || (u.Length <= ChatAboutDesign.MaxUrl && Uri.TryCreate(u.Trim(), UriKind.Absolute, out var url) && url.Scheme is "https" or "http"))
+            .WithMessage("Send a link that starts with https://.");
     }
 }
 
@@ -101,7 +109,8 @@ public sealed class ChatAboutDesignHandler(
     IImageOptimizer optimizer,
     IBusinessRepository businesses,
     ISiteRepository sites,
-    ITemplateRepository templates)
+    ITemplateRepository templates,
+    StudioChecker? studio = null)
 {
     public const int ReplyMax = 600;
 
@@ -124,7 +133,36 @@ public sealed class ChatAboutDesignHandler(
             return loaded.Error!;
         }
 
+        // The AI design studio: a Studio site on a live Pro plan, where "Surprise me" is a whole new design.
+        var isStudio = studio is not null && StudioChecker.IsStudio(loaded.Value.Schema);
+        var newDesign = isStudio && cmd.Surprise;
+        if (isStudio && !await studio!.IsProAsync(businessId, ct))
+        {
+            return StudioErrors.NeedsPro;
+        }
+
+        if (newDesign && await studio!.NewDesignsLeftAsync(businessId, ct) == 0)
+        {
+            return StudioErrors.NewDesignLimit;
+        }
+
         List<AiImage> images = [];
+        if (!string.IsNullOrWhiteSpace(cmd.ReferenceUrl))
+        {
+            if (!isStudio)
+            {
+                return StudioErrors.LinkNeedsStudio;
+            }
+
+            var reference = await studio!.ReferenceAsync(cmd.ReferenceUrl!, ct);
+            if (!reference.IsSuccess)
+            {
+                return reference.Error!;
+            }
+
+            images.Add(reference.Value);
+        }
+
         if (cmd.Photo is not null)
         {
             var photo = await AiPhotos.PrepareAsync(optimizer, cmd.Photo, AiPhotos.DesignSide, ct);
@@ -144,7 +182,8 @@ public sealed class ChatAboutDesignHandler(
         }
 
         var language = string.IsNullOrEmpty(cmd.Language) ? site.Locale : cmd.Language;
-        var answer = await assistant.GenerateAsync(Request(site, fields, cmd.Messages, language, images, cmd.Surprise), ct);
+        var css = isStudio ? CurrentCss(site.Current) : null;
+        var answer = await assistant.GenerateAsync(Request(site, fields, cmd.Messages, language, images, cmd.Surprise, css), ct);
         if (!answer.IsSuccess)
         {
             return answer.Error!;
@@ -154,6 +193,13 @@ public sealed class ChatAboutDesignHandler(
         var proposed = TemplateAiFields.WithLook(AiText.Field(answer.Value, "settings"), AiText.Field(answer.Value, "look"), site.Looks);
         var patch = await TemplateAiFields.ToPatchAsync(site.Schema, fields, proposed, site.Current);
         RemoveUnchanged(patch, site.Current);
+        if (css is not null && AiText.Field(answer.Value, "css") is JsonValue cssAnswer && cssAnswer.TryGetValue<string>(out var newCss)
+            && newCss != css && StudioCss.Check(newCss, StudioChecker.CssMax(site.Schema)) is null)
+        {
+            // The style sheet is checked with the rules of a saved draft; a sheet that fails is left out and the rest still applies.
+            patch[StudioChecker.CssKey] = newCss;
+        }
+
         var reply = AiText.Clean(AiText.Field(answer.Value, "reply"), ReplyMax, multiline: true);
         if (reply is null)
         {
@@ -166,6 +212,11 @@ public sealed class ChatAboutDesignHandler(
         }
 
         var remaining = await quota.RecordAsync(businessId, ct);
+        if (newDesign)
+        {
+            await studio!.CountNewDesignAsync(businessId, ct);
+        }
+
         return new DesignChatAnswerDto(reply, JsonDocument.Parse(patch.ToJsonString()).RootElement.Clone(), remaining);
     }
 
@@ -184,7 +235,12 @@ public sealed class ChatAboutDesignHandler(
     private static bool SameNumber(JsonNode? a, JsonNode? b) =>
         a is JsonValue x && b is JsonValue y && x.TryGetValue<double>(out var m) && y.TryGetValue<double>(out var n) && m.Equals(n);
 
-    private static AiRequest Request(AiSite site, IReadOnlyList<TemplateField> fields, IReadOnlyList<AiChatMessage> messages, string language, IReadOnlyList<AiImage> images, bool surprise)
+    /// <summary>The Studio site's current style sheet ("" when it has none).</summary>
+    private static string CurrentCss(JsonObject current) =>
+        current[StudioChecker.CssKey] is JsonValue value && value.TryGetValue<string>(out var css) ? css : "";
+
+    private static AiRequest Request(
+        AiSite site, IReadOnlyList<TemplateField> fields, IReadOnlyList<AiChatMessage> messages, string language, IReadOnlyList<AiImage> images, bool surprise, string? css = null)
     {
         var input = new StringBuilder();
         site.Describe(input, language);
@@ -212,7 +268,17 @@ public sealed class ChatAboutDesignHandler(
         input.AppendLine($"The owner's new message: {OneLine(messages[^1].Text)}");
         if (images.Count > 0)
         {
-            input.AppendLine("The owner attached a photo to this message");
+            input.AppendLine(images.Count > 1 ? "The owner attached pictures to this message" : "The owner attached a photo to this message");
+        }
+
+        if (css is not null)
+        {
+            input.AppendLine();
+            input.AppendLine(css.Length == 0 ? "The website has no style sheet yet" : "The website's current style sheet:");
+            if (css.Length > 0)
+            {
+                input.AppendLine(css);
+            }
         }
 
         if (surprise)
@@ -230,10 +296,17 @@ public sealed class ChatAboutDesignHandler(
             properties["look"] = look;
         }
 
+        var instructions = AiPrompts.Chat(AiSite.LanguageName(language));
+        if (css is not null)
+        {
+            properties["css"] = new JsonObject { ["type"] = "string", ["maxLength"] = StudioChecker.CssMax(site.Schema) ?? StudioCss.DefaultMax };
+            instructions += AiPrompts.Studio(AiSite.LanguageName(language));
+        }
+
         var schema = new JsonObject { ["type"] = "object", ["properties"] = properties, ["required"] = new JsonArray("reply", "settings") };
 
         // A surprise should differ from one press to the next, so the model gets more room.
-        return new AiRequest(AiTask.ChatAboutDesign, AiPrompts.Chat(AiSite.LanguageName(language)), input.ToString(), images, schema, Temperature: surprise ? 0.9 : 0.5);
+        return new AiRequest(AiTask.ChatAboutDesign, instructions, input.ToString(), images, schema, Temperature: surprise ? 0.9 : 0.5);
     }
 
     private static string OneLine(string? text) => string.Join(' ', (text ?? "").Split((char[])['\r', '\n'], StringSplitOptions.RemoveEmptyEntries)).Trim();

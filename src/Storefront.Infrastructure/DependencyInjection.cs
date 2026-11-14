@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Storefront.Application.Abstractions;
 using Storefront.Application.Ai;
+using Storefront.Application.Ai.Studio;
 using Storefront.Application.Common;
 using Storefront.Application.PublicSites;
 using Storefront.Infrastructure.Ai;
@@ -129,6 +130,20 @@ public static class DependencyInjection
             !string.IsNullOrWhiteSpace(sp.GetRequiredService<IOptions<DeepSeekOptions>>().Value.ApiKey) ? sp.GetRequiredService<DeepSeekAssistant>()
             : !string.IsNullOrWhiteSpace(sp.GetRequiredService<IOptions<GeminiOptions>>().Value.ApiKey) ? sp.GetRequiredService<GeminiAssistant>()
             : sp.GetRequiredService<DisabledAiAssistant>());
+
+        // The AI design studio's reference links: public internet addresses only, checked as each connection is made.
+        services.AddHttpClient<IReferenceImages, HttpReferenceImages>(c =>
+            {
+                c.Timeout = TimeSpan.FromSeconds(15);
+                c.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; SitePreview/1.0)");
+            })
+            .ConfigurePrimaryHttpMessageHandler(() => new SocketsHttpHandler
+            {
+                AllowAutoRedirect = false,
+                UseProxy = false,
+                ConnectCallback = HttpReferenceImages.ConnectPublicOnlyAsync,
+                AutomaticDecompression = System.Net.DecompressionMethods.All,
+            });
 
         services.AddScoped<TemplateRegistryImporter>();
         services.AddScoped<ReferenceDataSeeder>();

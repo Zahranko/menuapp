@@ -39,12 +39,25 @@ class AiChatBubble {
 
 /// The editor's conversation with the assistant. The editor keeps one for as long as it is open, so closing and reopening
 /// the chat carries on where the owner left off.
+/// The Studio template's style sheet, written by the design assistant (never shown as a control in the editor).
+const studioCssKey = 'studio.css';
+
+/// The first web link in [text] (trailing punctuation left out), or null.
+String? firstLink(String text) {
+  final match = RegExp(r'https?://[^\s<>"]+', caseSensitive: false).firstMatch(text);
+  return match?.group(0)!.replaceFirst(RegExp(r'[.,;:!?)\]]+$'), '');
+}
+
 class AiChatController extends ChangeNotifier {
   /// [_language] is "en" or "ar", usually the website's language.
   AiChatController(this._language);
 
   final messages = <AiChatBubble>[];
   bool busy = false;
+
+  /// True on a Studio site (the AI design studio): the assistant also writes the site's style sheet ([studioCssKey]), and a
+  /// link in the owner's message is sent as a reference picture.
+  bool studio = false;
 
   /// The last failed call, shown under the conversation until the next message.
   Object? error;
@@ -84,8 +97,8 @@ class AiChatController extends ChangeNotifier {
     error = null;
     notifyListeners();
     try {
-      final answer = await repo.chat(_turns(), language: _language, photo: photo, surprise: surprise);
-      final change = SettingsChange.of(answer.settings, keys: keys, current: values());
+      final answer = await repo.chat(_turns(), language: _language, photo: photo, surprise: surprise, referenceUrl: studio ? firstLink(text) : null);
+      final change = SettingsChange.of(answer.settings, keys: {...keys, if (studio) studioCssKey}, current: values());
       if (change.patch.isNotEmpty) await onApply(change.patch);
       messages.add(AiChatBubble.assistant(answer.reply, changed: change.before));
       return true;
