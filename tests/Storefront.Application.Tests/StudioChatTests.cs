@@ -73,7 +73,7 @@ public class StudioChatTests
         var request = s.Assistant.Requests.Single();
         Assert.NotNull(request.ResponseSchema["properties"]!["css"]);
         Assert.Contains("Studio template of the AI design studio", request.Instructions);
-        Assert.Contains("The website's style sheet is empty.", request.Input);
+        Assert.Contains("The website has no style sheet yet", request.Input);
     }
 
     [Fact]
