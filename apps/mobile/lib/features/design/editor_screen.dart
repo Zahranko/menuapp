@@ -450,7 +450,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
                           values: () => _settings ?? const {},
                           onApply: _applySuggestions,
                         ),
-                      AiDesignAssistant(chat: _chat, fields: fields, values: () => _settings ?? const {}, onApply: _applySuggestions),
+                      AiDesignAssistant(chat: _chat..studio = (template?.fields.any((f) => f.type == 'css') ?? false), fields: fields, values: () => _settings ?? const {}, onApply: _applySuggestions),
                       for (final entry in groups.entries)
                         _GroupCard(
                           key: _groupKey(entry.key),
