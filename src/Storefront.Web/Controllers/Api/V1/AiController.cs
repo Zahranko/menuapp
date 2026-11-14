@@ -107,6 +107,8 @@ public sealed class AiController : ApiController
     /// (JPEG, PNG or WebP up to 5 MB) sent with the new message; optional "surprise" (true from the editor's "Surprise me" button)
     /// asks for a fresh design built from the template's own looks and layouts. Returns a short reply and a settings patch (colors, themes,
     /// fonts, sizes, layouts, switches, sections and texts; empty when nothing changed) to merge into the editor's draft.
+    /// On a Studio site (the AI design studio, Pro only) the patch can also hold "studio.css", the site's style sheet; "surprise"
+    /// makes a whole new design (10 a month); and optional "referenceUrl" is a link to a picture or a web page to take as a reference.
     /// </summary>
     [HttpPost("chat")]
     [EnableRateLimiting(RateLimits.Ai)]
@@ -118,7 +120,7 @@ public sealed class AiController : ApiController
     [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status429TooManyRequests)]
     [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status502BadGateway)]
     [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status503ServiceUnavailable)]
-    public async Task<ActionResult<DesignChatAnswerDto>> Chat(IFormFile? file, [FromForm] string? messages, [FromForm] string? language, [FromForm] bool? surprise, [FromServices] ChatAboutDesignHandler handler, CancellationToken ct)
+    public async Task<ActionResult<DesignChatAnswerDto>> Chat(IFormFile? file, [FromForm] string? messages, [FromForm] string? language, [FromForm] bool? surprise, [FromForm] string? referenceUrl, [FromServices] ChatAboutDesignHandler handler, CancellationToken ct)
     {
         var parsed = ChatAboutDesign.ParseMessages(messages);
         if (!parsed.IsSuccess)
@@ -128,10 +130,10 @@ public sealed class AiController : ApiController
 
         if (file is null)
         {
-            return From(await handler.Handle(new ChatAboutDesign(parsed.Value, language, null, surprise == true), ct));
+            return From(await handler.Handle(new ChatAboutDesign(parsed.Value, language, null, surprise == true, referenceUrl), ct));
         }
 
         await using var stream = file.OpenReadStream();
-        return From(await handler.Handle(new ChatAboutDesign(parsed.Value, language, new AiPhoto(stream, file.Length), surprise == true), ct));
+        return From(await handler.Handle(new ChatAboutDesign(parsed.Value, language, new AiPhoto(stream, file.Length), surprise == true, referenceUrl), ct));
     }
 }

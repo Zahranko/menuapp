@@ -408,6 +408,8 @@ export interface paths {
                         language?: string;
                     } & {
                         surprise?: boolean;
+                    } & {
+                        referenceUrl?: string;
                     };
                 };
             };
