@@ -13,12 +13,12 @@ public static partial class StudioCss
     public const int DefaultMax = 20_000;
 
     /// <summary>Why the sheet can't be saved, or null when it can. An empty sheet is fine.</summary>
-    public static string? Check(string css, int? max)
+    public static string? Check(string css, int? maxLength)
     {
-        var limit = max ?? DefaultMax;
-        if (css.Length > limit)
+        var max = maxLength ?? DefaultMax;
+        if (css.Length > max)
         {
-            return $"Use up to {limit} characters.";
+            return $"Use up to {max} characters.";
         }
 
         if (css.Contains('\\') || css.Contains('<'))

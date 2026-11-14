@@ -274,7 +274,7 @@ public sealed class ChatAboutDesignHandler(
         if (css is not null)
         {
             input.AppendLine();
-            input.AppendLine(css.Length == 0 ? "The website's style sheet is empty." : "The website's current style sheet:");
+            input.AppendLine(css.Length == 0 ? "The website has no style sheet yet" : "The website's current style sheet:");
             if (css.Length > 0)
             {
                 input.AppendLine(css);

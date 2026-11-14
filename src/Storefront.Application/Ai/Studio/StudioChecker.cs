@@ -20,8 +20,9 @@ public static class StudioErrors
 {
     public static readonly Error NeedsPro = Error.Forbidden("studio.pro", "The design studio is part of the Pro plan. Upgrade to Pro to use it.");
 
+    // The number is written out so the Arabic catalog matches it; keep it equal to StudioChecker.NewDesignsPerMonth.
     public static readonly Error NewDesignLimit = Error.LimitReached(
-        "studio.limit", $"You've made {StudioChecker.NewDesignsPerMonth} new designs this month. You can still change your design in the chat.");
+        "studio.limit", "You've made 10 new designs this month. You can still change your design in the chat.");
 
     public static readonly Error BadLink = Error.Validation(
         "studio.link", "We couldn't open a picture at this link. Try another link, or send a screenshot instead.", "referenceUrl");
