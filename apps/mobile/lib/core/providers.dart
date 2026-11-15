@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../features/auth/auth_controller.dart';
 import '../features/auth/auth_repository.dart';
+import '../features/community/community_repository.dart';
 import '../features/design/design_repository.dart';
 import '../features/menu/menu_repository.dart';
 import '../features/plan/plan_repository.dart';
@@ -35,3 +36,5 @@ final menuRepositoryProvider = Provider<MenuRepository>((ref) => MenuRepository(
 final designRepositoryProvider = Provider<DesignRepository>((ref) => DesignRepository(ref.watch(dioProvider)));
 
 final planRepositoryProvider = Provider<PlanRepository>((ref) => PlanRepository(ref.watch(dioProvider)));
+
+final communityRepositoryProvider = Provider<CommunityRepository>((ref) => CommunityRepository(ref.watch(dioProvider)));

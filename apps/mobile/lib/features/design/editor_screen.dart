@@ -470,6 +470,25 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
                               ),
                           ],
                         ),
+                      if (template?.fields.any((f) => f.type == 'css') ?? false)
+                        SectionCard(
+                          title: t.communityTitle,
+                          icon: Icons.groups_2_rounded,
+                          badge: const ProBadge(),
+                          subtitle: t.communityOnlyDesign,
+                          children: [
+                            LightButton(
+                              key: const Key('editorShareCommunity'),
+                              icon: Icons.ios_share_rounded,
+                              label: t.communityShareFromEditor,
+                              onPressed: () async {
+                                // Share what the owner sees: save pending changes first.
+                                if (_pending) await _save();
+                                if (context.mounted) context.push('/community/mine');
+                              },
+                            ),
+                          ],
+                        ),
                       SectionCard(
                         title: t.menuItemsAndPrices,
                         icon: Icons.restaurant_menu_rounded,

@@ -1506,4 +1506,204 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aiReadStepReady => 'Putting your menu together';
+
+  @override
+  String get communityTitle => 'Community templates';
+
+  @override
+  String get communitySub =>
+      'Designs made by Pro owners with the AI design studio. Try one on your website.';
+
+  @override
+  String get communityPopular => 'Popular';
+
+  @override
+  String get communityNew => 'New';
+
+  @override
+  String get communitySearchHint => 'Search, or paste a design code or link';
+
+  @override
+  String get communityEmpty => 'No designs here yet.';
+
+  @override
+  String communityEmptySearch(String query) {
+    return 'No designs match “$query”.';
+  }
+
+  @override
+  String communityBy(String name) {
+    return 'by $name';
+  }
+
+  @override
+  String communityUses(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count uses',
+      one: '1 use',
+      zero: 'New',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get communityUseDesign => 'Use this design';
+
+  @override
+  String communityUseTitle(String name) {
+    return 'Use $name?';
+  }
+
+  @override
+  String get communityUseBody =>
+      'Your website moves to the Studio template with this design. Your products, texts and photos stay yours. Your live website changes only when you publish.';
+
+  @override
+  String get communityApplied =>
+      'Design added. Have a look, then publish when you like it.';
+
+  @override
+  String get communityShareLink => 'Share link';
+
+  @override
+  String communityShareText(String name, String url) {
+    return '$name: $url';
+  }
+
+  @override
+  String communityCode(String code) {
+    return 'Design code $code';
+  }
+
+  @override
+  String get communityPreviewNote =>
+      'Shown on a sample menu. Your website keeps your own products and texts.';
+
+  @override
+  String get communityShareYours => 'Share your designs';
+
+  @override
+  String get communityShareYoursSub =>
+      'Pro owners can publish their Studio designs here for everyone to use.';
+
+  @override
+  String get communityShareYoursPro =>
+      'Sharing designs in the community is part of the Pro plan.';
+
+  @override
+  String get publisherProfileTitle => 'Your publisher profile';
+
+  @override
+  String get publisherProfileSub =>
+      'People see this name on the designs you share. Your username is yours alone and appears in your link.';
+
+  @override
+  String get publisherUsername => 'Username';
+
+  @override
+  String publisherUsernameFree(String username) {
+    return '@$username is free';
+  }
+
+  @override
+  String get publisherDisplayName => 'Name people see';
+
+  @override
+  String get publisherBio => 'About you (optional)';
+
+  @override
+  String get publisherCreate => 'Create publisher profile';
+
+  @override
+  String get publisherSave => 'Save profile';
+
+  @override
+  String get publisherEdit => 'Edit profile';
+
+  @override
+  String get communityMine => 'My shared designs';
+
+  @override
+  String get communityShareCurrent => 'Share my current design';
+
+  @override
+  String get communityNeedsStudio =>
+      'Only Studio designs can be shared. Choose the Studio template and design it with the AI helper first.';
+
+  @override
+  String get communityShareName => 'Design name';
+
+  @override
+  String get communityShareDescription => 'Short description (optional)';
+
+  @override
+  String get communityListed => 'Show in the gallery';
+
+  @override
+  String get communityListedSub =>
+      'When off, only people with the link can find it.';
+
+  @override
+  String get communityPublish => 'Share design';
+
+  @override
+  String get communityShared => 'Your design is in the community.';
+
+  @override
+  String get communityUpdateDesign => 'Update from my current design';
+
+  @override
+  String get communityUpdated => 'Design updated.';
+
+  @override
+  String get communityHide => 'Hide from the gallery';
+
+  @override
+  String get communityShow => 'Show in the gallery';
+
+  @override
+  String get communityLinkOnly => 'Link only';
+
+  @override
+  String get communityDelete => 'Delete';
+
+  @override
+  String communityDeleteTitle(String name) {
+    return 'Delete $name?';
+  }
+
+  @override
+  String get communityDeleteBody =>
+      'Its link stops working. Websites that already use it keep their design.';
+
+  @override
+  String get communityDeleted => 'Design deleted.';
+
+  @override
+  String get communityNoneShared => 'You haven\'t shared a design yet.';
+
+  @override
+  String get communityShareFromEditor => 'Share this design with the community';
+
+  @override
+  String get communityOnlyDesign =>
+      'Only your colors, layout and style are shared. Your texts, photos and opening hours stay private.';
+
+  @override
+  String get communityLoadMore => 'Show more';
+
+  @override
+  String get communityGone => 'This design is gone';
+
+  @override
+  String get communityGoneBody =>
+      'Its publisher removed it. Have a look at the other community templates.';
+
+  @override
+  String get communityShort => 'Community';
+
+  @override
+  String get communityShare => 'Share';
 }

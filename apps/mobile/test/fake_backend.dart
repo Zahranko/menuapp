@@ -39,6 +39,14 @@ class FakeBackend {
   final categories = <Map<String, Object?>>[];
   final products = <Map<String, Object?>>[];
   Map<String, Object?>? domainRequest;
+  /// Templates only some tests need (like Studio for the community tests), listed after [templates].
+  final extraTemplates = <Map<String, Object?>>[];
+  List<Map<String, Object?>> get _allTemplates => [...templates, ...extraTemplates];
+
+  /// Community templates: the owner's publisher profile (null until made), every shared design, and the codes applied.
+  Map<String, Object?>? publisher;
+  final community = <Map<String, Object?>>[];
+  final applied = <String>[];
   String templateId = 'souq';
   Map<String, Object?> draft = Map.of(souqDefaults);
   DateTime? publishedAt;
@@ -325,7 +333,7 @@ class FakeBackend {
 
   /// Why the current plan can't use template [id], or null when it can.
   FakeResponse? _refuse(String id) {
-    final tier = templates.firstWhere((t) => t['id'] == id, orElse: () => const {})['tier'] ?? 'basic';
+    final tier = _allTemplates.firstWhere((t) => t['id'] == id, orElse: () => const {})['tier'] ?? 'basic';
     if (tier == 'pro' && plan != 'pro') return proTemplateRefused;
     if (tier == 'basic' && plan == 'lite') return basicTemplateRefused;
     return null;
@@ -395,13 +403,13 @@ class FakeBackend {
         products.add(p);
         return (status: 201, body: p);
       case 'GET /api/v1/templates':
-        return (status: 200, body: templates);
+        return (status: 200, body: _allTemplates);
       case 'GET /api/v1/site':
         return (status: 200, body: _site);
       case 'PUT /api/v1/site/template':
         if (_refuse(body!['templateId'] as String) case final refused?) return refused;
         templateId = body['templateId'] as String;
-        draft = Map.of(templates.firstWhere((t) => t['id'] == templateId)['defaults'] as Map<String, Object?>);
+        draft = Map.of(_allTemplates.firstWhere((t) => t['id'] == templateId)['defaults'] as Map<String, Object?>);
         return (status: 200, body: _site);
       case 'PUT /api/v1/site/draft':
         draft = Map<String, Object?>.from(body!['settings'] as Map);
@@ -509,7 +517,88 @@ class FakeBackend {
       return (status: 200, body: {...c, 'productCount': 0});
     }
 
+    if (_community(r.method, path, body, r.queryParameters) case final answer?) return answer;
+
     return (status: 404, body: {'title': 'Not found: $key'});
+  }
+
+  /// A shared design as the API lists it.
+  static Map<String, Object?> communityDesign(String code, String name, {String username = 'nightmaker', int uses = 3, String id = 'ct1', bool listed = true}) => {
+        'id': id,
+        'isListed': listed,
+        'template': {
+          'code': code,
+          'name': name,
+          'description': 'Dark and calm',
+          'baseTemplateId': 'studio',
+          'isPro': true,
+          'publisher': {'username': username, 'displayName': 'Night Maker', 'bio': null, 'createdAt': '2026-11-01T00:00:00Z', 'url': 'https://example.test/community/u/$username'},
+          'colors': ['#111827', '#F59E0B'],
+          'uses': uses,
+          'createdAt': '2026-11-10T00:00:00Z',
+          'updatedAt': '2026-11-10T00:00:00Z',
+          'shareUrl': 'https://example.test/community/$code',
+          'previewUrl': 'https://example.test/community-preview/$code',
+        },
+      };
+
+  FakeResponse? _community(String method, String path, Map<String, Object?>? body, Map<String, dynamic> query) {
+    Map<String, Object?> template(Map<String, Object?> d) => d['template'] as Map<String, Object?>;
+    final listed = [for (final d in community) if (d['isListed'] == true) template(d)];
+    if (method == 'GET' && path == '/api/public/v1/community/templates') {
+      final q = (query['q'] as String? ?? '').toLowerCase();
+      final items = [for (final t in listed) if (q.isEmpty || (t['name'] as String).toLowerCase().contains(q)) t];
+      return (status: 200, body: {'items': items, 'total': items.length, 'page': 1, 'pageSize': 24});
+    }
+    final byCode = RegExp(r'^/api/public/v1/community/templates/([a-z0-9]+)$').firstMatch(path);
+    if (method == 'GET' && byCode != null) {
+      final d = community.where((d) => template(d)['code'] == byCode.group(1)).firstOrNull;
+      return d == null ? (status: 404, body: {'title': 'Not found'}) : (status: 200, body: {'template': template(d), 'settings': {'theme': 'night'}});
+    }
+    final apply = RegExp(r'^/api/v1/community/templates/([a-z0-9]+)/apply$').firstMatch(path);
+    if (method == 'POST' && apply != null) {
+      if (_refuse('studio') case final refused?) return refused;
+      applied.add(apply.group(1)!);
+      templateId = 'studio';
+      draft = {...draft, 'theme': 'night'};
+      return (status: 200, body: _site);
+    }
+    switch ('$method $path') {
+      case 'GET /api/v1/community/publisher':
+        return publisher == null ? (status: 404, body: {'title': 'Create your publisher profile first.', 'code': 'publisher.notFound'}) : (status: 200, body: publisher);
+      case 'PUT /api/v1/community/publisher':
+        if (plan != 'pro' && publisher == null) return (status: 403, body: {'title': 'Publishing community templates is part of the Pro plan.', 'code': 'community.pro'});
+        final username = (body!['username'] as String).toLowerCase().replaceFirst('@', '');
+        if (username == 'taken') {
+          return (status: 409, body: {'title': 'This username is taken. Try another one.', 'code': 'publisher.usernameTaken', 'errors': {'username': ['This username is taken. Try another one.']}});
+        }
+        publisher = {'username': username, 'displayName': body['displayName'], 'bio': body['bio'], 'createdAt': '2026-11-15T00:00:00Z', 'url': 'https://example.test/community/u/$username'};
+        return (status: 200, body: publisher);
+      case 'GET /api/v1/community/username-availability':
+        final username = query['username'] as String? ?? '';
+        return (status: 200, body: {'username': username, 'available': username != 'taken', 'message': username == 'taken' ? 'This username is taken. Try another one.' : null});
+      case 'GET /api/v1/community/templates/mine':
+        return (status: 200, body: [for (final d in community) if ((template(d)['publisher'] as Map)['username'] == publisher?['username']) d]);
+      case 'POST /api/v1/community/templates':
+        final d = communityDesign('mine${community.length}abc'.substring(0, 8), body!['name'] as String, username: publisher!['username'] as String, uses: 0, id: 'ct${_ids++}', listed: body['isListed'] as bool? ?? true);
+        community.add(d);
+        return (status: 200, body: d);
+    }
+    final mine = RegExp(r'^/api/v1/community/templates/(ct[0-9]+)$').firstMatch(path);
+    if (mine != null) {
+      final d = community.where((d) => d['id'] == mine.group(1)).firstOrNull;
+      if (d == null) return (status: 404, body: {'title': 'This community template is gone.'});
+      if (method == 'DELETE') {
+        community.remove(d);
+        return (status: 204, body: null);
+      }
+      if (method == 'PUT') {
+        d['isListed'] = body!['isListed'];
+        template(d)['name'] = body['name'];
+        return (status: 200, body: d);
+      }
+    }
+    return null;
   }
 
   Map<String, Object?> get _subscription => {

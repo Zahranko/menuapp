@@ -884,5 +884,119 @@
   "aiReadStepLook": "Looking at your photos",
   "aiReadStepSections": "Finding your categories",
   "aiReadStepPrices": "Reading names and prices",
-  "aiReadStepReady": "Putting your menu together"
+  "aiReadStepReady": "Putting your menu together",
+  "communityTitle": "Community templates",
+  "communitySub": "Designs made by Pro owners with the AI design studio. Try one on your website.",
+  "communityPopular": "Popular",
+  "communityNew": "New",
+  "communitySearchHint": "Search, or paste a design code or link",
+  "communityEmpty": "No designs here yet.",
+  "communityEmptySearch": "No designs match “{query}”.",
+  "@communityEmptySearch": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "communityBy": "by {name}",
+  "@communityBy": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "communityUses": "{count, plural, =0{New} =1{1 use} other{{count} uses}}",
+  "@communityUses": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "communityUseDesign": "Use this design",
+  "communityUseTitle": "Use {name}?",
+  "@communityUseTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "communityUseBody": "Your website moves to the Studio template with this design. Your products, texts and photos stay yours. Your live website changes only when you publish.",
+  "communityApplied": "Design added. Have a look, then publish when you like it.",
+  "communityShareLink": "Share link",
+  "communityShareText": "{name}: {url}",
+  "@communityShareText": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "communityCode": "Design code {code}",
+  "@communityCode": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "communityPreviewNote": "Shown on a sample menu. Your website keeps your own products and texts.",
+  "communityShareYours": "Share your designs",
+  "communityShareYoursSub": "Pro owners can publish their Studio designs here for everyone to use.",
+  "communityShareYoursPro": "Sharing designs in the community is part of the Pro plan.",
+  "publisherProfileTitle": "Your publisher profile",
+  "publisherProfileSub": "People see this name on the designs you share. Your username is yours alone and appears in your link.",
+  "publisherUsername": "Username",
+  "publisherUsernameFree": "@{username} is free",
+  "@publisherUsernameFree": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  },
+  "publisherDisplayName": "Name people see",
+  "publisherBio": "About you (optional)",
+  "publisherCreate": "Create publisher profile",
+  "publisherSave": "Save profile",
+  "publisherEdit": "Edit profile",
+  "communityMine": "My shared designs",
+  "communityShareCurrent": "Share my current design",
+  "communityNeedsStudio": "Only Studio designs can be shared. Choose the Studio template and design it with the AI helper first.",
+  "communityShareName": "Design name",
+  "communityShareDescription": "Short description (optional)",
+  "communityListed": "Show in the gallery",
+  "communityListedSub": "When off, only people with the link can find it.",
+  "communityPublish": "Share design",
+  "communityShared": "Your design is in the community.",
+  "communityUpdateDesign": "Update from my current design",
+  "communityUpdated": "Design updated.",
+  "communityHide": "Hide from the gallery",
+  "communityShow": "Show in the gallery",
+  "communityLinkOnly": "Link only",
+  "communityDelete": "Delete",
+  "communityDeleteTitle": "Delete {name}?",
+  "@communityDeleteTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "communityDeleteBody": "Its link stops working. Websites that already use it keep their design.",
+  "communityDeleted": "Design deleted.",
+  "communityNoneShared": "You haven't shared a design yet.",
+  "communityShareFromEditor": "Share this design with the community",
+  "communityOnlyDesign": "Only your colors, layout and style are shared. Your texts, photos and opening hours stay private.",
+  "communityLoadMore": "Show more",
+  "communityGone": "This design is gone",
+  "communityGoneBody": "Its publisher removed it. Have a look at the other community templates.",
+  "communityShort": "Community",
+  "communityShare": "Share"
 }
