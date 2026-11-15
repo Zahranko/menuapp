@@ -153,6 +153,19 @@ public static partial class Messages
         ["studio.link"] = "لم نتمكن من فتح صورة من هذا الرابط. جرّب رابطًا آخر أو أرسل لقطة شاشة.",
         ["studio.template"] = "روابط الصور تعمل مع قالب ستوديو. انتقل إلى ستوديو أولًا.",
         ["studio.css"] = "لا يمكن استخدام ملف التنسيق هذا.",
+
+        ["community.pro"] = "نشر القوالب في مجتمع القوالب ضمن باقة Pro. انتقل إلى Pro لمشاركة تصاميمك.",
+        ["community.notFound"] = "لم يعد قالب المجتمع هذا متاحًا.",
+        ["community.studio"] = "يمكن مشاركة التصاميم المصنوعة في قالب ستوديو فقط. انتقل إلى ستوديو أولًا.",
+        ["community.limit"] = "يمكنك مشاركة 30 قالبًا كحد أقصى. احذف واحدًا لمشاركة قالب جديد.",
+        ["community.name"] = "استخدم من 3 إلى 40 حرفًا للاسم.",
+        ["community.description"] = "استخدم 200 حرف كحد أقصى.",
+        ["publisher.notFound"] = "أنشئ ملفك كناشر أولًا.",
+        ["publisher.username"] = "استخدم من 3 إلى 20 حرفًا إنجليزيًا صغيرًا أو رقمًا أو _ ، تبدأ بحرف.",
+        ["publisher.usernameReserved"] = "اسم المستخدم هذا غير متاح.",
+        ["publisher.usernameTaken"] = "اسم المستخدم هذا مأخوذ. جرّب اسمًا آخر.",
+        ["publisher.displayName"] = "استخدم من 1 إلى 40 حرفًا لاسمك.",
+        ["publisher.bio"] = "استخدم 160 حرفًا كحد أقصى.",
     };
 
     /// <summary>Exact English sentences.</summary>
@@ -322,6 +335,21 @@ public static partial class Messages
         ["Send up to 20 messages."] = "أرسل 20 رسالة كحد أقصى.",
         ["Keep each message under 1000 characters."] = "اجعل كل رسالة أقل من 1000 حرف.",
         ["Done. Have a look at the preview."] = "تم. ألقِ نظرة على المعاينة.",
+
+        // Community templates
+        ["Publishing community templates is part of the Pro plan. Upgrade to Pro to share your designs."] = "نشر القوالب في مجتمع القوالب ضمن باقة Pro. انتقل إلى Pro لمشاركة تصاميمك.",
+        ["Create your publisher profile first."] = "أنشئ ملفك كناشر أولًا.",
+        ["This username is taken. Try another one."] = "اسم المستخدم هذا مأخوذ. جرّب اسمًا آخر.",
+        ["This community template is gone."] = "لم يعد قالب المجتمع هذا متاحًا.",
+        ["Only designs made in the Studio template can be shared. Switch to Studio first."] = "يمكن مشاركة التصاميم المصنوعة في قالب ستوديو فقط. انتقل إلى ستوديو أولًا.",
+        ["You can share up to 30 templates. Delete one to share a new one."] = "يمكنك مشاركة 30 قالبًا كحد أقصى. احذف واحدًا لمشاركة قالب جديد.",
+        ["Choose a username."] = "اختر اسم مستخدم.",
+        ["Enter the name people will see."] = "أدخل الاسم الذي سيراه الناس.",
+        ["Use 1 to 40 characters for your name."] = "استخدم من 1 إلى 40 حرفًا لاسمك.",
+        ["Use 3 to 20 lowercase letters, numbers or _, starting with a letter."] = "استخدم من 3 إلى 20 حرفًا إنجليزيًا صغيرًا أو رقمًا أو _ ، تبدأ بحرف.",
+        ["This username is not available."] = "اسم المستخدم هذا غير متاح.",
+        ["Give your template a name."] = "أعطِ قالبك اسمًا.",
+        ["Use 3 to 40 characters for the name."] = "استخدم من 3 إلى 40 حرفًا للاسم.",
     };
 
     /// <summary>English sentences with placeholders {0}, {1}... and their Arabic, which may use any of them.</summary>

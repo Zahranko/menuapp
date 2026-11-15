@@ -13,6 +13,7 @@ public static class RateLimits
     public const string Public = "public";
     public const string Upload = "upload";
     public const string Ai = "ai";
+    public const string Community = "community";
 
     /// <summary>
     /// Named policies are per client IP, except uploads and AI helper calls, which are per owner. On top, every request counts against a global per-IP limit and,
@@ -35,6 +36,9 @@ public static class RateLimits
             // Each AI answer costs money and seconds of model time; the monthly allowance is checked separately (AiQuotaChecker).
             var ai = section.GetValue("AiPerMinute", 10);
             o.AddPolicy(Ai, context => PerMinute($"{Ai}:{context.User.FindFirst("sub")?.Value ?? ClientIp(context)}", ai));
+            // Sharing and applying community templates writes designs; a small budget per owner keeps the gallery from being flooded.
+            var community = section.GetValue("CommunityPerMinute", 20);
+            o.AddPolicy(Community, context => PerMinute($"{Community}:{context.User.FindFirst("sub")?.Value ?? ClientIp(context)}", community));
 
             var perIp = section.GetValue("GlobalPerMinute", 1200);
             var perOwner = section.GetValue("OwnerPerMinute", 300);

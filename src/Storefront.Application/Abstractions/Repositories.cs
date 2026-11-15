@@ -2,6 +2,7 @@ using Storefront.Domain.Ai;
 using Storefront.Domain.Billing;
 using Storefront.Domain.Businesses;
 using Storefront.Domain.Catalog;
+using Storefront.Domain.Community;
 using Storefront.Domain.Domains;
 using Storefront.Domain.Media;
 using Storefront.Domain.Sites;
@@ -123,4 +124,39 @@ public interface IAiUsageRepository
 
     /// <summary>Adds one use to the month at once, outside the unit of work, so two answers finishing together both count.</summary>
     Task IncrementAsync(Guid businessId, string period, DateTimeOffset now, CancellationToken ct);
+}
+
+/// <summary>
+/// Publisher profiles and community templates. "My" reads are tenant-filtered; the gallery, publisher pages and share links
+/// read across businesses.
+/// </summary>
+public interface ICommunityRepository
+{
+    Task<PublisherProfile?> GetMyPublisherAsync(CancellationToken ct);
+
+    /// <summary>Across all businesses, by username (stored lowercase).</summary>
+    Task<PublisherProfile?> FindPublisherAsync(string username, CancellationToken ct);
+
+    Task<bool> UsernameTakenAsync(string username, Guid? exceptId, CancellationToken ct);
+
+    Task<IReadOnlyDictionary<Guid, PublisherProfile>> GetPublishersAsync(IReadOnlyCollection<Guid> ids, CancellationToken ct);
+
+    Task<IReadOnlyList<CommunityTemplate>> ListMineAsync(CancellationToken ct);
+
+    Task<CommunityTemplate?> GetMineAsync(Guid id, CancellationToken ct);
+
+    /// <summary>Across all businesses, listed or not (a share link opens an unlisted one too).</summary>
+    Task<CommunityTemplate?> FindByCodeAsync(string code, CancellationToken ct);
+
+    /// <summary>The gallery: listed templates only, "popular" (most used first) or "new", optionally matching a name.</summary>
+    Task<(IReadOnlyList<CommunityTemplate> Items, int Total)> BrowseAsync(bool newestFirst, string? search, int skip, int take, CancellationToken ct);
+
+    /// <summary>A publisher's listed templates, newest first.</summary>
+    Task<IReadOnlyList<CommunityTemplate>> ListByPublisherAsync(Guid publisherId, CancellationToken ct);
+
+    void Add(PublisherProfile profile);
+
+    void Add(CommunityTemplate template);
+
+    void Remove(CommunityTemplate template);
 }

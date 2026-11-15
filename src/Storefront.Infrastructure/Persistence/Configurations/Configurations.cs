@@ -5,6 +5,7 @@ using Storefront.Domain.Ai;
 using Storefront.Domain.Billing;
 using Storefront.Domain.Businesses;
 using Storefront.Domain.Catalog;
+using Storefront.Domain.Community;
 using Storefront.Domain.Domains;
 using Storefront.Domain.Media;
 using Storefront.Domain.Sites;
@@ -213,5 +214,39 @@ internal sealed class AuditEntryConfiguration : IEntityTypeConfiguration<AuditEn
         b.Property(x => x.EntityType).HasMaxLength(60);
         b.Property(x => x.EntityId).HasMaxLength(100);
         b.HasIndex(x => new { x.BusinessId, x.At });
+    }
+}
+
+internal sealed class PublisherProfileConfiguration : IEntityTypeConfiguration<PublisherProfile>
+{
+    public void Configure(EntityTypeBuilder<PublisherProfile> b)
+    {
+        b.Property(x => x.Username).HasMaxLength(PublisherProfile.UsernameMax).IsRequired();
+        b.HasIndex(x => x.Username).IsUnique();
+        b.Property(x => x.DisplayName).HasMaxLength(PublisherProfile.DisplayNameMax).IsRequired();
+        b.Property(x => x.Bio).HasMaxLength(PublisherProfile.BioMax);
+        b.HasIndex(x => x.BusinessId).IsUnique();
+        b.HasOne<Business>().WithOne().HasForeignKey<PublisherProfile>(x => x.BusinessId).OnDelete(DeleteBehavior.Cascade);
+    }
+}
+
+internal sealed class CommunityTemplateConfiguration : IEntityTypeConfiguration<CommunityTemplate>
+{
+    public void Configure(EntityTypeBuilder<CommunityTemplate> b)
+    {
+        b.Property(x => x.Code).HasMaxLength(CommunityTemplate.CodeLength).IsRequired();
+        b.HasIndex(x => x.Code).IsUnique();
+        b.Property(x => x.BaseTemplateId).HasMaxLength(40).IsRequired();
+        b.Property(x => x.Name).HasMaxLength(CommunityTemplate.NameMax).IsRequired();
+        b.Property(x => x.Description).HasMaxLength(CommunityTemplate.DescriptionMax);
+        b.Property(x => x.Settings).IsRequired();
+        b.HasIndex(x => new { x.IsListed, x.Uses });
+        b.HasIndex(x => new { x.IsListed, x.CreatedAt });
+        b.HasIndex(x => x.PublisherId);
+        b.HasIndex(x => x.BusinessId);
+        // Business → publisher cascades to templates; a second cascade path from Businesses is not allowed on SQL Server.
+        b.HasOne<Business>().WithMany().HasForeignKey(x => x.BusinessId).OnDelete(DeleteBehavior.NoAction);
+        b.HasOne<PublisherProfile>().WithMany().HasForeignKey(x => x.PublisherId).OnDelete(DeleteBehavior.Cascade);
+        b.HasOne<Template>().WithMany().HasForeignKey(x => x.BaseTemplateId).OnDelete(DeleteBehavior.Restrict);
     }
 }

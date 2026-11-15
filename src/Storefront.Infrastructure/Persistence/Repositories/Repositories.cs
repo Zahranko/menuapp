@@ -5,6 +5,7 @@ using Storefront.Domain.Billing;
 using Storefront.Domain.Businesses;
 using Storefront.Domain.Catalog;
 using Storefront.Domain.Common;
+using Storefront.Domain.Community;
 using Storefront.Domain.Domains;
 using Storefront.Domain.Media;
 using Storefront.Domain.Sites;
@@ -200,4 +201,56 @@ internal sealed class AiUsageRepository(StorefrontDbContext db) : IAiUsageReposi
             }
         }
     }
+}
+
+internal sealed class CommunityRepository(StorefrontDbContext db) : ICommunityRepository
+{
+    public Task<PublisherProfile?> GetMyPublisherAsync(CancellationToken ct) => db.PublisherProfiles.FirstOrDefaultAsync(ct);
+
+    public Task<PublisherProfile?> FindPublisherAsync(string username, CancellationToken ct) =>
+        db.PublisherProfiles.IgnoreQueryFilters().FirstOrDefaultAsync(p => p.Username == username, ct);
+
+    public Task<bool> UsernameTakenAsync(string username, Guid? exceptId, CancellationToken ct) =>
+        db.PublisherProfiles.IgnoreQueryFilters().AnyAsync(p => p.Username == username && p.Id != exceptId, ct);
+
+    public async Task<IReadOnlyDictionary<Guid, PublisherProfile>> GetPublishersAsync(IReadOnlyCollection<Guid> ids, CancellationToken ct) =>
+        ids.Count == 0
+            ? new Dictionary<Guid, PublisherProfile>()
+            : await db.PublisherProfiles.IgnoreQueryFilters().AsNoTracking().Where(p => ids.Contains(p.Id)).ToDictionaryAsync(p => p.Id, ct);
+
+    public async Task<IReadOnlyList<CommunityTemplate>> ListMineAsync(CancellationToken ct) =>
+        await db.CommunityTemplates.OrderByDescending(t => t.CreatedAt).ToListAsync(ct);
+
+    public Task<CommunityTemplate?> GetMineAsync(Guid id, CancellationToken ct) => db.CommunityTemplates.FirstOrDefaultAsync(t => t.Id == id, ct);
+
+    public Task<CommunityTemplate?> FindByCodeAsync(string code, CancellationToken ct) =>
+        db.CommunityTemplates.IgnoreQueryFilters().FirstOrDefaultAsync(t => t.Code == code, ct);
+
+    public async Task<(IReadOnlyList<CommunityTemplate> Items, int Total)> BrowseAsync(bool newestFirst, string? search, int skip, int take, CancellationToken ct)
+    {
+        var query = db.CommunityTemplates.IgnoreQueryFilters().AsNoTracking().Where(t => t.IsListed);
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            var pattern = $"%{search.Replace("\\", "\\\\").Replace("%", "\\%").Replace("_", "\\_").Replace("[", "\\[")}%";
+            query = query.Where(t => EF.Functions.Like(t.Name, pattern, "\\"));
+        }
+
+        var total = await query.CountAsync(ct);
+        var ordered = newestFirst
+            ? query.OrderByDescending(t => t.CreatedAt)
+            : query.OrderByDescending(t => t.Uses).ThenByDescending(t => t.CreatedAt);
+        return (await ordered.Skip(skip).Take(take).ToListAsync(ct), total);
+    }
+
+    public async Task<IReadOnlyList<CommunityTemplate>> ListByPublisherAsync(Guid publisherId, CancellationToken ct) =>
+        await db.CommunityTemplates.IgnoreQueryFilters().AsNoTracking()
+            .Where(t => t.PublisherId == publisherId && t.IsListed)
+            .OrderByDescending(t => t.CreatedAt)
+            .ToListAsync(ct);
+
+    public void Add(PublisherProfile profile) => db.PublisherProfiles.Add(profile);
+
+    public void Add(CommunityTemplate template) => db.CommunityTemplates.Add(template);
+
+    public void Remove(CommunityTemplate template) => db.CommunityTemplates.Remove(template);
 }

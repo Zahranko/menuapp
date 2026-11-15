@@ -53,6 +53,7 @@ public static class DependencyInjection
         services.AddScoped<IDomainRepository, DomainRepository>();
         services.AddScoped<IMediaRepository, MediaRepository>();
         services.AddScoped<IAiUsageRepository, AiUsageRepository>();
+        services.AddScoped<ICommunityRepository, CommunityRepository>();
 
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
