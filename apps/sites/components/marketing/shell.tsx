@@ -25,11 +25,11 @@ export function MarketingDocument({ lang, fontClassName, children }: { lang: Lan
 
 const other = (lang: Lang): Lang => (lang === "ar" ? "en" : "ar");
 
-function LangSwitch({ lang, page, className }: { lang: Lang; page: MarketingPage; className?: string }) {
+function LangSwitch({ lang, page, className, href }: { lang: Lang; page: MarketingPage; className?: string; href?: string }) {
   const t = copy(lang);
   const to = other(lang);
   return (
-    <a href={pagePath(to, page)} hrefLang={to} lang={to} className={`mk-lang ${className ?? ""}`} aria-label={t.switchLabel} data-lang-switch>
+    <a href={href ?? pagePath(to, page)} hrefLang={to} lang={to} className={`mk-lang ${className ?? ""}`} aria-label={t.switchLabel} data-lang-switch>
       <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
         <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="1.8" />
         <path d="M3 12h18M12 3c2.5 2.6 3.7 5.6 3.7 9s-1.2 6.4-3.7 9c-2.5-2.6-3.7-5.6-3.7-9S9.5 5.6 12 3z" fill="none" stroke="currentColor" strokeWidth="1.8" />
@@ -48,8 +48,11 @@ function Wordmark({ lang }: { lang: Lang }) {
   );
 }
 
-/** Header, main and footer around every marketing page. */
-export function MarketingShell({ lang, page, children }: { lang: Lang; page: MarketingPage; children: React.ReactNode }) {
+/**
+ * Header, main and footer around every marketing page. `switchHref` is this page in the other language, for pages below
+ * a marketing page (a community template or publisher); it defaults to the page itself.
+ */
+export function MarketingShell({ lang, page, switchHref, children }: { lang: Lang; page: MarketingPage; switchHref?: string; children: React.ReactNode }) {
   const t = copy(lang);
   const home = page === "home" ? "" : pagePath(lang, "home");
   const name = lang === "ar" ? brand.brandNameAr : brand.brandName;
@@ -67,9 +70,12 @@ export function MarketingShell({ lang, page, children }: { lang: Lang; page: Mar
             <a href={`${home}#features`}>{t.nav.features}</a>
             <a href={`${home}#ai`}>{t.nav.ai}</a>
             <a href={`${home}#plans`}>{t.nav.plans}</a>
+            <a href={pagePath(lang, "community")} aria-current={page === "community" ? "page" : undefined}>
+              {t.nav.community}
+            </a>
           </nav>
           <div className="mk-header-end">
-            <LangSwitch lang={lang} page={page} />
+            <LangSwitch lang={lang} page={page} href={switchHref} />
             <a href={`${home}#download`} className="mk-btn mk-btn-dark mk-btn-sm">
               {t.nav.getApp}
             </a>
@@ -95,7 +101,7 @@ export function MarketingShell({ lang, page, children }: { lang: Lang; page: Mar
             <a href={`mailto:${brand.supportEmail}`} dir="ltr">
               {brand.supportEmail}
             </a>
-            <LangSwitch lang={lang} page={page} className="mk-lang-footer" />
+            <LangSwitch lang={lang} page={page} href={switchHref} className="mk-lang-footer" />
           </nav>
           <p className="mk-footer-copy">
             © {new Date().getFullYear()} {name}. {t.footer.rights}

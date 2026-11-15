@@ -23,6 +23,13 @@ describe("route", () => {
     expect(isReserved("contact")).toBe(true);
   });
 
+  it("serves the community gallery, share pages, publishers and previews on the main host", () => {
+    for (const path of ["/community", "/ar/community", "/community/nyt2fx7k", "/ar/community/nyt2fx7k", "/community/u/lina_designs", "/community-preview/nyt2fx7k", "/community-preview/nyt2fx7k/ar"]) {
+      expect(route("example.test", path, main), path).toEqual({ kind: "pass" });
+    }
+    expect(isReserved("community")).toBe(true);
+  });
+
   it("still serves business sites next to the marketing pages", () => {
     expect(route("example.test", "/arabica", main)).toEqual({ kind: "rewrite", path: "/s/arabica", base: "/arabica" });
     expect(route("example.test", "/privacycafe/menu", main)).toEqual({ kind: "rewrite", path: "/s/privacycafe/menu", base: "/privacycafe" });

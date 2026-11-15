@@ -5,9 +5,9 @@ export type Lang = "en" | "ar";
 export const LANGS: readonly Lang[] = ["en", "ar"];
 
 /** Marketing pages, by the path they have in English. */
-export type MarketingPage = "home" | "privacy" | "contact";
+export type MarketingPage = "home" | "privacy" | "contact" | "community";
 
-const PAGE_PATHS: Record<MarketingPage, string> = { home: "", privacy: "/privacy", contact: "/contact" };
+const PAGE_PATHS: Record<MarketingPage, string> = { home: "", privacy: "/privacy", contact: "/contact", community: "/community" };
 
 /** "/", "/privacy", "/ar", "/ar/privacy", ... */
 export function pagePath(lang: Lang, page: MarketingPage): string {
@@ -32,13 +32,14 @@ type Section = { title: string; body: string[]; list?: string[] };
 const en = {
   dir: "ltr" as "ltr" | "rtl",
   skip: "Skip to content",
-  nav: { how: "How it works", features: "Features", ai: "AI helper", plans: "Plans", getApp: "Get the app", home: "Home", main: "Main" },
+  nav: { how: "How it works", features: "Features", ai: "AI helper", plans: "Plans", community: "Community", getApp: "Get the app", home: "Home", main: "Main" },
   switchTo: "عربي",
   switchLabel: "اقرأ هذه الصفحة بالعربية",
   meta: {
     home: { title: "{brandName} · Create your website from your phone", description: "Pick one of 100 templates, add your products and prices, and share one link. A website for your café, restaurant or shop, made on your phone." },
     privacy: { title: "Privacy policy · {brandName}", description: "What {brandName} collects, why, who processes it and how to delete your data." },
     contact: { title: "Contact us · {brandName}", description: "Questions about your website, plans or your own domain? Email the {brandName} team." },
+    community: { title: "Community templates · {brandName}", description: "Website designs made by {brandName} Pro owners with the AI design studio. Pick one and make it yours in the app." },
   },
   hero: {
     eyebrow: "For cafés, restaurants and shops",
@@ -136,6 +137,42 @@ const en = {
     ] as Plan[],
   },
   cta: { title: "Your website is one phone away.", body: "Download {brandName}, pick a template and publish today." },
+  community: {
+    kicker: "Community templates",
+    title: "Designs made by owners, for owners",
+    intro: "Pro owners design these with the AI design studio and share them here. Open one to see it on a sample menu, then use it on your own website from the app.",
+    popular: "Popular",
+    newest: "New",
+    search: "Search designs",
+    searchButton: "Search",
+    empty: "No designs here yet. Pro owners can share theirs from the app.",
+    emptySearch: "No designs match \u201c{q}\u201d.",
+    by: "by",
+    uses: "{n} uses",
+    oneUse: "1 use",
+    noUses: "New",
+    pro: "Pro",
+    previous: "Previous",
+    next: "Next",
+    pageOf: "Page {page} of {pages}",
+    preview: "Preview of {name} on a sample menu",
+    useTitle: "Use this design",
+    useSteps: ["Open the {brandName} app and go to Design.", "Tap Community templates and search for this code:", "Tap Use this design, then Publish when you like it."],
+    useNote: "Your products, texts and photos stay yours: only the colors, layout and style come with the design. Community designs use the Studio template, which is part of the Pro plan.",
+    code: "Design code",
+    copyLink: "Copy link",
+    copied: "Link copied",
+    share: "Share",
+    moreBy: "More from {name}",
+    publisherKicker: "Publisher",
+    publisherTemplates: "Designs by {name}",
+    backToGallery: "All community templates",
+    shareTitle: "{name} · Community template",
+    shareDescription: "A website design by {publisher}, made with the AI design studio.",
+    publisherTitle: "{name} (@{username}) · Community templates",
+    publisherDescription: "Website designs shared by {name}.",
+    publishCta: "Pro owners: make a publisher profile in the app and share your own designs here.",
+  },
   footer: { tagline: "Websites for small businesses, made on the phone.", privacy: "Privacy", contact: "Contact", rights: "All rights reserved.", language: "Language" },
   contact: {
     kicker: "Contact",
@@ -244,13 +281,14 @@ export type Copy = typeof en;
 const ar: Copy = {
   dir: "rtl",
   skip: "انتقل إلى المحتوى",
-  nav: { how: "كيف يعمل", features: "المزايا", ai: "المساعد الذكي", plans: "الباقات", getApp: "حمّل التطبيق", home: "الرئيسية", main: "الرئيسية" },
+  nav: { how: "كيف يعمل", features: "المزايا", ai: "المساعد الذكي", plans: "الباقات", community: "المجتمع", getApp: "حمّل التطبيق", home: "الرئيسية", main: "الرئيسية" },
   switchTo: "EN",
   switchLabel: "Read this page in English",
   meta: {
     home: { title: "{brandName} · أنشئ موقعك من هاتفك", description: "اختر قالبًا من 100 قالب، أضف منتجاتك وأسعارك، وشارك رابطًا واحدًا. موقع لمقهاك أو مطعمك أو متجرك، تصنعه من هاتفك." },
     privacy: { title: "سياسة الخصوصية · {brandName}", description: "ما الذي يجمعه {brandName} ولماذا، ومن يعالجه، وكيف تحذف بياناتك." },
     contact: { title: "تواصل معنا · {brandName}", description: "عندك سؤال عن موقعك أو باقتك أو نطاقك الخاص؟ راسل فريق {brandName}." },
+    community: { title: "قوالب المجتمع · {brandName}", description: "تصاميم مواقع صنعها مشتركو Pro في {brandName} باستوديو التصميم الذكي. اختر واحدًا واجعله لك من التطبيق." },
   },
   hero: {
     eyebrow: "للمقاهي والمطاعم والمتاجر",
@@ -348,6 +386,42 @@ const ar: Copy = {
     ],
   },
   cta: { title: "موقعك على بُعد هاتف.", body: "حمّل {brandName}، اختر قالبًا وانشر موقعك اليوم." },
+  community: {
+    kicker: "قوالب المجتمع",
+    title: "تصاميم صنعها أصحاب الأنشطة لأصحاب الأنشطة",
+    intro: "يصمم مشتركو Pro هذه القوالب باستوديو التصميم الذكي ويشاركونها هنا. افتح أيًا منها لتراه على منيو تجريبي، ثم استخدمه في موقعك من التطبيق.",
+    popular: "الأكثر استخدامًا",
+    newest: "الأحدث",
+    search: "ابحث في التصاميم",
+    searchButton: "بحث",
+    empty: "لا توجد تصاميم هنا بعد. يمكن لمشتركي Pro مشاركة تصاميمهم من التطبيق.",
+    emptySearch: "لا توجد تصاميم تطابق \u201c{q}\u201d.",
+    by: "من",
+    uses: "استُخدم {n} مرة",
+    oneUse: "استُخدم مرة واحدة",
+    noUses: "جديد",
+    pro: "Pro",
+    previous: "السابق",
+    next: "التالي",
+    pageOf: "صفحة {page} من {pages}",
+    preview: "معاينة {name} على منيو تجريبي",
+    useTitle: "استخدم هذا التصميم",
+    useSteps: ["افتح تطبيق {brandName} وانتقل إلى التصميم.", "اضغط على قوالب المجتمع وابحث بهذا الرمز:", "اضغط على استخدم هذا التصميم، ثم انشر حين يعجبك."],
+    useNote: "تبقى منتجاتك ونصوصك وصورك كما هي: يأتي مع التصميم الألوان والترتيب والأسلوب فقط. تصاميم المجتمع مبنية على قالب ستوديو، وهو ضمن باقة Pro.",
+    code: "رمز التصميم",
+    copyLink: "انسخ الرابط",
+    copied: "تم نسخ الرابط",
+    share: "مشاركة",
+    moreBy: "المزيد من {name}",
+    publisherKicker: "ناشر",
+    publisherTemplates: "تصاميم {name}",
+    backToGallery: "كل قوالب المجتمع",
+    shareTitle: "{name} · قالب من المجتمع",
+    shareDescription: "تصميم موقع من {publisher}، صُنع باستوديو التصميم الذكي.",
+    publisherTitle: "{name} (@{username}) · قوالب المجتمع",
+    publisherDescription: "تصاميم مواقع شاركها {name}.",
+    publishCta: "مشتركو Pro: أنشئوا ملف ناشر من التطبيق وشاركوا تصاميمكم هنا.",
+  },
   footer: { tagline: "مواقع للأنشطة الصغيرة، تُصنع من الهاتف.", privacy: "الخصوصية", contact: "تواصل معنا", rights: "جميع الحقوق محفوظة.", language: "اللغة" },
   contact: {
     kicker: "تواصل معنا",

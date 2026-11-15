@@ -19,8 +19,8 @@ public sealed class SiteLinks(IOptions<BrandOptions> brand, IOptions<StorefrontO
     /// <summary>A community template's share page.</summary>
     public string Community(string code) => $"{BaseUrl}/community/{code}";
 
-    /// <summary>A community template drawn on a sample menu, for the app's preview.</summary>
-    public string CommunityPreview(string code) => $"{BaseUrl}/community/{code}/preview";
+    /// <summary>A community template drawn on a sample menu (add "/ar" for the Arabic sample), for previews in the app and on the share page.</summary>
+    public string CommunityPreview(string code) => $"{BaseUrl}/community-preview/{code}";
 
     /// <summary>A publisher's page in the community gallery.</summary>
     public string Publisher(string username) => $"{BaseUrl}/community/u/{username}";
