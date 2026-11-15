@@ -19,5 +19,8 @@ class SiteController extends AsyncNotifier<SiteInfo> {
   Future<void> saveDraft(Map<String, dynamic> settings) async =>
       state = AsyncData(await ref.read(designRepositoryProvider).saveDraft(settings));
 
+  /// The site as another call returned it (applying a community design).
+  void replace(SiteInfo site) => state = AsyncData(site);
+
   Future<void> publish() async => state = AsyncData(await ref.read(designRepositoryProvider).publish());
 }

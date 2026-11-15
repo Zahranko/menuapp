@@ -25,6 +25,16 @@ public sealed class AiUsage : Entity, ITenantOwned
     public static AiUsage Start(Guid businessId, string period, DateTimeOffset now) =>
         new() { BusinessId = businessId, Period = period, Count = 1, UpdatedAt = now };
 
+    /// <summary>
+    /// The row that counts the AI design studio's new designs in the month of <paramref name="now"/>, like "S26-11". It lives
+    /// beside the month's answers ("2026-11") so both fit the same table and its 7-character period.
+    /// </summary>
+    public static string StudioPeriodOf(DateTimeOffset now)
+    {
+        var utc = now.ToUniversalTime();
+        return $"S{utc.Year % 100:D2}-{utc.Month:D2}";
+    }
+
     /// <summary>The month of <paramref name="now"/> in UTC, as stored in <see cref="Period"/>.</summary>
     public static string PeriodOf(DateTimeOffset now)
     {

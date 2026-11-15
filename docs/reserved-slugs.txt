@@ -16,6 +16,7 @@ blog
 terms
 privacy
 contact
+community
 s
 _next
 _preview

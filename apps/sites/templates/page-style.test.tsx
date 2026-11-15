@@ -19,7 +19,7 @@ const STYLE_KEYS = styleSettings.fields.map((f) => f.key);
 /** Templates with a motion switch of their own leave out the shared one. */
 const OWN_MOTION = new Set(["atlas", "bloom", "couture", "ember", "lumen", "maison"]);
 /** Templates whose only actions are text links or the order button: nothing for the button style to change. */
-const NO_BUTTONS = new Set(["monogrid", "zen"]);
+const NO_BUTTONS = new Set(["monogrid", "zen", "studio"]);
 /** Text-only templates: no photos for the photo shape to change. */
 const NO_PHOTOS = new Set(["bistro", "linen", "ticket"]);
 const MULTI_PAGE = new Set(["maison", "lumen", "atlas", "ember", "bloom", "couture"]);

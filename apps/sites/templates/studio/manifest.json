@@ -1,0 +1,301 @@
+{
+  "id": "studio",
+  "number": 31,
+  "name": "Studio",
+  "category": "Your own design",
+  "description": "A blank canvas for your own AI-made design: the AI design studio sets every part, color and animation.",
+  "ar": {
+    "name": "ستوديو",
+    "category": "تصميمك الخاص",
+    "description": "لوحة فارغة لتصميمك الخاص بالذكاء الاصطناعي: استوديو التصميم يختار كل جزء ولون وحركة."
+  },
+  "version": 1,
+  "tier": "pro",
+  "heroSlider": {
+    "kind": "band"
+  },
+  "thumbnail": "/templates/studio/thumbnail.png",
+  "sample": "cafe",
+  "menu": {
+    "own": [
+      "photos"
+    ]
+  },
+  "sectionsLayout": {
+    "order": [
+      "menu",
+      "story",
+      "visit"
+    ]
+  },
+  "signature": {
+    "menu.layout": [
+      {
+        "id": "canvas",
+        "base": "list",
+        "label": "Canvas list",
+        "labelAr": "قائمة اللوحة",
+        "preview": "/templates/studio/previews/menu-canvas.svg"
+      }
+    ],
+    "hero.variant": [
+      {
+        "id": "ring",
+        "base": "circle",
+        "label": "Ring",
+        "labelAr": "حلقة",
+        "preview": "/templates/studio/previews/hero-ring.svg"
+      }
+    ]
+  },
+  "looks": [
+    {
+      "id": "clean",
+      "label": {
+        "en": "Clean light",
+        "ar": "فاتح ونظيف"
+      },
+      "values": {
+        "theme": "light",
+        "accent": "#2F6FEB",
+        "font": "modern",
+        "menu.layout": "canvas",
+        "hero.variant": "split",
+        "header.layout": "classic"
+      }
+    },
+    {
+      "id": "sand",
+      "label": {
+        "en": "Warm sand",
+        "ar": "رملي دافئ"
+      },
+      "values": {
+        "theme": "sand",
+        "accent": "#C2410C",
+        "font": "elegant",
+        "menu.layout": "canvas",
+        "hero.variant": "ring",
+        "header.layout": "centered",
+        "style.spacing": "airy"
+      }
+    },
+    {
+      "id": "slate",
+      "label": {
+        "en": "Slate",
+        "ar": "رمادي حجري"
+      },
+      "values": {
+        "theme": "slate",
+        "accent": "#0F766E",
+        "font": "modern",
+        "menu.layout": "tiles",
+        "hero.variant": "type",
+        "header.layout": "minimal"
+      }
+    },
+    {
+      "id": "night",
+      "label": {
+        "en": "Night",
+        "ar": "ليلي"
+      },
+      "values": {
+        "theme": "night",
+        "accent": "#F59E0B",
+        "font": "mono",
+        "menu.layout": "compact",
+        "hero.variant": "ring",
+        "header.layout": "centered",
+        "style.tracking": "wide"
+      }
+    },
+    {
+      "id": "bold",
+      "label": {
+        "en": "Bold",
+        "ar": "جريء"
+      },
+      "values": {
+        "theme": "light",
+        "accent": "#E11D48",
+        "font": "modern",
+        "menu.layout": "tiles",
+        "hero.variant": "split",
+        "header.layout": "classic",
+        "cards.style": "raised"
+      }
+    }
+  ],
+  "schema": [
+    {
+      "key": "font",
+      "type": "choice",
+      "label": "Font style",
+      "group": "Brand",
+      "options": [
+        "elegant",
+        "modern",
+        "mono"
+      ],
+      "optionLabels": {
+        "elegant": "Elegant",
+        "modern": "Modern",
+        "mono": "Typewriter"
+      }
+    },
+    {
+      "key": "logo",
+      "type": "image",
+      "label": "Logo",
+      "group": "Brand"
+    },
+    {
+      "key": "theme",
+      "type": "palette",
+      "label": "Color theme",
+      "group": "Brand",
+      "options": [
+        "light",
+        "sand",
+        "slate",
+        "night"
+      ],
+      "swatches": {
+        "light": "#FAFAF9",
+        "sand": "#F4EDE3",
+        "slate": "#E7EAEE",
+        "night": "#111318"
+      },
+      "optionLabels": {
+        "light": "Light",
+        "sand": "Sand",
+        "slate": "Slate",
+        "night": "Night"
+      },
+      "optionLabelsAr": {
+        "light": "فاتح",
+        "sand": "رملي",
+        "slate": "رمادي",
+        "night": "ليلي"
+      }
+    },
+    {
+      "key": "accent",
+      "type": "color",
+      "label": "Accent color",
+      "group": "Brand",
+      "options": [
+        "#2F6FEB",
+        "#C2410C",
+        "#0F766E",
+        "#F59E0B",
+        "#E11D48"
+      ]
+    },
+    {
+      "key": "photos",
+      "type": "toggle",
+      "label": "Small photos",
+      "group": "Brand"
+    },
+    {
+      "key": "hero.title",
+      "type": "text",
+      "label": "Headline",
+      "group": "Top",
+      "max": 60
+    },
+    {
+      "key": "hero.subtitle",
+      "type": "textarea",
+      "label": "Text under the headline",
+      "group": "Top",
+      "max": 160
+    },
+    {
+      "key": "sections",
+      "type": "toggles",
+      "label": "Sections",
+      "group": "Sections",
+      "options": [
+        "announcement",
+        "story",
+        "visit"
+      ],
+      "optionLabels": {
+        "announcement": "Announcement bar",
+        "story": "Our way",
+        "visit": "Hours and contact"
+      }
+    },
+    {
+      "key": "announcement",
+      "type": "text",
+      "label": "Announcement",
+      "group": "Sections",
+      "max": 80
+    },
+    {
+      "key": "story.title",
+      "type": "text",
+      "label": "Story headline",
+      "group": "Our way",
+      "max": 60
+    },
+    {
+      "key": "story.text",
+      "type": "textarea",
+      "label": "Our way",
+      "group": "Our way",
+      "max": 400
+    },
+    {
+      "key": "hours",
+      "type": "hours",
+      "label": "Opening hours",
+      "group": "Visit and contact"
+    },
+    {
+      "key": "studio.css",
+      "type": "css",
+      "label": "Design studio style",
+      "group": "Design studio",
+      "max": 20000
+    }
+  ],
+  "defaults": {
+    "font": "modern",
+    "logo": "",
+    "theme": "light",
+    "accent": "#2F6FEB",
+    "photos": true,
+    "hero.title": "Made fresh, every day",
+    "hero.subtitle": "Good coffee, fresh bakes and a short menu we are proud of.",
+    "sections": [
+      "story",
+      "visit"
+    ],
+    "announcement": "Ask us about today's specials",
+    "story.title": "Our story",
+    "story.text": "We started small, with a few recipes we loved. Today we still make everything ourselves, with care and good ingredients.",
+    "hours": {
+      "sat": "12:00-23:30",
+      "sun": "12:00-23:30",
+      "mon": "12:00-23:30",
+      "tue": "12:00-23:30",
+      "wed": "12:00-23:30",
+      "thu": "12:00-00:30",
+      "fri": "13:00-00:30"
+    },
+    "studio.css": ""
+  },
+  "defaultsAr": {
+    "hero.title": "طازج كل يوم",
+    "hero.subtitle": "قهوة طيبة ومخبوزات طازجة ومنيو قصير نفخر به.",
+    "announcement": "اسألونا عن أطباق اليوم",
+    "story.title": "قصتنا",
+    "story.text": "بدأنا صغارًا بوصفات قليلة نحبها. واليوم ما زلنا نحضّر كل شيء بأنفسنا، بعناية وبمكونات جيدة."
+  }
+}

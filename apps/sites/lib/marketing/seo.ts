@@ -33,12 +33,12 @@ export function marketingMetadata(lang: Lang, page: MarketingPage): Metadata {
 /** Every marketing page in both languages, for the sitemap of the brand domain. */
 export function marketingUrls(): { url: string; languages: Record<Lang, string>; priority: number }[] {
   const origin = `https://${brand.domain}`;
-  const pages: MarketingPage[] = ["home", "privacy", "contact"];
+  const pages: MarketingPage[] = ["home", "privacy", "contact", "community"];
   return pages.flatMap((page) =>
     (["en", "ar"] as const).map((lang) => ({
       url: `${origin}${pagePath(lang, page)}`,
       languages: { en: `${origin}${pagePath("en", page)}`, ar: `${origin}${pagePath("ar", page)}` },
-      priority: page === "home" ? 1 : 0.4,
+      priority: page === "home" ? 1 : page === "community" ? 0.6 : 0.4,
     })),
   );
 }

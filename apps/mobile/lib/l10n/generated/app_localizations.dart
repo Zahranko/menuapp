@@ -1532,6 +1532,24 @@ abstract class AppLocalizations {
   /// **'Live preview'**
   String get livePreview;
 
+  /// No description provided for @studioPickOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to edit'**
+  String get studioPickOn;
+
+  /// No description provided for @studioPickHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap any part of the page to edit it'**
+  String get studioPickHint;
+
+  /// No description provided for @studioPickNoSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'This part has no settings yet'**
+  String get studioPickNoSettings;
+
   /// No description provided for @groupMore.
   ///
   /// In en, this message translates to:
@@ -2599,6 +2617,336 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Putting your menu together'**
   String get aiReadStepReady;
+
+  /// No description provided for @communityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Community templates'**
+  String get communityTitle;
+
+  /// No description provided for @communitySub.
+  ///
+  /// In en, this message translates to:
+  /// **'Designs made by Pro owners with the AI design studio. Try one on your website.'**
+  String get communitySub;
+
+  /// No description provided for @communityPopular.
+  ///
+  /// In en, this message translates to:
+  /// **'Popular'**
+  String get communityPopular;
+
+  /// No description provided for @communityNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get communityNew;
+
+  /// No description provided for @communitySearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search, or paste a design code or link'**
+  String get communitySearchHint;
+
+  /// No description provided for @communityEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No designs here yet.'**
+  String get communityEmpty;
+
+  /// No description provided for @communityEmptySearch.
+  ///
+  /// In en, this message translates to:
+  /// **'No designs match “{query}”.'**
+  String communityEmptySearch(String query);
+
+  /// No description provided for @communityBy.
+  ///
+  /// In en, this message translates to:
+  /// **'by {name}'**
+  String communityBy(String name);
+
+  /// No description provided for @communityUses.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{New} =1{1 use} other{{count} uses}}'**
+  String communityUses(int count);
+
+  /// No description provided for @communityUseDesign.
+  ///
+  /// In en, this message translates to:
+  /// **'Use this design'**
+  String get communityUseDesign;
+
+  /// No description provided for @communityUseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Use {name}?'**
+  String communityUseTitle(String name);
+
+  /// No description provided for @communityUseBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your website moves to the Studio template with this design. Your products, texts and photos stay yours. Your live website changes only when you publish.'**
+  String get communityUseBody;
+
+  /// No description provided for @communityApplied.
+  ///
+  /// In en, this message translates to:
+  /// **'Design added. Have a look, then publish when you like it.'**
+  String get communityApplied;
+
+  /// No description provided for @communityShareLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Share link'**
+  String get communityShareLink;
+
+  /// No description provided for @communityShareText.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}: {url}'**
+  String communityShareText(String name, String url);
+
+  /// No description provided for @communityCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Design code {code}'**
+  String communityCode(String code);
+
+  /// No description provided for @communityPreviewNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Shown on a sample menu. Your website keeps your own products and texts.'**
+  String get communityPreviewNote;
+
+  /// No description provided for @communityShareYours.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your designs'**
+  String get communityShareYours;
+
+  /// No description provided for @communityShareYoursSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Pro owners can publish their Studio designs here for everyone to use.'**
+  String get communityShareYoursSub;
+
+  /// No description provided for @communityShareYoursPro.
+  ///
+  /// In en, this message translates to:
+  /// **'Sharing designs in the community is part of the Pro plan.'**
+  String get communityShareYoursPro;
+
+  /// No description provided for @publisherProfileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your publisher profile'**
+  String get publisherProfileTitle;
+
+  /// No description provided for @publisherProfileSub.
+  ///
+  /// In en, this message translates to:
+  /// **'People see this name on the designs you share. Your username is yours alone and appears in your link.'**
+  String get publisherProfileSub;
+
+  /// No description provided for @publisherUsername.
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get publisherUsername;
+
+  /// No description provided for @publisherUsernameFree.
+  ///
+  /// In en, this message translates to:
+  /// **'@{username} is free'**
+  String publisherUsernameFree(String username);
+
+  /// No description provided for @publisherDisplayName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name people see'**
+  String get publisherDisplayName;
+
+  /// No description provided for @publisherBio.
+  ///
+  /// In en, this message translates to:
+  /// **'About you (optional)'**
+  String get publisherBio;
+
+  /// No description provided for @publisherCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Create publisher profile'**
+  String get publisherCreate;
+
+  /// No description provided for @publisherSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save profile'**
+  String get publisherSave;
+
+  /// No description provided for @publisherEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit profile'**
+  String get publisherEdit;
+
+  /// No description provided for @communityMine.
+  ///
+  /// In en, this message translates to:
+  /// **'My shared designs'**
+  String get communityMine;
+
+  /// No description provided for @communityShareCurrent.
+  ///
+  /// In en, this message translates to:
+  /// **'Share my current design'**
+  String get communityShareCurrent;
+
+  /// No description provided for @communityNeedsStudio.
+  ///
+  /// In en, this message translates to:
+  /// **'Only Studio designs can be shared. Choose the Studio template and design it with the AI helper first.'**
+  String get communityNeedsStudio;
+
+  /// No description provided for @communityShareName.
+  ///
+  /// In en, this message translates to:
+  /// **'Design name'**
+  String get communityShareName;
+
+  /// No description provided for @communityShareDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Short description (optional)'**
+  String get communityShareDescription;
+
+  /// No description provided for @communityListed.
+  ///
+  /// In en, this message translates to:
+  /// **'Show in the gallery'**
+  String get communityListed;
+
+  /// No description provided for @communityListedSub.
+  ///
+  /// In en, this message translates to:
+  /// **'When off, only people with the link can find it.'**
+  String get communityListedSub;
+
+  /// No description provided for @communityPublish.
+  ///
+  /// In en, this message translates to:
+  /// **'Share design'**
+  String get communityPublish;
+
+  /// No description provided for @communityShared.
+  ///
+  /// In en, this message translates to:
+  /// **'Your design is in the community.'**
+  String get communityShared;
+
+  /// No description provided for @communityUpdateDesign.
+  ///
+  /// In en, this message translates to:
+  /// **'Update from my current design'**
+  String get communityUpdateDesign;
+
+  /// No description provided for @communityUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Design updated.'**
+  String get communityUpdated;
+
+  /// No description provided for @communityHide.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide from the gallery'**
+  String get communityHide;
+
+  /// No description provided for @communityShow.
+  ///
+  /// In en, this message translates to:
+  /// **'Show in the gallery'**
+  String get communityShow;
+
+  /// No description provided for @communityLinkOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Link only'**
+  String get communityLinkOnly;
+
+  /// No description provided for @communityDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get communityDelete;
+
+  /// No description provided for @communityDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete {name}?'**
+  String communityDeleteTitle(String name);
+
+  /// No description provided for @communityDeleteBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Its link stops working. Websites that already use it keep their design.'**
+  String get communityDeleteBody;
+
+  /// No description provided for @communityDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Design deleted.'**
+  String get communityDeleted;
+
+  /// No description provided for @communityNoneShared.
+  ///
+  /// In en, this message translates to:
+  /// **'You haven\'t shared a design yet.'**
+  String get communityNoneShared;
+
+  /// No description provided for @communityShareFromEditor.
+  ///
+  /// In en, this message translates to:
+  /// **'Share this design with the community'**
+  String get communityShareFromEditor;
+
+  /// No description provided for @communityOnlyDesign.
+  ///
+  /// In en, this message translates to:
+  /// **'Only your colors, layout and style are shared. Your texts, photos and opening hours stay private.'**
+  String get communityOnlyDesign;
+
+  /// No description provided for @communityLoadMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Show more'**
+  String get communityLoadMore;
+
+  /// No description provided for @communityGone.
+  ///
+  /// In en, this message translates to:
+  /// **'This design is gone'**
+  String get communityGone;
+
+  /// No description provided for @communityGoneBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Its publisher removed it. Have a look at the other community templates.'**
+  String get communityGoneBody;
+
+  /// No description provided for @communityShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Community'**
+  String get communityShort;
+
+  /// No description provided for @communityShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get communityShare;
 }
 
 class _AppLocalizationsDelegate

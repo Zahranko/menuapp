@@ -111,7 +111,7 @@ public class TemplateLooksTests
             count++;
         }
 
-        Assert.Equal(30, count);
+        Assert.Equal(31, count);
     }
 
     private static string RegistryPath()

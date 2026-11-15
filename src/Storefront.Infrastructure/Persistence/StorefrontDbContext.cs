@@ -8,6 +8,7 @@ using Storefront.Domain.Billing;
 using Storefront.Domain.Businesses;
 using Storefront.Domain.Catalog;
 using Storefront.Domain.Common;
+using Storefront.Domain.Community;
 using Storefront.Domain.Domains;
 using Storefront.Domain.Media;
 using Storefront.Domain.Sites;
@@ -37,6 +38,8 @@ public sealed class StorefrontDbContext(DbContextOptions<StorefrontDbContext> op
     public DbSet<OutboxMessage> OutboxMessages => Set<OutboxMessage>();
     public DbSet<AuditEntry> AuditLog => Set<AuditEntry>();
     public DbSet<AiUsage> AiUsage => Set<AiUsage>();
+    public DbSet<PublisherProfile> PublisherProfiles => Set<PublisherProfile>();
+    public DbSet<CommunityTemplate> CommunityTemplates => Set<CommunityTemplate>();
 
     Task IUnitOfWork.SaveChangesAsync(CancellationToken ct) => SaveChangesAsync(ct);
 
@@ -81,6 +84,9 @@ public sealed class StorefrontDbContext(DbContextOptions<StorefrontDbContext> op
         builder.Entity<Subscription>().HasQueryFilter(e => e.BusinessId == CurrentBusinessId);
         builder.Entity<DomainRequest>().HasQueryFilter(e => e.BusinessId == CurrentBusinessId);
         builder.Entity<AiUsage>().HasQueryFilter(e => e.BusinessId == CurrentBusinessId);
+        // The community gallery reads across businesses with IgnoreQueryFilters(); an owner's own profile and templates stay scoped.
+        builder.Entity<PublisherProfile>().HasQueryFilter(e => e.BusinessId == CurrentBusinessId);
+        builder.Entity<CommunityTemplate>().HasQueryFilter(e => e.BusinessId == CurrentBusinessId);
     }
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configuration)

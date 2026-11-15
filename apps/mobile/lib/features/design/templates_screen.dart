@@ -102,7 +102,21 @@ class _TemplatesScreenState extends ConsumerState<TemplatesScreen> {
     bool locked(TemplateInfo x) => subscription != null && !subscription.opens(x.tier);
     final onLite = subscription != null && subscription.rank == 0;
     return Scaffold(
-      appBar: AuthHeader(onBack: () => context.canPop() ? context.pop() : context.go('/menu'), wordmark: const BrandLockup(size: 20)),
+      appBar: AuthHeader(
+        onBack: () => context.canPop() ? context.pop() : context.go('/menu'),
+        wordmark: const BrandLockup(size: 20),
+        // Designs other owners shared, next to the built-in templates.
+        action: ActionChip(
+          key: const Key('openCommunity'),
+          avatar: Icon(Icons.groups_2_rounded, size: 18, color: BrandColors.primary),
+          label: Text(t.communityShort),
+          tooltip: t.communityTitle,
+          labelStyle: TextStyle(fontWeight: FontWeight.w700, color: BrandColors.primary),
+          side: BorderSide(color: BrandColors.line),
+          backgroundColor: Colors.white,
+          onPressed: () => context.push('/community'),
+        ),
+      ),
       body: templates.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => LoadError(error: e, onRetry: () => ref.invalidate(templatesProvider)),

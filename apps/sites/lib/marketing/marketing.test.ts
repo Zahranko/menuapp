@@ -53,10 +53,10 @@ describe("SEO", () => {
     expect(marketingMetadata("en", "home").description).toBeTruthy();
   });
 
-  it("lists all six marketing pages for the sitemap", () => {
+  it("lists all eight marketing pages for the sitemap", () => {
     const urls = marketingUrls().map((u) => u.url);
-    expect(urls).toHaveLength(6);
-    for (const path of ["/", "/ar", "/privacy", "/ar/privacy", "/contact", "/ar/contact"]) expect(urls).toContain(`https://${brand.domain}${path}`);
+    expect(urls).toHaveLength(8);
+    for (const path of ["/", "/ar", "/privacy", "/ar/privacy", "/contact", "/ar/contact", "/community", "/ar/community"]) expect(urls).toContain(`https://${brand.domain}${path}`);
   });
 });
 

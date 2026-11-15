@@ -15,7 +15,7 @@ const schemaOf = (id: string) => registry.templates.find((t) => t.id === id)!.sc
 const defaultsOf = (id: string) => registry.templates.find((t) => t.id === id)!.defaults as Record<string, unknown>;
 const MULTI_PAGE = new Set(["maison", "lumen", "atlas", "ember", "bloom", "couture"]);
 /** Templates whose own menu choices move into the Menu layout group (manifest "menu.own"). */
-const OWN_MENU: Record<string, string> = { atlas: "density", ember: "cards", linen: "columns", lumen: "cards", maison: "carte.style", zen: "photos" };
+const OWN_MENU: Record<string, string> = { atlas: "density", ember: "cards", linen: "columns", lumen: "cards", maison: "carte.style", zen: "photos", studio: "photos" };
 /** Templates whose own filter buttons and price sort (CatalogControls) keep working over the shared menu. */
 const CATALOG = new Set(["pocket", "drop"]);
 

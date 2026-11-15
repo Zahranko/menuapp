@@ -839,6 +839,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get livePreview => 'معاينة مباشرة';
 
   @override
+  String get studioPickOn => 'اضغط للتعديل';
+
+  @override
+  String get studioPickHint => 'اضغط على أي جزء من الصفحة لتعديله';
+
+  @override
+  String get studioPickNoSettings => 'لا توجد إعدادات لهذا الجزء بعد';
+
+  @override
   String get groupMore => 'المزيد';
 
   @override
@@ -1499,4 +1508,202 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get aiReadStepReady => 'نجهّز قائمتك';
+
+  @override
+  String get communityTitle => 'قوالب المجتمع';
+
+  @override
+  String get communitySub =>
+      'تصاميم صنعها مشتركو Pro باستوديو التصميم الذكي. جرّب واحدًا على موقعك.';
+
+  @override
+  String get communityPopular => 'الأكثر استخدامًا';
+
+  @override
+  String get communityNew => 'الأحدث';
+
+  @override
+  String get communitySearchHint => 'ابحث، أو الصق رمز تصميم أو رابطه';
+
+  @override
+  String get communityEmpty => 'لا توجد تصاميم هنا بعد.';
+
+  @override
+  String communityEmptySearch(String query) {
+    return 'لا توجد تصاميم تطابق “$query”.';
+  }
+
+  @override
+  String communityBy(String name) {
+    return 'من $name';
+  }
+
+  @override
+  String communityUses(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'استُخدم $count مرة',
+      one: 'استُخدم مرة واحدة',
+      zero: 'جديد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get communityUseDesign => 'استخدم هذا التصميم';
+
+  @override
+  String communityUseTitle(String name) {
+    return 'استخدام $name؟';
+  }
+
+  @override
+  String get communityUseBody =>
+      'ينتقل موقعك إلى قالب ستوديو بهذا التصميم. تبقى منتجاتك ونصوصك وصورك كما هي. لا يتغير موقعك المنشور إلا عندما تنشر.';
+
+  @override
+  String get communityApplied => 'أُضيف التصميم. ألقِ نظرة، ثم انشر حين يعجبك.';
+
+  @override
+  String get communityShareLink => 'مشاركة الرابط';
+
+  @override
+  String communityShareText(String name, String url) {
+    return '$name: $url';
+  }
+
+  @override
+  String communityCode(String code) {
+    return 'رمز التصميم $code';
+  }
+
+  @override
+  String get communityPreviewNote =>
+      'معروض على منيو تجريبي. يبقى في موقعك منتجاتك ونصوصك.';
+
+  @override
+  String get communityShareYours => 'شارك تصاميمك';
+
+  @override
+  String get communityShareYoursSub =>
+      'يمكن لمشتركي Pro نشر تصاميمهم من ستوديو هنا ليستخدمها الجميع.';
+
+  @override
+  String get communityShareYoursPro =>
+      'مشاركة التصاميم في المجتمع ضمن باقة Pro.';
+
+  @override
+  String get publisherProfileTitle => 'ملفك كناشر';
+
+  @override
+  String get publisherProfileSub =>
+      'يرى الناس هذا الاسم على التصاميم التي تشاركها. اسم المستخدم خاص بك وحدك ويظهر في رابطك.';
+
+  @override
+  String get publisherUsername => 'اسم المستخدم';
+
+  @override
+  String publisherUsernameFree(String username) {
+    return '‎@$username متاح';
+  }
+
+  @override
+  String get publisherDisplayName => 'الاسم الذي يراه الناس';
+
+  @override
+  String get publisherBio => 'نبذة عنك (اختياري)';
+
+  @override
+  String get publisherCreate => 'إنشاء ملف ناشر';
+
+  @override
+  String get publisherSave => 'حفظ الملف';
+
+  @override
+  String get publisherEdit => 'تعديل الملف';
+
+  @override
+  String get communityMine => 'تصاميمي المشتركة';
+
+  @override
+  String get communityShareCurrent => 'شارك تصميمي الحالي';
+
+  @override
+  String get communityNeedsStudio =>
+      'يمكن مشاركة تصاميم ستوديو فقط. اختر قالب ستوديو وصمّمه مع المساعد الذكي أولًا.';
+
+  @override
+  String get communityShareName => 'اسم التصميم';
+
+  @override
+  String get communityShareDescription => 'وصف قصير (اختياري)';
+
+  @override
+  String get communityListed => 'اعرضه في المعرض';
+
+  @override
+  String get communityListedSub => 'عند إيقافه، يجده فقط من لديه الرابط.';
+
+  @override
+  String get communityPublish => 'شارك التصميم';
+
+  @override
+  String get communityShared => 'أصبح تصميمك في المجتمع.';
+
+  @override
+  String get communityUpdateDesign => 'حدّثه من تصميمي الحالي';
+
+  @override
+  String get communityUpdated => 'تم تحديث التصميم.';
+
+  @override
+  String get communityHide => 'إخفاء من المعرض';
+
+  @override
+  String get communityShow => 'إظهار في المعرض';
+
+  @override
+  String get communityLinkOnly => 'بالرابط فقط';
+
+  @override
+  String get communityDelete => 'حذف';
+
+  @override
+  String communityDeleteTitle(String name) {
+    return 'حذف $name؟';
+  }
+
+  @override
+  String get communityDeleteBody =>
+      'سيتوقف رابطه عن العمل. المواقع التي تستخدمه تحتفظ بتصميمها.';
+
+  @override
+  String get communityDeleted => 'تم حذف التصميم.';
+
+  @override
+  String get communityNoneShared => 'لم تشارك أي تصميم بعد.';
+
+  @override
+  String get communityShareFromEditor => 'شارك هذا التصميم مع المجتمع';
+
+  @override
+  String get communityOnlyDesign =>
+      'نشارك ألوانك وترتيبك وأسلوبك فقط. تبقى نصوصك وصورك ومواعيد عملك خاصة بك.';
+
+  @override
+  String get communityLoadMore => 'عرض المزيد';
+
+  @override
+  String get communityGone => 'لم يعد هذا التصميم متاحًا';
+
+  @override
+  String get communityGoneBody =>
+      'حذفه ناشره. ألقِ نظرة على قوالب المجتمع الأخرى.';
+
+  @override
+  String get communityShort => 'المجتمع';
+
+  @override
+  String get communityShare => 'مشاركة';
 }

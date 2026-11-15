@@ -101,7 +101,7 @@ const registryPath = path.join(root, "registry.json");
 // Optional "tier": "lite" (menu sheets, every plan), "basic" (default when absent; Basic and Pro) or "pro" (Pro plan only).
 // The backend gates choosing and publishing.
 const TIERS = new Set(["lite", "basic", "pro"]);
-const FIELD_TYPES = new Set(["choice", "palette", "color", "text", "textarea", "range", "image", "images", "toggle", "toggles", "hours", "order"]);
+const FIELD_TYPES = new Set(["choice", "palette", "color", "text", "textarea", "range", "image", "images", "toggle", "toggles", "hours", "order", "css"]);
 const TEXT_TYPES = new Set(["text", "textarea"]);
 const dictionary = JSON.parse(readFileSync(path.join(root, "_i18n", "ar.json"), "utf8"));
 const logoSettings = JSON.parse(readFileSync(path.join(root, "_kit", "logo-settings.json"), "utf8"));

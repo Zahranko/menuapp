@@ -52,6 +52,7 @@ public class StorefrontFactory : WebApplicationFactory<Program>, IAsyncLifetime
             ["RateLimits:PublicPerMinute"] = "10000",
             ["RateLimits:UploadPerMinute"] = "10000",
             ["RateLimits:AiPerMinute"] = "10000",
+            ["RateLimits:CommunityPerMinute"] = "10000",
             ["RateLimits:GlobalPerMinute"] = "100000",
             ["RateLimits:OwnerPerMinute"] = "100000",
             ["Security:RequireHttps"] = "false",
