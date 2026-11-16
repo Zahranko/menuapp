@@ -120,7 +120,7 @@ test("the search and the filters keep working over the shared menu", async ({ pa
   await expect(shown).not.toHaveCount(all);
   expect(await shown.count()).toBeGreaterThan(0);
 
-  await open(page, "/_preview/fixture.pocket.default.en.ml_masonry");
+  await open(page, "/_preview/fixture.drop.default.en.ml_masonry");
   const before = await page.locator(".kit-mn-li:visible").count();
   await page.locator(".catalog-chips .chip").nth(1).click();
   await expect(page.locator(".kit-mn-li:visible")).not.toHaveCount(before);

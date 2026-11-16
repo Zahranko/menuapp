@@ -15,7 +15,7 @@ const schemaOf = (id: string) => registry.templates.find((t) => t.id === id)!.sc
 const defaultsOf = (id: string) => registry.templates.find((t) => t.id === id)!.defaults as Record<string, unknown>;
 const MULTI_PAGE = new Set(["maison", "lumen", "atlas", "ember", "bloom", "couture"]);
 /** Templates whose header is also their opening (SiteMasthead). */
-const MASTHEAD = new Set(["bistro", "chalkboard", "linen", "monogrid", "neondiner", "polaroid", "spiceroute", "ticket"]);
+const MASTHEAD = new Set(["chalkboard", "linen", "monogrid", "neondiner", "polaroid", "spiceroute", "ticket"]);
 /** Templates with their own versions of the opening ("hero.layout"), which move into the Page layout group. */
 const OWN_HERO_LAYOUT = new Set(["souq", "atlas", "bloom", "ember", "lumen", "maison"]);
 

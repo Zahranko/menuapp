@@ -1,5 +1,6 @@
 import "server-only";
 import { fixtureBySlug, fixturePreview, fixtureSite } from "./fixtures";
+import { liveTemplateId } from "./retired";
 import { apiBaseUrl } from "./routing";
 import type { PublicSite } from "./types";
 
@@ -12,6 +13,7 @@ export const hostTag = (host: string) => `host:${host.toLowerCase()}`;
 function normalize(site: PublicSite): PublicSite {
   return {
     ...site,
+    templateId: liveTemplateId(site.templateId),
     categories: site.categories.map((c) => ({
       ...c,
       products: c.products.map((p) => ({ ...p, price: Number(p.price) })),

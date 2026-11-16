@@ -17,7 +17,7 @@ const MULTI_PAGE = new Set(["maison", "lumen", "atlas", "ember", "bloom", "coutu
 /** Templates whose own menu choices move into the Menu layout group (manifest "menu.own"). */
 const OWN_MENU: Record<string, string> = { atlas: "density", ember: "cards", linen: "columns", lumen: "cards", maison: "carte.style", zen: "photos" };
 /** Templates whose own filter buttons and price sort (CatalogControls) keep working over the shared menu. */
-const CATALOG = new Set(["pocket", "drop"]);
+const CATALOG = new Set(["drop"]);
 
 function html(site: PublicSite, page: string[] = []): string {
   const Template = templates[site.templateId];
@@ -142,7 +142,7 @@ describe("menu layout fields", () => {
 
 describe("each product's own button with the shared menu", () => {
   /** Templates whose products have their own button: Ask on WhatsApp, Request or Book. */
-  const ACTIONS: Record<string, RegExp> = { pocket: /^https:\/\/wa\.me\//, handy: /^https:\/\/wa\.me\//, atelier: /^https:\/\/wa\.me\// };
+  const ACTIONS: Record<string, RegExp> = { handy: /^https:\/\/wa\.me\//, atelier: /^https:\/\/wa\.me\// };
 
   it.each(Object.keys(ACTIONS))("keeps the buttons of %s in every layout, in English and Arabic", (id) => {
     for (const layout of MENU_LAYOUTS.filter((l) => l !== "auto")) {

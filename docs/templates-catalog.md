@@ -1,7 +1,8 @@
 # Template catalog
 
 One row per template. Every template has its own layout and its own way of showing products, never a recolor of another.
-Status: done (merged), building (in an open PR), planned.
+Status: done (merged), building (in an open PR), planned, retired (removed from the app; see `apps/sites/templates/retired.json`).
+Retired numbers are never reused.
 
 The product is for service businesses too (salons, clinics, studios, gyms, home services). Rows marked "Service website" show services instead of a menu: booking on WhatsApp, "From" prices, steps and questions. Their kit is `templates/_kit/services.ts`.
 
@@ -11,12 +12,12 @@ The product is for service businesses too (salons, clinics, studios, gyms, home 
 | 002 | Linen List | Restaurant | Text-only printed menu: dotted leaders to prices, one or two columns, no photos | building (S16 batch 1) |
 | 003 | Night Market | Street food, burgers | Dark, big photo cards in a sideways carousel per category, condensed type | building (S16 batch 1) |
 | 004 | Arch Story | Bakery, desserts | Magazine: arch-shaped photos, story chapters per category, swipe cards | building (S16 batch 1) |
-| 005 | Pocket Catalog | Shop | Catalog grid with category filter chips, sort by price and Ask on WhatsApp per item | building (S16 batch 1) |
+| 005 | ~~Pocket Catalog~~ | Shop | Catalog grid with category filter chips, sort by price and Ask on WhatsApp per item | retired 2026-11-16, sites moved to Mono Grid |
 | 006 | Chalk Board | Café | Chalkboard panels in a wooden frame, handwritten headings, prices in chalk | building (S16 batch 1) |
 | 007 | Bento | Juice bar | Bento grid of tiles in mixed sizes, featured items get the big tiles | building (S16 batch 2) |
 | 008 | Neon Diner | Burger joint | Retro diner: numbered combo cards, checkered strip, neon sign hero | building (S16 batch 2) |
 | 009 | Zen | Sushi, Japanese | Quiet minimal list with big numerals and small square photos | building (S16 batch 2) |
-| 010 | Bistro Card | French bistro | One printed menu card on a textured table, courses in order | building (S16 batch 2) |
+| 010 | ~~Bistro Card~~ | French bistro | One printed menu card on a textured table, courses in order | retired 2026-11-16, sites moved to Linen List |
 | 011 | Pizzeria | Pizza | Round photo cutouts on a rustic band per category | building (S16 batch 2) |
 | 012 | Ticket | Coffee truck | Receipt-style menu: monospace, perforated edges, order number | building (S16 batch 3) |
 | 013 | Garden | Brunch, healthy | Organic shapes, leaf ornaments, cards with diet tags first | building (S16 batch 3) |

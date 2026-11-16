@@ -21,7 +21,7 @@ const OWN_MOTION = new Set(["atlas", "bloom", "couture", "ember", "lumen", "mais
 /** Templates whose only actions are text links or the order button: nothing for the button style to change. */
 const NO_BUTTONS = new Set(["monogrid", "zen"]);
 /** Text-only templates: no photos for the photo shape to change. */
-const NO_PHOTOS = new Set(["bistro", "linen", "ticket"]);
+const NO_PHOTOS = new Set(["linen", "ticket"]);
 const MULTI_PAGE = new Set(["maison", "lumen", "atlas", "ember", "bloom", "couture"]);
 
 function html(site: PublicSite, page: string[] = []): string {

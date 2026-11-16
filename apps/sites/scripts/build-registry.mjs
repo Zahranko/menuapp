@@ -603,7 +603,24 @@ for (const m of manifests) {
   numbers.add(m.number);
 }
 
-const output = JSON.stringify({ templates: manifests }, null, 2) + "\n";
+// Retired templates (templates/retired.json): removed from the gallery, but sites that used one still work. The sites
+// render its "replacedBy" template, and the backend's importer moves those sites over to it, keeping every setting the
+// new template takes. A retired id must not have a folder any more, and "replacedBy" must be a live template on the
+// same plan or a cheaper one, so the move never asks an owner to pay more.
+const retiredFile = JSON.parse(readFileSync(path.join(root, "retired.json"), "utf8"));
+const TIER_RANK = { lite: 0, basic: 1, pro: 2 };
+const retired = [];
+for (const r of retiredFile.retired) {
+  if (!/^[a-z0-9]+$/.test(r.id ?? "")) fail(`retired.json: bad id ${JSON.stringify(r.id)}`);
+  if (manifests.some((m) => m.id === r.id)) fail(`retired.json: "${r.id}" still has a manifest; delete templates/${r.id}`);
+  if (retired.some((x) => x.id === r.id)) fail(`retired.json: "${r.id}" is listed twice`);
+  const next = manifests.find((m) => m.id === r.replacedBy);
+  if (!next) fail(`retired.json: "${r.id}" is replaced by "${r.replacedBy}", which is not a template`);
+  if (r.tier !== undefined && TIER_RANK[next.tier ?? "basic"] > TIER_RANK[r.tier]) fail(`retired.json: "${r.id}" (${r.tier}) cannot move to the ${next.tier} template "${next.id}"`);
+  retired.push({ id: r.id, replacedBy: r.replacedBy });
+}
+
+const output = JSON.stringify({ templates: manifests, retired }, null, 2) + "\n";
 const signaturesPath = path.join(root, "_kit", "signatures.generated.json");
 const signatures = JSON.stringify(Object.fromEntries(manifests.filter((m) => signatureMap[m.id]).map((m) => [m.id, signatureMap[m.id]])), null, 2) + "\n";
 if (process.argv.includes("--dry")) {

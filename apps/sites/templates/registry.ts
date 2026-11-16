@@ -1,13 +1,13 @@
 import { createElement, type ComponentType } from "react";
 import type { PublicSite, TemplateProps } from "@/lib/types";
 import { pageTitle, resolvePage, type Page } from "./_premium/pages";
+import { liveTemplateId } from "@/lib/retired";
 import FallbackTemplate from "./fallback/Template";
 import AgencyTemplate from "./agency/Template";
 import ArchStoryTemplate from "./archstory/Template";
 import AtlasTemplate from "./atlas/Template";
 import AtelierTemplate from "./atelier/Template";
 import BentoTemplate from "./bento/Template";
-import BistroCardTemplate from "./bistro/Template";
 import BloomTemplate from "./bloom/Template";
 import ChalkBoardTemplate from "./chalkboard/Template";
 import ClinicTemplate from "./clinic/Template";
@@ -24,7 +24,6 @@ import MonoGridTemplate from "./monogrid/Template";
 import NeonDinerTemplate from "./neondiner/Template";
 import NightMarketTemplate from "./nightmarket/Template";
 import PizzeriaTemplate from "./pizzeria/Template";
-import PocketCatalogTemplate from "./pocket/Template";
 import PolaroidTemplate from "./polaroid/Template";
 import PulseTemplate from "./pulse/Template";
 import SouqTemplate from "./souq/Template";
@@ -42,12 +41,10 @@ export const templates: Record<string, ComponentType<TemplateProps>> = {
   linen: LinenListTemplate,
   nightmarket: NightMarketTemplate,
   archstory: ArchStoryTemplate,
-  pocket: PocketCatalogTemplate,
   chalkboard: ChalkBoardTemplate,
   bento: BentoTemplate,
   neondiner: NeonDinerTemplate,
   zen: ZenTemplate,
-  bistro: BistroCardTemplate,
   pizzeria: PizzeriaTemplate,
   ticket: TicketTemplate,
   garden: GardenTemplate,
@@ -84,8 +81,12 @@ export function titleOf(site: PublicSite, page: Page): string | null {
   return pageTitle(site, page);
 }
 
+/**
+ * The component for a template id. A site still on a retired template renders with its replacement (the backend also
+ * moves those sites over); an id nobody knows gets the plain fallback.
+ */
 export function templateFor(id: string): ComponentType<TemplateProps> {
-  return templates[id] ?? FallbackTemplate;
+  return templates[liveTemplateId(id)] ?? FallbackTemplate;
 }
 
 /** Renders a site with its template's component. */

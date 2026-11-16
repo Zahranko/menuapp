@@ -35,6 +35,28 @@ public sealed class Site : AggregateRoot, ITenantOwned
         UpdatedAt = now;
     }
 
+    /// <summary>
+    /// Moves the site off a template that was removed from the app, to its replacement: the draft and, when the live site
+    /// used the removed template, the live site too, each with the settings carried over by the caller. Unlike
+    /// <see cref="Publish"/> this keeps the publish date and raises no event: the owner did not publish anything.
+    /// </summary>
+    public void MoveToTemplate(string retiredTemplateId, string templateId, string draftSettings, string? publishedSettings, DateTimeOffset now)
+    {
+        if (TemplateId == retiredTemplateId)
+        {
+            TemplateId = templateId;
+            DraftSettings = draftSettings;
+        }
+
+        if (PublishedTemplateId == retiredTemplateId && publishedSettings is not null)
+        {
+            PublishedTemplateId = templateId;
+            PublishedSettings = publishedSettings;
+        }
+
+        UpdatedAt = now;
+    }
+
     public void SaveDraft(string settings, DateTimeOffset now)
     {
         DraftSettings = settings;

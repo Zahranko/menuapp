@@ -1,0 +1,18 @@
+{
+  "retired": [
+    {
+      "id": "bistro",
+      "replacedBy": "linen",
+      "tier": "lite",
+      "removed": "2026-11-16",
+      "reason": "Nearly the same as Linen (a text-only menu for the same Lite owners), and empty on big screens."
+    },
+    {
+      "id": "pocket",
+      "replacedBy": "monogrid",
+      "tier": "basic",
+      "removed": "2026-11-16",
+      "reason": "A plain product grid; Mono Grid (Basic) and Atlas (Pro) do the shop catalog better."
+    }
+  ]
+}
