@@ -428,7 +428,7 @@
     }
     .chapter {
       display: grid;
-      grid-template-columns: 280px 1fr;
+      grid-template-columns: 340px 1fr;
       gap: 48px;
       padding: calc(56px * var(--kit-space, 1)) 0 calc(30px * var(--kit-space, 1));
     }
@@ -438,7 +438,10 @@
       align-self: start;
     }
     .chapter h2 {
-      font-size: calc(54px * var(--fs));
+      /* Fits one long word ("Doughnuts", "Milkshakes") on a line in the 340px column instead of splitting it. */
+      font-size: calc(48px * var(--fs));
+      overflow-wrap: normal;
+      hyphens: auto;
     }
     .treats {
       grid-template-columns: repeat(3, minmax(0, 1fr));

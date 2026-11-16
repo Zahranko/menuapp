@@ -151,6 +151,17 @@
   .grid > li:nth-child(odd) {
     border-inline-end: 1px solid var(--line);
   }
+  /* The cells a short last row leaves empty: hatched like an empty slot in a printed index, so the grid reads as finished. */
+  .grid::after {
+    content: "";
+    grid-column: span 1;
+    min-height: 48px;
+    border-bottom: 1px solid var(--line);
+    background: repeating-linear-gradient(135deg, transparent 0 9px, var(--line) 9px 10px);
+  }
+  .grid:has(> li:last-child:nth-child(2n))::after {
+    display: none;
+  }
   .cell {
     all: unset;
     box-sizing: border-box;
@@ -295,6 +306,18 @@
     }
     .grid > li:not(:nth-child(4n)) {
       border-inline-end: 1px solid var(--line);
+    }
+    .grid:has(> li:last-child:nth-child(2n))::after {
+      display: block;
+    }
+    .grid:has(> li:last-child:nth-child(4n + 1))::after {
+      grid-column: span 3;
+    }
+    .grid:has(> li:last-child:nth-child(4n + 2))::after {
+      grid-column: span 2;
+    }
+    .grid:has(> li:last-child:nth-child(4n))::after {
+      display: none;
     }
     .cell {
       padding: 16px;
