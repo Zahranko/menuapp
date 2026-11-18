@@ -5,6 +5,7 @@ using System.Text.Unicode;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Storefront.Application.Abstractions;
 using Storefront.Application.Common;
 using Storefront.Application.Templates;
 using Storefront.Domain.Templates;
@@ -15,8 +16,11 @@ namespace Storefront.Infrastructure.Persistence.Seeding;
 /// <summary>
 /// Upserts the Templates table from apps/sites/templates/registry.json. Templates missing from the file are deactivated.
 /// The optional "ar" block (name, category, description) and "defaultsAr" object carry each template's Arabic.
+/// The optional "retired" list (<c>[{ "id", "replacedBy" }]</c>, from templates/retired.json) names templates removed
+/// from the app: every site still on one, in its draft or on its live site, moves to the replacement, keeping the
+/// settings the replacement takes, so no site is left on a template the app no longer has.
 /// </summary>
-public sealed class TemplateRegistryImporter(StorefrontDbContext db, IOptions<StorefrontOptions> options, ILogger<TemplateRegistryImporter> logger)
+public sealed class TemplateRegistryImporter(StorefrontDbContext db, IOptions<StorefrontOptions> options, IClock clock, ILogger<TemplateRegistryImporter> logger)
 {
     public string? RegistryPath => options.Value.TemplateRegistryFile
         ?? RepoFiles.Find(Path.Combine("apps", "sites", "templates", "registry.json"), AppContext.BaseDirectory, Directory.GetCurrentDirectory());
@@ -83,8 +87,51 @@ public sealed class TemplateRegistryImporter(StorefrontDbContext db, IOptions<St
         }
 
         await db.SaveChangesAsync(ct);
+        await MoveRetiredSitesAsync(doc.RootElement, ct);
         logger.LogInformation("Imported {Count} templates from the registry", seen.Count);
         return seen.Count;
+    }
+
+    /// <summary>Moves every site on a retired template to its replacement (see the class summary).</summary>
+    private async Task MoveRetiredSitesAsync(JsonElement registry, CancellationToken ct)
+    {
+        if (!registry.TryGetProperty("retired", out var list) || list.ValueKind != JsonValueKind.Array)
+        {
+            return;
+        }
+
+        foreach (var entry in list.EnumerateArray())
+        {
+            var id = entry.GetProperty("id").GetString()!;
+            var nextId = entry.GetProperty("replacedBy").GetString()!;
+            var next = await db.Templates.FirstOrDefaultAsync(t => t.Id == nextId, ct);
+            if (next is null || !next.IsActive || next.Id == id)
+            {
+                logger.LogWarning("Template {Template} is retired but its replacement {Replacement} is not a live template; its sites were not moved", id, nextId);
+                continue;
+            }
+
+            // An import runs outside any business, so the tenant filter is lifted on purpose: this touches every business.
+            var sites = await db.Sites.IgnoreQueryFilters()
+                .Where(s => s.TemplateId == id || s.PublishedTemplateId == id)
+                .Join(db.Businesses.IgnoreQueryFilters(), s => s.BusinessId, b => b.Id, (s, b) => new { Site = s, b.Locale })
+                .ToListAsync(ct);
+            if (sites.Count == 0)
+            {
+                continue;
+            }
+
+            var now = clock.UtcNow;
+            foreach (var (site, locale) in sites.Select(x => (x.Site, x.Locale)))
+            {
+                var draft = site.TemplateId == id ? await TemplateDefaults.CarryOverAsync(next, site.DraftSettings, locale) : site.DraftSettings;
+                var published = site.PublishedTemplateId == id ? await TemplateDefaults.CarryOverAsync(next, site.PublishedSettings, locale) : null;
+                site.MoveToTemplate(id, next.Id, draft, published, now);
+            }
+
+            await db.SaveChangesAsync(ct);
+            logger.LogInformation("Moved {Count} sites from the retired template {Template} to {Replacement}", sites.Count, id, next.Id);
+        }
     }
 
     private static string? Text(JsonElement? block, string name) =>

@@ -32,7 +32,7 @@ describe("JSON-LD", () => {
   });
 
   it("lists a shop's products and a service business's services as an offer catalog", () => {
-    const shop = JSON.parse(jsonLdScript(siteJsonLd(fixtureFor("pocket"))));
+    const shop = JSON.parse(jsonLdScript(siteJsonLd(fixtureFor("monogrid"))));
     expect(shop["@type"]).toBe("Store");
     expect(shop.hasMenu).toBeUndefined();
     expect(

@@ -52,7 +52,7 @@ public class SitesTests(StorefrontFactory factory) : IClassFixture<StorefrontFac
         var blocked = await client.PostAsync("/api/v1/site/publish", null);
         Assert.Equal(HttpStatusCode.Forbidden, blocked.StatusCode);
         Assert.Equal("template.basic", (await Api.ProblemAsync(blocked)).GetProperty("code").GetString());
-        Assert.Equal(HttpStatusCode.Forbidden, (await client.PutAsJsonAsync("/api/v1/site/template", new { templateId = "pocket" })).StatusCode);
+        Assert.Equal(HttpStatusCode.Forbidden, (await client.PutAsJsonAsync("/api/v1/site/template", new { templateId = "monogrid" })).StatusCode);
 
         await Api.EnsureSuccess(await client.PutAsJsonAsync("/api/v1/site/template", new { templateId = "linen" }));
         await Api.EnsureSuccess(await client.PostAsync("/api/v1/site/publish", null));

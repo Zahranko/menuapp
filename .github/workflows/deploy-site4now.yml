@@ -3,9 +3,11 @@
 # The "test" branch also turns on billing test mode: every account is on an active Pro plan.
 name: Deploy API (site4now)
 
+# Paused (2026-11-18): the backend host is switched off while it moves to a new hosting company, so pushes no longer
+# deploy the API. Start it by hand from the Actions tab if needed. To turn automatic deploys back on, restore:
+#   push:
+#     branches: [main, deploy, test]
 on:
-  push:
-    branches: [main, deploy, test]
   workflow_dispatch:
 
 concurrency:

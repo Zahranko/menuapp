@@ -31,14 +31,6 @@
       "chapter": "letter"
     }
   },
-  "pocket": {
-    "menu.layout": {
-      "shelf": "grid"
-    },
-    "header.layout": {
-      "folder": "classic"
-    }
-  },
   "chalkboard": {
     "hero.variant": {
       "board": "type"
@@ -69,14 +61,6 @@
     },
     "hero.variant": {
       "enso": "circle"
-    }
-  },
-  "bistro": {
-    "hero.variant": {
-      "tablecloth": "framed"
-    },
-    "menu.layout": {
-      "folded": "list"
     }
   },
   "pizzeria": {

@@ -52,6 +52,48 @@ public static class TemplateDefaults
         return (valid, own);
     }
 
+    /// <summary>
+    /// The settings a site keeps when it moves from a removed template to <paramref name="next"/>: the new template's
+    /// defaults (Arabic ones for an Arabic business), with every old value whose key the new template has and that its
+    /// schema accepts (texts, colors, logo, photos, hours, shared layout choices). Everything else takes the new default.
+    /// Photos are kept as they are: they were checked against the business when the owner saved them.
+    /// </summary>
+    public static async Task<string> CarryOverAsync(Template next, string? oldSettings, string? locale)
+    {
+        var defaults = For(next, locale);
+        var schema = TemplateSchema.Parse(next.SettingsSchema);
+        var keys = schema.Fields.Select(f => f.Key).ToHashSet();
+        var candidate = (JsonObject)defaults.DeepClone();
+        if (oldSettings is not null && JsonNode.Parse(oldSettings) is JsonObject old)
+        {
+            foreach (var (key, value) in old)
+            {
+                if (keys.Contains(key))
+                {
+                    candidate[key] = value?.DeepClone();
+                }
+            }
+        }
+
+        // Two passes: the first finds the old values the new template rejects (an option it does not have, a text too
+        // long for it), the second checks the result with those keys back on their defaults.
+        for (var pass = 0; pass < 2; pass++)
+        {
+            var (valid, errors) = await schema.ValidateAsync(candidate, defaults, _ => Task.FromResult(true));
+            if (valid is not null)
+            {
+                return valid.ToJsonString(Readable);
+            }
+
+            foreach (var key in errors.Keys)
+            {
+                candidate[key] = defaults[key]?.DeepClone();
+            }
+        }
+
+        return defaults.ToJsonString(Readable);
+    }
+
     /// <summary>As JSON. English businesses get the stored defaults unchanged.</summary>
     public static string JsonFor(Template template, string? locale) =>
         Messages.IsArabic(locale) ? For(template, locale).ToJsonString(Readable) : template.DefaultSettings;
