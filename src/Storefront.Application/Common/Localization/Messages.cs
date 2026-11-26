@@ -108,6 +108,8 @@ public static partial class Messages
         ["product.customLabel"] = "اكتب نص الشارة، حتى 24 حرفًا في سطر واحد.",
         ["product.category"] = "اختر صنفًا.",
         ["product.image"] = "ارفع الصورة مرة أخرى.",
+        ["catalog.categoryLimit"] = "يمكنك إضافة 200 صنف كحد أقصى. احذف بعضها أولًا.",
+        ["catalog.productLimit"] = "يمكنك إضافة 2000 منتج كحد أقصى. احذف بعضها أولًا.",
 
         ["media.empty"] = "اختر صورة لرفعها.",
         ["media.size"] = "الصورة كبيرة جدًا. جرّب صورة أخرى.",
@@ -233,6 +235,8 @@ public static partial class Messages
         ["This category has its own sub-categories, so it can't go inside another one. Move them out first."] = "لهذا الصنف أصناف فرعية، لذلك لا يمكن وضعه داخل صنف آخر. انقلها خارجه أولًا.",
         ["The list must contain each item exactly once. Refresh and try again."] = "يجب أن تحتوي القائمة على كل عنصر مرة واحدة فقط. حدّث الصفحة وحاول مرة أخرى.",
         ["Enter a product name."] = "أدخل اسم المنتج.",
+        ["You can have up to 200 categories. Delete some first."] = "يمكنك إضافة 200 صنف كحد أقصى. احذف بعضها أولًا.",
+        ["You can have up to 2000 products. Delete some first."] = "يمكنك إضافة 2000 منتج كحد أقصى. احذف بعضها أولًا.",
         ["Product names can be up to 60 characters."] = "يمكن أن يصل اسم المنتج إلى 60 حرفًا.",
         ["Descriptions can be up to 140 characters."] = "يمكن أن يصل الوصف إلى 140 حرفًا.",
         ["Type the label text."] = "اكتب نص الشارة.",

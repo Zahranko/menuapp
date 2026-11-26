@@ -18,6 +18,9 @@ builder.Host.UseSerilog((context, logger) => logger
 
 builder.Services.Configure<BrandOptions>(builder.Configuration.GetSection(BrandOptions.SectionName));
 builder.Services.AddProblemDetails(o => o.CustomizeProblemDetails = c => ApiLocalization.LocalizeFrameworkProblem(c.ProblemDetails));
+// A body over the size limit or a malformed request is the client's mistake (413, 400), not a server error.
+builder.Services.Configure<ExceptionHandlerOptions>(o => o.StatusCodeSelector = ex =>
+    ex is BadHttpRequestException bad ? bad.StatusCode : StatusCodes.Status500InternalServerError);
 builder.Services.AddStorefrontLocalization();
 builder.Services.AddOpenApi("v1");
 builder.Services.AddHealthChecks();

@@ -5,7 +5,8 @@ import path from "node:path";
 const repoRoot = path.join(__dirname, "../..");
 
 // Hosts that serve uploaded images (the API's /media in development, the storage CDN in production).
-const imageHosts = (process.env.IMAGE_HOSTS ?? "localhost")
+// Only development falls back to localhost: in production the image optimizer fetches from the hosts in IMAGE_HOSTS and nowhere else.
+const imageHosts = (process.env.IMAGE_HOSTS ?? (process.env.NODE_ENV === "production" ? "" : "localhost"))
   .split(",")
   .map((h) => h.trim())
   .filter(Boolean);
@@ -32,6 +33,18 @@ const nextConfig: NextConfig = {
           { key: "Strict-Transport-Security", value: "max-age=31536000" },
         ],
       },
+      // Template stylesheets carry a content hash in their name (scripts/build-styles.mjs), so browsers can keep them for good.
+      // Next.js serves public files with max-age=0, which made every visit re-check the stylesheet before showing the page.
+      {
+        source: "/styles/:file([^/]+\\.css)",
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+      },
+      // Preset pictures, sample photos and editor previews keep their names when they change, so a day, then refreshed in the background.
+      // Files only (a name with an extension); those folder names are also reserved slugs, so no site page lives there.
+      ...["presets", "samples", "kit", "templates", "marketing"].map((folder) => ({
+        source: `/${folder}/:file(.+\\.[a-zA-Z0-9]+)`,
+        headers: [{ key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" }],
+      })),
     ];
   },
 };

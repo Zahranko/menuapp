@@ -83,6 +83,9 @@ internal sealed class CatalogRepository(StorefrontDbContext db) : ICatalogReposi
 
     public Task<int> CountProductsAsync(Guid categoryId, CancellationToken ct) => db.Products.CountAsync(p => p.CategoryId == categoryId, ct);
 
+    public async Task<(int Categories, int Products)> CountCatalogAsync(CancellationToken ct) =>
+        (await db.Categories.CountAsync(ct), await db.Products.CountAsync(ct));
+
     public void Add(Category category) => db.Categories.Add(category);
 
     public void Add(Product product) => db.Products.Add(product);

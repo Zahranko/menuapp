@@ -28,6 +28,22 @@ public sealed record ProductDto(
             p.CustomLabel, p.CustomLabelAr);
 }
 
+/// <summary>
+/// The most a business can have. Far above any café or shop menu, but it keeps the public site (one JSON read with
+/// every product) small and fast, and stops a script from filling the database through a leaked token.
+/// </summary>
+public static class CatalogLimits
+{
+    public const int MaxCategories = 200;
+    public const int MaxProducts = 2000;
+
+    public static Common.Error TooManyCategories(string field) =>
+        Common.Error.Validation("catalog.categoryLimit", "You can have up to 200 categories. Delete some first.", field);
+
+    public static Common.Error TooManyProducts(string field) =>
+        Common.Error.Validation("catalog.productLimit", "You can have up to 2000 products. Delete some first.", field);
+}
+
 internal static class CatalogErrors
 {
     public static readonly Common.Error CategoryNotFound = Common.Error.NotFound("category.notFound", "Category not found.");

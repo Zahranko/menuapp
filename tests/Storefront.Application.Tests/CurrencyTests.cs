@@ -251,6 +251,7 @@ internal sealed class FakeCatalog : ICatalogRepository
     public Task<int> NextProductSortOrderAsync(Guid categoryId, CancellationToken ct) => throw new NotSupportedException();
     public Task<Product?> GetProductAsync(Guid id, CancellationToken ct) => throw new NotSupportedException();
     public Task<int> CountProductsAsync(Guid categoryId, CancellationToken ct) => throw new NotSupportedException();
+    public Task<(int Categories, int Products)> CountCatalogAsync(CancellationToken ct) => Task.FromResult((0, Products.Count));
     public void Add(Category category) => throw new NotSupportedException();
     public void Add(Product product) => Products.Add(product);
     public void Remove(Category category) => throw new NotSupportedException();

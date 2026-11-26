@@ -50,6 +50,9 @@ public interface ICatalogRepository
 
     Task<int> CountProductsAsync(Guid categoryId, CancellationToken ct);
 
+    /// <summary>How many categories and products the business has in all (checked against <c>CatalogLimits</c> before adding).</summary>
+    Task<(int Categories, int Products)> CountCatalogAsync(CancellationToken ct);
+
     void Add(Category category);
 
     void Add(Product product);

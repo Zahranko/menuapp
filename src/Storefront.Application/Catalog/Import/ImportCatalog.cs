@@ -59,6 +59,20 @@ public sealed class ImportCatalogHandler(
             return invalid;
         }
 
+        // The business-wide limits, counting only the categories this import would add.
+        var existing = await catalog.CountCatalogAsync(ct);
+        if (existing.Products + total > CatalogLimits.MaxProducts)
+        {
+            return CatalogLimits.TooManyProducts("categories");
+        }
+
+        var known = (await catalog.ListCategoriesAsync(ct)).Select(c => Key(c.Name)).ToHashSet();
+        var newCategories = categories.Where(c => (c.Products?.Count ?? 0) > 0).Select(c => Key(c.Name)).Where(k => !known.Contains(k)).Distinct().Count();
+        if (existing.Categories + newCategories > CatalogLimits.MaxCategories)
+        {
+            return CatalogLimits.TooManyCategories("categories");
+        }
+
         try
         {
             return await uow.InTransactionAsync(() => SaveAsync(business.Id, business.CurrencyCode, categories, ct), ct);
