@@ -44,6 +44,11 @@ public sealed class CreateCategoryHandler(IValidator<SaveCategory> validator, IC
             return CategoryErrors.Duplicate;
         }
 
+        if ((await catalog.CountCatalogAsync(ct)).Categories >= CatalogLimits.MaxCategories)
+        {
+            return CatalogLimits.TooManyCategories("name");
+        }
+
         var (parent, parentError) = await CategoryParents.ResolveAsync(catalog, cmd.ParentId, null, ct);
         if (parentError is not null)
         {

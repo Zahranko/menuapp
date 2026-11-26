@@ -943,6 +943,8 @@ public class WriteTextHandlerTests
 
         public Task<int> CountProductsAsync(Guid categoryId, CancellationToken ct) => throw new NotSupportedException();
 
+        public Task<(int Categories, int Products)> CountCatalogAsync(CancellationToken ct) => Task.FromResult((0, products.Count));
+
         public void Add(Category category) => throw new NotSupportedException();
 
         public void Add(Product product) => throw new NotSupportedException();

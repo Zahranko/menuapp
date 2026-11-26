@@ -21,6 +21,13 @@ _next
 _preview
 static
 assets
+# Folders of files the sites app serves (apps/sites/public): a site here would clash with them.
+styles
+presets
+samples
+kit
+templates
+marketing
 dashboard
 settings
 account

@@ -1,4 +1,5 @@
 using System.Net;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 
@@ -71,6 +72,15 @@ public static class Security
             {
                 await RefusePlainHttpAsync(context);
                 return;
+            }
+
+            // Kestrel's limit (above) does not apply when the app runs in-process under IIS (site4now and other Windows
+            // hosts), where bodies of about 30 MB would be read. Setting it on the request works on every server;
+            // upload endpoints raise it again with [RequestSizeLimit].
+            if (context.Features.Get<IHttpMaxRequestBodySizeFeature>() is { IsReadOnly: false } bodyLimit
+                && (bodyLimit.MaxRequestBodySize is null || bodyLimit.MaxRequestBodySize > options.MaxRequestBodyBytes))
+            {
+                bodyLimit.MaxRequestBodySize = options.MaxRequestBodyBytes;
             }
 
             var headers = context.Response.Headers;

@@ -107,6 +107,11 @@ public sealed class CreateProductHandler(IValidator<SaveProduct> validator, Prod
             return error;
         }
 
+        if ((await catalog.CountCatalogAsync(ct)).Products >= CatalogLimits.MaxProducts)
+        {
+            return CatalogLimits.TooManyProducts("name");
+        }
+
         try
         {
             var product = Product.Create(business!.Id, cmd.CategoryId, Details(cmd), business.CurrencyCode,
