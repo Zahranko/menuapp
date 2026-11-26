@@ -7,6 +7,7 @@ import { fontPairs, forLocale, type FontName } from "./fonts";
 import { cardVars } from "./cards";
 import { typeface } from "./options";
 import { tickerColors } from "./ticker";
+import { ownInk, tuneVars } from "./tune";
 
 /** A color theme. Extra keys become CSS variables too (`stripe` → `--stripe`). */
 export type Palette = { bg: string; surf: string; ink: string; muted: string; line: string; [extra: string]: string };
@@ -29,7 +30,10 @@ export function themeVars<T extends string>(settings: Settings, locale: string, 
   const chosen = o.palettes[choice(settings, "theme", names, names[0])];
   // The owner's background color recolors the theme (_kit/background.ts); "Template default" keeps it as designed.
   const background = pageBackground(settings);
-  const { palette, panels: onPanels } = background ? onBackground(chosen, Object.values<Palette>(o.palettes), background) : { palette: chosen, panels: panels(chosen) };
+  const recolored = background ? onBackground(chosen, Object.values<Palette>(o.palettes), background) : { palette: chosen, panels: panels(chosen) };
+  const onPanels = recolored.panels;
+  // The owner's text color ("Fine tuning", _kit/tune.ts), kept readable on the page and its panels.
+  const palette: Palette = { ...recolored.palette, ink: ownInk(settings, recolored.palette.ink, [recolored.palette.bg, recolored.palette.surf, ...onPanels]) };
   const font = typeface(settings, locale) ?? forLocale(fontPairs[choice(settings, "font", o.fonts, o.fonts[0])], locale);
   const accent = accentTokens(accentColor(settings, o.defaultAccent ?? "#D9542C"), palette.bg, palette.surf, palette.ink, onPanels);
   const radius = o.radius ?? { rounded: "18px", sharp: "2px" };
@@ -51,6 +55,8 @@ export function themeVars<T extends string>(settings: Settings, locale: string, 
   // The owner's moving strip colors (_kit/ticker.ts), only when they picked one.
   Object.assign(vars, tickerColors(settings, { bg: palette.bg, surf: palette.surf, ink: palette.ink }, accent));
   Object.assign(vars, cardVars(settings, { surface: palette.card ?? palette.surf, accent: accent.fill, inks: [palette.ink, vars["--muted"] as string, accent.text] }));
+  // The owner's color for section titles ("Fine tuning"), when they picked one.
+  Object.assign(vars, tuneVars(settings, [palette.bg, palette.surf, ...onPanels], { fill: accent.fill, text: accent.text }));
   return vars as CSSProperties;
 }
 

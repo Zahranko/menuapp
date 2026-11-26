@@ -11,6 +11,7 @@
 @import "../_kit/menu.css";
 @import "../_kit/sections.css";
 @import "../_kit/style.css";
+@import "../_kit/tune.css";
 @import "../_fashion/base.css";
 @import "./signature.css";
 
@@ -1026,7 +1027,7 @@
     .cu-head-link {
       display: flex;
       align-items: center;
-      gap: 28px;
+      gap: clamp(14px, 2.2cqi, 28px);
     }
     .cu-nav a,
     .cu-head-link {
@@ -1041,8 +1042,13 @@
     .cu-head-link[aria-current="page"] {
       box-shadow: inset 0 -1px 0 currentColor;
     }
+    /* A long name or a big logo keeps to the middle, so it never sits on the menu links beside it. */
+    .cu-lockup {
+      max-width: 30cqi;
+    }
     .cu-name {
       font-size: calc(24px * var(--fs));
+      overflow-wrap: anywhere;
     }
 
     /* Mega menu: opens on hover or keyboard focus, under the whole header. */

@@ -5,6 +5,7 @@ import { fontPairs, forLocale } from "../_kit/fonts";
 import { cardVars } from "../_kit/cards";
 import { typeface } from "../_kit/options";
 import { accentColor } from "../_kit/theme";
+import { ownInk, tuneVars } from "../_kit/tune";
 import { choice, flag } from "@/lib/settings";
 import type { Settings } from "@/lib/types";
 
@@ -24,7 +25,10 @@ export function souqVars(settings: Settings, locale: string): CSSProperties {
   const chosen: Record<keyof (typeof THEMES)["cream"], string> = THEMES[choice(settings, "theme", THEME_NAMES, "cream")];
   // The owner's background color recolors the theme (_kit/background.ts).
   const background = pageBackground(settings);
-  const { palette: theme, panels } = background ? onBackground(chosen, Object.values(THEMES), background) : { palette: chosen, panels: [] };
+  const recolored = background ? onBackground(chosen, Object.values(THEMES), background) : { palette: chosen, panels: [] };
+  const panels = recolored.panels;
+  // The owner's text color ("Fine tuning", _kit/tune.ts), kept readable on the page and its panels.
+  const theme = { ...recolored.palette, ink: ownInk(settings, recolored.palette.ink, [recolored.palette.bg, recolored.palette.surf, ...panels]) };
   const font = typeface(settings, locale) ?? forLocale(fontPairs[choice(settings, "font", ["modern", "elegant", "bold"] as const, "modern")], locale);
   const accent = accentTokens(accentColor(settings, "#D9542C"), theme.bg, theme.surf, theme.ink, panels);
   const dark = isDark(theme.bg);
@@ -50,6 +54,7 @@ export function souqVars(settings: Settings, locale: string): CSSProperties {
     "--sdls": font.tracking,
     "--sds": font.scale,
     "--srad": choice(settings, "corners", ["rounded", "sharp"] as const, "rounded") === "sharp" ? "4px" : "22px",
+    ...tuneVars(settings, [theme.bg, theme.surf, ...panels], { fill: accent.fill, text: accent.text }),
     colorScheme: dark ? "dark" : "light",
   } as CSSProperties;
 }

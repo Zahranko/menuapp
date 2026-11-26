@@ -12,6 +12,7 @@ import { contact as contactLinks } from "./site-data";
 import siteOptions from "./site-options.json";
 import { styleAttributes } from "./style";
 import { tickerAttributes } from "./ticker";
+import { tuneAttributes } from "./tune";
 
 /*
  * The owner's site options shared by every template (fields in site-options.json, added to every template by
@@ -192,5 +193,5 @@ export function optionAttributes(site: PublicSite, order: OrderButton | null = n
   if (arabic.length) attrs["data-ar-text"] = arabic.join(" ");
   // Card options (_kit/cards.ts, cards.css), hero options (_kit/hero.ts, hero.css), page style (_kit/style.ts, style.css),
   // page layout (_kit/layout.ts, layout.css) and the moving strip (_kit/ticker.ts, ticker.css).
-  return { ...attrs, ...cardAttributes(site.settings), ...heroAttributes(site.settings), ...styleAttributes(site.settings), ...layoutAttributes(site.settings), ...tickerAttributes(site.settings), ...signatureAttributes(site) };
+  return { ...attrs, ...cardAttributes(site.settings), ...heroAttributes(site.settings), ...styleAttributes(site.settings), ...layoutAttributes(site.settings), ...tickerAttributes(site.settings), ...tuneAttributes(site.settings), ...signatureAttributes(site) };
 }

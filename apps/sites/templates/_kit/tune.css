@@ -1,0 +1,246 @@
+/*
+ * The owner's fine tuning, shared by every template (each styles.css imports this file after style.css; _kit/tune.ts
+ * sets the attributes on the template's root):
+ *   data-mo-intro   how the top of the page appears when it loads (fade, rise, zoom, blur, slide, or still)
+ *   data-mo-hover   what products, categories and buttons do when a visitor points at them (lift, zoom, glow, tilt, press,
+ *                   or nothing)
+ *   data-mo-speed   slower or quicker motion: the intro, the hover and "Motion when scrolling" (style.motion)
+ *   --tn-head       section titles in the owner's color (set in the root's style only when a readable color exists)
+ * and the owner's own section (.kit-sc-extra, drawn by SiteExtra in _kit/Sections.tsx with the shared sections' classes).
+ * Rules use !important under these attributes only, so they win over the template only once the owner picked something.
+ * Nothing moves for visitors who prefer less motion, and hover effects only apply on screens with a pointer.
+ */
+
+[data-template] {
+  --mo-k: 1;
+}
+[data-mo-speed="slow"] {
+  --mo-k: 1.7;
+}
+[data-mo-speed="normal"] {
+  --mo-k: 1;
+}
+[data-mo-speed="fast"] {
+  --mo-k: 0.55;
+}
+
+/* ---------- how the top of the page appears ---------- */
+/* The opening's headline, text, buttons and photos come in one after another, once, as the page loads. Templates whose
+ * header is also their opening mark it data-k="masthead". */
+@media (prefers-reduced-motion: no-preference) {
+  :is([data-mo-intro="fade"], [data-mo-intro="rise"], [data-mo-intro="zoom"], [data-mo-intro="blur"], [data-mo-intro="slide"])
+    :is([data-section="hero"], [data-k~="masthead"])
+    :is(h1, p, [data-k~="btn"], [data-k~="photo"]):not(:is(p, [data-k~="btn"], [data-k~="photo"], dialog) *) {
+    animation: kit-mo-fade calc(700ms * var(--mo-k)) cubic-bezier(0.2, 0.7, 0.2, 1) both !important;
+  }
+  [data-mo-intro] :is([data-section="hero"], [data-k~="masthead"]) :is(p, [data-k~="btn"]):not(:is(p, [data-k~="btn"], [data-k~="photo"], dialog) *) {
+    animation-delay: calc(140ms * var(--mo-k)) !important;
+  }
+  [data-mo-intro] :is([data-section="hero"], [data-k~="masthead"]) [data-k~="btn"]:not(:is(p, [data-k~="photo"], dialog) *),
+  [data-mo-intro] :is([data-section="hero"], [data-k~="masthead"]) p [data-k~="btn"] {
+    animation-delay: calc(260ms * var(--mo-k)) !important;
+  }
+  [data-mo-intro="rise"] :is([data-section="hero"], [data-k~="masthead"]) :is(h1, p, [data-k~="btn"], [data-k~="photo"]):not(:is(p, [data-k~="btn"], [data-k~="photo"], dialog) *) {
+    animation-name: kit-mo-rise !important;
+  }
+  [data-mo-intro="zoom"] :is([data-section="hero"], [data-k~="masthead"]) :is(h1, p, [data-k~="btn"], [data-k~="photo"]):not(:is(p, [data-k~="btn"], [data-k~="photo"], dialog) *) {
+    animation-name: kit-mo-zoom !important;
+  }
+  [data-mo-intro="blur"] :is([data-section="hero"], [data-k~="masthead"]) :is(h1, p, [data-k~="btn"], [data-k~="photo"]):not(:is(p, [data-k~="btn"], [data-k~="photo"], dialog) *) {
+    animation-name: kit-mo-blur !important;
+  }
+  [data-mo-intro="slide"] :is([data-section="hero"], [data-k~="masthead"]) :is(h1, p, [data-k~="btn"], [data-k~="photo"]):not(:is(p, [data-k~="btn"], [data-k~="photo"], dialog) *) {
+    animation-name: kit-mo-slide !important;
+  }
+  [data-mo-intro="slide"][dir="rtl"] :is([data-section="hero"], [data-k~="masthead"]) :is(h1, p, [data-k~="btn"], [data-k~="photo"]):not(:is(p, [data-k~="btn"], [data-k~="photo"], dialog) *),
+  [dir="rtl"] [data-mo-intro="slide"] :is([data-section="hero"], [data-k~="masthead"]) :is(h1, p, [data-k~="btn"], [data-k~="photo"]):not(:is(p, [data-k~="btn"], [data-k~="photo"], dialog) *) {
+    animation-name: kit-mo-slide-rtl !important;
+  }
+}
+/* "Still": the opening's words and buttons stand still (its photo slider keeps its own setting). */
+[data-mo-intro="none"] :is([data-section="hero"], [data-k~="masthead"]) :is(h1, h2, p, [data-k~="btn"]) {
+  animation: none !important;
+}
+
+/* ---------- motion when scrolling, slower or quicker ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    [data-mo-speed="slow"]:is([data-ps-motion="fade"], [data-ps-motion="rise"], [data-ps-motion="playful"]) [data-section] :is(h2, .kit-card, .kit-cat, [data-k~="photo"], blockquote, p) {
+      animation-range: entry 0% cover 45% !important;
+    }
+    [data-mo-speed="fast"]:is([data-ps-motion="fade"], [data-ps-motion="rise"], [data-ps-motion="playful"]) [data-section] :is(h2, .kit-card, .kit-cat, [data-k~="photo"], blockquote, p) {
+      animation-range: entry 0% entry 40% !important;
+    }
+  }
+}
+
+/* ---------- when a visitor points at a product or button ---------- */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  :is([data-mo-hover="lift"], [data-mo-hover="glow"], [data-mo-hover="tilt"], [data-mo-hover="press"])
+    :is(.kit-card, .kit-cat, [data-item-id]:not(.kit-card *, .kit-cat *), [data-k~="btn"]) {
+    transition:
+      translate calc(240ms * var(--mo-k)) ease,
+      scale calc(240ms * var(--mo-k)) ease,
+      rotate calc(240ms * var(--mo-k)) ease,
+      box-shadow calc(240ms * var(--mo-k)) ease !important;
+  }
+  [data-mo-hover="lift"] :is(.kit-card, .kit-cat, [data-item-id]:not(.kit-card *, .kit-cat *), [data-k~="btn"]):hover {
+    translate: 0 -4px !important;
+    box-shadow: 0 14px 28px -14px rgb(0 0 0 / 0.45) !important;
+  }
+  [data-mo-hover="glow"] :is(.kit-card, .kit-cat, [data-item-id]:not(.kit-card *, .kit-cat *), [data-k~="btn"]):hover {
+    box-shadow:
+      0 0 0 3px var(--k-acc-soft, var(--acc-soft, rgb(0 0 0 / 0.08))),
+      0 10px 30px -10px var(--k-acc, var(--acc, currentColor)) !important;
+  }
+  [data-mo-hover="tilt"] :is(.kit-card, .kit-cat, [data-item-id]:not(.kit-card *, .kit-cat *), [data-k~="btn"]):hover {
+    translate: 0 -2px !important;
+    rotate: -1.2deg !important;
+  }
+  [dir="rtl"][data-mo-hover="tilt"] :is(.kit-card, .kit-cat, [data-item-id]:not(.kit-card *, .kit-cat *), [data-k~="btn"]):hover,
+  [dir="rtl"] [data-mo-hover="tilt"] :is(.kit-card, .kit-cat, [data-item-id]:not(.kit-card *, .kit-cat *), [data-k~="btn"]):hover {
+    rotate: 1.2deg !important;
+  }
+  [data-mo-hover="press"] :is(.kit-card, .kit-cat, [data-item-id]:not(.kit-card *, .kit-cat *), [data-k~="btn"]):hover {
+    scale: 0.97 !important;
+  }
+  [data-mo-hover="zoom"] :is(.kit-card, .kit-cat, [data-item-id]) :is(img, svg[role="img"]) {
+    transition: scale calc(420ms * var(--mo-k)) ease !important;
+  }
+  [data-mo-hover="zoom"] :is(.kit-card, .kit-cat, [data-item-id]):hover :is(img, svg[role="img"]) {
+    scale: 1.07 !important;
+  }
+}
+/* "Nothing moves": the template's own hover movement stops too. */
+[data-mo-hover="none"] :is(.kit-card, .kit-cat, [data-item-id], [data-k~="btn"]):hover,
+[data-mo-hover="none"] :is(.kit-card, .kit-cat, [data-item-id]):hover img {
+  translate: none !important;
+  scale: none !important;
+  rotate: none !important;
+  transform: none !important;
+}
+
+/* ---------- section titles in the owner's color ---------- */
+[style*="--tn-head"]
+  [data-section]:not([data-section="header"], [data-section="hero"], [data-section="announcement"], [data-section="ticker"], [data-section="marquee"], [data-section="order"], [data-section="footer"], [data-section="extra"][data-sc="band"])
+  h2:not(dialog *, [data-k~="overlay"] *, [data-k~="filled"] *) {
+  color: var(--tn-head) !important;
+  -webkit-text-stroke-color: var(--tn-head) !important;
+}
+
+/* ---------- the owner's own section ---------- */
+.kit-sc.kit-sc.kit-sc[data-section="extra"] {
+  & .kit-sc-extra-copy {
+    display: grid;
+    gap: 14px;
+    min-width: 0;
+  }
+  & .kit-sc-extra-copy .kit-sc-actions {
+    margin-top: 4px;
+  }
+  & .kit-sc-extra-pic {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: var(--ks-r);
+    background: var(--k-surf);
+  }
+  & .kit-sc-extra-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+    align-items: center;
+  }
+  &:not([data-sc="beside"]) .kit-sc-extra-pic {
+    aspect-ratio: 16 / 9;
+    max-width: 760px;
+    margin-block-end: 18px;
+  }
+
+  /* A card: the photo on top, the text under it, on the template's panel color. */
+  & .kit-sc-extra-card {
+    display: grid;
+    gap: 0;
+    margin-inline: auto;
+    max-width: 760px;
+    padding: 20px;
+    border: 1px solid var(--k-line);
+    border-radius: var(--ks-r);
+    background: var(--k-surf);
+  }
+
+  /* A colored band in the accent color, its text in the color made for it. */
+  &[data-sc="band"] {
+    background: var(--k-acc);
+    color: var(--k-acc-ink);
+    & .kit-sc-h,
+    & .kit-sc-eyebrow,
+    & p {
+      color: var(--k-acc-ink);
+    }
+    & .kit-sc-btn {
+      border-color: var(--k-acc-ink);
+      background: var(--k-acc-ink);
+      color: var(--k-acc);
+    }
+  }
+
+  /* Centered text, and the band centered too. */
+  &:is([data-sc="centered"], [data-sc="band"]) {
+    text-align: center;
+    & .kit-sc-head,
+    & .kit-sc-extra-copy,
+    & .kit-sc-extra-pic {
+      margin-inline: auto;
+      justify-items: center;
+    }
+    & p {
+      margin-inline: auto;
+    }
+  }
+
+  @container ksec (min-width: 760px) {
+    & .kit-sc-extra-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 40px;
+    }
+  }
+}
+
+@keyframes kit-mo-fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes kit-mo-rise {
+  from {
+    opacity: 0;
+    translate: 0 28px;
+  }
+}
+@keyframes kit-mo-zoom {
+  from {
+    opacity: 0;
+    scale: 0.92;
+  }
+}
+@keyframes kit-mo-blur {
+  from {
+    opacity: 0;
+    filter: blur(12px);
+  }
+}
+@keyframes kit-mo-slide {
+  from {
+    opacity: 0;
+    translate: -36px 0;
+  }
+}
+@keyframes kit-mo-slide-rtl {
+  from {
+    opacity: 0;
+    translate: 36px 0;
+  }
+}

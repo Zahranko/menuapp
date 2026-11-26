@@ -360,6 +360,38 @@ both languages, readable bands in every theme) and `e2e/ticker.spec.ts` (every o
 the words readable on what is really behind them). Fixture tokens: `tks`, `tkc`, `tksep`, `tksp`, `tke` and
 `tkbg_<rrggbb>`, for example `/_preview/fixture.ember.default.ar.tks_tilted-tkc_custom-tkbg_1f6feb-tksep_star`.
 
+## Motion, your own section and fine tuning (`_kit/tune-settings.json`, `tune.ts`, `tune.css`)
+
+Every template gets three more shared groups, added by `scripts/build-registry.mjs` right after "Sections" (or "Moving
+strip" when the template has one): "Motion" (الحركة), "Your own section" (قسمك الخاص) and "Fine tuning" (لمسات دقيقة).
+Their defaults keep every page byte for byte as before. Each styles.css imports `_kit/tune.css` right after `style.css`.
+
+| Key | Options |
+|---|---|
+| `motion.intro` | auto, none (still), fade, rise, zoom, blur (comes into focus), slide: how the opening's (or the masthead's) headline, text, buttons and photos appear when the page loads, one after another |
+| `motion.hover` | auto, none, lift, zoom (the photo), glow, tilt, press: what product cards, category tiles, anything with `data-item-id` and `data-k="btn"` buttons do under a pointer (only on screens with hover) |
+| `motion.speed` | auto, slow, normal, fast: the intro and hover times (`--mo-k`), and how far a section scrolls before "Motion when scrolling" (`style.motion`) finishes |
+| `extra.place` | off, top (under the opening), middle (after the menu), bottom (above the footer) |
+| `extra.layout` | beside (photo beside the text), card, band (an accent band), centered |
+| `extra.eyebrow`, `extra.title`, `extra.text`, `extra.image`, `extra.button`, `extra.link` | the section's texts, photo and button. The button shows only with a label and a safe link (`safeLink()`: http(s), WhatsApp and other web addresses with https added when left out, `tel:`, `mailto:` or `#section`) |
+| `tune.text` | the text color (`--ink`, or Souq's `--sink`), moved until it reads at 7:1 on the page and its panels (templates soften text with opacity in places, so it needs the room) |
+| `tune.headings` | section titles (`h2` in sections, not the header, opening, footer or anything over a photo) in the accent text color or the owner's color, kept at 4.5:1 on the page and 3:1 on the accent fill (`--tn-head` on the root, left out when no color reaches both) |
+| `tune.css` | the owner's own CSS, up to 4000 characters |
+
+- `ordered()` (`_kit/Sections.tsx`) puts the owner's own section (`SiteExtra`, `data-section="extra"`, `id="extra"`) in its
+  place, so every template has it without template code. It is drawn with the shared sections' classes, so it takes the
+  template's colors, fonts, corners, dividers and motion.
+- The owner's CSS is cleaned by `ownerCss()` in `lib/owner-css.ts` and added after the template by `SitePage` in a
+  `<style data-owner-css>`. It can't leave the style element ("<" and backslashes are removed), can't load anything
+  (`url()`, `image-set()`, `src()`... are switched off, and every at-rule but `@media`, `@supports` and `@keyframes` is
+  dropped) and stays nested under `[data-template]` with balanced braces. The AI chat may write it too (only the chat, and
+  only when no setting can do what the owner asks); the backend cleans its answer with `AiCss.Clean()` first.
+- Fixture tokens: `moi_<intro>`, `moh_<hover>`, `mos_<speed>`, `extra_<top|middle|bottom>` (sample texts, photo and a
+  button to `#menu`), `exl_<layout>`, `exnp` (no photo), `tnt_<rrggbb>`, `tnh_<accent|rrggbb>` and `css_demo`, for example
+  `/_preview/fixture.souq.default.ar.extra_middle-exl_band-moi_rise-moh_lift-tnh_accent`.
+- Tests: `templates/tune.test.tsx` (every template unchanged on the defaults, the groups and their order, the attributes,
+  readable colors, the section in each place and layout in both languages, safe links, the CSS cleaner).
+
 ## The floating order button
 
 The order button floats at the bottom of the screen. On a phone it appears only once the visitor scrolls past the top
