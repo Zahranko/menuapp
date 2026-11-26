@@ -43,6 +43,7 @@ Update this file at the end of every session: mark the row, add follow-ups and d
 ## Follow-ups
 
 - [S13] The app's editor shows "Your own CSS" (`tune.css`, 4000 characters) as an ordinary text box. A monospace box, or a note that the AI chat can write it, would help owners (found in the fine tuning work).
+- [S16+] Couture's desktop header can cover its own nav links (axe target-size, `.cu-nav > a:nth-child(2)` and `(3)`) with a long business name, a big framed logo, a solid header and big text: `e2e/combinations.spec.ts` Couture combination 1 on desktop fails on CI but not in cloud sessions (fonts). Arch Story in Arabic with a long name, the simple footer and tight heading lines lets the footer name's lines touch (found in the fine tuning work).
 - [S15] `next build` on Next.js 16.4.0 ends with a "SecurityFatalError: Your version of Next.js is affected by a known security vulnerability" after the pages are built (the output is still written). Upgrade Next.js; the security audit thread may already cover it (found in the fine tuning work).
 
 (Things a session found that belong to another session. Format: `- [S07] what and why (found in S03)`.)
