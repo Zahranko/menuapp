@@ -108,3 +108,52 @@ internal static partial class AiText
     [GeneratedRegex(@"[ \t ]+")]
     private static partial Regex Spaces();
 }
+
+/// <summary>
+/// Cleans CSS a model wrote for the owner's own stylesheet: code fences and markup are removed, along with anything that
+/// would load from elsewhere or leave the stylesheet ("&lt;", backslash escapes, url(), @import). The sites clean it again
+/// before it reaches a page; this keeps the draft itself tidy.
+/// </summary>
+public static partial class AiCss
+{
+    public static string? Clean(string? css, int max)
+    {
+        if (string.IsNullOrWhiteSpace(css) || max <= 0)
+        {
+            return null;
+        }
+
+        css = Fence().Replace(css, "");
+        var sb = new StringBuilder(css.Length);
+        foreach (var c in css.Normalize(NormalizationForm.FormC))
+        {
+            if (c is '<' or '\\' or '`')
+            {
+                continue;
+            }
+
+            sb.Append(c == '\t' ? ' ' : char.IsControl(c) && c != '\n' ? ' ' : c);
+        }
+
+        var cleaned = Loads().Replace(sb.ToString(), "blocked(");
+        cleaned = Imports().Replace(cleaned, "");
+        cleaned = string.Join('\n', cleaned.Split('\n').Select(l => l.TrimEnd()).Where(l => l.Trim().Length > 0)).Trim();
+        if (cleaned.Length > max)
+        {
+            // Cut after the last complete rule that fits, so the stylesheet stays whole.
+            var end = cleaned.LastIndexOf('}', max - 1);
+            cleaned = end > 0 ? cleaned[..(end + 1)] : "";
+        }
+
+        return cleaned.Length == 0 ? null : cleaned;
+    }
+
+    [GeneratedRegex(@"^\s*```[a-z]*\s*$", RegexOptions.Multiline | RegexOptions.IgnoreCase)]
+    private static partial Regex Fence();
+
+    [GeneratedRegex(@"\b(url|image-set|image|src|expression)\s*\(", RegexOptions.IgnoreCase)]
+    private static partial Regex Loads();
+
+    [GeneratedRegex(@"@(import|font-face|namespace|charset)\b[^;{}]*;?", RegexOptions.IgnoreCase)]
+    private static partial Regex Imports();
+}

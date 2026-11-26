@@ -952,3 +952,143 @@ public class WriteTextHandlerTests
         public void Remove(Product product) => throw new NotSupportedException();
     }
 }
+
+/// <summary>The design skills of the AI helper, and the "Motion", "Your own section" and "Fine tuning" groups in the chat.</summary>
+public class DesignSkillsAiTests
+{
+    private static readonly DateTimeOffset Now = new(2026, 11, 26, 9, 0, 0, TimeSpan.Zero);
+
+    private const string Schema = """
+        [ { "key": "hero.title", "type": "text", "label": "Headline", "group": "Hero", "max": 60 },
+          { "key": "motion.intro", "type": "choice", "label": "How the top of the page appears", "group": "Motion", "options": ["auto", "none", "fade", "rise", "zoom", "blur", "slide"] },
+          { "key": "motion.hover", "type": "choice", "label": "When a visitor points at a product or button", "group": "Motion", "options": ["auto", "none", "lift", "zoom", "glow", "tilt", "press"] },
+          { "key": "motion.speed", "type": "choice", "label": "Speed of the motion", "group": "Motion", "options": ["auto", "slow", "normal", "fast"] },
+          { "key": "extra.place", "type": "choice", "label": "Where your section shows", "group": "Your own section", "options": ["off", "top", "middle", "bottom"] },
+          { "key": "extra.title", "type": "text", "label": "Section title", "group": "Your own section", "max": 60 },
+          { "key": "extra.text", "type": "textarea", "label": "Section text", "group": "Your own section", "max": 600 },
+          { "key": "extra.link", "type": "text", "label": "Where the button goes (a web address)", "group": "Your own section", "max": 300 },
+          { "key": "tune.headings", "type": "color", "label": "Color of section titles", "group": "Fine tuning", "options": ["default", "accent"], "custom": true },
+          { "key": "tune.css", "type": "textarea", "label": "Your own CSS", "group": "Fine tuning", "max": 4000 } ]
+        """;
+
+    private const string Defaults = """
+        { "hero.title": "Fresh every morning", "motion.intro": "auto", "motion.hover": "auto", "motion.speed": "auto", "extra.place": "off",
+          "extra.title": "", "extra.text": "", "extra.link": "", "tune.headings": "default", "tune.css": "" }
+        """;
+
+    private static readonly TemplateSchema Parsed = TemplateSchema.Parse(Schema);
+
+    private static (ChatAboutDesignHandler Handler, WriteTextHandlerTests.FakeAssistant Assistant) Chat()
+    {
+        var business = Business.Create(Guid.CreateVersion7(), "Dawn Bakery", Slug.FromStorage("dawnbakery"), Now);
+        var template = Template.Create("souq", 1, "Souq", "Café", null, null, Schema, Defaults, 1);
+        var site = Site.Create(business.Id, "souq", template.DefaultSettings, Now);
+        var assistant = new WriteTextHandlerTests.FakeAssistant();
+        var quota = WriteTextHandlerTests.Quota(business.Id, assistant, new WriteTextHandlerTests.FakeUsage());
+        var handler = new ChatAboutDesignHandler(new ChatAboutDesignValidator(), quota, assistant, new NoPhotos(), WriteTextHandlerTests.Businesses(business), WriteTextHandlerTests.Sites(site), WriteTextHandlerTests.Templates(template));
+        return (handler, assistant);
+    }
+
+    private static ChatAboutDesign Ask(string text) => new([new AiChatMessage(AiChatMessage.Owner, text)], "en");
+
+    private static string OneLine(string text) => System.Text.RegularExpressions.Regex.Replace(text, @"\s+", " ");
+
+    [Fact]
+    public async Task The_instructions_give_the_helper_its_design_roles()
+    {
+        var (handler, assistant) = Chat();
+        await handler.Handle(Ask("Polish my website"), CancellationToken.None);
+        var instructions = OneLine(assistant.Requests.Single().Instructions);
+        Assert.Contains("Art director (taste)", instructions);
+        Assert.Contains("Layout designer (design optimization)", instructions);
+        Assert.Contains("Polisher:", instructions);
+        Assert.Contains("Motion designer:", instructions);
+        Assert.Contains("When the owner asks to polish, improve, optimize", instructions);
+        Assert.Contains("\"motion.intro\"", instructions);
+        Assert.Contains("\"Your own section\"", instructions);
+        Assert.Contains("\"tune.css\" is the owner's own CSS", instructions);
+    }
+
+    [Fact]
+    public void Css_is_code_for_the_chat_only_and_links_stay_the_owners()
+    {
+        var css = Parsed.Fields.Single(f => f.Key == "tune.css");
+        Assert.True(TemplateAiFields.IsCode(css));
+        Assert.False(TemplateAiFields.IsCopy(css));
+        Assert.True(TemplateAiFields.IsEditable(css));
+        Assert.False(TemplateAiFields.IsEditable(Parsed.Fields.Single(f => f.Key == "extra.link")));
+        Assert.True(TemplateAiFields.IsCopy(Parsed.Fields.Single(f => f.Key == "extra.text")));
+        Assert.False(TemplateAiFields.IsCode(Parsed.Fields.Single(f => f.Key == "extra.text")));
+    }
+
+    [Fact]
+    public async Task Motion_a_new_section_and_css_come_back_as_a_clean_patch()
+    {
+        var (handler, assistant) = Chat();
+        assistant.Answer = JsonNode.Parse("""
+            { "reply": "Your page now rises in gently, dishes lift when pointed at, and I added a catering section with a soft shadow.",
+              "settings": { "motion.intro": "rise", "motion.hover": "lift", "motion.speed": "slow", "extra.place": "middle",
+                            "extra.title": "Catering for your events", "extra.text": "Trays of pastries for offices and parties.",
+                            "extra.link": "https://evil.test", "tune.headings": "accent",
+                            "tune.css": "```css\n#menu .kit-card { box-shadow: 0 8px 24px rgb(0 0 0 / .12); }\n[data-section=\"hero\"] { background: url(https://evil.test/x.png); }\n@import 'https://evil.test/a.css';\n</style><script>alert(1)</script>\n```" } }
+            """)!;
+
+        var result = await handler.Handle(Ask("Make it feel alive and add a catering section"), CancellationToken.None);
+
+        Assert.True(result.IsSuccess);
+        var patch = result.Value.Settings.EnumerateObject().ToDictionary(p => p.Name, p => p.Value.GetString());
+        Assert.Equal("rise", patch["motion.intro"]);
+        Assert.Equal("lift", patch["motion.hover"]);
+        Assert.Equal("middle", patch["extra.place"]);
+        Assert.Equal("accent", patch["tune.headings"]);
+        Assert.False(patch.ContainsKey("extra.link"));
+        var css = patch["tune.css"]!;
+        Assert.StartsWith("#menu .kit-card { box-shadow", css);
+        Assert.DoesNotContain("```", css);
+        Assert.DoesNotContain("<", css);
+        Assert.DoesNotContain("url(", css);
+        Assert.DoesNotContain("@import", css);
+
+        var properties = assistant.Requests.Single().ResponseSchema["properties"]!["settings"]!["properties"]!;
+        Assert.Contains("complete stylesheet", properties["tune.css"]!["description"]!.GetValue<string>());
+        Assert.Null(properties["extra.link"]);
+    }
+
+    [Fact]
+    public void Long_css_is_cut_after_the_last_whole_rule()
+    {
+        var rule = ".kit-card { color: red; }\n";
+        var css = AiCss.Clean(string.Concat(Enumerable.Repeat(rule, 10)), rule.Length * 3 + 5);
+        Assert.Equal(string.Join('\n', Enumerable.Repeat(rule.TrimEnd(), 3)), css);
+        Assert.Null(AiCss.Clean("   ", 100));
+    }
+
+    [Fact]
+    public void Every_template_offers_motion_its_own_section_and_fine_tuning()
+    {
+        var path = "";
+        for (var dir = new DirectoryInfo(AppContext.BaseDirectory); dir is not null && path.Length == 0; dir = dir.Parent)
+        {
+            var candidate = Path.Combine(dir.FullName, "apps", "sites", "templates", "registry.json");
+            path = File.Exists(candidate) ? candidate : "";
+        }
+
+        using var registry = System.Text.Json.JsonDocument.Parse(File.ReadAllText(path));
+        foreach (var t in registry.RootElement.GetProperty("templates").EnumerateArray())
+        {
+            var chat = TemplateAiFields.ForChat(TemplateSchema.Parse(t.GetProperty("schema").GetRawText()).Fields).ToDictionary(f => f.Key);
+            foreach (var key in new[] { "motion.intro", "motion.hover", "motion.speed", "extra.place", "extra.layout", "extra.title", "extra.text", "extra.button", "tune.text", "tune.headings", "tune.css" })
+            {
+                Assert.True(chat.ContainsKey(key), $"{t.GetProperty("id").GetString()} {key}");
+            }
+
+            Assert.False(chat.ContainsKey("extra.link"));
+            Assert.False(chat.ContainsKey("extra.image"));
+        }
+    }
+
+    private sealed class NoPhotos : IImageOptimizer
+    {
+        public Result<OptimizedImage> Optimize(ReadOnlyMemory<byte> image, int maxSide, long maxBytes) => throw new NotSupportedException();
+    }
+}

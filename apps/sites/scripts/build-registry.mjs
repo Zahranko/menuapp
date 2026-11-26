@@ -113,6 +113,7 @@ const layoutSettings = JSON.parse(readFileSync(path.join(root, "_kit", "layout-s
 const menuSettings = JSON.parse(readFileSync(path.join(root, "_kit", "menu-settings.json"), "utf8"));
 const sectionsSettings = JSON.parse(readFileSync(path.join(root, "_kit", "sections-settings.json"), "utf8"));
 const tickerSettings = JSON.parse(readFileSync(path.join(root, "_kit", "ticker-settings.json"), "utf8"));
+const tuneSettings = JSON.parse(readFileSync(path.join(root, "_kit", "tune-settings.json"), "utf8"));
 const publicDir = path.join(root, "..", "public");
 const HERO_KINDS = new Set(Object.keys(heroSettings.kinds));
 const HERO_SOURCES = new Set(["hero.image", "hero.images"]);
@@ -157,6 +158,7 @@ const manifests = readdirSync(root, { withFileTypes: true })
     withMenuOptions(d.name, manifest);
     withSectionOptions(d.name, manifest);
     withTickerOptions(d.name, manifest);
+    withTuneOptions(d.name, manifest);
     withHeroOptions(d.name, manifest);
     withSignatureOptions(d.name, manifest);
     const keys = new Set();
@@ -410,6 +412,24 @@ function withTickerOptions(id, manifest) {
   const { group, groupAr } = tickerSettings;
   const fields = tickerSettings.fields.map((f) => ({ key: f.key, type: f.type, label: f.label, group, groupAr, ...f }));
   insertGroup(manifest, fields, tickerSettings.defaults, sectionsSettings.group);
+}
+
+/**
+ * Adds the shared fields of templates/_kit/tune-settings.json after "Sections" (or "Moving strip" when there is one):
+ * "Motion" (how the top appears, hover effects, speed), then "Your own section" (a section the owner writes: title, text, photo, button, and where it shows)
+ * and "Fine tuning" (text and title colors, the owner's own CSS).
+ * templates/_kit/tune.ts reads them, _kit/tune.css styles them; their defaults keep every site exactly as it was.
+ */
+function withTuneOptions(id, manifest) {
+  const groups = [tuneSettings.motion, tuneSettings.extra, tuneSettings.tune];
+  for (const field of groups.flatMap((g) => g.fields)) {
+    if (manifest.schema.some((f) => f.key === field.key) || field.key in manifest.defaults) fail(`${id}: "${field.key}" comes from templates/_kit/tune-settings.json; remove it from the manifest`);
+  }
+  const grouped = ({ group, groupAr, fields }) => fields.map((f) => ({ key: f.key, type: f.type, label: f.label, group, groupAr, ...f }));
+  const afterSections = manifest.schema.some((f) => f.group === tickerSettings.group) ? tickerSettings.group : sectionsSettings.group;
+  insertGroup(manifest, grouped(tuneSettings.motion), tuneSettings.defaults, afterSections);
+  insertGroup(manifest, grouped(tuneSettings.extra), tuneSettings.defaults, tuneSettings.motion.group);
+  insertGroup(manifest, grouped(tuneSettings.tune), tuneSettings.defaults, tuneSettings.extra.group);
 }
 
 /** Checks an "order" field: its options are the names to order and its default lists each of them once. */

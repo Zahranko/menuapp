@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { jsonLdScript, siteJsonLd } from "@/lib/jsonld";
+import { ownerCss } from "@/lib/owner-css";
 import { SITE_BASE_HEADER, siteBase } from "@/lib/routing";
 import { siteMetadata, siteUrl } from "@/lib/seo";
 import type { PublicSite } from "@/lib/types";
@@ -25,10 +26,13 @@ export function pageMetadata(site: PublicSite | null, path: string[]): Metadata 
 export async function SitePage({ site, path, preview, fallbackBase }: { site: PublicSite | null; path: string[]; preview: boolean; fallbackBase: string }) {
   if (!site || !pageOf(site, path)) notFound();
   const base = siteBase((await headers()).get(SITE_BASE_HEADER), fallbackBase);
+  // The owner's own CSS ("Fine tuning"), cleaned and kept inside the template's root (lib/owner-css.ts).
+  const css = ownerCss(site.settings["tune.css"]);
   return (
     <>
       {!preview && path.length === 0 && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(siteJsonLd(site)) }} />}
       <SiteTemplate site={site} preview={preview} path={path} base={base} />
+      {css && <style data-owner-css="" dangerouslySetInnerHTML={{ __html: css }} />}
     </>
   );
 }

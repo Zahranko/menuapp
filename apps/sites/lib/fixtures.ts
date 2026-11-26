@@ -871,6 +871,18 @@ const SECTION_KEYS: Record<string, string> = {
 /** Moving strip options for fixture previews (_kit/ticker.ts): "tks_<shape>", "tkc_<color>", "tkbg_<rrggbb>" (the owner's
  * own strip color), "tksep_<separator>", "tksp_<speed>" and "tke_<edges>". */
 const TICKER_KEYS: Record<string, string> = { tks: "ticker.style", tkc: "ticker.color", tksep: "ticker.separator", tksp: "ticker.speed", tke: "ticker.edge" };
+/** Motion and fine tuning for fixture previews (_kit/tune.ts): "moi_<intro>", "moh_<hover>", "mos_<speed>", "exl_<layout>"
+ * (the owner's own section), "tnt_<rrggbb>" (text color), "tnh_<accent|rrggbb>" (section titles), "extra_<top|middle|bottom>"
+ * (the owner's own section with sample texts, a photo and a button; "exnp" after it leaves the photo out) and "css_demo" (a
+ * sample of the owner's own CSS, including parts lib/owner-css.ts must remove). */
+const TUNE_KEYS: Record<string, string> = { moi: "motion.intro", moh: "motion.hover", mos: "motion.speed", exl: "extra.layout" };
+const EXTRA_TEXT = {
+  en: { "extra.eyebrow": "New", "extra.title": "Catering for your events", "extra.text": "Trays of our pastries and coffee for offices, parties and family days.\nOrder two days ahead.", "extra.button": "See the menu" },
+  ar: { "extra.eyebrow": "جديد", "extra.title": "ضيافة لمناسباتكم", "extra.text": "صواني من معجناتنا وقهوتنا للمكاتب والحفلات والعزائم.\nاطلبوا قبل يومين.", "extra.button": "شاهد القائمة" },
+};
+export const DEMO_CSS =
+  '.kit-card, [data-item-id] { outline: 3px dashed var(--k-acc); }\n[data-section="extra"] h2 { letter-spacing: .02em; }\n' +
+  "@import 'https://example.invalid/x.css';\n[data-section=\"hero\"] { background-image: url(https://example.invalid/x.png); }\n</style><b id=\"owner-css-escaped\">x</b>\n}} body { display: none }";
 const HERO_KEYS: Record<string, string> = { trans: "hero.transition", speed: "hero.speed", height: "hero.height", overlay: "hero.overlay", text: "hero.textPosition" };
 
 /**
@@ -900,6 +912,12 @@ function applyCardAndHeroOption(site: PublicSite, key: string, value: string): v
   else if (key in MENU_KEYS) set({ [MENU_KEYS[key]]: value });
   else if (key in SECTION_KEYS) set({ [SECTION_KEYS[key]]: value });
   else if (key in TICKER_KEYS) set({ [TICKER_KEYS[key]]: value });
+  else if (key in TUNE_KEYS) set({ [TUNE_KEYS[key]]: value });
+  else if (key === "tnt") set({ "tune.text": `#${value.toUpperCase()}` });
+  else if (key === "tnh") set({ "tune.headings": /^[0-9a-f]{6}$/i.test(value) ? `#${value.toUpperCase()}` : value });
+  else if (key === "extra") set({ ...EXTRA_TEXT[site.business.locale === "ar" ? "ar" : "en"], "extra.place": value || "middle", "extra.image": FIXTURE_SLIDES[0], "extra.link": "#menu" });
+  else if (key === "exnp") set({ "extra.image": "" });
+  else if (key === "css") set({ "tune.css": value === "demo" ? DEMO_CSS : "" });
   else if (key === "tkbg") set({ "ticker.bg": `#${value.toUpperCase()}` });
   else if (key === "so") set({ "sections.order": decodedOnce(value).split(/[+, ]/).filter(Boolean) });
   else if (key === "sparse") applySparse(site);

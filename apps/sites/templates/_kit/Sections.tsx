@@ -12,6 +12,7 @@ import { highlights as highlightPairs } from "./services";
 import { signatureOf } from "./signatures";
 import { hasHours } from "./site-data";
 import { tickerMarks } from "./ticker";
+import { extraSection } from "./tune";
 import type { NavLink } from "./Top";
 
 /*
@@ -39,6 +40,7 @@ const COPY = {
     findUs: "Find us",
     follow: "Follow us",
     write: "Message us",
+    extra: "More from us",
   },
   ar: {
     highlights: "لماذا يعود إلينا الناس",
@@ -51,6 +53,7 @@ const COPY = {
     findUs: "موقعنا",
     follow: "تابعونا",
     write: "راسلونا",
+    extra: "المزيد عنا",
   },
 };
 
@@ -65,7 +68,76 @@ const layoutOf = <K extends keyof SectionLayouts>(ctx: SiteContext, kind: K) => 
  * template's own order the page renders exactly as before.
  */
 export function ordered(ctx: SiteContext, parts: Record<string, ReactNode>): ReactNode[] {
-  return sectionOrder(ctx.site.settings, Object.keys(parts)).map((name) => <Fragment key={name}>{parts[name]}</Fragment>);
+  const names = sectionOrder(ctx.site.settings, Object.keys(parts));
+  const nodes = names.map((name) => <Fragment key={name}>{parts[name]}</Fragment>);
+  // The owner's own section ("Your own section", _kit/tune.ts): under the opening, after the menu or above the footer.
+  const extra = extraSection(ctx.site.settings);
+  if (!extra || "extra" in parts) return nodes;
+  const afterMenu = names.indexOf("menu") + 1;
+  const at = extra.place === "top" ? 0 : extra.place === "middle" && afterMenu > 0 ? afterMenu : nodes.length;
+  nodes.splice(at, 0, <SiteExtra key="extra" ctx={ctx} />);
+  return nodes;
+}
+
+/**
+ * The owner's own section ("Your own section"): a title, a text, a photo and a button they write themselves, in one of
+ * four layouts (photo beside the text, a card, a colored band, centered text). Drawn with the shared sections' classes, so
+ * it takes the template's colors, fonts, corners and the page style options.
+ */
+export function SiteExtra({ ctx }: { ctx: SiteContext }) {
+  const extra = extraSection(ctx.site.settings);
+  if (!extra) return null;
+  const photo = ctx.image("extra.image");
+  const bits = extra.text ? extra.text.split(/\n+/).map((p) => p.trim()).filter(Boolean) : [];
+  const copyBlock = (
+    <div className="kit-sc-extra-copy">
+      {bits.map((b, i) => (
+        <p key={i}>{b}</p>
+      ))}
+      {extra.button && (
+        <p className="kit-sc-actions">
+          <Button href={extra.button.href} external={!extra.button.href.startsWith("#")}>
+            {extra.button.label}
+          </Button>
+        </p>
+      )}
+    </div>
+  );
+  const picture = photo ? (
+    <span data-k="photo" className="kit-sc-extra-pic">
+      <Picture src={photo} sizes={extra.layout === "beside" ? "(min-width: 760px) 45vw, 100vw" : "(min-width: 760px) 60vw, 100vw"} />
+    </span>
+  ) : null;
+  const body =
+    extra.layout === "beside" && picture ? (
+      <div className="kit-sc-extra-grid">
+        {picture}
+        {copyBlock}
+      </div>
+    ) : extra.layout === "card" ? (
+      <div className="kit-sc-card kit-sc-extra-card">
+        {picture}
+        {copyBlock}
+      </div>
+    ) : (
+      <>
+        {picture}
+        {copyBlock}
+      </>
+    );
+  return (
+    <Section
+      kind="extra"
+      layout={extra.layout}
+      id="extra"
+      title={extra.title || extra.eyebrow || copy(ctx).extra}
+      eyebrow={extra.title ? extra.eyebrow || undefined : undefined}
+      heading={!!extra.title}
+      className={cx(!photo && "is-bare")}
+    >
+      {body}
+    </Section>
+  );
 }
 
 /**

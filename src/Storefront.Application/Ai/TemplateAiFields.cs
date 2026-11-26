@@ -25,7 +25,14 @@ public static partial class TemplateAiFields
     /// they are facts only the owner knows, and made-up reviews would mislead customers.
     /// </summary>
     public static bool IsCopy(TemplateField field) =>
-        field.Type is "text" or "textarea" && field.Max is null or > 0 && !FactKeys().IsMatch(field.Key);
+        field.Type is "text" or "textarea" && field.Max is null or > 0 && !FactKeys().IsMatch(field.Key) && !IsCode(field);
+
+    /// <summary>
+    /// The owner's own CSS ("tune.css" in the "Fine tuning" group): code, not copy. Only the chat assistant writes it, when no
+    /// setting can do what the owner asks; the sites clean it again before it reaches a page (apps/sites/lib/owner-css.ts).
+    /// </summary>
+    public static bool IsCode(TemplateField field) =>
+        field is { Type: "textarea" } && field.Key.EndsWith(".css", StringComparison.Ordinal) && field.Max is null or > 0;
 
     /// <summary>
     /// Everything the chat assistant may set from a value: texts (<see cref="IsCopy"/>), colors, themes and choices, sizes and
@@ -36,6 +43,7 @@ public static partial class TemplateAiFields
     /// </summary>
     public static bool IsEditable(TemplateField field) => field.Type switch
     {
+        "textarea" when IsCode(field) => true,
         "text" or "textarea" => IsCopy(field),
         _ when FactKeys().IsMatch(field.Key) && !LayoutKeys().IsMatch(field.Key) => false,
         "color" or "palette" or "choice" or "toggles" => field.Options is { Count: > 0 },
@@ -78,6 +86,18 @@ public static partial class TemplateAiFields
 
     private static JsonObject Property(TemplateField field, IReadOnlyCollection<TemplateField> all)
     {
+        if (IsCode(field))
+        {
+            var max = field.Max ?? 4000;
+            return new JsonObject
+            {
+                ["type"] = "string",
+                ["maxLength"] = max,
+                ["description"] = $"{field.Label}: the complete stylesheet (it replaces the current one, so keep the rules that "
+                    + $"should stay), plain CSS up to {max} characters, no url(), no @import, no HTML",
+            };
+        }
+
         if (field.Type is "text" or "textarea")
         {
             var max = field.Max ?? 400;
@@ -277,6 +297,11 @@ public static partial class TemplateAiFields
         if (node is not JsonValue value || !value.TryGetValue<string>(out var text))
         {
             return null;
+        }
+
+        if (IsCode(field))
+        {
+            return AiCss.Clean(text, field.Max ?? 4000) is { } css ? JsonValue.Create(css) : null;
         }
 
         if (field.Type is "text" or "textarea")
